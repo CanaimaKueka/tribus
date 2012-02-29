@@ -1,0 +1,175 @@
+{% load i18n %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{% lang %}" lang="{% lang %}" dir="ltr">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="keywords" content="" />
+		<link rel="shortcut icon" href="/skins/{% skin %}/images/favicon.ico" />
+		<title>{% title %} // {% trans title_desc %}</title>
+		<link rel='stylesheet' type='text/css' href='/skins/{% skin %}/css/style.css' media='screen' />
+                <script type="text/javascript" src="/skins/{% skin %}/js/jquery.js"></script>
+                <script type="text/javascript" src="/skins/{% skin %}/js/easing.js"></script>
+                <script type="text/javascript" src="/skins/{% skin %}/js/lavalamp.js"></script>
+                <script type="text/javascript" src="/skins/{% skin %}/js/validation.js"></script>
+                <script type="text/javascript" src="/skins/{% skin %}/js/ajax.js"></script>
+	</head>
+
+	<body>
+
+	<div id="globalWrapper">
+		<div id="column-content">
+			<div id="portal-top">
+				<ul id="p-personal">
+					<li id="login">
+						<a href="/login" title="Login" class="new">{% trans login%}</a>
+					</li>
+					<li id="signup">
+						<a href="/signup" title="Mi página de discusión [n]" accesskey="n" class="new">Mi discusión</a></li>
+                                <li id="preferences"><a href="/wiki/Especial:Preferences" title="Mis preferencias">Mis preferencias</a></li>
+                                <li id="watchlist"><a href="/wiki/Especial:Watchlist" title="La lista de páginas para las que está vigilando los cambios [l]" accesskey="l">Lista de seguimiento</a></li>
+                                <li id="mycontris"><a href="/wiki/Especial:Contributions/Huntingbears" title="Lista de mis contribuciones [y]" accesskey="y">Mis contribuciones</a></li>
+
+                                <li id="logout"><a href="/mediawiki/index.php?title=Especial:Userlogout&amp;returnto=Portada" title="Salir de la sesión">Salir</a></li>
+                        </ul>
+		</div>
+		<div id="portal-searchbox">
+
+        <div id="p-logo">
+                <a style="background-image: url(/mediawiki/skins/common/images/canaima.png);" href="http://canaima.softwarelibre.gob.ve/" title="Visitar la Portada [z]" accesskey="z"></a>
+        </div>
+
+<form action="/wiki/Especial:Search" id="searchform" style="white-space: nowrap;">
+	<div class="LSBox">
+	<div id="clock">Introduce un término de búsqueda y presiona enter.</div>
+	<label class="hiddenStructure" for="searchGadget">Buscar</label>
+	<input id="searchInput" value="Buscar en la enciclopedia" name="search" type="text" title="Buscar en este wiki [f]" accesskey="f" value="" onfocus="this.value=(this.value=='Buscar en la enciclopedia') ? '' : this.value;" onblur="this.value=(this.value=='') ? 'Buscar en la enciclopedia' : this.value;"  />
+				<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Ir" title="Ir al artículo con este nombre exacto si existe" />&nbsp;
+				<input type='submit' name="fulltext" class="searchButton" id="mw-searchButton" value="Buscar" title="Search the pages for this text" />
+	<div class="searchSection">
+
+	</div>
+	<div id="LSResult" class="LSResult" style="">
+	</div>
+</div>
+</form>
+
+</div>
+<img src="/mediawiki/skins/aponwao/banner.jpg" />
+	
+<div id="menu">
+   <ul id="portal-globalnav">
+<li><a href="/wiki/Portada">Portada</a></li>
+
+				<li id="t-whatlinkshere"><a href="/wiki/Especial:Whatlinkshere/Portada" title="Lista de todas las páginas del wiki que enlazan con ésta [j]" accesskey="j">Lo que enlaza aquí</a></li>
+<li id="t-upload"><a href="/wiki/Especial:Upload" title="Subir imágenes o archivos multimedia [u]" accesskey="u">Subir archivo</a></li>
+<li id="t-specialpages"><a href="/wiki/Especial:Specialpages" title="Lista de todas las páginas especiales [q]" accesskey="q">Páginas especiales</a></li>
+<li id="t-pdf">
+<a href="/mediawiki/index.php?title=Especial:PdfPrint&amp;page=Portada">Generar PDF</a></li><li><a href="/wiki/Especial:Recentchanges">Cambios Recientes</a></li>
+
+			</ul>
+	</div>
+	<div id="content">
+
+        <div id="p-cactions" class="">
+                <h5>Vistas</h5>
+
+                        <ul>
+        
+                                 <li id="ca-nstab-main" class="selected"><a href="/wiki/Portada" title="Ver el artículo [c]" accesskey="c">Artículo</a></li>
+                                 <li id="ca-talk" class="new"><a href="/mediawiki/index.php?title=Discusi%C3%B3n:Portada&amp;action=edit" title="Discusión acerca del artículo [t]" accesskey="t">Discusión</a></li>
+                                 <li id="ca-viewsource"><a href="/mediawiki/index.php?title=Portada&amp;action=edit" title="Esta página está protegida, sólo puede ver su código fuente [e]" accesskey="e">Ver código fuente</a></li>
+
+                                 <li id="ca-history"><a href="/mediawiki/index.php?title=Portada&amp;action=history" title="Versiones anteriores de esta página y sus autores [h]" accesskey="h">Historial</a></li>
+                                 <li id="ca-watch"><a href="/mediawiki/index.php?title=Portada&amp;action=watch" title="Añadir esta página a su lista de seguimiento [w]" accesskey="w">Vigilar</a></li>                        </ul>
+                </div>
+
+		<a name="top" id="top"></a>
+				<br /><br /><br /><br /><br />
+		<h1 class="firstHeading">Portada</h1>
+
+		<div id="bodyContent">
+
+			<h3 id="siteSub">De Enciclopedia Colaborativa de la Comunidad Canaima</h3>
+			<div id="contentSub" ></div>
+									<div id="jump-to-nav">Saltar a <a href="#column-one">navegación</a>, <a href="#searchInput">búsqueda</a></div>			<!-- start content -->
+			<div class="chiclet-especial">
+
+<p>Bienvenidos a la Enciclopedia Colaborativa de la Comunidad Canaima.
+</p><p>Aquí puedes encontrar un compendio del conocimiento colectivo construído para impulsar la socialización de todos los recursos necesarios para instalar, utilizar y contribuir con el desarrollo de Canaima GNU/Linux; además de guías referentes a documentación técnica, servicios, instalación de imágenes, entre otros.
+</p>
+</div>
+<div class="chiclet"><a href="/wiki/Imagen:Instalacion-portada.png" class="image" title="Imagen:instalacion-portada.png"><img alt="Imagen:instalacion-portada.png" src="/mediawiki/images/a/a1/Instalacion-portada.png" width="60" height="60" border="0" /></a><a href="/wiki/Instalaci%C3%B3n" title="Instalación">Instalación</a></div>
+<div class="chiclet"><a href="/wiki/Imagen:Primeros-pasos-portada.png" class="image" title="Imagen:primeros-pasos-portada.png"><img alt="Imagen:primeros-pasos-portada.png" src="/mediawiki/images/a/aa/Primeros-pasos-portada.png" width="60" height="60" border="0" /></a><a href="/wiki/Primeros_pasos" title="Primeros pasos">Primeros pasos</a></div>
+<div class="chiclet"><a href="/wiki/Imagen:Aplicaciones-portada.png" class="image" title="Imagen:aplicaciones-portada.png"><img alt="Imagen:aplicaciones-portada.png" src="/mediawiki/images/3/3c/Aplicaciones-portada.png" width="60" height="60" border="0" /></a><a href="/wiki/Aplicaciones_de_Usuarios" title="Aplicaciones de Usuarios">Aplicaciones</a></div>
+<div class="chiclet"><a href="/wiki/Imagen:Desarrollo-portada.png" class="image" title="Imagen:desarrollo-portada.png"><img alt="Imagen:desarrollo-portada.png" src="/mediawiki/images/e/e1/Desarrollo-portada.png" width="60" height="60" border="0" /></a><a href="/wiki/Programaci%C3%B3n_y_Desarrollo" title="Programación y Desarrollo">Desarrollo</a></div>
+<div class="chiclet"><a href="/wiki/Imagen:Sabores-portada.png" class="image" title="Imagen:sabores-portada.png"><img alt="Imagen:sabores-portada.png" src="/mediawiki/images/3/3c/Sabores-portada.png" width="60" height="60" border="0" /></a><a href="/wiki/Sabores_de_Canaima" title="Sabores de Canaima">Sabores</a></div>
+<div class="chiclet"><a href="/wiki/Imagen:Administracion-portada.png" class="image" title="Imagen:administracion-portada.png"><img alt="Imagen:administracion-portada.png" src="/mediawiki/images/e/e9/Administracion-portada.png" width="60" height="60" border="0" /></a><a href="/wiki/Administraci%C3%B3n_del_Sistema" title="Administración del Sistema">Administración</a></div>
+<div class="chiclet"><a href="/wiki/Imagen:Equipamiento-portada.png" class="image" title="Imagen:equipamiento-portada.png"><img alt="Imagen:equipamiento-portada.png" src="/mediawiki/images/7/7b/Equipamiento-portada.png" width="60" height="60" border="0" /></a><a href="/wiki/Equipamiento" title="Equipamiento">Equipamiento</a></div>
+
+<div class="chiclet"><a href="/wiki/Imagen:Politicas-portada.png" class="image" title="Imagen:politicas-portada.png"><img alt="Imagen:politicas-portada.png" src="/mediawiki/images/a/a3/Politicas-portada.png" width="60" height="60" border="0" /></a><a href="/wiki/Otras_Categor%C3%ADas" title="Otras Categorías">Otros</a></div>
+
+<!-- 
+NewPP limit report
+Preprocessor node count: 10/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+-->
+
+<!-- Saved in parser cache with key canaima-wiki:pcache:idhash:1468-0!1!0!!es!2!edit=0 and timestamp 20120228200327 -->
+<div class="printfooter">
+Obtenido de "<a href="http://wiki.canaima.softwarelibre.gob.ve/wiki/Portada">http://wiki.canaima.softwarelibre.gob.ve/wiki/Portada</a>"</div>
+						<!-- end content -->
+			<div class="visualClear"></div>
+		</div>
+
+	</div>
+		<div id="portal-footer">
+		<div id="footer"> 
+				<a href="/wiki/Enciclopedia_Colaborativa_de_la_Comunidad_Canaima:Pol%C3%ADtica_de_protecci%C3%B3n_de_datos" title="Enciclopedia Colaborativa de la Comunidad Canaima:Política de protección de datos">Política de protección de datos</a>&nbsp;				<a href="/wiki/Enciclopedia_Colaborativa_de_la_Comunidad_Canaima:Acerca_de" title="Enciclopedia Colaborativa de la Comunidad Canaima:Acerca de">Acerca de Enciclopedia Colaborativa de la Comunidad Canaima</a>&nbsp;				<a href="/wiki/Enciclopedia_Colaborativa_de_la_Comunidad_Canaima:Limitaci%C3%B3n_general_de_responsabilidad" title="Enciclopedia Colaborativa de la Comunidad Canaima:Limitación general de responsabilidad">Aviso legal</a>&nbsp;		</div>
+
+                             <div>El contenido está disponible bajo los términos de la <i><a href="http://www.gnu.org/licenses/old-licenses/fdl-1.2.txt" class="external " title="http://www.gnu.org/licenses/old-licenses/fdl-1.2.txt" rel="nofollow">GNU Free Documentation License 1.2</a></i></div>
+
+                             <div> Esta página fue modificada por última vez el 21:29, 1 feb 2011.</div>
+                             <div>Esta página ha sido visitada 401.294 veces.</div>
+
+		                                <div id="f-poweredbyico"><a href="http://www.mediawiki.org/"><img src="/mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" /></a></div>
+                                <div id="f-copyrightico"><a href="http://www.gnu.org/licenses/old-licenses/fdl-1.2.txt"><img src="/mediawiki/skins/common/images/gnu-fdl.png" alt='GNU Free Documentation License 1.2' /></a></div>
+	
+		</div>
+		</div>
+
+	
+		<div id="column-one">
+
+	<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script>
+
+		</div><!-- end of the left (by default at least) column -->
+		<!--<div class="visualClear"></div>-->	
+		
+<!--</div>-->
+
+		<script type="text/javascript">if (window.runOnloadHook) runOnloadHook();</script>
+<!-- Served in 0.169 secs. --><script type="text/javascript">
+$(function() {
+
+$("#menu ul").lavaLamp({
+
+	fx: "easeOutBack",
+	speed: 700
+
+});
+});
+
+</script>
+</body></html>
+
+
+{% if latest_poll_list %}
+    <ul>
+    {% for poll in latest_poll_list %}
+        <li><a href="/polls/{{ poll.id }}/">{{ poll.question }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}

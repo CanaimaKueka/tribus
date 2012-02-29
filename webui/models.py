@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
-import datetime
+from django.contrib.auth.models import User
 
 class Repository(models.Model):
     name = models.CharField(max_length=60)
@@ -19,27 +19,48 @@ class Distribution(models.Model):
     def __unicode__(self):
         return self.name
 
-# A person is a user of chamanes, that is a package maintainer
-class User(models.Model):
-    firstname = models.CharField(max_length=60)
-    lastname = models.CharField(max_length=60)
+class UserProfile(models.Model):
+    user = models.ForeignKey(User, unique=True)
     role = models.CharField(max_length=60)
     appadmin = models.BooleanField()
-    loggedin = models.BooleanField()
-    mail = models.EmailField(max_length=60)
-    uid = models.CharField(max_length=60)
+    date_promoted = models.DateField()
 
     def __unicode__(self):
 #       return u'%s %s' % (self.firstname, self.lastname)
-        return self.uid
+        return self.username
 
 class Package(models.Model):
-    maintainer = models.ForeignKey(User)
+    maintainer = models.ForeignKey(UserProfile)
     name = models.SlugField(max_length=255)
     debianversion = models.CharField(max_length=60)
     upstreamversion = models.CharField(max_length=60)
     origin = models.ForeignKey(Repository)
     branch = models.CharField(max_length=60)
+    upload_date = models.DateField()
+
+    def __unicode__(self):
+        return self.name
+
+class Ticket(models.Model):
+    title = models.CharField(max_length=255)
+    number = models.IntegerField()
+    package = models.ForeignKey(Package)
+    assigned_to = models.ForeignKey(UserProfile)
+    distro = models.ForeignKey(Distribution)
+    date_reported = models.DateField()
+    status = models.CharField(max_length=255)
+
+    def __unicode__(self):
+        return self.number
+
+class Event(models.Model):
+    title = models.CharField(max_length=255)
+    number = models.IntegerField()
+    package = models.ForeignKey(Package)
+    assigned_to = models.ForeignKey(UserProfile)
+    distro = models.ForeignKey(Distribution)
+    date_reported = models.DateField()
+    status = models.CharField(max_length=255)
 
     def __unicode__(self):
         return self.name
