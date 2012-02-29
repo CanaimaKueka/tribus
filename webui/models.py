@@ -25,6 +25,7 @@ class User(models.Model):
     lastname = models.CharField(max_length=60)
     role = models.CharField(max_length=60)
     appadmin = models.BooleanField()
+    loggedin = models.BooleanField()
     mail = models.EmailField(max_length=60)
     uid = models.CharField(max_length=60)
 
