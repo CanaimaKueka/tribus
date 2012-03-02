@@ -5,10 +5,15 @@ from webui.models import *
 def welcome(request):
     latest_tickets = Ticket.objects.all().order_by('-date_reported')[:6]
     latest_packages = Package.objects.all().order_by('-date_uploaded')[:6]
-    latest_events = Event.objects.all().order_by('-date_created')[:6]
     latest_promotions = User.objects.all().order_by('-date_promoted')[:6]
+    statistics = 'TODO'
 
-    return render_to_response('html/index.html', {'latest_poll_list': latest_poll_list})
+    return render_to_response('html/welcome.html', {
+        'latest_tickets': latest_tickets,
+        'latest_packages': latest_packages,
+        'latest_promotions': latest_promotions,
+        'statistics': statistics,
+    })
 
 def detail(request, poll_id):
     return HttpResponse("You're looking at poll %s." % poll_id)
