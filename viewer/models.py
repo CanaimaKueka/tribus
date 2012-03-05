@@ -19,6 +19,10 @@ class Distribution(models.Model):
     address = models.URLField(max_length=60)
     repos = models.ForeignKey(Repository)
     bugtracker = models.URLField(max_length=60)
+    wiki = models.URLField(max_length=60)
+    devlist = models.EmailField(max_length=60)
+    disclist = models.EmailField(max_length=60)
+    suplist = models.EmailField(max_length=60)
     
     def __unicode__(self):
         return self.name
@@ -31,7 +35,6 @@ class UserProfile(models.Model):
     date_promoted = models.DateField()
 
     def __unicode__(self):
-#       return u'%s %s' % (self.firstname, self.lastname)
         return self.username
 
 class Package(models.Model):
@@ -41,10 +44,26 @@ class Package(models.Model):
     upstreamversion = models.CharField(max_length=60)
     origin = models.ForeignKey(Repository)
     branch = models.CharField(max_length=60)
-    upload_date = models.DateField()
+    depends = models.CharField(max_length=60)
+    recommends = models.CharField(max_length=60)
+    suggests = models.CharField(max_length=60)
+    conflicts = models.CharField(max_length=60)
+    date_uploaded = models.DateField()
 
     def __unicode__(self):
         return self.name
+
+class Ticket(models.Model):
+    title = models.CharField(max_length=255)
+    number = models.IntegerField()
+    package = models.ForeignKey(Package)
+    assigned_to = models.ForeignKey(UserProfile)
+    distro = models.ForeignKey(Distribution)
+    date_reported = models.DateField()
+    status = models.CharField(max_length=255)
+
+    def __unicode__(self):
+        return self.number
 
 class Comment(models.Model):
     title = models.CharField(max_length=255)

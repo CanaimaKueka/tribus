@@ -4,7 +4,7 @@ syncdb:
 
 showsql:
 
-	@python manage.py sql webui
+	@python manage.py sql viewer
 
 runserver:
 

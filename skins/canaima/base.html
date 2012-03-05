@@ -1,0 +1,125 @@
+{% load i18n %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{ app_locale }}" lang="{{ app_locale }}" dir="ltr">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset={{ app_charset|upper }}" />
+		<link rel="shortcut icon" href="{{ app_static_url }}{{ app_skin }}/images/favicon.ico" />
+		<title>{% block title %}{{ app_name|upper }} - {{ app_desc }}{% endblock %}</title>
+		<link rel='stylesheet' type='text/css' href='{{ app_static_url }}{{ app_skin }}/css/style.css' media='screen' />
+		<script type="text/javascript" src="{{ app_static_url }}{{ app_skin }}/js/jquery.js"></script>
+		<script type="text/javascript" src="{{ app_static_url }}{{ app_skin }}/js/easing.js"></script>
+		<script type="text/javascript" src="{{ app_static_url }}{{ app_skin }}/js/lavalamp.js"></script>
+		<script type="text/javascript" src="{{ app_static_url }}{{ app_skin }}/js/validation.js"></script>
+		<script type="text/javascript" src="{{ app_static_url }}{{ app_skin }}/js/ajax.js"></script>
+		<script type="text/javascript" src="{{ app_static_url }}{{ app_skin }}/js/dom.js"></script>
+	</head>
+	<body>
+	<div id="content-wrapper">
+		<div id="toolbar">
+			<ul id="toolbar-buttons">
+				{% if user.is_authenticated %}
+				<li id="profile">
+					<a href="/profile/" title="{{ user.get_full_name }}">{{ user.get_full_name }}</a>
+				</li>
+				<li id="preferences">
+					<a href="/preferences/" title="{% trans preferences %}">{% trans preferences %}</a>
+				</li>
+				{% else %}
+				<li id="login">
+					<a href="/login/" title="{% trans 'login' %}">{% trans 'login' %}</a>
+				</li>
+				<li id="signup">
+					<a href="/signup" title="{% trans signup %}" class="new">{% trans signup %}</a>
+				</li>
+				{% endif %}
+			</ul>
+		</div>
+		<div id="header">
+			<div id="logo">
+				<a href="{{ app_url }}" title="{{ app_name }}"></a>
+			</div>
+			<form action="/search/">
+				<div id="searchform">
+					<div id="searchdesc">{% trans 'Enter your search term and press enter.' %}</div>
+						<input id="searchinput"
+							value="{% trans 'Search' %}"
+							title="{% trans 'Search' %}"
+							name="search"
+							type="text"
+							onfocus="this.value=(this.value=='{% trans 'Search' %}') ? '' : this.value;"
+							onblur="this.value=(this.value=='') ? '{% trans 'Search' %}' : this.value;" />
+						<input type='submit' class="hidden" name="go" id="searchbutton" value="Ir" />
+					</div>
+				</form>
+			</div>
+
+			<img src="{{ app_static_url }}{{ app_skin }}/images/banner.jpg" />
+
+			<div id="menu">
+				<ul id="navigation">
+					{% for menu in menu_list %}
+					<li>
+						<a href="{{ menu.url }}">{{ menu.name }}</a>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+
+			<div id="content">
+				<div id="actions" class="">
+					<ul>
+						{% for action in action_list %}
+						<li>
+							<a href="{{ action.url }}">{{ action.name }}</a>
+						</li>
+						{% endfor %}
+					</ul>
+                		</div>
+				<div id="real-content">
+					{% block content %}
+					<div id="intro">
+						<p>Bienvenidos a la Enciclopedia Colaborativa de la Comunidad Canaima.</p>
+					</div>
+
+					<div class="chiclet">
+						<a href="#" class="image" title="#">
+							<img alt="#" src="#" width="60" height="60" border="0" />
+						</a>
+						<a href="#" title="#">#</a>
+					</div>
+					<div class="chiclet">
+						<a href="#" class="image" title="#">
+							<img alt="#" src="#" width="60" height="60" border="0" />
+						</a>
+						<a href="#" title="#">#</a>
+					</div>
+					<div class="chiclet">
+						<a href="#" class="image" title="#">
+							<img alt="#" src="#" width="60" height="60" border="0" />
+						</a>
+						<a href="#" title="#">#</a>
+					</div>
+					<div class="chiclet">
+						<a href="#" class="image" title="#">
+							<img alt="#" src="#" width="60" height="60" border="0" />
+						</a>
+						<a href="#" title="#">#</a>
+					</div>
+					<div class="chiclet">
+						<a href="#" class="image" title="#">
+							<img alt="#" src="#" width="60" height="60" border="0" />
+						</a>
+						<a href="#" title="#">#</a>
+					</div>
+					{% endblock %}
+				</div>
+			</div>
+			<div id="footer">
+				<div id="footlinks"> 
+					<a href="#" title="">Hola</a>&nbsp;
+				</div>
+				<div>Vengo a flotar</div>
+			</div>
+	</div>
+	</body>
+</html>
