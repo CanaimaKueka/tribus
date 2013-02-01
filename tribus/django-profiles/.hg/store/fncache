@@ -1,0 +1,14 @@
+data/setup.py.i
+data/INSTALL.txt.i
+data/README.txt.i
+data/profiles/urls.py.i
+data/profiles/__init__.py.i
+data/docs/views.txt.i
+data/CHANGELOG.txt.i
+data/LICENSE.txt.i
+data/.hgignore.i
+data/.hgtags.i
+data/MANIFEST.in.i
+data/docs/overview.txt.i
+data/profiles/utils.py.i
+data/profiles/views.py.i

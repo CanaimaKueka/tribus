@@ -1,0 +1,6 @@
+include LICENSE CHANGELOG
+recursive-include postman/locale *.po *.mo
+recursive-include postman/static *
+recursive-include postman/templates *.html *.txt
+graft docs
+prune docs/_build
