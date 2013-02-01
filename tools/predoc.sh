@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # ====================================================================
-# PACKAGE: aguilas
+# PACKAGE: tribus
 # FILE: tools/predoc.sh
 # DESCRIPTION:	build: Replaces @@DATA@@ tokens with correct values
 #		on documentation and generates proper output files.
@@ -37,8 +37,8 @@ SUBS="AUTHOR DATE VERSION URL DESCRIPTION DESCRIPTIONLINES COMMONINTRO RSTLIST L
 AUTHOR="Luis Alejandro Martínez Faneyth"
 DATE=$( date +%d-%m-%Y )
 VERSION=$( cat ${VERSIONFILE} | grep "VERSION = " | sed 's/VERSION = //g;s/+.*//g' )
-URL="http://code.google.com/p/aguilas"
-DESCRIPTION="A web-based LDAP user management system"
+URL="http://code.google.com/p/tribus"
+DESCRIPTION="An application to manage FOSS communities"
 DESCRIPTIONLINES="---------------------------------------"
 COMMONINTRO=$( cat ${DOCDIR}/common.index.in | sed ':a;N;$!ba;s/\n/______/g' )
 RSTLIST=$( ls ${RESTDIR}/*.rest | sed "s|${RESTDIR}/|@@@@@@|g" | sed ':a;N;$!ba;s|\n||g' )

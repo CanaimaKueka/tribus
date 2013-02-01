@@ -1,0 +1,125 @@
+#! /bin/bash -e
+#
+# ====================================================================
+# PACKAGE: aguilas
+# FILE: debian/postrm
+# DESCRIPTION: Removes/purges conffiles after package uninstallation
+# USAGE: Executes automatically after package uninstallation
+# COPYRIGHT:
+# (C) 2012 Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>
+# LICENCE: GPL3
+# ====================================================================
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# COPYING file for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+# CODE IS POETRY
+
+. /usr/share/debconf/confmodule
+db_version 2.0
+
+ACTION="${1}"
+VERSION="${2}"
+
+if [ "${AGUILASDEBUG}" == "true" ]; then
+	set -x
+fi
+
+if [ "${ACTION}" == "remove" ] || [ "${ACTION}" == "purge" ]; then
+
+	if [ -f /usr/share/dbconfig-common/dpkg/postrm.mysql ]; then
+		. /usr/share/dbconfig-common/dpkg/postrm.mysql
+
+		if [ "${AGUILASDEBUG}" == "true" ]; then
+			dbc_debug=1
+		fi
+
+		if ! dbc_go aguilas $@ ; then
+			echo 'Automatic configuration using dbconfig-common failed!'
+		fi
+	fi
+
+	db_get aguilas/reconfigure-webserver || true
+	WEBSERVER="${RET}"
+
+	db_get aguilas/restart-webserver || true
+	RESTART="${RET}"
+
+	for WEBSERVER in ${WEBSERVERS}; do
+
+		WEBSERVER=${WEBSERVER%,}
+		test -x /usr/sbin/${WEBSERVER} || continue
+
+		case "${WEBSERVER}" in
+			lighttpd)
+				if [ -f /etc/lighttpd/conf-available/50-aguilas.conf ]; then
+					if which lighty-disable-mod >/dev/null 2>&1; then
+						lighty-disable-mod aguilas
+						rm -rf /etc/lighttpd/conf-available/50-aguilas.conf
+					else
+						echo "Lighttpd not installed, skipping"
+					fi
+				fi
+
+				if [ -h /etc/lighttpd/conf-enabled/50-aguilas.conf ] ; then
+					rm -rf /etc/lighttpd/conf-enabled/50-aguilas.conf
+				fi
+			;;
+
+			apache2)
+				if [ -d /etc/${WEBSERVER}/conf.d ] && [ -e /etc/${WEBSERVER}/conf.d/aguilas.conf ]; then
+					rm -rf /etc/${WEBSERVER}/conf.d/aguilas.conf
+				fi
+			;;
+		esac
+
+		if [ "${RESTART}" == "true" ]; then
+			if [ -x /usr/sbin/invoke-rc.d ]; then
+				invoke-rc.d ${WEBSERVER} restart 3>/dev/null || true
+			else
+				/etc/init.d/${WEBSERVER} restart 3>/dev/null || true
+			fi
+		fi
+	done
+fi
+
+if [ "${ACTION}" == "purge" ]; then
+
+	for ext in '~' '%' .bak .ucf-new .ucf-old .ucf-dist;  do
+		rm -rf /etc/aguilas/config.php$ext
+	done
+
+	rm -rf /etc/aguilas
+	rm -rf /var/log/aguilas
+	rm -rf /usr/share/aguilas
+
+	if which ucf >/dev/null; then
+		ucf --debconf-ok --purge /etc/aguilas/config.php
+		ucf --debconf-ok --purge /etc/aguilas/apache.conf
+		ucf --debconf-ok --purge /etc/aguilas/lighttpd.conf
+		ucf --debconf-ok --purge /etc/aguilas/dbconfig-common.php
+	fi
+
+	if which ucfr >/dev/null; then
+		ucfr --purge aguilas /etc/aguilas/config.php
+		ucfr --purge aguilas /etc/aguilas/apache.conf
+		ucfr --purge aguilas /etc/aguilas/lighttpd.conf
+		ucfr --purge aguilas /etc/aguilas/dbconfig-common.php
+	fi
+fi
+
+#DEBHELPER#
+
+db_stop || true
+
+exit 0
