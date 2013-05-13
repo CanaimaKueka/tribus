@@ -1,0 +1,15 @@
+[Desktop Entry]
+Name=Manual de Canaima Semilla
+Name[es_VE]=Manual de Canaima Semilla
+GenericName=Manual de Canaima Semilla
+GenericName[es_VE]=Manual de Canaima Semilla
+Comment=Abre de Canaima Semilla
+Comment[es_VE]=Abre de Canaima Semilla
+Exec=manual-canaima-semilla
+Terminal=false
+Type=Application
+StartupNotify=true
+Icon=/usr/share/icons/canaima-iconos/categories/scalable/applications-other.svg
+Categories=GTK;Development;IDE;
+X-GNOME-FullName=Manual de Canaima Semilla
+X-GNOME-FullName[es]=Manual de Canaima Semilla

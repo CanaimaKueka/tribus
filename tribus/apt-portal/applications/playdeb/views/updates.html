@@ -1,0 +1,129 @@
+    ## -*- coding: utf-8 -*-
+<%inherit file="base.html"/>
+<%def name="page_head()">
+<script type="text/javascript">
+(function() {
+var s = document.createElement('SCRIPT'), s1 = document.getElementsByTagName('SCRIPT')[0];
+s.type = 'text/javascript';
+s.async = true;
+s.src = 'http://widgets.digg.com/buttons.js';
+s1.parentNode.insertBefore(s, s1);
+})();
+</script>
+    %if not q:
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="${search_str}format=xml" />
+    %endif
+	<link rel="stylesheet" href="/css/updates.css" type="text/css" media="screen" />    	
+	<link rel="stylesheet" href="/css/jquery.rating.css" type="text/css" media="screen" />	
+	<script type="text/javascript" src="/js/shadowbox-2.0.js"></script>
+	<script type="text/javascript" src="/js/jquery.rating.pack.js"></script>
+	<script type="text/javascript" src="/js/page.updates.js"></script>
+	<!-- we need cookie for the infobox handler -->
+	<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+	<script type="text/javascript" src="/js/infobox.js"></script>
+	<!-- infobox js -->
+</%def>
+<%def name="title()">
+${_("Updates for Ubuntu ")}${updates_release}\
+% if category:
+ (${category.name})
+% endif
+</%def>
+<%def name="body()">
+% if page == 1:
+			<%include file="how_to_install.html"/>
+% endif			
+			<!--start top navigation -->
+			<div class="navigate">
+% if page > 2:
+				<a href="${search_str}page=1" class="first" title="First Page"></a>
+% endif
+% if page > 1:				
+				<a href="${search_str}page=${page - 1}" class="prev" title="Back 1 Page"></a>				
+% endif
+				<div id="search_content">
+				<ul id="genre" class="drop_down">
+						<li>
+							<a href="#" id="search_genre">Release</a>
+							<ul>														
+% for rel  in ['12.10', '12.04', '11.10', '11.04', '10.10', '10.04', '9.10']:
+								<li><a class="release_set" id="release_${rel}" href="${base_url}/updates/Ubuntu/${rel}/">Ubuntu ${rel}</a></li>
+% endfor
+							</ul>
+						</li>
+				</ul>					
+					<ul id="genre" class="drop_down">
+						<li>
+							<a href="#" id="search_genre">Genre</a>
+							<ul>							
+% for category in categories:
+								<li><a href="${base_url}/updates/Ubuntu/${updates_release}/?category=${category.name|u}">${category.name}</a></li>
+% endfor								
+							</ul>
+						</li>
+					</ul>
+				</div>
+
+% if page < page_count - 1:
+				<a href="${search_str}page=${page_count}" class="last" title="Last Page"></a>
+% endif
+% if page < page_count:				
+				<a href="${search_str}page=${page + 1}" class="next" title="Forward 1 Page"></a>
+% else:
+				<br/>
+% endif
+			</div>
+			<!-- end top navigation -->
+			<br style="clear:both;" />
+
+% for app in applications_list:
+	<%include file="game_info.html" args="app=app, package=package_dict[app.id], available_for=available_for[app.id]"  />
+% endfor
+			<div class="navigate">
+% if page > 2:
+				<a href="${search_str}page=1" class="first" title="First Page"></a>
+% endif
+% if page > 1:		
+				<a href="${search_str}page=${page - 1}" class="prev" title="Back 1 Page"></a>				
+% endif
+% if len(applications_list) == 0:
+<p>No packages available for the selected criteria.</p>
+% endif
+	<p id="page_numbers">
+% if page_count > 1:
+<%
+	paging_start = page - 10
+	paging_end = page + 10
+	if paging_start < 1:
+		paging_start = 1
+	if paging_end > page_count + 1:
+		paging_end = page_count + 1
+%>
+%	for n in range(paging_start, paging_end):
+	<a href="${search_str}page=${n}"
+% if n == page:
+	class="highlight"
+% endif
+	>${n}</a> 
+%	endfor
+% endif
+	</p>
+% if page < page_count - 1:
+				<a href="${search_str}page=${page_count}" class="last" title="Last Page"></a>
+% endif	
+% if page < page_count:					
+				<a href="${search_str}page=${page + 1}" class="next" title="Forward 1 Page"></a>
+% endif				
+			</div>
+			<br style="clear:both;" />
+<script type="text/javascript">
+(function() {
+var s = document.createElement('SCRIPT'), s1 = document.getElementsByTagName('SCRIPT')[0];
+s.type = 'text/javascript';
+s.async = true;
+s.src = 'http://widgets.digg.com/buttons.js';
+s1.parentNode.insertBefore(s, s1);
+})();
+</script>			
+</%def>
+

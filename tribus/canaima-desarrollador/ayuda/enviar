@@ -1,0 +1,28 @@
+Documentación para el Ayudante "enviar" de Canaima Desarrollador
+
+Éste ayudante te permite enviar los cambios realizados al repositorio remoto especificado en las configuraciones personales, mediante el uso de la acción git push.
+
+Éste ayudante se encarga además de realizar las siguientes operaciones por ti:
+
+  - Verifica la existencia de la rama git "upstream". En caso de no encontrarla, la crea.
+  - Verifica la existencia de la rama git "master". En caso de no encontrarla, la crea.
+  - Verifica la existencia de todos los elementos necesarios para ejecutar la acción git push (carpetas, variables de entorno, entre otros). En caso de encontrar algún error, aborta e informa.
+  - Configura el repositorio remoto para el proyecto, de acuerdo a los parámetros establecidos en ~/.config/canaima-desarrollador/usuario.conf
+    
+Uso:
+
+  canaima-desarrollador enviar --directorio="nombre-X.Y+Z" [--ayuda]
+  c-d enviar --directorio="nombre-X.Y+Z" [--ayuda]
+
+Parámetros:
+
+  --directorio
+	Nombre de la carpeta dentro del directorio del desarrollador a la que se quiere hacer push.
+
+  --ayuda
+	Muestra ésta ayuda.
+
+Para mayor información, puedes recurrir a la entrada del manual para canaima-desarrollador (man canaima-desarrollador).
+
+Contacto: desarrolladores@canaima.softwarelibre.gob.ve
+

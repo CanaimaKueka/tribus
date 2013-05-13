@@ -1,0 +1,8 @@
+file
+imagemagick
+librsvg2-bin
+syslinux
+debootstrap
+live-build
+locales
+lsb-release

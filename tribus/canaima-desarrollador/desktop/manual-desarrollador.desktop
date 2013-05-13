@@ -1,0 +1,17 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Name=Manual del Desarrollador
+Name[es_VE]=Manual del Desarrollador
+GenericName=Manual del Desarrollador
+GenericName[es_VE]=Manual del Desarrollador
+Comment=Abre el Manual del Desarrollador
+Comment[es_VE]=Abre el Manual del Desarrollador
+Exec=manual-desarrollador
+Terminal=false
+Type=Application
+StartupNotify=true
+Icon=/usr/share/icons/canaima-iconos/categories/scalable/applications-other.svg
+Categories=GTK;Development;IDE;
+X-GNOME-FullName=Manual del Desarrollador
+X-GNOME-FullName[es]=Manual del Desarrollador

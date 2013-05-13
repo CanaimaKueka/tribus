@@ -32,11 +32,13 @@ LDAPSERVER="${3}"
 LDAPBASE="${4}"
 
 echo "\nGetting all entries ..." | tee ${TMP}
-ENTRIES=$( ldapsearch -x -w ${LDAPPASS} -D "${LDAPWRITER}" -h ${LDAPSERVER} -b ${LDAPBASE} -LLL "(uid=*)" | perl -p00e 's/\r?\n //g' | grep "dn: "| sed 's/dn: //g' | sed 's/ /_@_/g' )
+ENTRIES=$( ldapsearch -x -w ${LDAPPASS} -D "${LDAPWRITER}" -h ${LDAPSERVER} -b ${LDAPBASE} -LLL "(cn=*)" | perl -p00e 's/\r?\n //g' | grep "dn: "| sed 's/dn: //g' | sed 's/ /_@_/g' )
 
 for ENTRY in ${ENTRIES}; do
 	echo ${ENTRY} | tee ${TMP}
 done
+
+exit 0
 
 echo "\nGetting entries without sn ..." | tee ${TMP}
 ENTRIES=$( ldapsearch -x -w ${LDAPPASS} -D "${LDAPWRITER}" -h ${LDAPSERVER} -b ${LDAPBASE} -LLL "(!(sn=*))" | perl -p00e 's/\r?\n //g' | grep "dn: "| sed 's/dn: //g' | sed 's/ /_@_/g' )

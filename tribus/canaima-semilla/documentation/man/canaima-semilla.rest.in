@@ -1,0 +1,22 @@
+===================
+**Canaima Semilla**
+===================
+
+@@DESCRIPTIONLINES@@
+@@DESCRIPTION@@
+@@DESCRIPTIONLINES@@
+
+:Author: @@AUTHOR@@
+:Date:   @@DATE@@
+:Copyright: GPL-3
+:Version: @@VERSION@@
+:Manual section: 1
+:Manual group: Development
+:Tags: live-build, iso, debian, canaima, development
+:Support: @@URL@@
+:Summary: @@DESCRIPTION@@
+
+**DESCRIPTION**
+===============
+
+@@COMMONINTRO@@

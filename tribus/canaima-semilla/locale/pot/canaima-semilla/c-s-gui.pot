@@ -1,0 +1,617 @@
+# Plantilla de Traducción para Canaima Semilla.
+# Copyright (C) 2013 Luis Alejandro Martínez Faneyth
+# This file is distributed under the same license as the Canaima Semilla package.
+#
+# Translators:
+# Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>, 2013
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Canaima Semilla 3.0\n"
+"Report-Msgid-Bugs-To: desarrolladores@canaima.softwarelibre.gob.ve\n"
+"POT-Creation-Date: 2013-04-29 13:40-0430\n"
+"PO-Revision-Date: 2013-04-29 13:40-0430\n"
+"Last-Translator: Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>\n"
+"Language-Team: Equipo de Traducción de Canaima Semilla <desarrolladores@canaima.softwarelibre.gob.ve>\n"
+"Language: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../canaimasemilla/translator.py:152
+msgid "Al incluir el instalador Debian en la imagen, se agregará una opción de instalación en el menú de presentación de la imagen que permitirá instalar a través del debian-installer."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:168
+msgid "Archivo de imagen PNG"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:56
+msgid "Arquitectura de procesadores con soporte para 32 bits [Recomendado]."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:55
+msgid "Arquitectura de procesadores con soporte para 64 bits."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:112
+#: ../../../canaimasemilla/translator.py:125
+msgid "Arquitecturas soportadas no encontradas"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:99
+msgid "Cada Metadistribución tiene secciones del repositorio particulares. Seleccione segun su conveniencia."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:43
+msgid "Canaima Semilla debe ser ejecutado con permisos de superusuario."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:47
+msgid "Canaima Semilla: Módulo de Construcción de Imágenes"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:74
+msgid "Canaima Semilla: Módulo de Creación de Perfiles"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:177
+msgid "Canaima Semilla: Módulo de Emulación de Imágenes"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:199
+msgid "Canaima Semilla: Módulo de Grabación de Imágenes"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:167
+msgid "Carpetas"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:67
+msgid "Completado"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:36
+msgid "Construir imagen"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:71
+msgid "Construyendo imagen ..."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:40
+msgid "Crea una imagen de un Sistema Operativo construido en base a un perfil."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:59
+#: ../../../canaimasemilla/translator.py:61
+#: ../../../canaimasemilla/translator.py:63
+msgid "Creación de imagen"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:162
+#: ../../../canaimasemilla/translator.py:164
+msgid "Creación de perfil"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:35
+msgid "Crear perfil"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:83
+msgid "Debe introducir el nombre con el que desea identificar la distribución derivada que está creando, en minúsculas y sin espacios."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:87
+msgid "Debe introducir el nombre de la persona o grupo responsable de la creación y mantenimiento del sabor."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:89
+msgid "Debe introducir un correo electrónico válido para contacto de la persona o grupo responsable de la creación y mantenimiento del sabor."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:101
+msgid "Debe seleccionar de la lista el idioma que vendrá configurado en la imagen resultante."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:192
+msgid "Deseo formatear el disco duro virtual con el siguiente tamaño de disco (GB)."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:151
+msgid "Deseo incluir el instalador Debian (opcional)."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:116
+msgid "Deseo incluir repositorios adicionales (opcional)."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:117
+msgid "Dirección URL"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:123
+msgid "Direción no válida"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:76
+msgid "Distribución"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:49
+msgid "El formato que elija determinará el tipo de dispositivo en donde podrá grabar la imagen una vez construída."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:172
+msgid "El nombre de perfil seleccionado ya se encuentra en uso. Por favor selecciona otro y vuelve a intentarlo."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:171
+msgid "El perfil ya existe"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:111
+#: ../../../canaimasemilla/translator.py:124
+msgid "El soporte para arquitectura i386 y/o amd64 se encuentra vacío.{0}Debes seleccionar las arquitecturas soportadas para poder realizar la validación de los repositorios y paquetes que se incluirán dentro de la imagen instalable."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:193
+#: ../../../canaimasemilla/translator.py:195
+msgid "Emulación de Imagen"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:201
+msgid "En la lista se muestran los dispositivos ópticos y usb que se encuentran aptos y disponibles en su equipo para la grabación de imágenes instalables."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:214
+msgid "Error de grabación"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:44
+msgid "Error de permisología"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:169
+msgid "Error desconocido"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:109
+msgid "Error en la validación de paquetes"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:65
+msgid "Error validando repositorios"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:213
+msgid "Estamos grabando su imagen, espere un momento ..."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:85
+msgid "Estas serán las arquitecturas disponibles para la construcción de imágenes basadas en el perfil de este nuevo sabor. Las arquitecturas que seleccione serán utilizadas para validar paquetes y repositorios."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:34
+msgid "Generador de Distribuciones Derivadas"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:208
+#: ../../../canaimasemilla/translator.py:210
+msgid "Grabación de Imagen"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:216
+msgid "Grabación exitosa"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:212
+msgid "Grabando"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:38
+msgid "Grabar imagen"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:170
+msgid "Ha ocurrido un error desconocido durante la copia de los archivos al nuevo perfil. Por favor revisa los datos introducidos y vuelve a intentarlo."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:215
+msgid "Ha ocurrido un error desconocido durante la grabación de la imagen en el dispositivo seleccionado. Por favor revisa los datos introducidos y vuelve a intentarlo."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:66
+msgid "Ha ocurrido un error mientras se intentaba comprobar la existencia de los repositorios especificados.{0}Por favor verifica que estás conectado a internet o que la ruta es la correcta."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:70
+msgid "Ha ocurrido un error mientras se realizaba la construcción de la imagen."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:75
+msgid "Identificación"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:52
+msgid "Imagen mixta para dispositivos variados (CD/DVD/USB) [Recomendado]."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:51
+msgid "Imagen para dispositivos de almacenamiento extraíble (USB)."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:50
+msgid "Imagen para dispositivos ópticos de almacenamiento (CD/DVD)."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:183
+#: ../../../canaimasemilla/translator.py:207
+msgid "Imágenes ISO"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:80
+msgid "Inclusiones"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:188
+msgid "Indique desde donde desea iniciar la prueba:"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:184
+msgid "Indique la cantidad de memoria RAM (MB) que desea asignar:"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:186
+msgid "Indique la cantidad de procesadores que desea asignar:"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:39
+msgid "Inicia un asistente que permite construir un perfil para una nueva distribución derivada."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:42
+msgid "Inicia un asistente que permite grabar una imagen en un dispositivo de almacenamiento."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:41
+msgid "Inicia un emulador que permite ejecutar el Sistema Operativo contenido en una imagen."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:191
+msgid "Iniciar desde el disco duro virtual."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:190
+msgid "Iniciar desde la imagen seleccionada."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:78
+msgid "Instalador"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:88
+msgid "Introduzca el correo electrónico de la persona o grupo responsable:"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:96
+msgid "Introduzca el espejo del repositorio a utilizar:"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:86
+msgid "Introduzca el nombre de la persona o grupo responsable:"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:82
+msgid "Introduzca el nombre del sabor a crear:"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:102
+msgid "Introduzca los paquetes que conformarán el Sistema Operativo:"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:140
+msgid "Introduzca los paquetes que se incluirán en el repositorio interno de la imagen (opcional):"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:90
+msgid "Introduzca una dirección web para la persona o grupo responsable:"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:122
+msgid "La dirección URL \"{0}\" es inválida.{1}Comprueba que has introducido correctamente los datos y vuelve a intentarlo."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:141
+msgid "Los paquetes acá listados se incluirán en el repositorio interno de la imagen, con el propósito de que estén disponibles para otros procesos posteriores (como por ejemplo instaladores o configuradores)."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:103
+msgid "Los paquetes que se listen acá deben estar presentes en el espejo de la Metadistribución seleccionada o en los repositorios adicionales. Deben incluirse los componentes escenciales de un Sistema Operativo para poder generar una imagen funcional."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:115
+msgid "Los repositorios adicionales permiten agregar software no oficial o desarrollado localmente a la imagen en construcción. Introduzca la dirección web, la rama y las secciones (separadas por espacios) correspondientes al repositorio."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:110
+msgid "No se ha encontrado el paquete \"{0}\" dentro de los repositorios provistos."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:77
+msgid "Paquetes"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:104
+#: ../../../canaimasemilla/translator.py:142
+msgid "Paquetes (separados por espacios)"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:173
+msgid "Perfil creado"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:37
+msgid "Probar imagen"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:203
+msgid "Puede escoger imágenes ISO o IMG que estén aptas para la grabación en dispositivos de almacenamiento. Si usted hizo una imagen con Canaima Semilla, puede seleccionarla por acá."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:187
+msgid "Puede indicar la cantidad de procesadores asignados a este proceso, según la disponibilidad de su computador."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:185
+msgid "Puede indicar la memoria en un rango comprendido entre la mínima necesaria y el máximo disponible en su computador."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:189
+msgid "Puede iniciar desde la imagen para instalar o probar el modo \"live\" o desde el disco duro virtual para comprobar si el sistema operativo ha instalado correctamente."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:91
+msgid "Puede introducir una dirección web de referencia para mayor información acerca del sabor."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:179
+msgid "Puede seleccionar cualquier imagen que contenga un sistema operativo instalable."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:58
+msgid "Puede seleccionar un perfil existente o crear uno nuevo a través del menú de entrada."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:144
+msgid "Puede seleccionar una carpeta que contenga la estructura de directorios y archivos que desea incluir directamente en la imagen. Debe incluir los directorios en el mismo orden jerárquico que quiere que aparezcan."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:129
+msgid "Puede seleccionar una carpeta que contenga la estructura de directorios y archivos que desea incluir en el Sistema Operativo de la imagen. Debe incluir los directorios en el mismo orden jerárquico que quiere que aparezcan."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:133
+msgid "Puede seleccionar una carpeta que contenga scripts de shell (sh/bash) que necesite ejecutar durante la construcción del Sistema Operativo que va a ser incluído en la imagen."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:148
+msgid "Puede seleccionar una carpeta que contenga scripts de shell (sh/bash) que necesite ejecutar durante la generación de la imagen."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:137
+msgid "Puede selecionar una imagen PNG de no más de 800 por 600 pixeles de tamaño para mostrar en el fondo del menú (syslinux) de presentación de la imagen."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:97
+msgid "Puede utilizar el espejo del repositorio de la Metadistribución que más le convenga. Se recomienda la utilización de un espejo local para mayor rapidez. Si no está seguro, deje el valor por defecto."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:118
+msgid "Rama"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:114
+#: ../../../canaimasemilla/translator.py:127
+msgid "Repositorio inexistente o inconsistente"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:79
+msgid "Repositorios"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:69
+msgid "Se ha interrumpido la construcción"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:119
+msgid "Secciones"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:181
+msgid "Seleccion una imagen ISO"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:202
+msgid "Seleccione el archivo de imagen que desea grabar:"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:156
+msgid "Seleccione el archivo de presembrado (preseed) para el instalador Debian:"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:159
+msgid "Seleccione el archivo de temas GTK (gtkrc) para el instalador Debian:"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:153
+msgid "Seleccione el banner para el instalador Debian (800x75px, PNG):"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:48
+msgid "Seleccione el formato de archivo de la imagen:"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:100
+msgid "Seleccione el idioma predeterminado del Sistema Operativo:"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:94
+msgid "Seleccione el nombre código de la Metadistribución:"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:57
+msgid "Seleccione el perfil del sistema operativo a incluir en la imagen:"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:53
+msgid "Seleccione el tipo de arquitectura de la imagen:"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:92
+msgid "Seleccione la Metadistribución base de sabor:"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:93
+#: ../../../canaimasemilla/translator.py:95
+msgid "Seleccione la Metadistribución que será la base del sabor en construcción."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:136
+msgid "Seleccione la imagen de arranque o portada para la imagen (opcional):"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:178
+msgid "Seleccione la imagen que desea probar:"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:84
+msgid "Seleccione las arquitecturas habilitadas para el sabor:"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:128
+msgid "Seleccione las inclusiones de Sistema Operativo (opcional):"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:143
+msgid "Seleccione las inclusiones de imagen (opcional):"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:98
+msgid "Seleccione las secciones que estarán disponibles:"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:132
+msgid "Seleccione los scripts o \"ganchos\" de Sistema Operativo (opcional):"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:147
+msgid "Seleccione los scripts o \"ganchos\" de imagen (opcional):"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:200
+msgid "Seleccione o introduzca el dispositivo donde desea grabar la imagen:"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:158
+#: ../../../canaimasemilla/translator.py:161
+msgid "Seleccione un archivo"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:131
+#: ../../../canaimasemilla/translator.py:135
+#: ../../../canaimasemilla/translator.py:146
+#: ../../../canaimasemilla/translator.py:150
+msgid "Seleccione una carpeta"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:139
+#: ../../../canaimasemilla/translator.py:155
+msgid "Seleccione una imagen"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:205
+msgid "Seleccione una imagen instalable"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:54
+msgid "Tenga en cuenta que algunas arquitecturas funcionan en ciertos tipos de computadores y otras no funcionan."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:62
+msgid "Todo está preparado para comenzar a construir la imagen.{0}Presione aceptar para continuar o cancelar para volver a la pantalla anterior."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:196
+msgid "Todo está preparado para comenzar la emulación de la imagen.{0}Presione aceptar para continuar o cancelar para volver a la pantalla anterior."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:165
+msgid "Todo está preparado para crear el nuevo perfil.{0}Presione aceptar para continuar o cancelar para volver a la pantalla anterior."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:211
+msgid "Todo está preparado para la grabación de la imagen.{0}Presione aceptar para continuar o cancelar para volver a la pantalla anterior."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:166
+#: ../../../canaimasemilla/translator.py:182
+#: ../../../canaimasemilla/translator.py:206
+msgid "Todos los archivos"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:105
+#: ../../../canaimasemilla/translator.py:107
+msgid "Validación de paquetes"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:120
+msgid "Validación de repositorios"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:108
+msgid "Validando presencia del paquete \"{0}\" dentro{1}del repositorio principal y repositorios adicionales ..."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:64
+#: ../../../canaimasemilla/translator.py:106
+#: ../../../canaimasemilla/translator.py:121
+msgid "Validando sección \"{0}\" de la rama \"{1}\"{2}para el repositorio \"{3}\" ({4})"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:81
+msgid "Varios"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:113
+#: ../../../canaimasemilla/translator.py:126
+msgid "{0}{1}Ha ocurrido un error mientras se intentaba comprobar la existencia de los repositorios especificados.{2}Por favor verifica que estás conectado a internet o que los datos proporcionados son correctos."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:68
+msgid "¡Felicidades! La generación de la imagen se ha completado satisfactoriamente."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:217
+msgid "¡Felicidades! Su imagen ha sido grabada exitosamente."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:174
+msgid "¡Felicidades! Su perfil ha sido creado."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:60
+msgid "¿Está seguro que desea cancelar la creación de la imagen?{0}Presione aceptar para interrumpir la creación de la imagen o cancelar para continuar con el proceso."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:163
+msgid "¿Está seguro que desea cancelar la creación del perfil?{0}Presione aceptar para interrumpir la creación del perfil o cancelar para continuar con el proceso."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:194
+msgid "¿Está seguro que desea cancelar la emulación de la imagen?{0}Presione aceptar para interrumpir la emulación de la imagen o cancelar para continuar con el proceso."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:209
+msgid "¿Está seguro que desea cancelar la grabación de la imagen?{0}Presione aceptar para interrumpir la grabación de la imagen o cancelar para continuar con el proceso."
+msgstr ""

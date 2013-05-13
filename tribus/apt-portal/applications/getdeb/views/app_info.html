@@ -1,0 +1,30 @@
+## -*- coding: utf-8 -*-
+<%page args="app, package, available_for"/>
+<!-- app -->
+<div class="app">	
+	<class="app_name"><a class="app_name" href="${base_url}/software/${app.name}" name="${package.package}" title="${app.name} - ${package.version|h}">${app.name|h} ${package.version|h}</a>
+	<div class="left">
+		<a href="${media_base_url}/media/screens/${app.id}/${app.id}.png" rel="shadowbox[image]" class="thumb_link"><img src="${media_base_url}/media/screens/${app.id}/${app.id}_t.png" alt="" class="thumb" /></a>
+		<a href="${base_url}/install/${package.package | u}/${package.version| u}" target="_blank" rel="nofollow" class="install_now" title="Install the latest version of this software!">Install this now</a>
+	</div>
+	<div class="details">
+		<div class="short_description">${package.description|h}</div>
+		 <div class="description">${app.descr | html_lines}</div>
+		<!-- available for -->
+		<h3 class="available_for">Available for Ubuntu: 
+		${', '.join(available_for)}		
+		</h3>
+		<!-- end available for -->		
+		<h3 class="more_links">
+% if app.video_link:
+		<a href="${app.video_link}&amp;autoplay=1" rel="shadowbox[video];width=580;height=520" title="${app.name}" class="video">Watch Video</a> |
+% endif
+		<a href="${app.homepage}" title="${app.name}" target="_blank" class="homepage">Homepage</a> 
+		| License: ${app.license}
+        | <a class="DiggThisButton DiggCompact" href="http://digg.com/submit?url=${base_url|u}/software/${app.name|u}&amp;title=${app.name|u}%20${package.version.split('-')[0]|u}%20available%20for%20Ubuntu"></a>		
+		</h3>
+		<h3 class="updated">
+		Updated: ${package.last_modified} | <A HREF="http://archive.getdeb.net/ubuntu/rpool/apps/${changelogs_dict[app.id]}">Changes</A>		
+	</div>
+</div>
+<!-- end app -->

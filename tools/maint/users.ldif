@@ -1,0 +1,37 @@
+dn: uid=maria,dc=ejemplo,dc=com
+givenName: María Virginia
+sn: Mendez Barraza
+cn: María Virginia Mendez Barraza
+uid: maria
+mail: mvmendezb@gmail.com
+uidNumber: 10
+gidNumber: 2000
+userPassword: 123456
+homeDirectory: /home/maria/
+ObjectClass: inetOrgPerson
+ObjectClass: posixAccount
+ObjectClass: top
+ObjectClass: person
+ObjectClass: shadowAccount
+ObjectClass: organizationalPerson
+loginShell: /bin/false
+description: Tribus
+
+dn: uid=luis,dc=ejemplo,dc=com
+givenName: Luis Alejandro
+sn: Martínez Faneyth
+cn: Luis Alejandro Martínez Faneyth
+uid: luis
+mail: luis@huntingbears.com.ve
+uidNumber: 11
+gidNumber: 2000
+userPassword: 654321
+homeDirectory: /home/luis/
+ObjectClass: inetOrgPerson
+ObjectClass: posixAccount
+ObjectClass: top
+ObjectClass: person
+ObjectClass: shadowAccount
+ObjectClass: organizationalPerson
+loginShell: /bin/false
+description: Tribus

@@ -1,0 +1,93 @@
+#!/usr/bin/python
+#
+#	Copyright (C) 2009  Joao Pinto- Adapted for getdeb
+# Original:
+# 
+#   update-maintainer - this script is used to update the Maintainer field of an
+#                       Ubuntu package, as approved by the Ubuntu Technical
+#                       Board at:
+#
+#       https://lists.ubuntu.com/archives/ubuntu-devel/2009-May/028213.html
+#
+#   Copyright (C) 2009 Jonathan Davies <jpds@ubuntu.com>
+#
+#   Original shell script was:
+#
+#   Copyright 2007 (C) Albin Tonnerre (Lutin) <lut1n.tne@gmail.com>
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+import os
+import re
+import sys
+
+valid_locations = ["debian/control.in", "control.in", "debian/control", "control"]
+control_file_found = False
+
+# Check changelog file exists.
+for location in valid_locations:
+    if os.path.exists(location):
+         control_file_found = True
+         control_file = location
+         break # Stop looking.
+
+# Check if we've found a control file.
+if not control_file_found:
+   sys.stderr.write("Unable to find debian/control file.\n")
+   sys.exit(1)
+
+# Read found file contents.
+debian_control_file = open(control_file, "r")
+file_contents = debian_control_file.read()
+debian_control_file.close()
+
+# Check if there is a Maintainer field in file found.
+if not 'Maintainer' in file_contents:
+    sys.stderr.write("Unable to find Maintainer field in %s.\n" % control_file)
+    sys.exit(1)
+
+package_field = re.findall('(Source:) (.*)', file_contents)
+package_name = package_field[0][1]
+
+# Get maintainer field information.
+maintainer_field = re.findall('(Maintainer:) (.*) (<.*>)', file_contents)
+
+# Split out maintainer name and email address.
+maintainer_name = maintainer_field[0][1]
+maintainer_mail = maintainer_field[0][2]
+
+if maintainer_mail.find("@getdeb.net") != -1:
+    print "Maintainer email is set to an @getdeb.net address - doing nothing."
+    sys.exit(0)
+
+
+target_maintainer = "GetDeb Package Ninjas <package.ninjas@getdeb.net>"
+
+# Set original maintainer field in a string.
+original_maintainer = maintainer_name + " " + maintainer_mail
+
+# If maintainer-field contained the pre-archive-reorganisation entries, don't add a new
+# XSBC-Original maintainer field
+
+final_addition = target_maintainer + "\nXSBC-Original-Maintainer: " + original_maintainer
+final_addition = target_maintainer
+
+print "The original maintainer for this package is: " + original_maintainer
+print "Resetting as: " + target_maintainer
+
+# Replace text.
+debian_control_file = open(control_file, "w")
+debian_control_file.write(re.sub(re.escape(original_maintainer), final_addition, file_contents))
+debian_control_file.close()

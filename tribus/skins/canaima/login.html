@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
+
+<div class="visualClear"></div>
+
+<h2>Editar perfil de usuario</h2>
+
+<p>Después de introducir sus datos de usuario, usted podrá editar su información de perfil.</p>
+
+{% if error %}
+<p>{{ error }}</p>
+{% endif %}
+
+<form method="post" action=".">
+{% csrf_token %}
+<table>
+{{ form }}
+</table>
+<input type="submit" value="ENVIAR" class="boton" />
+</form>
+
+<script type="text/javascript">
+    //var uid_var = new Spry.Widget.ValidationTextField("uid_js", "none", {validateOn:["blur"], maxChars:30, minChars:3});
+    //var userPassword_var = new Spry.Widget.ValidationTextField("userPassword_js", "none", {validateOn:["blur"], maxChars:30, minChars:8});
+    //var image_captcha_var = new Spry.Widget.ValidationTextField("image_captcha_js", "none", {validateOn:["blur"], maxChars:8});
+</script>
+<div class="visualClear"></div>
+
+
+
+{% endblock %}

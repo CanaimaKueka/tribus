@@ -246,9 +246,14 @@ deb-final-release: check-maintdep
 
 # CLEAN TASKS ------------------------------------------------------------------------------
 
-clean: clean-img clean-mo clean-man clean-conf clean-predoc
+clean: clean-img clean-mo clean-man clean-conf clean-predoc clean-pyc
 
-clean-all: clean-img clean-mo clean-html clean-wiki clean-man clean-conf clean-predoc
+clean-all: clean-img clean-mo clean-html clean-wiki clean-man clean-conf clean-predoc clean-pyc
+
+clean-pyc:
+
+	@echo "Cleaning precompiled python files ..."
+	@find . -name "*.pyc" | xargs -I {} rm -v "{}"
 
 clean-predoc:
 

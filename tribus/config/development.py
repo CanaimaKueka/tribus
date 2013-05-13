@@ -1,3 +1,7 @@
-from database import *
-from app import *
-from core import *
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from databaseconf import *
+from ldapconf import *
+from appconf import *
+from coreconf import *

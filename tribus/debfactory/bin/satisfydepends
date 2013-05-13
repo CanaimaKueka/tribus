@@ -1,0 +1,297 @@
+#!/bin/bash
+#   pbuilder -- personal Debian package builder
+#   Copyright (C) 2001,2002,2003,2005-2006 Junichi Uekawa
+#
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 2 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program; if not, write to the Free Software
+#   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+
+#
+# module to satisfy dependency.
+
+set -e
+
+function checkbuilddep_versiondeps () {
+    local PACKAGE="$1"
+    local COMPARESTRING="$2"
+    local DEPSVERSION="$3"
+    local PACKAGEVERSIONS=$( ( $CHROOTEXEC /usr/bin/apt-cache show "$PACKAGE" ) | sed -n  's/^Version: \(.*\)$/\1/p' | xargs)
+    # no versioned provides.
+    if [ "${FORCEVERSION}" = "yes" ]; then
+	return 0;
+    fi
+    for PACKAGEVERSION in $PACKAGEVERSIONS ; do
+      if dpkg --compare-versions "$PACKAGEVERSION" "$COMPARESTRING" "$DEPSVERSION"; then
+	# satisfies depends
+	return 0;
+      fi
+    done
+    echo "      Tried versions: $PACKAGEVERSIONS"
+    # cannot satisfy depends
+    return 1;
+}
+
+function expand_arch () {
+    local ARCH="$1"
+    local EXPANDED_ARCH
+    
+    # just keep the original behavior.
+    echo "$ARCH"
+    return
+
+    # the following may be used if dpkg change is set to stone.
+    if echo "$ARCH" | grep "-" > /dev/null; then
+        EXPANDED_ARCH=$ARCH
+    else
+        EXPANDED_ARCH="linux-$ARCH"
+    fi
+    local WC1=$(echo $EXPANDED_ARCH | sed 's/^[^-]*/any/')
+    local WC2=$(echo $EXPANDED_ARCH | sed 's/[^-]*$/any/')
+    echo "$ARCH\\|$EXPANDED_ARCH\\|$WC1\\|$WC2"
+}
+
+function checkbuilddep_archdeps () {
+    # returns FALSE on INSTALL
+    local INSTALLPKG="$1"
+    local ARCH="$2"
+    if echo "$INSTALLPKG" | sed 's/.*\(\[.*\]\)/\1/' | grep "[[/][!]\($(expand_arch $ARCH)\)[]/]" > /dev/null; then
+	# if !$ARCH exists in there, ERROR.
+	return 0;
+    fi
+    if ! echo "$INSTALLPKG" | sed 's/.*\(\[.*\]\)/\1/' | grep "[!]" > /dev/null; then
+	if ! echo "$INSTALLPKG" | sed 's/.*\(\[.*\]\)/\1/' | grep "[[/]\($(expand_arch $ARCH)\)[]/]" > /dev/null; then
+	# if $ARCH does not exist, ERROR.
+	    return 0;
+	fi
+    fi
+    return 1;
+}
+
+function checkbuilddep_provides () {
+    local PACKAGENAME="$1"
+    # PROVIDED needs to be used outside of this function.
+    PROVIDED=$($CHROOTEXEC /usr/bin/apt-cache showpkg $PACKAGENAME | awk '{p=0}/^Reverse Provides:/,/^$/{p=1}{if(p && ($0 !~ "Reverse Provides:")){PACKAGE=$1}} END{print PACKAGE}')
+}
+
+function checkbuilddep_internal () {
+# Use this function to fulfill the dependency (almost)
+
+    local ARCH=$(dpkg-architecture -qDEB_HOST_ARCH)
+    local INSTALLPKG
+    local INSTALLPKGLIST
+    local INSTALLPKGMULTI
+    local CURRENTREALPKGNAME
+    local SATISFIED
+    echo " -> Attempting to parse the build-deps $Id: pbuilder-satisfydepends,v 1.29 2006/11/06 20:20:56 lool Exp $"
+    for INSTALLPKGMULTI in $(cat ${DEBIAN_CONTROL} | \
+	awk '
+BEGIN{source=1} 
+/^$/      {source=0} 
+/^Source:/      {source=1} 
+/^[^ ]*:/ {p=0} 
+tolower($0) ~ /^'"${BD_REGEXP}"':/   {p=1} 
+{if(p && source) {print $0}}'  | \
+	sed 's/^[^: ]*://' | \
+	tr " " "/" | \
+	awk 'BEGIN{RS=","} {print}'); do
+      echo " -> Considering build-dep$(echo "$INSTALLPKGMULTI" | tr "/" " " )"
+      SATISFIED="no"
+      for INSTALLPKG in $(echo "$INSTALLPKGMULTI" | \
+	  awk 'BEGIN{RS="|"} {print}'); do
+	CURRENTREALPKGNAME=$(echo "$INSTALLPKG" | sed -e 's/^[/]*//' -e 's/[[/(].*//')
+	if echo "$INSTALLPKG" | grep '\[' > /dev/null ; then
+	    if checkbuilddep_archdeps "$INSTALLPKG" "$ARCH"; then
+		SATISFIED="yes"
+		echo "   -> This package is not for this architecture"
+		continue;
+	    fi
+	fi
+	if echo "$INSTALLPKG" | grep '[(]' > /dev/null; then
+	    #echo "Debug: $INSTALLPKG"
+	    if ! checkbuilddep_versiondeps ${CURRENTREALPKGNAME} \
+		$(echo "$INSTALLPKG" | tr "/" " " | sed 's/^.*([ ]*\(<<\|<=\|>=\|=\|<\|>>\|>\)[ ]*\(.*\)).*$/\1/') \
+		$(echo "$INSTALLPKG" | tr "/" " " | sed 's/^.*([ ]*\(<<\|<=\|>=\|=\|<\|>>\|>\)[ ]*\(.*\)).*$/\2/') ; then
+	      echo "   -> Does not satisfy version, not trying"
+	      continue;
+	    fi
+	fi
+	echo "   -> Trying ${CURRENTREALPKGNAME}"
+
+	if $CHROOTEXEC /usr/bin/apt-get -s install ${INSTALLPKGLIST} ${CURRENTREALPKGNAME} >& /dev/null; then
+	    SATISFIED="yes"
+	    INSTALLPKGLIST="${INSTALLPKGLIST} ${CURRENTREALPKGNAME}"
+	else
+	    echo "       -> Cannot install ${CURRENTREALPKGNAME}; apt errors follow:"
+	    if $CHROOTEXEC /usr/bin/apt-get -s install ${INSTALLPKGLIST} "${CURRENTREALPKGNAME}"; then
+		:
+	    fi
+	    # package could not be found. -- looking for alternative.
+	    PROVIDED=""
+	    checkbuilddep_provides "${CURRENTREALPKGNAME}"
+	    if [ -n "$PROVIDED" ]; then
+		# something provides this package
+		echo "     -> Considering $PROVIDED to satisfy the dependency "
+		if $CHROOTEXEC /usr/bin/apt-get -s install ${INSTALLPKGLIST} ${PROVIDED} >& /dev/null; then
+		    SATISFIED="yes";
+		    INSTALLPKGLIST="${INSTALLPKGLIST} ${PROVIDED}"
+		else
+		    # show the error for diagnostic purposes
+		    echo "       -> Cannot install $PROVIDED; apt errors follow:"
+		    if $CHROOTEXEC /usr/bin/apt-get -s install ${INSTALLPKGLIST} ${PROVIDED}; then
+			:
+		    fi
+		fi
+	    fi
+	fi
+	if [ "$SATISFIED" = "yes" ]; then
+	    break;
+	fi
+      done;
+      if [ "$SATISFIED" = "no" ]; then
+	  echo "E: Could not satisfy build-dependency." >&2
+	  if [ "$CONTINUE_FAIL" != "yes" ]; then
+	      exit 2
+	  fi
+      fi
+    done;
+    
+    # now actually install the packages
+    echo " -> Installing ${INSTALLPKGLIST}"
+    if ! $CHROOTEXEC apt-get -y --force-yes install ${INSTALLPKGLIST}; then
+	echo " -> Trying to fix apt error"
+	# Work around an apt bug which causes configure to fail.
+	if $CHROOTEXEC dpkg --configure --pending && $CHROOTEXEC apt-get -y --force-yes install ${INSTALLPKGLIST}; then
+	    echo " -> Apt bug workaround succeeded"
+	elif [ "$CONTINUE_FAIL" != "yes" ]; then
+	    echo "E: Unrecoverable error installing build-dependencies." >&2
+	    exit 1
+	fi
+    fi
+
+    # start processing build-conflicts.
+    for INSTALLPKG in $(cat "${DEBIAN_CONTROL}" | \
+	awk 'BEGIN{source=1} 
+/^$/      {source=0} 
+/^Source:/      {source=1} 
+/^[^ ]*:/{p=0} 
+tolower($0) ~ /^'"${BC_REGEXP}"':/   {p=1} 
+{if(p && source) {print $0}}'  | \
+	sed 's/^[^: ]*://' | \
+	tr " " "/" | \
+	awk 'BEGIN{RS=","} {print}'); do
+      CURRENTREALPKGNAME=$(echo "$INSTALLPKG" | sed -e 's/^[/]*//' -e 's/[[/(].*//')
+      echo " -> Considering ${CURRENTREALPKGNAME}"
+      
+      if echo "$INSTALLPKG" | grep '\[' > /dev/null ; then
+	  # this package has arch-conflicts.
+	  if checkbuilddep_archdeps "$INSTALLPKG" "$ARCH"; then
+	      echo "I: Ignoring other-arch"
+	      continue;
+	  fi
+      fi
+      if echo "$INSTALLPKG" | grep '[(]' > /dev/null ; then
+	  # this package has version-conflicts
+	  if ! checkbuilddep_versiondeps ${CURRENTREALPKGNAME} \
+		$(echo "$INSTALLPKG" | tr "/" " " | sed 's/^.*([ ]*\(<<\|<=\|>=\|=\|<\|>>\|>\)[ ]*\(.*\)).*$/\1/') \
+		$(echo "$INSTALLPKG" | tr "/" " " | sed 's/^.*([ ]*\(<<\|<=\|>=\|=\|<\|>>\|>\)[ ]*\(.*\)).*$/\2/'); then
+	      echo "I: Satisfies version, not trying"
+	      continue;
+	  fi
+      fi
+
+      # if package exists, remove it.
+      if $CHROOTEXEC /usr/bin/dpkg -s $(echo "$INSTALLPKG" | tr "/" " " | awk '{print $1}') 2>&1 | grep ^Package: > /dev/null; then
+	  if ! $CHROOTEXEC /usr/bin/apt-get -y remove ${CURRENTREALPKGNAME} ; then
+	      echo "E: Could not satisfy build-conflicts" >&2
+	      exit 1
+	  fi
+      else
+	  echo "I: ${CURRENTREALPKGNAME} package is not installed, no need to remove"
+      fi
+    done
+    echo " -> Finished parsing the build-deps"
+}
+
+
+function print_help () {
+    # print out help message
+    cat <<EOF
+pbuilder-satisfydepends -- satisfy dependencies
+Copyright 2002-2006  Junichi Uekawa <dancer@debian.org>
+
+--help:        give help
+--control:     specify control file (debian/control, *.dsc)
+--chroot:      operate inside chroot
+--binary-all:  include binary-all
+--binary-arch: include binary-arch only
+--echo:        echo mode, do nothing. (--force-version required for most operation)
+--force-version: skip version check.
+--continue-fail: continue even when failed.
+
+EOF
+}
+
+
+DEBIAN_CONTROL=debian/control
+CHROOTEXEC=""
+BD_REGEXP="build-(depends|depends-indep)"
+BC_REGEXP="build-(conflicts|conflicts-indep)"
+FORCEVERSION=""
+CONTINUE_FAIL="no"
+
+
+while [ -n "$1" ]; do
+    case "$1" in
+	--control|-c)
+	    DEBIAN_CONTROL="$2"
+	    shift; shift
+	    ;;
+	--chroot)
+	    CHROOTEXEC="chroot $2 "
+	    shift; shift
+	    ;;
+	--internal-chrootexec)
+	    CHROOTEXEC="$2"
+	    shift; shift 
+	    ;;
+	--binary-all)
+	    BD_REGEXP='build-(depends|depends-indep)'
+	    BC_REGEXP='build-(conflicts|conflicts-indep)'
+	    shift
+	    ;;
+	--binary-arch)
+	    BD_REGEXP='build-depends'
+	    BC_REGEXP='build-conflicts'
+	    shift
+	    ;;
+	--echo)
+	    CHROOTEXEC="echo $CHROOTEXEC"
+	    shift
+	    ;;
+	--continue-fail)
+	    CONTINUE_FAIL="yes"
+	    shift
+	    ;;
+	--force-version)
+	    FORCEVERSION="yes"
+	    shift;
+	    ;;
+	--help|-h|*)
+	    print_help
+	    exit 1
+	    ;;
+    esac
+done
+
+
+checkbuilddep_internal

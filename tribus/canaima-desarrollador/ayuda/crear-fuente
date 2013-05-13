@@ -1,0 +1,21 @@
+Documentación para el Ayudante "crear-fuente" de Canaima Desarrollador
+
+Crea un paquete fuente .tar.gz del proyecto de empaquetamiento contenido en --directorio="nombre-X.Y+Z" y lo guarda en el depósito de fuentes. El directorio debe contener un proyecto debianizado.
+
+Uso:
+
+  canaima-desarrollador crear-fuente --directorio="nombre-X.Y+Z" [--ayuda]
+  c-d crear-fuente --directorio="nombre-X.Y+Z" [--ayuda]
+
+Parámetros:
+
+  --directorio
+	Nombre de la carpeta dentro del directorio del desarrollador a la cual se va a crear el paquete fuente.
+	
+  --ayuda
+	Muestra ésta ayuda.
+
+Para mayor información, puedes recurrir a la entrada del manual para canaima-desarrollador (man canaima-desarrollador).
+
+Contacto: desarrolladores@canaima.softwarelibre.gob.ve
+

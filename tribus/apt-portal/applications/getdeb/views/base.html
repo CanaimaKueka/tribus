@@ -1,0 +1,106 @@
+## -*- coding: utf-8 -*-
+## base.html
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="author" content="The GetDeb Team" />
+<meta name="description" content="Software you want" />
+<meta name="keywords" content="ubuntu, repository, apps, applications, software, open source" />
+<meta name="google-site-verification" content="Jz7r9nfRKQIfmNt-ZsW51Fa201DxpII-lKhG-5_5GBg" />
+<title>GetDeb.net V2 - Software for Ubuntu Linux - ${self.title()}</title>
+<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+<link rel="stylesheet" href="/css/default.css" type="text/css" media="screen">
+<script type="text/javascript" src="/js/browser_selector.js"></script>	
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+${self.page_head()}
+<script type="text/javascript">
+<!-- This code highlight the currently selected page -->
+$(document).ready(function() {
+	$("a#${pagename|u}").addClass("selected");
+});
+</script>
+<script language="javascript" type="text/javascript">
+<!--
+var win=null;
+function NewWindow(mypage,myname,w,h,scroll,pos){
+if(pos=="random"){LeftPosition=(screen.width)?Math.floor(Math.random()*(screen.width-w)):100;TopPosition=(screen.height)?Math.floor(Math.random()*((screen.height-h)-75)):100;}
+if(pos=="center"){LeftPosition=(screen.width)?(screen.width-w)/2:100;TopPosition=(screen.height)?(screen.height-h)/2:100;}
+else if((pos!="center" && pos!="random") || pos==null){LeftPosition=0;TopPosition=20}
+settings='width='+w+',height='+h+',top='+TopPosition+',left='+LeftPosition+',scrollbars='+scroll+',location=no,directories=no,status=no,menubar=no,toolbar=no,resizable=yes';
+win=window.open(mypage,myname,settings);}
+// -->
+</script>
+<!-- google analytics -->
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-294097-5']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+  })();
+</script>
+<!-- end of google analytics -->
+<!-- google plus -->
+<link href="https://plus.google.com/110683567928974511220" rel="publisher" /><script type="text/javascript">
+window.___gcfg = {lang: 'en-GB'};
+(function() 
+{var po = document.createElement("script");
+po.type = "text/javascript"; po.async = true;po.src = "https://apis.google.com/js/plusone.js";
+var s = document.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(po, s);
+})();</script>
+<!-- end of google plus -->
+</head>
+<body>
+<div id="content">    
+    <div id="top">
+        <ul id="countrytabs" class="shadetabs">        
+        <li><a id="welcome" href="${base_url}/welcome/">Welcome</a></li>
+        <li><a id="updates" href="${base_url}/updates/ubuntu/${release}/">Apps</a></li>
+% if not session("is_admin"):
+        <li><a id="games" href="http://www.playdeb.net/updates/">Games</a></li>
+% endif
+        <li><a id="contact" href="${base_url}/contact/">Contact Us</a></li>
+        <li><a id="sponsors" href="${base_url}/sponsors/">Sponsors</a></li>
+% if session("is_admin"):
+		<li><a href="${base_url}/packages/" title="Package management" id="packages">Packages</a></li>
+% endif			        
+        </ul>
+        <a href="${base_url}/" id="logo-link"><img id="logo" src="/images/logo.png" alt="GetDeb"></a>                
+        <div id="searchbox">
+            <form name="sitesearch" id="sitesearch" action="${base_url}/updates/Ubuntu/${release}/" method="get">
+                <p>
+                    <label>Search</label>
+                    <input type="text" value="Search" name="q" onfocus="if(this.value == 'Search') this.value='';" size="10"/>
+                    
+                </p> 
+            </form>
+        </div>
+    </div>
+    <div id="middle"> 
+		<div id="top_user_actions"> 					
+		% if session("login_username"): 
+				<a href="${base_url}/logout/" title="logout" id="logout">Logout</a> ${session("login_username")}
+		% else:        
+<!-- Nothing useful yet		
+				<a href="${base_url}/login/">Login</a>  / <a href="${base_url}/register/">Register</a>
+!-->				
+		% endif		
+		</div>				  
+	${self.body()}
+    </div>
+    <div id="bottom">
+&copy; 2010 The GetDeb Team | Based on the design by <a href="http://www.rafaellaguna.com/">
+Rafael Laguna</a> | Powered by <a href="https://launchpad.net/apt-portal">APT-Portal</a>
+##  - For additional copyright and legal information read <a href="${base_url}/copyright"
+##onclick="NewWindow(this.href,'Asemar: Copyright & Legal','640','480','yes','center');return false" onfocus="this.blur()">this</A> page .
+    </div>
+</div>
+</body>
+</html>
