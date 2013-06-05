@@ -1,0 +1,13 @@
+.navbar .logo {
+  background-image: url('../img/logo-min.png');
+  width: 100px;
+  height: 40px;
+  display: block;
+  float: left;
+  padding: 0px;
+  margin: 0px;
+}
+
+.navbar .form-search {
+  margin: 5px;
+}

@@ -1,0 +1,121 @@
+#!/bin/bash
+
+declare DISTROS BP_ASIDE BUILDPLACE DIST DISTRO DEBOOTSRAPOPTS MIRROR PBUILDEROPTS
+declare CREATE=create
+
+PROGRAM=${0}
+OPTARGS=$(getopt -n $PROGRAM -o 'uh' -- "$@")
+eval set -- "$OPTARGS"
+while (( "$#" > "0" )) ; do
+    case "$1" in
+        '-h' )
+            cat <<EOF
+
+            usage: cowbuilder-create-base [-u] [dists]
+
+	    with -u meaning 'update instead of create' and
+	    [dists] a space separated list of common Debian or Ubuntu
+            distribution codenames like 'precise' or 'squeeze'
+
+EOF
+	    exit 0
+            ;;
+        '-u' )
+            shift 1
+            CREATE=update
+            ;;
+	'--' )
+	    shift 1
+	    break
+	    ;;
+        * )
+	    echo "unknown option: $1"
+	    exit 3
+            ;;
+    esac
+done   
+
+DISTROS=${@:-squeeze wheezy sid precise}
+
+restore_old_buildplace()
+{
+    [ "${CREATE}" = "create" ] \
+	&& [ -n \"${BP_ASIDE}\" ] \
+	&& [ -d ${BP_ASIDE} ] \
+	&& rm -rf ${BUILDPLACE} \
+	&& mv ${BP_ASIDE} ${BUILDPLACE} \
+	&& return 0
+    return 1
+}
+
+for DIST in ${DISTROS} ; do
+    DEBOOTSTRAPOPTS=
+    PBUILDEROPTS=
+    case ${DIST} in
+	hamm|slink|potato|woody|sarge|etch|lenny|squeeze|wheezy|sid )
+	    DISTRO=debian
+	    DEBOOTSTRAPOPTS="--debootstrapopts --keyring=/usr/share/keyrings/debian-archive-keyring.gpg"
+	    MIRROR=http://ftp.nl.debian.org/debian
+	    ;;
+	hardy|lucid|maverick|natty|oneiric|precise )
+	    DISTRO=ubuntu
+	    MIRROR=http://osmirror.rug.nl/ubuntu
+	    PBUILDEROPTS="--components \"main universe\""
+	    ;;
+	* )
+	    echo "unknown distro ${DIST}, please add it to the script before re-running"
+	    exit 2
+    esac
+
+    echo "Creating CowBuilder base for ${DISTRO} ${DIST}"
+    BUILDPLACE=/var/cache/pbuilder/${DIST}-base.cow
+    COPYPLACE=/var/cache/pbuilder/${DIST}.cow
+
+    [ -d "${COPYPLACE}" ] || install -d "${COPYPLACE}"
+
+    unset BP_ASIDE
+    if [ "${CREATE}" = "create" ] ; then
+	if [ -d "${BUILDPLACE}" ] ; then
+	    echo "Moving existing ${BUILDPLACE} aside to ${BP_ASIDE}"
+	    # If pbuilder fails, we want to restore this old original
+            BP_ASIDE=$(mktemp -d --tmpdir=$(dirname ${BUILDPLACE}))
+	    mv ${BUILDPLACE} ${BP_ASIDE}
+	fi
+	install -d ${BUILDPLACE}
+    fi
+
+    trap restore_old_buildplace INT
+
+    COMMAND="pbuilder --${CREATE} \
+--logfile pbuild-${DIST}-create.log \
+--buildplace ${BUILDPLACE} \
+--distribution ${DIST} \
+--mirror ${MIRROR} \
+--no-targz \
+--extrapackages cowdancer ${PBUILDEROPTS} \
+--debootstrap debootstrap ${DEBOOTSTRAPOPTS}"
+
+    if eval ${COMMAND} ; then
+	trap - INT
+	[ "${CREATE}" = "create" ] && [ -n "${BP_ASIDE}" ] && [ -d ${BP_ASIDE} ] && rm -rf ${BP_ASIDE}
+    else
+	FAILLIST="${FAILLIST} ${DIST}"
+	trap - INT
+
+	if restore_old_buildplace ; then
+	    FAILLIST="${FAILLIST}(but existing version was saved and restored)"
+	    echo "The command \"${COMMAND}\" failed."
+	    echo "Old chroot restored from ${BP_ASIDE}"
+	fi
+
+    fi
+
+done
+
+
+if [ -n "${FAILLIST}" ] ; then
+    echo "The following distributions failed to be (re)created: ${FAILLIST}"
+    exit 1
+fi
+
+exit 0

@@ -20,8 +20,8 @@ POTEAM = Tribus Translation Team
 PODATE = $(shell date +%F\ %R%z)
 
 # Common files lists
-IMAGES = $(shell ls skins/canaima/images/ | grep "\.svg" | sed 's/\.svg//g')
-THEMES = $(shell ls skins/)
+IMAGES = $(shell ls tribus/skins/canaima/img/ | grep "\.svg" | sed 's/\.svg//g')
+THEMES = $(shell ls tribus/skins/)
 LOCALES = $(shell find locale -mindepth 1 -maxdepth 1 -type d | sed 's|locale/pot||g;s|locale/||g')
 PHPS = $(wildcard *.php)
 ALLPHPS = $(shell find . -type f -iname "*.php")
@@ -118,12 +118,12 @@ gen-img: check-buildep clean-img
 	@printf "Generating images from source [SVG > PNG,ICO] ["
 	@for THEME in $(THEMES); do \
 		for IMAGE in $(IMAGES); do \
-			$(CONVERT) -background None themes/$${THEME}/images/$${IMAGE}.svg \
-				themes/$${THEME}/images/$${IMAGE}.png; \
+			$(CONVERT) -background None tribus/skins/$${THEME}/img/$${IMAGE}.svg \
+				tribus/skins/$${THEME}/img/$${IMAGE}.png; \
 			printf "."; \
 		done; \
-		$(ICOTOOL) -c -o themes/$${THEME}/images/favicon.ico \
-			themes/$${THEME}/images/favicon.png; \
+		$(ICOTOOL) -c -o tribus/skins/$${THEME}/img/favicon.ico \
+			tribus/skins/$${THEME}/img/favicon.png; \
 	done
 	@printf "]\n"
 

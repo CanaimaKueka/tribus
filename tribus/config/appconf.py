@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from django.utils.translation import ugettext as _
+from gettext import gettext as _
 
 APP_SKIN = 'canaima'
 APP_NAME = 'Tribus'

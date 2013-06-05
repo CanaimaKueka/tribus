@@ -3,7 +3,6 @@
 
 import os
 from appconf import *
-
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
