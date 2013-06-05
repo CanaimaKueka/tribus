@@ -20,7 +20,7 @@ POTEAM = Tribus Translation Team
 PODATE = $(shell date +%F\ %R%z)
 
 # Common files lists
-IMAGES = $(shell ls tribus/skins/canaima/img/ | grep "\.svg" | sed 's/\.svg//g')
+IMAGES = $(shell ls tribus/skins/default/img/ | grep "\.svg" | sed 's/\.svg//g')
 THEMES = $(shell ls tribus/skins/)
 LOCALES = $(shell find locale -mindepth 1 -maxdepth 1 -type d | sed 's|locale/pot||g;s|locale/||g')
 PHPS = $(wildcard *.php)
@@ -90,28 +90,28 @@ gen-predoc: clean-predoc
 gen-wiki: check-buildep gen-predoc clean-wiki
 
 	@echo "Generating documentation from source [RST > WIKI]"
-	@cp documentation/githubwiki.index documentation/rest/Home.md
-	@cp documentation/rest/*.md documentation/rest/*.rest documentation/githubwiki/
-	@rm -rf documentation/rest/Home.md
-	@cp documentation/googlewiki.index documentation/rest/index.rest
-	@echo "" >> documentation/rest/index.rest
-	@cat documentation/rest/contents.rest >> documentation/rest/index.rest
-	@mv documentation/rest/contents.rest documentation/rest/contents.tmp
+	@cp docs/githubwiki.index docs/rest/Home.md
+	@cp docs/rest/*.md docs/rest/*.rest docs/githubwiki/
+	@rm -rf docs/rest/Home.md
+	@cp docs/googlewiki.index docs/rest/index.rest
+	@echo "" >> docs/rest/index.rest
+	@cat docs/rest/contents.rest >> docs/rest/index.rest
+	@mv docs/rest/contents.rest docs/rest/contents.tmp
 	@$(PYTHON) -B tools/googlecode-wiki.py
-	@mv documentation/rest/contents.tmp documentation/rest/contents.rest
-	@rm -rf documentation/rest/index.rest
+	@mv docs/rest/contents.tmp docs/rest/contents.rest
+	@rm -rf docs/rest/index.rest
 
 gen-html: check-buildep gen-predoc clean-html
 
 	@echo "Generating documentation from source [RST > HTML]"
-	@cp documentation/sphinx.index documentation/rest/index.rest
-	@$(SPHINX) -Q -b html -d documentation/html/doctrees documentation/rest documentation/html
-	@rm -rf documentation/rest/index.rest
+	@cp docs/sphinx.index docs/rest/index.rest
+	@$(SPHINX) -Q -b html -d docs/html/doctrees docs/rest docs/html
+	@rm -rf docs/rest/index.rest
 
 gen-man: check-buildep gen-predoc clean-man
 
 	@echo "Generating documentation from source [RST > MAN]"
-	@$(RST2MAN) --language="en" --title="AGUILAS" documentation/man/aguilas.rest documentation/man/aguilas.1
+	@$(RST2MAN) --language="en" --title="AGUILAS" docs/man/aguilas.rest docs/man/aguilas.1
 
 gen-img: check-buildep clean-img
 
@@ -191,8 +191,8 @@ prepare: check-maintdep
 
 	@git submodule init
 	@git submodule update
-	@cd documentation/githubwiki/ && git checkout development && git pull origin development
-	@cd documentation/googlewiki/ && git checkout development && git pull origin development
+	@cd docs/githubwiki/ && git checkout development && git pull origin development
+	@cd docs/googlewiki/ && git checkout development && git pull origin development
 
 gen-po: check-maintdep gen-pot
 
@@ -253,13 +253,13 @@ clean-all: clean-img clean-mo clean-html clean-wiki clean-man clean-conf clean-p
 clean-pyc:
 
 	@echo "Cleaning precompiled python files ..."
-	@find . -name "*.pyc" | xargs -I {} rm -v "{}"
+	@find . -iname "*.pyc" -o -iname "*~" | xargs -I {} rm -v "{}"
 
 clean-predoc:
 
 	@echo "Cleaning preprocessed documentation files ..."
 	@$(BASH) tools/predoc.sh clean
-	@rm -rf documentation/rest/index.rest
+	@rm -rf docs/rest/index.rest
 
 clean-img:
 
@@ -285,19 +285,19 @@ clean-mo:
 clean-html:
 
 	@echo "Cleaning generated html ..."
-	@rm -rf documentation/html/*
-	@rm -rf documentation/html/.buildinfo
+	@rm -rf docs/html/*
+	@rm -rf docs/html/.buildinfo
 
 clean-wiki:
 
 	@echo "Cleaning generated wiki pages ..."
-	@rm -rf documentation/googlewiki/*
-	@rm -rf documentation/githubwiki/*
+	@rm -rf docs/googlewiki/*
+	@rm -rf docs/githubwiki/*
 
 clean-man:
 
 	@echo "Cleaning generated man pages ..."
-	@rm -rf documentation/man/aguilas.1
+	@rm -rf docs/man/aguilas.1
 
 clean-conf:
 

@@ -28,7 +28,7 @@
 # CODE IS POETRY
 
 ROOTDIR="$( pwd )"
-DOCDIR="${ROOTDIR}/documentation"
+DOCDIR="${ROOTDIR}/docs"
 RESTDIR="${DOCDIR}/rest"
 VERSIONFILE="${ROOTDIR}/VERSION"
 INFILES=$( grep -R "@@.*@@" ${DOCDIR} | awk -F: '{print $1}' | sort -u | grep "^.*\.in$" )

@@ -1,0 +1,68 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="{{ app_charset|lower }}" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>¡Bienvenido a {{ app_name }}!</title>
+        <link rel='stylesheet' href='{{ app_static_url }}{{ app_skin }}/css/normalize.css' />
+        <link rel='stylesheet' href='{{ app_static_url }}{{ app_skin }}/css/bootstrap.css' />
+        <link rel='stylesheet' href='{{ app_static_url }}{{ app_skin }}/css/bootstrap-responsive.css' />
+        <link rel='stylesheet' href='{{ app_static_url }}{{ app_skin }}/css/app.css' />
+	</head>
+    <body>
+        <script type="text/x-handlebars">
+            <div class="navbar navbar-fixed-top">
+                <div class="navbar-inner">
+                    <div class="container">
+                        <a class="logo" href="#"></a>
+                        <ul class="nav">
+                            <li><a href="#">A</a></li>
+                            <li><a href="#">B</a></li>
+                            <li><a href="#">C</a></li>
+                            <li>
+                                <form class="form-search">
+                                    <input type="text" class="input-xxlarge">
+                                </form>
+                            </li>
+                        </ul>
+                        <ul class="nav pull-right">
+                            <li class="dropdown">
+                              <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Actividades <b class="caret"></b></a>
+                              <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="http://google.com">Action</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#anotherAction">Another action</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+                                <li role="presentation" class="divider"></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+                              </ul>
+                            </li>
+                            <li class="dropdown">
+                              <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Perfil <b class="caret"></b></a>
+                              <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="http://google.com">Action</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#anotherAction">Another action</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+                                <li role="presentation" class="divider"></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+                              </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </script>
+
+
+    <script src="{{ app_static_url }}{{ app_skin }}/js/jquery.js"></script>
+    <script src="{{ app_static_url }}{{ app_skin }}/js/handlebars.js"></script>
+    <script src="{{ app_static_url }}{{ app_skin }}/js/ember.js"></script>
+    <script src="{{ app_static_url }}{{ app_skin }}/js/ember-data.js"></script>
+    <script src="{{ app_static_url }}{{ app_skin }}/js/bootstrap.js"></script>
+    <script src="{{ app_static_url }}{{ app_skin }}/js/app.js"></script>
+
+    <!--[if lt IE 9]>
+    <script src="{{ app_static_url }}{{ app_skin }}/js/html5shiv.js"></script>
+    <![endif]-->
+</body>
+</html>

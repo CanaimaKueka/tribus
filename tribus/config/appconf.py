@@ -3,7 +3,7 @@
 
 from gettext import gettext as _
 
-APP_SKIN = 'canaima'
+APP_SKIN = 'default'
 APP_NAME = 'Tribus'
 APP_DESC = u'Sistema para la Gestión de Comunidades en el Proyecto Canaima'
 APP_MAIL = ''

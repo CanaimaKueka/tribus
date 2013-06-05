@@ -4,16 +4,17 @@
 from django.conf.urls.defaults import patterns, include, url
 from django.contrib import admin
 from django.conf import settings
-from tribus.viewer.views import Welcome, Login, Logout, Dashboard
+from tribus.main.views import Init, Login, Logout, Dashboard
 
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$', Welcome),
-    url(r'^welcome/$', Welcome),
+    url(r'^$', Init),
     url(r'^login/$', Login),
     url(r'^logout/$', Logout),
     url(r'^dashboard/$', Dashboard),
+#    url(r'^m/$', include(tribus.postman.urls)),
+#    url(r'^u/$', include(tribus.profiles.urls)),
 #    url(r'^signup/$', 'tribus.viewer.views.signup'),
 #    url(r'^preferences/$', 'tribus.viewer.views.preferences'),
 #    url(r'^distro/$', 'tribus.viewer.views.distro'),

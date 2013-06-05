@@ -82,7 +82,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'tribus.viewer',
+    'tribus.main',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (

@@ -1,0 +1,188 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="{{ app_charset|lower }}" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{% block title %}{{ app_name }} - {{ app_desc }}{% endblock %}</title>
+        <link rel='stylesheet' href='{{ app_static_url }}{{ app_skin }}/css/normalize.css' />
+        <link rel='stylesheet' href='{{ app_static_url }}{{ app_skin }}/css/bootstrap.css' />
+        <link rel='stylesheet' href='{{ app_static_url }}{{ app_skin }}/css/bootstrap-responsive.css' />
+        <link rel='stylesheet' href='{{ app_static_url }}{{ app_skin }}/css/app.css' />
+	</head>
+    <body>
+        <script type="text/x-handlebars">
+            <div class="navbar navbar-fixed-top">
+                <div class="navbar-inner">
+                    <div class="container">
+                        <a class="logo" href="#"></a>
+                        <ul class="nav">
+                            <li><a href="#">A</a></li>
+                            <li><a href="#">B</a></li>
+                            <li><a href="#">C</a></li>
+                            <li>
+                                <form class="form-search">
+                                    <input type="text" class="input-xxlarge">
+                                </form>
+                            </li>
+                        </ul>
+                        <ul class="nav pull-right">
+                            <li class="dropdown">
+                              <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Actividades <b class="caret"></b></a>
+                              <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="http://google.com">Action</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#anotherAction">Another action</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+                                <li role="presentation" class="divider"></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+                              </ul>
+                            </li>
+                            <li class="dropdown">
+                              <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Perfil <b class="caret"></b></a>
+                              <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="http://google.com">Action</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#anotherAction">Another action</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+                                <li role="presentation" class="divider"></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+                              </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </script>
+
+
+
+<!-- 
+        <div id="globalWrapper">
+            <div id="column-content">
+                <div id="portal-top">
+                    <ul id="p-personal">
+				        {% if user.is_authenticated %}
+				        <li id="profile">
+					        <a href="/profile/" title="{{ user.get_full_name }}">{{ user.get_full_name }}</a>
+				        </li>
+				        <li id="preferences">
+					        <a href="/preferences/" title="{% trans preferences %}">{% trans preferences %}</a>
+				        </li>
+				        {% else %}
+				        <li id="login">
+					        <a href="/login/" title="{% trans 'login' %}">{% trans 'login' %}</a>
+				        </li>
+				        <li id="signup">
+					        <a href="/signup/" title="{% trans 'signup' %}" class="new">{% trans 'signup' %}</a>
+				        </li>
+				        {% endif %}
+                    </ul>
+
+                </div>
+                <div id="portal-searchbox">
+                    <div id="p-logo">
+                        <a href="{{ app_url }}" title="{{ app_name }}"></a>
+                    </div>
+
+                    <form action="Search.php" id="searchform">
+                        <div class="LSBox">
+                            <div id="clock">
+                                Escriba un término de búsqueda y pulse enter
+                            </div>
+                            <input id="searchInput" value="Buscar usuario" name="searchInput" type="text" onfocus="this.value=(this.value=='Buscar usuario') ? '' : this.value;" onblur="this.value=(this.value=='') ? 'Buscar usuario' : this.value;"  />
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <img src="{{ app_static_url }}{{ app_skin }}/images/banner.jpg" />
+
+            <div id="menu">
+                <ul id="portal-globalnav">
+                    <li><a href="http://registro.canaima.softwarelibre.gob.ve">Inicio</a></li>
+                    <li><a href="http://canaima.softwarelibre.gob.ve/">PORTAL PRINCIPAL</a></li>
+                    <li><a href="http://wiki.canaima.softwarelibre.gob.ve/">ENCICLOPEDIA</a></li>
+                    <li><a href="http://proyectos.canaima.softwarelibre.gob.ve/canaima/">SISTEMA DE TICKETS</a></li>
+                    <li><a href="http://ideas.canaima.softwarelibre.gob.ve/">IDEAS</a></li>
+                </ul>
+            </div>
+
+            <div id="content">
+{% block content %}
+                <div class="visualClear"></div>
+
+                <div id="chiclet_left">
+                    <p>Bienvenido a  Plataforma Colaborativa del Proyecto Canaima.</p>
+                    <p>Desde aquí podrá gestionar directamente sus usuarios en Plataforma Colaborativa del Proyecto Canaima. La creación de una cuenta le permitirá conectarse a los siguientes servicios:</p>
+                    <ul>
+                        <li><a href="http://canaima.softwarelibre.gob.ve/">PORTAL PRINCIPAL</a></li>
+                        <li><a href="http://wiki.canaima.softwarelibre.gob.ve/">ENCICLOPEDIA</a></li>
+                        <li><a href="http://proyectos.canaima.softwarelibre.gob.ve/canaima/">SISTEMA DE TICKETS</a></li>
+                        <li><a href="http://ideas.canaima.softwarelibre.gob.ve/">IDEAS</a></li>
+                    </ul>
+                </div>
+
+                <div id="chiclet_right">
+                    <div class="chiclet_usuario">
+                        <a href="#">#</a>
+                        <br />
+                        <a href="#" class="chiclet_little">#</a>
+                        <br />
+                    </div>
+                    <div class="chiclet_password">
+                        <a href="#">#</a>
+                        <br />
+                        <a href="#" class="chiclet_little">#</a>
+                        <br />
+                    </div>
+                    <div class="chiclet_olvidar">
+                        <a href="#">#</a>
+                        <br />
+                    </div>
+                    <div class="chiclet_eliminar">
+                        <a href="#">#</a>
+                        <br />
+                    </div>
+                    <div class="chiclet_editar">
+                        <a href="#">#</a>
+                        <br />
+                    </div>
+                    <div class="chiclet_listar">
+                        <a href="#">#</a>
+                        <br />
+                    </div>
+                </div>
+
+                <div class="visualClear"></div>
+{% endblock %}
+            </div>
+
+<div id="portal-footer">
+    <div id="footer">
+        <a href="#">#</a>
+        <a href="#">#</a>
+        <a href="#">#</a>
+        <a href="#">#</a>
+        <a href="#">#</a>
+        <a href="#">#</a>
+        <a href="#">#</a>
+    </div>
+    
+    <div>
+        Plataforma Colaborativa del Proyecto Canaima  es impulsado por
+        <strong><a href="http://code.google.com/p/aguilas/">AGUILAS</a></strong>.
+    </div>
+</div>
+</div> -->
+
+    <script src="{{ app_static_url }}{{ app_skin }}/js/jquery.js"></script>
+    <script src="{{ app_static_url }}{{ app_skin }}/js/handlebars.js"></script>
+    <script src="{{ app_static_url }}{{ app_skin }}/js/ember.js"></script>
+    <script src="{{ app_static_url }}{{ app_skin }}/js/ember-data.js"></script>
+    <script src="{{ app_static_url }}{{ app_skin }}/js/bootstrap.js"></script>
+    <script src="{{ app_static_url }}{{ app_skin }}/js/app.js"></script>
+
+    <!--[if lt IE 9]>
+    <script src="{{ app_static_url }}{{ app_skin }}/js/html5shiv.js"></script>
+    <![endif]-->
+</body>
+</html>
