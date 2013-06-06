@@ -1,0 +1,21 @@
+<script type="text/javascript" src="{{"/js/modernizr.custom.js"|media }}"></script>
+<script type="text/javascript">
+    var askbot = {};
+    askbot['data'] = {};
+    askbot['data']['userIsAuthenticated'] = {{ request.user.is_authenticated()|as_js_bool }};
+    askbot['data']['languageCode'] = '{{ current_language_code }}';
+    {% if request.user.is_authenticated() %}
+        askbot['data']['userId'] = {{ request.user.id }};
+        askbot['data']['userName'] = '{{ request.user.username|escape }}';
+        askbot['data']['userIsAdminOrMod'] = {{ request.user.is_administrator_or_moderator()|as_js_bool }};
+        askbot['data']['userIsAdmin'] = {{ request.user.is_administrator()|as_js_bool }};
+        askbot['data']['userReputation'] = {{ request.user.reputation }};
+    {% else %}
+        askbot['data']['userReputation'] = 0;
+    {% endif %}
+    askbot['urls'] = {};
+    askbot['settings'] = {};
+    askbot['messages'] = {};
+</script>
+<script type="text/javascript" src="{% url django.views.i18n.javascript_catalog %}"></script>
+{# avoid adding javascript here so that pages load faster #}

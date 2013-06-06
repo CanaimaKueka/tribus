@@ -1,0 +1,33 @@
+include ez_setup.py
+include tox.ini
+include LICENSE
+include AUTHORS
+include COPYING
+include README.rst
+include askbot_requirements.txt
+recursive-include askbot *
+recursive-exclude askbot *.pyc
+recursive-exclude .git
+prune dist
+prune tmp
+prune build
+prune static
+prune django
+prune lamson
+exclude db
+exclude lint
+exclude settings.py
+exclude manage.py
+exclude __init__.py
+exclude urls.py
+exclude rebuild-locales.pl
+exclude askbot/upfiles/*.*
+exclude askbot/upfiles/avatars/*
+recursive-exclude askbot/doc/build/*
+recursive-exclude avatar *
+recursive-exclude adzone *
+recursive-exclude follow *
+recursive-exclude categories *
+recursive-exclude follow *
+recursive-exclude env *
+recursive-exclude .tox

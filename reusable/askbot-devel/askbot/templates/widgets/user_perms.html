@@ -1,0 +1,28 @@
+<!--h2>{% trans karma=user.reputation %}Your karma is {{ karma }}{% endtrans %}</h2-->
+<div class="triangle"></div>
+<p>
+    {% trans %}Karma reflects the value of your contribution to this community.{% endtrans %}
+</p>
+<p>
+    {% if user.is_administrator_or_moderator() %}
+        {% if user.is_moderator() %}
+            {% set role=gettext('moderator') %}
+        {% else %}
+            {% set role=gettext('administrator') %}
+        {% endif %}
+        {% trans %}Since you are the site {{ role }}, you have access to all functions regardless of your karma.{% endtrans %}
+    {% else %}
+        {% trans %}The higher is your karma, the more rights you have on this site.{% endtrans %}
+    {% endif %}
+</p>
+{% if not user.is_administrator_or_moderator() %}
+<p> {% trans %}Currently, you can:{% endtrans %}</p>
+<ul>
+    <li>{% trans %}Post questions, answers and comments{% endtrans %}</li>
+    {% for perm in perms_data %}
+        {% if user.reputation >= perm[1] %}
+            <li>{{ perm[0] }}</li>
+        {% endif %}
+    {% endfor %}
+</ul>
+{% endif %}

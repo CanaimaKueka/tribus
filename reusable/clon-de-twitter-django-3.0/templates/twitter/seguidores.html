@@ -1,0 +1,38 @@
+{% extends 'twitter/base.html' %}
+{% block contenido %}
+<section>
+	{% if users %}
+		{% for user in users %}
+			<article>
+				<p>
+					<h2>{{ user.get_full_name }} (<a href="/twitter/profile/{{ user }}">@{{ user.username }}</a>)</h2>
+					<h3>{{ user.profile.ubicacion }}</h3>
+					<p>
+						{{ user.profile.frase|linebreaksbr }}
+					</p><p>
+						Joined on {{ user.date_joined }}<br>
+						Email: <a href="mailto:{{ user.email }}">{{ user.email }}</a>
+					</p>
+					{% if logueado.is_authenticated %}
+					{% if logueado != user %}
+						<form action="/twitter/follow/" method="post">
+							{% csrf_token %}
+							<input type="hidden" name="user" value="{{ user.username }}">
+							<p>
+								{% if following %}
+									<input class="btn btn-danger" type="submit" value="Dejar de seguir">
+								{% else %}
+									<input class="btn btn-success" type="submit" value="Seguir">
+								{% endif %}
+							</p>
+						</form>
+					{% endif %}
+					{% endif %}
+				</p>
+			</article>
+		{% endfor %}
+	{% else %}
+		<p>No hay usuarios que mostrar</p>
+	{% endif %}
+</section>
+{% endblock %}

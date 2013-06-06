@@ -1,0 +1,29 @@
+{% extends "one_column_body.html" %}
+{% block title %}{% spaceless %}{% trans %}Change Email{% endtrans %}{% endspaceless %}{% endblock %}
+{% block content %}
+{% if action_type=="validate" %}
+    <div id="main-bar" class="headNormal">
+        {% trans %}Validate email{% endtrans %}
+    </div>
+    <p class="message">
+        {% trans %}<span class=\"strong big\">An email with a validation link has been sent to 
+{{ email }}.</span> Please <strong>follow the emailed link</strong> with your 
+web browser. Email validation is necessary to help insure the proper use of 
+email on <span class=\"orange\">Q&amp;A</span>. If you would like to use 
+<strong>another email</strong>, please <a 
+href='{{ change_email_url }}'><strong>change it again</strong></a>.{% endtrans %}
+    </p>
+{% elif action_type=="validation_complete" %}
+    <div id="main-bar" class="headNormal">
+        {% trans %}Email verified{% endtrans %}
+    </div>
+    <p class="message">
+        {% trans %}<span class=\"big strong\">Thank you for verifying your email!</span> Now 
+you can <strong>ask</strong> and <strong>answer</strong> questions. Also if 
+you find a very interesting question you can <strong>subscribe for the 
+updates</strong> - then will be notified about changes <strong>once a day</strong>
+or less frequently.{% endtrans %}
+    </p>
+{% endif %}
+{% endblock %}
+<!-- end changeemail.html -->

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html><head>
+        <title>Tumblr</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="robots" content="noindex, nofollow">
+        <link rel="icon" href="http://assets.tumblr.com/images/favicon.gif?2" type="image/gif">
+
+
+        <script src="analytics_data/ga.js" async="" type="text/javascript"></script><script type="text/javascript">
+            function log(message) {
+                if (debug) console.log(message);
+            }
+
+            var Tumblr = {
+                Analytics: {
+                    create_post_message_listener: function() {
+                        // http://davidwalsh.name/window-iframe
+                        // Create IE + others compatible event handler
+                        var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+                        var eventer = window[eventMethod];
+                        var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
+
+                        // Listen to message from child window
+                        eventer(messageEvent,function(e) {
+                            var message = e.data.split(';');
+                            Tumblr.Analytics.handle_post_message(message, e.origin);
+                        }, false);
+                    },
+
+                    handle_post_message: function(message, origin) {
+                        switch (message[0]) {
+                            case 'openInMobileApp':
+                                var post_id = parseInt(message[1]),
+                                    custom_event = ['_trackEvent', 'Mobile', 'Clicked', 'Open in Mobile App', post_id ];
+
+                                _gaq.push(custom_event);
+
+                                parent.postMessage('openInMobileAppSuccess' + ';' + post_id, message[2]);
+                                break;
+
+                            case 'tick_google_analytics':
+                                var track_url = Tumblr.Analytics.get_ga_url(message);
+                                if (track_url) {
+                                    log('Tracking GA: ' + '/analytics.html?page=' + track_url);
+                                    _gaq.push(['_trackPageview', '/analytics.html?page=' + track_url]);
+                                }
+                                break;
+
+                            case 'enable_comscore':
+                            case 'tick_comscore':
+                                log({ c1: "7", c2: 15742520, c4: message[1] });
+                                _comscore.push({ c1: "7", c2: 15742520, c4: message[1] });
+                                var s   = document.createElement("script"),
+                                    el  = document.getElementsByTagName("script")[0];
+                                s.async = true;
+                                s.src   = (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js";
+                                el.parentNode.insertBefore(s, el);
+                                break;
+                        }
+                    },
+
+                    get_url_var: function(get_var) {
+                        var vars = [];
+                        var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+                            vars[key] = value;
+                        });
+
+                        if (get_var) {
+                            if (typeof vars[get_var] == 'undefined') {
+                                return;
+                            }
+
+                            return vars[get_var];
+                        }
+
+                        return vars;
+                    },
+
+                    get_ga_url: function(message) {
+                        var parser = document.createElement('a');
+                        message = message || [];
+
+                        if (message[1] === '') message[1] = '/';
+                        parser.href  = message[1] || document.referrer;
+                        var page_path = parser.pathname;
+
+                        // Remove query string parameters and hash tags.
+                        page_path = page_path.split("?")[0].split("#")[0];
+
+                        // Make sure path starts with a /
+                        if (!page_path.match(/^\//)) page_path = '/' + page_path;
+                        if (page_path.match(/^\/analytics\.html/)) return false;
+
+                        // Collapse urls.
+                        if (page_path.match(/^\/page\/[0-9]+$/)) return '/page/*';
+                        if (page_path.match(/^\/post\/[0-9]+/)) return '/post/*';
+                        if (page_path.match(/^\/image\/[0-9]+$/)) return '/image/*';
+                        if (page_path.match(/^\/video\/[0-9]+$/)) return '/video/*';
+                        if (page_path.match(/^\/tagged\/[a-z0-9_]+$/)) return '/tagged/*';
+
+                        // Add parameters as needed.
+                        if (message[2] == 'true') page_path += '&ajax=1';
+                        if (Tumblr.Analytics.get_url_var('utm_campaign')) page_path += '&utm_campaign=' + Tumblr.Analytics.get_url_var('utm_campaign');
+                        if (Tumblr.Analytics.get_url_var('utm_medium'))   page_path += '&utm_medium='   + Tumblr.Analytics.get_url_var('utm_medium');
+                        if (Tumblr.Analytics.get_url_var('utm_source'))   page_path += '&utm_source='   + Tumblr.Analytics.get_url_var('utm_source');
+
+                        return page_path;
+                    }
+                }
+            };
+
+            var debug     = false
+              , _gaq      = _gaq || []
+              , _comscore = _comscore || [];
+
+            _gaq.push(['_setAccount', 'UA-97144-8']);
+            _gaq.push(['_setAllowLinker', true]);
+            _gaq.push(['_setDomainName', 'tumblr.com']);
+
+            var track_url = Tumblr.Analytics.get_ga_url();
+            if (track_url) {
+                log('Tracking GA: ' + '/analytics.html?page=' + track_url);
+                _gaq.push(['_trackPageview', '/analytics.html?page=' + track_url]);
+            }
+
+            (function(){
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+
+            Tumblr.Analytics.create_post_message_listener();
+        </script>
+        <noscript><img src="http://b.scorecardresearch.com/p?c1=2&amp;c2=15742520&amp;cv=2.0&amp;cj=1" /></noscript>
+    </head>
+    <body>
+    
+</body></html>

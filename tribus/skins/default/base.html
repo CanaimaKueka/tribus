@@ -2,9 +2,9 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	<meta charset="{{ app_charset|lower }}" />
+		<meta charset="{{ app_charset|lower }}" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>{% block title %}{{ app_name }} - {{ app_desc }}{% endblock %}</title>
+		<title>{% block title %}{{ app_name|upper }} - {{ app_desc }}{% endblock %}</title>
         <link rel='stylesheet' href='{{ app_static_url }}{{ app_skin }}/css/normalize.css' />
         <link rel='stylesheet' href='{{ app_static_url }}{{ app_skin }}/css/bootstrap.css' />
         <link rel='stylesheet' href='{{ app_static_url }}{{ app_skin }}/css/bootstrap-responsive.css' />
@@ -17,14 +17,14 @@
                     <div class="container">
                         <a class="logo" href="#"></a>
                         <ul class="nav">
+                            <li>
+                                <form class="form-search">
+                                    <input type="text" class="input-xlarge">
+                                </form>
+                            </li>
                             <li><a href="#">A</a></li>
                             <li><a href="#">B</a></li>
                             <li><a href="#">C</a></li>
-                            <li>
-                                <form class="form-search">
-                                    <input type="text" class="input-xxlarge">
-                                </form>
-                            </li>
                         </ul>
                         <ul class="nav pull-right">
                             <li class="dropdown">

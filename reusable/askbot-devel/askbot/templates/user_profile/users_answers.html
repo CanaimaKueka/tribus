@@ -1,0 +1,23 @@
+<div class="user-stats-table">
+    {% for top_answer in top_answers %}
+    <div class="answer-summary">
+        <a title="{{ top_answer.summary|collapse|escape }}"
+            href="{% url question top_answer.thread._question_post().id %}{{ top_answer.thread.title|slugify }}#{{ top_answer.id }}">
+            <span class="answer-votes {% if top_answer.accepted() %}answered-accepted{% endif %}"
+                  title="{% trans answer_score=top_answer.score %}the answer has been voted for {{ answer_score }} times{% endtrans %} {% if top_answer.accepted() %}{% trans %}this answer has been selected as correct{% endtrans %}{%endif%}">
+                {{ top_answer.score }}
+            </span>
+        </a>
+        <div class="answer-link">
+            {% spaceless %}
+            <a href="{% url question top_answer.thread._question_post().id %}{{ top_answer.thread.title|slugify }}#{{top_answer.id}}">{{ top_answer.thread.title|escape }}</a>
+            {% endspaceless %}
+            {% if top_answer.comment_count > 0 %}
+            <span>
+                {% trans comment_count=top_answer.comment_count %}({{ comment_count }} comment){% pluralize %}the answer has been commented {{ comment_count }} times{% endtrans %}
+            </span>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>

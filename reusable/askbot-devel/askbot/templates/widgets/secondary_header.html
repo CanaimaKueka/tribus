@@ -1,0 +1,44 @@
+<!-- template secondary_header.html -->
+<div id="secondaryHeader">
+    <div class="content-wrapper">
+        {# form is wrapping search buttons and the search bar inputs #}
+        {% set enabled_scopes_class = 'scopes-' + 
+            '%s'|format(settings.ALL_SCOPE_ENABLED) + '-' +
+            '%s'|format(settings.UNANSWERED_SCOPE_ENABLED) + '-' +
+            '%s'|format((request.user.is_authenticated() and settings.FOLLOWED_SCOPE_ENABLED))
+        %}
+        <form
+            {% if active_tab == "tags" %}
+                action="{% url tags %}" 
+            {% elif active_tab == "users" %}
+                action="" 
+            {% else %}
+                action="{% url questions %}" id="searchForm"
+            {% endif %}
+            class="{{ enabled_scopes_class }}"
+            method="get">
+            <div>
+                {# 
+                    Some or all contents of this div may be dropped
+                    over the search bar via negative margins,
+                    to make sure that the search bar can occupy 100%
+                    of the content width.
+                    Search bar may have padding on the left and right
+                    to accomodate the buttons.
+                #}
+                <a id="homeButton" href="{% url questions %}"></a>
+                {% include "widgets/scope_nav.html" %}            
+                {# 
+                    three buttons below are in the opposite order because
+                    they are floated at the right
+                #}
+                {% if settings.ASK_BUTTON_ENABLED %}
+                    {% include "widgets/ask_button.html" %}            
+                {% endif %}
+                {# clears button floats #}
+                <div class="clearfix"></div>
+            </div>
+            {% include "widgets/search_bar.html" %} {# include search form widget #}
+        </form>
+    </div>
+</div>

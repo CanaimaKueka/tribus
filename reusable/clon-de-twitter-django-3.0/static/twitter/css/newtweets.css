@@ -1,0 +1,14 @@
+#nuevostweets
+{
+	background-color: #99F;
+	border-radius: 5px;
+	padding: 15px;
+	display: none;
+}
+#nuevostweets a{
+	color: black;
+}
+.tweetoculto
+{
+	display: none;
+}

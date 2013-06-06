@@ -1,0 +1,7972 @@
+# English translation for CNPROG package.
+# Copyright (C) 2009 Gang Chen, 2010 Askbot
+# This file is distributed under the same license as the CNPROG package.
+# 
+# Translators:
+# evgeny <evgeny.fadeev@gmail.com>, 2009
+# whisky <whisky@ystaiwan.org.tw>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: askbot\n"
+"Report-Msgid-Bugs-To: http://askbot.org/\n"
+"POT-Creation-Date: 2013-05-18 09:59-0500\n"
+"PO-Revision-Date: 2013-05-18 18:48+0000\n"
+"Last-Translator: evgeny <evgeny.fadeev@gmail.com>\n"
+"Language-Team: Chinese (Taiwan) (http://www.transifex.com/projects/p/askbot/language/zh_TW/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_TW\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: exceptions.py:13
+msgid "Sorry, but anonymous visitors cannot access this function"
+msgstr ""
+
+#: feed.py:34 feed.py:108
+msgid " - "
+msgstr "-"
+
+#: feed.py:35 feed.py:109
+msgid "Individual question feed"
+msgstr ""
+
+#: forms.py:139
+msgid "select country"
+msgstr "選擇國家"
+
+#: forms.py:149
+msgid "Country"
+msgstr "國家"
+
+#: forms.py:157
+msgid "Country field is required"
+msgstr ""
+
+#: forms.py:187
+#, python-format
+msgid "must be > %d word"
+msgid_plural "must be > %d words"
+msgstr[0] ""
+
+#: forms.py:198
+#, python-format
+msgid "must be < %d word"
+msgid_plural "must be < %d words"
+msgstr[0] ""
+
+#: forms.py:219
+msgid "minor edit (don't send alerts)"
+msgstr ""
+
+#: forms.py:246 templates/widgets/markdown_help.html:20
+#: templates/widgets/markdown_help.html:24
+msgid "title"
+msgstr "標題"
+
+#: forms.py:248 templates/embed/ask_by_widget.html:170
+msgid "Please enter your question"
+msgstr ""
+
+#: forms.py:259
+#, python-format
+msgid "must have > %d character"
+msgid_plural "must have > %d characters"
+msgstr[0] ""
+
+#: forms.py:269
+#, python-format
+msgid "The question is too long, maximum allowed size is %d characters"
+msgstr ""
+
+#: forms.py:276
+#, python-format
+msgid "The question is too long, maximum allowed size is %d bytes"
+msgstr ""
+
+#: forms.py:308
+msgid "content"
+msgstr "內容"
+
+#: forms.py:369
+#, python-format
+msgid "each tag must be shorter than %(max_chars)d character"
+msgid_plural "each tag must be shorter than %(max_chars)d characters"
+msgstr[0] ""
+
+#: forms.py:406
+msgid ""
+"We ran out of space for recording the tags. Please shorten or delete some of"
+" them."
+msgstr ""
+
+#: forms.py:409 forms.py:1015 models/widgets.py:27
+#: templates/widgets/edit_post.html:32 templates/widgets/meta_nav.html:6
+msgid "tags"
+msgstr "標籤"
+
+#: forms.py:411
+#, python-format
+msgid ""
+"Tags are short keywords, with no spaces within. Up to %(max_tags)d tag can "
+"be used."
+msgid_plural ""
+"Tags are short keywords, with no spaces within. Up to %(max_tags)d tags can "
+"be used."
+msgstr[0] ""
+
+#: forms.py:438
+#, python-format
+msgid "please use %(tag_count)d tag or less"
+msgid_plural "please use %(tag_count)d tags or less"
+msgstr[0] ""
+
+#: forms.py:446
+#, python-format
+msgid "At least one of the following tags is required : %(tags)s"
+msgstr ""
+
+#: forms.py:474
+msgid "community wiki (karma is not awarded & many others can edit wiki post)"
+msgstr ""
+
+#: forms.py:478
+msgid ""
+"if you choose community wiki option, the question and answer do not generate"
+" points and name of author will not be shown"
+msgstr "選擇社區wiki模式，問答不計算積分，簽名也不顯示作者信息"
+
+#: forms.py:505
+msgid "update summary:"
+msgstr "更新概要："
+
+#: forms.py:507
+msgid ""
+"enter a brief summary of your revision (e.g. fixed spelling, grammar, "
+"improved style, this field is optional)"
+msgstr "輸入本次修改的簡單概述（如：修改了別字，修正了語法，改進了樣式等。非必填項。）"
+
+#: forms.py:594
+msgid "Enter number of points to add or subtract"
+msgstr ""
+
+#: forms.py:609 const/__init__.py:375
+msgid "approved"
+msgstr ""
+
+#: forms.py:610 const/__init__.py:376
+msgid "watched"
+msgstr ""
+
+#: forms.py:611 const/__init__.py:377
+msgid "suspended"
+msgstr ""
+
+#: forms.py:612 const/__init__.py:378
+msgid "blocked"
+msgstr ""
+
+#: forms.py:614
+msgid "administrator"
+msgstr "管理員"
+
+#: forms.py:615 const/__init__.py:374
+msgid "moderator"
+msgstr ""
+
+#: forms.py:634
+msgid "Change status to"
+msgstr ""
+
+#: forms.py:661
+msgid "which one?"
+msgstr ""
+
+#: forms.py:682
+msgid "Cannot change own status"
+msgstr ""
+
+#: forms.py:688
+msgid "Cannot turn other user to moderator"
+msgstr ""
+
+#: forms.py:695
+msgid "Cannot change status of another moderator"
+msgstr ""
+
+#: forms.py:701
+msgid "Cannot change status to admin"
+msgstr ""
+
+#: forms.py:707
+#, python-format
+msgid ""
+"If you wish to change %(username)s's status, please make a meaningful "
+"selection."
+msgstr ""
+
+#: forms.py:717
+msgid "Subject line"
+msgstr ""
+
+#: forms.py:722
+msgid "Message text"
+msgstr ""
+
+#: forms.py:736
+msgid "Your name (optional):"
+msgstr ""
+
+#: forms.py:737
+msgid "Email:"
+msgstr ""
+
+#: forms.py:739
+msgid "Your message:"
+msgstr ""
+
+#: forms.py:744
+msgid "I don't want to give my email or receive a response:"
+msgstr ""
+
+#: forms.py:767
+msgid "Please mark \"I dont want to give my mail\" field."
+msgstr ""
+
+#: forms.py:800
+msgid "keep private within your groups"
+msgstr ""
+
+#: forms.py:839
+msgid "User name:"
+msgstr ""
+
+#: forms.py:841
+msgid "Enter name to post on behalf of someone else. Can create new accounts."
+msgstr ""
+
+#: forms.py:848
+msgid "Email address:"
+msgstr ""
+
+#: forms.py:898
+msgid "User name is required with the email"
+msgstr ""
+
+#: forms.py:903
+msgid "Email is required if user name is added"
+msgstr ""
+
+#: forms.py:923 forms.py:966
+msgid "ask anonymously"
+msgstr ""
+
+#: forms.py:925 forms.py:968
+msgid "Check if you do not want to reveal your name when asking this question"
+msgstr ""
+
+#: forms.py:956
+msgid ""
+"Subject line is expected in the format: [tag1, tag2, tag3,...] question "
+"title"
+msgstr ""
+
+#: forms.py:1215
+msgid ""
+"You have asked this question anonymously, if you decide to reveal your "
+"identity, please check this box."
+msgstr ""
+
+#: forms.py:1219
+msgid "reveal identity"
+msgstr ""
+
+#: forms.py:1298
+msgid ""
+"Sorry, only owner of the anonymous question can reveal his or her identity, "
+"please uncheck the box"
+msgstr ""
+
+#: forms.py:1311
+msgid ""
+"Sorry, apparently rules have just changed - it is no longer possible to ask "
+"anonymously. Please either check the \"reveal identity\" box or reload this "
+"page and try editing the question again."
+msgstr ""
+
+#: forms.py:1375
+msgid "Real name"
+msgstr "真實姓名"
+
+#: forms.py:1382
+msgid "Website"
+msgstr "個人網站"
+
+#: forms.py:1389
+msgid "City"
+msgstr "城市"
+
+#: forms.py:1398
+msgid "Show country"
+msgstr ""
+
+#: forms.py:1403
+msgid "Show tag choices"
+msgstr ""
+
+#: forms.py:1408
+msgid "Date of birth"
+msgstr "生日"
+
+#: forms.py:1410
+msgid "will not be shown, used to calculate age, format: YYYY-MM-DD"
+msgstr "不會公開，只會顯示您的年齡，格式為：YYYY-MM-DD"
+
+#: forms.py:1418
+msgid "Profile"
+msgstr "個人簡介"
+
+#: forms.py:1427
+msgid "Screen name"
+msgstr ""
+
+#: forms.py:1459 forms.py:1463
+msgid "this email has already been registered, please use another one"
+msgstr "該電子郵件已被注冊，請選擇另一個再試。"
+
+#: forms.py:1472
+msgid "Choose email tag filter"
+msgstr "選擇 Email 標籤篩選"
+
+#: forms.py:1524
+msgid "Asked by me"
+msgstr "詢問"
+
+#: forms.py:1527
+msgid "Answered by me"
+msgstr "回應"
+
+#: forms.py:1530
+msgid "Individually selected"
+msgstr "個別選定"
+
+#: forms.py:1533
+msgid "Entire forum (tag filtered)"
+msgstr "整個論壇 (標籤篩選)"
+
+#: forms.py:1537
+msgid "Comments and posts mentioning me"
+msgstr ""
+
+#: forms.py:1621
+msgid "please choose one of the options above"
+msgstr "請選上述選項之一"
+
+#: forms.py:1624
+msgid "okay, let's try!"
+msgstr "好, 試試看"
+
+#: forms.py:1627
+#, python-format
+msgid "no %(sitename)s email please, thanks"
+msgstr ""
+
+#: forms.py:1675 templates/reopen.html:7
+msgid "Title"
+msgstr ""
+
+#: forms.py:1678 templates/groups.html:32
+msgid "Description"
+msgstr ""
+
+#: forms.py:1697 templates/tags.html:3 templates/tags/header.html:9
+#: templates/tags/list_bulk_tag_subscription.html:12
+#: templates/widgets/edit_post.html:26 templates/widgets/related_tags.html:3
+#: templates/widgets/tag_category_selector.html:2
+msgid "Tags"
+msgstr ""
+
+#: tasks.py:94
+msgid "An edit for my answer"
+msgstr ""
+
+#: tasks.py:97
+msgid "To add to your post EDIT ABOVE THIS LINE"
+msgstr ""
+
+#: tasks.py:115
+#, python-format
+msgid "Your post at %(site_name)s is now published"
+msgstr ""
+
+#: urls.py:42
+msgid "about/"
+msgstr "關於/"
+
+#: urls.py:43
+msgid "faq/"
+msgstr ""
+
+#: urls.py:44
+msgid "privacy/"
+msgstr ""
+
+#: urls.py:45
+msgid "help/"
+msgstr ""
+
+#: urls.py:47 urls.py:52
+msgid "answers/"
+msgstr ""
+
+#: urls.py:47 urls.py:131 urls.py:382 urls.py:497
+msgid "edit/"
+msgstr "編輯/"
+
+#: urls.py:52 urls.py:161
+msgid "revisions/"
+msgstr "版本/"
+
+#: urls.py:62
+msgid "questions"
+msgstr ""
+
+#: urls.py:126 urls.py:131 urls.py:136 urls.py:141 urls.py:146 urls.py:151
+#: urls.py:161 urls.py:573
+msgid "questions/"
+msgstr "問題/"
+
+#: urls.py:126 urls.py:471 urls.py:476 urls.py:481 urls.py:487
+msgid "ask/"
+msgstr "提問/"
+
+#: urls.py:136
+msgid "retag/"
+msgstr ""
+
+#: urls.py:141
+msgid "close/"
+msgstr ""
+
+#: urls.py:146
+msgid "reopen/"
+msgstr ""
+
+#: urls.py:151
+msgid "answer/"
+msgstr ""
+
+#: urls.py:219
+msgid "tags/"
+msgstr ""
+
+#: urls.py:224
+msgid "tags/subscriptions/"
+msgstr ""
+
+#: urls.py:229
+msgid "tags/subscriptions/delete/"
+msgstr ""
+
+#: urls.py:234
+msgid "tags/subscriptions/create/"
+msgstr ""
+
+#: urls.py:239
+msgid "tags/subscriptions/edit/"
+msgstr ""
+
+#: urls.py:245
+msgid "suggested-tags/"
+msgstr ""
+
+#: urls.py:365
+msgid "subscribe-for-tags/"
+msgstr ""
+
+#: urls.py:370 urls.py:375 urls.py:382 urls.py:388 urls.py:397 urls.py:404
+msgid "users/"
+msgstr ""
+
+#: urls.py:375
+msgid "by-group/"
+msgstr ""
+
+#: urls.py:389
+msgid "subscriptions/"
+msgstr ""
+
+#: urls.py:398
+msgid "select_languages/"
+msgstr ""
+
+#: urls.py:409
+msgid "groups/"
+msgstr ""
+
+#: urls.py:414
+msgid "users/update_has_custom_avatar/"
+msgstr ""
+
+#: urls.py:419 urls.py:424
+msgid "badges/"
+msgstr "徽章/"
+
+#: urls.py:434
+msgid "messages/"
+msgstr ""
+
+#: urls.py:434
+msgid "markread/"
+msgstr ""
+
+#: urls.py:465 urls.py:471 urls.py:476 urls.py:481 urls.py:487 urls.py:492
+#: urls.py:497 urls.py:502 urls.py:508
+msgid "widgets/"
+msgstr ""
+
+#: urls.py:487 deps/django_authopenid/urls.py:20
+msgid "complete/"
+msgstr ""
+
+#: urls.py:492
+msgid "create/"
+msgstr ""
+
+#: urls.py:502
+msgid "delete/"
+msgstr ""
+
+#: urls.py:533
+msgid "upload/"
+msgstr ""
+
+#: urls.py:534
+msgid "feedback/"
+msgstr ""
+
+#: urls.py:579
+msgid "question/"
+msgstr ""
+
+#: urls.py:586 setup_templates/settings.py:229
+#: templates/authopenid/providers_javascript.html:7
+msgid "account/"
+msgstr ""
+
+#: conf/access_control.py:8
+msgid "Access control settings"
+msgstr ""
+
+#: conf/access_control.py:17
+msgid "Allow only registered user to access the forum"
+msgstr ""
+
+#: conf/access_control.py:22
+msgid "nothing - not required"
+msgstr ""
+
+#: conf/access_control.py:23
+msgid "access to content"
+msgstr ""
+
+#: conf/access_control.py:34
+msgid "Require valid email for"
+msgstr ""
+
+#: conf/access_control.py:44
+msgid "Allowed email addresses"
+msgstr ""
+
+#: conf/access_control.py:45
+msgid "Please use space to separate the entries"
+msgstr ""
+
+#: conf/access_control.py:54
+msgid "Allowed email domain names"
+msgstr ""
+
+#: conf/access_control.py:55
+msgid "Please use space to separate the entries, do not use the @ symbol!"
+msgstr ""
+
+#: conf/badges.py:13
+msgid "Badge settings"
+msgstr ""
+
+#: conf/badges.py:23
+msgid "Disciplined: minimum upvotes for deleted post"
+msgstr ""
+
+#: conf/badges.py:32
+msgid "Peer Pressure: minimum downvotes for deleted post"
+msgstr ""
+
+#: conf/badges.py:41
+msgid "Teacher: minimum upvotes for the answer"
+msgstr ""
+
+#: conf/badges.py:50
+msgid "Nice Answer: minimum upvotes for the answer"
+msgstr ""
+
+#: conf/badges.py:59
+msgid "Good Answer: minimum upvotes for the answer"
+msgstr ""
+
+#: conf/badges.py:68
+msgid "Great Answer: minimum upvotes for the answer"
+msgstr ""
+
+#: conf/badges.py:77
+msgid "Nice Question: minimum upvotes for the question"
+msgstr ""
+
+#: conf/badges.py:86
+msgid "Good Question: minimum upvotes for the question"
+msgstr ""
+
+#: conf/badges.py:95
+msgid "Great Question: minimum upvotes for the question"
+msgstr ""
+
+#: conf/badges.py:104
+msgid "Popular Question: minimum views"
+msgstr ""
+
+#: conf/badges.py:113
+msgid "Notable Question: minimum views"
+msgstr ""
+
+#: conf/badges.py:122
+msgid "Famous Question: minimum views"
+msgstr ""
+
+#: conf/badges.py:131
+msgid "Self-Learner: minimum answer upvotes"
+msgstr ""
+
+#: conf/badges.py:140
+msgid "Civic Duty: minimum votes"
+msgstr ""
+
+#: conf/badges.py:149
+msgid "Enlightened Duty: minimum upvotes"
+msgstr ""
+
+#: conf/badges.py:158
+msgid "Guru: minimum upvotes"
+msgstr ""
+
+#: conf/badges.py:167
+msgid "Necromancer: minimum upvotes"
+msgstr ""
+
+#: conf/badges.py:176
+msgid "Necromancer: minimum delay in days"
+msgstr ""
+
+#: conf/badges.py:185
+msgid "Associate Editor: minimum number of edits"
+msgstr ""
+
+#: conf/badges.py:194
+msgid "Favorite Question: minimum stars"
+msgstr ""
+
+#: conf/badges.py:203
+msgid "Stellar Question: minimum stars"
+msgstr ""
+
+#: conf/badges.py:212
+msgid "Commentator: minimum comments"
+msgstr ""
+
+#: conf/badges.py:221
+msgid "Taxonomist: minimum tag use count"
+msgstr ""
+
+#: conf/badges.py:230
+msgid "Enthusiast: minimum days"
+msgstr ""
+
+#: conf/email.py:15
+msgid "Email and email alert settings"
+msgstr ""
+
+#: conf/email.py:24
+msgid "Prefix for the email subject line"
+msgstr ""
+
+#: conf/email.py:26
+msgid ""
+"This setting takes default from the django settingEMAIL_SUBJECT_PREFIX. A "
+"value entered here will overridethe default."
+msgstr ""
+
+#: conf/email.py:38
+msgid "Enable email alerts"
+msgstr ""
+
+#: conf/email.py:47
+msgid "Maximum number of news entries in an email alert"
+msgstr ""
+
+#: conf/email.py:57
+msgid "Default notification frequency all questions"
+msgstr ""
+
+#: conf/email.py:59
+msgid "Option to define frequency of emailed updates for: all questions."
+msgstr ""
+
+#: conf/email.py:71
+msgid "Default notification frequency questions asked by the user"
+msgstr ""
+
+#: conf/email.py:73
+msgid ""
+"Option to define frequency of emailed updates for: Question asked by the "
+"user."
+msgstr ""
+
+#: conf/email.py:85
+msgid "Default notification frequency questions answered by the user"
+msgstr ""
+
+#: conf/email.py:87
+msgid ""
+"Option to define frequency of emailed updates for: Question answered by the "
+"user."
+msgstr ""
+
+#: conf/email.py:99
+msgid ""
+"Default notification frequency questions individually"
+"                        selected by the user"
+msgstr ""
+
+#: conf/email.py:102
+msgid ""
+"Option to define frequency of emailed updates for: Question individually "
+"selected by the user."
+msgstr ""
+
+#: conf/email.py:114
+msgid ""
+"Default notification frequency for mentions                        and "
+"comments"
+msgstr ""
+
+#: conf/email.py:117
+msgid ""
+"Option to define frequency of emailed updates for: Mentions and comments."
+msgstr ""
+
+#: conf/email.py:128
+msgid "Send periodic reminders about unanswered questions"
+msgstr ""
+
+#: conf/email.py:130
+msgid ""
+"NOTE: in order to use this feature, it is necessary to run the management "
+"command \"send_unanswered_question_reminders\" (for example, via a cron job "
+"- with an appropriate frequency) "
+msgstr ""
+
+#: conf/email.py:143
+msgid "Days before starting to send reminders about unanswered questions"
+msgstr ""
+
+#: conf/email.py:154
+msgid ""
+"How often to send unanswered question reminders (in days between the "
+"reminders sent)."
+msgstr ""
+
+#: conf/email.py:166
+msgid "Max. number of reminders to send about unanswered questions"
+msgstr ""
+
+#: conf/email.py:177
+msgid "Send periodic reminders to accept the best answer"
+msgstr ""
+
+#: conf/email.py:179
+msgid ""
+"NOTE: in order to use this feature, it is necessary to run the management "
+"command \"send_accept_answer_reminders\" (for example, via a cron job - with"
+" an appropriate frequency) "
+msgstr ""
+
+#: conf/email.py:192
+msgid "Days before starting to send reminders to accept an answer"
+msgstr ""
+
+#: conf/email.py:203
+msgid ""
+"How often to send accept answer reminders (in days between the reminders "
+"sent)."
+msgstr ""
+
+#: conf/email.py:215
+msgid "Max. number of reminders to send to accept the best answer"
+msgstr ""
+
+#: conf/email.py:227
+msgid "Require email verification before allowing to post"
+msgstr ""
+
+#: conf/email.py:228
+msgid ""
+"Active email verification is done by sending a verification key in email"
+msgstr ""
+
+#: conf/email.py:237
+msgid "Fake email for anonymous user"
+msgstr ""
+
+#: conf/email.py:238
+msgid "Use this setting to control gravatar for email-less user"
+msgstr ""
+
+#: conf/email.py:247
+msgid "Allow posting questions by email"
+msgstr ""
+
+#: conf/email.py:249
+msgid ""
+"Before enabling this setting - please fill out IMAP settings in the "
+"settings.py file"
+msgstr ""
+
+#: conf/email.py:260
+msgid "Replace space in emailed tags with dash"
+msgstr ""
+
+#: conf/email.py:262
+msgid ""
+"This setting applies to tags written in the subject line of questions asked "
+"by email"
+msgstr ""
+
+#: conf/email.py:273
+msgid "Enable posting answers and comments by email"
+msgstr ""
+
+#: conf/email.py:276
+msgid "To enable this feature make sure lamson is running"
+msgstr ""
+
+#: conf/email.py:287
+msgid "Emailed post: when to notify author about publishing"
+msgstr ""
+
+#: conf/email.py:312
+msgid "Reply by email hostname"
+msgstr ""
+
+#: conf/email.py:323
+msgid ""
+"Email replies having fewer words than this number will be posted as comments"
+" instead of answers"
+msgstr ""
+
+#: conf/external_keys.py:11
+msgid "Keys for external services"
+msgstr ""
+
+#: conf/external_keys.py:19
+msgid "Google site verification key"
+msgstr ""
+
+#: conf/external_keys.py:21
+#, python-format
+msgid ""
+"This key helps google index your site please obtain is at <a "
+"href=\"%(url)s?hl=%(lang)s\">google webmasters tools site</a>"
+msgstr ""
+
+#: conf/external_keys.py:36
+msgid "Google Analytics key"
+msgstr ""
+
+#: conf/external_keys.py:38
+#, python-format
+msgid ""
+"Obtain is at <a href=\"%(url)s\">Google Analytics</a> site, if you wish to "
+"use Google Analytics to monitor your site"
+msgstr ""
+
+#: conf/external_keys.py:51
+msgid "Enable recaptcha (keys below are required)"
+msgstr ""
+
+#: conf/external_keys.py:62
+msgid "Recaptcha public key"
+msgstr ""
+
+#: conf/external_keys.py:70
+msgid "Recaptcha private key"
+msgstr ""
+
+#: conf/external_keys.py:72
+#, python-format
+msgid ""
+"Recaptcha is a tool that helps distinguish real people from annoying spam "
+"robots. Please get this and a public key at the <a "
+"href=\"%(url)s\">%(url)s</a>"
+msgstr ""
+
+#: conf/external_keys.py:84
+msgid "Facebook public API key"
+msgstr ""
+
+#: conf/external_keys.py:86
+#, python-format
+msgid ""
+"Facebook API key and Facebook secret allow to use Facebook Connect login "
+"method at your site. Please obtain these keys at <a "
+"href=\"%(url)s\">facebook create app</a> site"
+msgstr ""
+
+#: conf/external_keys.py:99
+msgid "Facebook secret key"
+msgstr ""
+
+#: conf/external_keys.py:107
+msgid "Twitter consumer key"
+msgstr ""
+
+#: conf/external_keys.py:109
+#, python-format
+msgid ""
+"Please register your forum at <a href=\"%(url)s\">twitter applications "
+"site</a>"
+msgstr ""
+
+#: conf/external_keys.py:120
+msgid "Twitter consumer secret"
+msgstr ""
+
+#: conf/external_keys.py:128
+msgid "LinkedIn consumer key"
+msgstr ""
+
+#: conf/external_keys.py:130
+#, python-format
+msgid ""
+"Please register your forum at <a href=\"%(url)s\">LinkedIn developer "
+"site</a>"
+msgstr ""
+
+#: conf/external_keys.py:141
+msgid "LinkedIn consumer secret"
+msgstr ""
+
+#: conf/external_keys.py:149
+msgid "ident.ca consumer key"
+msgstr ""
+
+#: conf/external_keys.py:151
+#, python-format
+msgid ""
+"Please register your forum at <a href=\"%(url)s\">Identi.ca applications "
+"site</a>"
+msgstr ""
+
+#: conf/external_keys.py:162
+msgid "ident.ca consumer secret"
+msgstr ""
+
+#: conf/flatpages.py:11
+msgid "Messages and pages - about, privacy policy, etc."
+msgstr ""
+
+#: conf/flatpages.py:19
+msgid "Text of the Q&A forum About page (html format)"
+msgstr ""
+
+#: conf/flatpages.py:22
+msgid ""
+"Save, then <a href=\"http://validator.w3.org/\">use HTML validator</a> on "
+"the \"about\" page to check your input."
+msgstr ""
+
+#: conf/flatpages.py:32
+msgid "Text of the Q&A forum FAQ page (html format)"
+msgstr ""
+
+#: conf/flatpages.py:35
+msgid ""
+"Save, then <a href=\"http://validator.w3.org/\">use HTML validator</a> on "
+"the \"faq\" page to check your input."
+msgstr ""
+
+#: conf/flatpages.py:45
+msgid "Instructions on how to ask questions"
+msgstr ""
+
+#: conf/flatpages.py:48
+msgid ""
+"HTML is allowed. Save, then <a href=\"http://validator.w3.org/\">use HTML "
+"validator</a> on the \"ask\" page to check your input."
+msgstr ""
+
+#: conf/flatpages.py:59
+msgid "Text of the Q&A forum Privacy Policy (html format)"
+msgstr ""
+
+#: conf/flatpages.py:62
+msgid ""
+"Save, then <a href=\"http://validator.w3.org/\">use HTML validator</a> on "
+"the \"privacy\" page to check your input."
+msgstr ""
+
+#: conf/flatpages.py:75
+msgid "Do not edit this field manually!!!"
+msgstr ""
+
+#: conf/forum_data_rules.py:12
+msgid "Data entry and display rules"
+msgstr ""
+
+#: conf/forum_data_rules.py:27
+msgid "Editor for the posts"
+msgstr ""
+
+#: conf/forum_data_rules.py:42
+msgid "Editor for the comments"
+msgstr ""
+
+#: conf/forum_data_rules.py:51
+msgid "Enable big Ask button"
+msgstr ""
+
+#: conf/forum_data_rules.py:53
+msgid ""
+"Disabling this button will reduce number of new questions. If this button is"
+" disabled, the ask button in the search menu will still be available."
+msgstr ""
+
+#: conf/forum_data_rules.py:66
+msgid "Enable embedding videos. "
+msgstr ""
+
+#: conf/forum_data_rules.py:68
+#, python-format
+msgid "<em>Note: please read <a href=\"%(url)s\">read this</a> first.</em>"
+msgstr ""
+
+#: conf/forum_data_rules.py:78
+msgid "Check to enable community wiki feature"
+msgstr ""
+
+#: conf/forum_data_rules.py:87
+msgid "Allow asking questions anonymously"
+msgstr ""
+
+#: conf/forum_data_rules.py:89
+msgid ""
+"Users do not accrue reputation for anonymous questions and their identity is"
+" not revealed until they change their mind"
+msgstr ""
+
+#: conf/forum_data_rules.py:101
+msgid "Allow posting before logging in"
+msgstr ""
+
+#: conf/forum_data_rules.py:103
+msgid ""
+"Check if you want to allow users start posting questions or answers before "
+"logging in. Enabling this may require adjustments in the user login system "
+"to check for pending posts every time the user logs in. The builtin Askbot "
+"login system supports this feature."
+msgstr ""
+
+#: conf/forum_data_rules.py:118
+msgid "Auto-follow questions by the Author"
+msgstr ""
+
+#: conf/forum_data_rules.py:123
+msgid "Fully open by default"
+msgstr ""
+
+#: conf/forum_data_rules.py:124
+msgid "Folded by default"
+msgstr ""
+
+#: conf/forum_data_rules.py:133
+msgid "Question details/body editor should be"
+msgstr ""
+
+#: conf/forum_data_rules.py:135
+msgid ""
+"To use folded mode, please first set minimum question body length to 0. Also"
+" - please make tags optional."
+msgstr ""
+
+#: conf/forum_data_rules.py:147
+msgid "Allow swapping answer with question"
+msgstr ""
+
+#: conf/forum_data_rules.py:149
+msgid ""
+"This setting will help import data from other forums such as zendesk, when "
+"automatic data import fails to detect the original question correctly."
+msgstr ""
+
+#: conf/forum_data_rules.py:161
+msgid "Maximum length of tag (number of characters)"
+msgstr ""
+
+#: conf/forum_data_rules.py:170
+msgid "Minimum length of title (number of characters)"
+msgstr ""
+
+#: conf/forum_data_rules.py:180
+msgid "Minimum length of question body (number of characters)"
+msgstr ""
+
+#: conf/forum_data_rules.py:191
+msgid "Minimum length of answer body (number of characters)"
+msgstr ""
+
+#: conf/forum_data_rules.py:202
+msgid "Minimum length of comment (number of characters)"
+msgstr ""
+
+#: conf/forum_data_rules.py:213
+msgid "Limit one answer per question per user"
+msgstr ""
+
+#: conf/forum_data_rules.py:223
+msgid "Enable accepting best answer"
+msgstr ""
+
+#: conf/forum_data_rules.py:231
+msgid "Are tags required?"
+msgstr ""
+
+#: conf/forum_data_rules.py:237
+msgid "category tree"
+msgstr ""
+
+#: conf/forum_data_rules.py:238
+msgid "user input"
+msgstr ""
+
+#: conf/forum_data_rules.py:245
+msgid "Source of tags"
+msgstr ""
+
+#: conf/forum_data_rules.py:256
+msgid "Mandatory tags"
+msgstr ""
+
+#: conf/forum_data_rules.py:259
+msgid ""
+"At least one of these tags will be required for any new or newly edited "
+"question. A mandatory tag may be wildcard, if the wildcard tags are active."
+msgstr ""
+
+#: conf/forum_data_rules.py:271
+msgid "Force lowercase the tags"
+msgstr ""
+
+#: conf/forum_data_rules.py:273
+msgid ""
+"Attention: after checking this, please back up the database, and run a "
+"management command: <code>python manage.py fix_question_tags</code> to "
+"globally rename the tags"
+msgstr ""
+
+#: conf/forum_data_rules.py:287
+msgid "Format of tag list"
+msgstr ""
+
+#: conf/forum_data_rules.py:289
+msgid ""
+"Select the format to show tags in, either as a simple list, or as a tag "
+"cloud"
+msgstr ""
+
+#: conf/forum_data_rules.py:301
+msgid "Use wildcard tags"
+msgstr ""
+
+#: conf/forum_data_rules.py:303
+msgid ""
+"Wildcard tags can be used to follow or ignore many tags at once, a valid "
+"wildcard tag has a single wildcard at the very end"
+msgstr ""
+
+#: conf/forum_data_rules.py:315
+msgid "Use separate set for subscribed tags"
+msgstr ""
+
+#: conf/forum_data_rules.py:317
+msgid ""
+"If enabled, users will have a third set of tag selections - \"subscribed\" "
+"(by email) in additon to \"interesting\" and \"ignored\""
+msgstr ""
+
+#: conf/forum_data_rules.py:325
+msgid "Always, for all users"
+msgstr ""
+
+#: conf/forum_data_rules.py:326
+msgid "Never, for all users"
+msgstr ""
+
+#: conf/forum_data_rules.py:327
+msgid "Let users decide"
+msgstr ""
+
+#: conf/forum_data_rules.py:335
+msgid "Publicly show user tag selections"
+msgstr ""
+
+#: conf/forum_data_rules.py:344
+msgid "Enable separate tag search box on main page"
+msgstr ""
+
+#: conf/forum_data_rules.py:354
+msgid "Default max number of comments to display under posts"
+msgstr ""
+
+#: conf/forum_data_rules.py:365
+#, python-format
+msgid "Maximum comment length, must be < %(max_len)s"
+msgstr ""
+
+#: conf/forum_data_rules.py:375
+msgid "Limit time to edit comments"
+msgstr ""
+
+#: conf/forum_data_rules.py:377
+msgid "If unchecked, there will be no time limit to edit the comments"
+msgstr ""
+
+#: conf/forum_data_rules.py:388
+msgid "Minutes allowed to edit a comment"
+msgstr ""
+
+#: conf/forum_data_rules.py:389
+msgid "To enable this setting, check the previous one"
+msgstr ""
+
+#: conf/forum_data_rules.py:398
+msgid "Save comment by pressing <Enter> key"
+msgstr ""
+
+#: conf/forum_data_rules.py:400
+msgid ""
+"This may be useful when only one-line comments are desired. Will not work "
+"with TinyMCE editor."
+msgstr ""
+
+#: conf/forum_data_rules.py:411
+msgid "Minimum length of search term for Ajax search"
+msgstr ""
+
+#: conf/forum_data_rules.py:412
+msgid "Must match the corresponding database backend setting"
+msgstr ""
+
+#: conf/forum_data_rules.py:421
+msgid "Do not make text query sticky in search"
+msgstr ""
+
+#: conf/forum_data_rules.py:423
+msgid ""
+"Check to disable the \"sticky\" behavior of the search query. This may be "
+"useful if you want to move the search bar away from the default position or "
+"do not like the default sticky behavior of the text search query."
+msgstr ""
+
+#: conf/forum_data_rules.py:436
+msgid "Maximum number of tags per question"
+msgstr ""
+
+#: conf/forum_data_rules.py:448
+msgid "Number of questions to list by default"
+msgstr ""
+
+#: conf/forum_data_rules.py:458
+msgid "What should \"unanswered question\" mean?"
+msgstr ""
+
+#: conf/group_settings.py:9
+msgid "Group settings"
+msgstr ""
+
+#: conf/group_settings.py:18
+msgid "Enable user groups"
+msgstr ""
+
+#: conf/group_settings.py:41
+msgid "everyone"
+msgstr ""
+
+#: conf/group_settings.py:42
+msgid "Global user group name"
+msgstr ""
+
+#: conf/group_settings.py:43
+msgid "All users belong to this group automatically"
+msgstr ""
+
+#: conf/group_settings.py:53
+msgid "Enable group email adddresses"
+msgstr ""
+
+#: conf/group_settings.py:55
+msgid "If selected, users can post to groups by email \"group-name@domain.com\""
+msgstr ""
+
+#: conf/karma_and_badges_visibility.py:12
+msgid "Karma & Badge visibility"
+msgstr ""
+
+#: conf/karma_and_badges_visibility.py:27
+msgid "Visibility of karma"
+msgstr ""
+
+#: conf/karma_and_badges_visibility.py:30
+msgid "User's karma may be shown publicly or only to the owners"
+msgstr ""
+
+#: conf/karma_and_badges_visibility.py:44
+msgid "Visibility of badges"
+msgstr ""
+
+#: conf/karma_and_badges_visibility.py:47
+msgid "Badges can be either publicly shown or completely hidden"
+msgstr ""
+
+#: conf/ldap.py:9
+msgid "LDAP login configuration"
+msgstr ""
+
+#: conf/ldap.py:17
+msgid "Use LDAP authentication for the password login"
+msgstr ""
+
+#: conf/ldap.py:26
+msgid "Automatically create user accounts when possible"
+msgstr ""
+
+#: conf/ldap.py:29
+msgid ""
+"Potentially reduces number of steps in the registration process but can "
+"expose personal information, e.g. when LDAP login name is the same as email "
+"address or real name."
+msgstr ""
+
+#: conf/ldap.py:37
+msgid "Version 3"
+msgstr ""
+
+#: conf/ldap.py:38
+msgid "Version 2 (insecure and deprecated)!!!"
+msgstr ""
+
+#: conf/ldap.py:47
+msgid "LDAP protocol version"
+msgstr ""
+
+#: conf/ldap.py:49
+msgid ""
+"Note that Version 2 protocol is not secure!!! Do not use it on unprotected "
+"network."
+msgstr ""
+
+#: conf/ldap.py:59
+msgid "LDAP URL"
+msgstr ""
+
+#: conf/ldap.py:68
+msgid "LDAP encoding"
+msgstr ""
+
+#: conf/ldap.py:71
+msgid ""
+"This value in almost all cases is \"utf-8\". Change it if yours is "
+"different. This field is required"
+msgstr ""
+
+#: conf/ldap.py:82
+msgid "Base DN (distinguished name)"
+msgstr ""
+
+#: conf/ldap.py:85
+msgid ""
+"Usually base DN mirrors domain name of your organization, e.g. "
+"\"dn=example,dn=com\" when your site url is \"example.com\".This value is "
+"the \"root\" address of your LDAP directory."
+msgstr ""
+
+#: conf/ldap.py:96
+msgid "User search filter template"
+msgstr ""
+
+#: conf/ldap.py:99
+msgid ""
+"Python string format template, must have two string placeholders, which "
+"should be left in the intact format. First placeholder will be used for the "
+"user id field name, and the second - for the user id value. The template can"
+" be extended to match schema of your LDAP directory."
+msgstr ""
+
+#: conf/ldap.py:113
+msgid "UserID/login field"
+msgstr ""
+
+#: conf/ldap.py:116
+msgid ""
+"This field is required. For Microsoft Active Directory this value usually is"
+" \"sAMAccountName\"."
+msgstr ""
+
+#: conf/ldap.py:127
+msgid "\"Common Name\" field"
+msgstr ""
+
+#: conf/ldap.py:129
+msgid ""
+"Common name is a formal or informal name of a person, can be blank. Use it "
+"only if surname and given names are not available."
+msgstr ""
+
+#: conf/ldap.py:139
+msgid "First name, Last name"
+msgstr ""
+
+#: conf/ldap.py:140
+msgid "Last name, First name"
+msgstr ""
+
+#: conf/ldap.py:147
+msgid "\"Common Name\" field format"
+msgstr ""
+
+#: conf/ldap.py:150
+msgid "Use this only if \"Common Name\" field is used."
+msgstr ""
+
+#: conf/ldap.py:158
+msgid "Given (First) name"
+msgstr ""
+
+#: conf/ldap.py:160 conf/ldap.py:170
+msgid "This field can be blank"
+msgstr ""
+
+#: conf/ldap.py:168
+msgid "Surname (last) name"
+msgstr ""
+
+#: conf/ldap.py:178
+msgid "LDAP Server EMAIL field name"
+msgstr ""
+
+#: conf/ldap.py:180
+msgid "This field is required"
+msgstr ""
+
+#: conf/leading_sidebar.py:12
+msgid "Common left sidebar"
+msgstr ""
+
+#: conf/leading_sidebar.py:20
+msgid "Enable left sidebar"
+msgstr ""
+
+#: conf/leading_sidebar.py:29
+msgid "HTML for the left sidebar"
+msgstr ""
+
+#: conf/leading_sidebar.py:32
+msgid ""
+"Use this area to enter content at the LEFT sidebarin HTML format.  When "
+"using this option, please use the HTML validation service to make sure that "
+"your input is valid and works well in all browsers."
+msgstr ""
+
+#: conf/license.py:13
+msgid "Content License"
+msgstr ""
+
+#: conf/license.py:21
+msgid "Show license clause in the site footer"
+msgstr ""
+
+#: conf/license.py:30
+msgid "Short name for the license"
+msgstr ""
+
+#: conf/license.py:39
+msgid "Full name of the license"
+msgstr ""
+
+#: conf/license.py:40
+msgid "Creative Commons Attribution Share Alike 3.0"
+msgstr ""
+
+#: conf/license.py:48
+msgid "Add link to the license page"
+msgstr ""
+
+#: conf/license.py:57
+msgid "License homepage"
+msgstr ""
+
+#: conf/license.py:59
+msgid "URL of the official page with all the license legal clauses"
+msgstr ""
+
+#: conf/license.py:69
+msgid "Use license logo"
+msgstr ""
+
+#: conf/license.py:78
+msgid "License logo image"
+msgstr ""
+
+#: conf/login_providers.py:13
+msgid "Login provider setings"
+msgstr ""
+
+#: conf/login_providers.py:22
+msgid "Show alternative login provider buttons on the password \"Sign Up\" page"
+msgstr ""
+
+#: conf/login_providers.py:31
+msgid "Always display local login form and hide \"Askbot\" button."
+msgstr ""
+
+#: conf/login_providers.py:40
+msgid "Activate to allow login with self-hosted wordpress site"
+msgstr ""
+
+#: conf/login_providers.py:41
+msgid ""
+"to activate this feature you must fill out the wordpress xml-rpc setting "
+"bellow"
+msgstr ""
+
+#: conf/login_providers.py:50
+msgid ""
+"Fill it with the wordpress url to the xml-rpc, normally "
+"http://mysite.com/xmlrpc.php"
+msgstr ""
+
+#: conf/login_providers.py:51
+msgid ""
+"To enable, go to Settings->Writing->Remote Publishing and check the box for "
+"XML-RPC"
+msgstr ""
+
+#: conf/login_providers.py:60
+msgid "Upload your icon"
+msgstr ""
+
+#: conf/login_providers.py:93
+msgid "local password"
+msgstr ""
+
+#: conf/login_providers.py:98
+#, python-format
+msgid "Activate %(provider)s login"
+msgstr ""
+
+#: conf/login_providers.py:103
+#, python-format
+msgid ""
+"Note: to really enable %(provider)s login some additional parameters will "
+"need to be set in the \"External keys\" section"
+msgstr ""
+
+#: conf/markup.py:15
+msgid "Markup in posts"
+msgstr ""
+
+#: conf/markup.py:41
+msgid "Enable code-friendly Markdown"
+msgstr ""
+
+#: conf/markup.py:43
+msgid ""
+"If checked, underscore characters will not trigger italic or bold formatting"
+" - bold and italic text can still be marked up with asterisks. Note that "
+"\"MathJax support\" implicitly turns this feature on, because underscores "
+"are heavily used in LaTeX input."
+msgstr ""
+
+#: conf/markup.py:58
+msgid "Mathjax support (rendering of LaTeX)"
+msgstr ""
+
+#: conf/markup.py:60
+#, python-format
+msgid ""
+"If you enable this feature, <a href=\"%(url)s\">mathjax</a> must be "
+"installed on your server in its own directory."
+msgstr ""
+
+#: conf/markup.py:74
+msgid "Base url of MathJax deployment"
+msgstr ""
+
+#: conf/markup.py:76
+msgid ""
+"Note - <strong>MathJax is not included with askbot</strong> - you should "
+"deploy it yourself, preferably at a separate domain and enter url pointing "
+"to the \"mathjax\" directory (for example: http://mysite.com/mathjax)"
+msgstr ""
+
+#: conf/markup.py:91
+msgid "Enable autolinking with specific patterns"
+msgstr ""
+
+#: conf/markup.py:93
+msgid ""
+"If you enable this feature, the application  will be able to detect patterns"
+" and auto link to URLs"
+msgstr ""
+
+#: conf/markup.py:106
+msgid "Regexes to detect the link patterns"
+msgstr ""
+
+#: conf/markup.py:108
+msgid ""
+"Enter valid regular expressions for the patters, one per line. For example "
+"to detect a bug pattern like #bug123, use the following regex: #bug(\\d+). "
+"The numbers captured by the pattern in the parentheses will be transferred "
+"to the link url template. Please look up more information about regular "
+"expressions elsewhere."
+msgstr ""
+
+#: conf/markup.py:127
+msgid "URLs for autolinking"
+msgstr ""
+
+#: conf/markup.py:129
+msgid ""
+"Here, please enter url templates for the patterns entered in the previous "
+"setting, also one entry per line. <strong>Make sure that number of lines in "
+"this setting and the previous one are the same</strong> For example template"
+" https://bugzilla.redhat.com/show_bug.cgi?id=\\1 together with the pattern "
+"shown above and the entry in the post #123 will produce link to the bug 123 "
+"in the redhat bug tracker."
+msgstr ""
+
+#: conf/minimum_reputation.py:12
+msgid "Karma thresholds"
+msgstr ""
+
+#: conf/minimum_reputation.py:22
+msgid "Upvote"
+msgstr ""
+
+#: conf/minimum_reputation.py:31
+msgid "Downvote"
+msgstr ""
+
+#: conf/minimum_reputation.py:40
+msgid "Answer own question immediately"
+msgstr ""
+
+#: conf/minimum_reputation.py:49
+msgid "Accept own answer"
+msgstr ""
+
+#: conf/minimum_reputation.py:58
+msgid "Accept any answer"
+msgstr ""
+
+#: conf/minimum_reputation.py:67
+msgid "Flag offensive"
+msgstr ""
+
+#: conf/minimum_reputation.py:88
+msgid "Delete comments posted by others"
+msgstr ""
+
+#: conf/minimum_reputation.py:97
+msgid "Delete questions and answers posted by others"
+msgstr ""
+
+#: conf/minimum_reputation.py:106
+msgid "Upload files"
+msgstr ""
+
+#: conf/minimum_reputation.py:115
+msgid "Insert clickable links"
+msgstr ""
+
+#: conf/minimum_reputation.py:124
+msgid "Insert link suggestions as plain text"
+msgstr ""
+
+#: conf/minimum_reputation.py:126
+msgid ""
+"This value should be smaller than that for \"insert clickable links\". This "
+"setting should stop link-spamming by newly registered users."
+msgstr ""
+
+#: conf/minimum_reputation.py:137
+msgid "Close own questions"
+msgstr ""
+
+#: conf/minimum_reputation.py:146
+msgid "Retag questions posted by other people"
+msgstr ""
+
+#: conf/minimum_reputation.py:155
+msgid "Reopen own questions"
+msgstr ""
+
+#: conf/minimum_reputation.py:164
+msgid "Edit community wiki posts"
+msgstr ""
+
+#: conf/minimum_reputation.py:173
+msgid "Edit posts authored by other people"
+msgstr ""
+
+#: conf/minimum_reputation.py:182
+msgid "View offensive flags"
+msgstr ""
+
+#: conf/minimum_reputation.py:191
+msgid "Close questions asked by others"
+msgstr ""
+
+#: conf/minimum_reputation.py:200
+msgid "Lock posts"
+msgstr ""
+
+#: conf/minimum_reputation.py:209
+msgid "Remove rel=nofollow from own homepage"
+msgstr ""
+
+#: conf/minimum_reputation.py:211
+msgid ""
+"When a search engine crawler will see a rel=nofollow attribute on a link - "
+"the link will not count towards the rank of the users personal site."
+msgstr ""
+
+#: conf/minimum_reputation.py:223
+msgid "Make posts by email"
+msgstr ""
+
+#: conf/minimum_reputation.py:232
+msgid "Trigger email notifications"
+msgstr ""
+
+#: conf/minimum_reputation.py:233 conf/minimum_reputation.py:243
+msgid "Reduces spam"
+msgstr ""
+
+#: conf/minimum_reputation.py:242
+msgid "Trigger tweets on others accounts"
+msgstr ""
+
+#: conf/moderation.py:19
+msgid "Content moderation"
+msgstr ""
+
+#: conf/moderation.py:28
+msgid "Enable content moderation"
+msgstr ""
+
+#: conf/moderation.py:38
+msgid "Enable tag moderation"
+msgstr ""
+
+#: conf/moderation.py:40
+msgid ""
+"If enabled, any new tags will not be applied to the questions, but emailed "
+"to the moderators. To use this feature, tags must be optional."
+msgstr ""
+
+#: conf/question_lists.py:11
+msgid "Listings of questions"
+msgstr ""
+
+#: conf/question_lists.py:20
+msgid "Enable \"All Questions\" selector"
+msgstr ""
+
+#: conf/question_lists.py:21 conf/question_lists.py:31
+#: conf/question_lists.py:41
+msgid "At least one of these selectors must be enabled"
+msgstr ""
+
+#: conf/question_lists.py:30
+msgid "Enable \"Unanswered Questions\" selector"
+msgstr ""
+
+#: conf/question_lists.py:40
+msgid "Enable \"Followed Questions\" selector"
+msgstr ""
+
+#: conf/question_lists.py:53 conf/question_lists.py:70
+msgid "All Questions"
+msgstr ""
+
+#: conf/question_lists.py:54 conf/question_lists.py:71
+msgid "Unanswered Questions"
+msgstr ""
+
+#: conf/question_lists.py:55
+msgid "Followed Questions"
+msgstr ""
+
+#: conf/question_lists.py:64
+msgid "Default questions selector for the authenticated users"
+msgstr ""
+
+#: conf/question_lists.py:80
+msgid "Default questions selector for the anonymous users"
+msgstr ""
+
+#: conf/reputation_changes.py:13
+msgid "Karma loss and gain rules"
+msgstr ""
+
+#: conf/reputation_changes.py:23
+msgid "Maximum daily reputation gain per user"
+msgstr ""
+
+#: conf/reputation_changes.py:32
+msgid "Gain for receiving an upvote"
+msgstr ""
+
+#: conf/reputation_changes.py:41
+msgid "Gain for the author of accepted answer"
+msgstr ""
+
+#: conf/reputation_changes.py:50
+msgid "Gain for accepting best answer"
+msgstr ""
+
+#: conf/reputation_changes.py:59
+msgid "Gain for post owner on canceled downvote"
+msgstr ""
+
+#: conf/reputation_changes.py:68
+msgid "Gain for voter on canceling downvote"
+msgstr ""
+
+#: conf/reputation_changes.py:78
+msgid "Loss for voter for canceling of answer acceptance"
+msgstr ""
+
+#: conf/reputation_changes.py:88
+msgid "Loss for author whose answer was \"un-accepted\""
+msgstr ""
+
+#: conf/reputation_changes.py:98
+msgid "Loss for giving a downvote"
+msgstr ""
+
+#: conf/reputation_changes.py:108
+msgid "Loss for owner of post that was flagged offensive"
+msgstr ""
+
+#: conf/reputation_changes.py:118
+msgid "Loss for owner of post that was downvoted"
+msgstr ""
+
+#: conf/reputation_changes.py:128
+msgid "Loss for owner of post that was flagged 3 times per same revision"
+msgstr ""
+
+#: conf/reputation_changes.py:138
+msgid "Loss for owner of post that was flagged 5 times per same revision"
+msgstr ""
+
+#: conf/reputation_changes.py:148
+msgid "Loss for post owner when upvote is canceled"
+msgstr ""
+
+#: conf/sidebar_main.py:12
+msgid "Main page sidebar"
+msgstr ""
+
+#: conf/sidebar_main.py:20 conf/sidebar_profile.py:20
+#: conf/sidebar_question.py:48
+msgid "Custom sidebar header"
+msgstr ""
+
+#: conf/sidebar_main.py:23 conf/sidebar_profile.py:23
+msgid ""
+"Use this area to enter content at the TOP of the sidebarin HTML format.   "
+"When using this option (as well as the sidebar footer), please use the HTML "
+"validation service to make sure that your input is valid and works well in "
+"all browsers."
+msgstr ""
+
+#: conf/sidebar_main.py:36
+msgid "Show avatar block in sidebar"
+msgstr ""
+
+#: conf/sidebar_main.py:38
+msgid "Uncheck this if you want to hide the avatar block from the sidebar "
+msgstr ""
+
+#: conf/sidebar_main.py:49
+msgid "Limit how many avatars will be displayed on the sidebar"
+msgstr ""
+
+#: conf/sidebar_main.py:59
+msgid "Show tag selector in sidebar"
+msgstr ""
+
+#: conf/sidebar_main.py:61
+msgid ""
+"Uncheck this if you want to hide the options for choosing interesting and "
+"ignored tags "
+msgstr ""
+
+#: conf/sidebar_main.py:72
+msgid "Show tag list/cloud in sidebar"
+msgstr ""
+
+#: conf/sidebar_main.py:74
+msgid ""
+"Uncheck this if you want to hide the tag cloud or tag list from the sidebar "
+msgstr ""
+
+#: conf/sidebar_main.py:85 conf/sidebar_profile.py:36
+#: conf/sidebar_question.py:104
+msgid "Custom sidebar footer"
+msgstr ""
+
+#: conf/sidebar_main.py:88 conf/sidebar_profile.py:39
+#: conf/sidebar_question.py:107
+msgid ""
+"Use this area to enter content at the BOTTOM of the sidebarin HTML format."
+"   When using this option (as well as the sidebar header), please use the "
+"HTML validation service to make sure that your input is valid and works well"
+" in all browsers."
+msgstr ""
+
+#: conf/sidebar_profile.py:12
+msgid "User profile sidebar"
+msgstr ""
+
+#: conf/sidebar_question.py:11
+msgid "Question page banners and sidebar"
+msgstr ""
+
+#: conf/sidebar_question.py:19
+msgid "Top banner"
+msgstr ""
+
+#: conf/sidebar_question.py:22
+msgid ""
+"When using this option, please use the HTML validation service to make sure "
+"that your input is valid and works well in all browsers."
+msgstr ""
+
+#: conf/sidebar_question.py:33
+msgid "Answers banner"
+msgstr ""
+
+#: conf/sidebar_question.py:36
+msgid ""
+"This banner will show above the second answer. When using this option, "
+"please use the HTML validation service to make sure that your input is valid"
+" and works well in all browsers."
+msgstr ""
+
+#: conf/sidebar_question.py:51
+msgid ""
+"Use this area to enter content at the TOP of the sidebarin HTML format. When"
+" using this option (as well as the sidebar footer), please use the HTML "
+"validation service to make sure that your input is valid and works well in "
+"all browsers."
+msgstr ""
+
+#: conf/sidebar_question.py:64
+msgid "Show tag list in sidebar"
+msgstr ""
+
+#: conf/sidebar_question.py:66
+msgid "Uncheck this if you want to hide the tag list from the sidebar "
+msgstr ""
+
+#: conf/sidebar_question.py:77
+msgid "Show meta information in sidebar"
+msgstr ""
+
+#: conf/sidebar_question.py:79
+msgid ""
+"Uncheck this if you want to hide the meta information about the question "
+"(post date, views, last updated). "
+msgstr ""
+
+#: conf/sidebar_question.py:91
+msgid "Show related questions in sidebar"
+msgstr ""
+
+#: conf/sidebar_question.py:93
+msgid "Uncheck this if you want to hide the list of related questions. "
+msgstr ""
+
+#: conf/site_modes.py:64
+msgid "Bootstrap mode"
+msgstr ""
+
+#: conf/site_modes.py:74
+msgid "Activate a \"Large site\" mode"
+msgstr ""
+
+#: conf/site_modes.py:76
+msgid ""
+"\"Large site\" mode increases reputation and certain badge thresholds, to "
+"values, more suitable for the larger communities, <strong>WARNING:</strong> "
+"your current values for Minimum reputation, Badge Settings and Vote Rules "
+"will be changed after you modify this setting."
+msgstr ""
+
+#: conf/site_settings.py:12
+msgid "URLS, keywords & greetings"
+msgstr ""
+
+#: conf/site_settings.py:21
+msgid "Site title for the Q&A forum"
+msgstr ""
+
+#: conf/site_settings.py:30
+msgid "Comma separated list of Q&A site keywords"
+msgstr ""
+
+#: conf/site_settings.py:39
+msgid "Copyright message to show in the footer"
+msgstr ""
+
+#: conf/site_settings.py:49
+msgid "Site description for the search engines"
+msgstr ""
+
+#: conf/site_settings.py:58
+msgid "Short name for your Q&A forum"
+msgstr ""
+
+#: conf/site_settings.py:67
+msgid "Base URL for your Q&A forum, must start with http or https"
+msgstr ""
+
+#: conf/site_settings.py:78
+msgid "Check to enable greeting for anonymous user"
+msgstr ""
+
+#: conf/site_settings.py:89
+msgid "Text shown in the greeting message shown to the anonymous user"
+msgstr ""
+
+#: conf/site_settings.py:93
+msgid "Use HTML to format the message "
+msgstr ""
+
+#: conf/site_settings.py:102
+msgid "Feedback site URL"
+msgstr ""
+
+#: conf/site_settings.py:104
+msgid "If left empty, a simple internal feedback form will be used instead"
+msgstr ""
+
+#: conf/skin_general_settings.py:15
+msgid "Skin, logos and HTML <head> parts"
+msgstr ""
+
+#: conf/skin_general_settings.py:23
+msgid "Q&A site logo"
+msgstr ""
+
+#: conf/skin_general_settings.py:25
+msgid "To change the logo, select new file, then submit this whole form."
+msgstr ""
+
+#: conf/skin_general_settings.py:34
+msgid "English"
+msgstr ""
+
+#: conf/skin_general_settings.py:35
+msgid "Spanish"
+msgstr ""
+
+#: conf/skin_general_settings.py:36
+msgid "Catalan"
+msgstr ""
+
+#: conf/skin_general_settings.py:37
+msgid "German"
+msgstr ""
+
+#: conf/skin_general_settings.py:38
+msgid "Greek"
+msgstr ""
+
+#: conf/skin_general_settings.py:39
+msgid "Finnish"
+msgstr ""
+
+#: conf/skin_general_settings.py:40
+msgid "French"
+msgstr ""
+
+#: conf/skin_general_settings.py:41
+msgid "Hindi"
+msgstr ""
+
+#: conf/skin_general_settings.py:42
+msgid "Hungarian"
+msgstr ""
+
+#: conf/skin_general_settings.py:43
+msgid "Italian"
+msgstr ""
+
+#: conf/skin_general_settings.py:44
+msgid "Japanese"
+msgstr ""
+
+#: conf/skin_general_settings.py:45
+msgid "Korean"
+msgstr ""
+
+#: conf/skin_general_settings.py:46
+msgid "Portuguese"
+msgstr ""
+
+#: conf/skin_general_settings.py:47
+msgid "Brazilian Portuguese"
+msgstr ""
+
+#: conf/skin_general_settings.py:48
+msgid "Romanian"
+msgstr ""
+
+#: conf/skin_general_settings.py:49
+msgid "Russian"
+msgstr ""
+
+#: conf/skin_general_settings.py:50
+msgid "Serbian"
+msgstr ""
+
+#: conf/skin_general_settings.py:51
+msgid "Turkish"
+msgstr ""
+
+#: conf/skin_general_settings.py:52
+msgid "Vietnamese"
+msgstr ""
+
+#: conf/skin_general_settings.py:53
+msgid "Chinese"
+msgstr ""
+
+#: conf/skin_general_settings.py:54
+msgid "Chinese (Taiwan)"
+msgstr ""
+
+#: conf/skin_general_settings.py:73
+msgid "Show logo"
+msgstr ""
+
+#: conf/skin_general_settings.py:75
+msgid ""
+"Check if you want to show logo in the forum header or uncheck in the case "
+"you do not want the logo to appear in the default location"
+msgstr ""
+
+#: conf/skin_general_settings.py:87
+msgid "Site favicon"
+msgstr ""
+
+#: conf/skin_general_settings.py:89
+#, python-format
+msgid ""
+"A small 16x16 or 32x32 pixel icon image used to distinguish your site in the"
+" browser user interface. Please find more information about favicon at <a "
+"href=\"%(favicon_info_url)s\">this page</a>."
+msgstr ""
+
+#: conf/skin_general_settings.py:105
+msgid "Password login button"
+msgstr ""
+
+#: conf/skin_general_settings.py:107
+msgid ""
+"An 88x38 pixel image that is used on the login screen for the password login"
+" button."
+msgstr ""
+
+#: conf/skin_general_settings.py:120
+msgid "Show all UI functions to all users"
+msgstr ""
+
+#: conf/skin_general_settings.py:122
+msgid ""
+"If checked, all forum functions will be shown to users, regardless of their "
+"reputation. However to use those functions, moderation rules, reputation and"
+" other limits will still apply."
+msgstr ""
+
+#: conf/skin_general_settings.py:137
+msgid "Select skin"
+msgstr ""
+
+#: conf/skin_general_settings.py:148
+msgid "Customize HTML <HEAD>"
+msgstr ""
+
+#: conf/skin_general_settings.py:157
+msgid "Custom portion of the HTML <HEAD>"
+msgstr ""
+
+#: conf/skin_general_settings.py:159
+msgid ""
+"<strong>To use this option</strong>, check \"Customize HTML &lt;HEAD&gt;\" "
+"above. Contents of this box will be inserted into the &lt;HEAD&gt; portion "
+"of the HTML output, where elements such as &lt;script&gt;, &lt;link&gt;, "
+"&lt;meta&gt; may be added. Please, keep in mind that adding external "
+"javascript to the &lt;HEAD&gt; is not recommended because it slows loading "
+"of the pages. Instead, it will be more efficient to place links to the "
+"javascript files into the footer. <strong>Note:</strong> if you do use this "
+"setting, please test the site with the W3C HTML validator service."
+msgstr ""
+
+#: conf/skin_general_settings.py:181
+msgid "Custom header additions"
+msgstr ""
+
+#: conf/skin_general_settings.py:183
+msgid ""
+"Header is the bar at the top of the content that contains user info and site"
+" links, and is common to all pages. Use this area to enter contents of the "
+"headerin the HTML format.   When customizing the site header (as well as "
+"footer and the HTML &lt;HEAD&gt;), use the HTML validation service to make "
+"sure that your input is valid and works well in all browsers."
+msgstr ""
+
+#: conf/skin_general_settings.py:198
+msgid "Site footer mode"
+msgstr ""
+
+#: conf/skin_general_settings.py:200
+msgid ""
+"Footer is the bottom portion of the content, which is common to all pages. "
+"You can disable, customize, or use the default footer."
+msgstr ""
+
+#: conf/skin_general_settings.py:217
+msgid "Custom footer (HTML format)"
+msgstr ""
+
+#: conf/skin_general_settings.py:219
+msgid ""
+"<strong>To enable this function</strong>, please select option 'customize' "
+"in the \"Site footer mode\" above. Use this area to enter contents of the "
+"footer in the HTML format. When customizing the site footer (as well as the "
+"header and HTML &lt;HEAD&gt;), use the HTML validation service to make sure "
+"that your input is valid and works well in all browsers."
+msgstr ""
+
+#: conf/skin_general_settings.py:234
+msgid "Apply custom style sheet (CSS)"
+msgstr ""
+
+#: conf/skin_general_settings.py:236
+msgid ""
+"Check if you want to change appearance of your form by adding custom style "
+"sheet rules (please see the next item)"
+msgstr ""
+
+#: conf/skin_general_settings.py:248
+msgid "Custom style sheet (CSS)"
+msgstr ""
+
+#: conf/skin_general_settings.py:250
+msgid ""
+"<strong>To use this function</strong>, check \"Apply custom style sheet\" "
+"option above. The CSS rules added in this window will be applied after the "
+"default style sheet rules. The custom style sheet will be served dynamically"
+" at url \"&lt;forum url&gt;/custom.css\", where the \"&lt;forum url&gt; part"
+" depends (default is empty string) on the url configuration in your urls.py."
+msgstr ""
+
+#: conf/skin_general_settings.py:266
+msgid "Add custom javascript"
+msgstr ""
+
+#: conf/skin_general_settings.py:269
+msgid "Check to enable javascript that you can enter in the next field"
+msgstr ""
+
+#: conf/skin_general_settings.py:279
+msgid "Custom javascript"
+msgstr ""
+
+#: conf/skin_general_settings.py:281
+msgid ""
+"Type or paste plain javascript that you would like to run on your site. Link"
+" to the script will be inserted at the bottom of the HTML output and will be"
+" served at the url \"&lt;forum url&gt;/custom.js\". Please, bear in mind "
+"that your javascript code may break other functionalities of the site and "
+"that the behavior may not be consistent across different browsers "
+"(<strong>to enable your custom code</strong>, check \"Add custom "
+"javascript\" option above)."
+msgstr ""
+
+#: conf/skin_general_settings.py:299
+msgid "Skin media revision number"
+msgstr ""
+
+#: conf/skin_general_settings.py:301
+msgid "Will be set automatically but you can modify it if necessary."
+msgstr ""
+
+#: conf/skin_general_settings.py:312
+msgid "Hash to update the media revision number automatically."
+msgstr ""
+
+#: conf/skin_general_settings.py:316
+msgid "Will be set automatically, it is not necesary to modify manually."
+msgstr ""
+
+#: conf/social_sharing.py:11
+msgid "Content sharing"
+msgstr ""
+
+#: conf/social_sharing.py:20
+msgid "Check to enable RSS feeds"
+msgstr ""
+
+#: conf/social_sharing.py:29
+msgid "Hashtag or suffix to sharing messages"
+msgstr ""
+
+#: conf/social_sharing.py:38
+msgid "Check to enable sharing of questions on Twitter"
+msgstr ""
+
+#: conf/social_sharing.py:40
+msgid ""
+"Important - to actually start sharing on twitter, it is required to set up "
+"Twitter consumer key and secret in the \"keys to external services\" "
+"section."
+msgstr ""
+
+#: conf/social_sharing.py:52
+msgid "Check to enable sharing of questions on Facebook"
+msgstr ""
+
+#: conf/social_sharing.py:61
+msgid "Check to enable sharing of questions on LinkedIn"
+msgstr ""
+
+#: conf/social_sharing.py:70
+msgid "Check to enable sharing of questions on Identi.ca"
+msgstr ""
+
+#: conf/social_sharing.py:79
+msgid "Check to enable sharing of questions on Google+"
+msgstr ""
+
+#: conf/spam_and_moderation.py:10
+msgid "Akismet spam protection"
+msgstr ""
+
+#: conf/spam_and_moderation.py:18
+msgid "Enable Akismet spam detection(keys below are required)"
+msgstr ""
+
+#: conf/spam_and_moderation.py:21
+#, python-format
+msgid "To get an Akismet key please visit <a href=\"%(url)s\">Akismet site</a>"
+msgstr ""
+
+#: conf/spam_and_moderation.py:31
+msgid "Akismet key for spam detection"
+msgstr ""
+
+#: conf/super_groups.py:5
+msgid "Reputation, Badges, Votes & Flags"
+msgstr ""
+
+#: conf/super_groups.py:6
+msgid "Static Content, URLS & UI"
+msgstr ""
+
+#: conf/super_groups.py:7
+msgid "Data rules & Formatting"
+msgstr ""
+
+#: conf/super_groups.py:8
+msgid "External Services"
+msgstr ""
+
+#: conf/super_groups.py:9
+msgid "Login, Users & Communication"
+msgstr ""
+
+#: conf/user_settings.py:14
+msgid "User settings"
+msgstr ""
+
+#: conf/user_settings.py:23
+msgid "On-screen greeting shown to the new users"
+msgstr ""
+
+#: conf/user_settings.py:32
+msgid "Allow anonymous users send feedback"
+msgstr ""
+
+#: conf/user_settings.py:41
+msgid "Allow editing user screen name"
+msgstr ""
+
+#: conf/user_settings.py:50
+msgid "Auto-fill user name, email, etc on registration"
+msgstr ""
+
+#: conf/user_settings.py:51
+msgid "Implemented only for LDAP logins at this point"
+msgstr ""
+
+#: conf/user_settings.py:60
+msgid "Allow users change own email addresses"
+msgstr ""
+
+#: conf/user_settings.py:69
+msgid "Allow email address in user name"
+msgstr ""
+
+#: conf/user_settings.py:78
+msgid "Allow account recovery by email"
+msgstr ""
+
+#: conf/user_settings.py:87
+msgid "Allow adding and removing login methods"
+msgstr ""
+
+#: conf/user_settings.py:97
+msgid "Minimum allowed length for screen name"
+msgstr ""
+
+#: conf/user_settings.py:105
+msgid "Default avatar for users"
+msgstr ""
+
+#: conf/user_settings.py:107
+msgid ""
+"To change the avatar image, select new file, then submit this whole form."
+msgstr ""
+
+#: conf/user_settings.py:120
+msgid "Use automatic avatars from gravatar.com"
+msgstr ""
+
+#: conf/user_settings.py:122
+msgid ""
+"Check this option if you want to allow the use of gravatar.com for avatars. "
+"Please, note that this feature might take about 10 minutes to become fully "
+"effective. You will have to enable uploaded avatars as well. For more "
+"information, please visit <a href=\"http://askbot.org/doc/optional-"
+"modules.html#uploaded-avatars\">this page</a>."
+msgstr ""
+
+#: conf/user_settings.py:134
+msgid "Default Gravatar icon type"
+msgstr ""
+
+#: conf/user_settings.py:136
+msgid ""
+"This option allows you to set the default avatar type for email addresses "
+"without associated gravatar images.  For more information, please visit <a "
+"href=\"http://en.gravatar.com/site/implement/images/\">this page</a>."
+msgstr ""
+
+#: conf/user_settings.py:146
+msgid "Name for the Anonymous user"
+msgstr ""
+
+#: conf/vote_rules.py:14
+msgid "Vote and flag limits"
+msgstr ""
+
+#: conf/vote_rules.py:24
+msgid "Number of votes a user can cast per day"
+msgstr ""
+
+#: conf/vote_rules.py:33
+msgid "Maximum number of flags per user per day"
+msgstr ""
+
+#: conf/vote_rules.py:42
+msgid "Threshold for warning about remaining daily votes"
+msgstr ""
+
+#: conf/vote_rules.py:51
+msgid "Number of days to allow canceling votes"
+msgstr ""
+
+#: conf/vote_rules.py:60
+msgid "Number of days required before answering own question"
+msgstr ""
+
+#: conf/vote_rules.py:69
+msgid "Number of flags required to automatically hide posts"
+msgstr ""
+
+#: conf/vote_rules.py:78
+msgid "Number of flags required to automatically delete posts"
+msgstr ""
+
+#: conf/vote_rules.py:87
+msgid ""
+"Minimum days to accept an answer, if it has not been accepted by the "
+"question poster"
+msgstr ""
+
+#: const/__init__.py:11
+msgid "duplicate question"
+msgstr "完全重複的問題"
+
+#: const/__init__.py:12
+msgid "question is off-topic or not relevant"
+msgstr "已經離題"
+
+#: const/__init__.py:13
+msgid "too subjective and argumentative"
+msgstr "太主觀性、引起爭吵的問題"
+
+#: const/__init__.py:14
+msgid "not a real question"
+msgstr "無關緊要的問題"
+
+#: const/__init__.py:15
+msgid "the question is answered, right answer was accepted"
+msgstr "問題已經解決，已得到正確答案"
+
+#: const/__init__.py:16
+msgid "question is not relevant or outdated"
+msgstr "已經過時、或無關的問題"
+
+#: const/__init__.py:17
+msgid "question contains offensive or malicious remarks"
+msgstr "惡意言論"
+
+#: const/__init__.py:18
+msgid "spam or advertising"
+msgstr "垃圾廣告"
+
+#: const/__init__.py:19
+msgid "too localized"
+msgstr "太區域化"
+
+#: const/__init__.py:29
+msgid "disable sharing"
+msgstr ""
+
+#: const/__init__.py:30
+#: templates/user_profile/twitter_sharing_controls.html:13
+#: templates/user_profile/twitter_sharing_controls.html:17
+msgid "my posts"
+msgstr ""
+
+#: const/__init__.py:31
+#: templates/user_profile/twitter_sharing_controls.html:14
+#: templates/user_profile/twitter_sharing_controls.html:16
+msgid "all posts"
+msgstr ""
+
+#: const/__init__.py:54 templates/question/answer_tab_bar.html:18
+msgid "newest"
+msgstr "最新問題"
+
+#: const/__init__.py:55 templates/users.html:54
+#: templates/question/answer_tab_bar.html:15
+msgid "oldest"
+msgstr "最先加入"
+
+#: const/__init__.py:56
+msgid "active"
+msgstr "熱門問題"
+
+#: const/__init__.py:57
+msgid "inactive"
+msgstr "冷門問題"
+
+#: const/__init__.py:58
+msgid "hottest"
+msgstr "火熱問題"
+
+#: const/__init__.py:59
+msgid "coldest"
+msgstr "過時"
+
+#: const/__init__.py:60 templates/question/answer_tab_bar.html:21
+msgid "most voted"
+msgstr "最有價值的問題"
+
+#: const/__init__.py:61
+msgid "least voted"
+msgstr "最不被推薦的問題"
+
+#: const/__init__.py:62
+msgid "relevance"
+msgstr "關聯"
+
+#: const/__init__.py:74
+msgid "Never"
+msgstr ""
+
+#: const/__init__.py:75
+msgid "When new post is published"
+msgstr ""
+
+#: const/__init__.py:76
+msgid "When post is published or revised"
+msgstr ""
+
+#: const/__init__.py:108
+#, python-format
+msgid ""
+"Note: to reply with a comment, please use <a "
+"href=\"mailto:%(addr)s?subject=%(subject)s\">this link</a>"
+msgstr ""
+
+#: const/__init__.py:122 templates/user_inbox/responses_and_flags.html:9
+msgid "all"
+msgstr "全部"
+
+#: const/__init__.py:123
+msgid "unanswered"
+msgstr "尚未回答"
+
+#: const/__init__.py:124
+msgid "followed"
+msgstr ""
+
+#: const/__init__.py:129
+msgid "list"
+msgstr ""
+
+#: const/__init__.py:130
+msgid "cloud"
+msgstr ""
+
+#: const/__init__.py:138
+msgid "Question has no answers"
+msgstr ""
+
+#: const/__init__.py:139
+msgid "Question has no accepted answers"
+msgstr ""
+
+#: const/__init__.py:195
+msgid "asked a question"
+msgstr ""
+
+#: const/__init__.py:196
+msgid "answered a question"
+msgstr ""
+
+#: const/__init__.py:197 const/__init__.py:301
+msgid "commented question"
+msgstr "評論問題"
+
+#: const/__init__.py:198 const/__init__.py:302
+msgid "commented answer"
+msgstr "有評論回答"
+
+#: const/__init__.py:199
+msgid "edited question"
+msgstr "修改問題"
+
+#: const/__init__.py:200
+msgid "edited answer"
+msgstr "修改回答"
+
+#: const/__init__.py:201
+msgid "received badge"
+msgstr ""
+
+#: const/__init__.py:202
+msgid "marked best answer"
+msgstr "標記最佳答案"
+
+#: const/__init__.py:203
+msgid "upvoted"
+msgstr "投贊成票"
+
+#: const/__init__.py:204
+msgid "downvoted"
+msgstr "投反對票"
+
+#: const/__init__.py:205
+msgid "canceled vote"
+msgstr "撤銷投票"
+
+#: const/__init__.py:206
+msgid "deleted question"
+msgstr "刪除問題"
+
+#: const/__init__.py:207
+msgid "deleted answer"
+msgstr "刪除回答"
+
+#: const/__init__.py:208
+msgid "marked offensive"
+msgstr "標記垃圾帖"
+
+#: const/__init__.py:209
+msgid "updated tags"
+msgstr "更新標籤"
+
+#: const/__init__.py:210
+msgid "selected favorite"
+msgstr "收藏"
+
+#: const/__init__.py:211
+msgid "completed user profile"
+msgstr "完成個人所有資料"
+
+#: const/__init__.py:212
+msgid "email update sent to user"
+msgstr "Email 更改已通知"
+
+#: const/__init__.py:213
+msgid "a post was shared"
+msgstr ""
+
+#: const/__init__.py:216
+msgid "reminder about unanswered questions sent"
+msgstr ""
+
+#: const/__init__.py:220
+msgid "reminder about accepting the best answer sent"
+msgstr ""
+
+#: const/__init__.py:222
+msgid "mentioned in the post"
+msgstr ""
+
+#: const/__init__.py:225
+msgid "created tag description"
+msgstr ""
+
+#: const/__init__.py:229
+msgid "updated tag description"
+msgstr ""
+
+#: const/__init__.py:231
+msgid "made a new post"
+msgstr ""
+
+#: const/__init__.py:234
+msgid "made an edit"
+msgstr ""
+
+#: const/__init__.py:238
+msgid "created post reject reason"
+msgstr ""
+
+#: const/__init__.py:242
+msgid "updated post reject reason"
+msgstr ""
+
+#: const/__init__.py:300
+msgid "answered question"
+msgstr ""
+
+#: const/__init__.py:303
+msgid "accepted answer"
+msgstr ""
+
+#: const/__init__.py:307
+msgid "[closed]"
+msgstr "[已關閉]"
+
+#: const/__init__.py:308
+msgid "[deleted]"
+msgstr "[已刪除]"
+
+#: const/__init__.py:309 views/readers.py:613
+msgid "initial version"
+msgstr "初始版本"
+
+#: const/__init__.py:310
+msgid "retagged"
+msgstr "更新了標籤"
+
+#: const/__init__.py:311
+msgid "[private]"
+msgstr ""
+
+#: const/__init__.py:320
+msgid "show all tags"
+msgstr ""
+
+#: const/__init__.py:321 const/__init__.py:330 const/__init__.py:336
+#: const/__init__.py:342
+msgid "exclude ignored tags"
+msgstr ""
+
+#: const/__init__.py:322 const/__init__.py:331 const/__init__.py:343
+msgid "only interesting tags"
+msgstr ""
+
+#: const/__init__.py:326 const/__init__.py:337 const/__init__.py:344
+msgid "only subscribed tags"
+msgstr ""
+
+#: const/__init__.py:329 const/__init__.py:335 const/__init__.py:341
+msgid "email for all tags"
+msgstr ""
+
+#: const/__init__.py:348
+msgid "instantly"
+msgstr ""
+
+#: const/__init__.py:349
+msgid "daily"
+msgstr "每天"
+
+#: const/__init__.py:350
+msgid "weekly"
+msgstr "每星期"
+
+#: const/__init__.py:351
+msgid "no email"
+msgstr ""
+
+#: const/__init__.py:358
+msgid "identicon"
+msgstr ""
+
+#: const/__init__.py:359
+msgid "mystery-man"
+msgstr ""
+
+#: const/__init__.py:360
+msgid "monsterid"
+msgstr ""
+
+#: const/__init__.py:361
+msgid "wavatar"
+msgstr ""
+
+#: const/__init__.py:362
+msgid "retro"
+msgstr ""
+
+#: const/__init__.py:409 templates/badges.html:33
+msgid "gold"
+msgstr "第一名"
+
+#: const/__init__.py:410 templates/badges.html:43
+msgid "silver"
+msgstr "第二名"
+
+#: const/__init__.py:411 templates/badges.html:50
+msgid "bronze"
+msgstr "第三名"
+
+#: const/__init__.py:423
+msgid "None"
+msgstr ""
+
+#: const/__init__.py:424
+msgid "Gravatar"
+msgstr ""
+
+#: const/__init__.py:425
+msgid "Uploaded Avatar"
+msgstr ""
+
+#: const/__init__.py:429
+msgid "date descendant"
+msgstr ""
+
+#: const/__init__.py:430
+msgid "date ascendant"
+msgstr ""
+
+#: const/__init__.py:431
+msgid "activity descendant"
+msgstr ""
+
+#: const/__init__.py:432
+msgid "activity ascendant"
+msgstr ""
+
+#: const/__init__.py:433
+msgid "answers descendant"
+msgstr ""
+
+#: const/__init__.py:434
+msgid "answers ascendant"
+msgstr ""
+
+#: const/__init__.py:435
+msgid "votes descendant"
+msgstr ""
+
+#: const/__init__.py:436
+msgid "votes ascendant"
+msgstr ""
+
+#: const/message_keys.py:21
+msgid "most relevant questions"
+msgstr ""
+
+#: const/message_keys.py:22
+msgid "click to see most relevant questions"
+msgstr ""
+
+#: const/message_keys.py:23
+msgid "by relevance"
+msgstr ""
+
+#: const/message_keys.py:24
+msgid "click to see the oldest questions"
+msgstr "點選觀看最早問題"
+
+#: const/message_keys.py:25
+msgid "by date"
+msgstr ""
+
+#: const/message_keys.py:26
+msgid "click to see the newest questions"
+msgstr "點選觀看最新問題"
+
+#: const/message_keys.py:27
+msgid "click to see the least recently updated questions"
+msgstr "點選觀看最近最少被更新的問題"
+
+#: const/message_keys.py:28
+msgid "by activity"
+msgstr ""
+
+#: const/message_keys.py:29
+msgid "click to see the most recently updated questions"
+msgstr "點選觀看最近最常被更新的問題"
+
+#: const/message_keys.py:30
+msgid "click to see the least answered questions"
+msgstr ""
+
+#: const/message_keys.py:31
+msgid "by answers"
+msgstr ""
+
+#: const/message_keys.py:32
+msgid "click to see the most answered questions"
+msgstr ""
+
+#: const/message_keys.py:33
+msgid "click to see least voted questions"
+msgstr ""
+
+#: const/message_keys.py:34
+msgid "by votes"
+msgstr ""
+
+#: const/message_keys.py:35
+msgid "click to see most voted questions"
+msgstr "點選觀看投票次數最多的問題"
+
+#: const/message_keys.py:36 models/tag.py:311
+msgid "interesting"
+msgstr ""
+
+#: const/message_keys.py:37 models/tag.py:312
+msgid "ignored"
+msgstr "忽略"
+
+#: const/message_keys.py:38 models/tag.py:313
+msgid "subscribed"
+msgstr ""
+
+#: const/message_keys.py:39 templates/question_retag.html:58
+msgid "tags are required"
+msgstr " 標籤不能為空。"
+
+#: const/message_keys.py:41
+msgid "please use letters, numbers and characters \"-+.#\""
+msgstr ""
+
+#: const/message_keys.py:47
+msgid ""
+"Sorry, your account appears to be blocked and you cannot make new posts "
+"until this issue is resolved. Please contact the forum administrator to "
+"reach a resolution."
+msgstr ""
+
+#: const/message_keys.py:52 models/__init__.py:1121
+msgid ""
+"Sorry, your account appears to be suspended and you cannot make new posts "
+"until this issue is resolved. You can, however edit your existing posts. "
+"Please contact the forum administrator to reach a resolution."
+msgstr ""
+
+#: deps/django_authopenid/backends.py:99
+msgid ""
+"Welcome! Please set email address (important!) in your profile and adjust "
+"screen name, if necessary."
+msgstr ""
+
+#: deps/django_authopenid/forms.py:112 deps/django_authopenid/views.py:206
+msgid "i-names are not supported"
+msgstr "不支援 i-name "
+
+#: deps/django_authopenid/forms.py:236
+#, python-format
+msgid "Please enter your %(username_token)s"
+msgstr ""
+
+#: deps/django_authopenid/forms.py:262
+msgid "Please, enter your user name"
+msgstr ""
+
+#: deps/django_authopenid/forms.py:266
+msgid "Please, enter your password"
+msgstr ""
+
+#: deps/django_authopenid/forms.py:273 deps/django_authopenid/forms.py:277
+msgid "Please, enter your new password"
+msgstr ""
+
+#: deps/django_authopenid/forms.py:288
+msgid "Passwords did not match"
+msgstr ""
+
+#: deps/django_authopenid/forms.py:300
+#, python-format
+msgid "Please choose password > %(len)s characters"
+msgstr ""
+
+#: deps/django_authopenid/forms.py:338
+msgid "Current password"
+msgstr "密碼"
+
+#: deps/django_authopenid/forms.py:349
+msgid ""
+"Old password is incorrect.                     Please enter the correct "
+"password."
+msgstr "密碼無效, 請輸入正確 密碼"
+
+#: deps/django_authopenid/forms.py:399
+msgid "Sorry, we don't have this email address in the database"
+msgstr ""
+
+#: deps/django_authopenid/forms.py:438
+msgid "Your user name (<i>required</i>)"
+msgstr " 使用者名稱 (<i>required</i>)"
+
+#: deps/django_authopenid/forms.py:455
+msgid "sorry, there is no such user name"
+msgstr ""
+
+#: deps/django_authopenid/urls.py:14 deps/django_authopenid/urls.py:20
+#: deps/django_authopenid/urls.py:23 setup_templates/settings.py:229
+msgid "signin/"
+msgstr ""
+
+#: deps/django_authopenid/urls.py:15
+msgid "widget/signin/"
+msgstr ""
+
+#: deps/django_authopenid/urls.py:18
+msgid "signout/"
+msgstr ""
+
+#: deps/django_authopenid/urls.py:23
+msgid "complete-oauth/"
+msgstr ""
+
+#: deps/django_authopenid/urls.py:32
+msgid "register/"
+msgstr ""
+
+#: deps/django_authopenid/urls.py:34
+msgid "signup/"
+msgstr ""
+
+#: deps/django_authopenid/urls.py:38
+msgid "logout/"
+msgstr ""
+
+#: deps/django_authopenid/urls.py:43
+msgid "recover/"
+msgstr ""
+
+#: deps/django_authopenid/urls.py:45
+msgid "verify-email/"
+msgstr ""
+
+#: deps/django_authopenid/util.py:379
+#, python-format
+msgid "%(site)s user name and password"
+msgstr ""
+
+#: deps/django_authopenid/util.py:385 templates/authopenid/signin.html:120
+#: templates/authopenid/widget_signin.html:120
+msgid "Create a password-protected account"
+msgstr ""
+
+#: deps/django_authopenid/util.py:386
+msgid "Change your password"
+msgstr ""
+
+#: deps/django_authopenid/util.py:486
+msgid "Sign in with Yahoo"
+msgstr ""
+
+#: deps/django_authopenid/util.py:493
+msgid "AOL screen name"
+msgstr ""
+
+#: deps/django_authopenid/util.py:502
+msgid "Sign in with LaunchPad"
+msgstr ""
+
+#: deps/django_authopenid/util.py:509
+msgid "OpenID url"
+msgstr ""
+
+#: deps/django_authopenid/util.py:538
+msgid "Flickr user name"
+msgstr ""
+
+#: deps/django_authopenid/util.py:546
+msgid "Technorati user name"
+msgstr ""
+
+#: deps/django_authopenid/util.py:554
+msgid "WordPress blog name"
+msgstr ""
+
+#: deps/django_authopenid/util.py:562
+msgid "Blogger blog name"
+msgstr ""
+
+#: deps/django_authopenid/util.py:570
+msgid "LiveJournal blog name"
+msgstr ""
+
+#: deps/django_authopenid/util.py:578
+msgid "ClaimID user name"
+msgstr ""
+
+#: deps/django_authopenid/util.py:586
+msgid "Vidoop user name"
+msgstr ""
+
+#: deps/django_authopenid/util.py:594
+msgid "Verisign user name"
+msgstr ""
+
+#: deps/django_authopenid/util.py:629
+#, python-format
+msgid "Change your %(provider)s password"
+msgstr ""
+
+#: deps/django_authopenid/util.py:633
+#, python-format
+msgid "Click to see if your %(provider)s signin still works for %(site_name)s"
+msgstr ""
+
+#: deps/django_authopenid/util.py:642
+#, python-format
+msgid "Create password for %(provider)s"
+msgstr ""
+
+#: deps/django_authopenid/util.py:646
+#, python-format
+msgid "Connect your %(provider)s account to %(site_name)s"
+msgstr ""
+
+#: deps/django_authopenid/util.py:655
+#, python-format
+msgid "Signin with %(provider)s user name and password"
+msgstr ""
+
+#: deps/django_authopenid/util.py:662
+#, python-format
+msgid "Sign in with your %(provider)s account"
+msgstr ""
+
+#: deps/django_authopenid/views.py:213
+#, python-format
+msgid "OpenID %(openid_url)s is invalid"
+msgstr "OpenID %(openid_url)s 無效"
+
+#: deps/django_authopenid/views.py:391 deps/django_authopenid/views.py:568
+#: deps/django_authopenid/views.py:583
+#, python-format
+msgid ""
+"Unfortunately, there was some problem when connecting to %(provider)s, "
+"please try again or use another provider"
+msgstr ""
+
+#: deps/django_authopenid/views.py:520
+msgid "Your new password saved"
+msgstr ""
+
+#: deps/django_authopenid/views.py:613
+msgid "The login password combination was not correct"
+msgstr ""
+
+#: deps/django_authopenid/views.py:717
+msgid "Please click any of the icons below to sign in"
+msgstr ""
+
+#: deps/django_authopenid/views.py:719
+msgid "Account recovery email sent"
+msgstr ""
+
+#: deps/django_authopenid/views.py:722
+msgid "Please add one or more login methods."
+msgstr ""
+
+#: deps/django_authopenid/views.py:724
+msgid "If you wish, please add, remove or re-validate your login methods"
+msgstr ""
+
+#: deps/django_authopenid/views.py:726
+msgid "Please wait a second! Your account is recovered, but ..."
+msgstr ""
+
+#: deps/django_authopenid/views.py:728
+msgid "Sorry, this account recovery key has expired or is invalid"
+msgstr ""
+
+#: deps/django_authopenid/views.py:801
+#, python-format
+msgid "Login method %(provider_name)s does not exist"
+msgstr ""
+
+#: deps/django_authopenid/views.py:807
+msgid "Oops, sorry - there was some error - please try again"
+msgstr ""
+
+#: deps/django_authopenid/views.py:882
+msgid ""
+"If you are trying to sign in to another account, please sign out first."
+msgstr ""
+
+#: deps/django_authopenid/views.py:887
+msgid "Otherwise, please report the incident to the site administrator."
+msgstr ""
+
+#: deps/django_authopenid/views.py:918
+#, python-format
+msgid "Your %(provider)s login works fine"
+msgstr ""
+
+#: deps/django_authopenid/views.py:1109
+msgid ""
+"Sorry, registration failed. Please ask the site administrator for help."
+msgstr ""
+
+#: deps/django_authopenid/views.py:1255
+#, python-format
+msgid "Recover your %(site)s account"
+msgstr ""
+
+#: deps/django_authopenid/views.py:1289
+msgid "Please check your email and visit the enclosed link."
+msgstr ""
+
+#: deps/group_messaging/models.py:356
+msgid "Re: "
+msgstr ""
+
+#: deps/livesettings/models.py:107 deps/livesettings/models.py:153
+msgid "Site"
+msgstr ""
+
+#: deps/livesettings/values.py:72
+msgid "Main"
+msgstr ""
+
+#: deps/livesettings/values.py:133
+msgid "Base Settings"
+msgstr ""
+
+#: deps/livesettings/values.py:244
+msgid "Default value: \"\""
+msgstr ""
+
+#: deps/livesettings/values.py:251
+msgid "Default value: "
+msgstr ""
+
+#: deps/livesettings/values.py:254
+#, python-format
+msgid "Default value: %s"
+msgstr ""
+
+#: deps/livesettings/values.py:641
+#, python-format
+msgid "Allowed image file types are %(types)s"
+msgstr ""
+
+#: importers/stackexchange/management/commands/load_stackexchange.py:150
+msgid "Congratulations, you are now an Administrator"
+msgstr ""
+
+#: mail/__init__.py:183
+msgid "<p>To ask by email, please:</p>"
+msgstr ""
+
+#: mail/__init__.py:185
+msgid "<li>Type title in the subject line</li>"
+msgstr ""
+
+#: mail/__init__.py:188
+msgid "<li>Type details of your question into the email body</li>"
+msgstr ""
+
+#: mail/__init__.py:191
+msgid ""
+"<li>The beginning of the subject line can contain tags,\n"
+"<em>enclosed in the square brackets</em> like so: [Tag1; Tag2]</li>"
+msgstr ""
+
+#: mail/__init__.py:195
+msgid ""
+"<li>In the beginning of the subject add at least one tag\n"
+"<em>enclosed in the brackets</em> like so: [Tag1; Tag2].</li>"
+msgstr ""
+
+#: mail/__init__.py:199
+msgid ""
+"<p>Note that a tag may consist of more than one word, to separate\n"
+"the tags, use a semicolon or a comma, for example, [One tag; Other tag]</p>"
+msgstr ""
+
+#: mail/__init__.py:214
+#, python-format
+msgid ""
+"<p>Sorry, there was an error posting your question please contact the "
+"%(site)s administrator</p>"
+msgstr ""
+
+#: mail/__init__.py:241
+#, python-format
+msgid ""
+"<p>Sorry, in order to post questions on %(site)s by email, please <a "
+"href=\"%(url)s\">register first</a></p>"
+msgstr ""
+
+#: mail/__init__.py:249
+msgid ""
+"<p>Sorry, your question could not be posted due to insufficient privileges "
+"of your user account</p>"
+msgstr ""
+
+#: mail/lamson_handlers.py:160
+msgid ""
+"You were replying to an email address             unknown to the system or "
+"you were replying from a different address from the one where you"
+"             received the notification."
+msgstr ""
+
+#: mail/lamson_handlers.py:251
+#, python-format
+msgid "Re: Welcome to %(site_name)s"
+msgstr ""
+
+#: mail/lamson_handlers.py:258
+msgid "Please reply to the welcome email without editing it"
+msgstr ""
+
+#: mail/lamson_handlers.py:318
+#, python-format
+msgid "Re: %s"
+msgstr ""
+
+#: management/commands/send_accept_answer_reminders.py:61
+#, python-format
+msgid "Accept the best answer for %(question_count)d of your questions"
+msgstr ""
+
+#: management/commands/send_accept_answer_reminders.py:66
+msgid "Please accept the best answer for this question:"
+msgstr ""
+
+#: management/commands/send_accept_answer_reminders.py:68
+msgid "Please accept the best answer for these questions:"
+msgstr ""
+
+#: management/commands/send_email_alerts.py:413
+#, python-format
+msgid "%(question_count)d updated question about %(topics)s"
+msgid_plural "%(question_count)d updated questions about %(topics)s"
+msgstr[0] ""
+
+#: management/commands/send_email_alerts.py:424
+#, python-format
+msgid ""
+"<p>Dear %(name)s,</p><p>The following question has been updated "
+"%(sitename)s</p>"
+msgid_plural ""
+"<p>Dear %(name)s,</p><p>The following %(num)d questions have been updated on"
+" %(sitename)s:</p>"
+msgstr[0] ""
+
+#: management/commands/send_email_alerts.py:448
+msgid "new question"
+msgstr "提問"
+
+#: management/commands/send_email_alerts.py:473
+#, python-format
+msgid ""
+"<p>Please remember that you can always <a "
+"href=\"%(email_settings_link)s\">adjust</a> frequency of the email updates "
+"or turn them off entirely.<br/>If you believe that this message was sent in "
+"an error, please email about it the forum administrator at "
+"%(admin_email)s.</p><p>Sincerely,</p><p>Your friendly %(sitename)s "
+"server.</p>"
+msgstr ""
+
+#: management/commands/send_unanswered_question_reminders.py:67
+#, python-format
+msgid "%(question_count)d unanswered question about %(topics)s"
+msgid_plural "%(question_count)d unanswered questions about %(topics)s"
+msgstr[0] ""
+
+#: middleware/forum_mode.py:63
+#, python-format
+msgid "Please log in to use %s"
+msgstr ""
+
+#: models/__init__.py:561
+msgid "Sorry, this operation is not allowed"
+msgstr ""
+
+#: models/__init__.py:611
+msgid ""
+"Sorry, you cannot accept or unaccept best answers because your account is "
+"blocked"
+msgstr ""
+
+#: models/__init__.py:615
+msgid ""
+"Sorry, you cannot accept or unaccept best answers because your account is "
+"suspended"
+msgstr ""
+
+#: models/__init__.py:629
+#, python-format
+msgid ""
+">%(points)s points required to accept or unaccept  your own answer to your "
+"own question"
+msgstr ""
+
+#: models/__init__.py:653
+#, python-format
+msgid ""
+"Sorry, you will be able to accept this answer only after %(will_be_able_at)s"
+msgstr ""
+
+#: models/__init__.py:662
+#, python-format
+msgid ""
+"Sorry, only moderators or original author of the question  - %(username)s - "
+"can accept or unaccept the best answer"
+msgstr ""
+
+#: models/__init__.py:685
+msgid "Sorry, you cannot vote for your own posts"
+msgstr ""
+
+#: models/__init__.py:689
+msgid "Sorry your account appears to be blocked "
+msgstr ""
+
+#: models/__init__.py:694
+msgid "Sorry your account appears to be suspended "
+msgstr ""
+
+#: models/__init__.py:704
+#, python-format
+msgid ">%(points)s points required to upvote"
+msgstr ""
+
+#: models/__init__.py:710
+#, python-format
+msgid ">%(points)s points required to downvote"
+msgstr "需要+%(points)s積分才能投反對票。"
+
+#: models/__init__.py:725
+msgid "Sorry, blocked users cannot upload files"
+msgstr ""
+
+#: models/__init__.py:726
+msgid "Sorry, suspended users cannot upload files"
+msgstr ""
+
+#: models/__init__.py:728
+#, python-format
+msgid "sorry, file uploading requires karma >%(min_rep)s"
+msgstr ""
+
+#: models/__init__.py:747
+msgid "Could not post, because your karma is insufficient to publish links"
+msgstr ""
+
+#: models/__init__.py:773
+msgid "Sorry, you already gave an answer, please edit it instead."
+msgstr ""
+
+#: models/__init__.py:797
+#, python-format
+msgid ""
+"Sorry, comments (except the last one) are editable only within %(minutes)s "
+"minute from posting"
+msgid_plural ""
+"Sorry, comments (except the last one) are editable only within %(minutes)s "
+"minutes from posting"
+msgstr[0] ""
+
+#: models/__init__.py:809
+msgid "Sorry, but only post owners or moderators can edit comments"
+msgstr ""
+
+#: models/__init__.py:838
+msgid ""
+"Sorry, since your account is suspended you can comment only your own posts"
+msgstr ""
+
+#: models/__init__.py:842
+#, python-format
+msgid ""
+"Sorry, to comment any post a minimum reputation of %(min_rep)s points is "
+"required. You can still comment your own posts and answers to your questions"
+msgstr ""
+
+#: models/__init__.py:872
+msgid ""
+"This post has been deleted and can be seen only by post owners, site "
+"administrators and moderators"
+msgstr ""
+
+#: models/__init__.py:889
+msgid ""
+"Sorry, only moderators, site administrators and post owners can edit deleted"
+" posts"
+msgstr ""
+
+#: models/__init__.py:904
+msgid "Sorry, since your account is blocked you cannot edit posts"
+msgstr ""
+
+#: models/__init__.py:908
+msgid ""
+"Sorry, since your account is suspended you can edit only your own posts"
+msgstr ""
+
+#: models/__init__.py:913
+#, python-format
+msgid ""
+"Sorry, to edit wiki posts, a minimum reputation of %(min_rep)s is required"
+msgstr ""
+
+#: models/__init__.py:920
+#, python-format
+msgid ""
+"Sorry, to edit other people's posts, a minimum reputation of %(min_rep)s is "
+"required"
+msgstr ""
+
+#: models/__init__.py:983
+msgid ""
+"Sorry, cannot delete your question since it has an upvoted answer posted by "
+"someone else"
+msgid_plural ""
+"Sorry, cannot delete your question since it has some upvoted answers posted "
+"by other users"
+msgstr[0] ""
+
+#: models/__init__.py:998
+msgid "Sorry, since your account is blocked you cannot delete posts"
+msgstr ""
+
+#: models/__init__.py:1002
+msgid ""
+"Sorry, since your account is suspended you can delete only your own posts"
+msgstr ""
+
+#: models/__init__.py:1006
+#, python-format
+msgid ""
+"Sorry, to delete other people's posts, a minimum reputation of %(min_rep)s "
+"is required"
+msgstr ""
+
+#: models/__init__.py:1026
+msgid "Sorry, since your account is blocked you cannot close questions"
+msgstr ""
+
+#: models/__init__.py:1030
+msgid "Sorry, since your account is suspended you cannot close questions"
+msgstr ""
+
+#: models/__init__.py:1034
+#, python-format
+msgid ""
+"Sorry, to close other people' posts, a minimum reputation of %(min_rep)s is "
+"required"
+msgstr ""
+
+#: models/__init__.py:1043
+#, python-format
+msgid ""
+"Sorry, to close own question a minimum reputation of %(min_rep)s is required"
+msgstr ""
+
+#: models/__init__.py:1069
+#, python-format
+msgid ""
+"Sorry, only administrators, moderators or post owners with reputation > "
+"%(min_rep)s can reopen questions."
+msgstr ""
+
+#: models/__init__.py:1075
+#, python-format
+msgid ""
+"Sorry, to reopen own question a minimum reputation of %(min_rep)s is "
+"required"
+msgstr ""
+
+#: models/__init__.py:1080
+msgid "Sorry, you cannot reopen questions because your account is blocked"
+msgstr ""
+
+#: models/__init__.py:1085
+msgid "Sorry, you cannot reopen questions because your account is suspended"
+msgstr ""
+
+#: models/__init__.py:1108
+msgid "You have flagged this question before and cannot do it more than once"
+msgstr ""
+
+#: models/__init__.py:1116
+msgid ""
+"Sorry, since your account is blocked you cannot flag posts as offensive"
+msgstr ""
+
+#: models/__init__.py:1127
+#, python-format
+msgid ""
+"Sorry, to flag posts as offensive a minimum reputation of %(min_rep)s is "
+"required"
+msgstr ""
+
+#: models/__init__.py:1148
+#, python-format
+msgid ""
+"Sorry, you have exhausted the maximum number of %(max_flags_per_day)s "
+"offensive flags per day."
+msgstr ""
+
+#: models/__init__.py:1160
+msgid "cannot remove non-existing flag"
+msgstr ""
+
+#: models/__init__.py:1166
+msgid "Sorry, since your account is blocked you cannot remove flags"
+msgstr ""
+
+#: models/__init__.py:1170
+msgid ""
+"Sorry, your account appears to be suspended and you cannot remove flags. "
+"Please contact the forum administrator to reach a resolution."
+msgstr ""
+
+#: models/__init__.py:1176
+#, python-format
+msgid "Sorry, to flag posts a minimum reputation of %(min_rep)d is required"
+msgid_plural ""
+"Sorry, to flag posts a minimum reputation of %(min_rep)d is required"
+msgstr[0] ""
+
+#: models/__init__.py:1195
+msgid "you don't have the permission to remove all flags"
+msgstr ""
+
+#: models/__init__.py:1196
+msgid "no flags for this entry"
+msgstr ""
+
+#: models/__init__.py:1220
+msgid ""
+"Sorry, only question owners, site administrators and moderators can retag "
+"deleted questions"
+msgstr ""
+
+#: models/__init__.py:1227
+msgid "Sorry, since your account is blocked you cannot retag questions"
+msgstr ""
+
+#: models/__init__.py:1231
+msgid ""
+"Sorry, since your account is suspended you can retag only your own questions"
+msgstr ""
+
+#: models/__init__.py:1235
+#, python-format
+msgid ""
+"Sorry, to retag questions a minimum reputation of %(min_rep)s is required"
+msgstr ""
+
+#: models/__init__.py:1254
+msgid "Sorry, since your account is blocked you cannot delete comment"
+msgstr ""
+
+#: models/__init__.py:1258
+msgid ""
+"Sorry, since your account is suspended you can delete only your own comments"
+msgstr ""
+
+#: models/__init__.py:1262
+#, python-format
+msgid "Sorry, to delete comments reputation of %(min_rep)s is required"
+msgstr ""
+
+#: models/__init__.py:1286
+msgid "sorry, but older votes cannot be revoked"
+msgstr ""
+
+#: models/__init__.py:1973 utils/functions.py:98
+#, python-format
+msgid "on %(date)s"
+msgstr ""
+
+#: models/__init__.py:1975
+msgid "in two days"
+msgstr ""
+
+#: models/__init__.py:1977
+msgid "tomorrow"
+msgstr ""
+
+#: models/__init__.py:1979
+#, python-format
+msgid "in %(hr)d hour"
+msgid_plural "in %(hr)d hours"
+msgstr[0] ""
+
+#: models/__init__.py:1981
+#, python-format
+msgid "in %(min)d min"
+msgid_plural "in %(min)d mins"
+msgstr[0] ""
+
+#: models/__init__.py:1982
+#, python-format
+msgid "%(days)d day"
+msgid_plural "%(days)d days"
+msgstr[0] ""
+
+#: models/__init__.py:1984
+#, python-format
+msgid ""
+"New users must wait %(days)s before answering their own question.  You can "
+"post an answer %(left)s"
+msgstr ""
+
+#: models/__init__.py:2172 templates/email/feedback_email.txt:9
+msgid "Anonymous"
+msgstr ""
+
+#: models/__init__.py:2276
+msgid "Site Adminstrator"
+msgstr ""
+
+#: models/__init__.py:2278
+msgid "Forum Moderator"
+msgstr ""
+
+#: models/__init__.py:2280
+msgid "Suspended User"
+msgstr ""
+
+#: models/__init__.py:2282
+msgid "Blocked User"
+msgstr ""
+
+#: models/__init__.py:2284
+msgid "Registered User"
+msgstr ""
+
+#: models/__init__.py:2286
+msgid "Watched User"
+msgstr ""
+
+#: models/__init__.py:2288
+msgid "Approved User"
+msgstr ""
+
+#: models/__init__.py:2473
+#, python-format
+msgid "%(username)s karma is %(reputation)s"
+msgstr ""
+
+#: models/__init__.py:2486
+#, python-format
+msgid "one gold badge"
+msgid_plural "%(count)d gold badges"
+msgstr[0] ""
+
+#: models/__init__.py:2493
+#, python-format
+msgid "one silver badge"
+msgid_plural "%(count)d silver badges"
+msgstr[0] ""
+
+#: models/__init__.py:2500
+#, python-format
+msgid "one bronze badge"
+msgid_plural "%(count)d bronze badges"
+msgstr[0] ""
+
+#: models/__init__.py:2511
+#, python-format
+msgid "%(item1)s and %(item2)s"
+msgstr ""
+
+#: models/__init__.py:2513
+#, python-format
+msgid "%(user)s has %(badges)s"
+msgstr ""
+
+#: models/__init__.py:2646
+#, python-format
+msgid "At least %d karma point is required to post links"
+msgid_plural "At least %d karma points is required to post links"
+msgstr[0] ""
+
+#: models/__init__.py:3118
+#, python-format
+msgid "%(user)s shared a %(post_link)s."
+msgstr ""
+
+#: models/__init__.py:3121 models/__init__.py:3131
+#, python-format
+msgid "%(user)s edited a %(post_link)s."
+msgstr ""
+
+#: models/__init__.py:3123
+#, python-format
+msgid "%(user)s posted a %(post_link)s"
+msgstr ""
+
+#: models/__init__.py:3126
+#, python-format
+msgid "%(user)s edited an %(post_link)s."
+msgstr ""
+
+#: models/__init__.py:3128
+#, python-format
+msgid "%(user)s posted an %(post_link)s."
+msgstr ""
+
+#: models/__init__.py:3133
+#, python-format
+msgid "%(user)s posted a %(post_link)s."
+msgstr ""
+
+#: models/__init__.py:3149
+msgid "To reply, PLEASE WRITE ABOVE THIS LINE."
+msgstr ""
+
+#: models/__init__.py:3188
+#, python-format
+msgid "\"%(title)s\""
+msgstr ""
+
+#: models/__init__.py:3340
+#, python-format
+msgid ""
+"Congratulations, you have received a badge '%(badge_name)s'. Check out <a "
+"href=\"%(user_profile)s\">your profile</a>."
+msgstr ""
+
+#: models/__init__.py:3613
+#, python-format
+msgid "Welcome to %(site_name)s"
+msgstr ""
+
+#: models/__init__.py:3634 views/commands.py:697
+msgid "Your tag subscription was saved, thanks!"
+msgstr ""
+
+#: models/badges.py:129
+#, python-format
+msgid "Deleted own post with %(votes)s or more upvotes"
+msgstr ""
+
+#: models/badges.py:133
+msgid "Disciplined"
+msgstr "井然有序"
+
+#: models/badges.py:151
+#, python-format
+msgid "Deleted own post with %(votes)s or more downvotes"
+msgstr ""
+
+#: models/badges.py:155
+msgid "Peer Pressure"
+msgstr "同儕壓力"
+
+#: models/badges.py:174
+#, python-format
+msgid "Received at least %(votes)s upvote for an answer for the first time"
+msgstr ""
+
+#: models/badges.py:178
+msgid "Teacher"
+msgstr "老師"
+
+#: models/badges.py:218
+msgid "Supporter"
+msgstr "贊成者"
+
+#: models/badges.py:219
+msgid "First upvote"
+msgstr ""
+
+#: models/badges.py:227
+msgid "Critic"
+msgstr "評論"
+
+#: models/badges.py:228
+msgid "First downvote"
+msgstr ""
+
+#: models/badges.py:237
+msgid "Civic Duty"
+msgstr ""
+
+#: models/badges.py:238
+#, python-format
+msgid "Voted %(num)s times"
+msgstr ""
+
+#: models/badges.py:252
+#, python-format
+msgid "Answered own question with at least %(num)s up votes"
+msgstr ""
+
+#: models/badges.py:256
+msgid "Self-Learner"
+msgstr "自學者"
+
+#: models/badges.py:304
+msgid "Nice Answer"
+msgstr ""
+
+#: models/badges.py:309 models/badges.py:321 models/badges.py:333
+#, python-format
+msgid "Answer voted up %(num)s times"
+msgstr ""
+
+#: models/badges.py:316
+msgid "Good Answer"
+msgstr "好回答"
+
+#: models/badges.py:328
+msgid "Great Answer"
+msgstr "妙答"
+
+#: models/badges.py:340
+msgid "Nice Question"
+msgstr "好問題"
+
+#: models/badges.py:345 models/badges.py:357 models/badges.py:369
+#, python-format
+msgid "Question voted up %(num)s times"
+msgstr ""
+
+#: models/badges.py:352
+msgid "Good Question"
+msgstr "好問題"
+
+#: models/badges.py:364
+msgid "Great Question"
+msgstr "好問題"
+
+#: models/badges.py:376
+msgid "Student"
+msgstr "學生"
+
+#: models/badges.py:381
+msgid "Asked first question with at least one up vote"
+msgstr "詢問至少有一票的問題"
+
+#: models/badges.py:414
+msgid "Popular Question"
+msgstr "常見問題"
+
+#: models/badges.py:418 models/badges.py:429 models/badges.py:441
+#, python-format
+msgid "Asked a question with %(views)s views"
+msgstr ""
+
+#: models/badges.py:425
+msgid "Notable Question"
+msgstr "顯目問題"
+
+#: models/badges.py:436
+msgid "Famous Question"
+msgstr ""
+
+#: models/badges.py:450
+msgid "Asked a question and accepted an answer"
+msgstr ""
+
+#: models/badges.py:453
+msgid "Scholar"
+msgstr "學者"
+
+#: models/badges.py:495
+msgid "Enlightened"
+msgstr "開明"
+
+#: models/badges.py:499
+#, python-format
+msgid "First answer was accepted with %(num)s or more votes"
+msgstr ""
+
+#: models/badges.py:507
+msgid "Guru"
+msgstr "大師"
+
+#: models/badges.py:510
+#, python-format
+msgid "Answer accepted with %(num)s or more votes"
+msgstr ""
+
+#: models/badges.py:518
+#, python-format
+msgid ""
+"Answered a question more than %(days)s days later with at least %(votes)s "
+"votes"
+msgstr ""
+
+#: models/badges.py:525
+msgid "Necromancer"
+msgstr "法師"
+
+#: models/badges.py:548
+msgid "Citizen Patrol"
+msgstr ""
+
+#: models/badges.py:551
+msgid "First flagged post"
+msgstr "第一個標記張貼"
+
+#: models/badges.py:563
+msgid "Cleanup"
+msgstr "清除"
+
+#: models/badges.py:566
+msgid "First rollback"
+msgstr "首次退出"
+
+#: models/badges.py:577
+msgid "Pundit"
+msgstr "權威人士"
+
+#: models/badges.py:580
+msgid "Left 10 comments with score of 10 or more"
+msgstr "保留十個積分超過十分的意見"
+
+#: models/badges.py:612
+msgid "Editor"
+msgstr ""
+
+#: models/badges.py:615
+msgid "First edit"
+msgstr ""
+
+#: models/badges.py:623
+msgid "Associate Editor"
+msgstr ""
+
+#: models/badges.py:627
+#, python-format
+msgid "Edited %(num)s entries"
+msgstr ""
+
+#: models/badges.py:634
+msgid "Organizer"
+msgstr "組織者"
+
+#: models/badges.py:637
+msgid "First retag"
+msgstr "首次重設標籤"
+
+#: models/badges.py:644
+msgid "Autobiographer"
+msgstr "自傳"
+
+#: models/badges.py:647
+msgid "Completed all user profile fields"
+msgstr "完成個人所有資料"
+
+#: models/badges.py:663
+#, python-format
+msgid "Question favorited by %(num)s users"
+msgstr ""
+
+#: models/badges.py:689
+msgid "Stellar Question"
+msgstr "主要的問題"
+
+#: models/badges.py:698
+msgid "Favorite Question"
+msgstr "珍藏問題"
+
+#: models/badges.py:710
+msgid "Enthusiast"
+msgstr ""
+
+#: models/badges.py:714
+#, python-format
+msgid "Visited site every day for %(num)s days in a row"
+msgstr ""
+
+#: models/badges.py:732
+msgid "Commentator"
+msgstr ""
+
+#: models/badges.py:736
+#, python-format
+msgid "Posted %(num_comments)s comments"
+msgstr ""
+
+#: models/badges.py:752
+msgid "Taxonomist"
+msgstr "分類專家"
+
+#: models/badges.py:756
+#, python-format
+msgid "Created a tag used by %(num)s questions"
+msgstr ""
+
+#: models/badges.py:774
+msgid "Expert"
+msgstr "專家"
+
+#: models/badges.py:777
+msgid "Very active in one tag"
+msgstr "某一標籤常啟用"
+
+#: models/message.py:16
+msgid "message"
+msgstr ""
+
+#: models/post.py:414
+msgid "Question: "
+msgstr ""
+
+#: models/post.py:416
+msgid "Answer: "
+msgstr ""
+
+#: models/post.py:1569
+msgid "Sorry, this question has been deleted and is no longer accessible"
+msgstr ""
+
+#: models/post.py:1585
+msgid ""
+"Sorry, the answer you are looking for is no longer available, because the "
+"parent question has been removed"
+msgstr ""
+
+#: models/post.py:1592
+msgid "Sorry, this answer has been removed and is no longer accessible"
+msgstr ""
+
+#: models/post.py:1608
+msgid ""
+"Sorry, the comment you are looking for is no longer accessible, because the "
+"parent question has been removed"
+msgstr ""
+
+#: models/post.py:1615
+msgid ""
+"Sorry, the comment you are looking for is no longer accessible, because the "
+"parent answer has been removed"
+msgstr ""
+
+#: models/post.py:1637
+msgid "This post is temporarily not available"
+msgstr ""
+
+#: models/post.py:2146
+#, python-format
+msgid ""
+"Thank you for your post to %(site)s. It will be published after the "
+"moderators review."
+msgstr ""
+
+#: models/post.py:2150
+#, python-format
+msgid "your post to %(site)s"
+msgstr ""
+
+#: models/post.py:2157
+msgid ""
+"Your post was placed on the moderation queue and will be published after the"
+" moderator approval."
+msgstr ""
+
+#: models/question.py:102
+#, python-format
+msgid "\" and \"%s\""
+msgstr ""
+
+#: models/question.py:105
+msgid "\" and more"
+msgstr ""
+
+#: models/question.py:770
+#, python-format
+msgid "%(count)d answer:"
+msgid_plural "%(count)d answers:"
+msgstr[0] ""
+
+#: models/question.py:1267
+#, python-format
+msgid "Tag %s is new and will be submitted for the moderators approval"
+msgstr ""
+
+#: models/question.py:1272 models/tag.py:217
+#, python-format
+msgid "Tags %s are new and will be submitted for the moderators approval"
+msgstr ""
+
+#: models/question.py:1507
+#, python-format
+msgid "Please, <a href=\"%s\">review your question</a>."
+msgstr ""
+
+#: models/reply_by_email.py:38
+msgid "Post an answer"
+msgstr ""
+
+#: models/reply_by_email.py:39
+msgid "Post a comment"
+msgstr ""
+
+#: models/reply_by_email.py:40
+msgid "Edit post"
+msgstr ""
+
+#: models/reply_by_email.py:41
+msgid "Append to post"
+msgstr ""
+
+#: models/reply_by_email.py:42
+msgid "Answer or comment, depending on the size of post"
+msgstr ""
+
+#: models/reply_by_email.py:43
+msgid "Validate email and record signature"
+msgstr ""
+
+#: models/reply_by_email.py:106
+msgid "added content by email"
+msgstr ""
+
+#: models/reply_by_email.py:109
+msgid "edited by email"
+msgstr ""
+
+#: models/repute.py:207
+#, python-format
+msgid "<em>Changed by moderator. Reason:</em> %(reason)s"
+msgstr ""
+
+#: models/repute.py:218
+#, python-format
+msgid ""
+"%(points)s points were added for %(username)s's contribution to question "
+"%(question_title)s"
+msgstr ""
+
+#: models/repute.py:223
+#, python-format
+msgid ""
+"%(points)s points were subtracted for %(username)s's contribution to "
+"question %(question_title)s"
+msgstr ""
+
+#: models/tag.py:209
+#, python-format
+msgid "New tags added to %s"
+msgstr ""
+
+#: models/user.py:284
+msgid "Entire forum"
+msgstr "這論壇"
+
+#: models/user.py:285
+msgid "Questions that I asked"
+msgstr "提問問題"
+
+#: models/user.py:286
+msgid "Questions that I answered"
+msgstr "已回答的問題"
+
+#: models/user.py:287
+msgid "Individually selected questions"
+msgstr "已選問題"
+
+#: models/user.py:288
+msgid "Mentions and comment responses"
+msgstr ""
+
+#: models/user.py:291
+msgid "Instantly"
+msgstr ""
+
+#: models/user.py:292
+msgid "Daily"
+msgstr "每天"
+
+#: models/user.py:293
+msgid "Weekly"
+msgstr "每周"
+
+#: models/user.py:294
+msgid "No email"
+msgstr "無電子郵件"
+
+#: models/user.py:528
+msgid "Can join when they want"
+msgstr ""
+
+#: models/user.py:529
+msgid "Users ask permission"
+msgstr ""
+
+#: models/user.py:530
+msgid "Moderator adds users"
+msgstr ""
+
+#: models/user.py:579
+msgid "Please give a list of valid email addresses."
+msgstr ""
+
+#: models/user.py:589
+msgid "Please give a list of valid email domain names."
+msgstr ""
+
+#: models/widgets.py:34
+msgid "css for the widget"
+msgstr ""
+
+#: templates/404.html:3 templates/404.html.py:10
+msgid "Page not found"
+msgstr ""
+
+#: templates/404.html:13
+msgid "Sorry, could not find the page you requested."
+msgstr "對不起，沒有找到您要的頁面！"
+
+#: templates/404.html:15
+msgid "This might have happened for the following reasons:"
+msgstr "可能是以下原因導致："
+
+#: templates/404.html:17
+msgid "this question or answer has been deleted;"
+msgstr "你正在查看的問題或者回答已經被刪除；"
+
+#: templates/404.html:18
+msgid "url has error - please check it;"
+msgstr "請求的地址有誤 - 請核實原始 URL 地址；"
+
+#: templates/404.html:19
+msgid ""
+"the page you tried to visit is protected or you don't have sufficient "
+"points, see"
+msgstr "訪問的頁面被保護或你的積分不夠，參見"
+
+#: templates/404.html:19 templates/widgets/footer.html:39
+msgid "faq"
+msgstr "常見問題"
+
+#: templates/404.html:20
+msgid "if you believe this error 404 should not have occured, please"
+msgstr "如果你確信不該出現 404 錯誤，請"
+
+#: templates/404.html:21
+msgid "report this problem"
+msgstr "回報這個問題"
+
+#: templates/404.html:30 templates/500.html:11
+msgid "back to previous page"
+msgstr "返回前頁"
+
+#: templates/404.html:31 templates/widgets/scope_nav.html:17
+msgid "see all questions"
+msgstr "查看最新問題"
+
+#: templates/404.html:32
+msgid "see all tags"
+msgstr "查看標籤列表"
+
+#: templates/500.html:3 templates/500.html.py:5
+msgid "Internal server error"
+msgstr ""
+
+#: templates/500.html:8
+msgid "system error log is recorded, error will be fixed as soon as possible"
+msgstr "系統已記錄錯誤, 並將盡快處理"
+
+#: templates/500.html:9
+msgid "please report the error to the site administrators if you wish"
+msgstr "如果你願意, 請將錯誤回報管理者"
+
+#: templates/500.html:12
+msgid "see latest questions"
+msgstr "請看最新問題"
+
+#: templates/500.html:13
+msgid "see tags"
+msgstr "請看標籤"
+
+#: templates/answer_edit.html:4 templates/answer_edit.html.py:10
+msgid "Edit answer"
+msgstr "修改回答"
+
+#: templates/answer_edit.html:10 templates/question_edit.html:9
+#: templates/question_retag.html:5 templates/revisions.html:7
+msgid "back"
+msgstr "返回"
+
+#: templates/answer_edit.html:41 templates/question_edit.html:61
+msgid "Save edit"
+msgstr "儲存修改"
+
+#: templates/answer_edit.html:46 templates/close.html:16
+#: templates/feedback.html:64 templates/question_edit.html:62
+#: templates/question_retag.html:22 templates/reopen.html:28
+#: templates/subscribe_for_tags.html:16
+#: templates/user_profile/reject_post_dialog.html:36
+#: templates/user_profile/reject_post_dialog.html:74
+#: templates/user_profile/reject_post_dialog.html:104
+#: templates/user_profile/user_edit.html:110
+msgid "Cancel"
+msgstr "取消"
+
+#: templates/answer_edit.html:87 templates/answer_edit.html.py:90
+#: templates/ask.html:82 templates/ask.html.py:85
+#: templates/question_edit.html:101 templates/question_edit.html.py:104
+#: templates/question/javascript.html:73 templates/question/javascript.html:76
+#: templates/widgets/edit_post.html:73
+msgid "hide preview"
+msgstr "禁用預覽"
+
+#: templates/answer_edit.html:90 templates/ask.html:85
+#: templates/question_edit.html:104 templates/question/javascript.html:76
+msgid "show preview"
+msgstr "顯示預覽"
+
+#: templates/ask.html:4 templates/widgets/ask_button.html:9
+#: templates/widgets/ask_form.html:66
+msgid "Ask Your Question"
+msgstr ""
+
+#: templates/ask.html:21
+msgid ""
+"since you are not logged in right now, you will be asked to sign in or "
+"register after posting your question"
+msgstr ""
+
+#: templates/ask.html:25
+#, python-format
+msgid ""
+"Your email, %(email)s has not yet been validated. To post messages you must "
+"verify your email, please see <a href='%(email_validation_faq_url)s'>more "
+"details here</a>. You can submit your question now and validate email after "
+"that. Meanwhile, your question will saved as pending."
+msgstr ""
+
+#: templates/ask.html:29
+msgid "please, try to make your question interesting to this community"
+msgstr ""
+
+#: templates/ask.html:30 templates/widgets/answer_edit_tips.html:12
+#: templates/widgets/question_edit_tips.html:8
+msgid "provide enough details"
+msgstr ""
+
+#: templates/ask.html:31 templates/widgets/answer_edit_tips.html:15
+#: templates/widgets/question_edit_tips.html:11
+msgid "be clear and concise"
+msgstr "簡單扼要"
+
+#: templates/ask.html:36 templates/widgets/answer_edit_tips.html:20
+#: templates/widgets/question_edit_tips.html:16
+msgid "see frequently asked questions"
+msgstr "查看常見問題"
+
+#: templates/ask.html:36 templates/faq_static.html:3
+#: templates/faq_static.html.py:5 templates/widgets/answer_edit_tips.html:20
+#: templates/widgets/question_edit_tips.html:16 views/meta.py:71
+msgid "FAQ"
+msgstr ""
+
+#: templates/badge.html:5 templates/badge.html.py:9
+#: templates/user_profile/user_recent.html:20
+#: templates/user_profile/user_stats.html:120
+#, python-format
+msgid "%(name)s"
+msgstr ""
+
+#: templates/badge.html:5
+msgid "Badge"
+msgstr "獎牌"
+
+#: templates/badge.html:7
+#, python-format
+msgid "Badge \"%(name)s\""
+msgstr ""
+
+#: templates/badge.html:9 templates/user_profile/user_recent.html:18
+#: templates/user_profile/user_stats.html:118
+#, python-format
+msgid "%(description)s"
+msgstr ""
+
+#: templates/badge.html:14
+msgid "user received this badge:"
+msgid_plural "users received this badge:"
+msgstr[0] ""
+
+#: templates/badges.html:3 templates/badges.html.py:5
+msgid "Badges"
+msgstr "獎勵"
+
+#: templates/badges.html:7
+msgid "Community gives you awards for your questions, answers and votes."
+msgstr "社群將依你提出的問題，回答，投票的表現，獎勵你。"
+
+#: templates/badges.html:8
+msgid ""
+"Below is the list of available badges and number of times each type of badge"
+" has been awarded."
+msgstr ""
+
+#: templates/badges.html:31
+msgid "Community badges"
+msgstr "社群獎勵"
+
+#: templates/badges.html:33
+msgid "gold badge: the highest honor and is very rare"
+msgstr "金牌:十分罕見之最高榮耀"
+
+#: templates/badges.html:36
+msgid ""
+"Gold badge is the highest award in this community. To obtain it you have to show \n"
+"profound knowledge and ability in addition to your active participation."
+msgstr ""
+
+#: templates/badges.html:42 templates/badges.html.py:46
+msgid ""
+"silver badge: occasionally awarded for the very high quality contributions"
+msgstr "銀牌:偶爾頒發之優質獎章"
+
+#: templates/badges.html:49 templates/badges.html.py:53
+msgid "bronze badge: often given as a special honor"
+msgstr "第三名獎勵:授予之特殊榮譽"
+
+#: templates/base.html:22
+#, python-format
+msgid "RSS feed from %(site_title)s"
+msgstr ""
+
+#: templates/close.html:3 templates/close.html.py:5
+msgid "Close question"
+msgstr "結束問題"
+
+#: templates/close.html:6
+msgid "Close the question"
+msgstr "結束問題"
+
+#: templates/close.html:11
+msgid "Reasons"
+msgstr "原因"
+
+#: templates/close.html:15
+msgid "OK to close"
+msgstr "確定關閉"
+
+#: templates/faq_static.html:5
+msgid "Frequently Asked Questions "
+msgstr "常見問題"
+
+#: templates/faq_static.html:6
+msgid "What kinds of questions can I ask here?"
+msgstr "我可以在這裏提問什麼樣的問題？"
+
+#: templates/faq_static.html:7
+msgid ""
+"Most importantly - questions should be <strong>relevant</strong> to this "
+"community."
+msgstr ""
+
+#: templates/faq_static.html:8
+msgid ""
+"Before you ask - please make sure to search for a similar question. You can "
+"search questions by their title or tags."
+msgstr ""
+
+#: templates/faq_static.html:10
+msgid "What kinds of questions should be avoided?"
+msgstr ""
+
+#: templates/faq_static.html:11
+msgid ""
+"Please avoid asking questions that are not relevant to this community, too "
+"subjective and argumentative."
+msgstr "請避免提問無關的，過於主觀性，易造成爭吵的問題。"
+
+#: templates/faq_static.html:13
+msgid "What should I avoid in my answers?"
+msgstr "什麼樣的回答是不受歡迎的？"
+
+#: templates/faq_static.html:14
+msgid ""
+"is a <strong>question and answer</strong> site - <strong>it is not a "
+"discussion group</strong>. Please avoid holding debates in your answers as "
+"they tend to dilute the essense of questions and answers. For the brief "
+"discussions please use commenting facility."
+msgstr ""
+
+#: templates/faq_static.html:15
+msgid "Who moderates this community?"
+msgstr "誰是社群的管理員？"
+
+#: templates/faq_static.html:16
+msgid "The short answer is: <strong>you</strong>."
+msgstr "答案是：<strong>你</strong>。"
+
+#: templates/faq_static.html:17
+msgid "This website is moderated by the users."
+msgstr "社群沒有嚴格意義上的管理員身份，每個人皆可為管理員"
+
+#: templates/faq_static.html:18
+msgid ""
+"Karma system allows users to earn rights to perform a variety of moderation "
+"tasks"
+msgstr ""
+
+#: templates/faq_static.html:20
+msgid "How does karma system work?"
+msgstr ""
+
+#: templates/faq_static.html:21
+msgid ""
+"When a question or answer is upvoted, the user who posted them will gain "
+"some points, which are called \\\"karma points\\\". These points serve as a "
+"rough measure of the community trust to him/her. Various moderation tasks "
+"are gradually assigned to the users based on those points."
+msgstr ""
+
+#: templates/faq_static.html:22
+#, python-format
+msgid ""
+"For example, if you ask an interesting question or give a helpful answer, "
+"your input will be upvoted. On the other hand if the answer is misleading - "
+"it will be downvoted. Each vote in favor will generate "
+"<strong>%(REP_GAIN_FOR_RECEIVING_UPVOTE)s</strong> points, each vote against"
+" will subtract <strong>%(REP_LOSS_FOR_RECEIVING_DOWNVOTE)s</strong> points. "
+"There is a limit of <strong>%(MAX_REP_GAIN_PER_USER_PER_DAY)s</strong> "
+"points that can be accumulated for a question or answer per day. The table "
+"below explains reputation point requirements for each type of moderation "
+"task."
+msgstr ""
+
+#: templates/faq_static.html:32 templates/user_profile/user_votes.html:14
+msgid "upvote"
+msgstr "投贊成票"
+
+#: templates/faq_static.html:37
+msgid "add comments"
+msgstr "添加評論"
+
+#: templates/faq_static.html:42 templates/user_profile/user_votes.html:16
+msgid "downvote"
+msgstr "投反對票"
+
+#: templates/faq_static.html:45
+msgid " accept own answer to own questions"
+msgstr ""
+
+#: templates/faq_static.html:49
+msgid "open and close own questions"
+msgstr ""
+
+#: templates/faq_static.html:53
+msgid "retag other's questions"
+msgstr ""
+
+#: templates/faq_static.html:58
+msgid "edit community wiki questions"
+msgstr "編輯 wiki 類問題"
+
+#: templates/faq_static.html:63
+msgid "edit any answer"
+msgstr ""
+
+#: templates/faq_static.html:67
+msgid "delete any comment"
+msgstr ""
+
+#: templates/faq_static.html:71
+msgid "How to change my picture (gravatar) and what is gravatar?"
+msgstr ""
+
+#: templates/faq_static.html:72
+msgid ""
+"<p>The picture that appears on the users profiles is called "
+"<strong>gravatar</strong> (which means <strong>g</strong>lobally "
+"<strong>r</strong>ecognized <strong>avatar</strong>).</p><p>Here is how it "
+"works: a <strong>cryptographic key</strong> (unbreakable code) is calculated"
+" from your email address. You upload your picture (or your favorite alter "
+"ego image) the website <a "
+"href='http://gravatar.com'><strong>gravatar.com</strong></a> from where we "
+"later retreive your image using the key.</p><p>This way all the websites you"
+" trust can show your image next to your posts and your email address remains"
+" private.</p><p>Please <strong>personalize your account</strong> with an "
+"image - just register at <a "
+"href='http://gravatar.com'><strong>gravatar.com</strong></a> (just please be"
+" sure to use the same email address that you used to register with us). "
+"Default image that looks like a kitchen tile is generated automatically.</p>"
+msgstr ""
+
+#: templates/faq_static.html:73
+msgid "To register, do I need to create new password?"
+msgstr "注冊需要一個新密碼嗎？"
+
+#: templates/faq_static.html:74
+msgid ""
+"No, you don't have to. You can login through any service that supports "
+"OpenID, e.g. Google, Yahoo, AOL, etc."
+msgstr ""
+
+#: templates/faq_static.html:75
+msgid "\"Login now!\""
+msgstr ""
+
+#: templates/faq_static.html:77
+msgid "Why other people can edit my questions/answers?"
+msgstr "為什麼其他人可以修改我的問題/回答？"
+
+#: templates/faq_static.html:78
+msgid "Goal of this site is..."
+msgstr "此網站的目的為 ... "
+
+#: templates/faq_static.html:78
+msgid ""
+"So questions and answers can be edited like wiki pages by experienced users "
+"of this site and this improves the overall quality of the knowledge base "
+"content."
+msgstr "所以問題和答案都是如 Wiki 一樣可編輯的，進而積累更多有用的知識和經驗。"
+
+#: templates/faq_static.html:79
+msgid "If this approach is not for you, we respect your choice."
+msgstr "如果您不喜歡這種方式，我們尊重你的選擇。"
+
+#: templates/faq_static.html:81
+msgid "Still have questions?"
+msgstr "還有其他問題？"
+
+#: templates/faq_static.html:82
+#, python-format
+msgid ""
+"Please <a href='%(ask_question_url)s'>ask</a> your question, help make our "
+"community better!"
+msgstr ""
+
+#: templates/feedback.html:3
+msgid "Feedback"
+msgstr "問題回饋"
+
+#: templates/feedback.html:5
+msgid "Give us your feedback!"
+msgstr "回饋"
+
+#: templates/feedback.html:14
+#, python-format
+msgid ""
+"\n"
+"        <span class='big strong'>Dear %(user_name)s</span>, we look forward to hearing your feedback. \n"
+"        Please type and send us your message below.\n"
+"        "
+msgstr ""
+
+#: templates/feedback.html:21
+msgid ""
+"\n"
+"        <span class='big strong'>Dear visitor</span>, we look forward to hearing your feedback.\n"
+"        Please type and send us your message below.\n"
+"        "
+msgstr ""
+
+#: templates/feedback.html:30
+msgid "(to hear from us please enter a valid email or check the box below)"
+msgstr ""
+
+#: templates/feedback.html:37 templates/feedback.html.py:46
+msgid "(this field is required)"
+msgstr " (此欄不能為空白)"
+
+#: templates/feedback.html:55
+msgid "(Please solve the captcha)"
+msgstr ""
+
+#: templates/feedback.html:63
+msgid "Send Feedback"
+msgstr "送出問題回饋"
+
+#: templates/groups.html:3 templates/groups.html.py:6
+#: templates/question/sidebar.html:121
+#: templates/tags/list_bulk_tag_subscription.html:15
+msgid "Groups"
+msgstr ""
+
+#: templates/groups.html:11
+msgid "All groups"
+msgstr ""
+
+#: templates/groups.html:13
+msgid "all groups"
+msgstr ""
+
+#: templates/groups.html:15
+msgid "My groups"
+msgstr ""
+
+#: templates/groups.html:17
+msgid "my groups"
+msgstr ""
+
+#: templates/groups.html:25
+msgid ""
+"Tip: to create a new group - please go to some user profile and add the new "
+"group there. That user will be the first member of the group"
+msgstr ""
+
+#: templates/groups.html:30
+msgid "Group"
+msgstr ""
+
+#: templates/groups.html:31
+msgid "Number of members"
+msgstr ""
+
+#: templates/help.html:2 templates/help.html.py:4
+msgid "Help"
+msgstr ""
+
+#: templates/help.html:7
+#, python-format
+msgid "Welcome %(username)s,"
+msgstr ""
+
+#: templates/help.html:9
+msgid "Welcome,"
+msgstr ""
+
+#: templates/help.html:13
+#, python-format
+msgid "Thank you for using %(app_name)s, here is how it works."
+msgstr ""
+
+#: templates/help.html:16
+msgid "How questions, answers and comments work"
+msgstr ""
+
+#: templates/help.html:18
+msgid ""
+"This site is for asking and answering questions, not for open-ended "
+"discussions."
+msgstr ""
+
+#: templates/help.html:19
+msgid ""
+"We encourage everyone to use “question” space for asking and “answer” for "
+"answering."
+msgstr ""
+
+#: templates/help.html:22
+msgid ""
+"Despite that, each question and answer can be commented – \n"
+"    the comments are good for the limited discussions."
+msgstr ""
+
+#: templates/help.html:26
+msgid "Please search before asking your questions"
+msgstr ""
+
+#: templates/help.html:27
+msgid ""
+"Type your question in the search bar and see whether a similar question has "
+"been asked before"
+msgstr ""
+
+#: templates/help.html:29
+msgid "Search has advanced capabilities:"
+msgstr ""
+
+#: templates/help.html:31
+msgid "to search in title - enter [title: your text]"
+msgstr ""
+
+#: templates/help.html:32
+msgid "to search by tags - enter [tag: sometag] or #sometag"
+msgstr ""
+
+#: templates/help.html:33
+msgid "to search by user - enter [user: somename] or @somename or @\"some name\""
+msgstr ""
+
+#: templates/help.html:35
+msgid ""
+"In addition, it is possible to click on tags to add them to the search "
+"query."
+msgstr ""
+
+#: templates/help.html:37
+msgid ""
+"Finally, a separate tag search box is available in the side bar of the main "
+"page, where the search tags can be entered as well"
+msgstr ""
+
+#: templates/help.html:40
+msgid ""
+"<em>Important!!!</em> All search terms are combined with a logical \"AND\" "
+"expression - to narrow the search by adding new terms."
+msgstr ""
+
+#: templates/help.html:42
+msgid "Voting"
+msgstr ""
+
+#: templates/help.html:44
+#, python-format
+msgid ""
+"Voting in %(app_name)s helps to select best answers and thank most helpful "
+"users."
+msgstr ""
+
+#: templates/help.html:47
+#, python-format
+msgid ""
+"Please vote when you find helpful information,\n"
+"    it really helps the %(app_name)s community."
+msgstr ""
+
+#: templates/help.html:51
+msgid "Other topics"
+msgstr ""
+
+#: templates/help.html:53
+msgid ""
+"You can @mention users anywhere in the text to point their attention,\n"
+"    follow users and conversations and report inappropriate content by flagging it."
+msgstr ""
+
+#: templates/help.html:56
+msgid "Enjoy."
+msgstr ""
+
+#: templates/import_data.html:2 templates/import_data.html.py:4
+msgid "Import StackExchange data"
+msgstr ""
+
+#: templates/import_data.html:13
+msgid ""
+"<em>Warning:</em> if your database is not empty, please back it up\n"
+"        before attempting this operation."
+msgstr ""
+
+#: templates/import_data.html:16
+msgid ""
+"Upload your stackexchange dump .zip file, then wait until\n"
+"        the data import completes. This process may take several minutes.\n"
+"        Please note that feedback will be printed in plain text.\n"
+"        "
+msgstr ""
+
+#: templates/import_data.html:25
+msgid "Import data"
+msgstr ""
+
+#: templates/import_data.html:27
+msgid ""
+"In the case you experience any difficulties in using this import tool,\n"
+"        please try importing your data via command line: <code>python manage.py load_stackexchange path/to/your-data.zip</code>"
+msgstr ""
+
+#: templates/list_suggested_tags.html:11
+msgid "Tag"
+msgstr ""
+
+#: templates/list_suggested_tags.html:12
+msgid "Suggested by"
+msgstr ""
+
+#: templates/list_suggested_tags.html:13
+msgid "Your decision"
+msgstr ""
+
+#: templates/list_suggested_tags.html:14
+msgid "Suggested tag was used for questions"
+msgstr ""
+
+#: templates/list_suggested_tags.html:34 templates/list_suggested_tags.html:45
+msgid "Accept"
+msgstr ""
+
+#: templates/list_suggested_tags.html:35 templates/list_suggested_tags.html:46
+msgid "Reject"
+msgstr ""
+
+#: templates/list_suggested_tags.html:38
+msgid "There are no questions with this tag yet"
+msgstr ""
+
+#: templates/list_suggested_tags.html:62
+#, python-format
+msgid "Apply tag \"%(name)s\" to all above questions"
+msgstr ""
+
+#: templates/list_suggested_tags.html:63
+msgid "Reject tag"
+msgstr ""
+
+#: templates/list_suggested_tags.html:71 templates/tags/content.html:5
+#: templates/tags/content.html.py:31
+msgid "Nothing found"
+msgstr "毫無所獲"
+
+#: templates/macros.html:5
+#, python-format
+msgid "Share this question on %(site)s"
+msgstr ""
+
+#: templates/macros.html:44
+msgid "current number of votes"
+msgstr "當前總票數"
+
+#: templates/macros.html:57
+msgid "anonymous user"
+msgstr ""
+
+#: templates/macros.html:91 templates/macros.html.py:110
+msgid "asked"
+msgstr "提問於"
+
+#: templates/macros.html:93 templates/macros.html.py:112
+msgid "answered"
+msgstr ""
+
+#: templates/macros.html:95 templates/macros.html.py:114
+msgid "posted"
+msgstr ""
+
+#: templates/macros.html:101
+msgid "this post is marked as community wiki"
+msgstr ""
+
+#: templates/macros.html:104
+#, python-format
+msgid ""
+"This post is a wiki.\n"
+"        Anyone with karma &gt;%(wiki_min_rep)s is welcome to improve it."
+msgstr ""
+
+#: templates/macros.html:146
+msgid "updated"
+msgstr "更新"
+
+#: templates/macros.html:261 templates/macros.html.py:267
+msgid "Leave this group"
+msgstr ""
+
+#: templates/macros.html:262 templates/macros.html.py:264
+#: templates/macros.html:283
+msgid "Join this group"
+msgstr ""
+
+#: templates/macros.html:263 templates/macros.html.py:268
+#: templates/macros.html:278
+msgid "You are a member"
+msgstr ""
+
+#: templates/macros.html:270
+msgid "Cancel application"
+msgstr ""
+
+#: templates/macros.html:271 templates/macros.html.py:280
+msgid "Waiting approval"
+msgstr ""
+
+#: templates/macros.html:273 templates/macros.html.py:274
+#: templates/macros.html:285
+msgid "Ask to join"
+msgstr ""
+
+#: templates/macros.html:314
+#, python-format
+msgid "see questions tagged '%(tag)s'"
+msgstr "查看有關 '%(tag)s' 的問題"
+
+#: templates/macros.html:430
+msgid "delete this comment"
+msgstr "刪除任何一個評論"
+
+#: templates/macros.html:443 templates/revisions.html:38
+#: templates/revisions.html.py:41 templates/question/answer_controls.html:5
+#: templates/question/question_controls.html:1
+msgid "edit"
+msgstr "編輯"
+
+#: templates/macros.html:452
+msgid "convert to answer"
+msgstr ""
+
+#: templates/macros.html:579
+#, python-format
+msgid "follow %(alias)s"
+msgstr ""
+
+#: templates/macros.html:582
+#, python-format
+msgid "unfollow %(alias)s"
+msgstr ""
+
+#: templates/macros.html:583
+#, python-format
+msgid "following %(alias)s"
+msgstr ""
+
+#: templates/macros.html:662 templatetags/extra_tags.py:44
+#, python-format
+msgid "%(username)s gravatar image"
+msgstr "%(username)s 大頭貼"
+
+#: templates/macros.html:671
+#, python-format
+msgid "%(username)s's website is %(url)s"
+msgstr ""
+
+#: templates/macros.html:686 templates/macros.html.py:687
+#: templates/macros.html:725 templates/macros.html.py:726
+msgid "previous"
+msgstr "上一頁"
+
+#: templates/macros.html:698 templates/macros.html.py:737
+msgid "current page"
+msgstr "當前頁"
+
+#: templates/macros.html:700 templates/macros.html.py:707
+#: templates/macros.html:739 templates/macros.html.py:746
+#, python-format
+msgid "page %(num)s"
+msgstr ""
+
+#: templates/macros.html:711 templates/macros.html.py:750
+msgid "next page"
+msgstr "下一頁"
+
+#: templates/macros.html:762
+#, python-format
+msgid "responses for %(username)s"
+msgstr ""
+
+#: templates/macros.html:765
+#, python-format
+msgid "you have %(response_count)s new response"
+msgid_plural "you have %(response_count)s new responses"
+msgstr[0] ""
+
+#: templates/macros.html:768
+msgid "no new responses yet"
+msgstr ""
+
+#: templates/macros.html:783 templates/macros.html.py:784
+#, python-format
+msgid "%(new)s new flagged posts and %(seen)s previous"
+msgstr ""
+
+#: templates/macros.html:786 templates/macros.html.py:787
+#, python-format
+msgid "%(new)s new flagged posts"
+msgstr ""
+
+#: templates/macros.html:792 templates/macros.html.py:793
+#, python-format
+msgid "%(seen)s flagged posts"
+msgstr ""
+
+#: templates/main_page.html:14
+msgid "Questions"
+msgstr "問題列表"
+
+#: templates/question.html:226
+msgid "see more comments"
+msgstr ""
+
+#: templates/question.html:228 templates/question.html.py:331
+msgid "post a comment"
+msgstr ""
+
+#: templates/question.html:241 templates/question/content.html:46
+msgid "Answer Your Own Question"
+msgstr "回答問題"
+
+#: templates/question.html:246
+msgid "Post Your Answer"
+msgstr ""
+
+#: templates/question.html:252 templates/widgets/ask_form.html:64
+msgid "Login/Signup to Post"
+msgstr ""
+
+#: templates/question_edit.html:4 templates/question_edit.html.py:9
+msgid "Edit question"
+msgstr "修改問題"
+
+#: templates/question_edit.html:16
+msgid "Question - in one sentence"
+msgstr ""
+
+#: templates/question_edit.html:23
+msgid "Details"
+msgstr ""
+
+#: templates/question_edit.html:56
+msgid "Change language"
+msgstr ""
+
+#: templates/question_retag.html:3 templates/question_retag.html.py:5
+msgid "Retag question"
+msgstr ""
+
+#: templates/question_retag.html:21
+msgid "Retag"
+msgstr ""
+
+#: templates/question_retag.html:28
+msgid "Why use and modify tags?"
+msgstr "為什麼要用或修改標籤？"
+
+#: templates/question_retag.html:30
+msgid "Tags help to keep the content better organized and searchable"
+msgstr ""
+
+#: templates/question_retag.html:32
+msgid "tag editors receive special awards from the community"
+msgstr "將授予修改標籤的用戶特殊的社區獎勵"
+
+#: templates/question_retag.html:59
+msgid "up to 5 tags, less than 20 characters each"
+msgstr "最多 5 個標籤，每個標籤長度小於 20 個字元。"
+
+#: templates/reopen.html:4 templates/reopen.html.py:6
+msgid "Reopen question"
+msgstr "重啟問題"
+
+#: templates/reopen.html:12
+#, python-format
+msgid ""
+"This question has been closed by \n"
+"    <a href=\"%(closed_by_profile_url)s\">%(username)s</a>\n"
+msgstr ""
+
+#: templates/reopen.html:17
+msgid "Close reason:"
+msgstr ""
+
+#: templates/reopen.html:20
+msgid "When:"
+msgstr ""
+
+#: templates/reopen.html:23
+msgid "Reopen this question?"
+msgstr ""
+
+#: templates/reopen.html:27
+msgid "Reopen this question"
+msgstr ""
+
+#: templates/revisions.html:4 templates/revisions.html.py:7
+msgid "Revision history"
+msgstr "版本歷史"
+
+#: templates/revisions.html:23
+msgid "click to hide/show revision"
+msgstr "點選 隱藏/展開 版本"
+
+#: templates/revisions.html:29
+#, python-format
+msgid "revision %(number)s"
+msgstr ""
+
+#: templates/subscribe_for_tags.html:3 templates/subscribe_for_tags.html:5
+msgid "Subscribe for tags"
+msgstr ""
+
+#: templates/subscribe_for_tags.html:6
+msgid "Please, subscribe for the following tags:"
+msgstr ""
+
+#: templates/subscribe_for_tags.html:15
+msgid "Subscribe"
+msgstr ""
+
+#: templates/tags.html:17
+msgid "search for tags"
+msgstr ""
+
+#: templates/users.html:8 templates/users.html.py:18
+#: templates/tags/list_bulk_tag_subscription.html:13
+msgid "Users"
+msgstr "用戶列表"
+
+#: templates/users.html:16
+#, python-format
+msgid "Users in group %(name)s"
+msgstr ""
+
+#: templates/users.html:24
+msgid "Select/Sort by &raquo;"
+msgstr ""
+
+#: templates/users.html:29
+#, python-format
+msgid "people in group %(name)s"
+msgstr ""
+
+#: templates/users.html:33 templates/main_page/tab_bar.html:17
+#: templates/tags/header.html:14
+msgid "Sort by &raquo;"
+msgstr ""
+
+#: templates/users.html:40
+msgid "see people with the highest reputation"
+msgstr ""
+
+#: templates/users.html:41 templates/user_profile/user_info.html:26
+#: templates/user_profile/user_reputation.html:5
+#: templates/user_profile/user_tabs.html:24
+msgid "karma"
+msgstr ""
+
+#: templates/users.html:47
+msgid "see people who joined most recently"
+msgstr ""
+
+#: templates/users.html:48
+msgid "recent"
+msgstr "最新加入"
+
+#: templates/users.html:53
+msgid "see people who joined the site first"
+msgstr ""
+
+#: templates/users.html:59
+msgid "see people sorted by name"
+msgstr ""
+
+#: templates/users.html:60
+msgid "by username"
+msgstr "用戶名"
+
+#: templates/users.html:66
+#, python-format
+msgid "users matching query %(search_query)s:"
+msgstr ""
+
+#: templates/users.html:69
+msgid "Nothing found."
+msgstr "沒有找到相關數據。"
+
+#: templates/authopenid/authopenid_macros.html:63
+msgid "Please enter your <span>user name</span>, then sign in"
+msgstr ""
+
+#: templates/authopenid/authopenid_macros.html:64
+#: templates/authopenid/signin.html:98
+#: templates/authopenid/widget_signin.html:102
+msgid "(or select another login method above)"
+msgstr ""
+
+#: templates/authopenid/authopenid_macros.html:66
+#: templates/authopenid/signin.html:118
+#: templates/authopenid/widget_signin.html:118
+msgid "Sign in"
+msgstr ""
+
+#: templates/authopenid/changeemail.html:2
+msgid "Change Email"
+msgstr ""
+
+#: templates/authopenid/changeemail.html:6
+msgid "Validate email"
+msgstr ""
+
+#: templates/authopenid/changeemail.html:9
+#, python-format
+msgid ""
+"<span class=\\\"strong big\\\">An email with a validation link has been sent to \n"
+"%(email)s.</span> Please <strong>follow the emailed link</strong> with your \n"
+"web browser. Email validation is necessary to help insure the proper use of \n"
+"email on <span class=\\\"orange\\\">Q&amp;A</span>. If you would like to use \n"
+"<strong>another email</strong>, please <a \n"
+"href='%(change_email_url)s'><strong>change it again</strong></a>."
+msgstr ""
+
+#: templates/authopenid/changeemail.html:18
+msgid "Email verified"
+msgstr "驗證過電子信箱"
+
+#: templates/authopenid/changeemail.html:21
+msgid ""
+"<span class=\\\"big strong\\\">Thank you for verifying your email!</span> Now \n"
+"you can <strong>ask</strong> and <strong>answer</strong> questions. Also if \n"
+"you find a very interesting question you can <strong>subscribe for the \n"
+"updates</strong> - then will be notified about changes <strong>once a day</strong>\n"
+"or less frequently."
+msgstr ""
+
+#: templates/authopenid/complete.html:21
+msgid "Registration"
+msgstr ""
+
+#: templates/authopenid/complete.html:23
+msgid "User registration"
+msgstr ""
+
+#: templates/authopenid/complete.html:47
+msgid "<strong>Screen Name</strong> (<i>will be shown to others</i>)"
+msgstr ""
+
+#: templates/authopenid/complete.html:56
+msgid ""
+"<strong>Email Address</strong> (<i>will <strong>not</strong> be shared with \n"
+"anyone, must be valid</i>)\n"
+"                    "
+msgstr ""
+
+#: templates/authopenid/complete.html:71
+#: templates/authopenid/signup_with_password.html:5
+#: templates/authopenid/signup_with_password.html:45
+msgid "Signup"
+msgstr "註冊帳號"
+
+#: templates/authopenid/confirm_email.txt:1
+msgid "Thank you for registering at our Q&A forum!"
+msgstr "感謝你加入我們的 Q&A 論壇"
+
+#: templates/authopenid/confirm_email.txt:3
+msgid "Your account details are:"
+msgstr "帳號詳細: "
+
+#: templates/authopenid/confirm_email.txt:5
+msgid "Username:"
+msgstr ""
+
+#: templates/authopenid/confirm_email.txt:6
+msgid "Password:"
+msgstr "密碼: "
+
+#: templates/authopenid/confirm_email.txt:8
+msgid "Please sign in here:"
+msgstr "請由此進入: "
+
+#: templates/authopenid/confirm_email.txt:11
+#: templates/authopenid/email_validation.txt:13
+msgid ""
+"Sincerely,\n"
+"Q&A Forum Administrator"
+msgstr ""
+
+#: templates/authopenid/email_validation.html:2
+#: templates/authopenid/email_validation.html:3
+#: templates/authopenid/email_validation.txt:1
+msgid "Greetings from the Q&A forum"
+msgstr "歡迎"
+
+#: templates/authopenid/email_validation.html:7
+#: templates/authopenid/email_validation.txt:3
+msgid "To make use of the Forum, please follow the link below:"
+msgstr "請依下列指引使用論壇: "
+
+#: templates/authopenid/email_validation.html:11
+#: templates/authopenid/email_validation.txt:7
+msgid "Following the link above will help us verify your email address."
+msgstr "請依上列指引認證電子郵件地址"
+
+#: templates/authopenid/email_validation.html:13
+#: templates/authopenid/email_validation.txt:9
+msgid ""
+"If you believe that this message was sent in mistake - \n"
+"no further action is needed. Just ignore this email, we apologize\n"
+"for any inconvenience"
+msgstr ""
+
+#: templates/authopenid/logout.html:3
+msgid "Logout"
+msgstr "登出"
+
+#: templates/authopenid/logout.html:5
+msgid "You have successfully logged out"
+msgstr ""
+
+#: templates/authopenid/logout.html:7
+msgid ""
+"However, you still may be logged in to your OpenID provider. Please logout "
+"of your provider if you wish to do so."
+msgstr ""
+
+#: templates/authopenid/signin.html:5
+#: templates/authopenid/widget_signin.html:5
+msgid "User login"
+msgstr "用戶登錄"
+
+#: templates/authopenid/signin.html:15
+#: templates/authopenid/widget_signin.html:19
+#, python-format
+msgid ""
+"\n"
+"        Your answer to %(title)s %(summary)s will be posted once you log in\n"
+"        "
+msgstr ""
+
+#: templates/authopenid/signin.html:22
+#: templates/authopenid/widget_signin.html:26
+#, python-format
+msgid ""
+"Your question \n"
+"        %(title)s %(summary)s will be posted once you log in\n"
+"        "
+msgstr ""
+
+#: templates/authopenid/signin.html:31
+#: templates/authopenid/widget_signin.html:36
+msgid ""
+"It's a good idea to make sure that your existing login methods still work, "
+"or add a new one. Please click any of the icons below to check/change or add"
+" new login methods."
+msgstr ""
+
+#: templates/authopenid/signin.html:33
+#: templates/authopenid/widget_signin.html:38
+msgid ""
+"Please add a more permanent login method by clicking one of the icons below,"
+" to avoid logging in via email each time."
+msgstr ""
+
+#: templates/authopenid/signin.html:37
+#: templates/authopenid/widget_signin.html:42
+msgid ""
+"Click on one of the icons below to add a new login method or re-validate an "
+"existing one."
+msgstr ""
+
+#: templates/authopenid/signin.html:39
+#: templates/authopenid/widget_signin.html:44
+msgid ""
+"You don't have a method to log in right now, please add one or more by "
+"clicking any of the icons below."
+msgstr ""
+
+#: templates/authopenid/signin.html:42
+#: templates/authopenid/widget_signin.html:47
+msgid ""
+"Please check your email and visit the enclosed link to re-connect to your "
+"account"
+msgstr ""
+
+#: templates/authopenid/signin.html:90
+#: templates/authopenid/widget_signin.html:94
+msgid "or enter your <span>user name and password</span>, then sign in"
+msgstr ""
+
+#: templates/authopenid/signin.html:94
+#: templates/authopenid/widget_signin.html:98
+msgid "Please, sign in"
+msgstr ""
+
+#: templates/authopenid/signin.html:104
+#: templates/authopenid/widget_signin.html:105
+msgid "Login failed, please try again"
+msgstr ""
+
+#: templates/authopenid/signin.html:109
+#: templates/authopenid/widget_signin.html:109
+msgid "Login or email"
+msgstr ""
+
+#: templates/authopenid/signin.html:113
+#: templates/authopenid/widget_signin.html:113 utils/forms.py:264
+msgid "Password"
+msgstr "密碼"
+
+#: templates/authopenid/signin.html:125
+#: templates/authopenid/widget_signin.html:125
+msgid "To change your password - please enter the new one twice, then submit"
+msgstr ""
+
+#: templates/authopenid/signin.html:129
+#: templates/authopenid/widget_signin.html:129
+msgid "New password"
+msgstr ""
+
+#: templates/authopenid/signin.html:138
+#: templates/authopenid/widget_signin.html:138
+msgid "Please, retype"
+msgstr ""
+
+#: templates/authopenid/signin.html:148
+#: templates/authopenid/widget_signin.html:148
+#: templates/livesettings/site_settings.html:24
+msgid "Change password"
+msgstr "修改密碼"
+
+#: templates/authopenid/signin.html:162
+#: templates/authopenid/widget_signin.html:162
+msgid "Here are your current login methods"
+msgstr ""
+
+#: templates/authopenid/signin.html:166
+#: templates/authopenid/widget_signin.html:166
+msgid "provider"
+msgstr ""
+
+#: templates/authopenid/signin.html:167
+#: templates/authopenid/widget_signin.html:167
+msgid "last used"
+msgstr ""
+
+#: templates/authopenid/signin.html:168
+#: templates/authopenid/widget_signin.html:168
+msgid "delete, if you like"
+msgstr ""
+
+#: templates/authopenid/signin.html:182
+#: templates/authopenid/widget_signin.html:182
+#: templates/question/answer_controls.html:33
+#: templates/question/question_controls.html:36
+msgid "delete"
+msgstr "刪除"
+
+#: templates/authopenid/signin.html:184
+#: templates/authopenid/widget_signin.html:184
+msgid "cannot be deleted"
+msgstr ""
+
+#: templates/authopenid/signin.html:197
+#: templates/authopenid/widget_signin.html:197
+msgid "Still have trouble signing in?"
+msgstr ""
+
+#: templates/authopenid/signin.html:202
+#: templates/authopenid/widget_signin.html:202
+msgid "Please, enter your email address below and obtain a new key"
+msgstr ""
+
+#: templates/authopenid/signin.html:204
+#: templates/authopenid/widget_signin.html:204
+msgid "Please, enter your email address below to recover your account"
+msgstr ""
+
+#: templates/authopenid/signin.html:207
+#: templates/authopenid/widget_signin.html:207
+msgid "recover your account via email"
+msgstr ""
+
+#: templates/authopenid/signin.html:217
+#: templates/authopenid/widget_signin.html:217
+msgid "Send a new recovery key"
+msgstr ""
+
+#: templates/authopenid/signin.html:219
+#: templates/authopenid/widget_signin.html:219
+msgid "Recover your account via email"
+msgstr ""
+
+#: templates/authopenid/signup_with_password.html:11
+msgid "Please register by clicking on any of the icons below"
+msgstr ""
+
+#: templates/authopenid/signup_with_password.html:24
+msgid "or create a new user name and password here"
+msgstr ""
+
+#: templates/authopenid/signup_with_password.html:26
+msgid "Create login name and password"
+msgstr ""
+
+#: templates/authopenid/signup_with_password.html:27
+msgid ""
+"<span class='strong big'>If you prefer, create your forum login name and \n"
+"password here. However</span>, please keep in mind that we also support \n"
+"<strong>OpenID</strong> login method. With <strong>OpenID</strong> you can \n"
+"simply reuse your external login (e.g. Gmail or AOL) without ever sharing \n"
+"your login details with anyone and having to remember yet another password."
+msgstr ""
+
+#: templates/authopenid/signup_with_password.html:42
+msgid ""
+"Please read and type in the two words below to help us prevent automated "
+"account creation."
+msgstr "請讀取並輸入下列的字, 以防止自動場產生的帳號. "
+
+#: templates/authopenid/signup_with_password.html:47
+msgid "or"
+msgstr "或者"
+
+#: templates/authopenid/signup_with_password.html:48
+msgid "return to OpenID login"
+msgstr ""
+
+#: templates/authopenid/verify_email.html:2
+#: templates/authopenid/verify_email.html:4
+msgid "Confirm email address"
+msgstr ""
+
+#: templates/authopenid/verify_email.html:6
+msgid ""
+"Validation email sent. Please find it and follow the enclosed link.<br/>\n"
+"        If the link doesn't work - enter the code below:"
+msgstr ""
+
+#: templates/authopenid/verify_email.html:11
+msgid "Confirm email"
+msgstr ""
+
+#: templates/authopenid/widget_signin.html:33
+msgid ""
+"Choose your favorite service below to sign in using secure OpenID or similar"
+" technology. Your external service password always stays confidential and "
+"you don't have to rememeber or create another one."
+msgstr ""
+
+#: templates/avatar/add.html:3
+msgid "add avatar"
+msgstr ""
+
+#: templates/avatar/add.html:5
+msgid "Change avatar"
+msgstr ""
+
+#: templates/avatar/add.html:6 templates/avatar/change.html:7
+msgid "Your current avatar: "
+msgstr ""
+
+#: templates/avatar/add.html:9 templates/avatar/change.html:11
+msgid "You haven't uploaded an avatar yet. Please upload one now."
+msgstr ""
+
+#: templates/avatar/add.html:13
+msgid "Upload New Image"
+msgstr ""
+
+#: templates/avatar/change.html:4
+msgid "change avatar"
+msgstr ""
+
+#: templates/avatar/change.html:17
+msgid "Choose new Default"
+msgstr ""
+
+#: templates/avatar/change.html:22
+msgid "Upload"
+msgstr ""
+
+#: templates/avatar/confirm_delete.html:2
+msgid "delete avatar"
+msgstr ""
+
+#: templates/avatar/confirm_delete.html:4
+msgid "Please select the avatars that you would like to delete."
+msgstr ""
+
+#: templates/avatar/confirm_delete.html:6
+#, python-format
+msgid ""
+"You have no avatars to delete. Please <a "
+"href=\"%(avatar_change_url)s\">upload one</a> now."
+msgstr ""
+
+#: templates/avatar/confirm_delete.html:12
+msgid "Delete These"
+msgstr ""
+
+#: templates/email/ask_for_signature.html:4
+#, python-format
+msgid "%(user)s, please reply to this message."
+msgstr ""
+
+#: templates/email/ask_for_signature.html:9
+msgid ""
+"Your post could not be published, because we could not detect signature in "
+"your email."
+msgstr ""
+
+#: templates/email/ask_for_signature.html:10
+msgid ""
+"This happened either because this is your first post or you have changed "
+"your email signature."
+msgstr ""
+
+#: templates/email/ask_for_signature.html:11
+msgid "Please make a simple response, without editing this message."
+msgstr ""
+
+#: templates/email/ask_for_signature.html:12
+msgid ""
+"We will then attempt to detect the signature in your response and you should"
+" be able to post."
+msgstr ""
+
+#: templates/email/feedback_email.txt:2
+#, python-format
+msgid ""
+"\n"
+"Hello, this is a %(site_title)s forum feedback message.\n"
+msgstr ""
+
+#: templates/email/footer.html:1
+#, python-format
+msgid "Sincerely,<br>%(site_name)s Administrator"
+msgstr ""
+
+#: templates/email/instant_notification.html:6
+#, python-format
+msgid ""
+"\n"
+"<p style=\"font-size:10px; font-style:italic;\">\n"
+"Please note - you can easily <a href=\"%(user_subscriptions_url)s\">change</a>\n"
+"how often you receive these notifications or unsubscribe. Thank you for your interest in our forum!</p>\n"
+msgstr ""
+
+#: templates/email/insufficient_rep_to_post_by_email.html:10
+#, python-format
+msgid "%(username)s, your question could not be posted by email just yet."
+msgstr ""
+
+#: templates/email/insufficient_rep_to_post_by_email.html:14
+#, python-format
+msgid ""
+"To make posts by email, you need to receive about %(min_upvotes)s upvotes."
+msgstr ""
+
+#: templates/email/insufficient_rep_to_post_by_email.html:15
+#, python-format
+msgid "At this time, please post your question at %(link)s"
+msgstr ""
+
+#: templates/email/macros.html:19
+#, python-format
+msgid "Question by %(author)s:"
+msgstr ""
+
+#: templates/email/macros.html:21
+#, python-format
+msgid ""
+"\n"
+"                                In reply to %(author)s's question:\n"
+"                            "
+msgstr ""
+
+#: templates/email/macros.html:26
+msgid "Question :"
+msgstr ""
+
+#: templates/email/macros.html:33
+#, python-format
+msgid "Asked by %(author)s:"
+msgstr ""
+
+#: templates/email/macros.html:40
+msgid "Tags:"
+msgstr ""
+
+#: templates/email/macros.html:48
+#, python-format
+msgid ""
+"\n"
+"                                %(author)s's answer:\n"
+"                            "
+msgstr ""
+
+#: templates/email/macros.html:52
+#, python-format
+msgid ""
+"\n"
+"                                In reply to %(author)s's answer:\n"
+"                            "
+msgstr ""
+
+#: templates/email/macros.html:57
+#, python-format
+msgid "Answered by %(author)s:"
+msgstr ""
+
+#: templates/email/macros.html:64
+#, python-format
+msgid ""
+"\n"
+"                                %(author)s's comment:\n"
+"                            "
+msgstr ""
+
+#: templates/email/macros.html:68
+#, python-format
+msgid ""
+"\n"
+"                                In reply to %(author)s's comment:\n"
+"                            "
+msgstr ""
+
+#: templates/email/macros.html:73
+#, python-format
+msgid ""
+"\n"
+"                            Commented by %(author)s:\n"
+"                        "
+msgstr ""
+
+#: templates/email/notify_author_about_approved_post.html:21
+msgid "Below is a copy of your post:"
+msgstr ""
+
+#: templates/email/post_as_subthread.html:8
+#, python-format
+msgid ""
+"\n"
+"                %(comment)s comment:\n"
+"            "
+msgid_plural ""
+"\n"
+"                %(count)s comments:\n"
+"            "
+msgstr[0] ""
+
+#: templates/email/re_welcome_lamson_on.html:2
+#: templates/email/re_welcome_lamson_on.html:3
+#, python-format
+msgid "Great, you are ready to use %(site_name)s!"
+msgstr ""
+
+#: templates/email/re_welcome_lamson_on.html:7
+#, python-format
+msgid "You can post questions by emailing them at %(ask_address)s."
+msgstr ""
+
+#: templates/email/re_welcome_lamson_on.html:8
+msgid ""
+"When you receive update notifications, you will be able to respond to them, "
+"also by email."
+msgstr ""
+
+#: templates/email/re_welcome_lamson_on.html:9
+#, python-format
+msgid ""
+"Of course, you can always visit the %(site_name)s at <a "
+"href=\"%(site_url)s\">%(site_url)s</a>."
+msgstr ""
+
+#: templates/email/re_welcome_lamson_on.html:11
+#: templates/email/welcome_lamson_off.html:10
+#, python-format
+msgid ""
+"Please visit %(site_name)s at <a href=\"%(site_url)s\">%(site_url)s</a>, we "
+"look forward to your posts."
+msgstr ""
+
+#: templates/email/rejected_post.html:2 templates/email/rejected_post.html:3
+msgid " Your post was rejected. "
+msgstr ""
+
+#: templates/email/rejected_post.html:5
+msgid "Your post (copied in the end), was rejected for the following reason:"
+msgstr ""
+
+#: templates/email/rejected_post.html:7
+msgid "Here is your original post"
+msgstr ""
+
+#: templates/email/reply_by_email_error.html:1
+msgid ""
+"\n"
+"<p>The system was unable to process your message successfully, the reason being:<p>\n"
+msgstr ""
+
+#: templates/email/welcome_lamson_off.html:6
+#: templates/email/welcome_lamson_off.html:7
+#: templates/email/welcome_lamson_on.html:3
+#: templates/email/welcome_lamson_on.html:4
+#, python-format
+msgid "Welcome to %(site_name)s!"
+msgstr ""
+
+#: templates/email/welcome_lamson_on.html:11
+msgid ""
+"Important: <em>Please reply</em> to this message, without editing it. We "
+"need this to determine your email signature and that the email address is "
+"valid and was typed correctly."
+msgstr ""
+
+#: templates/email/welcome_lamson_on.html:14
+#, python-format
+msgid ""
+"Until we receive the response from you, you will not be able ask or answer "
+"questions on %(site_name)s by email."
+msgstr ""
+
+#: templates/embed/list_widgets.html:44
+msgid "How to use?"
+msgstr ""
+
+#: templates/embed/list_widgets.html:45
+msgid ""
+"\n"
+"    Just copy the &lt;script&gt; tag provided and paste it in the site where you wan to put it.\n"
+"    "
+msgstr ""
+
+#: templates/embed/widget_form.html:3 templates/embed/widget_form.html.py:5
+#, python-format
+msgid "%(action)s an %(widget_name)s widget"
+msgstr ""
+
+#: templates/embed/widget_form.html:14
+#: templates/user_profile/user_moderate.html:20
+msgid "Save"
+msgstr "儲存"
+
+#: templates/embed/widgets.html:3 templates/embed/widgets.html.py:5
+msgid "Widgets"
+msgstr ""
+
+#: templates/embed/widgets.html:11
+msgid ""
+"Create and embed widgets into your sites, here a list of available widgets."
+msgstr ""
+
+#: templates/embed/widgets.html:16
+msgid "Ask a question"
+msgstr ""
+
+#: templates/embed/widgets.html:17 templates/embed/widgets.html.py:26
+msgid "create"
+msgstr ""
+
+#: templates/embed/widgets.html:20 templates/embed/widgets.html.py:29
+msgid "view list"
+msgstr ""
+
+#: templates/embed/widgets.html:25
+msgid "List of questions"
+msgstr ""
+
+#: templates/group_messaging/email_alert.html:7
+#, python-format
+msgid "%(author)s wrote:"
+msgstr ""
+
+#: templates/group_messaging/email_alert.html:11
+msgid ""
+"To reply please <a class=\"thread-link\" href=\"THREAD_URL_HOLE\">visit your"
+" message inbox</a>"
+msgstr ""
+
+#: templates/group_messaging/home.html:7
+#: templates/group_messaging/home_thread_details.html:7
+msgid "compose"
+msgstr ""
+
+#: templates/group_messaging/macros.html:5
+#, python-format
+msgid "You wrote on %(date)s:"
+msgstr ""
+
+#: templates/group_messaging/senders_list.html:3
+msgid "Messages by sender:"
+msgstr ""
+
+#: templates/group_messaging/senders_list.html:5
+#: templates/user_inbox/base.html:6 templates/user_profile/user_tabs.html:12
+msgid "inbox"
+msgstr ""
+
+#: templates/group_messaging/senders_list.html:9
+msgid "sent"
+msgstr ""
+
+#: templates/group_messaging/senders_list.html:16
+msgid "trash"
+msgstr ""
+
+#: templates/group_messaging/threads_list.html:25
+msgid "there are no messages yet..."
+msgstr ""
+
+#: templates/livesettings/_admin_site_views.html:4
+msgid "Sites"
+msgstr ""
+
+#: templates/livesettings/group_settings.html:4
+msgid "Settings"
+msgstr ""
+
+#: templates/livesettings/group_settings.html:9
+#: templates/livesettings/site_settings.html:51
+msgid "Please correct the error below."
+msgid_plural "Please correct the errors below."
+msgstr[0] ""
+
+#: templates/livesettings/group_settings.html:16
+#, python-format
+msgid "Settings included in %(name)s."
+msgstr ""
+
+#: templates/livesettings/group_settings.html:50
+#: templates/livesettings/site_settings.html:98
+msgid "You don't have permission to edit values."
+msgstr ""
+
+#: templates/livesettings/site_settings.html:24
+msgid "Documentation"
+msgstr ""
+
+#: templates/livesettings/site_settings.html:24
+msgid "Log out"
+msgstr ""
+
+#: templates/livesettings/site_settings.html:27
+msgid "Home"
+msgstr ""
+
+#: templates/livesettings/site_settings.html:28
+msgid "Edit Site Settings"
+msgstr ""
+
+#: templates/livesettings/site_settings.html:44
+msgid "Livesettings are disabled for this site."
+msgstr ""
+
+#: templates/livesettings/site_settings.html:45
+msgid "All configuration options must be edited in the site settings.py file"
+msgstr ""
+
+#: templates/livesettings/site_settings.html:67
+#, python-format
+msgid "Group settings: %(name)s"
+msgstr ""
+
+#: templates/livesettings/site_settings.html:94
+msgid "Uncollapse all"
+msgstr ""
+
+#: templates/main_page/headline.html:4 views/readers.py:149
+#, python-format
+msgid "%(q_num)s question"
+msgid_plural "%(q_num)s questions"
+msgstr[0] ""
+
+#: templates/main_page/headline.html:6
+#, python-format
+msgid "with %(author_name)s's contributions"
+msgstr "%(author_name)s 的貢獻"
+
+#: templates/main_page/headline.html:11
+msgid "Tagged"
+msgstr ""
+
+#: templates/main_page/headline.html:22
+msgid "Search tips:"
+msgstr "搜尋技巧: "
+
+#: templates/main_page/headline.html:25
+msgid "reset author"
+msgstr "重設作者"
+
+#: templates/main_page/headline.html:27 templates/main_page/headline.html:30
+#: templates/main_page/nothing_found.html:18
+#: templates/main_page/nothing_found.html:21
+msgid " or "
+msgstr ""
+
+#: templates/main_page/headline.html:28
+msgid "reset tags"
+msgstr "重設標籤"
+
+#: templates/main_page/headline.html:31 templates/main_page/headline.html:34
+msgid "start over"
+msgstr "重新開始"
+
+#: templates/main_page/headline.html:36
+msgid " - to expand, or dig in by adding more tags and revising the query."
+msgstr " - 使用更多的標籤更改查詢找資料"
+
+#: templates/main_page/headline.html:39
+msgid "Search tip:"
+msgstr "查詢技巧: "
+
+#: templates/main_page/headline.html:39
+msgid "add tags and a query to focus your search"
+msgstr "增加標籤和查詢加強搜尋"
+
+#: templates/main_page/nothing_found.html:4
+msgid "There are no unanswered questions here"
+msgstr "無未解答問題"
+
+#: templates/main_page/nothing_found.html:7
+msgid "No questions here. "
+msgstr ""
+
+#: templates/main_page/nothing_found.html:8
+msgid "Please follow some questions or follow some users."
+msgstr ""
+
+#: templates/main_page/nothing_found.html:13
+msgid "You can expand your search by "
+msgstr "廣泛搜尋可由"
+
+#: templates/main_page/nothing_found.html:16
+msgid "resetting author"
+msgstr "重設作者"
+
+#: templates/main_page/nothing_found.html:19
+msgid "resetting tags"
+msgstr "重設標籤"
+
+#: templates/main_page/nothing_found.html:22
+#: templates/main_page/nothing_found.html:25
+msgid "starting over"
+msgstr "重新開始"
+
+#: templates/main_page/nothing_found.html:30
+msgid "Please always feel free to ask your question!"
+msgstr ""
+
+#: templates/main_page/questions_loop.html:9
+msgid "Did not find what you were looking for?"
+msgstr "找不到結果? "
+
+#: templates/main_page/questions_loop.html:10
+msgid "Ask your question!"
+msgstr ""
+
+#: templates/main_page/tab_bar.html:11
+msgid "subscribe to the questions feed"
+msgstr "訂閱最新問題"
+
+#: templates/main_page/tab_bar.html:12
+msgid "RSS"
+msgstr ""
+
+#: templates/main_page/tag_search.html:2
+msgid "Tag search"
+msgstr ""
+
+#: templates/main_page/tag_search.html:5
+msgid "search"
+msgstr ""
+
+#: templates/meta/bottom_scripts.html:7
+#, python-format
+msgid ""
+"Please note: %(app_name)s requires javascript to work properly, please "
+"enable javascript in your browser, <a href=\"%(noscript_url)s\">here is "
+"how</a>"
+msgstr ""
+
+#: templates/meta/editor_data.html:5
+#, python-format
+msgid "each tag must be shorter that %(max_chars)s character"
+msgid_plural "each tag must be shorter than %(max_chars)s characters"
+msgstr[0] ""
+
+#: templates/meta/editor_data.html:7
+#, python-format
+msgid "please use %(tag_count)s tag"
+msgid_plural "please use %(tag_count)s tags or less"
+msgstr[0] ""
+
+#: templates/meta/editor_data.html:8
+#, python-format
+msgid ""
+"please use up to %(tag_count)s tags, less than %(max_chars)s characters each"
+msgstr ""
+
+#: templates/question/answer_card.html:21
+msgid "This response is published"
+msgstr ""
+
+#: templates/question/answer_controls.html:2
+msgid "swap with question"
+msgstr ""
+
+#: templates/question/answer_controls.html:11
+msgid "remove offensive flag"
+msgstr ""
+
+#: templates/question/answer_controls.html:13
+#: templates/question/question_controls.html:12
+msgid "remove flag"
+msgstr ""
+
+#: templates/question/answer_controls.html:18
+#: templates/question/answer_controls.html:26
+#: templates/question/question_controls.html:10
+#: templates/question/question_controls.html:16
+#: templates/question/question_controls.html:23
+msgid ""
+"report as offensive (i.e containing spam, advertising, malicious text, etc.)"
+msgstr "檢舉該帖為「惡意帖」（含廣告、人身攻擊、惡意言論等）"
+
+#: templates/question/answer_controls.html:20
+#: templates/question/answer_controls.html:28
+#: templates/question/question_controls.html:18
+#: templates/question/question_controls.html:25
+msgid "flag offensive"
+msgstr "標記惡意帖"
+
+#: templates/question/answer_controls.html:33
+#: templates/question/question_controls.html:36
+msgid "undelete"
+msgstr "恢復"
+
+#: templates/question/answer_controls.html:43
+msgid "unpublish"
+msgstr ""
+
+#: templates/question/answer_controls.html:48
+msgid "publish"
+msgstr ""
+
+#: templates/question/answer_controls.html:54
+msgid "permanent link"
+msgstr "永久連結"
+
+#: templates/question/answer_controls.html:55
+#: templates/widgets/markdown_help.html:20
+msgid "link"
+msgstr "聯結"
+
+#: templates/question/answer_controls.html:58
+msgid "more"
+msgstr ""
+
+#: templates/question/answer_controls.html:71
+msgid "repost as a question comment"
+msgstr ""
+
+#: templates/question/answer_controls.html:85
+msgid "repost as a comment under the older answer"
+msgstr ""
+
+#: templates/question/answer_tab_bar.html:3
+#, python-format
+msgid ""
+"\n"
+"            %(counter)s Answer\n"
+"            "
+msgid_plural ""
+"\n"
+"            %(counter)s Answers\n"
+"        "
+msgstr[0] ""
+
+#: templates/question/answer_tab_bar.html:11
+msgid "Sort by »"
+msgstr ""
+
+#: templates/question/answer_tab_bar.html:14
+msgid "oldest answers will be shown first"
+msgstr "最先回答將顯示在最前面"
+
+#: templates/question/answer_tab_bar.html:17
+msgid "newest answers will be shown first"
+msgstr "最晚回答將顯示在最前面"
+
+#: templates/question/answer_tab_bar.html:20
+msgid "most voted answers will be shown first"
+msgstr "投票次數最多的將顯示在最前面"
+
+#: templates/question/answer_vote_buttons.html:7
+#: templates/user_profile/user_stats.html:25
+msgid "this answer has been selected as correct"
+msgstr "該回答已被認為正確"
+
+#: templates/question/answer_vote_buttons.html:9
+msgid "mark this answer as correct (click again to undo)"
+msgstr ""
+
+#: templates/question/closed_question_info.html:2
+#, python-format
+msgid ""
+"The question has been closed for the following reason "
+"<b>\"%(close_reason)s\"</b> <i>by"
+msgstr ""
+
+#: templates/question/closed_question_info.html:4
+#, python-format
+msgid "close date %(closed_at)s"
+msgstr "關閉日期 %(closed_at)s "
+
+#: templates/question/content.html:33
+msgid "Edit Your Previous Answer"
+msgstr ""
+
+#: templates/question/content.html:34
+msgid "(only one answer per user is allowed)"
+msgstr ""
+
+#: templates/question/new_answer_form.html:12
+msgid "Login/Signup to Answer"
+msgstr ""
+
+#: templates/question/new_answer_form.html:20
+msgid "Your answer"
+msgstr "您的回答"
+
+#: templates/question/new_answer_form.html:22
+msgid "Be the first one to answer this question!"
+msgstr "這問題的第一個解答者"
+
+#: templates/question/new_answer_form.html:28
+msgid ""
+"<span class='strong big'>Please start posting your answer anonymously</span>"
+" - your answer will be saved within the current session and published after "
+"you log in or create a new account. Please try to give a <strong>substantial"
+" answer</strong>, for discussions, <strong>please use comments</strong> and "
+"<strong>please do remember to vote</strong> (after you log in)!"
+msgstr ""
+
+#: templates/question/new_answer_form.html:32
+msgid ""
+"<span class='big strong'>You are welcome to answer your own question</span>,"
+" but please make sure to give an <strong>answer</strong>. Remember that you "
+"can always <strong>revise your original question</strong>. Please "
+"<strong>use comments for discussions</strong>  and <strong>please don't "
+"forget to vote :)</strong> for the answers that you liked (or perhaps did "
+"not like)!"
+msgstr ""
+
+#: templates/question/new_answer_form.html:34
+msgid ""
+"<span class='big strong'>Please try to give a substantial answer</span>. If "
+"you wanted to comment on the question or answer, just <strong>use the "
+"commenting tool</strong>. Please remember that you can always <strong>revise"
+" your answers</strong> - no need to answer the same question twice. Also, "
+"please <strong>don't forget to vote</strong> - it really helps to select the"
+" best questions and answers!"
+msgstr ""
+
+#: templates/question/new_answer_form.html:39
+msgid "Add answer"
+msgstr ""
+
+#: templates/question/question_controls.html:5
+msgid "retag"
+msgstr ""
+
+#: templates/question/question_controls.html:29
+msgid "reopen"
+msgstr "打開"
+
+#: templates/question/question_controls.html:31
+msgid "close"
+msgstr "關閉"
+
+#: templates/question/sidebar.html:8
+msgid "Question tools"
+msgstr ""
+
+#: templates/question/sidebar.html:11
+msgid "click to unfollow this question"
+msgstr ""
+
+#: templates/question/sidebar.html:12
+msgid "Following"
+msgstr ""
+
+#: templates/question/sidebar.html:13
+msgid "Unfollow"
+msgstr ""
+
+#: templates/question/sidebar.html:17
+msgid "click to follow this question"
+msgstr ""
+
+#: templates/question/sidebar.html:18
+msgid "Follow"
+msgstr ""
+
+#: templates/question/sidebar.html:25
+#, python-format
+msgid "%(count)s follower"
+msgid_plural "%(count)s followers"
+msgstr[0] ""
+
+#: templates/question/sidebar.html:37
+msgid "email the updates"
+msgstr ""
+
+#: templates/question/sidebar.html:40
+msgid ""
+"<strong>Here</strong> (once you log in) you will be able to sign up for the "
+"periodic email updates about this question."
+msgstr ""
+
+#: templates/question/sidebar.html:46
+msgid "subscribe to this question rss feed"
+msgstr ""
+
+#: templates/question/sidebar.html:47
+msgid "subscribe to rss feed"
+msgstr ""
+
+#: templates/question/sidebar.html:57
+msgid "Invite"
+msgstr ""
+
+#: templates/question/sidebar.html:63 templates/question/sidebar.html.py:69
+#: templates/user_profile/user_email_subscriptions.html:59
+#: templates/widgets/tag_selector.html:20
+#: templates/widgets/tag_selector.html:37
+#: templates/widgets/tag_selector.html:56
+msgid "add"
+msgstr ""
+
+#: templates/question/sidebar.html:65 templates/question/sidebar.html.py:71
+msgid "- or -"
+msgstr ""
+
+#: templates/question/sidebar.html:83
+msgid "share with everyone"
+msgstr ""
+
+#: templates/question/sidebar.html:94
+msgid "This question is currently shared only with:"
+msgstr ""
+
+#: templates/question/sidebar.html:96
+msgid "Individual users"
+msgstr ""
+
+#: templates/question/sidebar.html:101
+msgid "You"
+msgstr ""
+
+#: templates/question/sidebar.html:108 templates/question/sidebar.html:128
+msgid "and"
+msgstr ""
+
+#: templates/question/sidebar.html:133
+#, python-format
+msgid "%(more_count)s more"
+msgstr ""
+
+#: templates/question/sidebar.html:139
+msgid "Public thread"
+msgstr ""
+
+#: templates/question/sidebar.html:140
+#, python-format
+msgid ""
+"This thread is public, all members of %(site_name)s can read this page."
+msgstr ""
+
+#: templates/question/sidebar.html:148
+msgid "Stats"
+msgstr ""
+
+#: templates/question/sidebar.html:150
+msgid "Asked"
+msgstr ""
+
+#: templates/question/sidebar.html:153
+msgid "Seen"
+msgstr ""
+
+#: templates/question/sidebar.html:153
+msgid "times"
+msgstr "次"
+
+#: templates/question/sidebar.html:156
+msgid "Last updated"
+msgstr ""
+
+#: templates/question/sidebar.html:164
+msgid "Related questions"
+msgstr "相似的問題"
+
+#: templates/tags/form_bulk_tag_subscription.html:4
+msgid "Tag subscriptions"
+msgstr ""
+
+#: templates/tags/form_bulk_tag_subscription.html:6
+msgid "Tag Subscriptions"
+msgstr ""
+
+#: templates/tags/header.html:7
+#, python-format
+msgid "Tags, matching \"%(tag_query)s\""
+msgstr ""
+
+#: templates/tags/header.html:19
+msgid "sorted alphabetically"
+msgstr "按名稱的字母先後順序排序"
+
+#: templates/tags/header.html:20
+msgid "by name"
+msgstr "按名稱排序"
+
+#: templates/tags/header.html:25
+msgid "sorted by frequency of tag use"
+msgstr "按標籤被使用的次數排序"
+
+#: templates/tags/header.html:26
+msgid "by popularity"
+msgstr "按流行程度排序"
+
+#: templates/tags/header.html:34 templates/tags/header.html.py:35
+msgid "suggested"
+msgstr ""
+
+#: templates/tags/header.html:42 templates/tags/header.html.py:43
+msgid "manage subscriptions"
+msgstr ""
+
+#: templates/tags/list_bulk_tag_subscription.html:4
+msgid "Manage Tag subscriptions"
+msgstr ""
+
+#: templates/tags/list_bulk_tag_subscription.html:6
+msgid "Manage Tag subscription</a> "
+msgstr ""
+
+#: templates/tags/list_bulk_tag_subscription.html:6
+msgid "Create New"
+msgstr ""
+
+#: templates/tags/list_bulk_tag_subscription.html:11
+msgid "Date"
+msgstr ""
+
+#: templates/tags/list_bulk_tag_subscription.html:17
+msgid "Action"
+msgstr ""
+
+#: templates/tags/list_bulk_tag_subscription.html:48 views/commands.py:759
+msgid "Edit"
+msgstr ""
+
+#: templates/user_inbox/base.html:14
+msgid "Sections:"
+msgstr ""
+
+#: templates/user_inbox/base.html:19
+msgid "messages"
+msgstr ""
+
+#: templates/user_inbox/base.html:24
+#, python-format
+msgid "forum responses (%(re_count)s)"
+msgstr ""
+
+#: templates/user_inbox/base.html:31
+#, python-format
+msgid "flagged items (%(flags_count)s)"
+msgstr ""
+
+#: templates/user_inbox/base.html:38
+msgid "group join requests"
+msgstr ""
+
+#: templates/user_inbox/group_join_requests.html:4
+msgid "inbox - group join requests"
+msgstr ""
+
+#: templates/user_inbox/group_join_requests.html:26
+msgid "Approve"
+msgstr ""
+
+#: templates/user_inbox/group_join_requests.html:41
+msgid "Deny"
+msgstr ""
+
+#: templates/user_inbox/messages.html:104
+msgid "inbox - messages"
+msgstr ""
+
+#: templates/user_inbox/responses_and_flags.html:4
+msgid "inbox - responses"
+msgstr ""
+
+#: templates/user_inbox/responses_and_flags.html:8
+msgid "select:"
+msgstr ""
+
+#: templates/user_inbox/responses_and_flags.html:10
+msgid "seen"
+msgstr ""
+
+#: templates/user_inbox/responses_and_flags.html:11
+msgid "new"
+msgstr ""
+
+#: templates/user_inbox/responses_and_flags.html:12
+msgid "none"
+msgstr ""
+
+#: templates/user_inbox/responses_and_flags.html:15
+msgid "mark as seen"
+msgstr ""
+
+#: templates/user_inbox/responses_and_flags.html:16
+msgid "mark as new"
+msgstr ""
+
+#: templates/user_inbox/responses_and_flags.html:17
+msgid "dismiss"
+msgstr ""
+
+#: templates/user_inbox/responses_and_flags.html:19
+msgid "remove flags/approve"
+msgstr ""
+
+#: templates/user_inbox/responses_and_flags.html:23
+msgid "delete post"
+msgstr ""
+
+#: templates/user_profile/reject_post_dialog.html:4
+msgid "Reject the post(s)?"
+msgstr ""
+
+#: templates/user_profile/reject_post_dialog.html:11
+msgid "1) Enter a brief description of why you are rejecting the post."
+msgstr ""
+
+#: templates/user_profile/reject_post_dialog.html:14
+msgid "2) Please enter details here. This text will be sent to the user."
+msgstr ""
+
+#: templates/user_profile/reject_post_dialog.html:20
+#: templates/user_profile/reject_post_dialog.html:88
+msgid "Use this reason &amp; reject"
+msgstr ""
+
+#: templates/user_profile/reject_post_dialog.html:27
+#: templates/user_profile/reject_post_dialog.html:95
+msgid "Use other reason"
+msgstr ""
+
+#: templates/user_profile/reject_post_dialog.html:33
+msgid "Save reason, but do not reject"
+msgstr ""
+
+#: templates/user_profile/reject_post_dialog.html:43
+msgid "Please, choose a reason for the rejection."
+msgstr ""
+
+#: templates/user_profile/reject_post_dialog.html:58
+msgid "Select this reason"
+msgstr ""
+
+#: templates/user_profile/reject_post_dialog.html:65
+msgid "Delete this reason"
+msgstr ""
+
+#: templates/user_profile/reject_post_dialog.html:71
+msgid "Add a new reason"
+msgstr ""
+
+#: templates/user_profile/reject_post_dialog.html:81
+msgid ""
+"You have selected reason for the rejection <strong>\"<span class=\"selected-"
+"reason-title\"></span>\"</strong>. The text below will be sent to the user "
+"and the post(s) will be deleted:"
+msgstr ""
+
+#: templates/user_profile/reject_post_dialog.html:101
+msgid "Edit this reason"
+msgstr ""
+
+#: templates/user_profile/twitter_sharing_controls.html:8
+#, python-format
+msgid "Auto-tweeting to @%(handle)s"
+msgstr ""
+
+#: templates/user_profile/twitter_sharing_controls.html:19
+msgid "stop tweeting"
+msgstr ""
+
+#: templates/user_profile/twitter_sharing_controls.html:23
+msgid "Auto-tweeting is inactive"
+msgstr ""
+
+#: templates/user_profile/twitter_sharing_controls.html:26
+msgid "Select twitter account"
+msgstr ""
+
+#: templates/user_profile/twitter_sharing_controls.html:28
+msgid "use another account"
+msgstr ""
+
+#: templates/user_profile/twitter_sharing_controls.html:32
+msgid "Auto-tweeting is off"
+msgstr ""
+
+#: templates/user_profile/twitter_sharing_controls.html:33
+msgid "Start tweeting"
+msgstr ""
+
+#: templates/user_profile/user.html:12
+#, python-format
+msgid "%(username)s's profile"
+msgstr ""
+
+#: templates/user_profile/user_edit.html:4
+msgid "Edit user profile"
+msgstr "修改個人資料"
+
+#: templates/user_profile/user_edit.html:7
+msgid "edit profile"
+msgstr "修改資料"
+
+#: templates/user_profile/user_edit.html:21
+#: templates/user_profile/user_info.html:15
+msgid "change picture"
+msgstr "更換照片"
+
+#: templates/user_profile/user_edit.html:25
+#: templates/user_profile/user_info.html:19
+msgid "remove"
+msgstr ""
+
+#: templates/user_profile/user_edit.html:32
+msgid "Registered user"
+msgstr "註冊用戶"
+
+#: templates/user_profile/user_edit.html:39
+msgid "Screen Name"
+msgstr ""
+
+#: templates/user_profile/user_edit.html:59
+msgid "(cannot be changed)"
+msgstr ""
+
+#: templates/user_profile/user_edit.html:109
+#: templates/user_profile/user_email_subscriptions.html:23
+msgid "Update"
+msgstr "更新"
+
+#: templates/user_profile/user_email_subscriptions.html:5
+#: templates/user_profile/user_tabs.html:44
+msgid "subscriptions"
+msgstr ""
+
+#: templates/user_profile/user_email_subscriptions.html:8
+msgid "Email subscription settings"
+msgstr "Email 訂閱設定"
+
+#: templates/user_profile/user_email_subscriptions.html:10
+msgid ""
+"<span class='big strong'>Adjust frequency of email updates.</span> Receive "
+"updates on interesting questions by email, <strong><br/>help the "
+"community</strong> by answering questions of your colleagues. If you do not "
+"wish to receive emails - select 'no email' on all items below.<br/>Updates "
+"are only sent when there is any new activity on selected items."
+msgstr ""
+
+#: templates/user_profile/user_email_subscriptions.html:24
+msgid "Stop Email"
+msgstr ""
+
+#: templates/user_profile/user_email_subscriptions.html:30
+msgid "Subscribed languages"
+msgstr ""
+
+#: templates/user_profile/user_email_subscriptions.html:43
+msgid "Save languages"
+msgstr ""
+
+#: templates/user_profile/user_email_subscriptions.html:48
+msgid "Subscribed Tags"
+msgstr ""
+
+#: templates/user_profile/user_favorites.html:4
+#: templates/user_profile/user_tabs.html:29
+msgid "followed questions"
+msgstr ""
+
+#: templates/user_profile/user_info.html:38
+msgid "update profile"
+msgstr "更新我的資料"
+
+#: templates/user_profile/user_info.html:42
+msgid "manage login methods"
+msgstr ""
+
+#: templates/user_profile/user_info.html:55
+msgid "real name"
+msgstr "真名"
+
+#: templates/user_profile/user_info.html:61
+msgid "groups"
+msgstr ""
+
+#: templates/user_profile/user_info.html:71
+msgid "add group"
+msgstr ""
+
+#: templates/user_profile/user_info.html:76
+msgid "member since"
+msgstr ""
+
+#: templates/user_profile/user_info.html:81
+msgid "last seen"
+msgstr "上次活動時間"
+
+#: templates/user_profile/user_info.html:87
+msgid "website"
+msgstr ""
+
+#: templates/user_profile/user_info.html:100
+msgid "location"
+msgstr "城市"
+
+#: templates/user_profile/user_info.html:107
+msgid "age"
+msgstr "年齡"
+
+#: templates/user_profile/user_info.html:108
+#, python-format
+msgid "%(age)s years old"
+msgstr ""
+
+#: templates/user_profile/user_info.html:113
+msgid "todays unused votes"
+msgstr "今日剩餘投票數"
+
+#: templates/user_profile/user_info.html:114
+msgid "votes left"
+msgstr "票"
+
+#: templates/user_profile/user_moderate.html:4
+#: templates/user_profile/user_tabs.html:50
+msgid "moderation"
+msgstr ""
+
+#: templates/user_profile/user_moderate.html:8
+#, python-format
+msgid "%(username)s's current status is \"%(status)s\""
+msgstr ""
+
+#: templates/user_profile/user_moderate.html:11
+msgid "User status changed"
+msgstr ""
+
+#: templates/user_profile/user_moderate.html:25
+#, python-format
+msgid "Your current reputation is %(reputation)s points"
+msgstr ""
+
+#: templates/user_profile/user_moderate.html:27
+#, python-format
+msgid "User's current reputation is %(reputation)s points"
+msgstr ""
+
+#: templates/user_profile/user_moderate.html:31
+msgid "User reputation changed"
+msgstr ""
+
+#: templates/user_profile/user_moderate.html:38
+msgid "Subtract"
+msgstr ""
+
+#: templates/user_profile/user_moderate.html:39
+msgid "Add"
+msgstr "增加"
+
+#: templates/user_profile/user_moderate.html:43
+#, python-format
+msgid "Send message to %(username)s"
+msgstr ""
+
+#: templates/user_profile/user_moderate.html:44
+msgid ""
+"An email will be sent to the user with 'reply-to' field set to your email "
+"address. Please make sure that your address is entered correctly."
+msgstr ""
+
+#: templates/user_profile/user_moderate.html:46
+msgid "Message sent"
+msgstr ""
+
+#: templates/user_profile/user_moderate.html:64
+msgid "Send message"
+msgstr ""
+
+#: templates/user_profile/user_moderate.html:74
+msgid ""
+"Administrators have privileges of normal users, but in addition they can "
+"assign/revoke any status to any user, and are exempt from the reputation "
+"limits."
+msgstr ""
+
+#: templates/user_profile/user_moderate.html:77
+msgid ""
+"Moderators have the same privileges as administrators, but cannot add or "
+"remove user status of 'moderator' or 'administrator'."
+msgstr ""
+
+#: templates/user_profile/user_moderate.html:80
+msgid "'Approved' status means the same as regular user."
+msgstr ""
+
+#: templates/user_profile/user_moderate.html:83
+msgid "Suspended users can only edit or delete their own posts."
+msgstr ""
+
+#: templates/user_profile/user_moderate.html:86
+msgid ""
+"Blocked users can only login and send feedback to the site administrators, "
+"their url and profile will also be hidden."
+msgstr ""
+
+#: templates/user_profile/user_network.html:5
+#: templates/user_profile/user_tabs.html:18
+msgid "network"
+msgstr ""
+
+#: templates/user_profile/user_network.html:10
+#, python-format
+msgid "Followed by %(count)s person"
+msgid_plural "Followed by %(count)s people"
+msgstr[0] ""
+
+#: templates/user_profile/user_network.html:20
+#, python-format
+msgid "Following %(count)s person"
+msgid_plural "Following %(count)s people"
+msgstr[0] ""
+
+#: templates/user_profile/user_network.html:31
+msgid ""
+"Your network is empty. Would you like to follow someone? - Just visit their "
+"profiles and click \"follow\""
+msgstr ""
+
+#: templates/user_profile/user_network.html:33
+#, python-format
+msgid "%(username)s's network is empty"
+msgstr ""
+
+#: templates/user_profile/user_recent.html:5
+#: templates/user_profile/user_tabs.html:31
+#: templates/user_profile/user_tabs.html:33
+msgid "activity"
+msgstr ""
+
+#: templates/user_profile/user_recent.html:25
+#: templates/user_profile/user_recent.html:29
+msgid "source"
+msgstr ""
+
+#: templates/user_profile/user_reputation.html:12
+msgid "Your karma change log."
+msgstr "karma 更動日誌"
+
+#: templates/user_profile/user_reputation.html:14
+#, python-format
+msgid "%(user_name)s's karma change log"
+msgstr "%(user_name)s karma 更動日誌"
+
+#: templates/user_profile/user_stats.html:6
+#: templates/user_profile/user_tabs.html:7
+msgid "overview"
+msgstr "概覽"
+
+#: templates/user_profile/user_stats.html:12
+#, python-format
+msgid "<span class=\"count\">%(counter)s</span> Question"
+msgid_plural "<span class=\"count\">%(counter)s</span> Questions"
+msgstr[0] "<span class=\"count\">%(counter)s</span> 問題"
+
+#: templates/user_profile/user_stats.html:17
+msgid "Answer"
+msgid_plural "Answers"
+msgstr[0] ""
+
+#: templates/user_profile/user_stats.html:25
+#, python-format
+msgid "the answer has been voted for %(answer_score)s times"
+msgstr "該回答總共有 %(answer_score)s 個投票"
+
+#: templates/user_profile/user_stats.html:35
+#, python-format
+msgid "(%(comment_count)s comment)"
+msgid_plural "the answer has been commented %(comment_count)s times"
+msgstr[0] ""
+
+#: templates/user_profile/user_stats.html:45
+#, python-format
+msgid "<span class=\"count\">%(cnt)s</span> Vote"
+msgid_plural "<span class=\"count\">%(cnt)s</span> Votes "
+msgstr[0] "<span class=\"count\">%(cnt)s</span> 票"
+
+#: templates/user_profile/user_stats.html:51
+msgid "thumb up"
+msgstr "贊同"
+
+#: templates/user_profile/user_stats.html:52
+msgid "user has voted up this many times"
+msgstr "用戶已投贊成票數次"
+
+#: templates/user_profile/user_stats.html:55
+msgid "thumb down"
+msgstr "反對"
+
+#: templates/user_profile/user_stats.html:56
+msgid "user voted down this many times"
+msgstr ""
+
+#: templates/user_profile/user_stats.html:64
+#, python-format
+msgid "<span class=\"count\">%(counter)s</span> Tag"
+msgid_plural "<span class=\"count\">%(counter)s</span> Tags"
+msgstr[0] "<span class=\"count\">%(counter)s</span> 標籤"
+
+#: templates/user_profile/user_stats.html:109
+#, python-format
+msgid "<span class=\"count\">%(counter)s</span> Badge"
+msgid_plural "<span class=\"count\">%(counter)s</span> Badges"
+msgstr[0] "<span class=\"count\">%(counter)s</span> 標記"
+
+#: templates/user_profile/user_stats.html:132
+msgid "Answer to:"
+msgstr ""
+
+#: templates/user_profile/user_tabs.html:5
+msgid "User profile"
+msgstr "用戶資料"
+
+#: templates/user_profile/user_tabs.html:10 views/users.py:873
+msgid "comments and answers to others questions"
+msgstr "其他用戶的回覆和評論"
+
+#: templates/user_profile/user_tabs.html:16
+msgid "followers and followed users"
+msgstr ""
+
+#: templates/user_profile/user_tabs.html:22
+msgid "Graph of user karma"
+msgstr ""
+
+#: templates/user_profile/user_tabs.html:27
+msgid "questions that user is following"
+msgstr ""
+
+#: templates/user_profile/user_tabs.html:36 views/users.py:915
+msgid "user vote record"
+msgstr "用戶投票記錄"
+
+#: templates/user_profile/user_tabs.html:38
+#: templates/user_profile/user_votes.html:5
+msgid "votes"
+msgstr "投票"
+
+#: templates/user_profile/user_tabs.html:42 views/users.py:1027
+msgid "email subscription settings"
+msgstr "email 訂閱設定"
+
+#: templates/user_profile/user_tabs.html:48 views/users.py:283
+msgid "moderate this user"
+msgstr ""
+
+#: templates/widgets/answer_edit_tips.html:3
+#: templates/widgets/question_edit_tips.html:3
+msgid "Tips"
+msgstr ""
+
+#: templates/widgets/answer_edit_tips.html:6
+msgid "give an answer interesting to this community"
+msgstr ""
+
+#: templates/widgets/answer_edit_tips.html:9
+msgid "try to give an answer, rather than engage into a discussion"
+msgstr "盡量答覆問題，而非討論。"
+
+#: templates/widgets/ask_button.html:9
+msgid "Ask the Group"
+msgstr ""
+
+#: templates/widgets/ask_form.html:21 templates/widgets/ask_form.html.py:23
+msgid "Add details (optional)"
+msgstr ""
+
+#: templates/widgets/ask_form.html:25
+msgid "Add details"
+msgstr ""
+
+#: templates/widgets/ask_form.html:58
+msgid "Select language"
+msgstr ""
+
+#: templates/widgets/contributors.html:3
+msgid "Contributors"
+msgstr "貢獻者"
+
+#: templates/widgets/edit_post.html:33
+msgid ", one of these is required"
+msgstr ""
+
+#: templates/widgets/edit_post.html:42 templates/widgets/edit_post.html:47
+msgid "tags:"
+msgstr ""
+
+#: templates/widgets/edit_post.html:43
+msgid "(required)"
+msgstr "(必要的)"
+
+#: templates/widgets/edit_post.html:71
+msgid "Toggle the real time Markdown editor preview"
+msgstr "切換為 Markdown 編輯器的即時預覽"
+
+#: templates/widgets/edit_post.html:86
+msgid ""
+"To post on behalf of someone else, enter user name <strong>and</strong> "
+"email below."
+msgstr ""
+
+#: templates/widgets/footer.html:33
+#, python-format
+msgid "Content on this site is licensed under a %(license)s"
+msgstr ""
+
+#: templates/widgets/footer.html:38
+msgid "about"
+msgstr "關於本站"
+
+#: templates/widgets/footer.html:40 templates/widgets/user_navigation.html:26
+msgid "help"
+msgstr ""
+
+#: templates/widgets/footer.html:42
+msgid "privacy policy"
+msgstr "隱私政策"
+
+#: templates/widgets/footer.html:51
+msgid "give feedback"
+msgstr "問題回饋"
+
+#: templates/widgets/group_info.html:3
+msgid "Group info"
+msgstr ""
+
+#: templates/widgets/group_info.html:26
+msgid "edit description"
+msgstr ""
+
+#: templates/widgets/group_info.html:30
+msgid "change logo"
+msgstr ""
+
+#: templates/widgets/group_info.html:32
+msgid "delete logo"
+msgstr ""
+
+#: templates/widgets/group_info.html:36
+msgid "add logo"
+msgstr ""
+
+#: templates/widgets/group_info.html:46
+msgid "moderate emailed questions"
+msgstr ""
+
+#: templates/widgets/group_info.html:58
+msgid "show only selected answers to enquirers"
+msgstr ""
+
+#: templates/widgets/group_info.html:63
+msgid "How users join this group?"
+msgstr ""
+
+#: templates/widgets/group_info.html:87
+msgid "Make group VIP"
+msgstr ""
+
+#: templates/widgets/group_info.html:93
+msgid "list of email addresses of pre-approved users"
+msgstr ""
+
+#: templates/widgets/group_info.html:98
+msgid "List of preapproved email addresses"
+msgstr ""
+
+#: templates/widgets/group_info.html:99
+msgid ""
+"Users with these email adderesses will be added to the group automatically."
+msgstr ""
+
+#: templates/widgets/group_info.html:100
+msgid "edit preapproved emails"
+msgstr ""
+
+#: templates/widgets/group_info.html:104
+msgid "list of preapproved email address domain names"
+msgstr ""
+
+#: templates/widgets/group_info.html:109
+msgid "List of preapproved email domain names"
+msgstr ""
+
+#: templates/widgets/group_info.html:110
+msgid ""
+"Users whose email adderesses belong to these domains will be added to the "
+"group automatically."
+msgstr ""
+
+#: templates/widgets/group_info.html:111
+msgid "edit preapproved email domains"
+msgstr ""
+
+#: templates/widgets/logo.html:3
+msgid "back to home page"
+msgstr "回到首頁"
+
+#: templates/widgets/logo.html:4
+#, python-format
+msgid "%(site)s logo"
+msgstr ""
+
+#: templates/widgets/markdown_help.html:2
+msgid "Markdown basics"
+msgstr ""
+
+#: templates/widgets/markdown_help.html:6
+msgid "*italic*"
+msgstr ""
+
+#: templates/widgets/markdown_help.html:9
+msgid "**bold**"
+msgstr ""
+
+#: templates/widgets/markdown_help.html:13
+msgid "*italic* or _italic_"
+msgstr ""
+
+#: templates/widgets/markdown_help.html:16
+msgid "**bold** or __bold__"
+msgstr "**加粗** 或者 __加粗__ "
+
+#: templates/widgets/markdown_help.html:20
+#: templates/widgets/markdown_help.html:24
+msgid "text"
+msgstr "文字"
+
+#: templates/widgets/markdown_help.html:24
+msgid "image"
+msgstr "圖片"
+
+#: templates/widgets/markdown_help.html:28
+msgid "numbered list:"
+msgstr "有序列表："
+
+#: templates/widgets/markdown_help.html:33
+msgid "basic HTML tags are also supported"
+msgstr "支援基本的HTML標籤"
+
+#: templates/widgets/markdown_help.html:38
+msgid "learn more about Markdown"
+msgstr "有關 Markdown 詳細說明"
+
+#: templates/widgets/meta_nav.html:12
+msgid "people & groups"
+msgstr ""
+
+#: templates/widgets/meta_nav.html:20
+msgid "users"
+msgstr "用戶"
+
+#: templates/widgets/meta_nav.html:27
+msgid "badges"
+msgstr "獎勵榜"
+
+#: templates/widgets/question_edit_tips.html:5
+msgid "ask a question interesting to this community"
+msgstr ""
+
+#: templates/widgets/question_summary.html:12
+msgid "view"
+msgid_plural "views"
+msgstr[0] ""
+
+#: templates/widgets/question_summary.html:30
+msgid "answer"
+msgid_plural "answers"
+msgstr[0] ""
+
+#: templates/widgets/question_summary.html:41
+msgid "vote"
+msgid_plural "votes"
+msgstr[0] ""
+
+#: templates/widgets/scope_nav.html:17
+msgid "ALL"
+msgstr ""
+
+#: templates/widgets/scope_nav.html:22
+msgid "see unanswered questions"
+msgstr ""
+
+#: templates/widgets/scope_nav.html:22
+msgid "UNANSWERED"
+msgstr ""
+
+#: templates/widgets/scope_nav.html:27
+msgid "see your followed questions"
+msgstr ""
+
+#: templates/widgets/scope_nav.html:27
+msgid "FOLLOWED"
+msgstr ""
+
+#: templates/widgets/scope_nav.html:30
+msgid "Please ask your question here"
+msgstr ""
+
+#: templates/widgets/tag_selector.html:4
+msgid "Interesting tags"
+msgstr "有趣的標籤"
+
+#: templates/widgets/tag_selector.html:22
+msgid "Ignored tags"
+msgstr "忽視標籤"
+
+#: templates/widgets/tag_selector.html:40
+msgid "Subscribed tags"
+msgstr ""
+
+#: templates/widgets/tag_selector.html:59
+msgid "Show only questions from"
+msgstr ""
+
+#: templates/widgets/tag_selector.html:70
+msgid "Send me email alerts for"
+msgstr ""
+
+#: templates/widgets/tag_selector.html:86
+msgid "Change frequency of emails"
+msgstr ""
+
+#: templates/widgets/three_column_category_selector.html:4
+msgid ""
+"Categorize your question using this tag selector or entering text in tag "
+"box."
+msgstr ""
+
+#: templates/widgets/three_column_category_selector.html:7
+#: templates/widgets/three_column_category_selector.html:10
+msgid "(done editing)"
+msgstr ""
+
+#: templates/widgets/three_column_category_selector.html:8
+#: templates/widgets/three_column_category_selector.html:9
+#: templates/widgets/three_column_category_selector.html:11
+msgid "(edit categories)"
+msgstr ""
+
+#: templates/widgets/user_long_score_and_badge_summary.html:5
+msgid "karma:"
+msgstr ""
+
+#: templates/widgets/user_long_score_and_badge_summary.html:10
+msgid "badges:"
+msgstr ""
+
+#: templates/widgets/user_navigation.html:17
+msgid "sign out"
+msgstr ""
+
+#: templates/widgets/user_navigation.html:20
+msgid "Hi there! Please sign in"
+msgstr ""
+
+#: templates/widgets/user_navigation.html:23
+msgid "settings"
+msgstr ""
+
+#: templates/widgets/user_navigation.html:24
+msgid "widgets"
+msgstr ""
+
+#: templatetags/extra_filters_jinja.py:319
+msgid "no"
+msgstr ""
+
+#: utils/decorators.py:104 views/commands.py:146
+msgid "Oops, apologies - there was some error"
+msgstr ""
+
+#: utils/decorators.py:123
+msgid "Please login to post"
+msgstr ""
+
+#: utils/decorators.py:219
+msgid "Spam was detected on your post, sorry for if this is a mistake"
+msgstr ""
+
+#: utils/decorators.py:243
+msgid "This function is limited to moderators and administrators"
+msgstr ""
+
+#: utils/forms.py:66
+msgid "this field is required"
+msgstr " 標籤不能為空白。"
+
+#: utils/forms.py:93
+msgid "Choose a screen name"
+msgstr ""
+
+#: utils/forms.py:103
+msgid "user name is required"
+msgstr " 標籤不能為空白。"
+
+#: utils/forms.py:104
+msgid "sorry, this name is taken, please choose another"
+msgstr "對不起，該用戶名已註冊，請換一個試試"
+
+#: utils/forms.py:105
+msgid "sorry, this name is not allowed, please choose another"
+msgstr ""
+
+#: utils/forms.py:106
+msgid "sorry, there is no user with this name"
+msgstr "對不起，沒有此用戶"
+
+#: utils/forms.py:107
+msgid "sorry, we have a serious error - user name is taken by several users"
+msgstr "對不起，許多人使用該用戶, 造成錯誤"
+
+#: utils/forms.py:108
+msgid "user name can only consist of letters, empty space and underscore"
+msgstr "用戶名字須由字元, 空白, 下標字組成"
+
+#: utils/forms.py:109
+msgid "please use at least some alphabetic characters in the user name"
+msgstr ""
+
+#: utils/forms.py:110
+msgid "symbol \"@\" is not allowed"
+msgstr ""
+
+#: utils/forms.py:222
+msgid "Your email <i>(never shared)</i>"
+msgstr ""
+
+#: utils/forms.py:224
+msgid "email address is required"
+msgstr " 電子郵件地址不能為空白"
+
+#: utils/forms.py:225
+msgid "please enter a valid email address"
+msgstr "請輸入合法電子郵件地址"
+
+#: utils/forms.py:226
+msgid "this email is already used by someone else, please choose another"
+msgstr ""
+
+#: utils/forms.py:227
+msgid "this email address is not authorized"
+msgstr ""
+
+#: utils/forms.py:265
+msgid "password is required"
+msgstr " 密碼不能為空白。"
+
+#: utils/forms.py:268
+msgid "Password <i>(please retype)</i>"
+msgstr ""
+
+#: utils/forms.py:269
+msgid "please, retype your password"
+msgstr ""
+
+#: utils/forms.py:270
+msgid "sorry, entered passwords did not match, please try again"
+msgstr "對不起, 密碼不合, 請重新輸入"
+
+#: utils/functions.py:102
+msgid "2 days ago"
+msgstr ""
+
+#: utils/functions.py:104
+msgid "yesterday"
+msgstr "昨天"
+
+#: utils/functions.py:107
+#, python-format
+msgid "%(hr)d hour ago"
+msgid_plural "%(hr)d hours ago"
+msgstr[0] ""
+
+#: utils/functions.py:113
+#, python-format
+msgid "%(min)d min ago"
+msgid_plural "%(min)d mins ago"
+msgstr[0] ""
+
+#: views/avatar_views.py:103
+msgid "Successfully uploaded a new avatar."
+msgstr ""
+
+#: views/avatar_views.py:144
+msgid "Successfully updated your avatar."
+msgstr ""
+
+#: views/avatar_views.py:184
+msgid "Successfully deleted the requested avatars."
+msgstr ""
+
+#: views/commands.py:123
+msgid "your post was not accepted"
+msgstr ""
+
+#: views/commands.py:136
+msgid "Sorry, but anonymous users cannot access the inbox"
+msgstr ""
+
+#: views/commands.py:165
+msgid "Sorry, anonymous users cannot vote"
+msgstr ""
+
+#: views/commands.py:182
+msgid "Sorry you ran out of votes for today"
+msgstr ""
+
+#: views/commands.py:188
+#, python-format
+msgid "You have %(votes_left)s votes left for today"
+msgstr ""
+
+#: views/commands.py:263
+msgid "Sorry, something is not right here..."
+msgstr ""
+
+#: views/commands.py:286
+msgid "Sorry, but anonymous users cannot accept answers"
+msgstr ""
+
+#: views/commands.py:396
+#, python-format
+msgid ""
+"Your subscription is saved, but email address %(email)s needs to be "
+"validated, please see <a href=\"%(details_url)s\">more details here</a>"
+msgstr ""
+
+#: views/commands.py:405
+msgid "email update frequency has been set to daily"
+msgstr "電子郵件每日更新"
+
+#: views/commands.py:628
+msgid "Sorry, could not delete tag"
+msgstr ""
+
+#: views/commands.py:701
+#, python-format
+msgid "Tag subscription was canceled (<a href=\"%(url)s\">undo</a>)."
+msgstr ""
+
+#: views/commands.py:710
+#, python-format
+msgid "Please sign in to subscribe for: %(tags)s"
+msgstr ""
+
+#: views/commands.py:729
+msgid "Create"
+msgstr ""
+
+#: views/commands.py:959
+msgid "Please sign in to vote"
+msgstr ""
+
+#: views/commands.py:980
+msgid "Please sign in to delete/restore posts"
+msgstr ""
+
+#: views/commands.py:1402 views/commands.py:1435
+msgid "Sorry, looks like sharing request was invalid"
+msgstr ""
+
+#: views/commands.py:1458
+#, python-format
+msgid "%(user)s, welcome to group %(group)s!"
+msgstr ""
+
+#: views/commands.py:1515
+msgid "Sorry, only thread moderators can use this function"
+msgstr ""
+
+#: views/commands.py:1530
+msgid "The answer is now unpublished"
+msgstr ""
+
+#: views/commands.py:1534
+msgid "The answer is now published"
+msgstr ""
+
+#: views/meta.py:47
+#, python-format
+msgid "About %(site)s"
+msgstr ""
+
+#: views/meta.py:91
+msgid "Please sign in or register to send your feedback"
+msgstr ""
+
+#: views/meta.py:118
+msgid "Q&A forum feedback"
+msgstr "Q&A 論壇回饋"
+
+#: views/meta.py:122
+msgid "Thanks for the feedback!"
+msgstr "謝謝回饋"
+
+#: views/meta.py:131
+msgid "We look forward to hearing your feedback! Please, give it next time :)"
+msgstr "期待你的回饋"
+
+#: views/meta.py:135
+msgid "Privacy policy"
+msgstr "隱私政策"
+
+#: views/meta.py:216
+msgid "Suggested tags"
+msgstr ""
+
+#: views/readers.py:402
+msgid ""
+"Sorry, the comment you are looking for has been deleted and is no longer "
+"accessible"
+msgstr ""
+
+#: views/users.py:284
+msgid "moderate user"
+msgstr ""
+
+#: views/users.py:502
+msgid "user profile"
+msgstr "用戶資料"
+
+#: views/users.py:503
+msgid "user profile overview"
+msgstr "用戶概覽"
+
+#: views/users.py:704
+msgid "recent user activity"
+msgstr "最近活動"
+
+#: views/users.py:705
+msgid "profile - recent activity"
+msgstr "最近活動"
+
+#: views/users.py:736
+msgid "group joining requests"
+msgstr ""
+
+#: views/users.py:737
+msgid "profile - moderation"
+msgstr ""
+
+#: views/users.py:793
+msgid "private messages"
+msgstr ""
+
+#: views/users.py:794
+msgid "profile - messages"
+msgstr ""
+
+#: views/users.py:874
+msgid "profile - responses"
+msgstr "用戶資料 - 回應 "
+
+#: views/users.py:916
+msgid "profile - votes"
+msgstr "用戶資料 - 投票"
+
+#: views/users.py:937
+msgid "user karma"
+msgstr ""
+
+#: views/users.py:938
+msgid "Profile - User's Karma"
+msgstr ""
+
+#: views/users.py:956
+msgid "users favorite questions"
+msgstr "用戶收藏的問題"
+
+#: views/users.py:957
+msgid "profile - favorite questions"
+msgstr "用戶資料 - 收藏"
+
+#: views/users.py:998 views/users.py:1002
+msgid "changes saved"
+msgstr "儲存修改"
+
+#: views/users.py:1008
+msgid "email updates canceled"
+msgstr "取消電子郵件更新"
+
+#: views/users.py:1028
+msgid "profile - email subscriptions"
+msgstr ""
+
+#: views/users.py:1049
+#, python-format
+msgid "profile - %(section)s"
+msgstr ""
+
+#: views/writers.py:72
+msgid "Sorry, anonymous users cannot upload files"
+msgstr ""
+
+#: views/writers.py:90
+#, python-format
+msgid "allowed file types are '%(file_types)s'"
+msgstr "只允許上傳 '%(file_types)s' 類型的文件！"
+
+#: views/writers.py:103
+#, python-format
+msgid "maximum upload file size is %(file_size)sK"
+msgstr ""
+
+#: views/writers.py:111
+msgid ""
+"Error uploading file. Please contact the site administrator. Thank you."
+msgstr ""
+
+#: views/writers.py:208
+msgid ""
+"<span class=\"strong big\">You are welcome to start submitting your question"
+" anonymously</span>. When you submit the post, you will be redirected to the"
+" login/signup page. Your question will be saved in the current session and "
+"will be published after you log in. Login/signup process is very simple. "
+"Login takes about 30 seconds, initial signup takes a minute or less."
+msgstr ""
+
+#: views/writers.py:575
+msgid "Please log in to answer questions"
+msgstr ""
+
+#: views/writers.py:701
+msgid "This content is forbidden"
+msgstr ""
+
+#: views/writers.py:710
+msgid "Post not found"
+msgstr ""
+
+#: views/writers.py:718
+#, python-format
+msgid ""
+"Sorry, you appear to be logged out and cannot post comments. Please <a "
+"href=\"%(sign_in_url)s\">sign in</a>."
+msgstr ""
+
+#: views/writers.py:742
+msgid "Sorry, anonymous users cannot edit comments"
+msgstr ""
+
+#: views/writers.py:791
+#, python-format
+msgid ""
+"Sorry, you appear to be logged out and cannot delete comments. Please <a "
+"href=\"%(sign_in_url)s\">sign in</a>."
+msgstr ""
+
+#: views/writers.py:817
+msgid "sorry, we seem to have some technical difficulties"
+msgstr ""
+
+#: views/writers.py:881
+msgid "Error - could not find the destination post"
+msgstr ""
+
+#: views/writers.py:905
+#, python-format
+msgid ""
+"Cannot convert, because text has more characters than %(max_chars)s - "
+"maximum allowed for comments"
+msgstr ""
+
+#~ msgid "your email needs to be validated see %(details_url)s"
+#~ msgstr ""
+#~ "Your email needs to be validated. Please see details <a "
+#~ "id='validate_email_alert' href='%(details_url)s'>here</a>."
+
+#~ msgid "logout"
+#~ msgstr "sign out"
+
+#~ msgid ""
+#~ "As a registered user you can login with your OpenID, log out of the site or "
+#~ "permanently remove your account."
+#~ msgstr ""
+#~ "Clicking <strong>Logout</strong> will log you out from the forum but will "
+#~ "not sign you off from your OpenID provider.</p><p>If you wish to sign off "
+#~ "completely - please make sure to log out from your OpenID provider as well."
+
+#~ msgid "Email verification subject line"
+#~ msgstr "Verification Email from Q&A forum"
+
+#~ msgid ""
+#~ "how to validate email info with %(send_email_key_url)s %(gravatar_faq_url)s"
+#~ msgstr ""
+#~ "<form style='margin:0;padding:0;' action='%(send_email_key_url)s'><p><span "
+#~ "class=\"bigger strong\">How?</span> If you have just set or changed your "
+#~ "email address - <strong>check your email and click the included "
+#~ "link</strong>.<br>The link contains a key generated specifically for you. "
+#~ "You can also <button style='display:inline' type='submit'><strong>get a new "
+#~ "key</strong></button> and check your email again.</p></form><span "
+#~ "class=\"bigger strong\">Why?</span> Email validation is required to make "
+#~ "sure that <strong>only you can post messages</strong> on your behalf and to "
+#~ "<strong>minimize spam</strong> posts.<br>With email you can "
+#~ "<strong>subscribe for updates</strong> on the most interesting questions. "
+#~ "Also, when you sign up for the first time - create a unique <a "
+#~ "href='%(gravatar_faq_url)s'><strong>gravatar</strong></a> personal "
+#~ "image.</p>"

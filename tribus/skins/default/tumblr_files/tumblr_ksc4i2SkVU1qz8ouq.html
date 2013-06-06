@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><meta name="robots" content="noindex,nofollow">
+
+<link type="text/css" rel="stylesheet" media="screen" href="tumblr_ksc4i2SkVU1qz8ouq_data/dashboard.css"><link type="text/css" rel="stylesheet" media="screen" href="tumblr_ksc4i2SkVU1qz8ouq_data/html5_audio_player_tlog.css">
+<script>
+var Tumblr = Tumblr || {};
+Tumblr.AudioPlayerSettings = {
+    eq: false,
+    lightbox: window.parent && window.parent.Tumblr && window.parent.Tumblr.Lightbox ? window.parent.Tumblr.Lightbox : false
+};
+</script>
+<script type="text/javascript" src="tumblr_files/tumblelog.js"></script>
+<script type="text/javascript" src="tumblr_ksc4i2SkVU1qz8ouq_data/jquery_underscore.js"></script>
+<script type="text/javascript" src="tumblr_ksc4i2SkVU1qz8ouq_data/audio_player.js"></script>
+<script>
+
+/**
+ * PostMessageListener listens for incoming post messages from iframes on the Tumblelog
+ * 1. Used by the video iframe to pop the iframe for the video lightbox
+ * 2. Used by the tumblelog iframe to match the tumblelog color scheme
+ */
+Tumblr.PostMessageListener = (function(){
+    return {
+        initialize : function(callback){
+            callback = callback || function(){};
+            // http://davidwalsh.name/window-iframe
+            // Create IE + others compatible event handler
+            var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+            var eventer = window[eventMethod];
+            var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
+            // Listen to message from child window
+            eventer(messageEvent,function(e) {
+                var message = e.data.split(';');
+                callback(message, e.origin);
+            },false);
+        }
+    };
+})();
+
+(function($){
+    $(function(){
+        Tumblr.PostMessageListener.initialize(function (message, origin) {
+            switch (message[0]) {
+                case 'playPause':
+                    return current_audio_player.play_pause();
+                case 'play':
+                    return current_audio_player.play();
+                case 'pause':
+                    return current_audio_player.pause();
+                case 'skipTo':
+                    return current_audio_player.skipTo(parseFloat(message[1]));
+                default:
+                    break;
+            }
+        });
+
+        window.current_audio_player = Tumblr.AudioPlayer.instances[0];
+        var icon_size = 30;
+        var icon_padding = 5;
+        $(window).on({
+            'resize': function (e) {
+                var window_width = $(this).width();
+                var window_height = $(this).height();
+
+                current_audio_player.responsive_size(window_width, window_height);
+                current_audio_player.truncate_text();
+
+                // Send event outside the iframe
+                parent.postMessage('audioPlayerResize;' + current_audio_player.config.post_id, '*');
+            },
+            'tumblr:audio:ready': function (e, data) {
+                if (!data.using_flash) {
+                    parent.postMessage('audioPlayerReady;' + data.audioplayer.config.post_id, '*');
+                }
+            },
+            'tumblr:audio:flashready': function (e, data) {
+                $(window).trigger('resize');
+                parent.postMessage('audioPlayerReady;' + data.audioplayer.config.post_id, '*');
+            },
+            'tumblr:audio:playing': function (e, data) {
+                parent.postMessage('audioPlayerPlaying;' + data.audioplayer.config.post_id, '*');
+            },
+            'tumblr:audio:pause': function (e, data) {
+                parent.postMessage('audioPlayerPause;' + data.audioplayer.config.post_id, '*');
+            },
+            'tumblr:audio:update': function (e, data) {
+                parent.postMessage('audioPlayerUpdate;' + data.audioplayer.config.post_id + ';' + data.current_time + ';' + data.total_time, '*');
+            },
+            'tumblr:audio:ended': function (e, data) {
+                parent.postMessage('audioPlayerEnded;' + data.audioplayer.config.post_id, '*');
+            }
+        });
+        if (current_audio_player) {
+            current_audio_player.$container.addClass('square no_border');
+            $(window).trigger('resize');
+            if (!(current_audio_player.audiojs.settings.useFlash && current_audio_player.audiojs.settings.hasFlash)) {
+                parent.postMessage('audioPlayerReady;' + current_audio_player.config.post_id, '*');
+            }
+        }
+    });
+})(jQuery);
+</script>
+
+</head><body class="audio_player_iframe">
+
+
+<div class="audio_player_container has_visualizer has_lightbox square no_border small listen"><div class="album_art_container"></div><div id="audiojs_wrapper0" class="audio_player inactive unplayed grey">      <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" id="audiojs0" name="audiojs0" style="position: absolute; left: -1px;" height="1" width="1">         <param name="movie" value="http://assets.tumblr.com/javascript/audio-js/audiojs.swf?playerInstance=audiojs.instances['audiojs0']&amp;datetime=1370544552213.8127">         <param name="allowscriptaccess" value="always">         <embed name="audiojs0" src="tumblr_ksc4i2SkVU1qz8ouq_data/audiojs.swf" allowscriptaccess="always" height="1" width="1">       </object><div class="audio_controls"><div class="progress_container"><div class="load_progress"></div><div class="play_progress"></div><i class="playhead"></i><i class="seek_position"></i><i class="seek_time"></i></div><div style="" class="player_text_wrapper"><div class="player_text"><ul class="id3_tags"><li class="track_name"></li><li class="artist_name"></li><li class="album_name">...Was Right All Along</li></ul></div></div><ul class="time_container"><li class="current_time">0:00</li><li class="separator"> / </li><li class="total_time">0:00</li></ul><div class="seek_overlay"></div><div class="play_pause_container"><i class="play_button audio_player_button">Play</i><i class="pause_button audio_player_button">Pause</i><i class="error_x audio_player_button">X</i></div><div class="audio_message_container"><span class="audio_message_text">Listen</span></div></div><div class="audio_visualizer"><div class="audio_equalizer"><div class="audio_equalizer_band"><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b class="peak"></b></div><div class="audio_equalizer_band"><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b class="peak"></b></div><div class="audio_equalizer_band"><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b class="peak"></b></div><div class="audio_equalizer_band"><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b class="peak"></b></div><div class="audio_equalizer_band"><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b class="peak"></b></div><div class="audio_equalizer_band"><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b class="peak"></b></div><div class="audio_equalizer_band"><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b class="peak"></b></div></div></div><div class="audio_player_overlay"></div><audio type="audio/mp3"></audio></div></div>
+
+
+</body></html>
