@@ -21,138 +21,131 @@
         <link rel='stylesheet' href='{{ app_static_url }}{{ app_skin }}/css/app.css' />
 	</head>
     <body>
-        <script type="text/x-handlebars">
-            <div class="navbar navbar-fixed-top">
-                <div class="navbar-inner">
-                    <div class="container">
-                        <a class="logo" href="#"></a>
-                        <ul class="nav">
-                            <li><a href="#">A</a></li>
-                            <li><a href="#">B</a></li>
-                            <li><a href="#">C</a></li>
-                            <li>
-                                <form class="form-search">
-                                    <input type="text" class="input-xxlarge">
-                                </form>
-                            </li>
-                        </ul>
-                        <ul class="nav pull-right">
-                            <li class="dropdown">
-                              <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Actividades <b class="caret"></b></a>
-                              <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="http://google.com">Action</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#anotherAction">Another action</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
-                                <li role="presentation" class="divider"></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
-                              </ul>
-                            </li>
-                            <li class="dropdown">
-                              <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Perfil <b class="caret"></b></a>
-                              <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="http://google.com">Action</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#anotherAction">Another action</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
-                                <li role="presentation" class="divider"></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
-                              </ul>
-                            </li>
-                        </ul>
+        <div class="navbar navbat-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="logo" href="#"></a>
+                    <ul class="nav">
+                        <li><a href="#">A</a></li>
+                        <li><a href="#">B</a></li>
+                        <li><a href="#">C</a></li>
+                        <li>
+                            <form class="form-search">
+                                <input type="text" class="input-xxlarge">
+                            </form>
+                        </li>
+                    </ul>
+                    <ul class="nav pull-right">
+                        <li class="dropdown">
+                          <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Actividades <b class="caret"></b></a>
+                          <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="http://google.com">Action</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#anotherAction">Another action</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+                            <li role="presentation" class="divider"></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+                          </ul>
+                        </li>
+                        <li class="dropdown">
+                          <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Perfil <b class="caret"></b></a>
+                          <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="http://google.com">Action</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#anotherAction">Another action</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+                            <li role="presentation" class="divider"></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+                          </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="jumbotron">
+            <div class="container">
+                <div class="row-fluid">
+                    <div class="span8">
+                        <h1 class="heading">Build software better, together.</h1>
+                        <p class="subheading">Powerful collaboration, review, and code management for open source and private development projects.</p>
+                    </div>
+                    <div class="span4">
+                        <form accept-charset="UTF-8" action="/users" autocomplete="off" class="home-signup" method="post">
+                            <div style="margin:0;padding:0;display:inline">
+                            <input name="authenticity_token" value="ytB/ID92mWS1BRHGmQxK6ec9yWxz+unDVw9ZPikj5VA=" type="hidden"></div> 
+                            <dl class="form">
+                                <dd>
+                                    <input name="user[login]" class="textfield" placeholder="Pick a username" data-autocheck-url="/signup_check/username" autofocus="&quot;autofocus&quot;" type="text">
+                                </dd>
+                            </dl>
+                            <dl class="form">
+                                <dd>
+                                    <input name="user[email]" class="textfield" placeholder="Your email" data-autocheck-url="/signup_check/email" type="text">
+                                </dd>
+                            </dl>
+                            <dl class="form">
+                                <dd>
+                                    <input name="user[password]" class="textfield" placeholder="Create a password" data-autocheck-url="/signup_check/password" type="password">
+                                    <p class="note">Tip: use at least one number and at least 7 characters.</p>
+                                </dd>
+                            </dl>
+                            <p class="signup-agreement">
+                                By clicking on "Sign up for free" below, you agree to the
+                                <a href="http://help.github.com/terms" target="_blank">Terms of Service</a> and the
+                                <a href="http://help.github.com/privacy" target="_blank">Privacy Policy</a>.
+                            </p>
+                            <button class="button primary button-block" type="submit">Sign up for free</button>
+                            <p class="plans"><a href="https://github.com/plans">See plans and pricing</a></p>
+                        </form>
                     </div>
                 </div>
             </div>
-        </script>
 
-        <div class="container">
-            <div class="row-fluid">
-                <div class="span8">
-                    <h1 class="heading">Build software better, together.</h1>
-                    <p class="subheading">Powerful collaboration, review, and code management for open source and private development projects.</p>
-                </div>
-                <div class="span4">
-                <form accept-charset="UTF-8" action="/users" autocomplete="off" class="home-signup" method="post">
-                    <div style="margin:0;padding:0;display:inline">
-                    <input name="authenticity_token" value="ytB/ID92mWS1BRHGmQxK6ec9yWxz+unDVw9ZPikj5VA=" type="hidden"></div> 
-                    <dl class="form">
-                        <dd>
-                            <input name="user[login]" class="textfield" placeholder="Pick a username" data-autocheck-url="/signup_check/username" autofocus="&quot;autofocus&quot;" type="text">
-                        </dd>
-                    </dl>
-                    <dl class="form">
-                        <dd>
-                            <input name="user[email]" class="textfield" placeholder="Your email" data-autocheck-url="/signup_check/email" type="text">
-                        </dd>
-                    </dl>
-                    <dl class="form">
-                        <dd>
-                            <input name="user[password]" class="textfield" placeholder="Create a password" data-autocheck-url="/signup_check/password" type="password">
-                            <p class="note">Tip: use at least one number and at least 7 characters.</p>
-                        </dd>
-                    </dl>
-
-          <p class="signup-agreement">
-            By clicking on "Sign up for free" below, you agree to the
-            <a href="http://help.github.com/terms" target="_blank">Terms of Service</a> and the
-            <a href="http://help.github.com/privacy" target="_blank">Privacy Policy</a>.
-          </p>
-
-          <button class="button primary button-block" type="submit">Sign up for free</button>
-          <p class="plans"><a href="https://github.com/plans">See plans and pricing</a></p>
-</form>
+      <div class="container">
+        <div class="teasers">
+          <div class="teaser">
+            <img alt="Communicate" class="teaser-illustration" src="GitHub%20%C2%B7%20Build%20software%20better,%20together._files/communicate.png" height="100" width="225">
+            <h3>Great collaboration starts with communication.</h3>
+            <p>Review changes, comment on lines of code, report issues, and plan the future of your project with <a href="http://github.com/features">flexible discussion tools</a>.</p>
+          </div>
+          <div class="teaser">
+            <img alt="Devices" class="teaser-illustration" src="GitHub%20%C2%B7%20Build%20software%20better,%20together._files/devices.png" height="100" width="225">
+            <h3>Manage and contribute from all your devices.</h3>
+            <p>Native clients for <a href="http://mac.github.com/">Mac</a>, <a href="http://windows.github.com/">Windows</a>, and <a href="http://mobile.github.com/">mobile</a> devices allow you to stay involved with your projects from anywhere.</p>
+          </div>
+          <div class="teaser">
+            <img alt="Network" class="teaser-illustration" src="GitHub%20%C2%B7%20Build%20software%20better,%20together._files/network.png" height="100" width="225">
+            <h3>The world’s largest open source community.</h3>
+            <p>Share your code with the world and contribute to <a href="http://github.com/explore">the millions of public repositories</a> hosted on GitHub.</p>
+          </div>
         </div>
-    </div>
-  </div>
 
-  <div class="container">
-    <div class="teasers">
-      <div class="teaser">
-        <img alt="Communicate" class="teaser-illustration" src="GitHub%20%C2%B7%20Build%20software%20better,%20together._files/communicate.png" height="100" width="225">
-        <h3>Great collaboration starts with communication.</h3>
-        <p>Review changes, comment on lines of code, report issues, and plan the future of your project with <a href="http://github.com/features">flexible discussion tools</a>.</p>
-      </div>
-      <div class="teaser">
-        <img alt="Devices" class="teaser-illustration" src="GitHub%20%C2%B7%20Build%20software%20better,%20together._files/devices.png" height="100" width="225">
-        <h3>Manage and contribute from all your devices.</h3>
-        <p>Native clients for <a href="http://mac.github.com/">Mac</a>, <a href="http://windows.github.com/">Windows</a>, and <a href="http://mobile.github.com/">mobile</a> devices allow you to stay involved with your projects from anywhere.</p>
-      </div>
-      <div class="teaser">
-        <img alt="Network" class="teaser-illustration" src="GitHub%20%C2%B7%20Build%20software%20better,%20together._files/network.png" height="100" width="225">
-        <h3>The world’s largest open source community.</h3>
-        <p>Share your code with the world and contribute to <a href="http://github.com/explore">the millions of public repositories</a> hosted on GitHub.</p>
-      </div>
-    </div>
+        <p class="plans-pricing-callout">
+          <span class="mega-octicon octicon-lock"></span>
+          Collaborate on private repositories when you <a href="https://github.com/plans">sign up for a paid individual or organization plan</a>.
+        </p>
 
-    <p class="plans-pricing-callout">
-      <span class="mega-octicon octicon-lock"></span>
-      Collaborate on private repositories when you <a href="https://github.com/plans">sign up for a paid individual or organization plan</a>.
-    </p>
-
-  </div><!-- /.container -->
+      </div><!-- /.container -->
+    </div><!-- /.container -->
 
 
 
     <script src="{{ app_static_url }}{{ app_skin }}/js/jquery.js"></script>
 
-        <!--[if lte IE 8]>
-          <script src="assets/js/excanvas.min.js"></script>
-        <![endif]-->
+    <!--[if lte IE 8]>
+      <script src="{{ app_static_url }}{{ app_skin }}/js/excanvas.min.js"></script>
+    <![endif]-->
 
-        <script src="assets/js/jquery-ui-1.10.3.custom.min.js"></script>
-        <script src="assets/js/jquery.ui.touch-punch.min.js"></script>
-        <script src="assets/js/jquery.slimscroll.min.js"></script>
-        <script src="assets/js/jquery.easy-pie-chart.min.js"></script>
-        <script src="assets/js/jquery.sparkline.min.js"></script>
-        <script src="assets/js/flot/jquery.flot.min.js"></script>
-        <script src="assets/js/flot/jquery.flot.pie.min.js"></script>
-        <script src="assets/js/flot/jquery.flot.resize.min.js"></script>
+    <script src="{{ app_static_url }}{{ app_skin }}/js/jquery-ui-1.10.2.custom.js"></script>
+    <script src="{{ app_static_url }}{{ app_skin }}/js/jquery.ui.touch-punch.js"></script>
+    <script src="{{ app_static_url }}{{ app_skin }}/js/jquery.slimscroll.js"></script>
+    <script src="{{ app_static_url }}{{ app_skin }}/js/jquery.easy-pie-chart.js"></script>
+    <script src="{{ app_static_url }}{{ app_skin }}/js/jquery.sparkline.js"></script>
+    <script src="{{ app_static_url }}{{ app_skin }}/js/flot/jquery.flot.js"></script>
+    <script src="{{ app_static_url }}{{ app_skin }}/js/flot/jquery.flot.pie.js"></script>
+    <script src="{{ app_static_url }}{{ app_skin }}/js/flot/jquery.flot.resize.js"></script>
 
-        <!--ace scripts-->
-
-        <script src="assets/js/ace-elements.min.js"></script>
-        <script src="assets/js/ace.min.js"></script>
-
-        <!--inline scripts related to this page-->
-
+    <script src="{{ app_static_url }}{{ app_skin }}/js/ace-elements.js"></script>
+    <script src="{{ app_static_url }}{{ app_skin }}/js/ace.js"></script>
 
     <script src="{{ app_static_url }}{{ app_skin }}/js/handlebars.js"></script>
     <script src="{{ app_static_url }}{{ app_skin }}/js/ember.js"></script>
