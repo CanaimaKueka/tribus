@@ -21,316 +21,96 @@
         <link rel='stylesheet' href='{{ app_static_url }}{{ app_skin }}/css/app.css' />
 	</head>
     <body>
-        <div class="navbar navbat-fixed-top">
-            <div class="navbar-inner">
-                <div class="container">
-                    <a class="logo" href="#"></a>
-                    <ul class="nav">
-                        <li><a href="#">A</a></li>
-                        <li><a href="#">B</a></li>
-                        <li><a href="#">C</a></li>
-                        <li>
-                            <form class="form-search">
-                                <input type="text" class="input-xxlarge">
-                            </form>
-                        </li>
-                    </ul>
+        <div class="navbar">
+                <div class="container-fluid">
+                    <a class="brand" href="#">
+                        <small>
+                            <i class="icon-leaf"></i>
+                            Tribus
+                        </small>
+                    </a>
                     <ul class="nav pull-right">
                         <li class="dropdown">
-                          <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Actividades <b class="caret"></b></a>
+                          <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">{% trans "Languages" %} <b class="caret"></b></a>
                           <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="http://google.com">Action</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#anotherAction">Another action</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
-                            <li role="presentation" class="divider"></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
-                          </ul>
-                        </li>
-                        <li class="dropdown">
-                          <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Perfil <b class="caret"></b></a>
-                          <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="http://google.com">Action</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#anotherAction">Another action</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
-                            <li role="presentation" class="divider"></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Spanish</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Deutch</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">French</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Italian</a></li>
                           </ul>
                         </li>
                     </ul>
                 </div>
-            </div>
         </div>
 
         <div class="jumbotron">
             <div class="container">
                 <div class="row-fluid">
-                    <div class="span8">
-                        <h1 class="heading">Build software better, together.</h1>
-                        <p class="subheading">Powerful collaboration, review, and code management for open source and private development projects.</p>
+                    <div class="span10 hero-unit">
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+                        <h1>{% trans "Think. Create. Share. Collaborate." %}</h1>
+                        <p>{% trans "We fuel up the engines of free software by providing top quality community services." %} <a href="/tour">{% trans "Take a look" %}</a>.</p>
                     </div>
-                    <div class="span4">
-                        <form accept-charset="UTF-8" action="/users" autocomplete="off" class="home-signup" method="post">
-                            <div style="margin:0;padding:0;display:inline">
-                            <input name="authenticity_token" value="ytB/ID92mWS1BRHGmQxK6ec9yWxz+unDVw9ZPikj5VA=" type="hidden"></div> 
-                            <dl class="form">
-                                <dd>
-                                    <input name="user[login]" class="textfield" placeholder="Pick a username" data-autocheck-url="/signup_check/username" autofocus="&quot;autofocus&quot;" type="text">
-                                </dd>
-                            </dl>
-                            <dl class="form">
-                                <dd>
-                                    <input name="user[email]" class="textfield" placeholder="Your email" data-autocheck-url="/signup_check/email" type="text">
-                                </dd>
-                            </dl>
-                            <dl class="form">
-                                <dd>
-                                    <input name="user[password]" class="textfield" placeholder="Create a password" data-autocheck-url="/signup_check/password" type="password">
-                                    <p class="note">Tip: use at least one number and at least 7 characters.</p>
-                                </dd>
-                            </dl>
+                    <div class="span2">
+                        <form accept-charset="UTF-8" action="/login" autocomplete="off" class="home-signup" method="post">
+                            <input name="login" class="input-block" placeholder="Pick a username" data-autocheck-url="/login/check/username" autofocus="&quot;autofocus&quot;" type="text">
+                            <input name="password" class="input-block" placeholder="Create a password" data-autocheck-url="/login/check/password" type="password">
+                            <button class="btn btn-yellow btn-block" type="submit">Sign in</button>
+                        </form>
+                        <form accept-charset="UTF-8" action="/signup" autocomplete="off" class="home-signup" method="post">
+                            <input name="login" class="input-block" placeholder="Pick a username" data-autocheck-url="/signup/check/username" type="text">
+                            <input name="email" class="input-block" placeholder="Your email" data-autocheck-url="/signup/check/email" type="text">
+                            <input name="password" class="input-block" placeholder="Create a password" data-autocheck-url="/signup/check/password" type="password">
                             <p class="signup-agreement">
-                                By clicking on "Sign up for free" below, you agree to the
-                                <a href="http://help.github.com/terms" target="_blank">Terms of Service</a> and the
-                                <a href="http://help.github.com/privacy" target="_blank">Privacy Policy</a>.
+                                By clicking on this button, you agree to the
+                                <a href="http://help.github.com/terms" target="_blank">Terms of Service</a>, the
+                                <a href="http://help.github.com/privacy" target="_blank">Privacy Policy</a> and the
+                                <a href="http://help.github.com/privacy" target="_blank">Community Guidelines</a>.
                             </p>
-                            <button class="button primary button-block" type="submit">Sign up for free</button>
-                            <p class="plans"><a href="https://github.com/plans">See plans and pricing</a></p>
+                            <button class="btn btn-success btn-block" type="submit">Sign up</button>
                         </form>
                     </div>
                 </div>
             </div>
+      </div>
 
       <div class="container">
-        <div class="teasers">
-          <div class="teaser">
-            <img alt="Communicate" class="teaser-illustration" src="GitHub%20%C2%B7%20Build%20software%20better,%20together._files/communicate.png" height="100" width="225">
-            <h3>Great collaboration starts with communication.</h3>
+      <div class="row-fluid">
+          <div class="span4">
+            <img src="{{ app_static_url }}{{ app_skin }}/img/settings.png" />
+            <h2>Great collaboration starts with communication.</h2>
             <p>Review changes, comment on lines of code, report issues, and plan the future of your project with <a href="http://github.com/features">flexible discussion tools</a>.</p>
           </div>
-          <div class="teaser">
-            <img alt="Devices" class="teaser-illustration" src="GitHub%20%C2%B7%20Build%20software%20better,%20together._files/devices.png" height="100" width="225">
+          <div class="span4">
+            <img src="{{ app_static_url }}{{ app_skin }}/img/clipboard.png" />
             <h3>Manage and contribute from all your devices.</h3>
             <p>Native clients for <a href="http://mac.github.com/">Mac</a>, <a href="http://windows.github.com/">Windows</a>, and <a href="http://mobile.github.com/">mobile</a> devices allow you to stay involved with your projects from anywhere.</p>
           </div>
-          <div class="teaser">
-            <img alt="Network" class="teaser-illustration" src="GitHub%20%C2%B7%20Build%20software%20better,%20together._files/network.png" height="100" width="225">
+          <div class="span4">
+            <img src="{{ app_static_url }}{{ app_skin }}/img/share.png" />
             <h3>The world’s largest open source community.</h3>
             <p>Share your code with the world and contribute to <a href="http://github.com/explore">the millions of public repositories</a> hosted on GitHub.</p>
           </div>
-        </div>
-
-        <p class="plans-pricing-callout">
-          <span class="mega-octicon octicon-lock"></span>
-          Collaborate on private repositories when you <a href="https://github.com/plans">sign up for a paid individual or organization plan</a>.
-        </p>
-
-      </div><!-- /.container -->
-    </div><!-- /.container -->
-
-
+    </div>
+    </div>
 
     <script src="{{ app_static_url }}{{ app_skin }}/js/jquery.js"></script>
-
-    <!--[if lte IE 8]>
-      <script src="{{ app_static_url }}{{ app_skin }}/js/excanvas.min.js"></script>
-    <![endif]-->
-
-    <script src="{{ app_static_url }}{{ app_skin }}/js/jquery-ui-1.10.2.custom.js"></script>
-    <script src="{{ app_static_url }}{{ app_skin }}/js/jquery.ui.touch-punch.js"></script>
-    <script src="{{ app_static_url }}{{ app_skin }}/js/jquery.slimscroll.js"></script>
-    <script src="{{ app_static_url }}{{ app_skin }}/js/jquery.easy-pie-chart.js"></script>
-    <script src="{{ app_static_url }}{{ app_skin }}/js/jquery.sparkline.js"></script>
-    <script src="{{ app_static_url }}{{ app_skin }}/js/flot/jquery.flot.js"></script>
-    <script src="{{ app_static_url }}{{ app_skin }}/js/flot/jquery.flot.pie.js"></script>
-    <script src="{{ app_static_url }}{{ app_skin }}/js/flot/jquery.flot.resize.js"></script>
-
+    <script src="{{ app_static_url }}{{ app_skin }}/js/bootstrap.js"></script>
     <script src="{{ app_static_url }}{{ app_skin }}/js/ace-elements.js"></script>
     <script src="{{ app_static_url }}{{ app_skin }}/js/ace.js"></script>
 
-    <script src="{{ app_static_url }}{{ app_skin }}/js/handlebars.js"></script>
-    <script src="{{ app_static_url }}{{ app_skin }}/js/ember.js"></script>
-    <script src="{{ app_static_url }}{{ app_skin }}/js/ember-data.js"></script>
-    <script src="{{ app_static_url }}{{ app_skin }}/js/bootstrap.js"></script>
-    <script src="{{ app_static_url }}{{ app_skin }}/js/app.js"></script>
-
     <!--[if lt IE 9]>
-    <script src="{{ app_static_url }}{{ app_skin }}/js/html5shiv.js"></script>
+	<script src="{{ app_static_url }}{{ app_skin }}/js/html5shiv.js"></script>
     <![endif]-->
 
-
-    
-        <script type="text/javascript">
-            $(function() {
-            
-                $('.dialogs,.comments').slimScroll({
-                    height: '300px'
-                });
-                
-                $('#tasks').sortable();
-                $('#tasks').disableSelection();
-                $('#tasks input:checkbox').removeAttr('checked').on('click', function(){
-                    if(this.checked) $(this).closest('li').addClass('selected');
-                    else $(this).closest('li').removeClass('selected');
-                });
-            
-                var oldie = $.browser.msie && $.browser.version < 9;
-                $('.easy-pie-chart.percentage').each(function(){
-                    var $box = $(this).closest('.infobox');
-                    var barColor = $(this).data('color') || (!$box.hasClass('infobox-dark') ? $box.css('color') : 'rgba(255,255,255,0.95)');
-                    var trackColor = barColor == 'rgba(255,255,255,0.95)' ? 'rgba(255,255,255,0.25)' : '#E2E2E2';
-                    var size = parseInt($(this).data('size')) || 50;
-                    $(this).easyPieChart({
-                        barColor: barColor,
-                        trackColor: trackColor,
-                        scaleColor: false,
-                        lineCap: 'butt',
-                        lineWidth: parseInt(size/10),
-                        animate: oldie ? false : 1000,
-                        size: size
-                    });
-                })
-            
-                $('.sparkline').each(function(){
-                    var $box = $(this).closest('.infobox');
-                    var barColor = !$box.hasClass('infobox-dark') ? $box.css('color') : '#FFF';
-                    $(this).sparkline('html', {tagValuesAttribute:'data-values', type: 'bar', barColor: barColor , chartRangeMin:$(this).data('min') || 0} );
-                });
-            
-            
-            
-            
-              var data = [
-                { label: "social networks",  data: 38.7, color: "#68BC31"},
-                { label: "search engines",  data: 24.5, color: "#2091CF"},
-                { label: "ad campaings",  data: 8.2, color: "#AF4E96"},
-                { label: "direct traffic",  data: 18.6, color: "#DA5430"},
-                { label: "other",  data: 10, color: "#FEE074"}
-              ];
-            
-              var placeholder = $('#piechart-placeholder').css({'width':'90%' , 'min-height':'150px'});
-              $.plot(placeholder, data, {
-                
-                series: {
-                    pie: {
-                        show: true,
-                        tilt:0.8,
-                        highlight: {
-                            opacity: 0.25
-                        },
-                        stroke: {
-                            color: '#fff',
-                            width: 2
-                        },
-                        startAngle: 2
-                        
-                    }
-                },
-                legend: {
-                    show: true,
-                    position: "ne", 
-                    labelBoxBorderColor: null,
-                    margin:[-30,15]
-                }
-                ,
-                grid: {
-                    hoverable: true,
-                    clickable: true
-                },
-                tooltip: true, //activate tooltip
-                tooltipOpts: {
-                    content: "%s : %y.1",
-                    shifts: {
-                        x: -30,
-                        y: -50
-                    }
-                }
-                
-             });
-            
-             
-              var $tooltip = $("<div class='tooltip top in' style='display:none;'><div class='tooltip-inner'></div></div>").appendTo('body');
-              placeholder.data('tooltip', $tooltip);
-              var previousPoint = null;
-            
-              placeholder.on('plothover', function (event, pos, item) {
-                if(item) {
-                    if (previousPoint != item.seriesIndex) {
-                        previousPoint = item.seriesIndex;
-                        var tip = item.series['label'] + " : " + item.series['percent']+'%';
-                        $(this).data('tooltip').show().children(0).text(tip);
-                    }
-                    $(this).data('tooltip').css({top:pos.pageY + 10, left:pos.pageX + 10});
-                } else {
-                    $(this).data('tooltip').hide();
-                    previousPoint = null;
-                }
-                
-             });
-            
-            
-            
-            
-            
-            
-                var d1 = [];
-                for (var i = 0; i < Math.PI * 2; i += 0.5) {
-                    d1.push([i, Math.sin(i)]);
-                }
-            
-                var d2 = [];
-                for (var i = 0; i < Math.PI * 2; i += 0.5) {
-                    d2.push([i, Math.cos(i)]);
-                }
-            
-                var d3 = [];
-                for (var i = 0; i < Math.PI * 2; i += 0.2) {
-                    d3.push([i, Math.tan(i)]);
-                }
-                
-            
-                var sales_charts = $('#sales-charts').css({'width':'100%' , 'height':'220px'});
-                $.plot("#sales-charts", [
-                    { label: "Domains", data: d1 },
-                    { label: "Hosting", data: d2 },
-                    { label: "Services", data: d3 }
-                ], {
-                    hoverable: true,
-                    shadowSize: 0,
-                    series: {
-                        lines: { show: true },
-                        points: { show: true }
-                    },
-                    xaxis: {
-                        tickLength: 0
-                    },
-                    yaxis: {
-                        ticks: 10,
-                        min: -2,
-                        max: 2,
-                        tickDecimals: 3
-                    },
-                    grid: {
-                        backgroundColor: { colors: [ "#fff", "#fff" ] },
-                        borderWidth: 1,
-                        borderColor:'#555'
-                    }
-                });
-            
-            
-                $('#recent-box [data-rel="tooltip"]').tooltip({placement: tooltip_placement});
-                function tooltip_placement(context, source) {
-                    var $source = $(source);
-                    var $parent = $source.closest('.tab-content')
-                    var off1 = $parent.offset();
-                    var w1 = $parent.width();
-            
-                    var off2 = $source.offset();
-                    var w2 = $source.width();
-            
-                    if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
-                    return 'left';
-                }
-            })
-        </script>
 </body>
 </html>
