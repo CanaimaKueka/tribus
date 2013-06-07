@@ -6,8 +6,8 @@ from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib import auth
 from django.conf import settings
-from tribus.main.models import *
-from tribus.main.forms import LoginForm
+from tribus.core.models import *
+from tribus.core.forms import LoginForm
 
 conftree = settings.CONFTREE
 

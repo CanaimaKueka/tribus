@@ -44,7 +44,7 @@
                 </div>
         </div>
 
-        <div class="jumbotron">
+        <div class="well jumbotron">
             <div class="container">
                 <div class="row-fluid">
                     <div class="span10 hero-unit">
@@ -61,15 +61,15 @@
                         <p>{% trans "We fuel up the engines of free software by providing top quality community services." %} <a href="/tour">{% trans "Take a look" %}</a>.</p>
                     </div>
                     <div class="span2">
-                        <form accept-charset="UTF-8" action="/login" autocomplete="off" class="home-signup" method="post">
-                            <input name="login" class="input-block" placeholder="Pick a username" data-autocheck-url="/login/check/username" autofocus="&quot;autofocus&quot;" type="text">
-                            <input name="password" class="input-block" placeholder="Create a password" data-autocheck-url="/login/check/password" type="password">
+                        <form accept-charset="UTF-8" action="/login/" autocomplete="off" class="home-signin" method="post">
+                            <input name="login" class="input-medium" placeholder="Enter your username" autofocus="autofocus" type="text">
+                            <input name="password" class="input-medium" placeholder="Enter your password" type="password">
                             <button class="btn btn-yellow btn-block" type="submit">Sign in</button>
                         </form>
                         <form accept-charset="UTF-8" action="/signup" autocomplete="off" class="home-signup" method="post">
-                            <input name="login" class="input-block" placeholder="Pick a username" data-autocheck-url="/signup/check/username" type="text">
-                            <input name="email" class="input-block" placeholder="Your email" data-autocheck-url="/signup/check/email" type="text">
-                            <input name="password" class="input-block" placeholder="Create a password" data-autocheck-url="/signup/check/password" type="password">
+                            <input name="login" class="input-medium" placeholder="Pick a username" type="text">
+                            <input name="email" class="input-medium" placeholder="Your email" type="text">
+                            <input name="password" class="input-medium" placeholder="Create a password" type="password">
                             <p class="signup-agreement">
                                 By clicking on this button, you agree to the
                                 <a href="http://help.github.com/terms" target="_blank">Terms of Service</a>, the

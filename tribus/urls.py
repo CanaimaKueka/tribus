@@ -4,7 +4,7 @@
 from django.conf.urls.defaults import patterns, include, url
 from django.contrib import admin
 from django.conf import settings
-from tribus.main.views import Init, Login, Logout, Dashboard, Tour
+from tribus.core.views import Init, Login, Logout, Dashboard, Tour
 
 admin.autodiscover()
 

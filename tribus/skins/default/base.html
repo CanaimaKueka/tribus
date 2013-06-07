@@ -21,8 +21,6 @@
         <link rel='stylesheet' href='{{ app_static_url }}{{ app_skin }}/css/app.css' />
 	</head>
     <body>
-
-        <script type="text/x-handlebars">
         <div class="navbar">
                 <div class="container-fluid">
                     <a class="brand" href="#">
@@ -66,10 +64,7 @@
                 </div>
         </div>
 
-        </script>
-
-
-{% block contenta %}pupu{% endblock %}
+{% block content %}{% endblock %}
 
 <!-- 
         <div id="globalWrapper">
@@ -123,7 +118,7 @@
             </div>
 
             <div id="content">
-{% block content %}
+{% block contenta %}
                 <div class="visualClear"></div>
 
                 <div id="chiclet_left">
@@ -189,6 +184,65 @@
     </div>
 </div>
 </div> -->
+<div id="footer">
+  <div class="container">
+
+      <dl class="span3">
+        <dt>GitHub</dt>
+        <dd><a href="/about">About us</a></dd>
+        <dd><a href="/blog">Blog</a></dd>
+        <dd><a href="/contact">Contact &amp; support</a></dd>
+        <dd><a href="http://enterprise.github.com/">GitHub Enterprise</a></dd>
+        <dd><a href="http://status.github.com/">Site status</a></dd>
+      </dl>
+
+      <dl class="span3">
+        <dt>Applications</dt>
+        <dd><a href="http://mac.github.com/">GitHub for Mac</a></dd>
+        <dd><a href="http://windows.github.com/">GitHub for Windows</a></dd>
+        <dd><a href="http://eclipse.github.com/">GitHub for Eclipse</a></dd>
+        <dd><a href="http://mobile.github.com/">GitHub mobile apps</a></dd>
+      </dl>
+
+      <dl class="span3">
+        <dt>Services</dt>
+        <dd><a href="http://get.gaug.es/">Gauges: Web analytics</a></dd>
+        <dd><a href="http://speakerdeck.com">Speaker Deck: Presentations</a></dd>
+        <dd><a href="https://gist.github.com">Gist: Code snippets</a></dd>
+        <dd><a href="http://jobs.github.com/">Job board</a></dd>
+      </dl>
+
+      <dl class="span3">
+        <dt>Documentation</dt>
+        <dd><a href="http://help.github.com/">GitHub Help</a></dd>
+        <dd><a href="http://developer.github.com/">Developer API</a></dd>
+        <dd><a href="http://github.github.com/github-flavored-markdown/">GitHub Flavored Markdown</a></dd>
+        <dd><a href="http://pages.github.com/">GitHub Pages</a></dd>
+        <dt>More</dt>
+        <dd><a href="http://training.github.com/">Training</a></dd>
+        <dd><a href="/edu">Students &amp; teachers</a></dd>
+        <dd><a href="http://shop.github.com">The Shop</a></dd>
+        <dd><a href="/plans">Plans &amp; pricing</a></dd>
+        <dd><a href="http://octodex.github.com/">The Octodex</a></dd>
+      </dl>
+
+      <hr class="footer-divider">
+
+
+    <p class="right">© 2013 <span title="0.12248s from fe18.rs.github.com">GitHub</span>, Inc. All rights reserved.</p>
+    <a class="left" href="/">
+      <span class="mega-octicon octicon-mark-github"></span>
+    </a>
+    <ul id="legal">
+        <li><a href="/site/terms">Terms of Service</a></li>
+        <li><a href="/site/privacy">Privacy</a></li>
+        <li><a href="/security">Security</a></li>
+    </ul>
+
+  </div><!-- /.container -->
+
+</div><!-- /.#footer -->
+
 
     <script src="{{ app_static_url }}{{ app_skin }}/js/jquery.js"></script>
 
@@ -218,180 +272,6 @@
     <script src="{{ app_static_url }}{{ app_skin }}/js/html5shiv.js"></script>
     <![endif]-->
 
-
-    
-        <script type="text/javascript">
-            $(function() {
-            
-                $('.dialogs,.comments').slimScroll({
-                    height: '300px'
-                });
-                
-                $('#tasks').sortable();
-                $('#tasks').disableSelection();
-                $('#tasks input:checkbox').removeAttr('checked').on('click', function(){
-                    if(this.checked) $(this).closest('li').addClass('selected');
-                    else $(this).closest('li').removeClass('selected');
-                });
-            
-                var oldie = $.browser.msie && $.browser.version < 9;
-                $('.easy-pie-chart.percentage').each(function(){
-                    var $box = $(this).closest('.infobox');
-                    var barColor = $(this).data('color') || (!$box.hasClass('infobox-dark') ? $box.css('color') : 'rgba(255,255,255,0.95)');
-                    var trackColor = barColor == 'rgba(255,255,255,0.95)' ? 'rgba(255,255,255,0.25)' : '#E2E2E2';
-                    var size = parseInt($(this).data('size')) || 50;
-                    $(this).easyPieChart({
-                        barColor: barColor,
-                        trackColor: trackColor,
-                        scaleColor: false,
-                        lineCap: 'butt',
-                        lineWidth: parseInt(size/10),
-                        animate: oldie ? false : 1000,
-                        size: size
-                    });
-                })
-            
-                $('.sparkline').each(function(){
-                    var $box = $(this).closest('.infobox');
-                    var barColor = !$box.hasClass('infobox-dark') ? $box.css('color') : '#FFF';
-                    $(this).sparkline('html', {tagValuesAttribute:'data-values', type: 'bar', barColor: barColor , chartRangeMin:$(this).data('min') || 0} );
-                });
-            
-            
-            
-            
-              var data = [
-                { label: "social networks",  data: 38.7, color: "#68BC31"},
-                { label: "search engines",  data: 24.5, color: "#2091CF"},
-                { label: "ad campaings",  data: 8.2, color: "#AF4E96"},
-                { label: "direct traffic",  data: 18.6, color: "#DA5430"},
-                { label: "other",  data: 10, color: "#FEE074"}
-              ];
-            
-              var placeholder = $('#piechart-placeholder').css({'width':'90%' , 'min-height':'150px'});
-              $.plot(placeholder, data, {
-                
-                series: {
-                    pie: {
-                        show: true,
-                        tilt:0.8,
-                        highlight: {
-                            opacity: 0.25
-                        },
-                        stroke: {
-                            color: '#fff',
-                            width: 2
-                        },
-                        startAngle: 2
-                        
-                    }
-                },
-                legend: {
-                    show: true,
-                    position: "ne", 
-                    labelBoxBorderColor: null,
-                    margin:[-30,15]
-                }
-                ,
-                grid: {
-                    hoverable: true,
-                    clickable: true
-                },
-                tooltip: true, //activate tooltip
-                tooltipOpts: {
-                    content: "%s : %y.1",
-                    shifts: {
-                        x: -30,
-                        y: -50
-                    }
-                }
-                
-             });
-            
-             
-              var $tooltip = $("<div class='tooltip top in' style='display:none;'><div class='tooltip-inner'></div></div>").appendTo('body');
-              placeholder.data('tooltip', $tooltip);
-              var previousPoint = null;
-            
-              placeholder.on('plothover', function (event, pos, item) {
-                if(item) {
-                    if (previousPoint != item.seriesIndex) {
-                        previousPoint = item.seriesIndex;
-                        var tip = item.series['label'] + " : " + item.series['percent']+'%';
-                        $(this).data('tooltip').show().children(0).text(tip);
-                    }
-                    $(this).data('tooltip').css({top:pos.pageY + 10, left:pos.pageX + 10});
-                } else {
-                    $(this).data('tooltip').hide();
-                    previousPoint = null;
-                }
-                
-             });
-            
-            
-            
-            
-            
-            
-                var d1 = [];
-                for (var i = 0; i < Math.PI * 2; i += 0.5) {
-                    d1.push([i, Math.sin(i)]);
-                }
-            
-                var d2 = [];
-                for (var i = 0; i < Math.PI * 2; i += 0.5) {
-                    d2.push([i, Math.cos(i)]);
-                }
-            
-                var d3 = [];
-                for (var i = 0; i < Math.PI * 2; i += 0.2) {
-                    d3.push([i, Math.tan(i)]);
-                }
-                
-            
-                var sales_charts = $('#sales-charts').css({'width':'100%' , 'height':'220px'});
-                $.plot("#sales-charts", [
-                    { label: "Domains", data: d1 },
-                    { label: "Hosting", data: d2 },
-                    { label: "Services", data: d3 }
-                ], {
-                    hoverable: true,
-                    shadowSize: 0,
-                    series: {
-                        lines: { show: true },
-                        points: { show: true }
-                    },
-                    xaxis: {
-                        tickLength: 0
-                    },
-                    yaxis: {
-                        ticks: 10,
-                        min: -2,
-                        max: 2,
-                        tickDecimals: 3
-                    },
-                    grid: {
-                        backgroundColor: { colors: [ "#fff", "#fff" ] },
-                        borderWidth: 1,
-                        borderColor:'#555'
-                    }
-                });
-            
-            
-                $('#recent-box [data-rel="tooltip"]').tooltip({placement: tooltip_placement});
-                function tooltip_placement(context, source) {
-                    var $source = $(source);
-                    var $parent = $source.closest('.tab-content')
-                    var off1 = $parent.offset();
-                    var w1 = $parent.width();
-            
-                    var off2 = $source.offset();
-                    var w2 = $source.width();
-            
-                    if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
-                    return 'left';
-                }
-            })
-        </script>
+{% block scripts %}{% endblock %}
 </body>
 </html>
