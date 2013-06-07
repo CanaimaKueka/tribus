@@ -36,7 +36,7 @@ def Login(request):
             if user is not None:
                 if user.is_active:
                     auth.login(request, user)
-                    return HttpResponseRedirect('/dashboard/')
+                    return HttpResponseRedirect('/i/')
                 else:
                     error = u'account disabled'
                     return errorHandle(error)
@@ -64,3 +64,8 @@ def Dashboard(request):
     data = {}
     context = RequestContext(request)
     return render_to_response('dashboard.html', data, context)
+
+def Tour(request):
+    data = {}
+    context = RequestContext(request)
+    return render_to_response('tour.html', data, context)
