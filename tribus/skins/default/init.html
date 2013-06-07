@@ -1,49 +1,6 @@
+{% extends 'base.html' %}
 {% load i18n %}
-<!DOCTYPE html>
-<html>
-	<head>
-	<meta charset="{{ app_charset|lower }}" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>¡Bienvenido a {{ app_name }}!</title>
-        <link rel='stylesheet' href='{{ app_static_url }}{{ app_skin }}/css/normalize.css' />
-        <link rel='stylesheet' href='{{ app_static_url }}{{ app_skin }}/css/bootstrap.css' />
-        <link rel='stylesheet' href='{{ app_static_url }}{{ app_skin }}/css/bootstrap-responsive.css' />
-        <link rel='stylesheet' href='{{ app_static_url }}{{ app_skin }}/css/font-awesome.css' />
-        <!--[if IE 7]>
-            <link rel="stylesheet" href="{{ app_static_url }}{{ app_skin }}/css/font-awesome-ie7.css" />
-        <![endif]-->
-        <link rel='stylesheet' href='{{ app_static_url }}{{ app_skin }}/css/ace.css' />
-        <link rel='stylesheet' href='{{ app_static_url }}{{ app_skin }}/css/ace-responsive.css' />
-        <link rel='stylesheet' href='{{ app_static_url }}{{ app_skin }}/css/ace-skins.css' />
-        <!--[if lte IE 8]>
-            <link rel="stylesheet" href="{{ app_static_url }}{{ app_skin }}/css/ace-ie.css" />
-        <![endif]-->
-        <link rel='stylesheet' href='{{ app_static_url }}{{ app_skin }}/css/app.css' />
-	</head>
-    <body>
-        <div class="navbar">
-                <div class="container-fluid">
-                    <a class="brand" href="#">
-                        <small>
-                            <i class="icon-leaf"></i>
-                            Tribus
-                        </small>
-                    </a>
-                    <ul class="nav pull-right">
-                        <li class="dropdown">
-                          <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">{% trans "Languages" %} <b class="caret"></b></a>
-                          <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Spanish</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Deutch</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">French</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Italian</a></li>
-                          </ul>
-                        </li>
-                    </ul>
-                </div>
-        </div>
-
+{% block content %}
         <div class="well jumbotron">
             <div class="container">
                 <div class="row-fluid">
@@ -102,15 +59,4 @@
           </div>
     </div>
     </div>
-
-    <script src="{{ app_static_url }}{{ app_skin }}/js/jquery.js"></script>
-    <script src="{{ app_static_url }}{{ app_skin }}/js/bootstrap.js"></script>
-    <script src="{{ app_static_url }}{{ app_skin }}/js/ace-elements.js"></script>
-    <script src="{{ app_static_url }}{{ app_skin }}/js/ace.js"></script>
-
-    <!--[if lt IE 9]>
-	<script src="{{ app_static_url }}{{ app_skin }}/js/html5shiv.js"></script>
-    <![endif]-->
-
-</body>
-</html>
+{% endblock %}
