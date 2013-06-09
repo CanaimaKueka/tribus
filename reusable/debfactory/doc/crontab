@@ -1,7 +1,0 @@
-# m h  dom mon dow   command
-# Daily GPG import
-0 8 * * * $HOME/debfactory/bin/import_uploaders_gpg_keys.py
-
-# New scripts for the repository
-*/2 * * * * $HOME/debfactory/build/process_incoming.py -i /srv/ftp/incoming -o /build/pre_build -q >> $HOME/var/log/check_incoming.log 2>&1
-*/2 * * * * $HOME/debfactory/build/process_pre_build.py -i /build/pre_build -o /build/post_build -q >> $HOME/var/log/check_pre_build.log 2>&1

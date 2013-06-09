@@ -1,0 +1,294 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="{{ app_charset|lower }}" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{% block title %}pupu{% endblock %}</title>
+        <link rel='stylesheet' href='{{ TBS_STATIC }}/css/normalize.css' />
+        <link rel='stylesheet' href='{{ TBS_STATIC }}/css/bootstrap.css' />
+        <link rel='stylesheet' href='{{ TBS_STATIC }}/css/bootstrap-responsive.css' />
+        <link rel='stylesheet' href='{{ TBS_STATIC }}/css/font-awesome.css' />
+        <!--[if IE 7]>
+            <link rel="stylesheet" href="{{ TBS_STATIC }}/css/font-awesome-ie7.css" />
+        <![endif]-->
+        <link rel='stylesheet' href='{{ TBS_STATIC }}/css/ace.css' />
+        <link rel='stylesheet' href='{{ TBS_STATIC }}/css/ace-responsive.css' />
+        <link rel='stylesheet' href='{{ TBS_STATIC }}/css/ace-skins.css' />
+        <!--[if lte IE 8]>
+            <link rel="stylesheet" href="{{ TBS_STATIC }}/css/ace-ie.css" />
+        <![endif]-->
+        <link rel='stylesheet' href='{{ TBS_STATIC }}/css/app.css' />
+	</head>
+    <body>
+        <div class="navbar">
+                <div class="container-fluid">
+                    <a class="brand" href="/">
+                        <small>
+                            <i class="icon-leaf"></i>
+                            Tribus
+                        </small>
+                    </a>
+                    {% if user.is_authenticated %}
+                    <ul class="nav">
+                        <li><a href="#">A</a></li>
+                        <li><a href="#">B</a></li>
+                        <li><a href="#">C</a></li>
+                        <li>
+                            <form class="form-search">
+                                <input type="text" class="input-xlarge">
+                            </form>
+                        </li>
+                    </ul>
+                    <ul class="nav pull-right">
+                        <li class="dropdown">
+                          <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Languages <b class="caret"></b></a>
+                          <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Spanish</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Deutch</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">French</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Italian</a></li>
+                          </ul>
+                        </li>
+                        <li class="dropdown">
+                          <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Languages <b class="caret"></b></a>
+                          <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Spanish</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Deutch</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">French</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Italian</a></li>
+                          </ul>
+                        </li>
+                    </ul>
+                    {% else %}
+                    <ul class="nav pull-right">
+                        <li class="dropdown">
+                          <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Languages <b class="caret"></b></a>
+                          <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Spanish</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Deutch</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">French</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Italian</a></li>
+                          </ul>
+                        </li>
+                    </ul>
+                    {% endif %}
+                </div>
+        </div>
+
+{% block content %}{% endblock %}
+
+<!-- 
+        <div id="globalWrapper">
+            <div id="column-content">
+                <div id="portal-top">
+                    <ul id="p-personal">
+				        {% if user.is_authenticated %}
+				        <li id="profile">
+					        <a href="/profile/" title="{{ user.get_full_name }}">{{ user.get_full_name }}</a>
+				        </li>
+				        <li id="preferences">
+					        <a href="/preferences/" title="{% trans preferences %}">{% trans preferences %}</a>
+				        </li>
+				        {% else %}
+				        <li id="login">
+					        <a href="/login/" title="{% trans 'login' %}">{% trans 'login' %}</a>
+				        </li>
+				        <li id="signup">
+					        <a href="/signup/" title="{% trans 'signup' %}" class="new">{% trans 'signup' %}</a>
+				        </li>
+				        {% endif %}
+                    </ul>
+
+                </div>
+                <div id="portal-searchbox">
+                    <div id="p-logo">
+                        <a href="{{ app_url }}" title="{{ app_name }}"></a>
+                    </div>
+
+                    <form action="Search.php" id="searchform">
+                        <div class="LSBox">
+                            <div id="clock">
+                                Escriba un término de búsqueda y pulse enter
+                            </div>
+                            <input id="searchInput" value="Buscar usuario" name="searchInput" type="text" onfocus="this.value=(this.value=='Buscar usuario') ? '' : this.value;" onblur="this.value=(this.value=='') ? 'Buscar usuario' : this.value;"  />
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <img src="{{ TBS_STATIC }}/images/banner.jpg" />
+
+            <div id="menu">
+                <ul id="portal-globalnav">
+                    <li><a href="http://registro.canaima.softwarelibre.gob.ve">Inicio</a></li>
+                    <li><a href="http://canaima.softwarelibre.gob.ve/">PORTAL PRINCIPAL</a></li>
+                    <li><a href="http://wiki.canaima.softwarelibre.gob.ve/">ENCICLOPEDIA</a></li>
+                    <li><a href="http://proyectos.canaima.softwarelibre.gob.ve/canaima/">SISTEMA DE TICKETS</a></li>
+                    <li><a href="http://ideas.canaima.softwarelibre.gob.ve/">IDEAS</a></li>
+                </ul>
+            </div>
+
+            <div id="content">
+{% block contenta %}
+                <div class="visualClear"></div>
+
+                <div id="chiclet_left">
+                    <p>Bienvenido a  Plataforma Colaborativa del Proyecto Canaima.</p>
+                    <p>Desde aquí podrá gestionar directamente sus usuarios en Plataforma Colaborativa del Proyecto Canaima. La creación de una cuenta le permitirá conectarse a los siguientes servicios:</p>
+                    <ul>
+                        <li><a href="http://canaima.softwarelibre.gob.ve/">PORTAL PRINCIPAL</a></li>
+                        <li><a href="http://wiki.canaima.softwarelibre.gob.ve/">ENCICLOPEDIA</a></li>
+                        <li><a href="http://proyectos.canaima.softwarelibre.gob.ve/canaima/">SISTEMA DE TICKETS</a></li>
+                        <li><a href="http://ideas.canaima.softwarelibre.gob.ve/">IDEAS</a></li>
+                    </ul>
+                </div>
+
+                <div id="chiclet_right">
+                    <div class="chiclet_usuario">
+                        <a href="#">#</a>
+                        <br />
+                        <a href="#" class="chiclet_little">#</a>
+                        <br />
+                    </div>
+                    <div class="chiclet_password">
+                        <a href="#">#</a>
+                        <br />
+                        <a href="#" class="chiclet_little">#</a>
+                        <br />
+                    </div>
+                    <div class="chiclet_olvidar">
+                        <a href="#">#</a>
+                        <br />
+                    </div>
+                    <div class="chiclet_eliminar">
+                        <a href="#">#</a>
+                        <br />
+                    </div>
+                    <div class="chiclet_editar">
+                        <a href="#">#</a>
+                        <br />
+                    </div>
+                    <div class="chiclet_listar">
+                        <a href="#">#</a>
+                        <br />
+                    </div>
+                </div>
+
+                <div class="visualClear"></div>
+{% endblock %}
+            </div>
+
+<div id="portal-footer">
+    <div id="footer">
+        <a href="#">#</a>
+        <a href="#">#</a>
+        <a href="#">#</a>
+        <a href="#">#</a>
+        <a href="#">#</a>
+        <a href="#">#</a>
+        <a href="#">#</a>
+    </div>
+    
+    <div>
+        Plataforma Colaborativa del Proyecto Canaima  es impulsado por
+        <strong><a href="http://code.google.com/p/aguilas/">AGUILAS</a></strong>.
+    </div>
+</div>
+</div> -->
+<div id="footer">
+  <div class="container">
+      <div class="row-fluid">
+      <dl class="span3">
+        <dt>GitHub</dt>
+        <dd><a href="/about">About us</a></dd>
+        <dd><a href="/blog">Blog</a></dd>
+        <dd><a href="/contact">Contact &amp; support</a></dd>
+        <dd><a href="http://enterprise.github.com/">GitHub Enterprise</a></dd>
+        <dd><a href="http://status.github.com/">Site status</a></dd>
+      </dl>
+      <dl class="span3">
+        <dt>Applications</dt>
+        <dd><a href="http://mac.github.com/">GitHub for Mac</a></dd>
+        <dd><a href="http://windows.github.com/">GitHub for Windows</a></dd>
+        <dd><a href="http://eclipse.github.com/">GitHub for Eclipse</a></dd>
+        <dd><a href="http://mobile.github.com/">GitHub mobile apps</a></dd>
+      </dl>
+      <dl class="span3">
+        <dt>Services</dt>
+        <dd><a href="http://get.gaug.es/">Gauges: Web analytics</a></dd>
+        <dd><a href="http://speakerdeck.com">Speaker Deck: Presentations</a></dd>
+        <dd><a href="https://gist.github.com">Gist: Code snippets</a></dd>
+        <dd><a href="http://jobs.github.com/">Job board</a></dd>
+      </dl>
+      <dl class="span3">
+        <dt>Documentation</dt>
+        <dd><a href="http://help.github.com/">GitHub Help</a></dd>
+        <dd><a href="http://developer.github.com/">Developer API</a></dd>
+        <dd><a href="http://github.github.com/github-flavored-markdown/">GitHub Flavored Markdown</a></dd>
+        <dd><a href="http://pages.github.com/">GitHub Pages</a></dd>
+        <dt>More</dt>
+        <dd><a href="http://training.github.com/">Training</a></dd>
+        <dd><a href="/edu">Students &amp; teachers</a></dd>
+        <dd><a href="http://shop.github.com">The Shop</a></dd>
+        <dd><a href="/plans">Plans &amp; pricing</a></dd>
+        <dd><a href="http://octodex.github.com/">The Octodex</a></dd>
+      </dl>
+</div>
+</div>
+  <div class="container">
+      <div class="row-fluid">
+
+    <hr class="footer-divider">
+
+    <p class="pull-right">© 2013 <span title="0.12248s from fe18.rs.github.com">GitHub</span>, Inc. All rights reserved.</p>
+    <a class="left" href="/">
+      <span class="mega-octicon octicon-mark-github"></span>
+    </a>
+    <ul class="unstyled">
+        <li><a href="/site/terms">Terms of Service</a></li>
+        <li><a href="/site/privacy">Privacy</a></li>
+        <li><a href="/security">Security</a></li>
+    </ul>
+
+  </div>
+
+  </div><!-- /.container -->
+
+</div><!-- /.#footer -->
+
+
+    <script src="{{ TBS_STATIC }}/js/jquery.js"></script>
+
+    <!--[if lte IE 8]>
+      <script src="{{ TBS_STATIC }}/js/excanvas.js"></script>
+    <![endif]-->
+
+    <script src="{{ TBS_STATIC }}/js/jquery.ui.custom.js"></script>
+    <script src="{{ TBS_STATIC }}/js/jquery.ui.touch-punch.js"></script>
+    <script src="{{ TBS_STATIC }}/js/jquery.slimscroll.js"></script>
+    <script src="{{ TBS_STATIC }}/js/jquery.easy-pie-chart.js"></script>
+    <script src="{{ TBS_STATIC }}/js/jquery.sparkline.js"></script>
+    <script src="{{ TBS_STATIC }}/js/jquery.flot.js"></script>
+    <script src="{{ TBS_STATIC }}/js/jquery.flot.pie.js"></script>
+    <script src="{{ TBS_STATIC }}/js/jquery.flot.resize.js"></script>
+
+    <script src="{{ TBS_STATIC }}/js/ace-elements.js"></script>
+    <script src="{{ TBS_STATIC }}/js/ace.js"></script>
+
+    <script src="{{ TBS_STATIC }}/js/handlebars.js"></script>
+    <script src="{{ TBS_STATIC }}/js/ember.js"></script>
+    <script src="{{ TBS_STATIC }}/js/ember-data.js"></script>
+    <script src="{{ TBS_STATIC }}/js/bootstrap.js"></script>
+    <script src="{{ TBS_STATIC }}/js/app.js"></script>
+
+    <!--[if lt IE 9]>
+    <script src="{{ TBS_STATIC }}/js/html5shiv.js"></script>
+    <![endif]-->
+
+{% block scripts %}{% endblock %}
+</body>
+</html>

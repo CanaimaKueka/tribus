@@ -5,12 +5,9 @@ from django.conf import settings
 
 def tribusconf(request):
     dictionary = {
-        'app_skin': settings.APP_SKIN,
-        'app_name': settings.APP_NAME,
-        'app_desc': settings.APP_DESC,
-        'app_locale': settings.LANGUAGE_CODE,
-        'app_charset': settings.DEFAULT_CHARSET,
-        'app_static_url': settings.STATIC_URL,
+        'TBS_LOCALE': settings.LANGUAGE_CODE,
+        'TBS_CHARSET': settings.DEFAULT_CHARSET,
+        'TBS_STATIC': settings.STATIC_URL,
     }
 
     return dictionary

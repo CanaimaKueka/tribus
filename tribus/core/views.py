@@ -9,10 +9,25 @@ from django.conf import settings
 from tribus.core.models import *
 from tribus.core.forms import LoginForm
 
-conftree = settings.CONFTREE
-
 def Init(request):
-    data = {}
+    loginform = LoginForm()
+
+    loginform.fields['username'].widget.attrs = {
+    		'placeholder': 'Enter your username',
+    		'class': 'input-large',
+    		'autofocus': 'autofocus'
+    		}
+    loginform.fields['username'].max_length = 100
+    loginform.fields['username'].label = ''
+
+    loginform.fields['password'].widget.attrs = {
+    		'placeholder': 'Enter your password',
+    		'class': 'input-large'
+    		}
+    loginform.fields['password'].max_length = 100
+    loginform.fields['password'].label = ''
+
+    data = { 'loginform': loginform }
     context = RequestContext(request)
     return render_to_response('init.html', data, context)
 

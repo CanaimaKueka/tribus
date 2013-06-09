@@ -4,22 +4,10 @@
 from django import forms
 
 class LoginForm(forms.Form):
-    username = forms.CharField(
-    	widget=forms.TextInput(
-    		attrs={
-    		'placeholder': 'Enter your username',
-    		'class': 'input-xlarge',
-    		'autofocus': 'autofocus'
-    		}
-    		),
-    	max_length=100, label=''
-    	)
-    password = forms.CharField(
-    	widget=forms.PasswordInput(
-    		attrs={
-    		'placeholder': 'Enter your password',
-    		'class': 'input-xlarge'
-    		}
-    		),
-    	max_length=100, label=''
-    	)
+    username = forms.CharField(widget=forms.TextInput())
+    password = forms.CharField(widget=forms.PasswordInput())
+
+class SignupForm(forms.Form):
+    username = forms.CharField(widget=forms.TextInput())
+    email = forms.CharField(widget=forms.TextInput())
+    password = forms.CharField(widget=forms.PasswordInput())
