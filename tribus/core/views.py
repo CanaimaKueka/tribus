@@ -5,40 +5,42 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib import auth
-from django.conf import settings
-from tribus.core.models import *
 from tribus.core.forms import LoginForm
 
+
 def Init(request):
+
     loginform = LoginForm()
 
     loginform.fields['username'].widget.attrs = {
-    		'placeholder': 'Enter your username',
-    		'class': 'input-large',
-    		'autofocus': 'autofocus'
-    		}
+        'placeholder': 'Enter your username',
+        'class': 'input-large'
+    }
+
     loginform.fields['username'].max_length = 100
     loginform.fields['username'].label = ''
 
     loginform.fields['password'].widget.attrs = {
-    		'placeholder': 'Enter your password',
-    		'class': 'input-large'
-    		}
+        'placeholder': 'Enter your password',
+        'class': 'input-large'
+    }
+
     loginform.fields['password'].max_length = 100
     loginform.fields['password'].label = ''
 
-    data = { 'loginform': loginform }
+    data = {'loginform': loginform}
     context = RequestContext(request)
     return render_to_response('init.html', data, context)
+
 
 def Login(request):
 
     def errorHandle(error):
         form = LoginForm()
         data = {
-            'error' : error,
-            'form' : form,
-            }
+            'error': error,
+            'form': form,
+        }
         context = RequestContext(request)
         return render_to_response('login.html', data, context)
 
@@ -65,9 +67,10 @@ def Login(request):
         form = LoginForm()
         data = {
             'form': form,
-            }
+        }
         context = RequestContext(request)
         return render_to_response('login.html', data, context)
+
 
 def Logout(request):
     auth.logout(request)
@@ -75,10 +78,12 @@ def Logout(request):
     context = RequestContext(request)
     return render_to_response('logout.html', data, context)
 
+
 def Dashboard(request):
     data = {}
     context = RequestContext(request)
     return render_to_response('dashboard.html', data, context)
+
 
 def Tour(request):
     data = {}

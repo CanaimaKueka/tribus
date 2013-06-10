@@ -1,0 +1,13 @@
+Django==1.5.1
+argparse==1.2.1
+distribute==0.6.34
+django-auth-ldap==1.1.4
+hiredis==0.1.1
+psycopg2==2.5
+python-ldap==2.4.12
+redis==2.7.5
+wsgiref==0.1.2
+django-celery
+celery-with-redis
+south
+django-redis

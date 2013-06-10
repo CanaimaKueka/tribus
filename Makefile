@@ -187,6 +187,16 @@ reinstall: uninstall install
 
 # MAINTAINER TASKS ---------------------------------------------------------------------------------
 
+runserver:
+
+	@$(BASH) -c "source virtualenv/bin/activate; python manage.py runserver"
+
+environment:
+
+	@echo "Enter your root password:"
+	@su root -c "$(BASH) tools/install-packages.sh"
+	@$(BASH) tools/create-virtualenv.sh
+
 prepare: check-maintdep
 
 	@git submodule init

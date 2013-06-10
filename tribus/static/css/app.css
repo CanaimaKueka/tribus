@@ -45,6 +45,11 @@ input[type="color"]
   width: 146px;
 }
 
+.input-large {
+  display: block;
+  width: 360px;
+}
+
 .input-xlarge {
   display: block;
   width: 360px;

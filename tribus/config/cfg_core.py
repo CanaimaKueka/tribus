@@ -2,19 +2,22 @@
 # -*- coding: utf-8 -*-
 
 import os
+import djcelery
+djcelery.setup_loader()
 
+BROKER_URL = 'redis://localhost:6379/0'
 
 SITE_ROOT = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
 MEDIA_ROOT = ''
 MEDIA_URL = '/media/'
 ADMIN_MEDIA_PREFIX = '/media/admin/'
 STATIC_ROOT = ''
-STATIC_URL = os.path.join(SITE_ROOT, 'static')
+STATIC_URL = os.path.join(SITE_ROOT, 'static', '')
 STATICFILES_DIRS = (
-	os.path.join(SITE_ROOT, 'static'),
+	os.path.join(SITE_ROOT, 'static', ''),
 )
 TEMPLATE_DIRS = (
-	os.path.join(SITE_ROOT, 'templates'),
+	os.path.join(SITE_ROOT, 'templates', ''),
 )
 ROOT_URLCONF = 'tribus.urls'
 
@@ -27,6 +30,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tribus.core',
+    'djcelery',
+    'south',
 )
 
 DEBUG = True
@@ -101,4 +106,18 @@ LOGGING = {
             'propagate': True,
         },
     }
+}
+
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'redis_cache.cache.RedisCache',
+        'LOCATION': 'localhost:6379:1',
+        'OPTIONS': {
+            'PARSER_CLASS': 'redis.connection.HiredisParser',
+            "CLIENT_CLASS": "redis_cache.client.DefaultClient",
+        },
+    },
 }

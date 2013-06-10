@@ -1,4 +1,4 @@
-dn: uid=maria,dc=ejemplo,dc=com
+dn: uid=maria,dc=tribus,dc=org
 givenName: María Virginia
 sn: Mendez Barraza
 cn: María Virginia Mendez Barraza
@@ -17,7 +17,7 @@ ObjectClass: organizationalPerson
 loginShell: /bin/false
 description: Tribus
 
-dn: uid=luis,dc=ejemplo,dc=com
+dn: uid=luis,dc=tribus,dc=org
 givenName: Luis Alejandro
 sn: Martínez Faneyth
 cn: Luis Alejandro Martínez Faneyth

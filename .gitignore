@@ -1,0 +1,6 @@
+virtualenv
+*.pyc
+*.pyo
+*~
+*.lock
+*.swp

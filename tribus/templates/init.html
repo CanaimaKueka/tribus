@@ -19,10 +19,10 @@
                     </div>
                     <div class="span3">
                         <form accept-charset="UTF-8" action="/login/" autocomplete="off" class="home-signin" method="post">
-			    {% csrf_token %}
-			    <ul class="unstyled">
-			    {{ loginform.as_ul }}
-			    </ul>
+                            {% csrf_token %}
+                            <ul class="unstyled">
+                            {{ loginform.as_ul }}
+                            </ul>
                             <button class="btn btn-yellow btn-block" type="submit">Log in</button>
                         </form>
                         <form accept-charset="UTF-8" action="/signup/" autocomplete="off" class="home-signup" method="post">

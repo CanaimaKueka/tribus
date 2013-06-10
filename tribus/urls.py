@@ -35,5 +35,5 @@ urlpatterns = patterns('',
 
 if settings.DEBUG:
     urlpatterns += patterns('',
-        url(r'^skins/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT})
+        url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT})
     )
