@@ -4,7 +4,7 @@
 	<head>
 	<meta charset="{{ app_charset|lower }}" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>{% block title %}pupu{% endblock %}</title>
+	<title>{% block title %}{% endblock %}</title>
         <link rel='stylesheet' href='{{ TBS_STATIC }}/css/normalize.css' />
         <link rel='stylesheet' href='{{ TBS_STATIC }}/css/bootstrap.css' />
         <link rel='stylesheet' href='{{ TBS_STATIC }}/css/bootstrap-responsive.css' />
@@ -24,10 +24,11 @@
         <div class="navbar">
                 <div class="container-fluid">
                     <a class="brand" href="/">
-                        <small>
-                            <i class="icon-leaf"></i>
-                            Tribus
-                        </small>
+                    <span class="smaller-90">
+                        <i class="icon-leaf"></i>
+                        Tribus
+                    </span>
+                    <span class="smaller-50">alpha</span>
                     </a>
                     {% if user.is_authenticated %}
                     <ul class="nav">
