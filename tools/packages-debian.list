@@ -8,3 +8,4 @@ slapd
 ldap-utils
 redis-server
 fabric
+gcc
