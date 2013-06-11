@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<title>{% block titulo %}Twitter{% endblock %}</title>
+	<!--[if lt IE 9]> <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script> <![endif]-->
+	<link href="{{ STATIC_URL }}twitter/css/bootstrap.min.css" rel="stylesheet">
+	<style>
+		body
+		{
+			padding-top: 60px;
+			background-color: #CCC;
+		}
+		.seccion
+		{
+			background-color: rgba(255,255,255,0.8);
+			border-radius: 10px;
+		}
+		.seccion *
+		{
+			padding: 3px;
+		}
+		input
+		{
+			width: 200px;
+		}
+	</style>
+	<link href="{{ STATIC_URL }}twitter/css/bootstrap-responsive.min.css" rel="stylesheet">
+	<link href="{{ STATIC_URL }}twitter/css/perfil.css" rel="stylesheet">
+	<script src="{{ STATIC_URL }}twitter/js/jquery.min.js"></script>
+	<script src="{{ STATIC_URL }}twitter/js/bootstrap.min.js"></script>
+	{% if logueado %}
+		<script type="text/javascript">
+			user = '{{ logueado.username|escapejs }}';
+			csrf = '{{ csrf_token }}';
+			staticurl = '{{ STATIC_URL }}';
+		</script>
+		<script src="{{ STATIC_URL }}twitter/js/cuentachars.js" type="text/javascript"></script>
+	{% endif %}
+	<script src="{{ STATIC_URL }}twitter/js/chat.js" type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}twitter/css/perfil.css">
+</head>
+<body>
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="brand" href="/twitter/">Twitter</a>
+				<div class="nav-collapse">
+					<ul class="nav">
+						<li class="active"><a href="/twitter/"><i class="icon-home icon-white"></i>Home</a></li>
+						<li><a data-toggle="modal" href="#contacto"><i class="icon-envelope icon-white"></i>Contacto</a></li>
+						{% if logueado %}
+							<li><a data-toggle="modal" href="#chatmodal"><i class="icon-comment icon-white"></i>Chat</a></li>
+							<li>
+								<div class="btn-group">
+							  <a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#">
+							    @{{ logueado.username }} 
+							    <span class="caret"></span>
+							  </a>
+							  <ul class="dropdown-menu">
+							    <li><a href="/twitter/"><i class="icon-home"></i>Home</a></li>
+							    <li><a href="/twitter/profile/{{ logueado.username }}/"><i class="icon-user"></i>Mi perfil</a></li>
+							    <li><a href="/twitter/buscar/?busqueda=%40{{ logueado.username }}"><i class="icon-time"></i>Mi actividad (menciones)</a></li>
+							    <li><a href="/twitter/configuracion/"><i class="icon-cog"></i>Configuración de la cuenta</a></li>
+							    <li class="divider"></li>
+							    <li><a href="/twitter/logout/"><i class="icon-off"></i>Cerrar sesión</a></li>
+							  </ul>
+							</div>
+							</li>
+						{% endif %}
+					</ul>
+					{% if logueado %}
+						<form action="/twitter/buscar/" method="get" class="navbar-search pull-left">
+							<i class="icon-search icon-white"></i>
+							<input type="text" class="search-query" name="busqueda" value="{{ busqueda }}" placeholder="Búsqueda">
+							<!-- <input type="submit" value="Buscar" class="btn btn-success"> -->
+						</form>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+<div class="modal hide fade" id="contacto">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal">×</a>
+    <h3>Contacto con el autor</h3>
+  </div>
+  <div class="modal-body">
+    <p>
+    	E-Mail: <a href="mailto:shareman1204@gmail.com">shareman1204@gmail.com</a><br>
+    	Blog: <a href="http://licenciaparahackear.wordpress.com" target="_blank">licenciaparahackear.wordpress.com</a><br>
+    	Twiter: <a href="http://twitter.com/sh4r3m4n" target="_blank">@sh4r3m4n</a><br>
+    </p>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn btn-primary" data-dismiss="modal">Cerrar</a>
+  </div>
+</div>
+<div class="modal hide fade" id="chatmodal">
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal">×</a>
+		<h3>Chat</h3>
+	</div>
+	<div class="modal-body">
+		<form class="chatform" action="/twitter/chat/" method="POST">
+			<input id="inputmodal" type="text" name="mensaje" placeholder="Mensaje" autocomplete="off" maxlength="100">
+		</form>
+		<section class="chat"></section>
+	</div>
+	<div class="modal-footer">
+    	<a href="#" class="btn btn-primary" data-dismiss="modal">Cerrar</a>
+  	</div>
+</div>
+<div class="container">
+	<div class="row">
+		{% if logueado %}
+		<div class="span4 seccion">
+			<h3>{% block fasttweet %}<i class="icon-edit"></i>Tweet rápido{% endblock %}</h2>
+				<form action="/twitter/tweet/" method="post">
+					{% csrf_token %}
+					{% block respuesta %}{% endblock %}
+					<p>
+						<textarea id="textarea" name="content" maxlength="140" rows="5" cols="50">{% block textarea %}{% endblock %}</textarea>
+						<span id="count" class="label label-info">140</span><br>
+						<input class="btn btn-success" type="submit" value="Tweetear">
+					</p>
+				</form>
+			<section>
+				<header>
+					<img src="{% if p.avatar %}{{ p.avatar }}{% else %}{{ STATIC_URL }}default.png{% endif %}" class="perfil"><h3>{{ logueado.get_full_name }} (<a href="/twitter/profile/{{ logueado }}/">@{{ logueado }}</a>)</h3>
+					<div class="pagination" style="font-size: 11px">
+						<ul>
+							<li><a href="/twitter/profile/{{ logueado }}/">{{ ntweets }} tweet{{ ntweets|pluralize }}</a></li>
+							<li><a href="/twitter/seguidores/{{ logueado }}/">{{ u_seguidores }} seguidores</a></li>
+							<li><a href="/twitter/siguiendo/{{ user.username }}/">{{ u_siguiendo }} siguiendo</a></li>
+						</ul>
+					</div>
+					{% block trending %}{% endblock %}
+				</header>
+			</section>
+		</div>
+		{% endif %}
+		<div class="span{% if logueado %}5{% else %}12{% endif %} seccion">
+			{% block contenido %}
+			{{ mensaje }}
+			{% endblock %}
+		</div>
+		{% if logueado %}
+			<div class="span3 seccion">
+				<h3>Chat</h3>
+				<form id="normal" class="chatform" action="/twitter/chat/" method="POST">
+					<input id="inputderecho" type="text" name="mensaje" placeholder="Mensaje" autocomplete="off" maxlength="100">
+				</form>
+				<section class="chat"></section>
+			</div>
+		{% endif %}
+	</div>
+</div>
+<footer>
+	<p>Clon de twitter creado en Django por <a href="#contacto" data-toggle="modal">sh4r3m4n</a></p>
+</footer>
+</body>
+</html>
