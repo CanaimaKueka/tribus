@@ -197,6 +197,10 @@ environment:
 	@su root -c "$(BASH) tools/install-packages.sh"
 	@$(BASH) tools/create-virtualenv.sh
 
+update-environment:
+
+	@$(BASH) tools/update-virtualenv.sh
+
 prepare: check-maintdep
 
 	@git submodule init

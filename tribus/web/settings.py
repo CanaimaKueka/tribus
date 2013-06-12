@@ -15,9 +15,16 @@ DATABASES = {
         'PASSWORD': 'tribus',
         'HOST': 'localhost',
         'PORT': '',
-    }
-}
+    },
+    'ldap': {
+        'ENGINE': 'ldapdb.backends.ldap',
+        'NAME': 'ldap://localhost/',
+        'USER': 'cn=admin,dc=tribus,dc=org',
+        'PASSWORD': 'tribus',
+     }
+ }
 
+DATABASE_ROUTERS = ['ldapdb.router.Router']
 
 BROKER_URL = 'redis://localhost:6379/0'
 
@@ -46,6 +53,7 @@ INSTALLED_APPS = (
     'tribus.web',
     'djcelery',
     'south',
+    'ldapdb'
 )
 
 DEBUG = True
@@ -102,8 +110,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'tribus.web.processors.tribusconf',
 )
 
-AUTH_PROFILE_MODULE = 'viewer.UserProfile'
-
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -136,12 +142,19 @@ CACHES = {
     },
 }
 
+
+AUTHENTICATION_BACKENDS = (
+    'django_auth_ldap.backend.LDAPBackend',
+)
+
+
 # Baseline configuration.
 AUTH_LDAP_SERVER_URI = "ldap://localhost"
+AUTH_LDAP_BASE = "dc=tribus,dc=org"
 AUTH_LDAP_BIND_DN = "cn=admin,dc=tribus,dc=org"
 AUTH_LDAP_BIND_PASSWORD = "tribus"
 AUTH_LDAP_USER_SEARCH = LDAPSearch(
-    "dc=tribus,dc=org", ldap.SCOPE_SUBTREE, "(uid=%(user)s)"
+    AUTH_LDAP_BASE, ldap.SCOPE_SUBTREE, "(uid=%(username)s)"
     )
 
 # Set up the basic group parameters.
@@ -184,12 +197,5 @@ AUTH_LDAP_FIND_GROUP_PERMS = True
 # Cache group memberships for an hour to minimize LDAP traffic
 AUTH_LDAP_CACHE_GROUPS = True
 AUTH_LDAP_GROUP_CACHE_TIMEOUT = 3600
-
-
-# Keep ModelBackend around for per-user permissions and maybe a local
-# superuser.
-AUTHENTICATION_BACKENDS = (
-    'django_auth_ldap.backend.LDAPBackend',
-)
 
 
