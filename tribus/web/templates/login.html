@@ -19,7 +19,7 @@
 		{% endif %}
 		<form method="post" action="/login/">
 			{% csrf_token %}
-			{{ form.as_p }}
+			{{ loginform.as_p }}
 			<button class="btn btn-yellow btn-block" type="submit">Sign in</button>
 		</form>
 		<ul class="unstyled">
