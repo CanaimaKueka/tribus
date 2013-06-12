@@ -26,9 +26,10 @@
                             <button class="btn btn-yellow btn-block" type="submit">Log in</button>
                         </form>
                         <form accept-charset="UTF-8" action="/signup/" autocomplete="off" class="home-signup" method="post">
-                            <input name="login" class="input-medium" placeholder="Pick a username" type="text">
-                            <input name="email" class="input-medium" placeholder="Your email" type="text">
-                            <input name="password" class="input-medium" placeholder="Create a password" type="password">
+                            {% csrf_token %}
+                            <ul class="unstyled">
+                            {{ signupform.as_ul }}
+                            </ul>
                             <p class="signup-agreement">
                                 By clicking on this button, you agree to the
                                 <a href="http://help.github.com/terms" target="_blank">Terms of Service</a>, the
