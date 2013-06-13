@@ -144,25 +144,30 @@ def Signup(request):
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
             email = form.cleaned_data['email']
-            first_name = form.cleaned_data['firstname']
-            last_name = form.cleaned_data['lastname']
+            first_name = 'lola'#form.cleaned_data['firstname']
+            last_name = 'lole'#form.cleaned_data['lastname']
 
             u = User.objects.create_user(username, email, password)
             u.first_name = first_name
             u.last_name = last_name
             u.is_active = True
-#            u.ldap.first_name = first_name
-#            u.ldap.last_name = last_name
-#            u.ldap.email = email
-#            u.ldap.username = username
-#            u.ldap.password = password
-#            u.ldap.uid = 
-#            u.ldap.group =
-#            u.ldap.home_directory = '/home/'+username
-#            u.ldap.login_shell = '/bin/false'
-#            u.ldap.description = 'Created by Tribus'
-#            u.ldap.save()
             u.save()
+
+            lastuid = int(LdapUser.objects.get(username='maxUID').uid)
+
+            ldapuser = LdapUser()
+            ldapuser.first_name = first_name
+            ldapuser.last_name = last_name
+            ldapuser.full_name = first_name+' '+last_name
+            ldapuser.email = email
+            ldapuser.username = username
+            ldapuser.password = password
+            ldapuser.uid = lastuid+1
+            ldapuser.group = 1234
+            ldapuser.home_directory = '/home/'+username
+            ldapuser.login_shell = '/bin/false'
+            ldapuser.description = 'Created by Tribus'
+            ldapuser.save()
 
             p = Profile.objects.create(
                 user = u,

@@ -191,6 +191,10 @@ runserver:
 
 	@$(BASH) -c "source virtualenv/bin/activate; python manage.py runserver"
 
+syncdb:
+
+	@$(BASH) -c "source virtualenv/bin/activate; python manage.py syncdb; python manage.py migrate"
+
 environment:
 
 	@echo "Enter your root password:"

@@ -16,15 +16,15 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '',
     },
-#    'ldap': {
-#        'ENGINE': 'ldapdb.backends.ldap',
-#        'NAME': 'ldap://localhost/',
-#        'USER': 'cn=admin,dc=tribus,dc=org',
-#        'PASSWORD': 'tribus',
-#     }
+   'ldap': {
+       'ENGINE': 'ldapdb.backends.ldap',
+       'NAME': 'ldap://localhost/',
+       'USER': 'cn=admin,dc=tribus,dc=org',
+       'PASSWORD': 'tribus',
+    }
  }
 
-#DATABASE_ROUTERS = ['ldapdb.router.Router']
+DATABASE_ROUTERS = ['ldapdb.router.Router']
 
 BROKER_URL = 'redis://localhost:6379/0'
 
@@ -53,7 +53,7 @@ INSTALLED_APPS = (
     'tribus.web',
     'djcelery',
     'south',
-    #'ldapdb'
+    'ldapdb'
 )
 
 DEBUG = True
