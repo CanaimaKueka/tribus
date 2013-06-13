@@ -16,7 +16,7 @@
 				</form>
 			<section>
 				<header>
-					<img src="{% if p.avatar %}{{ p.avatar }}{% else %}{{ STATIC_URL }}default.png{% endif %}" class="perfil"><h3>{{ logueado.get_full_name }} (<a href="/twitter/profile/{{ logueado }}/">@{{ logueado }}</a>)</h3>
+					<img src="{% if p.avatar %}{{ p.avatar }}{% else %}{{ STATIC_URL }}default.png{% endif %}" class="perfil"><h3>{{ user.get_full_name }} (<a href="/twitter/profile/{{ logueado }}/">@{{ user }}</a>)</h3>
 					<div class="pagination" style="font-size: 11px">
 						<ul>
 							<li><a href="/twitter/profile/{{ logueado }}/">{{ ntweets }} tweet{{ ntweets|pluralize }}</a></li>

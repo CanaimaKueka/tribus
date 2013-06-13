@@ -14,29 +14,30 @@ urlpatterns = patterns('tribus.web.views',
     url(r'^signup/$', 'Signup'),
     url(r'^i/$', 'Dashboard'),
     url(r'^tour/$', 'Tour'),
-	url('^page/(?P<page>\\d+)/$', 'index'),
-	url('^register/$', 'register'),
-	url('^configuracion/$', 'conf'),
-	
-	url('^profile/(?P<username>[a-zA-Z0-9\\_]+)/$', 'profile'),
-	url('^profile/(?P<username>[a-zA-Z0-9\\_]+)/page/(?P<page>\\d+)/$', 'profile'),
-	
-	url('^tweet/$', 'tweet'),
-	url('^follow/$', 'follow'),
-	url('^retweet/(?P<tweet_id>\\d+)/$', 'retweet'),
-	url('^borrar/(?P<tweet_id>\\d+)/$', 'borrar'),
-	url('^responder/(?P<tweet_id>\\d+)/$', 'responder'),
 
-	url('^conversacion/(?P<conversacion>\\d+)/$', 'conversacion'),
-	url('^conversacion/(?P<conversacion>\\d+)/page/(?P<page>\\d+)/$', 'conversacion'),
+#	url('^page/(?P<page>\\d+)/$', 'index'),
+#	url('^register/$', 'register'),
+#	url('^configuracion/$', 'conf'),
+#	
+#	url('^profile/(?P<username>[a-zA-Z0-9\\_]+)/$', 'profile'),
+#	url('^profile/(?P<username>[a-zA-Z0-9\\_]+)/page/(?P<page>\\d+)/$', 'profile'),
+#	
+#	url('^tweet/$', 'tweet'),
+#	url('^follow/$', 'follow'),
+#	url('^retweet/(?P<tweet_id>\\d+)/$', 'retweet'),
+#	url('^borrar/(?P<tweet_id>\\d+)/$', 'borrar'),
+#	url('^responder/(?P<tweet_id>\\d+)/$', 'responder'),
 
-	url('^buscar/$', 'buscar'),
-	url('^buscar/page/(?P<page>\\d+)/$', 'buscar'),
-	
-	url('^(?P<method>(seguidores|siguiendo))/(?P<username>[a-zA-Z0-9\\_]+)/$', 'seguidores'),
+#	url('^conversacion/(?P<conversacion>\\d+)/$', 'conversacion'),
+#	url('^conversacion/(?P<conversacion>\\d+)/page/(?P<page>\\d+)/$', 'conversacion'),
 
-	url('^chat/$', 'chat'),
-	url('^newtweets/$', 'ajaxtw'),
+#	url('^buscar/$', 'buscar'),
+#	url('^buscar/page/(?P<page>\\d+)/$', 'buscar'),
+#	
+#	url('^(?P<method>(seguidores|siguiendo))/(?P<username>[a-zA-Z0-9\\_]+)/$', 'seguidores'),
+
+#	url('^chat/$', 'chat'),
+#	url('^newtweets/$', 'ajaxtw'),
 #    url(r'^m/$', include(tribus.postman.urls)),
 #    url(r'^u/$', include(tribus.profiles.urls)),
 #    url(r'^signup/$', 'tribus.viewer.views.signup'),

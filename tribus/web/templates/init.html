@@ -5,45 +5,67 @@
             <div class="container">
                 <div class="row-fluid">
                     <div class="span9 hero-unit">
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-                        <h1>{% trans "Think. Create. Share. Collaborate." %}</h1>
-                        <p>{% trans "We fuel up the engines of free software by providing top quality community services." %} <a href="/tour">{% trans "Take a look" %}</a>.</p>
+                        <h1>{% trans "The power is yours" %}</h1>
+                        <p>{% trans "Unleash the power of your creativity to bring amazing pieces of art to the free software world. We deliver a complete set of community services right to your computer" %}. <a href="/tour">{% trans "Take the tour" %}</a> {% trans "to know how" %}.</p>
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
                     </div>
                     <div class="span3">
-                        <form accept-charset="UTF-8" action="/login/" autocomplete="off" class="home-signin" method="post">
+                        <div class="home-signin">
+                        <h3 class="lighter block ">{% trans "Log in" %}</h3>
+                        <form accept-charset="UTF-8" action="/login/" autocomplete="off" method="post">
                             {% csrf_token %}
                             <ul class="unstyled">
                             {{ loginform.as_ul }}
                             </ul>
-                            <button class="btn btn-yellow btn-block" type="submit">Log in</button>
+                            <button class="btn btn-yellow btn-block" type="submit">{% trans "Log in" %}</button>
+		                    <ul class="unstyled smaller-90">
+			                    <li><a href="/forgot/username">{% trans "forgot your username?" %}</a></li>
+			                    <li><a href="/forgot/password">{% trans "forgot your password?" %}</a></li>
+		                    </ul>
                         </form>
-                        <form accept-charset="UTF-8" action="/signup/" autocomplete="off" class="home-signup" method="post">
+                    </div>
+                        <div class="home-signup">
+                        <h3 class="lighter block">{% trans "Sign up with" %}</h3>
+                        <div class="row-fluid bigger-200">
+                            <span class="span3 bigger-200 text-center blue"><i class="icon-facebook-sign"></i></span>
+                            <span class="span3 bigger-200 text-center light-blue"><i class="icon-twitter-sign"></i></span>
+                            <span class="span3 bigger-200 text-center"><i class="icon-github-sign"></i></span>
+                            <span class="span3 bigger-200 text-center red"><i class="icon-google-plus-sign"></i></span>
+                        </div>
+                        <h3 class="lighter block">{% trans "- or -" %}</h3>
+                        <form accept-charset="UTF-8" action="/signup/" autocomplete="off" method="post">
                             {% csrf_token %}
                             <ul class="unstyled">
                             {{ signupform.as_ul }}
                             </ul>
-                            <p class="signup-agreement">
+                            <button class="btn btn-success btn-block" type="submit">{% trans "Sign up" %}</button>
+                            <p class="smaller-90">
                                 By clicking on this button, you agree to the
-                                <a href="http://help.github.com/terms" target="_blank">Terms of Service</a>, the
-                                <a href="http://help.github.com/privacy" target="_blank">Privacy Policy</a> and the
-                                <a href="http://help.github.com/privacy" target="_blank">Community Guidelines</a>.
+                                <a href="/about/terms" target="_blank">Terms of Service</a>, the
+                                <a href="/about/privacy" target="_blank">Privacy Policy</a> and the
+                                <a href="/about/guidelines" target="_blank">Community Guidelines</a>.
                             </p>
-                            <button class="btn btn-success btn-block" type="submit">Sign up</button>
                         </form>
+                    </div>
                     </div>
                 </div>
             </div>
       </div>
 
-      <div class="container">
+<!--      <div class="container">
       <div class="row-fluid">
           <div class="span4">
             <img src="{{ TBS_STATIC }}/img/settings.png" />
@@ -61,5 +83,5 @@
             <p>Share your code with the world and contribute to <a href="http://github.com/explore">the millions of public repositories</a> hosted on GitHub.</p>
           </div>
     </div>
-    </div>
+    </div>-->
 {% endblock %}

@@ -5,53 +5,64 @@ import re
 from urllib import urlencode
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
-from ldapdb.models import fields
-import ldapdb.models
+#from ldapdb.models import fields
+#import ldapdb.models
 from django.conf import settings
+
+class Profile(models.Model):
+    user = models.ForeignKey(User)
+    frase = models.CharField(max_length = 160)
+    ubicacion = models.CharField(max_length = 50)
+    avatar = models.CharField(max_length = 256)
+
+    def __unicode__(self):
+        return str(self.user)
 
 #
 # This class comes from django-ldapdb's examples
 # https://github.com/jlaine/django-ldapdb
 #
-class LdapUser(ldapdb.models.Model):
-    """
-    Class for representing an LDAP user entry.
-    """
-    # related_name tip from
-    # http://igorsobreira.com/2010/12/11/extending-user-model-in-django.html
-    user = models.OneToOneField(User, related_name='ldap')
-    base_dn = settings.AUTH_LDAP_BASE
-    object_classes = [
-        'posixAccount', 'shadowAccount', 'inetOrgPerson',
-        'top', 'person', 'organizationalPerson'
-        ]
+#class LdapUser(ldapdb.models.Model):
+#    """
+#    Class for representing an LDAP user entry.
+#    """
+#    # related_name tip from
+#    # http://igorsobreira.com/2010/12/11/extending-user-model-in-django.html
+#    user = models.OneToOneField(User, related_name='ldap')
+#    base_dn = settings.AUTH_LDAP_BASE
+#    object_classes = [
+#        'posixAccount', 'shadowAccount', 'inetOrgPerson',
+#        'top', 'person', 'organizationalPerson'
+#        ]
 
-    first_name = fields.CharField(db_column='givenName')
-    last_name = fields.CharField(db_column='sn')
-    full_name = fields.CharField(db_column='cn')
-    email = fields.CharField(db_column='mail')
-    username = fields.CharField(db_column='uid', primary_key=True)
-    password = fields.CharField(db_column='userPassword')
-    uid = fields.IntegerField(db_column='uidNumber', unique=True)
-    group = fields.IntegerField(db_column='gidNumber')
-    home_directory = fields.CharField(db_column='homeDirectory')
-    login_shell = fields.CharField(db_column='loginShell', default='/bin/bash')
-    description = fields.CharField(db_column='description')
+#    first_name = fields.CharField(db_column='givenName')
+#    last_name = fields.CharField(db_column='sn')
+#    full_name = fields.CharField(db_column='cn')
+#    email = fields.CharField(db_column='mail')
+#    username = fields.CharField(db_column='uid', primary_key=True)
+#    password = fields.CharField(db_column='userPassword')
+#    uid = fields.IntegerField(db_column='uidNumber', unique=True)
+#    group = fields.IntegerField(db_column='gidNumber')
+#    home_directory = fields.CharField(db_column='homeDirectory')
+#    login_shell = fields.CharField(db_column='loginShell', default='/bin/bash')
+#    description = fields.CharField(db_column='description')
 
-    def __str__(self):
-        return self.uid
+#    def __str__(self):
+#        return self.uid
 
-    def __unicode__(self):
-        return self.full_name
- 
-# post_save tip from
-# http://blog.tivix.com/2012/01/06/extending-user-model-in-django/
-def create_ldap_user(sender, instance, created, **kwargs):
-    if created:
-        profile, created = LdapUser.objects.get_or_create(user=instance)  
- 
-post_save.connect(create_ldap_user, sender=User)
+#    def __unicode__(self):
+#        return self.full_name
+
+## post_save tip from
+## http://blog.tivix.com/2012/01/06/extending-user-model-in-django/
+#def create_ldap_user(sender, instance, created, **kwargs):
+#    if created:
+#        profile, created = LdapUser.objects.get_or_create(user=instance)  
+
+##
+## Model Signaling --------------------------------------------------------------
+##
+#models.signals.post_save.connect(create_ldap_user, sender=User)
 
 
 # Create your models here.
@@ -88,15 +99,6 @@ class Tweet(models.Model):
             t = t.replace(mencion, '<a href="/twitter/profile/%s/">%s</a>' % (mencion[1:], mencion))
 
         return t
-
-
-class Profile(models.Model):
-    def __unicode__(self):
-        return str(self.user)
-    user = models.ForeignKey(User)
-    frase = models.CharField(max_length = 160)
-    ubicacion = models.CharField(max_length = 50)
-    avatar = models.CharField(max_length = 256)
 
 class Follow(models.Model):
     fecha = models.DateTimeField()

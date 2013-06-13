@@ -43,18 +43,11 @@ def Init(request):
         'placeholder': 'Enter your password',
         'class': 'input-large'
     }
-    
+#    loginform.fields['rememberme'].label = 'Remember my session'
+
     signupform = SignupForm()
     signupform.fields['username'].widget.attrs = {
         'placeholder': 'Pick a username',
-        'class': 'input-large'
-    }
-    signupform.fields['lastname'].widget.attrs = {
-        'placeholder': 'Enter your last name',
-        'class': 'input-large'
-    }
-    signupform.fields['firstname'].widget.attrs = {
-        'placeholder': 'Enter your first name',
         'class': 'input-large'
     }
     signupform.fields['email'].widget.attrs = {
@@ -95,12 +88,12 @@ def Login(request):
                     )
             except KeyError:
                 error = u'Key error'
-                return errorHandle(error)
+                return ErrorHandle(error)
 
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return HttpResponseRedirect('/i/')
+                    return HttpResponseRedirect(reverse('tribus.web.views.Dashboard'))
                 else:
                     error = u'account disabled'
                     return ErrorHandle(error)
@@ -147,7 +140,7 @@ def Signup(request):
                 return ErrorHandle('Ingrese un email valido')
             if User.objects.filter(username = request.POST['username']):
                 return ErrorHandle('El usuario ya existe')
-            print form
+
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
             email = form.cleaned_data['email']
@@ -157,29 +150,27 @@ def Signup(request):
             u = User.objects.create_user(username, email, password)
             u.first_name = first_name
             u.last_name = last_name
-            u.is_active = False
-            u.ldap.first_name = first_name
-            u.ldap.last_name = last_name
-            u.ldap.email = email
-            u.ldap.username = username
-            u.ldap.password = password
-            # u.ldap.uid = 
-            # u.ldap.group =
-            u.ldap.home_directory = '/home/'+username
-            u.ldap.login_shell = '/bin/false'
-            u.ldap.description = 'Created by Tribus'
-
-            u.ldap.save()
+            u.is_active = True
+#            u.ldap.first_name = first_name
+#            u.ldap.last_name = last_name
+#            u.ldap.email = email
+#            u.ldap.username = username
+#            u.ldap.password = password
+#            u.ldap.uid = 
+#            u.ldap.group =
+#            u.ldap.home_directory = '/home/'+username
+#            u.ldap.login_shell = '/bin/false'
+#            u.ldap.description = 'Created by Tribus'
+#            u.ldap.save()
             u.save()
 
-
-            # p = Profile.objects.create(
-            #     user = u,
-            #     frase = '',
-            #     ubicacion = '',
-            #     avatar = ''
-            # )
-            # p.save()
+            p = Profile.objects.create(
+                user = u,
+                frase = '',
+                ubicacion = '',
+                avatar = ''
+                )
+            p.save()
 
             return render_to_response('dashboard.html', {}, RequestContext(request))
 
@@ -188,8 +179,49 @@ def Logout(request):
     return HttpResponseRedirect('/')
 
 
-def Dashboard(request):
-    return render_to_response('dashboard.html', {}, RequestContext(request))
+def Dashboard(request, page = 1):
+    if page < 2:
+        page = 1
+    n = TWEETS_EN_PAGE * (int(page) - 1)
+    if request.user.is_authenticated():
+        p = Profile.objects.get(user = request.user)
+        users = Follow.objects.filter(follower = p, activo = True) #Busca los users que sigue el usuario
+        users = [u.followed for u in users] #Hace que users sea un array de los usuarios que sigue
+        users.append(request.user) #Le agrega el usuario actual
+        tweets_ = Tweet.objects.filter(user__in = users, activo = True).order_by('-fecha')[n:n + TWEETS_EN_PAGE]
+
+        #Procesa retweets
+        tweets = []
+        for t in tweets_:
+            t.profile = Profile.objects.get(user__username = t.user)
+            if t.retweet == True:
+                rt = Tweet.objects.get(pk = int(t.contenido))
+                rt.retwitteado = 1
+                rt.retweetter = t.user
+                rt.rt_id = t.id
+                tweets.append(rt)
+            else:
+                tweets.append(t)
+
+        return render_to_response('dashboard',
+        {
+            'logueado' : request.user,
+            'p' : Profile.objects.get(user = request.user),
+            'next' : int(page) + 1,
+            'page' : page,
+            'prev' : int(page) - 1,
+            'tweets' : tweets,
+            'ntweets' : len(Tweet.objects.filter(user = request.user, activo = True)),
+            'u_siguiendo' : len(Follow.objects.filter(activo = True,
+                follower = Profile.objects.get(user = request.user))),
+            'u_seguidores' : len(Follow.objects.filter(activo = True,
+                followed = request.user)),
+            'index' : True,
+            'trending' : tt(5, 200),
+            'seguir' : randuser(request.user, 3),
+        }, RequestContext(request))
+    else:
+        return HttpResponseRedirect('/login/')
 
 
 def Tour(request):
@@ -353,51 +385,6 @@ def follow(request):
         f.save()
     return HttpResponseRedirect(reverse('twitter.views.profile', args=(user,)))
 
-def index(request, page = 1):
-    if page < 2:
-        page = 1
-    n = TWEETS_EN_PAGE * (int(page) - 1)
-    if request.user.is_authenticated():
-        #t = Tweet.objects.all().order_by('-fecha')[n:n + TWEETS_EN_PAGE]
-        p = Profile.objects.get(user = request.user)
-        users = Follow.objects.filter(follower = p, activo = True) #Busca los users que sigue el usuario
-        users = [u.followed for u in users] #Hace que users sea un array de los usuarios que sigue
-        users.append(request.user) #Le agrega el usuario actual
-        tweets_ = Tweet.objects.filter(user__in = users, activo = True).order_by('-fecha')[n:n + TWEETS_EN_PAGE]
-
-        #Procesa retweets
-        tweets = []
-        for t in tweets_:
-            t.profile = Profile.objects.get(user__username = t.user)
-            if t.retweet == True:
-                rt = Tweet.objects.get(pk = int(t.contenido))
-                rt.retwitteado = 1
-                rt.retweetter = t.user
-                rt.rt_id = t.id
-                tweets.append(rt)
-            else:
-                tweets.append(t)
-
-        return render_to_response('twitter/index.html',
-        {
-            'logueado' : request.user,
-            'p' : Profile.objects.get(user = request.user),
-            'next' : int(page) + 1,
-            'page' : page,
-            'prev' : int(page) - 1,
-            'tweets' : tweets,
-            'ntweets' : len(Tweet.objects.filter(user = request.user, activo = True)),
-            'u_siguiendo' : len(Follow.objects.filter(activo = True,
-                follower = Profile.objects.get(user = request.user))),
-            'u_seguidores' : len(Follow.objects.filter(activo = True,
-                followed = request.user)),
-            'index' : True,
-            'trending' : tt(5, 200),
-            'seguir' : randuser(request.user, 3),
-        }, RequestContext(request))
-    else:
-        return HttpResponseRedirect(reverse('twitter.views.twitter_login'))
-        
 def profile(request, username, page = 1):
     if page < 2:
         page = 1
@@ -442,53 +429,6 @@ def profile(request, username, page = 1):
         'u_seguidores' : len(Follow.objects.filter(activo = True,
             followed = request.user)),
     }, RequestContext(request))
-
-def register(request):
-    try:
-        request.POST['procesa']
-        try:
-            if not re.match('^[a-zA-Z0-9_]+$', request.POST['user']):
-                return render_to_response(
-                    'twitter/login.html',
-                    {'mensaje_register' : 'El nombre de usuario solo puede contener letras, numeros y _'},
-                    RequestContext(request))
-            if not re.match('^[^@]+@[^@]+$', request.POST['email']):
-                return render_to_response(
-                    'twitter/login.html',
-                    {'mensaje_register' : 'Ingrese un email valido'},
-                    RequestContext(request))
-            if User.objects.filter(username = request.POST['user']):
-                return render_to_response(
-                    'twitter/login.html',
-                    {'mensaje_register' : 'El usuario ya existe'},
-                    RequestContext(request))
-            u = User.objects.create_user(
-                request.POST['user'],
-                request.POST['email'],
-                request.POST['pass'],
-            )
-            u.first_name =''
-            u.last_name = ''
-
-            u.save()
-
-            p = Profile.objects.create(
-                user = u,
-                frase = '',
-                ubicacion = '',
-                avatar = ''
-            )
-            p.save()
-            return render_to_response(
-                'twitter/login.html',
-                {'mensaje_register' : 'Registrado correctamente!'},
-                RequestContext(request))
-        except KeyError:
-            return render_to_response('twitter/login.html',
-                {'message' : 'Rellene todos los campos'},
-                RequestContext(request))
-    except KeyError:
-        return render_to_response('twitter/login.html', {}, RequestContext(request))
 
 def responder(request, tweet_id):
     return render_to_response('twitter/responder.html',

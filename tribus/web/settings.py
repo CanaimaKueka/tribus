@@ -16,15 +16,15 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '',
     },
-    'ldap': {
-        'ENGINE': 'ldapdb.backends.ldap',
-        'NAME': 'ldap://localhost/',
-        'USER': 'cn=admin,dc=tribus,dc=org',
-        'PASSWORD': 'tribus',
-     }
+#    'ldap': {
+#        'ENGINE': 'ldapdb.backends.ldap',
+#        'NAME': 'ldap://localhost/',
+#        'USER': 'cn=admin,dc=tribus,dc=org',
+#        'PASSWORD': 'tribus',
+#     }
  }
 
-DATABASE_ROUTERS = ['ldapdb.router.Router']
+#DATABASE_ROUTERS = ['ldapdb.router.Router']
 
 BROKER_URL = 'redis://localhost:6379/0'
 
@@ -53,7 +53,7 @@ INSTALLED_APPS = (
     'tribus.web',
     'djcelery',
     'south',
-    'ldapdb'
+    #'ldapdb'
 )
 
 DEBUG = True
@@ -154,7 +154,7 @@ AUTH_LDAP_BASE = "dc=tribus,dc=org"
 AUTH_LDAP_BIND_DN = "cn=admin,dc=tribus,dc=org"
 AUTH_LDAP_BIND_PASSWORD = "tribus"
 AUTH_LDAP_USER_SEARCH = LDAPSearch(
-    AUTH_LDAP_BASE, ldap.SCOPE_SUBTREE, "(uid=%(username)s)"
+    AUTH_LDAP_BASE, ldap.SCOPE_SUBTREE, "(uid=%(user)s)"
     )
 
 # Set up the basic group parameters.
