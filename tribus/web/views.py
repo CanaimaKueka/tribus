@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from django.core.serializers.json import json
 from django.core.urlresolvers import reverse
-from tribus.web.forms import LoginForm, SignupForm
+from tribus.web.auth.forms import LoginForm, SignupForm
 from tribus.web.models import *
 
 
@@ -32,18 +32,21 @@ from urllib import urlencode
 import datetime, re, random
 from time import time, sleep
 
-def Init(request):
+def init(request):
 
     loginform = LoginForm()
     loginform.fields['username'].widget.attrs = {
         'placeholder': 'Enter your username',
-        'class': 'input-large'
+        'class': 'input-large',
+        'label': '',
     }
     loginform.fields['password'].widget.attrs = {
         'placeholder': 'Enter your password',
         'class': 'input-large'
     }
-#    loginform.fields['rememberme'].label = 'Remember my session'
+    loginform.fields['username'].label = ''
+    loginform.fields['password'].label = ''
+    loginform.fields['remember_me'].label = 'Remember my session'
 
     signupform = SignupForm()
     signupform.fields['username'].widget.attrs = {
@@ -54,137 +57,145 @@ def Init(request):
         'placeholder': 'Enter a valid email',
         'class': 'input-large'
     }
-    signupform.fields['password'].widget.attrs = {
+    signupform.fields['password1'].widget.attrs = {
         'placeholder': 'Create a password',
         'class': 'input-large'
     }
+    signupform.fields['password2'].widget.attrs = {
+        'placeholder': 'Repeat the password',
+        'class': 'input-large'
+    }
+    signupform.fields['username'].label = ''
+    signupform.fields['email'].label = ''
+    signupform.fields['password1'].label = ''
+    signupform.fields['password2'].label = ''
 
     return render_to_response(
-        'init.html',{
+        'init.html', {
             'loginform': loginform,
             'signupform': signupform,
-            },
+        },
         RequestContext(request)
-        )
-
-
-def Login(request):
-
-    def ErrorHandle(error):
-        return render_to_response(
-        'login.html', {
-            'error': error,
-            'loginform': LoginForm(),
-            },
-    RequestContext(request)
     )
 
-    if request.method == 'POST':
-        if LoginForm(request.POST).is_valid():
-            try:
-                user = authenticate(
-                    username = request.POST['username'],
-                    password = request.POST['password']
-                    )
-            except KeyError:
-                error = u'Key error'
-                return ErrorHandle(error)
 
-            if user is not None:
-                if user.is_active:
-                    login(request, user)
-                    return HttpResponseRedirect(reverse('tribus.web.views.Dashboard'))
-                else:
-                    error = u'account disabled'
-                    return ErrorHandle(error)
-            else:
-                error = u'invalid login'
-                return ErrorHandle(error)
-        else: 
-            error = u'form is invalid'
-            return ErrorHandle(error)
-    else:
-        loginform = LoginForm()
-        loginform.fields['username'].widget.attrs = {
-            'placeholder': 'Enter your username',
-            'class': 'input-xlarge'
-        }
-        loginform.fields['password'].widget.attrs = {
-            'placeholder': 'Enter your password',
-            'class': 'input-xlarge'
-        }
-        return render_to_response(
-            'login.html',
-            {'loginform': loginform},
-            RequestContext(request)
-            )
+# def Login(request):
 
+#     def ErrorHandle(error):
+#         return render_to_response(
+#         'login.html', {
+#             'error': error,
+#             'loginform': LoginForm(),
+#             },
+#     RequestContext(request)
+#     )
 
-def Signup(request):
+#     if request.method == 'POST':
+#         if LoginForm(request.POST).is_valid():
+#             try:
+#                 user = authenticate(
+#                     username = request.POST['username'],
+#                     password = request.POST['password']
+#                     )
+#             except KeyError:
+#                 error = u'Key error'
+#                 return ErrorHandle(error)
 
-    def ErrorHandle(error):
-        return render_to_response(
-        'signup.html', {
-            'error': error,
-            'signupform': SignupForm(),
-            },
-    RequestContext(request)
-    )
-
-    if request.method == 'POST':
-        form = SignupForm(request.POST)
-        if form.is_valid():
-            if not re.match('^[a-zA-Z0-9_]+$', request.POST['username']):
-                return ErrorHandle('El nombre de usuario solo puede contener letras, numeros y _')
-            if not re.match('^[^@]+@[^@]+$', request.POST['email']):
-                return ErrorHandle('Ingrese un email valido')
-            if User.objects.filter(username = request.POST['username']):
-                return ErrorHandle('El usuario ya existe')
-
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            email = form.cleaned_data['email']
-            first_name = 'lola'#form.cleaned_data['firstname']
-            last_name = 'lole'#form.cleaned_data['lastname']
-
-            u = User.objects.create_user(username, email, password)
-            u.first_name = first_name
-            u.last_name = last_name
-            u.is_active = True
-            u.save()
-
-            lastuid = int(LdapUser.objects.get(username='maxUID').uid)
-
-            ldapuser = LdapUser()
-            ldapuser.first_name = first_name
-            ldapuser.last_name = last_name
-            ldapuser.full_name = first_name+' '+last_name
-            ldapuser.email = email
-            ldapuser.username = username
-            ldapuser.password = password
-            ldapuser.uid = lastuid+1
-            ldapuser.group = 1234
-            ldapuser.home_directory = '/home/'+username
-            ldapuser.login_shell = '/bin/false'
-            ldapuser.description = 'Created by Tribus'
-            ldapuser.save()
-
-            p = Profile.objects.create(
-                user = u,
-                frase = '',
-                ubicacion = '',
-                avatar = ''
-                )
-            p.save()
-
-            return render_to_response('dashboard.html', {}, RequestContext(request))
-
-def Logout(request):
-    logout(request)
-    return HttpResponseRedirect('/')
+#             if user is not None:
+#                 if user.is_active:
+#                     login(request, user)
+#                     return HttpResponseRedirect(reverse('tribus.web.views.Dashboard'))
+#                 else:
+#                     error = u'account disabled'
+#                     return ErrorHandle(error)
+#             else:
+#                 error = u'invalid login'
+#                 return ErrorHandle(error)
+#         else: 
+#             error = u'form is invalid'
+#             return ErrorHandle(error)
+#     else:
+#         loginform = LoginForm()
+#         loginform.fields['username'].widget.attrs = {
+#             'placeholder': 'Enter your username',
+#             'class': 'input-xlarge'
+#         }
+#         loginform.fields['password'].widget.attrs = {
+#             'placeholder': 'Enter your password',
+#             'class': 'input-xlarge'
+#         }
+#         return render_to_response(
+#             'login.html',
+#             {'loginform': loginform},
+#             RequestContext(request)
+#             )
 
 
-def Dashboard(request, page = 1):
+# def Signup(request):
+
+#     def ErrorHandle(error):
+#         return render_to_response(
+#         'signup.html', {
+#             'error': error,
+#             'signupform': SignupForm(),
+#             },
+#     RequestContext(request)
+#     )
+
+#     if request.method == 'POST':
+#         form = SignupForm(request.POST)
+#         if form.is_valid():
+#             if not re.match('^[a-zA-Z0-9_]+$', request.POST['username']):
+#                 return ErrorHandle('El nombre de usuario solo puede contener letras, numeros y _')
+#             if not re.match('^[^@]+@[^@]+$', request.POST['email']):
+#                 return ErrorHandle('Ingrese un email valido')
+#             if User.objects.filter(username = request.POST['username']):
+#                 return ErrorHandle('El usuario ya existe')
+
+#             username = form.cleaned_data['username']
+#             password = form.cleaned_data['password']
+#             email = form.cleaned_data['email']
+#             first_name = 'lola'#form.cleaned_data['firstname']
+#             last_name = 'lole'#form.cleaned_data['lastname']
+
+#             u = User.objects.create_user(username, email, password)
+#             u.first_name = first_name
+#             u.last_name = last_name
+#             u.is_active = True
+#             u.save()
+
+#             lastuid = int(LdapUser.objects.get(username='maxUID').uid)
+
+#             ldapuser = LdapUser()
+#             ldapuser.first_name = first_name
+#             ldapuser.last_name = last_name
+#             ldapuser.full_name = first_name+' '+last_name
+#             ldapuser.email = email
+#             ldapuser.username = username
+#             ldapuser.password = password
+#             ldapuser.uid = lastuid+1
+#             ldapuser.group = 1234
+#             ldapuser.home_directory = '/home/'+username
+#             ldapuser.login_shell = '/bin/false'
+#             ldapuser.description = 'Created by Tribus'
+#             ldapuser.save()
+
+#             p = Profile.objects.create(
+#                 user = u,
+#                 frase = '',
+#                 ubicacion = '',
+#                 avatar = ''
+#                 )
+#             p.save()
+
+#             return render_to_response('dashboard.html', {}, RequestContext(request))
+
+# def Logout(request):
+#     logout(request)
+#     return HttpResponseRedirect('/')
+
+
+def dashboard(request, page = 1):
     if page < 2:
         page = 1
     n = TWEETS_EN_PAGE * (int(page) - 1)
@@ -229,7 +240,7 @@ def Dashboard(request, page = 1):
         return HttpResponseRedirect('/login/')
 
 
-def Tour(request):
+def tour(request):
     data = {}
     context = RequestContext(request)
     return render_to_response('tour.html', data, context)

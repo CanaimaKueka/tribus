@@ -5,11 +5,12 @@ Views which allow users to create and activate accounts.
 from django.conf import settings
 from django.utils.http import is_safe_url
 from django.http import HttpResponseRedirect
-from django.shortcuts import redirect, resolve_url
+from django.shortcuts import redirect, resolve_url, render_to_response
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
 from django.template.response import TemplateResponse
-from django.contrib.auth import REDIRECT_FIELD_NAME, login as django_login
+from django.template import RequestContext
+from django.contrib.auth import REDIRECT_FIELD_NAME, login as django_login, authenticate as django_authenticate
 from django.contrib.sites.models import get_current_site
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.decorators.cache import never_cache
@@ -70,7 +71,7 @@ class _RequestPassingFormView(FormView):
 class BaseSignupView(_RequestPassingFormView):
     """
     Base class for user registration views.
-    
+
     """
     form_class = SignupForm
     http_method_names = ['get', 'post', 'head', 'options', 'trace']
@@ -81,14 +82,14 @@ class BaseSignupView(_RequestPassingFormView):
         """
         Check that user signup is allowed before even bothering to
         dispatch or do other processing.
-        
+
         """
         return super(SignupView, self).dispatch(request, *args, **kwargs)
 
     def form_valid(self, request, form):
         new_user = self.register(request, **form.cleaned_data)
         success_url = self.get_success_url(request, new_user)
-        
+
         # success_url may be a simple string, or a tuple providing the
         # full argument set for redirect(). Attempting to unpack it
         # tells us which one it is.
@@ -103,7 +104,7 @@ class BaseSignupView(_RequestPassingFormView):
         Implement user-registration logic here. Access to both the
         request and the full cleaned_data of the registration form is
         available here.
-        
+
         """
         raise NotImplementedError
 
@@ -145,7 +146,7 @@ class SignupView(BaseSignupView):
     an instance of ``registration.models.SignupProfile``. See
     that model and its custom manager for full documentation of its
     fields and supported operations.
-    
+
     """
     def register(self, request, **cleaned_data):
         """
@@ -187,7 +188,7 @@ class SignupView(BaseSignupView):
         """
         Return the name of the URL to redirect to after successful
         user registration.
-        
+
         """
         return ('auth_complete', (), {})
 
@@ -195,10 +196,10 @@ class SignupView(BaseSignupView):
 class BaseActivationView(TemplateView):
     """
     Base class for user activation views.
-    
+
     """
     http_method_names = ['get']
-    template_name = 'auth/activate.html'
+    template_name = 'auth/activate_form.html'
 
     def get(self, request, *args, **kwargs):
         activated_user = self.activate(request, *args, **kwargs)
@@ -217,7 +218,7 @@ class BaseActivationView(TemplateView):
     def activate(self, request, *args, **kwargs):
         """
         Implement account-activation logic here.
-        
+
         """
         raise NotImplementedError
 
@@ -235,7 +236,7 @@ class ActivationView(BaseActivationView):
         ``registration.signals.user_activated`` will be sent, with the
         newly activated ``User`` as the keyword argument ``user`` and
         the class of this backend as the sender.
-        
+
         """
         activated_user = SignupProfile.objects.activate_user(activation_key)
         if activated_user:
@@ -248,7 +249,7 @@ class ActivationView(BaseActivationView):
         return ('auth_activate_complete', (), {})
 
 
-@sensitive_post_parameters()
+# @sensitive_post_parameters()
 @csrf_protect
 @never_cache
 def LoginView(request, template_name='auth/login.html',
@@ -259,39 +260,89 @@ def LoginView(request, template_name='auth/login.html',
     """
     Displays the login form and handles the login action.
     """
+
+    def HandleResponse(request, form, redirect_to, error_title=None, extra_context=None):
+        form.fields['username'].widget.attrs = {
+            'placeholder': 'Enter your username',
+            'class': 'input-xlarge',
+            'label': '',
+        }
+        form.fields['password'].widget.attrs = {
+            'placeholder': 'Enter your password',
+            'class': 'input-xlarge'
+        }
+        form.fields['username'].label = ''
+        form.fields['password'].label = ''
+        form.fields['remember_me'].label = 'Remember my session'
+
+        current_site = get_current_site(request)
+
+        context = {
+            'form': form,
+            'error_title': error_title,
+            'redirect_field_name': redirect_to,
+            'site': current_site,
+            'site_name': current_site.name,
+        }
+
+        if extra_context is not None:
+            context.update(extra_context)
+
+        return TemplateResponse(request, template_name, context,
+                                current_app=current_app)
+
     redirect_to = request.REQUEST.get(redirect_field_name, '')
 
     if request.method == "POST":
-        form = authentication_form(request, data=request.POST)
+        
+        if request.session.test_cookie_worked():
+            request.session.delete_test_cookie()
+
+        request.session.set_test_cookie()
+
+        form = authentication_form(request=request, data=request.POST)
+
         if form.is_valid():
 
             # Ensure the user-originating redirection url is safe.
             if not is_safe_url(url=redirect_to, host=request.get_host()):
                 redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
 
+            try:
+                username = form.cleaned_data.get('username')
+                password = form.cleaned_data.get('password')
+
+            except KeyError:
+                error_title = u'Key error'
+                return HandleResponse(request, form, redirect_to, error_title)
+
+            user = django_authenticate(username=username, password=password, request=request)
+            print username
+            print password
+            print user
+
+            # Authentication failed
+            if not user:
+                error_title = u'invalid login'
+                return HandleResponse(request, form, redirect_to, error_title)
+
+            # The user is not active
+            if not user.is_active():
+                error_title = u'account disabled'
+                return HandleResponse(request, form, redirect_to, error_title)
+
+            # If we have 'remember_me' checked, user session
+            # will never expire
+            if not request.POST.get('remember_me', None):
+                request.session.set_expiry(0)
+
             # Okay, security check complete. Log the user in.
             django_login(request, form.get_user())
 
-            # If we have 'remember_me' checked, user session
-            # will last 1 month
-            if request.POST.has_key('remember_me'):
-                request.session.set_expiry(1209600*2)
-
             return HttpResponseRedirect(redirect_to)
+        else:
+            error_title = u'form is invalid'
+            return HandleResponse(request, form, redirect_to, error_title)
     else:
         form = authentication_form(request)
-
-    current_site = get_current_site(request)
-
-    context = {
-        'form': form,
-        'redirect_field_name': redirect_to,
-        'site': current_site,
-        'site_name': current_site.name,
-    }
-
-    if extra_context is not None:
-        context.update(extra_context)
-
-    return TemplateResponse(request, template_name, context,
-                            current_app=current_app)
+        return HandleResponse(request, form, redirect_to)

@@ -11,14 +11,13 @@ from django.conf.urls import patterns, include, url
 
 
 urlpatterns = patterns(
+    '',
 
     url(r'^$', 'tribus.web.views.init'),
     url(r'^i/$', 'tribus.web.views.dashboard'),
     url(r'^tour/$', 'tribus.web.views.tour'),
 
     url(r'', include('tribus.web.auth.urls')),
-
-
 
 
 #   url('^page/(?P<page>\\d+)/$', 'index'),

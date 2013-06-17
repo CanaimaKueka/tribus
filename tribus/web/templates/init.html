@@ -25,7 +25,7 @@
                     <div class="span3">
                         <div class="home-signin">
                         <h3 class="lighter block ">{% trans "Log in" %}</h3>
-                        <form accept-charset="UTF-8" action="/login/" autocomplete="off" method="post">
+                        <form accept-charset="UTF-8" action="{% url 'auth_login' %}" autocomplete="off" method="post">
                             {% csrf_token %}
                             <ul class="unstyled">
                             {{ loginform.as_ul }}
@@ -46,7 +46,7 @@
                             <span class="span3 bigger-200 text-center red"><i class="icon-google-plus-sign"></i></span>
                         </div>
                         <h3 class="lighter block">{% trans "- or -" %}</h3>
-                        <form accept-charset="UTF-8" action="/signup/" autocomplete="off" method="post">
+                        <form accept-charset="UTF-8" action="{% url 'auth_signup' %}" autocomplete="off" method="post">
                             {% csrf_token %}
                             <ul class="unstyled">
                             {{ signupform.as_ul }}

@@ -34,6 +34,7 @@ from tribus.web.auth.forms import LoginForm
 
 
 urlpatterns = patterns(
+    '',
 
     url(regex=r'^login/$',
         view=LoginView,
@@ -47,7 +48,7 @@ urlpatterns = patterns(
 
     url(regex=r'^logout/$',
         view='django.contrib.auth.views.logout',
-        kwargs={'template_name': 'auth/logout.html'},
+        kwargs={'next_page': '/'},
         name='auth_logout'
         ),
 
@@ -91,17 +92,17 @@ urlpatterns = patterns(
         ),
 
     url(regex=r'^activate/(?P<activation_key>\w+)/$',
-        view=ActivationView.as_view(),
+        view=ActivationView.as_view(template_name='auth/activate_form.html'),
         name='auth_activate',
         ),
 
     url(regex=r'^activate/complete/$',
-        view=TemplateView.as_view(template_name='auth/activation_complete.html'),
+        view=TemplateView.as_view(template_name='auth/activate_complete.html'),
         name='auth_activate_complete',
         ),
 
     url(regex=r'^signup/$',
-        view=SignupView.as_view(),
+        view=SignupView.as_view(template_name='auth/signup_form.html'),
         name='auth_signup',
         ),
 
