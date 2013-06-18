@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os
+import os, sys
 import djcelery
 import ldap
-from django_auth_ldap.config import LDAPSearch, GroupOfNamesType
+from tribus.web.auth.ldap.config import LDAPSearch, GroupOfNamesType
 djcelery.setup_loader()
 
 DATABASES = {
@@ -16,15 +16,21 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '',
     },
-   'ldap': {
-       'ENGINE': 'ldapdb.backends.ldap',
-       'NAME': 'ldap://localhost/',
-       'USER': 'cn=admin,dc=tribus,dc=org',
-       'PASSWORD': 'tribus',
-    }
+   # 'ldap': {
+   #     'ENGINE': 'ldapdb.backends.ldap',
+   #     'NAME': 'ldap://localhost/',
+   #     'USER': 'cn=admin,dc=tribus,dc=org',
+   #     'PASSWORD': 'tribus',
+   #  }
  }
+AUTHENTICATION_BACKENDS = (
+    'tribus.web.auth.ldap.backend.LDAPBackend',
+)
+LOGIN_REDIRECT_URL="/i/"
 
-DATABASE_ROUTERS = ['ldapdb.router.Router']
+ACCOUNT_ACTIVATION_DAYS = 7
+
+# DATABASE_ROUTERS = ['ldapdb.router.Router']
 
 BROKER_URL = 'redis://localhost:6379/0'
 
@@ -71,7 +77,7 @@ TIME_ZONE = 'America/Caracas'
 
 LANGUAGE_CODE = 'es-ve'
 
-DATABASE_OPTIONS = {'charset': 'utf8'} 
+DATABASE_OPTIONS = {'charset': 'utf8'}
 
 DEFAULT_CHARSET = 'utf-8'
 
@@ -112,20 +118,27 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': False,
+    'disable_existing_loggers': True,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+    },
     'handlers': {
-        'mail_admins': {
-            'level': 'ERROR',
-            'class': 'django.utils.log.AdminEmailHandler'
-        }
+        'console': {
+            'level':'DEBUG',
+            'class':'logging.StreamHandler',
+            'stream': sys.stdout,
+            'formatter':'verbose'
+        },
     },
     'loggers': {
-        'django.request': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
+        'django': {
+            'handlers':['console'],
             'propagate': True,
+            'level':'DEBUG',
         },
-    }
+    },
 }
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
@@ -144,7 +157,8 @@ CACHES = {
 
 
 AUTHENTICATION_BACKENDS = (
-    'django_auth_ldap.backend.LDAPBackend',
+    'tribus.web.auth.ldap.backend.LDAPBackend',
+    # 'django.contrib.auth.backends.ModelBackend',
 )
 
 

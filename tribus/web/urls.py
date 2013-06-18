@@ -2,23 +2,22 @@
 # -*- coding: utf-8 -*-
 
 # from django.conf.urls.defaults import patterns, include, url
-# from django.contrib import admin
+from django.contrib import admin
 # from django.conf import settings
 
-# admin.autodiscover()
+admin.autodiscover()
 
 from django.conf.urls import patterns, include, url
 
 
 urlpatterns = patterns(
+    '',
 
     url(r'^$', 'tribus.web.views.init'),
     url(r'^i/$', 'tribus.web.views.dashboard'),
     url(r'^tour/$', 'tribus.web.views.tour'),
 
     url(r'', include('tribus.web.auth.urls')),
-
-
 
 
 #   url('^page/(?P<page>\\d+)/$', 'index'),
@@ -60,7 +59,7 @@ urlpatterns = patterns(
 #    url(r'^user/(?P<action>[a-zA-Z0-9_.-]*)/(?P<term>[a-zA-Z0-9_.-]*)/*$', 'tribus.viewer.views.user'),
 #    url(r'^pkg/$', 'tribus.viewer.views.pkg'),
 #    url(r'^pkg/(?P<action>[a-zA-Z0-9_.-]*)/(?P<term>[a-zA-Z0-9_.-]*)/*$', 'tribus.viewer.views.pkg'),
-#    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', include(admin.site.urls)),
 )
 
 # if settings.DEBUG:

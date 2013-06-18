@@ -1,5 +1,4 @@
-#from tribus.core.models import Package
-
+from django.contrib.auth.models import User
 from django.contrib import admin
 
-#admin.site.register(Package)
+# admin.site.register(User)
