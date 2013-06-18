@@ -14,7 +14,6 @@ urlpatterns = patterns(
     '',
 
     url(r'^$', 'tribus.web.views.init'),
-    url(r'^i/$', 'tribus.web.views.dashboard'),
     url(r'^tour/$', 'tribus.web.views.tour'),
 
     url(r'', include('tribus.web.auth.urls')),

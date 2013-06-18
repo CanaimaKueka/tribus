@@ -7,7 +7,6 @@ billiard==2.7.3.28
 celery==3.0.19
 celery-with-redis==3.0
 distribute==0.6.34
-django-auth-ldap==1.1.4
 django-celery==3.0.17
 django-redis==3.3
 hiredis==0.1.1
@@ -19,4 +18,3 @@ pytz==2013b
 redis==2.7.5
 six==1.3.0
 wsgiref==0.1.2
--e git+https://github.com/jlaine/django-ldapdb.git@03591bef911916c17752bf4fe3e615984a9f5c7d#egg=django_ldapdb-dev

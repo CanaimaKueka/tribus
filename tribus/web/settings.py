@@ -27,7 +27,7 @@ AUTHENTICATION_BACKENDS = (
     'tribus.web.auth.ldap.backend.LDAPBackend',
 )
 
-LOGIN_REDIRECT_URL="/i/"
+LOGIN_REDIRECT_URL="/"
 
 ACCOUNT_ACTIVATION_DAYS = 7
 
