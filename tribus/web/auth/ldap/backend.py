@@ -141,8 +141,9 @@ class LDAPBackend(object):
             return None
 
         ldap_user = _LDAPUser(self, username=username.strip())
-        user_auth = ldap_user.authenticate(password)
-        return user_auth
+        user = ldap_user.authenticate(password)
+
+        return user
 
     def get_user(self, user_id):
         user = None

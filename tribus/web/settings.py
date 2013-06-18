@@ -26,6 +26,7 @@ DATABASES = {
 AUTHENTICATION_BACKENDS = (
     'tribus.web.auth.ldap.backend.LDAPBackend',
 )
+
 LOGIN_REDIRECT_URL="/i/"
 
 ACCOUNT_ACTIVATION_DAYS = 7
@@ -158,7 +159,6 @@ CACHES = {
 
 AUTHENTICATION_BACKENDS = (
     'tribus.web.auth.ldap.backend.LDAPBackend',
-    # 'django.contrib.auth.backends.ModelBackend',
 )
 
 
