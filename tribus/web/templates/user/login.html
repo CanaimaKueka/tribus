@@ -1,4 +1,4 @@
-{% extends 'auth/base.html' %}
+{% extends 'user/base.html' %}
 {% load i18n %}
 {% block title %}Login{% endblock %}
 {% block content %}
@@ -27,7 +27,7 @@
 		    {% endfor %}
 		</div>
 		{% endif %}
-		<form method="post" action="{% url 'auth_login' %}">
+		<form method="post" action="{% url 'user_login' %}">
             {% csrf_token %}
             <ul class="unstyled">
 				{% for field in form %}
@@ -40,8 +40,8 @@
 			<input type="hidden" name="next" value="{{ next }}" />
 		</form>
 		<ul class="unstyled">
-			<li><a href="{% url 'auth_password_reset' %}">forgot your password?</a></li>
-			<li><a href="{% url 'auth_signup' %}">are you new to Tribus?</a></li>
+			<li><a href="{% url 'user_password_reset' %}">forgot your password?</a></li>
+			<li><a href="{% url 'user_signup' %}">are you new to Tribus?</a></li>
 		</ul>
 	</div>
 </div>

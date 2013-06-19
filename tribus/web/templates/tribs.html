@@ -6,8 +6,8 @@
 <script src="{{ STATIC_URL }}twitter/js/newtweets.js" type="text/javascript"></script>
 <h4 id="nuevostweets"><a href="#">5 nuevos tweets</a></h4>
 <section id="tweets">
-	{% if tweets|length %}
-		{% for tweet in tweets %}
+	{% if tribs|length %}
+		{% for trib in tribs %}
 			{% if forloop.counter0 == 0 %}
 				<script>tweet_id = {{ tweet.id }}</script>
 			{% endif %}

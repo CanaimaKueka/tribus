@@ -70,7 +70,7 @@ except ImportError:
     get_user_username = lambda u: u.username
 
 
-from tribus.web.auth.ldap.config import _LDAPConfig, LDAPSearch
+from tribus.web.user.read.config import _LDAPConfig, LDAPSearch
 
 
 logger = _LDAPConfig.get_logger()

@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from django.core.serializers.json import json
 from django.core.urlresolvers import reverse
-from tribus.web.auth.forms import LoginForm, SignupForm
+from tribus.web.user.forms import LoginForm, SignupForm
 from tribus.web.models import *
 
 
@@ -32,11 +32,46 @@ from urllib import urlencode
 import datetime, re, random
 from time import time, sleep
 
-def init(request):
+def index(request, page = 1):
 
     if request.user.is_authenticated():
-        redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
-        return HttpResponseRedirect(redirect_to)
+
+        tribs = []
+        t0 = TWEETS_EN_PAGE * (int(page) - 1)
+        t1 = TWEETS_EN_PAGE + t_1
+
+        profile = request.user.get_profile()        # Give me the user profile
+        followers = profile.followers.all()
+        follows = profile.follows.all()
+        follows.append(request.user)
+
+        tribs = Trib.objects.filter(user__in = follows).order_by('-date')[t0:t1]
+
+
+        for t in raw_tribs:
+            t.profile = Profile.objects.get(user__username = t.user)
+            if t.retweet == True:
+                rt = Tweet.objects.get(pk = int(t.contenido))
+                rt.retwitteado = 1
+                rt.retweetter = t.user
+                rt.rt_id = t.id
+                tweets.append(rt)
+            else:
+                tweets.append(t)
+
+        return render_to_response('dashboard',
+        {
+            'p' : profile,
+            'next' : int(page) + 1,
+            'page' : page,
+            'prev' : int(page) - 1,
+            'tribs' : tribs,
+            'tribs_c' : len(tribs),
+            'follows_c' : len(follows),
+            'followers_c' : len(followers),
+            #'trending' : tt(5, 200),
+            #'recommended' : randuser(request.user, 3),
+        }, RequestContext(request))
 
     else:
 

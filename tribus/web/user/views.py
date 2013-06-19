@@ -18,9 +18,9 @@ from django.views.decorators.csrf import csrf_protect
 from django.contrib.sites.models import RequestSite
 from django.contrib.sites.models import Site
 
-from tribus.web.auth import signals
-from tribus.web.auth.forms import SignupForm, LoginForm
-from tribus.web.auth.models import SignupProfile
+from tribus.web.user import signals
+from tribus.web.user.forms import SignupForm, LoginForm
+from tribus.web.user.models import SignupProfile
 
 
 class _RequestPassingFormView(FormView):
@@ -76,7 +76,7 @@ class BaseSignupView(_RequestPassingFormView):
     form_class = SignupForm
     http_method_names = ['get', 'post', 'head', 'options', 'trace']
     success_url = None
-    template_name = 'auth/signup_form.html'
+    template_name = 'user/signup_form.html'
 
     def dispatch(self, request, *args, **kwargs):
         """
@@ -190,7 +190,7 @@ class SignupView(BaseSignupView):
         user registration.
 
         """
-        return ('auth_complete', (), {})
+        return ('user_signup_complete', (), {})
 
 
 class BaseActivationView(TemplateView):
@@ -199,7 +199,7 @@ class BaseActivationView(TemplateView):
 
     """
     http_method_names = ['get']
-    template_name = 'auth/activate_form.html'
+    template_name = 'user/activate_form.html'
 
     def get(self, request, *args, **kwargs):
         activated_user = self.activate(request, *args, **kwargs)
@@ -246,13 +246,13 @@ class ActivationView(BaseActivationView):
         return activated_user
 
     def get_success_url(self, request, user):
-        return ('auth_activate_complete', (), {})
+        return ('user_activate_complete', (), {})
 
 
-# @sensitive_post_parameters()
+@sensitive_post_parameters()
 @csrf_protect
 @never_cache
-def LoginView(request, template_name='auth/login.html',
+def LoginView(request, template_name='user/login.html',
               redirect_field_name=REDIRECT_FIELD_NAME,
               authentication_form=LoginForm,
               current_app=None, extra_context=None):

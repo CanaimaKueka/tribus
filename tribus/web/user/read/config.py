@@ -63,7 +63,7 @@ class _LDAPConfig(object):
             try:
                 import ldap.dn
             except ImportError:
-                from tribus.web.auth.ldap import dn
+                from tribus.web.user.read import dn
                 ldap.dn = dn
 
             cls.ldap = ldap

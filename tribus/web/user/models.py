@@ -10,6 +10,9 @@ from django.db import transaction
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 
+from tribus.web.user.write import models as ldapmodels
+from tribus.web.user.write import fields as ldapfields
+
 try:
     from django.utils.timezone import now as datetime_now
 except ImportError:
@@ -253,13 +256,68 @@ class SignupProfile(models.Model):
         ctx_dict = {'activation_key': self.activation_key,
                     'expiration_days': settings.ACCOUNT_ACTIVATION_DAYS,
                     'site': site}
-        subject = render_to_string('auth/activate_email_subject.txt',
+        subject = render_to_string('user/activate_email_subject.txt',
                                    ctx_dict)
         # Email subject *must not* contain newlines
         subject = ''.join(subject.splitlines())
         
-        message = render_to_string('auth/activate_email.txt',
+        message = render_to_string('user/activate_email.txt',
                                    ctx_dict)
         
         self.user.email_user(subject, message, settings.DEFAULT_FROM_EMAIL)
-    
+
+
+# This class comes from django-ldapdb's examples
+# https://github.com/jlaine/django-ldapdb
+class LdapUser(ldapmodels.Model):
+    """
+    Class for representing an LDAP user entry.
+    """
+
+    class Meta:
+        managed = False
+
+    base_dn = settings.AUTH_LDAP_BASE
+    object_classes = [
+       'posixAccount', 'shadowAccount', 'inetOrgPerson',
+       'top', 'person', 'organizationalPerson'
+       ]
+
+    first_name = ldapfields.CharField(db_column='givenName')
+    last_name = ldapfields.CharField(db_column='sn')
+    full_name = ldapfields.CharField(db_column='cn')
+    email = ldapfields.CharField(db_column='mail')
+    username = ldapfields.CharField(db_column='uid', primary_key=True)
+    password = ldapfields.CharField(db_column='userPassword')
+    uid = ldapfields.IntegerField(db_column='uidNumber', unique=True)
+    group = ldapfields.IntegerField(db_column='gidNumber')
+    home_directory = ldapfields.CharField(db_column='homeDirectory')
+    login_shell = ldapfields.CharField(db_column='loginShell', default='/bin/bash')
+    description = ldapfields.CharField(db_column='description')
+
+    def __str__(self):
+       return self.uid
+
+    def __unicode__(self):
+       return self.full_name
+
+
+class LdapGroup(ldapmodels.Model):
+    """
+    Class for representing an LDAP group entry.
+    """
+    # LDAP meta-data
+    base_dn = "ou=groups,dc=nodomain"
+    object_classes = ['posixGroup']
+
+    # posixGroup attributes
+    gid = ldapfields.IntegerField(db_column='gidNumber', unique=True)
+    name = ldapfields.CharField(db_column='cn', max_length=200, primary_key=True)
+    usernames = ldapfields.ListField(db_column='memberUid')
+
+    def __str__(self):
+        return self.name
+
+    def __unicode__(self):
+        return self.name
+

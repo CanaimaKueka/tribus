@@ -13,10 +13,10 @@ from django.conf.urls import patterns, include, url
 urlpatterns = patterns(
     '',
 
-    url(r'^$', 'tribus.web.views.init'),
+    url(r'^$', 'tribus.web.views.index'),
     url(r'^tour/$', 'tribus.web.views.tour'),
 
-    url(r'', include('tribus.web.auth.urls')),
+    url(r'', include('tribus.web.user.urls')),
 
 
 #   url('^page/(?P<page>\\d+)/$', 'index'),
