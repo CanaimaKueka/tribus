@@ -71,25 +71,28 @@ class _RequestPassingFormView(FormView):
 class BaseSignupView(_RequestPassingFormView):
     """
     Base class for user registration views.
-
     """
+    disallowed_url = 'registration_disallowed'
     form_class = SignupForm
     http_method_names = ['get', 'post', 'head', 'options', 'trace']
     success_url = None
     template_name = 'user/signup_form.html'
 
+
     def dispatch(self, request, *args, **kwargs):
         """
         Check that user signup is allowed before even bothering to
         dispatch or do other processing.
-
+        
         """
-        return super(SignupView, self).dispatch(request, *args, **kwargs)
+        if not self.registration_allowed(request):
+            return redirect(self.disallowed_url)
+        return super(BaseSignupView, self).dispatch(request, *args, **kwargs)
 
     def form_valid(self, request, form):
         new_user = self.register(request, **form.cleaned_data)
         success_url = self.get_success_url(request, new_user)
-
+        
         # success_url may be a simple string, or a tuple providing the
         # full argument set for redirect(). Attempting to unpack it
         # tells us which one it is.
@@ -99,12 +102,20 @@ class BaseSignupView(_RequestPassingFormView):
         except ValueError:
             return redirect(success_url)
 
+    def registration_allowed(self, request):
+        """
+        Override this to enable/disable user registration, either
+        globally or on a per-request basis.
+        
+        """
+        return True
+
     def register(self, request, **cleaned_data):
         """
         Implement user-registration logic here. Access to both the
         request and the full cleaned_data of the registration form is
         available here.
-
+        
         """
         raise NotImplementedError
 
@@ -184,6 +195,21 @@ class SignupView(BaseSignupView):
                                      request=request)
         return new_user
 
+    def registration_allowed(self, request):
+        """
+        Indicate whether account registration is currently permitted,
+        based on the value of the setting ``REGISTRATION_OPEN``. This
+        is determined as follows:
+
+        * If ``REGISTRATION_OPEN`` is not specified in settings, or is
+          set to ``True``, registration is permitted.
+
+        * If ``REGISTRATION_OPEN`` is both specified and set to
+          ``False``, registration is not permitted.
+        
+        """
+        return getattr(settings, 'REGISTRATION_OPEN', True)
+
     def get_success_url(self, request, user):
         """
         Return the name of the URL to redirect to after successful
@@ -252,7 +278,7 @@ class ActivationView(BaseActivationView):
 @sensitive_post_parameters()
 @csrf_protect
 @never_cache
-def LoginView(request, template_name='user/login.html',
+def LoginView(request, template_name='user/login_form.html',
               redirect_field_name=REDIRECT_FIELD_NAME,
               authentication_form=LoginForm,
               current_app=None, extra_context=None):
@@ -262,18 +288,6 @@ def LoginView(request, template_name='user/login.html',
     """
 
     def HandleResponse(request, form, redirect_to, error_title=None, extra_context=None):
-        form.fields['username'].widget.attrs = {
-            'placeholder': 'Enter your username',
-            'class': 'input-xlarge',
-            'label': '',
-        }
-        form.fields['password'].widget.attrs = {
-            'placeholder': 'Enter your password',
-            'class': 'input-xlarge'
-        }
-        form.fields['username'].label = ''
-        form.fields['password'].label = ''
-        form.fields['remember_me'].label = 'Remember my session'
 
         current_site = get_current_site(request)
 

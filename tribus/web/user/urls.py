@@ -39,7 +39,7 @@ urlpatterns = patterns(
     url(regex=r'^login/$',
         view=LoginView,
         kwargs={
-            'template_name': 'user/login.html',
+            'template_name': 'user/login_form.html',
             'redirect_field_name': '/',
             'authentication_form': LoginForm
         },
@@ -50,6 +50,26 @@ urlpatterns = patterns(
         view='django.contrib.auth.views.logout',
         kwargs={'next_page': '/'},
         name='user_logout'
+        ),
+
+    url(regex=r'^signup/$',
+        view=SignupView.as_view(template_name='user/signup_form.html'),
+        name='user_signup',
+        ),
+
+    url(regex=r'^signup/complete/$',
+        view=TemplateView.as_view(template_name='user/signup_complete.html'),
+        name='user_signup_complete',
+        ),
+
+    url(regex=r'^activate/(?P<activation_key>\w+)/$',
+        view=ActivationView.as_view(template_name='user/activate_form.html'),
+        name='user_activate',
+        ),
+
+    url(regex=r'^activate/complete/$',
+        view=TemplateView.as_view(template_name='user/activate_complete.html'),
+        name='user_activate_complete',
         ),
 
     url(regex=r'^password/change/$',
@@ -89,26 +109,6 @@ urlpatterns = patterns(
         view='django.contrib.auth.views.password_reset_complete',
         kwargs={'template_name': 'user/password_reset_complete.html'},
         name='user_password_reset_complete',
-        ),
-
-    url(regex=r'^activate/(?P<activation_key>\w+)/$',
-        view=ActivationView.as_view(template_name='user/activate_form.html'),
-        name='user_activate',
-        ),
-
-    url(regex=r'^activate/complete/$',
-        view=TemplateView.as_view(template_name='user/activate_complete.html'),
-        name='user_activate_complete',
-        ),
-
-    url(regex=r'^signup/$',
-        view=SignupView.as_view(template_name='user/signup_form.html'),
-        name='user_signup',
-        ),
-
-    url(regex=r'^signup/complete/$',
-        view=TemplateView.as_view(template_name='user/signup_complete.html'),
-        name='user_signup_complete',
         ),
 
 )

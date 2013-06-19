@@ -21,6 +21,8 @@ class LoginForm(AuthenticationForm):
     Subclass of Django ``AuthenticationForm`` which adds a remember me
     checkbox.
     """
+    username = forms.CharField(max_length=254)
+    password = forms.CharField(label=_("Password"), widget=forms.PasswordInput)
     remember_me = forms.BooleanField(
         label=_('Remember my session'),
         initial=False,
@@ -52,6 +54,26 @@ class SignupForm(Form):
                                 label=_("Password"))
     password2 = forms.CharField(widget=forms.PasswordInput,
                                 label=_("Password (again)"))
+    Form.fields['username'].widget.attrs = {
+            'placeholder': 'Pick a username',
+            'class': 'input-large'
+        }
+    Form.fields['email'].widget.attrs = {
+        'placeholder': 'Enter a valid email',
+        'class': 'input-large'
+    }
+    Form.fields['password1'].widget.attrs = {
+        'placeholder': 'Create a password',
+        'class': 'input-large'
+    }
+    Form.fields['password2'].widget.attrs = {
+        'placeholder': 'Repeat the password',
+        'class': 'input-large'
+    }
+    Form.fields['username'].label = ''
+    Form.fields['email'].label = ''
+    Form.fields['password1'].label = ''
+    Form.fields['password2'].label = ''
     
     def clean_username(self):
         """

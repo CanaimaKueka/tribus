@@ -38,7 +38,7 @@ def index(request, page = 1):
 
         tribs = []
         t0 = TWEETS_EN_PAGE * (int(page) - 1)
-        t1 = TWEETS_EN_PAGE + t_1
+        t1 = TWEETS_EN_PAGE + t0
 
         profile = request.user.get_profile()        # Give me the user profile
         followers = profile.followers.all()
@@ -79,7 +79,6 @@ def index(request, page = 1):
         loginform.fields['username'].widget.attrs = {
             'placeholder': 'Enter your username',
             'class': 'input-large',
-            'label': '',
         }
         loginform.fields['password'].widget.attrs = {
             'placeholder': 'Enter your password',
