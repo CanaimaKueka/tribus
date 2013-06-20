@@ -1,10 +1,10 @@
 {% extends "user/base.html" %}
-{% block title %}{% if account %}Activation complete{% else %}Activation problem{% endif %}{% endblock %}
+{% block title %}Activation complete{% endblock %}
 {% block content %}
 <div class="well jumbotron">
 	<div class="container">
 	    <div class="hero-unit">
-            <p>Thanks {{ account }}, activation complete! You may now <a href='{% url 'user_login' %}'>login</a> using the username and password you set at registration.</p>
+            <p>Thanks, activation complete! You may now <a href='{% url 'user_login' %}'>login</a> using the username and password you set at registration.</p>
 		</div>
 	</div>
 </div>

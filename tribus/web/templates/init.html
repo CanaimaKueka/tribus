@@ -28,7 +28,9 @@
                         <form accept-charset="UTF-8" action="{% url 'user_login' %}" autocomplete="off" method="post">
                             {% csrf_token %}
                             <ul class="unstyled">
-                            {{ loginform.as_ul }}
+                                {% for field in loginform %}
+                                    <li>{{ field }}</li>
+                                {% endfor %}
                             </ul>
                             <button class="btn btn-yellow btn-block" type="submit">{% trans "Log in" %}</button>
 		                    <ul class="unstyled smaller-90">
@@ -49,7 +51,9 @@
                         <form accept-charset="UTF-8" action="{% url 'user_signup' %}" autocomplete="off" method="post">
                             {% csrf_token %}
                             <ul class="unstyled">
-                            {{ signupform.as_ul }}
+                                {% for field in signupform %}
+                                    <li>{{ field }}</li>
+                                {% endfor %}
                             </ul>
                             <button class="btn btn-success btn-block" type="submit">{% trans "Sign up" %}</button>
                             <p class="smaller-90">

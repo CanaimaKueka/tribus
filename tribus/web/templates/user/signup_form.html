@@ -8,33 +8,32 @@
 		        <h3 class="lighter block blue">Sign up to Tribus</h3>
 		        <hr />
 		        <p>Después de introducir sus datos de usuario, usted podrá editar su información de perfil.</p>
-		        {% if error_title %}
+		        {% if form.errors %}
 		        <div class="alert alert-error">
-			        <strong>
-				        <i class="icon-remove"></i>Oh snap! {{ error_title }}
+		        	<strong>
+				        <i class="icon-remove"></i> Oh snap!
 			        </strong>
+					<p>The operation could not be performed because one or more error(s) occurred.</p>
+					<p>Please resubmit the form after making the following changes:</p>
+					<ul>
 			        {% if form.non_field_errors %}
                 		{% for non_field_error in form.non_field_errors %}
-                			<p>{{ non_field_error }}</p>
+                			<li>{{ non_field_error|striptags }}</li>
                 		{% endfor %}
 			        {% endif %}
-
 			        {% for field in form %}
 				        {% if field.errors %}
-					        {% for error in field.errors %}
-                				<p>{{ error }}</p>
-                			{% endfor %}
+                			<li>{{ field.label }}{{ field.errors|striptags }}</li>
                 		{% endif %}
 		            {% endfor %}
+					</ul>
 		        </div>
 		        {% endif %}
 		        <form method="post" action="{% url 'user_signup' %}">
                     {% csrf_token %}
                     <ul class="unstyled">
 				        {% for field in form %}
-                			<li>
-                    		{{ field }}
-                			</li>
+                			<li>{{ field }}</li>
             			{% endfor %}
                     </ul>
 			        <button class="btn btn-yellow btn-block" type="submit">Sign up</button>

@@ -48,30 +48,30 @@ def index(request, page = 1):
         tribs = Trib.objects.filter(user__in = follows).order_by('-date')[t0:t1]
 
 
-        for t in tribs:
-            t.profile = Profile.objects.get(user__username = t.user)
-            if t.retweet == True:
-                rt = Tweet.objects.get(pk = int(t.contenido))
-                rt.retwitteado = 1
-                rt.retweetter = t.user
-                rt.rt_id = t.id
-                tweets.append(rt)
-            else:
-                tweets.append(t)
+        # for t in tribs:
+        #     t.profile = Profile.objects.get(user__username = t.user)
+        #     if t.retweet == True:
+        #         rt = Tweet.objects.get(pk = int(t.contenido))
+        #         rt.retwitteado = 1
+        #         rt.retweetter = t.user
+        #         rt.rt_id = t.id
+        #         tweets.append(rt)
+        #     else:
+        #         tweets.append(t)
 
-        return render_to_response('dashboard',
-        {
-            'p' : profile,
-            'next' : int(page) + 1,
-            'page' : page,
-            'prev' : int(page) - 1,
-            'tribs' : tribs,
-            'tribs_c' : len(tribs),
-            'follows_c' : len(follows),
-            'followers_c' : len(followers),
-            #'trending' : tt(5, 200),
-            #'recommended' : randuser(request.user, 3),
-        }, RequestContext(request))
+        return render_to_response(
+            'index.html', {
+                'p' : profile,
+                'next' : int(page) + 1,
+                'page' : page,
+                'prev' : int(page) - 1,
+                'tribs' : tribs,
+                'tribs_c' : len(tribs),
+                'follows_c' : len(follows),
+                'followers_c' : len(followers),
+                #'trending' : tt(5, 200),
+                #'recommended' : randuser(request.user, 3),
+            }, RequestContext(request))
 
     else:
 

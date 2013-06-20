@@ -23,7 +23,7 @@ class LoginForm(AuthenticationForm):
     """
 
     username = forms.RegexField(
-                                    label = '', required = True,
+                                    label = _('Username:'), required = True,
                                     regex = r'^[\w.@+-]+$',
                                     widget = forms.TextInput(
                                         attrs= {
@@ -38,7 +38,7 @@ class LoginForm(AuthenticationForm):
                                 )
 
     password = forms.CharField(
-                                    label = '', required = True,
+                                    label = _('Password:'), required = True,
                                     widget = forms.PasswordInput(
                                         attrs = {
                                             'placeholder': _('Enter your password'),
