@@ -263,8 +263,8 @@ class SignupProfile(models.Model):
         
         message = render_to_string('user/activate_email.txt',
                                    ctx_dict)
-        
-        self.user.email_user(subject, message, settings.DEFAULT_FROM_EMAIL)
+        print message
+#        self.user.email_user(subject, message, settings.DEFAULT_FROM_EMAIL)
 
 
 # This class comes from django-ldapdb's examples

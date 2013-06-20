@@ -25,7 +25,7 @@ your own URL patterns for these views instead.
 
 """
 
-
+from django.conf import settings
 from django.conf.urls import patterns, url
 from django.views.generic.base import TemplateView
 
@@ -40,7 +40,7 @@ urlpatterns = patterns(
         view=LoginView,
         kwargs={
             'template_name': 'user/login_form.html',
-            'redirect_field_name': '/',
+            'redirect_field_name': settings.LOGIN_REDIRECT_URL,
             'authentication_form': LoginForm
         },
         name='user_login',
@@ -48,7 +48,7 @@ urlpatterns = patterns(
 
     url(regex=r'^logout/$',
         view='django.contrib.auth.views.logout',
-        kwargs={'next_page': '/'},
+        kwargs={'next_page': settings.LOGIN_REDIRECT_URL},
         name='user_logout'
         ),
 
@@ -62,7 +62,7 @@ urlpatterns = patterns(
         name='user_signup_complete',
         ),
 
-    url(regex=r'^activate/(?P<activation_key>\w+)/$',
+    url(regex=r'^activate/key/(?P<activation_key>\w+)/$',
         view=ActivationView.as_view(template_name='user/activate_form.html'),
         name='user_activate',
         ),

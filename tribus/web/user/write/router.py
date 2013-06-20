@@ -50,7 +50,7 @@ class Router(object):
         from django.conf import settings
         self.ldap_alias = None
         for alias, settings_dict in settings.DATABASES.items():
-            if settings_dict['ENGINE'] == 'ldapdb.backends.ldap':
+            if settings_dict['ENGINE'] == 'tribus.web.user.write':
                 self.ldap_alias = alias
                 break
 

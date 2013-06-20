@@ -17,10 +17,11 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.sites.models import RequestSite
 from django.contrib.sites.models import Site
+from django.contrib.auth.hashers import make_password
 
 from tribus.web.user import signals
 from tribus.web.user.forms import SignupForm, LoginForm
-from tribus.web.user.models import SignupProfile
+from tribus.web.user.models import SignupProfile, LdapUser
 
 
 class _RequestPassingFormView(FormView):
@@ -239,7 +240,11 @@ class BaseActivationView(TemplateView):
                 return redirect(to, *args, **kwargs)
             except ValueError:
                 return redirect(success_url)
-        return super(ActivationView, self).get(request, *args, **kwargs)
+        return super(BaseActivationView, self).get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(BaseActivationView, self).get_context_data(**kwargs)
+        return context
 
     def activate(self, request, *args, **kwargs):
         """
@@ -269,7 +274,51 @@ class ActivationView(BaseActivationView):
             signals.user_activated.send(sender=self.__class__,
                                         user=activated_user,
                                         request=request)
+
+            lastuid = self.get_last_uid()
+
+            ldapuser = LdapUser()
+            ldapuser.first_name = activated_user.first_name or 'unknown'
+            ldapuser.last_name = activated_user.last_name or 'unknown'
+            ldapuser.full_name = activated_user.first_name+' '+activated_user.last_name
+            ldapuser.email = activated_user.email
+            ldapuser.username = activated_user.username
+            ldapuser.password = activated_user.password
+            ldapuser.uid = lastuid
+            ldapuser.group = 1234
+            ldapuser.home_directory = '/home/'+activated_user.username
+            ldapuser.login_shell = '/bin/false'
+            ldapuser.description = 'Created by Tribus'
+            ldapuser.save()
+
         return activated_user
+
+    def get_last_uid(self):
+        try:
+            u = LdapUser.objects.get(username='maxUID')
+        except LdapUser.DoesNotExist:
+            return self.create_last_uid_entry()
+
+        lastuid = int(u.uid)
+        u.uid = int(u.uid)+1
+        u.save()
+        return lastuid
+
+    def create_last_uid_entry(self):
+        maxuid = LdapUser()
+        maxuid.first_name = 'max'
+        maxuid.last_name = 'UID'
+        maxuid.full_name = maxuid.first_name+maxuid.last_name
+        maxuid.email = ''
+        maxuid.username = 'maxUID'
+        maxuid.password = ''
+        maxuid.uid = 2000
+        maxuid.group = 1234
+        maxuid.home_directory = '/home/'+maxuid.username
+        maxuid.login_shell = '/bin/false'
+        maxuid.description = 'Created by Tribus'
+        maxuid.save()
+        return maxuid.uid
 
     def get_success_url(self, request, user):
         return ('user_activate_complete', (), {})
@@ -282,7 +331,6 @@ def LoginView(request, template_name='user/login_form.html',
               redirect_field_name=REDIRECT_FIELD_NAME,
               authentication_form=LoginForm,
               current_app=None, extra_context=None):
-
     """
     Displays the login form and handles the login action.
     """

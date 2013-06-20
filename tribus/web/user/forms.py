@@ -21,13 +21,37 @@ class LoginForm(AuthenticationForm):
     Subclass of Django ``AuthenticationForm`` which adds a remember me
     checkbox.
     """
-    username = forms.CharField(max_length=254)
-    password = forms.CharField(label=_("Password"), widget=forms.PasswordInput)
+
+    username = forms.RegexField(
+                                    label = '', required = True,
+                                    regex = r'^[\w.@+-]+$',
+                                    widget = forms.TextInput(
+                                        attrs= {
+                                            'placeholder': _('Enter your username'),
+                                            'class': 'input-xlarge'
+                                        }
+                                    ),
+                                    max_length = 30,
+                                    error_messages = {
+                                        'invalid': _("This value may contain only letters, numbers and @/./+/-/_ characters.")
+                                    }
+                                )
+
+    password = forms.CharField(
+                                    label = '', required = True,
+                                    widget = forms.PasswordInput(
+                                        attrs = {
+                                            'placeholder': _('Enter your password'),
+                                            'class': 'input-xlarge'
+                                        }
+                                    )
+                                )
+
     remember_me = forms.BooleanField(
-        label=_('Remember my session'),
-        initial=False,
-        required=False
-    )
+                                        label = _('Remember my session'),
+                                        initial = False,
+                                        required = False
+                                    )
 
 
 class SignupForm(Form):
@@ -44,37 +68,51 @@ class SignupForm(Form):
 
     """
     required_css_class = 'required'
-    
-    username = forms.RegexField(regex=r'^[\w.@+-]+$',
-                                max_length=30,
-                                label=_("Username"),
-                                error_messages={'invalid': _("This value may contain only letters, numbers and @/./+/-/_ characters.")})
-    email = forms.EmailField(label=_("E-mail"))
-    password1 = forms.CharField(widget=forms.PasswordInput,
-                                label=_("Password"))
-    password2 = forms.CharField(widget=forms.PasswordInput,
-                                label=_("Password (again)"))
-    Form.fields['username'].widget.attrs = {
-            'placeholder': 'Pick a username',
-            'class': 'input-large'
-        }
-    Form.fields['email'].widget.attrs = {
-        'placeholder': 'Enter a valid email',
-        'class': 'input-large'
-    }
-    Form.fields['password1'].widget.attrs = {
-        'placeholder': 'Create a password',
-        'class': 'input-large'
-    }
-    Form.fields['password2'].widget.attrs = {
-        'placeholder': 'Repeat the password',
-        'class': 'input-large'
-    }
-    Form.fields['username'].label = ''
-    Form.fields['email'].label = ''
-    Form.fields['password1'].label = ''
-    Form.fields['password2'].label = ''
-    
+    username = forms.RegexField(
+                                    label = '', required = True,
+                                    regex = r'^[\w.@+-]+$',
+                                    widget = forms.TextInput(
+                                        attrs= {
+                                            'placeholder': _('Pick a username'),
+                                            'class': 'input-xlarge'
+                                        }
+                                    ),
+                                    max_length = 30,
+                                    error_messages = {
+                                    'invalid': _("This value may contain only letters, numbers and @/./+/-/_ characters.")
+                                    }
+                                )
+
+    email = forms.EmailField(
+                                label = '', required = True,
+                                widget = forms.TextInput(
+                                    attrs = {
+                                        'placeholder': _('Enter a valid email'),
+                                        'class': 'input-xlarge'
+                                    }
+                                )
+                            )
+
+    password1 = forms.CharField(
+                                    label = '', required = True,
+                                    widget = forms.PasswordInput(
+                                        attrs = {
+                                            'placeholder': _('Create a password'),
+                                            'class': 'input-xlarge'
+                                        }
+                                    )
+                                )
+
+    password2 = forms.CharField(
+                                    label = '', required = True,
+                                    widget = forms.PasswordInput(
+                                        attrs = {
+                                            'placeholder': _('Repeat the password'),
+                                            'class': 'input-xlarge'
+                                        }
+                                    )
+                                )
+
     def clean_username(self):
         """
         Validate that the username is alphanumeric and is not already

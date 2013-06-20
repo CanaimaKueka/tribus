@@ -85,7 +85,18 @@ DATABASES = {
      }
  }
 
+AUTH_PROFILE_MODULE = 'web.UserProfile'
 DATABASE_ROUTERS = ['tribus.web.user.write.router.Router']
+
+PASSWORD_HASHERS = (
+    'tribus.web.hashers.DummyPasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.BCryptPasswordHasher',
+    'django.contrib.auth.hashers.SHA1PasswordHasher',
+    'django.contrib.auth.hashers.MD5PasswordHasher',
+    'django.contrib.auth.hashers.CryptPasswordHasher',
+)
 
 LOGIN_REDIRECT_URL="/"
 
@@ -116,9 +127,20 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tribus.web',
+    'tribus.web.user',
+    'tribus.web.user.write',
     'djcelery',
     'south'
 )
+
+#EMAIL_SUBJECT_PREFIX
+#SERVER_EMAIL
+#EMAIL_HOST_PASSWORD
+#EMAIL_USE_TLS
+#EMAIL_HOST
+#DEFAULT_FROM_EMAIL
+#EMAIL_PORT
+#EMAIL_HOST_USER
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG

@@ -3,46 +3,63 @@
 {% block title %}Login{% endblock %}
 {% block content %}
 <div class="well jumbotron">
-	<div class="login-container">
-		<h3 class="lighter block blue">Log in to Tribus</h3>
-		<hr />
-		<p>Después de introducir sus datos de usuario, usted podrá editar su información de perfil.</p>
-		{% if error_title %}
-		<div class="alert alert-error">
-			<strong>
-				<i class="icon-remove"></i>Oh snap! {{ error_title }}
-			</strong>
-			{% if form.non_field_errors %}
-        		{% for non_field_error in form.non_field_errors %}
-        			<p>{{ non_field_error }}</p>
-        		{% endfor %}
-			{% endif %}
+	<div class="container">
+        <div class="row-fluid">
+	        <div class="span4">
+		        <h3 class="lighter block blue">Log in to Tribus</h3>
+		        <hr />
+		        <p>Después de introducir sus datos de usuario, usted podrá editar su información de perfil.</p>
+		        {% if error_title %}
+		        <div class="alert alert-error">
+			        <strong>
+				        <i class="icon-remove"></i>Oh snap! {{ error_title }}
+			        </strong>
+			        {% if form.non_field_errors %}
+                		{% for non_field_error in form.non_field_errors %}
+                			<p>{{ non_field_error }}</p>
+                		{% endfor %}
+			        {% endif %}
 
-			{% for field in form %}
-				{% if field.errors %}
-					{% for error in field.errors %}
-        				<p>{{ error }}</p>
-        			{% endfor %}
-        		{% endif %}
-		    {% endfor %}
+			        {% for field in form %}
+				        {% if field.errors %}
+					        {% for error in field.errors %}
+                				<p>{{ error }}</p>
+                			{% endfor %}
+                		{% endif %}
+		            {% endfor %}
+		        </div>
+		        {% endif %}
+		        <form method="post" action="{% url 'user_login' %}">
+                    {% csrf_token %}
+                    <ul class="unstyled">
+				        {% for field in form %}
+                			<li>
+                    		{{ field }}
+                			</li>
+            			{% endfor %}
+                    </ul>
+			        <button class="btn btn-yellow btn-block" type="submit">Log in</button>
+			        <input type="hidden" name="next" value="{{ next }}" />
+		        </form>
+		        <ul class="unstyled">
+			        <li><a href="{% url 'user_password_reset' %}">forgot your password?</a></li>
+			        <li><a href="{% url 'user_signup' %}">are you new to Tribus?</a></li>
+		        </ul>
+		    </div>
+		    <div class="span1"></div>
+		    <div class="span7 hero-unit">
+		        algo aquí
+		        <br />
+		        <br />
+		        <br />
+		        <br />
+		        <br />
+		        <br />
+		        <br />
+		        <br />
+		        <br />
+		    </div>
 		</div>
-		{% endif %}
-		<form method="post" action="{% url 'user_login' %}">
-            {% csrf_token %}
-            <ul class="unstyled">
-				{% for field in form %}
-        			<li>
-            		{{ field.label_tag }} {{ field }}
-        			</li>
-    			{% endfor %}
-            </ul>
-			<button class="btn btn-yellow btn-block" type="submit">Log in</button>
-			<input type="hidden" name="next" value="{{ next }}" />
-		</form>
-		<ul class="unstyled">
-			<li><a href="{% url 'user_password_reset' %}">forgot your password?</a></li>
-			<li><a href="{% url 'user_signup' %}">are you new to Tribus?</a></li>
-		</ul>
 	</div>
 </div>
 {% endblock %}

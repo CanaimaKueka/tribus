@@ -39,7 +39,7 @@ import django.db.models
 from django.db import connections, router
 from django.db.models import signals
 
-import ldapdb
+logging = logging.getLogger('django')
 
 class Model(django.db.models.base.Model):
     """

@@ -41,14 +41,14 @@ def index(request, page = 1):
         t1 = TWEETS_EN_PAGE + t0
 
         profile = request.user.get_profile()        # Give me the user profile
-        followers = profile.followers.all()
-        follows = profile.follows.all()
+        followers = [followers for f in profile.followers.all()]
+        follows = [follows for f in profile.follows.all()]
         follows.append(request.user)
 
         tribs = Trib.objects.filter(user__in = follows).order_by('-date')[t0:t1]
 
 
-        for t in raw_tribs:
+        for t in tribs:
             t.profile = Profile.objects.get(user__username = t.user)
             if t.retweet == True:
                 rt = Tweet.objects.get(pk = int(t.contenido))
