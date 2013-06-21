@@ -253,16 +253,14 @@ class SignupProfile(models.Model):
             framework for details regarding these objects' interfaces.
 
         """
-        ctx_dict = {'activation_key': self.activation_key,
-                    'expiration_days': settings.ACCOUNT_ACTIVATION_DAYS,
-                    'site': site}
-        subject = render_to_string('user/activate_email_subject.txt',
-                                   ctx_dict)
-        # Email subject *must not* contain newlines
+        ctx_dict = {
+            'activation_key': self.activation_key,
+            'expiration_days': settings.ACCOUNT_ACTIVATION_DAYS,
+            'site': site
+        }
+        subject = render_to_string('user/activate_email_subject.txt', ctx_dict)
         subject = ''.join(subject.splitlines())
-        
-        message = render_to_string('user/activate_email.txt',
-                                   ctx_dict)
+        message = render_to_string('user/activate_email.txt', ctx_dict)
         self.user.email_user(subject, message, settings.DEFAULT_FROM_EMAIL)
 
 

@@ -14,8 +14,7 @@
 		        	<strong>
 				        <i class="icon-remove"></i> Oh snap!
 			        </strong>
-					<p>The operation could not be performed because one or more error(s) occurred.</p>
-					<p>Please resubmit the form after making the following changes:</p>
+					<p>The operation could not be performed because one or more error(s) occurred. Please resubmit the form after making the following changes:</p>
 					<ul>
 			        {% if form.non_field_errors %}
                 		{% for non_field_error in form.non_field_errors %}
@@ -24,7 +23,7 @@
 			        {% endif %}
 			        {% for field in form %}
 				        {% if field.errors %}
-                			<li>{{ field.errors|striptags }}</li>
+                			<li><strong>{{ field.label }}</strong> {{ field.errors|striptags }}</li>
                 		{% endif %}
 		            {% endfor %}
 					</ul>
@@ -33,13 +32,9 @@
 		        <form method="post" action="{% url 'user_login' %}">
                     {% csrf_token %}
                     <ul class="unstyled">
-				        {% for field in form %}
-				        	{% if field.remember_me %}
-                				<li>{{ field }}</li>
-                			{% else %}
-                				<li>{{ field }}</li>
-                			{% endif %}
-            			{% endfor %}
+                        <li>{{ form.username }}</li>
+                        <li>{{ form.password }}</li>
+                        <li>{{ form.remember_me }}{{ form.remember_me.label_tag }}</li>
                     </ul>
 			        <button class="btn btn-yellow btn-block" type="submit">Log in</button>
 			        <input type="hidden" name="next" value="{{ next }}" />

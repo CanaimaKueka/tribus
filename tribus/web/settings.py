@@ -97,7 +97,8 @@ PASSWORD_HASHERS = (
     'django.contrib.auth.hashers.MD5PasswordHasher',
     'django.contrib.auth.hashers.CryptPasswordHasher',
 )
-
+LOGIN_URL='/login/'
+LOGOUT_URL='/logout/'
 LOGIN_REDIRECT_URL="/"
 
 ACCOUNT_ACTIVATION_DAYS = 7

@@ -9,10 +9,10 @@ you're using a custom model.
 """
 
 
-from django.contrib.auth.models import User
-from django.contrib.auth.forms import AuthenticationForm
-from django.forms import Form
 from django import forms
+from django.forms import Form
+from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm as BasePasswordResetForm, SetPasswordForm as BaseSetPasswordForm
+from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -23,7 +23,7 @@ class LoginForm(AuthenticationForm):
     """
 
     username = forms.RegexField(
-                                    label = _('Username:'), required = True,
+                                    label = _('Username'), required = True,
                                     regex = r'^[\w.@+-]+$',
                                     widget = forms.TextInput(
                                         attrs= {
@@ -38,7 +38,7 @@ class LoginForm(AuthenticationForm):
                                 )
 
     password = forms.CharField(
-                                    label = _('Password:'), required = True,
+                                    label = _('Password'), required = True,
                                     widget = forms.PasswordInput(
                                         attrs = {
                                             'placeholder': _('Enter your password'),
@@ -69,7 +69,7 @@ class SignupForm(Form):
     """
     required_css_class = 'required'
     username = forms.RegexField(
-                                    label = '', required = True,
+                                    label = _('Username'), required = True,
                                     regex = r'^[\w.@+-]+$',
                                     widget = forms.TextInput(
                                         attrs= {
@@ -84,17 +84,18 @@ class SignupForm(Form):
                                 )
 
     email = forms.EmailField(
-                                label = '', required = True,
+                                label = _('Email'), required = True,
                                 widget = forms.TextInput(
                                     attrs = {
                                         'placeholder': _('Enter a valid email'),
                                         'class': 'input-xlarge'
                                     }
-                                )
+                                ),
+                                max_length=254
                             )
 
     password1 = forms.CharField(
-                                    label = '', required = True,
+                                    label = _('Password'), required = True,
                                     widget = forms.PasswordInput(
                                         attrs = {
                                             'placeholder': _('Create a password'),
@@ -104,7 +105,7 @@ class SignupForm(Form):
                                 )
 
     password2 = forms.CharField(
-                                    label = '', required = True,
+                                    label = _('Password (repeat)'), required = True,
                                     widget = forms.PasswordInput(
                                         attrs = {
                                             'placeholder': _('Repeat the password'),
@@ -137,3 +138,60 @@ class SignupForm(Form):
             if self.cleaned_data['password1'] != self.cleaned_data['password2']:
                 raise forms.ValidationError(_("The two password fields didn't match."))
         return self.cleaned_data
+
+
+class PasswordResetForm(BasePasswordResetForm):
+    email = forms.EmailField(
+                                label = _('Email'), required = True,
+                                widget = forms.TextInput(
+                                    attrs = {
+                                        'placeholder': _('Enter a valid email'),
+                                        'class': 'input-xlarge'
+                                    }
+                                ),
+                                max_length=254
+                            )
+
+
+class SetPasswordForm(BaseSetPasswordForm):
+    """
+    A form that lets a user change set his/her password without entering the
+    old password
+    """
+    new_password1 = forms.CharField(
+                                    label = _('Password'), required = True,
+                                    widget = forms.PasswordInput(
+                                        attrs = {
+                                            'placeholder': _('Create a new password'),
+                                            'class': 'input-xlarge'
+                                        }
+                                    )
+                                )
+
+    new_password2 = forms.CharField(
+                                    label = _('Password (repeat)'), required = True,
+                                    widget = forms.PasswordInput(
+                                        attrs = {
+                                            'placeholder': _('Repeat your new password'),
+                                            'class': 'input-xlarge'
+                                        }
+                                    )
+                                )
+
+
+class PasswordChangeForm(SetPasswordForm):
+    """
+    A form that lets a user change his/her password by entering
+    their old password.
+    """
+
+    old_password = forms.CharField(
+                                    label = _('Old password'), required = True,
+                                    widget = forms.PasswordInput(
+                                        attrs = {
+                                            'placeholder': _('Enter your old password'),
+                                            'class': 'input-xlarge'
+                                        }
+                                    )
+                                )
+

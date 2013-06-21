@@ -28,9 +28,9 @@
                         <form accept-charset="UTF-8" action="{% url 'user_login' %}" autocomplete="off" method="post">
                             {% csrf_token %}
                             <ul class="unstyled">
-                                {% for field in loginform %}
-                                    <li>{{ field }}</li>
-                                {% endfor %}
+                                <li>{{ loginform.username }}</li>
+                                <li>{{ loginform.password }}</li>
+                                <li>{{ loginform.remember_me }}{{ loginform.remember_me.label_tag }}</li>
                             </ul>
                             <button class="btn btn-yellow btn-block" type="submit">{% trans "Log in" %}</button>
 		                    <ul class="unstyled smaller-90">
