@@ -30,12 +30,18 @@
                             <ul class="unstyled">
                                 <li>{{ loginform.username }}</li>
                                 <li>{{ loginform.password }}</li>
-                                <li>{{ loginform.remember_me }}{{ loginform.remember_me.label_tag }}</li>
+                                <li>
+                                    <label for="id_remember_me">
+                                        {{ loginform.remember_me }}
+                                        <span class="lbl">
+                                             {{ loginform.remember_me.label }}
+                                        </span>
+                                    </label>
+                                </li>
                             </ul>
                             <button class="btn btn-yellow btn-block" type="submit">{% trans "Log in" %}</button>
 		                    <ul class="unstyled smaller-90">
-			                    <li><a href="/forgot/username">{% trans "forgot your username?" %}</a></li>
-			                    <li><a href="/forgot/password">{% trans "forgot your password?" %}</a></li>
+			                    <li><a href="/password/reset">{% trans "forgot your password?" %}</a></li>
 		                    </ul>
                         </form>
                     </div>

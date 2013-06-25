@@ -36,6 +36,7 @@ AUTH_LDAP_USER_DN_TEMPLATE = 'uid=%(user)s,'+AUTH_LDAP_BASE
 AUTH_LDAP_USER_ATTR_MAP = {
     "first_name": "givenName",
     "last_name": "sn",
+    "password": "userPassword",
     "email": "mail"
 }
 

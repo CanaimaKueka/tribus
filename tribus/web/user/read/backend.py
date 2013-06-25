@@ -524,7 +524,7 @@ class _LDAPUser(object):
 
         if created:
             logger.debug("Created Django user %s", username)
-            self._user.set_unusable_password()
+            #self._user.set_unusable_password()
             save_user = True
 
         if should_populate:

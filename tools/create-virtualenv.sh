@@ -33,6 +33,7 @@ virtualenv ${ROOTDIR}/virtualenv --no-site-packages
 pip install -r ${ROOTDIR}/tools/packages-python.list
 python ${ROOTDIR}/manage.py syncdb --noinput
 python ${ROOTDIR}/manage.py createsuperuser --noinput --username admin --email admin@localhost.com
+python ${ROOTDIR}/tools/ch-admin-passwd.py
 deactivate
 
 exit 0

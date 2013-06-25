@@ -50,12 +50,12 @@ urlpatterns = patterns(
         view='django.contrib.auth.views.logout',
         kwargs={'next_page': settings.LOGIN_REDIRECT_URL},
         name='user_logout'
-        ),
+    ),
 
     url(regex=r'^signup/$',
         view=SignupView.as_view(template_name='user/signup_form.html'),
         name='user_signup',
-        ),
+    ),
 
     url(regex=r'^signup/complete/$',
         view=TemplateView.as_view(template_name='user/signup_complete.html'),
@@ -65,7 +65,7 @@ urlpatterns = patterns(
     url(regex=r'^activate/key/(?P<activation_key>\w+)/$',
         view=ActivationView.as_view(template_name='user/activate_form.html'),
         name='user_activate',
-        ),
+    ),
 
     url(regex=r'^activate/complete/$',
         view=TemplateView.as_view(template_name='user/activate_complete.html'),
@@ -76,7 +76,7 @@ urlpatterns = patterns(
         view='django.contrib.auth.views.password_change',
         kwargs={
             'template_name': 'user/password_change_form.html',
-            'post_change_redirect': 'user_password_change_done',
+            'post_change_redirect': '/password/change/done/',
             'password_change_form': PasswordChangeForm
         },
         name='user_password_change',
@@ -97,7 +97,7 @@ urlpatterns = patterns(
             'email_template_name': 'user/password_reset_email.txt',
             'subject_template_name': 'user/password_reset_subject.txt',
             'password_reset_form': PasswordResetForm,
-            'post_reset_redirect': 'user_password_reset_done'
+            'post_reset_redirect': '/password/reset/done/'
         },
         name='user_password_reset',
     ),
@@ -115,7 +115,7 @@ urlpatterns = patterns(
         kwargs={
             'template_name': 'user/password_reset_confirm.html',
             'set_password_form': SetPasswordForm,
-            'post_reset_redirect': 'user_password_reset_complete'
+            'post_reset_redirect': '/password/reset/complete/'
         },
         name='user_password_reset_confirm',
     ),

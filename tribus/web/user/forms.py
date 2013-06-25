@@ -15,6 +15,7 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm as B
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 
+from tribus.web.user.models import LdapUser
 
 class LoginForm(AuthenticationForm):
     """
@@ -177,6 +178,36 @@ class SetPasswordForm(BaseSetPasswordForm):
                                         }
                                     )
                                 )
+
+
+    def create_ldap_password(self, password, algorithm='SSHA', salt=None):
+        """
+        Encrypts a password as used for an ldap userPassword attribute.
+        """
+        s = hashlib.sha1()
+        s.update(password)
+
+        if algorithm == 'SSHA':
+            if salt is None:
+                salt = ''.join([random.choice(string.letters) for i in range(8)])
+
+            s.update(salt)
+            return '{SSHA}%s' % base64.encodestring(s.digest() + salt).rstrip()
+        else:
+            raise NotImplementedError
+
+
+    def save(self, commit=True):
+        self.user.set_password(self.cleaned_data['new_password1'])
+
+        if commit:
+            self.user.save()
+
+        u = LdapUser.objects.get(username=self.user.username)
+        u.password = self.create_ldap_password(self.user.password)
+        u.save()
+
+        return self.user
 
 
 class PasswordChangeForm(SetPasswordForm):
