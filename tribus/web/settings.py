@@ -13,11 +13,22 @@ djcelery.setup_loader()
 
 AUTHENTICATION_BACKENDS = (
     'social_auth.backends.twitter.TwitterBackend',
-    'social_auth.backends.facebook.FacebookBackend',
-    'social_auth.backends.google.GoogleBackend',
-    'social_auth.backends.contrib.github.GithubBackend',
+    # 'social_auth.backends.facebook.FacebookBackend',
+    # 'social_auth.backends.google.GoogleBackend',
+    # 'social_auth.backends.contrib.github.GithubBackend',
     'django_auth_ldap.backend.LDAPBackend',
 )
+
+SOCIAL_AUTH_ENABLED_BACKENDS = ('twitter')
+SOCIAL_AUTH_DEFAULT_USERNAME = 'tribus'
+SOCIAL_AUTH_UID_LENGTH = 16
+SOCIAL_AUTH_ASSOCIATION_HANDLE_LENGTH = 16
+SOCIAL_AUTH_NONCE_SERVER_URL_LENGTH = 16
+SOCIAL_AUTH_ASSOCIATION_SERVER_URL_LENGTH = 16
+SOCIAL_AUTH_ASSOCIATION_HANDLE_LENGTH = 16
+
+TWITTER_CONSUMER_KEY = '1uxQKRiKzHYUl3QbQSQ'
+TWITTER_CONSUMER_SECRET = 'gLLJf5DIuJ4wvrVJI6cL553AIGdLjxnsUlwJbOKhw'
 
 # Baseline configuration.
 AUTH_LDAP_SERVER_URI = "ldap://localhost"
@@ -102,6 +113,7 @@ PASSWORD_HASHERS = (
     'django.contrib.auth.hashers.MD5PasswordHasher',
     'django.contrib.auth.hashers.CryptPasswordHasher',
 )
+
 LOGIN_URL='/login/'
 LOGOUT_URL='/logout/'
 LOGIN_REDIRECT_URL="/"
@@ -202,6 +214,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'django.contrib.messages.context_processors.messages',
     'tribus.web.processors.tribusconf',
+    'social_auth.context_processors.social_auth_by_type_backends',
 )
 
 LOGGING = {

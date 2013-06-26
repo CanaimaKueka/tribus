@@ -24,7 +24,30 @@
                     </div>
                     <div class="span3">
                         <div class="home-signin">
-                        <h3 class="lighter block ">{% trans "Log in" %}</h3>
+                        <h3 class="lighter block">{% trans "Log in with" %}</h3>
+                        <div class="row-fluid bigger-200">
+                            <a href="{% url 'socialauth_begin' 'facebook' %}">
+                                <span class="span3 bigger-200 text-center blue">
+                                    <i class="icon-facebook-sign"></i>
+                                </span>
+                            </a>
+                            <a href="{% url 'socialauth_begin' 'twitter' %}">
+                                <span class="span3 bigger-200 text-center light-blue">
+                                    <i class="icon-twitter-sign"></i>
+                                </span>
+                            </a>
+                            <a href="{% url 'socialauth_begin' 'github' %}">
+                                <span class="span3 bigger-200 text-center dark">
+                                    <i class="icon-github-sign"></i>
+                                </span>
+                            </a>
+                            <a href="{% url 'socialauth_begin' 'google' %}">
+                                <span class="span3 bigger-200 text-center red">
+                                    <i class="icon-google-plus-sign"></i>
+                                </span>
+                            </a>
+                        </div>
+                        <h3 class="lighter block ">{% trans "- or -" %}</h3>
                         <form accept-charset="UTF-8" action="{% url 'user_login' %}" autocomplete="off" method="post">
                             {% csrf_token %}
                             <ul class="unstyled">
@@ -46,14 +69,7 @@
                         </form>
                     </div>
                         <div class="home-signup">
-                        <h3 class="lighter block">{% trans "Sign up with" %}</h3>
-                        <div class="row-fluid bigger-200">
-                            <span class="span3 bigger-200 text-center blue"><i class="icon-facebook-sign"></i></span>
-                            <span class="span3 bigger-200 text-center light-blue"><i class="icon-twitter-sign"></i></span>
-                            <span class="span3 bigger-200 text-center"><i class="icon-github-sign"></i></span>
-                            <span class="span3 bigger-200 text-center red"><i class="icon-google-plus-sign"></i></span>
-                        </div>
-                        <h3 class="lighter block">{% trans "- or -" %}</h3>
+                        <h3 class="lighter block">{% trans "Sign up" %}</h3>
                         <form accept-charset="UTF-8" action="{% url 'user_signup' %}" autocomplete="off" method="post">
                             {% csrf_token %}
                             <ul class="unstyled">
