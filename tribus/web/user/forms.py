@@ -8,9 +8,14 @@ you're using a custom model.
 
 """
 
+import base64
+import hashlib
+import random
+import string
 
 from django import forms
 from django.forms import Form
+from django.utils.datastructures import SortedDict
 from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm as BasePasswordResetForm, SetPasswordForm as BaseSetPasswordForm
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
@@ -73,9 +78,39 @@ class SignupForm(Form):
                                     label = _('Username'), required = True,
                                     regex = r'^[\w.@+-]+$',
                                     widget = forms.TextInput(
-                                        attrs= {
+                                        attrs = {
                                             'placeholder': _('Pick a username'),
                                             'class': 'input-xlarge'
+                                        }
+                                    ),
+                                    max_length = 30,
+                                    error_messages = {
+                                    'invalid': _("This value may contain only letters, numbers and @/./+/-/_ characters.")
+                                    }
+                                )
+
+    first_name = forms.RegexField(
+                                    label = _('First name'), required = True,
+                                    regex = r'^[\w.@+-]+$',
+                                    widget = forms.TextInput(
+                                        attrs = {
+                                            'placeholder': _('First name'),
+                                            'class': 'input-medium'
+                                        }
+                                    ),
+                                    max_length = 30,
+                                    error_messages = {
+                                    'invalid': _("This value may contain only letters, numbers and @/./+/-/_ characters.")
+                                    }
+                                )
+
+    last_name = forms.RegexField(
+                                    label = _('Last name'), required = True,
+                                    regex = r'^[\w.@+-]+$',
+                                    widget = forms.TextInput(
+                                        attrs = {
+                                            'placeholder': _('Last name'),
+                                            'class': 'input-medium'
                                         }
                                     ),
                                     max_length = 30,
@@ -95,7 +130,7 @@ class SignupForm(Form):
                                 max_length=254
                             )
 
-    password1 = forms.CharField(
+    password = forms.CharField(
                                     label = _('Password'), required = True,
                                     widget = forms.PasswordInput(
                                         attrs = {
@@ -105,15 +140,15 @@ class SignupForm(Form):
                                     )
                                 )
 
-    password2 = forms.CharField(
-                                    label = _('Password (repeat)'), required = True,
-                                    widget = forms.PasswordInput(
-                                        attrs = {
-                                            'placeholder': _('Repeat the password'),
-                                            'class': 'input-xlarge'
-                                        }
-                                    )
-                                )
+#    password2 = forms.CharField(
+#                                    label = _('Password (repeat)'), required = True,
+#                                    widget = forms.PasswordInput(
+#                                        attrs = {
+#                                            'placeholder': _('Repeat the password'),
+#                                            'class': 'input-xlarge'
+#                                        }
+#                                    )
+#                                )
 
     def clean_username(self):
         """
@@ -121,24 +156,27 @@ class SignupForm(Form):
         in use.
         
         """
-        existing = User.objects.filter(username__iexact=self.cleaned_data['username'])
-        if existing.exists():
+        existingldap = LdapUser.objects.filter(username=self.cleaned_data['username'])
+        if existingldap.exists():
             raise forms.ValidationError(_("A user with that username already exists."))
         else:
+            existingdb = User.objects.filter(username__iexact=self.cleaned_data['username'])
+            if existingdb.exists():
+                existingdb.delete()
             return self.cleaned_data['username']
 
-    def clean(self):
-        """
-        Verifiy that the values entered into the two password fields
-        match. Note that an error here will end up in
-        ``non_field_errors()`` because it doesn't apply to a single
-        field.
-        
-        """
-        if 'password1' in self.cleaned_data and 'password2' in self.cleaned_data:
-            if self.cleaned_data['password1'] != self.cleaned_data['password2']:
-                raise forms.ValidationError(_("The two password fields didn't match."))
-        return self.cleaned_data
+#    def clean(self):
+#        """
+#        Verifiy that the values entered into the two password fields
+#        match. Note that an error here will end up in
+#        ``non_field_errors()`` because it doesn't apply to a single
+#        field.
+#        
+#        """
+#        if 'password1' in self.cleaned_data and 'password2' in self.cleaned_data:
+#            if self.cleaned_data['password1'] != self.cleaned_data['password2']:
+#                raise forms.ValidationError(_("The two password fields didn't match."))
+#        return self.cleaned_data
 
 
 class PasswordResetForm(BasePasswordResetForm):
@@ -150,7 +188,7 @@ class PasswordResetForm(BasePasswordResetForm):
                                         'class': 'input-xlarge'
                                     }
                                 ),
-                                max_length=254
+                                max_length = 254
                             )
 
 
@@ -198,16 +236,19 @@ class SetPasswordForm(BaseSetPasswordForm):
 
 
     def save(self, commit=True):
-        self.user.set_password(self.cleaned_data['new_password1'])
 
-        if commit:
-            self.user.save()
+        try:
+            u = LdapUser.objects.get(username=self.user.username)
+        except LdapUser.DoesNotExist:
+            raise forms.ValidationError(_("A user with that username already exists."))
+        else:
+            self.user.set_password(self.cleaned_data['new_password1'])
+            u.password = self.create_ldap_password(self.cleaned_data['new_password1'])
+            u.save()
 
-        u = LdapUser.objects.get(username=self.user.username)
-        u.password = self.create_ldap_password(self.user.password)
-        u.save()
-
-        return self.user
+            if commit:
+                self.user.save()
+            return self.user
 
 
 class PasswordChangeForm(SetPasswordForm):
@@ -226,3 +267,7 @@ class PasswordChangeForm(SetPasswordForm):
                                     )
                                 )
 
+PasswordChangeForm.base_fields = SortedDict([
+    (k, PasswordChangeForm.base_fields[k])
+    for k in ['old_password', 'new_password1', 'new_password2']
+])

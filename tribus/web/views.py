@@ -76,39 +76,15 @@ def index(request, page = 1):
     else:
 
         loginform = LoginForm()
-        loginform.fields['username'].widget.attrs = {
-            'placeholder': 'Enter your username',
-            'class': 'input-large',
-        }
-        loginform.fields['password'].widget.attrs = {
-            'placeholder': 'Enter your password',
-            'class': 'input-large'
-        }
-        loginform.fields['username'].label = ''
-        loginform.fields['password'].label = ''
-        loginform.fields['remember_me'].label = 'Remember my session'
+        loginform.fields['username'].widget.attrs['class'] = 'input-large'
+        loginform.fields['password'].widget.attrs['class'] = 'input-large'
 
         signupform = SignupForm()
-        signupform.fields['username'].widget.attrs = {
-            'placeholder': 'Pick a username',
-            'class': 'input-large'
-        }
-        signupform.fields['email'].widget.attrs = {
-            'placeholder': 'Enter a valid email',
-            'class': 'input-large'
-        }
-        signupform.fields['password1'].widget.attrs = {
-            'placeholder': 'Create a password',
-            'class': 'input-large'
-        }
-        signupform.fields['password2'].widget.attrs = {
-            'placeholder': 'Repeat the password',
-            'class': 'input-large'
-        }
-        signupform.fields['username'].label = ''
-        signupform.fields['email'].label = ''
-        signupform.fields['password1'].label = ''
-        signupform.fields['password2'].label = ''
+        signupform.fields['username'].widget.attrs['class'] = 'input-large'
+        signupform.fields['first_name'].widget.attrs['class'] = 'input-small'
+        signupform.fields['last_name'].widget.attrs['class'] = 'input-small'
+        signupform.fields['email'].widget.attrs['class'] = 'input-large'
+        signupform.fields['password'].widget.attrs['class'] = 'input-large'
 
         return render_to_response(
             'init.html', {

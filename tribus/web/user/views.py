@@ -98,7 +98,7 @@ class BaseSignupView(_RequestPassingFormView):
     def form_valid(self, request, form):
         new_user = self.register(request, **form.cleaned_data)
         success_url = self.get_success_url(request, new_user)
-        
+
         # success_url may be a simple string, or a tuple providing the
         # full argument set for redirect(). Attempting to unpack it
         # tells us which one it is.
@@ -194,8 +194,11 @@ class SignupView(BaseSignupView):
         else:
             site = RequestSite(request)
 
-        username, email, password = cleaned_data['username'], cleaned_data['email'], cleaned_data['password1']
-        new_user = SignupProfile.objects.create_inactive_user(username, email, password, site)
+        new_user = SignupProfile.objects.create_inactive_user(
+            cleaned_data['username'], cleaned_data['first_name'],
+            cleaned_data['last_name'], cleaned_data['email'],
+            cleaned_data['password'], site)
+
         signals.user_registered.send(sender=self.__class__,
                                      user=new_user,
                                      request=request)
@@ -327,6 +330,7 @@ class ActivationView(BaseActivationView):
         lastuid = int(u.uid)
         u.uid = int(u.uid)+1
         u.save()
+
         return lastuid
 
 

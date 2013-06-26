@@ -29,9 +29,6 @@ ROOTDIR="$( pwd )"
 PACKAGES="$( cat "${ROOTDIR}/tools/packages-debian.list" )"
 
 echo "slapd slapd/purge_database boolean true" | debconf-set-selections
-
-DEBIAN_FRONTEND="noninteractive" aptitude purge --assume-yes --allow-untrusted -o DPkg::Options::="--force-confmiss" -o DPkg::Options::="--force-confnew" -o DPkg::Options::="--force-overwrite" ${PACKAGES}
-
 echo "slapd slapd/domain string tribus.org" | debconf-set-selections
 echo "slapd shared/organization string tribus" | debconf-set-selections
 echo "slapd slapd/password1 password tribus" | debconf-set-selections

@@ -10,8 +10,8 @@ from django.db import transaction
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 
-from tribus.web.user.write import models as ldapmodels
-from tribus.web.user.write import fields as ldapfields
+from ldapdb.models import base as ldapmodels
+from ldapdb.models import fields as ldapfields
 
 try:
     from django.utils.timezone import now as datetime_now
@@ -67,8 +67,8 @@ class RegistrationManager(models.Manager):
                 return user
         return False
     
-    def create_inactive_user(self, username, email, password,
-                             site, send_email=True):
+    def create_inactive_user(self, username, last_name, first_name, email,
+                             password, site, send_email=True):
         """
         Create a new, inactive ``User``, generate a
         ``RegistrationProfile`` and email its activation key to the
@@ -79,6 +79,8 @@ class RegistrationManager(models.Manager):
         
         """
         new_user = User.objects.create_user(username, email, password)
+        new_user.last_name = last_name
+        new_user.first_name = first_name
         new_user.is_active = False
         new_user.save()
 

@@ -48,7 +48,9 @@ urlpatterns = patterns(
 
     url(regex=r'^logout/$',
         view='django.contrib.auth.views.logout',
-        kwargs={'next_page': settings.LOGIN_REDIRECT_URL},
+        kwargs={
+            'next_page': settings.LOGIN_REDIRECT_URL
+        },
         name='user_logout'
     ),
 

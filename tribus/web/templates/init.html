@@ -41,7 +41,7 @@
                             </ul>
                             <button class="btn btn-yellow btn-block" type="submit">{% trans "Log in" %}</button>
 		                    <ul class="unstyled smaller-90">
-			                    <li><a href="/password/reset">{% trans "forgot your password?" %}</a></li>
+			                    <li><a href="{% url 'user_password_reset' %}">forgot your password?</a></li>
 		                    </ul>
                         </form>
                     </div>
@@ -57,9 +57,13 @@
                         <form accept-charset="UTF-8" action="{% url 'user_signup' %}" autocomplete="off" method="post">
                             {% csrf_token %}
                             <ul class="unstyled">
-                                {% for field in signupform %}
-                                    <li>{{ field }}</li>
-                                {% endfor %}
+                                <li>{{ signupform.username }}</li>
+                                <li class="row-fluid">
+                                    <span class="span6">{{ signupform.first_name }}</span>
+                                    <span class="span6">{{ signupform.last_name }}</span>
+                                </li>
+                                <li>{{ signupform.email }}</li>
+                                <li>{{ signupform.password }}</li>
                             </ul>
                             <button class="btn btn-success btn-block" type="submit">{% trans "Sign up" %}</button>
                             <p class="smaller-90">

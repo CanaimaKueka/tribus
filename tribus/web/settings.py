@@ -12,7 +12,11 @@ djcelery.setup_loader()
 #
 
 AUTHENTICATION_BACKENDS = (
-    'tribus.web.user.read.backend.LDAPBackend',
+    'social_auth.backends.twitter.TwitterBackend',
+    'social_auth.backends.facebook.FacebookBackend',
+    'social_auth.backends.google.GoogleBackend',
+    'social_auth.backends.contrib.github.GithubBackend',
+    'django_auth_ldap.backend.LDAPBackend',
 )
 
 # Baseline configuration.
@@ -79,7 +83,7 @@ DATABASES = {
         'PORT': '',
     },
     'ldap': {
-        'ENGINE': 'tribus.web.user.write',
+        'ENGINE': 'ldapdb.backends.ldap',
         'NAME': AUTH_LDAP_SERVER_URI,
         'USER': AUTH_LDAP_BIND_DN,
         'PASSWORD': AUTH_LDAP_BIND_PASSWORD,
@@ -87,7 +91,7 @@ DATABASES = {
  }
 
 AUTH_PROFILE_MODULE = 'web.UserProfile'
-DATABASE_ROUTERS = ['tribus.web.user.write.router.Router']
+DATABASE_ROUTERS = ['ldapdb.router.Router']
 
 PASSWORD_HASHERS = (
     'tribus.web.hashers.DummyPasswordHasher',
@@ -129,8 +133,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tribus.web',
-    'tribus.web.user',
-    'tribus.web.user.write',
+    'ldapdb',
+    'django_auth_ldap',
+    'social_auth',
     'djcelery',
     'south'
 )
