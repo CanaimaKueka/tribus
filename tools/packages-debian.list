@@ -9,3 +9,6 @@ ldap-utils
 redis-server
 fabric
 gcc
+nginx
+uwsgi
+uwsgi-plugin-python

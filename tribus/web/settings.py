@@ -6,6 +6,7 @@ import os, sys
 import djcelery
 djcelery.setup_loader()
 
+WSGI_APPLICATION = 'tribus.web.wsgi.application'
 
 #
 # LDAP CONFIGURATION -----------------------------------------------------------
@@ -13,22 +14,29 @@ djcelery.setup_loader()
 
 AUTHENTICATION_BACKENDS = (
     'social_auth.backends.twitter.TwitterBackend',
-    # 'social_auth.backends.facebook.FacebookBackend',
-    # 'social_auth.backends.google.GoogleBackend',
-    # 'social_auth.backends.contrib.github.GithubBackend',
+    'social_auth.backends.facebook.FacebookBackend',
+    'social_auth.backends.google.GoogleOAuth2Backend',
+    'social_auth.backends.contrib.github.GithubBackend',
     'django_auth_ldap.backend.LDAPBackend',
 )
 
-SOCIAL_AUTH_ENABLED_BACKENDS = ('twitter')
+# SOCIAL_AUTH_ENABLED_BACKENDS = ('twitter', 'facebook', 'google', 'github')
 SOCIAL_AUTH_DEFAULT_USERNAME = 'tribus'
-SOCIAL_AUTH_UID_LENGTH = 16
-SOCIAL_AUTH_ASSOCIATION_HANDLE_LENGTH = 16
-SOCIAL_AUTH_NONCE_SERVER_URL_LENGTH = 16
-SOCIAL_AUTH_ASSOCIATION_SERVER_URL_LENGTH = 16
-SOCIAL_AUTH_ASSOCIATION_HANDLE_LENGTH = 16
+SOCIAL_AUTH_UID_LENGTH = 32
+SOCIAL_AUTH_ASSOCIATION_HANDLE_LENGTH = 32
+SOCIAL_AUTH_NONCE_SERVER_URL_LENGTH = 32
+SOCIAL_AUTH_ASSOCIATION_SERVER_URL_LENGTH = 32
+SOCIAL_AUTH_ASSOCIATION_HANDLE_LENGTH = 32
 
 TWITTER_CONSUMER_KEY = '1uxQKRiKzHYUl3QbQSQ'
 TWITTER_CONSUMER_SECRET = 'gLLJf5DIuJ4wvrVJI6cL553AIGdLjxnsUlwJbOKhw'
+GOOGLE_OAUTH2_CLIENT_ID = '241742098100.apps.googleusercontent.com'
+GOOGLE_OAUTH2_CLIENT_SECRET = 'AeJo0x0mS4SAtQF_TuAHsfGC'
+FACEBOOK_APP_ID='172639862908723'
+FACEBOOK_API_SECRET='ef4e623c629e9e5ca5632bdd703c80a4'
+FACEBOOK_EXTENDED_PERMISSIONS = ['email']
+GITHUB_APP_ID = 'c3d70354858107387ef8'
+GITHUB_API_SECRET = 'b9defd6193c11c8fb27c9f65ddaba0747524afcc'
 
 # Baseline configuration.
 AUTH_LDAP_SERVER_URI = "ldap://localhost"
