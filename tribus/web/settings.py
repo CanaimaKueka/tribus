@@ -105,13 +105,8 @@ AUTH_PROFILE_MODULE = 'web.UserProfile'
 DATABASE_ROUTERS = ['ldapdb.router.Router']
 
 PASSWORD_HASHERS = (
-    'tribus.web.hashers.DummyPasswordHasher',
-    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
-    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
-    'django.contrib.auth.hashers.BCryptPasswordHasher',
-    'django.contrib.auth.hashers.SHA1PasswordHasher',
-    'django.contrib.auth.hashers.MD5PasswordHasher',
-    'django.contrib.auth.hashers.CryptPasswordHasher',
+    'tribus.web.user.hashers.SSHAPasswordLDAPHasher',
+    #'tribus.web.user.hashers.DummyPasswordHasher',
 )
 
 LOGIN_URL='/login/'
@@ -145,6 +140,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tribus.web',
+    'tribus.web.user',
     'ldapdb',
     'django_auth_ldap',
     'social_auth',
@@ -215,6 +211,15 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.messages.context_processors.messages',
     'tribus.web.processors.tribusconf',
     'social_auth.context_processors.social_auth_by_type_backends',
+)
+
+
+SOCIAL_AUTH_PIPELINE = (
+    'social_auth.backends.pipeline.social.social_auth_user',
+    'social_auth.backends.pipeline.user.get_username',
+    'tribus.web.user.pipeline.create_user',
+    'social_auth.backends.pipeline.social.associate_user',
+    'social_auth.backends.pipeline.social.load_extra_data',
 )
 
 LOGGING = {

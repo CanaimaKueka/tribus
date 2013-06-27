@@ -6,7 +6,7 @@ SHELL = sh -e
 AUTHOR = Luis Alejandro Martínez Faneyth
 EMAIL = luis@huntingbears.com.ve
 MAILIST = tribus-list@googlegroups.com
-PACKAGE = Aguilas
+PACKAGE = Tribus
 CHARSET = UTF-8
 VERSION = $(shell cat VERSION | grep "VERSION" | sed 's/VERSION = //g;s/+.*//g')
 YEAR = $(shell date +%Y)
@@ -20,11 +20,13 @@ POTEAM = Tribus Translation Team
 PODATE = $(shell date +%F\ %R%z)
 
 # Common files lists
-IMAGES = $(shell ls tribus/skins/default/img/ | grep "\.svg" | sed 's/\.svg//g')
-THEMES = $(shell ls tribus/skins/)
+IMGDIR = tribus/web/static/img
+IMGS = $(shell ls $(IMGDIR) | grep "\.svg" | sed 's/\.svg//g')
+MANDIR = docs/man
+MANS = $(shell ls $(MANDIR) | grep "\.rest\.in" | sed 's/\.rest\.in//g')
 LOCALES = $(shell find locale -mindepth 1 -maxdepth 1 -type d | sed 's|locale/pot||g;s|locale/||g')
-PHPS = $(wildcard *.php)
-ALLPHPS = $(shell find . -type f -iname "*.php")
+#PHPS = $(wildcard *.php)
+ALLPYS = $(shell find . -type f -iname "*.py")
 
 # Build depends
 # User build tasks
@@ -42,43 +44,41 @@ SPHINX = $(shell which sphinx-build)
 MSGFMT = $(shell which msgfmt)
 CONVERT = $(shell which convert)
 ICOTOOL = $(shell which icotool)
-LIBSVG = $(shell find /usr/lib/ -maxdepth 1 -type d -iname "imagemagick-*")/modules-Q16/coders/svg.so
+#LIBSVG = $(shell find /usr/lib/ -maxdepth 1 -type d -iname "imagemagick-*")/modules-Q16/coders/svg.so
 
 # Install depends
 # User install tasks
 # install: install aguilas
 #	- copy: copies files over their destination. They need PHP, PHPLDAP and PHPMYSQL.
 #	- config: creates MYSQL tables and LDAP entries.
-PHP = $(shell which php5)
-PHPLDAP = $(shell find /usr/lib/ -name "mysql.so" | grep "php5")
-PHPMYSQL = $(shell find /usr/lib/ -name "ldap.so" | grep "php5")
+#PHP = $(shell which php5)
+#PHPLDAP = $(shell find /usr/lib/ -name "mysql.so" | grep "php5")
+#PHPMYSQL = $(shell find /usr/lib/ -name "ldap.so" | grep "php5")
 
 # Maintainer tasks depends
 # generatepot: generates POT template from php sources. Uses XGETTEXT.
 # updatepos: updates PO files from POT files. Uses MSGMERGE.
 # snapshot: makes a new development snapshot. Uses BASH and GIT.
 # release: makes a new release. Uses BASH, GIT, PYTHON, MD5SUM, TAR and GBP.
-PYTHON = $(shell which python)
-BASH = $(shell which bash)
-GIT = $(shell which git)
+#PYTHON = $(shell which python)
+#BASH = $(shell which bash)
+#GIT = $(shell which git)
 MSGMERGE = $(shell which msgmerge)
 XGETTEXT = $(shell which xgettext)
-DEVSCRIPTS = $(shell which debuild)
-DPKGDEV = $(shell which dpkg-buildpackage)
-DEBHELPER = $(shell which dh)
-GBP = $(shell which git-buildpackage)
-LINTIAN = $(shell which lintian)
-GNUPG = $(shell which gpg)
-MD5SUM = $(shell which md5sum)
-TAR = $(shell which tar)
+#DEVSCRIPTS = $(shell which debuild)
+#DPKGDEV = $(shell which dpkg-buildpackage)
+#DEBHELPER = $(shell which dh)
+#GBP = $(shell which git-buildpackage)
+#LINTIAN = $(shell which lintian)
+#GNUPG = $(shell which gpg)
+#MD5SUM = $(shell which md5sum)
+#TAR = $(shell which tar)
 
 # BUILD TASKS ------------------------------------------------------------------------------
 
-all: gen-img gen-mo gen-conf
-
 build: gen-img gen-mo gen-doc
 
-build-all: gen-img gen-po gen-mo gen-doc gen-conf
+build-all: gen-img gen-po gen-mo gen-doc
 
 gen-doc: gen-wiki gen-html gen-man
 
@@ -110,21 +110,21 @@ gen-html: check-buildep gen-predoc clean-html
 
 gen-man: check-buildep gen-predoc clean-man
 
-	@echo "Generating documentation from source [RST > MAN]"
-	@$(RST2MAN) --language="en" --title="AGUILAS" docs/man/aguilas.rest docs/man/aguilas.1
+	@printf "Generating documentation from source [RST > MAN] ["
+	@for MAN in $(MANS); do \
+		$(RST2MAN) --language="en" --title="$${MAN}" docs/man/$${MAN}.rest docs/man/$${MAN}.1; \
+		printf "."; \
+	done
+	@printf "]\n"
 
 gen-img: check-buildep clean-img
 
 	@printf "Generating images from source [SVG > PNG,ICO] ["
-	@for THEME in $(THEMES); do \
-		for IMAGE in $(IMAGES); do \
-			$(CONVERT) -background None tribus/skins/$${THEME}/img/$${IMAGE}.svg \
-				tribus/skins/$${THEME}/img/$${IMAGE}.png; \
-			printf "."; \
-		done; \
-		$(ICOTOOL) -c -o tribus/skins/$${THEME}/img/favicon.ico \
-			tribus/skins/$${THEME}/img/favicon.png; \
+	@for IMG in $(IMGS); do \
+		$(CONVERT) -background None $(IMGDIR)/$${IMG}.svg $(IMGDIR)/$${IMG}.png; \
+		printf "."; \
 	done
+	@$(ICOTOOL) -c -o $(IMGDIR)/favicon.ico $(IMGDIR)/favicon.png
 	@printf "]\n"
 
 gen-mo: check-buildep clean-mo
@@ -137,63 +137,63 @@ gen-mo: check-buildep clean-mo
 	done
 	@printf "]\n"
 
-gen-conf: check-buildep clean-conf
+#gen-conf: check-buildep clean-conf
 
-	@echo "Filling up configuration"
-	@$(BASH) tools/gen-conf.sh
-	@echo "Configuration file generated!"
+#	@echo "Filling up configuration"
+#	@$(BASH) tools/gen-conf.sh
+#	@echo "Configuration file generated!"
 
 # INSTALL TASKS ------------------------------------------------------------------------------
 
-install: copy config
+#install: copy config
 
-config: check-instdep
+#config: check-instdep
 
-	@mkdir -p $(DESTDIR)/var/www/
-	@mkdir -p $(DESTDIR)/var/log/aguilas/
-	@touch $(DESTDIR)/var/log/aguilas/{ChangePasswordDo.log,DeleteUserDo.log,NewUserDo.log,ResendMailDo.log,ResetPasswordDo.log,ResetPasswordMail.log}
-	@ln -s $(DESTDIR)/usr/share/aguilas /var/www/aguilas
-	@$(PHP) -f setup/install.php
-	@echo "AGUILAS configured and running!"
+#	@mkdir -p $(DESTDIR)/var/www/
+#	@mkdir -p $(DESTDIR)/var/log/aguilas/
+#	@touch $(DESTDIR)/var/log/aguilas/{ChangePasswordDo.log,DeleteUserDo.log,NewUserDo.log,ResendMailDo.log,ResetPasswordDo.log,ResetPasswordMail.log}
+#	@ln -s $(DESTDIR)/usr/share/aguilas /var/www/aguilas
+#	@$(PHP) -f setup/install.php
+#	@echo "AGUILAS configured and running!"
 
-copy:
+#copy:
 
-	@mkdir -p $(DESTDIR)/usr/share/aguilas/setup/
+#	@mkdir -p $(DESTDIR)/usr/share/aguilas/setup/
 
-	@# Installing application
-	@cp -r locale libraries themes $(DESTDIR)/usr/share/aguilas/
-	@install -D -m 644 $(PHPS) $(DESTDIR)/usr/share/aguilas/
-	@install -D -m 644 setup/config.* $(DESTDIR)/usr/share/aguilas/setup/
+#	@# Installing application
+#	@cp -r locale libraries themes $(DESTDIR)/usr/share/aguilas/
+#	@install -D -m 644 $(PHPS) $(DESTDIR)/usr/share/aguilas/
+#	@install -D -m 644 setup/config.* $(DESTDIR)/usr/share/aguilas/setup/
 
-	@# Removing unnecesary svg's
-	@for THEME in $(THEMES); do \
-		for IMAGE in $(IMAGES); do \
-			rm -rf $(DESTDIR)/usr/share/aguilas/themes/$${THEME}/images/$${IMAGE}.svg; \
-		done; \
-		rm -rf themes/$${THEME}/images/favicon.png; \
-	done
-	@echo "Files copied"
+#	@# Removing unnecesary svg's
+#	@for THEME in $(THEMES); do \
+#		for IMAGE in $(IMAGES); do \
+#			rm -rf $(DESTDIR)/usr/share/aguilas/themes/$${THEME}/images/$${IMAGE}.svg; \
+#		done; \
+#		rm -rf themes/$${THEME}/images/favicon.png; \
+#	done
+#	@echo "Files copied"
 
-uninstall: check-instdep
+#uninstall: check-instdep
 
-	@$(PHP) -f setup/uninstall.php
-	@rm -rf $(DESTDIR)/usr/share/aguilas/
-	@rm -rf $(DESTDIR)/var/log/aguilas/
-	@rm -rf $(DESTDIR)/var/www/aguilas/
-	@echo "Uninstalled"
+#	@$(PHP) -f setup/uninstall.php
+#	@rm -rf $(DESTDIR)/usr/share/aguilas/
+#	@rm -rf $(DESTDIR)/var/log/aguilas/
+#	@rm -rf $(DESTDIR)/var/www/aguilas/
+#	@echo "Uninstalled"
 
-reinstall: uninstall install
+#reinstall: uninstall install
 
 
 # MAINTAINER TASKS ---------------------------------------------------------------------------------
 
-runserver:
+runserver: syncdb
 
-	@$(BASH) -c "source virtualenv/bin/activate; python manage.py runserver"
+	@$(BASH) -c "source virtualenv/bin/activate; $(PYTHON) manage.py runserver"
 
 syncdb:
 
-	@$(BASH) -c "source virtualenv/bin/activate; python manage.py syncdb; python manage.py migrate"
+	@$(BASH) -c "source virtualenv/bin/activate; $(PYTHON) manage.py syncdb; $(PYTHON) manage.py migrate"
 
 environment:
 
@@ -225,13 +225,13 @@ gen-pot: check-maintdep
 
 	@echo "Updating POT template ..."
 	@rm $(POTLIST)
-	@for FILE in $(ALLPHPS); do \
+	@for FILE in $(ALLPYS); do \
 		echo "../../.$${FILE}" >> $(POTLIST); \
 	done
-	@cd locale/pot/aguilas/ && $(XGETTEXT) --msgid-bugs-address="$(MAILIST)" \
+	@cd locale/pot/tribus/ && $(XGETTEXT) --msgid-bugs-address="$(MAILIST)" \
 		--package-version="$(VERSION)" --package-name="$(PACKAGE)" \
 		--copyright-holder="$(AUTHOR)" --no-wrap --from-code=utf-8 \
-		--language=php -k_ -s -j -o messages.pot -f POTFILES.in
+		--language=python -k_ -s -j -o messages.pot -f POTFILES.in
 	@sed -i -e 's/# SOME DESCRIPTIVE TITLE./# $(POTITLE)./' \
 		-e 's/# Copyright (C) YEAR Luis Alejandro Martínez Faneyth/# Copyright (C) $(YEAR) $(AUTHOR)/' \
 		-e 's/same license as the PACKAGE package./same license as the $(PACKAGE) package./' \
@@ -282,13 +282,11 @@ clean-predoc:
 clean-img:
 
 	@printf "Cleaning generated images [PNG,ICO] ["
-	@for THEME in $(THEMES); do \
-		for IMAGE in $(IMAGES); do \
-			rm -rf themes/$${THEME}/images/$${IMAGE}.png; \
-			printf "."; \
-		done; \
-		rm -rf themes/$${THEME}/images/favicon.ico; \
+	@for IMG in $(IMGS); do \
+		rm -rf $(IMGDIR)/$${IMAGE}.png; \
+		printf "."; \
 	done
+	rm -rf $(IMGDIR)/favicon.ico
 	@printf "]\n"
 
 clean-mo:
@@ -317,10 +315,10 @@ clean-man:
 	@echo "Cleaning generated man pages ..."
 	@rm -rf docs/man/aguilas.1
 
-clean-conf:
+#clean-conf:
 
-	@echo "Cleaning generated configuration ..."
-	@rm -rf setup/config.php
+#	@echo "Cleaning generated configuration ..."
+#	@rm -rf setup/config.php
 
 # CHECK DEPENDENCIES ---------------------------------------------------------------------------------------------
 

@@ -140,15 +140,6 @@ class SignupForm(Form):
                                     )
                                 )
 
-#    password2 = forms.CharField(
-#                                    label = _('Password (repeat)'), required = True,
-#                                    widget = forms.PasswordInput(
-#                                        attrs = {
-#                                            'placeholder': _('Repeat the password'),
-#                                            'class': 'input-xlarge'
-#                                        }
-#                                    )
-#                                )
 
     def clean_username(self):
         """
@@ -164,19 +155,6 @@ class SignupForm(Form):
             if existingdb.exists():
                 existingdb.delete()
             return self.cleaned_data['username']
-
-#    def clean(self):
-#        """
-#        Verifiy that the values entered into the two password fields
-#        match. Note that an error here will end up in
-#        ``non_field_errors()`` because it doesn't apply to a single
-#        field.
-#        
-#        """
-#        if 'password1' in self.cleaned_data and 'password2' in self.cleaned_data:
-#            if self.cleaned_data['password1'] != self.cleaned_data['password2']:
-#                raise forms.ValidationError(_("The two password fields didn't match."))
-#        return self.cleaned_data
 
 
 class PasswordResetForm(BasePasswordResetForm):
@@ -218,21 +196,21 @@ class SetPasswordForm(BaseSetPasswordForm):
                                 )
 
 
-    def create_ldap_password(self, password, algorithm='SSHA', salt=None):
-        """
-        Encrypts a password as used for an ldap userPassword attribute.
-        """
-        s = hashlib.sha1()
-        s.update(password)
+#    def create_ldap_password(self, password, algorithm='SSHA', salt=None):
+#        """
+#        Encrypts a password as used for an ldap userPassword attribute.
+#        """
+#        s = hashlib.sha1()
+#        s.update(password)
 
-        if algorithm == 'SSHA':
-            if salt is None:
-                salt = ''.join([random.choice(string.letters) for i in range(8)])
+#        if algorithm == 'SSHA':
+#            if salt is None:
+#                salt = ''.join([random.choice(string.letters) for i in range(8)])
 
-            s.update(salt)
-            return '{SSHA}%s' % base64.encodestring(s.digest() + salt).rstrip()
-        else:
-            raise NotImplementedError
+#            s.update(salt)
+#            return '{SSHA}%s' % base64.encodestring(s.digest() + salt).rstrip()
+#        else:
+#            raise NotImplementedError
 
 
     def save(self, commit=True):
@@ -243,11 +221,13 @@ class SetPasswordForm(BaseSetPasswordForm):
             raise forms.ValidationError(_("A user with that username already exists."))
         else:
             self.user.set_password(self.cleaned_data['new_password1'])
-            u.password = self.create_ldap_password(self.cleaned_data['new_password1'])
-            u.save()
 
             if commit:
                 self.user.save()
+
+            u.password = self.user.password
+            u.save()
+
             return self.user
 
 

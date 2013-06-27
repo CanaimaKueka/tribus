@@ -1,4 +1,5 @@
-from setuptools import setup
+# -*- coding: utf-8 -*-
+from setuptools import setup, find_packages
 
 setup(
     name="tribus",
@@ -9,7 +10,7 @@ setup(
     license="GPL",
     keywords="git buildbot django",
     url="TODO",
-    packages=['tribus'],
+    packages=find_packages(),
     install_requires=[
         'django',
         'django-auth-ldap',

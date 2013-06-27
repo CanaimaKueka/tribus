@@ -26,7 +26,8 @@ from django.contrib.auth.hashers import make_password
 
 from tribus.web.user import signals
 from tribus.web.user.forms import SignupForm, LoginForm
-from tribus.web.user.models import SignupProfile, LdapUser
+from tribus.web.user.models import SignupProfile
+from tribus.web.user.pipeline import create_ldap_user
 
 
 class _RequestPassingFormView(FormView):
@@ -280,75 +281,12 @@ class ActivationView(BaseActivationView):
         activated_user = SignupProfile.objects.activate_user(activation_key)
 
         if activated_user:
-            self.create_ldap_user(activated_user)
+            ldapuser = create_ldap_user(activated_user)
             signals.user_activated.send(sender=self.__class__,
                                         user=activated_user,
                                         request=request)
 
         return activated_user
-
-
-    def create_ldap_user(self, activated_user):
-        ldapuser = LdapUser()
-        ldapuser.first_name = activated_user.first_name or 'unknown'
-        ldapuser.last_name = activated_user.last_name or 'unknown'
-        ldapuser.full_name = activated_user.first_name+' '+activated_user.last_name
-        ldapuser.email = activated_user.email
-        ldapuser.username = activated_user.username
-        ldapuser.password = self.create_ldap_password(activated_user.password)
-        ldapuser.uid = self.get_last_uid()
-        ldapuser.group = 1234
-        ldapuser.home_directory = '/home/'+activated_user.username
-        ldapuser.login_shell = '/bin/false'
-        ldapuser.description = 'Created by Tribus'
-        ldapuser.save()
-
-
-    def create_ldap_password(self, password, algorithm='SSHA', salt=None):
-        """
-        Encrypts a password as used for an ldap userPassword attribute.
-        """
-        s = hashlib.sha1()
-        s.update(password)
-
-        if algorithm == 'SSHA':
-            if salt is None:
-                salt = ''.join([random.choice(string.letters) for i in range(8)])
-
-            s.update(salt)
-            return '{SSHA}%s' % base64.encodestring(s.digest() + salt).rstrip()
-        else:
-            raise NotImplementedError
-
-
-    def get_last_uid(self):
-        try:
-            u = LdapUser.objects.get(username='maxUID')
-        except LdapUser.DoesNotExist:
-            return self.create_last_uid_entry()
-
-        lastuid = int(u.uid)
-        u.uid = int(u.uid)+1
-        u.save()
-
-        return lastuid
-
-
-    def create_last_uid_entry(self):
-        maxuid = LdapUser()
-        maxuid.first_name = 'max'
-        maxuid.last_name = 'UID'
-        maxuid.full_name = maxuid.first_name+maxuid.last_name
-        maxuid.email = ''
-        maxuid.username = 'maxUID'
-        maxuid.password = ''
-        maxuid.uid = 2000
-        maxuid.group = 1234
-        maxuid.home_directory = '/home/'+maxuid.username
-        maxuid.login_shell = '/bin/false'
-        maxuid.description = 'Created by Tribus'
-        maxuid.save()
-        return maxuid.uid
 
     def get_success_url(self, request, user):
         return ('user_activate_complete', (), {})

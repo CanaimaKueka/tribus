@@ -1,0 +1,43 @@
+Tribus
+======
+
+Tribus es una red social para la gestión de comunidades de software libre. Permite una gestión descentralizada a través del reconocimiento mutuo de las capacidades de sus miembros y la asignación automática de responsabilidades según el nivel de experiencia alcanzado hasta el momento.
+
+El reconocimiento (o valoración) se realiza según un patrón establecido de puntos que representan la cantidad de experiencia obtenida a partir del cumplimiento de una o más actividades dentro de la plataforma. Hablamos de reconocimiento mutuo puesto que cada miembro inscrito en la red debe firmar un contrato social en el cuál acepta las condiciones en que él y todos los demás miembros serán valorados.
+
+El reconocimiento sirve para establecer una metrica relativa de la cantidad de conocimiento adquirido por los miembros durante la interacción con la plataforma. Esto permite ofrecer responsabilidades de gestión dentro de la plataforma a los miembros con diferentes grados de experiencia, así como también establecer recompensas específicas a través de un sistema de rangos o privilegios.
+
+La plataforma permite realzar diferentes actividades para facilitar el desenvolvimiento de proyectos de software libre en las áreas de diseño gráfico, documentación, traducción, desarrollo y activismo social, a través de las cuales se valoran las diferentes tareas que caracterizan la experiencia y conocimiento.
+
+Desarrollo
+----------
+
+Esta aplicación está en período de desarrollo, así que lo más probable es que **no funcione**. Aún no existe un método de instalación para medios en producción, así que si deseas usarla, la forma más rápida es que nos eches una mano.
+
+
+Colaboración
+------------
+
+Este proyecto está siendo desarrollado en Python, utilizando el framework de desarrollo web Django. Como podrás ver estamos utiliizando GitHub para gestionar las colaboraciones, así que para empezar, haz un fork de este repositorio y clonalo en tu pc:
+
+git clone https://github.com/<USUARIO>/tribus
+
+Tribus tiene un entorno de desarrollo python que ya hemos automatizado para ti. Cuando hayas clonado el repositorio, ejecuta la orden "make environment" en la carpeta raíz para crear el entorno de desarrollo (se te pedirá tu clave de root para instalar paquetes y necesitarás una conexión a internet). Luego para correr el servidor de desarrollo haz "make runserver" y apunta tu navegador a la dirección 127.0.0.1:8000 para que veas como va Tribus (si es que funciona).
+
+Existe un diagrama del diseño de la aplicación en docs/mindmap.svg (si prefieres ver un archivo png, está docs/mindmap.png pero debes hacer "make mindmap" primero). El diagrama puede servirte como guía de referencia para ver todos los componentes de la plataforma, pero no lo utilices para empezar a desarrollar.
+
+Para empezar a trabajar en una tarea específica de Tribus, debes revisar los tickets para ver cuales son las tareas disponibles. Allí se encuentran las tareas completadas, las tareas en proceso y las tareas por hacer. Cada tarea está descrita de la forma más detallada posible, para tomar una tarea simplemente haz un comentario en el ticket diciendo que tomarás la tarea. Si necesitas mayor información pregunta mediante comentarios en el ticket.
+
+Cuando termines una tarea, haz una solicitud de pull request desde tu fork hacia el repositorio principal para que pueda ser incorporado. Demás está decir que todos los colaboradores tendrán sus reconocimientos de autor en las partes que correspondan.
+
+
+Documentación
+-------------
+
+Aún no existe documentación. Este README y el diseño de la aplicación son los primeros pasos para el desarrollo de la aplicación. Conforme avance, iremos agrandando la documentación.
+
+
+Contacto
+--------
+
+Tribus tiene una lista de correo para desarrollo en tribus-dev@googlegroups.com, puedes suscribirte y comunicarte por esa vía o escribir al correo del autor luis@huntingbears.com.ve.
