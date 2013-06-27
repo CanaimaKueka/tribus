@@ -21,6 +21,7 @@ pytz==2013b
 redis==2.7.5
 six==1.3.0
 wsgiref==0.1.2
+uwsgi
 -e git+https://github.com/HuntingBears/django-ldapdb.git#egg=ldapdb
 -e git+https://github.com/HuntingBears/django-auth-ldap.git#egg=django_auth_ldap
 -e git+https://github.com/HuntingBears/django-social-auth.git#egg=social_auth

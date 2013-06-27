@@ -189,11 +189,11 @@ gen-mo: check-buildep clean-mo
 
 runserver: syncdb
 
-	@$(BASH) -c "source virtualenv/bin/activate; $(PYTHON) manage.py runserver"
+	@$(BASH) -c "source virtualenv/bin/activate; uwsgi --ini tools/tribus.uwsgi.ini"
 
 syncdb:
 
-	@$(BASH) -c "source virtualenv/bin/activate; $(PYTHON) manage.py syncdb; $(PYTHON) manage.py migrate"
+	@$(BASH) -c "source virtualenv/bin/activate; python manage.py syncdb; python manage.py migrate"
 
 environment:
 
