@@ -187,9 +187,13 @@ gen-mo: check-buildep clean-mo
 
 # MAINTAINER TASKS ---------------------------------------------------------------------------------
 
+#deploy:
+#
+#	@$(BASH) -c "source virtualenv/bin/activate; python manage.py runserver"
+
 runserver: syncdb
 
-	@$(BASH) -c "source virtualenv/bin/activate; uwsgi --ini tools/tribus.uwsgi.ini"
+	@$(BASH) -c "source virtualenv/bin/activate; python manage.py runserver"
 
 syncdb:
 
@@ -266,7 +270,7 @@ deb-final-release: check-maintdep
 
 clean: clean-img clean-mo clean-man clean-conf clean-predoc clean-pyc
 
-clean-all: clean-img clean-mo clean-html clean-wiki clean-man clean-conf clean-predoc clean-pyc
+clean-all: clean-img clean-mo clean-html clean-wiki clean-man   clean-predoc clean-pyc
 
 clean-pyc:
 

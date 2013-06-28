@@ -10,3 +10,5 @@ redis-server
 fabric
 gcc
 nginx
+uwsgi
+uwsgi-plugins-python

@@ -48,15 +48,15 @@ su postgres -c "psql -U postgres -c \"GRANT ALL PRIVILEGES ON DATABASE tribus to
 sh ${ROOTDIR}/tools/maint/ldap-populate-users.sh  cn=admin,dc=tribus,dc=org tribus localhost dc=tribus,dc=org
 
 service nginx stop
-#service uwsgi stop
+service uwsgi stop
 
 rm -rf /etc/nginx/sites-enabled/tribus.nginx.conf
-#rm -rf /etc/uwsgi/apps-enabled/tribus.uwsgi.ini
+rm -rf /etc/uwsgi/apps-enabled/tribus.uwsgi.ini
 
 ln -s ${ROOTDIR}/tools/tribus.nginx.conf /etc/nginx/sites-enabled/
-#ln -s ${ROOTDIR}/tools/tribus.uwsgi.ini /etc/uwsgi/apps-enabled/
+ln -s ${ROOTDIR}/tools/tribus.uwsgi.ini /etc/uwsgi/apps-enabled/
 
 service nginx start
-#service uwsgi start
+service uwsgi start
 
 exit 0
