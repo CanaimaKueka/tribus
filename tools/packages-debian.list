@@ -11,4 +11,4 @@ fabric
 gcc
 nginx
 uwsgi
-uwsgi-plugins-python
+uwsgi-plugin-python

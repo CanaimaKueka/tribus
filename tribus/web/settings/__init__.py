@@ -1,0 +1,1 @@
+from tribus.web.settings.core import *

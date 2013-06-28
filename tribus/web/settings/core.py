@@ -125,12 +125,12 @@ ACCOUNT_ACTIVATION_DAYS = 7
 
 BROKER_URL = 'redis://localhost:6379/0'
 
-SITE_ROOT = os.path.realpath(os.path.join(os.path.dirname(__file__)))
+SITE_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 MEDIA_ROOT = ''
 MEDIA_URL = '/media/'
 ADMIN_MEDIA_PREFIX = '/media/admin/'
 STATIC_ROOT = ''
-STATIC_URL = os.path.join(SITE_ROOT, 'static', '')
+STATIC_URL = '/static/'
 STATICFILES_DIRS = (
 	os.path.join(SITE_ROOT, 'static', ''),
 )

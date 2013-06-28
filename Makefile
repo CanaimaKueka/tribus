@@ -187,9 +187,9 @@ gen-mo: check-buildep clean-mo
 
 # MAINTAINER TASKS ---------------------------------------------------------------------------------
 
-#deploy:
-#
-#	@$(BASH) -c "source virtualenv/bin/activate; python manage.py runserver"
+deploy:
+
+	@$(BASH) -c "source virtualenv/bin/activate; python manage.py runserver"
 
 runserver: syncdb
 
