@@ -63,6 +63,9 @@ ICOTOOL = $(shell which icotool)
 #PYTHON = $(shell which python)
 #BASH = $(shell which bash)
 #GIT = $(shell which git)
+SU = $(shell which su)
+APTITUDE = $(shell which aptitude)
+FABRIC = $(shell which fab)
 MSGMERGE = $(shell which msgmerge)
 XGETTEXT = $(shell which xgettext)
 #DEVSCRIPTS = $(shell which debuild)
@@ -187,6 +190,19 @@ gen-mo: check-buildep clean-mo
 
 # MAINTAINER TASKS ---------------------------------------------------------------------------------
 
+checkpkg:
+
+	@printf "Checking if we have $(PACKAGE) ... "
+	@if [ -z $(shell which $(TESTBIN)) ]; then \
+		echo "[ABSENT]"; \
+		echo "Installing $(PACKAGE) ... "; \
+		echo "Enter your root password:"; \
+		$(SU) root -c "$(APTITUDE) install $(PACKAGE)"; \
+	else \
+		echo "[OK]"; \
+	fi
+	@echo
+
 deploy:
 
 	@$(BASH) -c "source virtualenv/bin/activate; python manage.py runserver"
@@ -199,11 +215,12 @@ syncdb:
 
 	@$(BASH) -c "source virtualenv/bin/activate; python manage.py syncdb; python manage.py migrate"
 
-environment:
+workenv:
 
-	@echo "Enter your root password:"
-	@su root -c "$(BASH) tools/install-packages.sh"
-	@$(BASH) tools/create-virtualenv.sh
+	@$(MAKE) checkpkg PACKAGE=fabric TESTBIN=fab
+	@$(FAB) -f setup.py workenv
+	# @su root -c "$(BASH) tools/install-packages.sh"
+	# @$(BASH) tools/create-virtualenv.sh
 
 update-environment:
 
