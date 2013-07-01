@@ -1,0 +1,44 @@
+#!/bin/bash -e
+#
+# ==============================================================================
+# PAQUETE: @PAQUETE@
+# ARCHIVO: postinst
+# DESCRIPCIÓN: Configura el sistema despues la instalación del paquete.
+# COPYRIGHT:
+#  (C) @YEAR@ @AUTHOR_NAME@ <@AUTHOR_MAIL@>
+# LICENCIA: GPL3
+# ==============================================================================
+#
+# Este programa es software libre. Puede redistribuirlo y/o modificarlo bajo los
+# términos de la Licencia Pública General de GNU (versión 3).
+
+PKG="@PAQUETE@"
+
+case ${1} in
+
+	configure)
+
+        # Aquí va lo que el paquete debe configurar/crear/borrar después de
+        # instalarse. Lenguaje a usar: BASH.
+
+	;;
+
+        abort-upgrade|abort-remove|abort-deconfigure)
+
+        # Aquí va lo que el paquete debe configurar/crear/borrar en caso
+        # de abortarse la instalación. Lenguaje a usar: BASH.
+
+        ;;
+
+        *)
+
+                echo "postinst no reconoce el argumento '"${1}"'" >&2
+                exit 1
+
+        ;;
+
+esac
+
+#DEBHELPER#
+
+exit 0

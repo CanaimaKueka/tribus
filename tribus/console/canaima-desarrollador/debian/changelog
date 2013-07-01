@@ -1,0 +1,323 @@
+canaima-desarrollador (1.2-2) unstable; urgency=low
+
+  * [d53daa3] Corrigiendo mantenedor.
+
+ -- Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>  Thu, 05 Jul 2012 22:32:13 -0430
+
+canaima-desarrollador (1.2-1) unstable; urgency=low
+
+  * [ab4e26f] Añadiendo devscripts a las dependencias y sustituyendo
+    canaima-curiara por sensible-browser. Resolviendo #445 y #364.
+
+ -- Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>  Wed, 04 Jul 2012 20:11:57 -0430
+
+canaima-desarrollador (1.1+39) testing; urgency=low
+
+  * [455b67d] Removiendo dependencia a un navegador y la creación de la
+    entrada de menú
+  * [ad985a9] Removiendo dependencia a un navegador y la creación de la
+    entrada de menú
+  * [b362440] Removiendo git-tag del empaquetador
+  * [f4e2017] Removiendo git-tag del empaquetador
+  * [59a296f] Removiendo git-tag del empaquetador
+  * [0fe9526] Removiendo git-tag del empaquetador
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Wed, 27 Jul 2011 08:52:34 -0430
+
+canaima-desarrollador (1.1+38) testing; urgency=low
+
+  * [c13418f] Cambaindo la dependencia de construcción de texlive-latex-
+    extra a texlive, es más completo.
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Wed, 18 May 2011 01:04:53 -0430
+
+canaima-desarrollador (1.1+37) testing; urgency=low
+
+  * [1fcf907] Agregando dependencia a lintian, para asegurar la revisión
+    de calidad.
+  * [56d290e] Agregando dependencia a lintian, para asegurar la revisión
+    de calidad.
+  * [8b856be] Agregando dependencia a lintian, para asegurar la revisión
+    de calidad.
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Wed, 18 May 2011 00:56:44 -0430
+
+canaima-desarrollador (1.1+36) testing; urgency=low
+
+  * [a23f02f] Moviendo la ubicación del .desktop a GTK;Development;IDE.
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Fri, 15 Apr 2011 01:15:49 -0430
+
+canaima-desarrollador (1.1+35) testing; urgency=low
+
+  * [3d4451b] Agregando dependencias a canaima-curiara o www-browser.
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Sun, 27 Mar 2011 12:33:17 -0430
+
+canaima-desarrollador (1.1+34) testing; urgency=low
+
+  * [88af140] Agregando dependencias fakeroot y build-essential.
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Sat, 26 Mar 2011 11:51:06 -0430
+
+canaima-desarrollador (1.1+33) testing; urgency=low
+
+  * [f013915] Agregando Carlos Escobar a Uploaders.
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Tue, 22 Mar 2011 14:38:26 -0430
+
+canaima-desarrollador (1.1+32) testing; urgency=low
+
+  * [48f4951] Arreglando forma en que se copia el Manual del
+    Desarrolldor en el Escritorio.
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Tue, 22 Mar 2011 14:22:05 -0430
+
+canaima-desarrollador (1.1+31) testing; urgency=low
+
+  * [658a843] [ canaima-desarrollador ] Los siguientes archivos han sido
+    modificados/añadidos: funciones-desarrollador.sh
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Fri, 18 Mar 2011 00:31:53 -0430
+
+canaima-desarrollador (1.1+30) testing; urgency=low
+
+  * [c19033f] [ canaima-desarrollador ] Los siguientes archivos han sido
+    modificados/añadidos: funciones-desarrollador.sh
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Fri, 18 Mar 2011 00:29:36 -0430
+
+canaima-desarrollador (1.1+29) testing; urgency=low
+
+  * [05731d3] [ canaima-desarrollador ] Los siguientes archivos han sido
+    modificados/añadidos: funciones-desarrollador.sh
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Thu, 17 Mar 2011 23:48:03 -0430
+
+canaima-desarrollador (1.1+28) testing; urgency=low
+
+  * [d211c7a] [ canaima-desarrollador ] Los siguientes archivos han sido
+    modificados/añadidos: funciones-desarrollador.sh
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Thu, 17 Mar 2011 16:59:46 -0430
+
+canaima-desarrollador (1.1+27) testing; urgency=low
+
+  * [4513efc] [ canaima-desarrollador ] Los siguientes archivos han sido
+    modificados/añadidos: control funciones-desarrollador.sh
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Thu, 17 Mar 2011 16:49:26 -0430
+
+canaima-desarrollador (1.1+26) testing; urgency=low
+
+  * [0e16eeb] [ canaima-desarrollador ] Los siguientes archivos han sido
+    modificados/añadidos: postinst hola1.deb hola2.deb hola3.deb
+    funciones-desarrollador.sh
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Thu, 17 Mar 2011 16:12:13 -0430
+
+canaima-desarrollador (1.1+25) testing; urgency=low
+
+  * [37c0134] Mejorando Makefile y corrigiendo bug del cambio de
+    directorio mientras se empaqueta
+  * [122451d] Corrigiendo error en el Makefile.
+  * [6a59e1f] Borrando residuo de compilación.
+  * [a57f3b1] Mejorando la forma en que se firman los paquetes.
+  * [0efc847] Agregando opción "--no-enviar" cuando se empaqueta
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Mon, 14 Mar 2011 17:10:24 -0430
+
+canaima-desarrollador (1.1+24) testing; urgency=low
+
+  * [06befe6] Mejorando documentación de ayuda
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Mon, 14 Mar 2011 14:49:19 -0430
+
+canaima-desarrollador (1.1+23) testing; urgency=low
+
+  * [da36c13] Removiendo residuos y haciendo más específica la forma en
+    que se determina que sólo se modificó el debian/changelog
+  * [b954ce8] Mejorando la forma en que se envían las tags
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Mon, 14 Mar 2011 14:32:59 -0430
+
+canaima-desarrollador (1.1+22) testing; urgency=low
+
+  * [49f236d] Especificando mensaje de Nueva versión cuando se hace el
+    commit de sólo debian/changelog
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Mon, 14 Mar 2011 13:51:22 -0430
+
+canaima-desarrollador (1.1+21) testing; urgency=low
+
+  * [381f83c] Corrigiendo bug con la ejecución de los parámetros de
+    ayuda.
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Mon, 14 Mar 2011 13:22:21 -0430
+
+canaima-desarrollador (1.1+20) testing; urgency=low
+
+  * [01baf16] Corrigiendo bugs
+  * [b0df91a] Corrigiendo bug que separa el mensaje se commit por sus
+    espacios.
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Mon, 14 Mar 2011 12:30:45 -0430
+
+canaima-desarrollador (1.1+19) testing; urgency=low
+
+  * [e01ce43] Corrigiendo bug
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Fri, 18 Feb 2011 03:57:55 -0430
+
+canaima-desarrollador (1.1+18) testing; urgency=low
+
+  * [6607829] Mejorando declaración de variables
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Fri, 18 Feb 2011 03:36:04 -0430
+
+canaima-desarrollador (1.1+17) testing; urgency=low
+
+  * [ca89f38] Mejorando el postrm y corrigiendo bugs
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Fri, 18 Feb 2011 03:12:49 -0430
+
+canaima-desarrollador (1.1+16) testing; urgency=low
+
+  * [c7b616a] Corrigiendo bug con el grep --
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Fri, 18 Feb 2011 02:35:00 -0430
+
+canaima-desarrollador (1.1+15) testing; urgency=low
+
+  * [9986c62] Agregando lógica para detectar opciones erróneas
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Fri, 18 Feb 2011 02:21:15 -0430
+
+canaima-desarrollador (1.1+14) testing; urgency=low
+
+  * [b8a9ace] Mejorando manual, removiendo script duplicado, corrigiendo
+    bugs en bash.
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Fri, 18 Feb 2011 01:49:32 -0430
+
+canaima-desarrollador (1.1+13) testing; urgency=low
+
+  * [98816d5] Corrigiendo bug, agregando ayudante "debug"
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Fri, 18 Feb 2011 00:46:03 -0430
+
+canaima-desarrollador (1.1+12) testing; urgency=low
+
+  * [a9678c3] Mejorando ayuda
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Thu, 17 Feb 2011 23:53:39 -0430
+
+canaima-desarrollador (1.1+11) testing; urgency=low
+
+  * [c89b739] Corrigiendo bug en la variable VARIABLES
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Thu, 17 Feb 2011 22:49:45 -0430
+
+canaima-desarrollador (1.1+10) testing; urgency=low
+
+  * [1f51d36] Mejorando el esquema de ayuda
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Thu, 17 Feb 2011 21:24:16 -0430
+
+canaima-desarrollador (1.1+9) testing; urgency=low
+
+  * [e458a5d] Corrigiendo bugs
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Thu, 17 Feb 2011 17:12:18 -0430
+
+canaima-desarrollador (1.1+8) testing; urgency=low
+
+  * [cd5cb3b] Corrigiendo bugs
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Wed, 16 Feb 2011 17:35:18 -0430
+
+canaima-desarrollador (1.1+7) testing; urgency=low
+
+  * [e7aca9a] Corrigiendo bugs
+  * [61049e2] Corrigiendo error
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Wed, 16 Feb 2011 16:32:02 -0430
+
+canaima-desarrollador (1.1+6) testing; urgency=low
+
+  * [9124c13] Corrigiendo bugs
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Wed, 16 Feb 2011 15:07:00 -0430
+
+canaima-desarrollador (1.1+5) testing; urgency=low
+
+  * [b7d1864] Corrigiendo bugs
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Wed, 16 Feb 2011 11:53:42 -0430
+
+canaima-desarrollador (1.1+4) testing; urgency=low
+
+  * [6efd10f] Corrigiendo bugs
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Wed, 16 Feb 2011 10:38:48 -0430
+
+canaima-desarrollador (1.1+3) testing; urgency=low
+
+  * [ff58745] Corrigiendo bugs
+  * [587789c] Cambiando c-d por un enlace y no una copia, arreglado bug
+    a la hora de ver la ayuda
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Wed, 16 Feb 2011 09:20:07 -0430
+
+canaima-desarrollador (1.1+2) testing; urgency=low
+
+  * [fe63420] Corrigiendo detalles en el manual
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Fri, 04 Feb 2011 16:29:11 -0430
+
+canaima-desarrollador (1.1+1) testing; urgency=low
+
+  * [d245c72] Corrigiendo detalles
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Fri, 04 Feb 2011 16:15:45 -0430
+
+canaima-desarrollador (1.1+0) testing; urgency=low
+
+  * [7aafd29] Corrigiendo error de chequeo en funciones-desarrollador.sh
+  * [0a756b6] Mejorando la documentación
+  * [c747b3d] Mejorando el formato de los archivos rst
+  * [efb5501] Removiendo basura de compilación anterior
+  * [21e979a] Corrigiendo error en el Makefile
+  * [cd21b23] Corrigiendo otro error en el Makefile
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Fri, 04 Feb 2011 16:00:59 -0430
+
+canaima-desarrollador (1.0+2) testing; urgency=low
+
+  * [9c11a2e] Corrigiendo debian/rules
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Wed, 02 Feb 2011 09:09:27 -0430
+
+canaima-desarrollador (1.0+1) testing; urgency=low
+
+  * [2725117] Modificando scripts del mantenedor
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Wed, 02 Feb 2011 08:59:47 -0430
+
+canaima-desarrollador (1.0+0) testing; urgency=low
+
+  * Primera versión para Canaima GNU/Linux
+  * [99ae97e] Documentando, mejorando funciones
+  * [5d77a4e] Borrando rastros .swp
+  * [1a73e3f] Agragando documentación y agregando comentarios en los
+    scripts para describir su funcionamiento
+  * [4841219] Agregando fuentes RST para diversas partes del manual
+  * [85c4e4f] Últimos detalles a la documentación
+  * [3a143cd] Actualizando documentación
+  * [dea4022] Merge branches 'master' and 'upstream' of
+    gitorious.org:canaima-gnu-linux/canaima-desarrollador
+  * [bec681e] Mejorando el esquema de generación de documentación,
+    agregando el lanzador del manual del desarrollador, docs y manpages
+  * [96e16ce] Renombrando entrada del desktop
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Wed, 02 Feb 2011 07:43:20 -0430

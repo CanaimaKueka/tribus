@@ -1,0 +1,32 @@
+Documentación para el Ayudante "crear-proyecto" de Canaima Desarrollador
+
+Uso:
+
+  canaima-desarrollador crear-proyecto --nombre="proyecto" --version="X.Y+Z" --destino="canaima" --licencia="gpl" [--ayuda]
+  canaima-desarrollador debianizar --nombre="proyecto" --version="X.Y+Z" --destino="canaima" --licencia="gpl" [--ayuda]
+  c-d crear-proyecto --nombre="proyecto" --version="X.Y+Z" --destino="canaima" --licencia="gpl" [--ayuda]
+  c-d debianizar --nombre="proyecto" --version="X.Y+Z" --destino="canaima" --licencia="gpl" [--ayuda]
+
+Parámetros:
+
+  --nombre
+	Un nombre para tu proyecto, que puede contener letras, números, puntos y guiones. Cualquier otro caracter no está permitido.
+
+  --version
+	La versión inicial de tu proyecto. Se permiten números, guiones, puntos, letras o dashes (~).
+
+  --destino	
+	Especifica si es un proyecto de empaquetamiento para Canaima GNU/Linux o si es un proyecto personal. Las opciones disponibles son: [canaima|personal].
+
+  --licencia
+	Especifica el tipo de licencia bajo el cuál distribuirás tu trabajo. Las opciones disponibles son: [apache|artistic|bsd|gpl|gpl2|gpl3|lgpl|lgpl2|lgpl3].
+			
+  --ayuda
+	Muestra ésta ayuda.
+  
+Si estás debianizando un proyecto existente, lo que ingreses en --nombre="proyecto" y --version="X.Y+Z" se utilizará para determinar cuál es el nombre de la carpeta a debianizar dentro del directorio del desarrollador, suponiendo que tiene el nombre "proyecto-X.Y+Z". Si no se llama así, habrá un error.
+
+Para mayor información, puedes recurrir a la entrada del manual para canaima-desarrollador (man canaima-desarrollador).
+
+Contacto: desarrolladores@canaima.softwarelibre.gob.ve
+

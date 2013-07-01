@@ -1,0 +1,216 @@
+DEVELOPMENT RELEASE v3.0+dev20130429134042 (04/29/13)
+Actualizando plantillas de documentación.
+Agregando plantillas en español para syslinux.
+
+DEVELOPMENT RELEASE v3.0+dev20120707030932 (07/07/12)
+Actualizando perfil "popular"
+Mejorando forma de instalación a través del Makefile.
+Actualizando perfil de Canaima Popular.
+
+DEVELOPMENT RELEASE v3.0+dev20120630185151 (06/30/12)
+Ajustando el arte gráfico de la gui.
+Mejorando esquema de traducción de cadenas de texto.
+Ingeniería de detalle para los módulos de la gui.
+Actualizando perfiles.
+
+DEVELOPMENT RELEASE v3.0+20120626164317 (06/26/12)
+Cambiando la ubicación de la carpeta de código fuente de la interfaz gráfica de ./gui/canaimasemilla a ./canaimasemilla
+Cambiando ubicación del binario principal del core a la carpeta raíz.
+Cambiando ubicación del binario principal de la gui  a la carpeta raíz.
+Reestructurando ubicación y nombres de las librerías principales de la gui.
+Actualizando cadenas de traducción.
+Introduciendo nuevo script para la asistencia en la traducción de cadenas de texto.
+
+DEVELOPMENT RELEASE v3.0+20120621060642 (06/21/12)
+Removiendo módulos inactivos de la gui.
+Moviendo definiciones de elementos GTK principales a library.controller.
+Actualizando traducciones-
+Mejorando el reconocimiento de binarios.
+
+DEVELOPMENT RELEASE v3.0+20120613115157 (06/13/12)
+Completando módulo para grabar imágenes.
+Completando módulo para probar imágenes.
+Actualizando traducciones de la gui y el core.
+Actualizando documentación.
+Mejorando la documentación de las funciones.
+Mejorando la forma en que se determinan los campos por defecto cuando se genera un nuevo perfil a través del módulo "profile/perfil".
+Mejorando las plantillas de perfiles para Canaima, Debian y Ubuntu.
+Corrigiendo errores en las rutinas del mantenedor (release/snapshot).
+Completando módulo para la gestión de perfiles (profile/perfil).
+Migrando el perfil 'popular' al nuevo formato.
+Eliminando archivos de prueba innecesarios.
+Mejorando función BuildImage de la gui.
+
+DEVELOPMENT RELEASE v3.0+20120608181049 (06/08/12)
+Implementando hilos en build.py y main.py.
+Actualizando cadenas de traducción.
+
+DEVELOPMENT RELEASE v3.0+20120607195036 (06/07/12)
+Mejorando módulo para construcción de imágenes.
+Actualizando traducciones.
+
+DEVELOPMENT RELEASE v3.0+20120606182858 (06/06/12)
+Mejorando módulo de construcción de imágenes
+Actualizando traducciones
+
+DEVELOPMENT RELEASE v3.0+20120605233135 (06/05/12)
+Mejorando módulo principal.
+Actualizando traducciones.
+
+DEVELOPMENT RELEASE v3.0+20120604002502 (06/04/12)
+Mejorando el módulo principal.
+Cambiando el nombre de algunas imágenes.
+Actualizando traducciones.
+Agregando TRANSLATORS.
+
+DEVELOPMENT RELEASE v3.0+20120602105537 (06/02/12)
+Mejorando el módulo de creación de perfiles.
+
+DEVELOPMENT RELEASE v3.0+20120530170603 (05/30/12)
+Mejorando módulo de creación de perfiles.
+
+DEVELOPMENT RELEASE v3.0+20120527224239 (05/27/12)
+Mejorando módulos en general
+
+DEVELOPMENT RELEASE v3.0+20120527034049 (05/27/12)
+Removiendo imágenes png generadas a partir de svg. Se generan al momento de compilación/empaquetamiento.
+Renombrando librerías.
+Generando locales para es_VE y en_US.
+Creando .po para gui/core.
+Actualizando plantillas .pot.
+
+DEVELOPMENT RELEASE v3.0+20120525174810 (05/25/12)
+Separando funciones constructoras en librerías diferentes.
+
+DEVELOPMENT RELEASE v3.0+20120524185632 (05/24/12)
+Mejorando módulo de creación de perfiles
+
+DEVELOPMENT RELEASE v3.0+20120522183846 (05/22/12)
+Mejorando el módulo de construcción de perfiles.
+
+DEVELOPMENT RELEASE v3.0+20120521232022 (05/21/12)
+Borrando plantilla para isolinux, convirtiendo en enlace simbólico hacia syslinux.
+Desarrollando módulo para probar imágenes con qemu-kvm.
+
+DEVELOPMENT RELEASE v3.0+20120507124627 (05/07/12)
+Actualizando mensajes de traducción
+
+DEVELOPMENT RELEASE v3.0+20120507115542 (05/07/12)
+Mejorando módulo de creación del perfil
+
+DEVELOPMENT RELEASE v3.0+20120427162807 (04/27/12)
+Mejorando módulo de edición de perfil.
+
+DEVELOPMENT RELEASE v3.0+20120427014259 (04/27/12)
+Mejorando configuración automática.
+
+DEVELOPMENT RELEASE v3.0+20120425182437 (04/25/12)
+Mejorando módulo para crear perfil de la gui.
+
+DEVELOPMENT RELEASE v3.0+20120424175003 (04/24/12)
+Añadiendo soporte para isolinux.
+Mejorando módulos de gui.
+
+DEVELOPMENT RELEASE v3.0+20120424020838 (04/24/12)
+Corrigiendo errores de compatibilidad con shell.
+
+DEVELOPMENT RELEASE v3.0+20120424010701 (04/24/12)
+Agregando estilo visual para la interfaz gráfica.
+Actualizando módulo de construcción para la interfaz gráfica.
+
+DEVELOPMENT RELEASE v3.0+20120423054314 (04/23/12)
+Actualizando
+
+DEVELOPMENT RELEASE v3.0+20120423054101 (04/23/12)
+Organizando íconos
+
+DEVELOPMENT RELEASE v3.0+20120423051401 (04/23/12)
+Mejorando la organización de la gui
+
+DEVELOPMENT RELEASE v3.0+20120420175220 (04/20/12)
+Ampliando las plantillas de syslinux.
+Mejorando funciones de módulos y perfiles.
+
+DEVELOPMENT RELEASE v3.0+20120419190335 (04/19/12)
+Actualizando plantillas de syslinux.
+Mejorando módulo de construcción.
+Actualizando cadenas de texto traducibles.
+
+DEVELOPMENT RELEASE v3.0+20120410174159 (04/10/12)
+Mejorando funciones.
+
+DEVELOPMENT RELEASE v3.0+20120410000334 (04/10/12)
+Mejorando módulo de construcción y función para cargar el perfil.
+
+DEVELOPMENT RELEASE v3.0+20120403173411 (04/03/12)
+Mejorando función para la carga del perfil.
+Incluyendo platillas para debootstrap.
+Mejorando el módulo de construcción
+Perfeccionando módulo de construcción.
+
+DEVELOPMENT RELEASE v3.0+20120327230826 (03/27/12)
+Creación de la función CS_LOAD_PROFILE, para validar la configuración del perfil.
+Separación de las constantes de colores de las funciones de mensajes.
+Reorganización de la plantilla del perfil por defecto.
+Actualización de documentación y traducciones.
+
+DEVELOPMENT RELEASE v3.0+20120326115954 (03/26/12)
+Agregando soporte para localización en scripts de bash
+Arreglando detalles estéticos
+
+DEVELOPMENT RELEASE v3.0+20120323183735 (03/23/12)
+Mejorando scripts, funciones y módulos
+
+DEVELOPMENT RELEASE v3.0+20120321115651 (03/21/12)
+Corrigiendo sintaxis para sh
+
+DEVELOPMENT RELEASE v+20120320200934 (03/20/12)
+Test Snapshot
+
+DEVELOPMENT RELEASE v+20120320185318 (03/20/12)
+Corrigiendo error en script de generación de snapshot
+
+DEVELOPMENT RELEASE v+20120320183640 (03/20/12)
+Agregando documentación autogenerada
+Agregando plantillas para syslinux
+Creando funciones y módulos básicos
+Generación dinámica de imágenes
+Removiendo carpeta debian de rama de desarrollo
+Renombrando algunos scripts
+Agregando locales
+Generando documentación
+Correcting Makefile
+Importando desarrollo de la Interfaz Gráfica por Nixon Molina y Carlos Espinoza.
+Fusionando documentación e imágenes de la Interfaz Gráfica con la aplicación principal.
+Mejorando Makefile y agregando herramientas para el mantenimiento de la aplicación.
+WIP
+Better handeling of SABOR FAILOVER
+... fuck daniel bauman... chroot_sources is now archives
+everything has changed name.. great, ok so now we map:
+binary list.binary
+binary.gpg key.binary
+chroot list.chroot
+chroot.gpg key.chroot
+n0 bash
+create semilla if doesn't exist
+install canaima-semilla-construir
+move chunk of code from canaima-semilla to canaima-semilla-construir
+indentation: cosmetics
+cosmetics: ${1} is really to ugly..
+make everything executable from source
+cosmetics
+lb_fixup, --packages disappeared, build a package-lists instead
+lb_fixup: move all options that aren't supported by new lb out of the way
+default to include installer, and re-work installer code'
+add -c|--conf option, to conditionally load VARIABLES overrides
+simplify canaima-semilla.sh
+bugfix: $ARQUITECTURA disapeared, use $arch
+cosmetics: rename getopt argument to short-form and lowercase
+if lb/config exits, move it to .bak before proceding
+make CONFIGURAR-SABOR take an argument
+use getopt to simplify canaima-semilla.sh
+cosmetics: split fat big line, into many smalls
+don't use ${1} but name it, and shift $\@
+
+DEVELOPMENT RELEASE v2.0+51 (12/16/11)
+

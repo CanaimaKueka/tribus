@@ -1,0 +1,18 @@
+Documentación para el Ayudante "descargar-todo" de Canaima Desarrollador
+
+Éste ayudante te permite copiar a tu disco duro todos los proyectos de Canaima GNU/Linux que se encuentren en el repositorio remoto oficial. Utiliza git clone para realizar tal operación.
+
+Uso:
+
+  canaima-desarrollador descargar-todo [--ayuda]
+  c-d descargar-todo [--ayuda]
+
+Parámetros:
+
+  --ayuda
+	Muestra ésta ayuda.
+
+Para mayor información, puedes recurrir a la entrada del manual para canaima-desarrollador (man canaima-desarrollador).
+
+Contacto: desarrolladores@canaima.softwarelibre.gob.ve
+
