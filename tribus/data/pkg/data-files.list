@@ -1,0 +1,4 @@
+tribus/data 	*.*		/usr/share/tribus/data
+tribus/cli 		*.*		/usr/share/tribus/cli
+tribus/i18n		*.*		/usr/share/locale
+docs			*.*		/usr/share/doc/tribus

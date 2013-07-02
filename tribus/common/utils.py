@@ -3,9 +3,33 @@
 
 import os
 
+
+def find_files(basedir, pattern, d=[]):
+    '''
+    Locate all files matching supplied filename pattern in and below
+    supplied root directory.
+    '''
+    import fnmatch
+    for path, dirs, files in os.walk(basedir):
+        for filename in fnmatch.filter(files, pattern):
+            d.append(get_path([path, filename]))
+    return d
+
+
+def cat_file(f):
+    return open(f).read()
+
+
+def get_file_on_list(f, l=[]):
+    for c in open(f):
+        l.append(c)
+    return l
+
+
 def get_path(p=[]):
     p[0] = os.path.realpath(os.path.abspath(p[0]))
     return os.path.normpath(os.path.join(*p))
+
 
 def get_split_path(path, result=None):
     """
@@ -22,49 +46,15 @@ def get_split_path(path, result=None):
     return get_split_path(head, [tail] + result)
 
 
-def get_packages(path, excludes=[], packages=[]):
-    if os.path.isfile(get_path([path, '__init__.py'])):
-        strippath=get_path([path, '..'])
-        print strippath
-    else:
-        strippath=path
-    for dirpath, dirnames, filenames in os.walk(path):
-        if '__init__.py' in filenames:
-            if dirpath.startswith(strippath):
-                dirpath = dirpath[len(strippath):]
-            package_name = '.'.join(get_split_path(dirpath))
-            packages.append(package_name)
-            for e in excludes:
-                if package_name.startswith(e):
-                    packages.remove(package_name)
-    return packages
-
-
-def get_packages_data(path, packages=[], package_data={}):
-    for dirpath, dirnames, filenames in os.walk(path):
-        parts = get_split_path(dirpath)
-        package_name = '.'.join(parts)
-        if '__init__.py' in filenames:
-            packages.append(package_name)
-        elif filenames:
-            relative_path = []
-            while '.'.join(parts) not in packages:
-                relative_path.append(parts.pop())
-            relative_path.reverse()
-            path = os.path.join(*relative_path)
-            package_files = package_data.setdefault('.'.join(parts), [])
-            package_files.extend([os.path.join(path, f) for f in filenames])
-    return package_files, package_data, packages
-
-
-def get_data_files(path, dest, pattern):
+def get_files_from_pattern(path, pattern):
     """
     Generate a pair of (directory, file-list) for installation.
 
     'd' -- A directory
     'e' -- A glob pattern
     """
-    return (dest, [f for f in glob.glob('%s/%s' % (path, pattern)) if os.path.isfile(f)])
+    import glob
+    return [f for f in glob.glob('%s/%s' % (path, pattern)) if os.path.isfile(f)]
 
 # def filter_names(names, excludes=[]):
 #     """

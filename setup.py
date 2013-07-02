@@ -7,4 +7,4 @@ from distutils.core import setup
 try:
 	setup(**METADATA)
 except:
-	raise 
+	raise "Something failed on setup"
