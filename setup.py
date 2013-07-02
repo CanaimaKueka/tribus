@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from tribus import get_setup_data
+from tribus import METADATA
 from distutils.core import setup
 
 try:
-	setup(**get_setup_data())
+	setup(**METADATA)
 except:
 	raise 

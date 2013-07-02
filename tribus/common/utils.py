@@ -4,7 +4,7 @@
 import os
 
 def get_path(p=[]):
-    p[0] = os.path.realpath(p[0])
+    p[0] = os.path.realpath(os.path.abspath(p[0]))
     return os.path.normpath(os.path.join(*p))
 
 def get_split_path(path, result=None):
