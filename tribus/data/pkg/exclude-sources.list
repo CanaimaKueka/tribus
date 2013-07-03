@@ -1,0 +1,4 @@
+tribus/data/icons/*/*/*.svg
+tribus/data/i18n/*/*/*.po
+tribus/data/images/*.svg
+docs/rest/*.rst
