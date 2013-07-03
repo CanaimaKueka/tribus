@@ -28,18 +28,25 @@
 #
 # CODE IS POETRY
 
-import os, gtk, sys, gettext, locale
+import os
+import sys
+import gtk
+import gettext
+import locale
 
-from canaimasemilla.main import Main
-from canaimasemilla.constructor import UserMessage
-from canaimasemilla.translator import MAIN_ROOT_ERROR_TITLE, MAIN_ROOT_ERROR_MSG
-from canaimasemilla.config import *
+from tribus.settings.gtk import LOCALEDIR
+from tribus.common.utils import get_path
+from tribus.gtk.main import Main
+from tribus.gtk.constructor import UserMessage
+from tribus.gtk.translator import MAIN_ROOT_ERROR_TITLE, MAIN_ROOT_ERROR_MSG
 
 gtk.gdk.threads_init()
 
 if __name__ == "__main__":
     settinglocale = locale.setlocale(locale.LC_ALL, '')
-    naminglocale = LOCALEDIR+'/'+locale.getlocale()[0]+'/LC_MESSAGES/c-s-gui.mo'
+    naminglocale = get_path([
+        LOCALEDIR, locale.getlocale()[0], 'LC_MESSAGES', '%s.mo' % localedomain
+        ])
 
     try:
         gettext.GNUTranslations(open(naminglocale, 'rb')).install()

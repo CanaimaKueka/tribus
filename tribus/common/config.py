@@ -21,3 +21,31 @@ def readconfig(filename, optionchar='=', commentchar='#', options=[], conffile=F
 
     f.close()
     return options
+
+import os, ConfigParser
+
+
+
+def ConfigMapper(confdir):
+    dictionary = {}
+    config = ConfigParser.ConfigParser()
+    conffiles = listdirfullpath(confdir)
+    configuration = config.read(conffiles)
+    sections = config.sections()
+    for section in sections:
+        options = config.options(section)
+        for option in options:
+            try:
+                giveme = config.get(section, option)
+                if section == 'array':
+                    process = giveme[1:-1].split(',')
+                elif section == 'boolean':
+                    process = giveme
+                elif section == 'integer':
+                    process = int(giveme)
+                else:
+                    process = '"'+giveme+'"'
+                dictionary[option] = process
+            except:
+                dictionary[option] = None
+    return dictionary

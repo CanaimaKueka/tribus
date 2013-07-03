@@ -267,6 +267,6 @@ except:
     pass
 
 try:
-    import tribus.settings.local
+    import tribus.settings.web_local
 except:
     pass

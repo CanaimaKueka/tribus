@@ -3,6 +3,9 @@
 
 import os
 
+def listdirfullpath(d):
+    return [os.path.join(d, f) for f in os.listdir(d)]
+
 def get_path(p=[]):
     p[0] = os.path.realpath(os.path.abspath(p[0]))
     return os.path.normpath(os.path.join(*p))
