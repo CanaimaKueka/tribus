@@ -1,4 +1,5 @@
 tribus/data/icons/*/*/*.svg
 tribus/data/i18n/*/*/*.po
 tribus/data/images/*.svg
-docs/rest/*.rst
+tribus/data/docs/rest/*.rest
+tribus/data/docs/rest/*.rst

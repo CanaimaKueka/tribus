@@ -1,4 +1,3 @@
-docs
-tests
-tribus.cli
 tribus.data
+tribus.tests
+tribus.i18n

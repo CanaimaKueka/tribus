@@ -33,6 +33,8 @@ from tribus.common.config import (readconfig, get_dependencies, get_repositories
                                   get_classifiers)
 from tribus.config.base import CONFDIR, DOCDIR
 
+platforms = ('Any',),
+keywords = ('backup', 'archive', 'atom', 'rss', 'blog', 'weblog'),
 f_readme = get_path([DOCDIR, 'README'])
 f_classifiers = get_path([CONFDIR, 'data', 'python-classifiers.list'])
 f_dependencies = get_path([CONFDIR, 'data', 'python-dependencies.list'])
@@ -48,5 +50,5 @@ include_data_patterns = readconfig(filename=f_data_patterns, conffile=False)
 
 long_description = cat_file(f=f_readme)
 classifiers = get_classifiers(f=f_classifiers)
-requires = get_dependencies(f=f_dependencies)
+install_requires = get_dependencies(f=f_dependencies)
 dependency_links = get_repositories(f=f_dependencies)

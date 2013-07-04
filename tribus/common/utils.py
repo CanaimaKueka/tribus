@@ -14,6 +14,7 @@ def find_files(basedir, pattern, d=[]):
     supplied root directory.
     '''
     import fnmatch
+    d = []
     for path, dirs, files in os.walk(basedir):
         for filename in fnmatch.filter(files, pattern):
             d.append(get_path([path, filename]))
@@ -22,12 +23,6 @@ def find_files(basedir, pattern, d=[]):
 
 def cat_file(f):
     return open(f).read()
-
-
-def get_file_on_list(f, l=[]):
-    for c in open(f):
-        l.append(c)
-    return l
 
 
 def get_path(p=[]):
