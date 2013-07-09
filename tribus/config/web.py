@@ -2,8 +2,13 @@
 # -*- coding: utf-8 -*-
 
 import os, sys, djcelery
-
 from tribus.common.utils import get_path
+
+try:
+    djcelery.setup_loader()
+except:
+    pass
+
 
 SITE_ID = 1
 
@@ -29,8 +34,8 @@ MEDIA_URL = '/media/'
 ADMIN_MEDIA_PREFIX = '/media/admin/'
 STATIC_ROOT = ''
 STATIC_URL = '/static/'
-STATICFILES_DIRS[0] = get_path([BASEDIR, 'data', 'static', ''])
-TEMPLATE_DIRS[0] =get_path([BASEDIR, 'data', 'html', '')
+STATICFILES_DIRS = get_path([BASEDIR, 'data', 'static', '']),
+TEMPLATE_DIRS = get_path([BASEDIR, 'data', 'html', '']),
 
 LOGIN_URL='/login/'
 LOGOUT_URL='/logout/'
@@ -221,31 +226,6 @@ SOCIAL_AUTH_PIPELINE = (
     'social_auth.backends.pipeline.social.load_extra_data',
 )
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': True,
-    'formatters': {
-        'verbose': {
-            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
-        },
-    },
-    'handlers': {
-        'console': {
-            'level':'DEBUG',
-            'class':'logging.StreamHandler',
-            'stream': sys.stdout,
-            'formatter':'verbose'
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers':['console'],
-            'propagate': True,
-            'level':'DEBUG',
-        },
-    },
-}
-
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 
@@ -260,11 +240,11 @@ CACHES = {
     },
 }
 
-
 try:
-    djcelery.setup_loader()
+    import tribus.settings.logging
 except:
     pass
+
 
 try:
     import tribus.settings.web_local

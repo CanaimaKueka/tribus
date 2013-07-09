@@ -28,9 +28,8 @@
 #
 # CODE IS POETRY
 
-from tribus.common.utils import get_path, cat_file
-from tribus.common.config import (readconfig, get_dependencies, get_repositories,
-                                  get_classifiers)
+from tribus.common.utils import (get_path, cat_file, readconfig, get_dependencies,
+                                 get_repositories, get_classifiers)
 from tribus.config.base import CONFDIR, DOCDIR
 
 platforms = ('Any',),

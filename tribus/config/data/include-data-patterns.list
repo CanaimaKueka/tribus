@@ -7,3 +7,4 @@ tribus/data/desktop 	*.*		/usr/share/applications
 tribus/data/icons 		*.*		/usr/share/icons
 tribus/data/docs		*.*		/usr/share/doc/tribus
 tribus/i18n				*.*		/usr/share/locale
+tribus/config			*.*		/etc/tribus

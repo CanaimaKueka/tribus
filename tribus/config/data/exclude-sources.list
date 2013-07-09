@@ -1,5 +1,5 @@
-tribus/data/icons/*/*/*.svg
-tribus/data/i18n/*/*/*.po
-tribus/data/images/*.svg
-tribus/data/docs/rest/*.rest
-tribus/data/docs/rest/*.rst
+*.svg
+*.po
+*.pot
+*.rest
+*.rst
