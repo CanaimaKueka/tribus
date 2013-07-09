@@ -3,32 +3,39 @@
 
 import os
 import fnmatch
-import glob
-import sys
 import inspect
-
-sys.path.append(os.getcwd())
+import re
 
 from tribus.common.logger import get_logger
 
 log = get_logger()
 
 
-# def get_listdir_fullpath(d):
-#     '''
-#     Returns a list of all files and folders in a directory
-#     (non-recursive)
-#     '''
-#     return [os.path.join(d, f) for f in os.listdir(d)]
+def flatten_list(l, limit=1000, counter=0):
+    for i in xrange(len(l)):
+        if (isinstance(l[i], (list, tuple)) and counter < limit):
+            for a in l.pop(i):
+                l.insert(i, a)
+                i += 1
+            counter += 1
+            return flatten_list(l, limit, counter)
+    return l
 
 
-def cat_file(f):
-    return open(f).read()
+def cat_file(filename):
+    return open(filename).read()
 
 
-def get_path(p=[]):
-    p[0] = os.path.realpath(os.path.abspath(p[0]))
-    return os.path.normpath(os.path.join(*p))
+def norm_path(path):
+    if path.endswith(os.sep):
+        return os.path.split(path)[0]
+    else:
+        return path
+
+
+def get_path(path=[]):
+    path[0] = os.path.realpath(os.path.abspath(path[0]))
+    return os.path.normpath(os.path.join(*path))
 
 
 def package_to_path(package):
@@ -42,33 +49,54 @@ def package_to_path(package):
     return get_path(package.split('.'))
 
 
-def list_files(d):
+def path_to_package(path):
+    path = norm_path(path)
+    return path.replace(os.sep, '.')
+
+
+def list_files(path):
     '''
     Returns a list of all files and folders in a directory
     (non-recursive)
     '''
-    return [get_path([d, f]) for f in os.listdir(d) if os.path.isfile(get_path([d, f]))]
+    path = norm_path(path)
+    return [get_path([path, f]) for f in os.listdir(path) if os.path.isfile(get_path([path, f]))]
 
 
-def find_files(basedir, pattern):
+def find_files(path, pattern):
     '''
     Locate all files matching supplied filename pattern in and below
     supplied root directory.
     '''
     d = []
-    for path, dirs, files in os.walk(basedir):
+    path = norm_path(path)
+    for directory, subdirs, files in os.walk(path):
         for filename in fnmatch.filter(files, pattern):
-            d.append(get_path([path, filename]))
+            d.append(get_path([directory, filename]))
     return d
 
 
-def find_subdirectories(path):
+def list_dirs(path):
     """
     Get the subdirectories within a package
     This will include resources (non-submodules) and submodules
     """
+    path = norm_path(path)
     try:
         subdirectories = ['']+os.walk(path).next()[1]
+    except StopIteration:
+        subdirectories = []
+    return subdirectories
+
+
+def find_dirs(path):
+    """
+    Get the subdirectories within a package
+    This will include resources (non-submodules) and submodules
+    """
+    path = norm_path(path)
+    try:
+        subdirectories = [d[0] for d in os.walk(path) if os.path.isdir(d[0])]
     except StopIteration:
         subdirectories = []
     return subdirectories
@@ -149,57 +177,31 @@ def readconfig(filename, options=[], conffile=False, strip_comments=True):
     return options
 
 
-def get_classifiers(f):
-    return readconfig(f, conffile=False)
+def get_classifiers(filename):
+    return readconfig(filename, conffile=False)
 
 
-def get_repositories(f, l=[]):
+def get_dependency_links(filename):
     from tribus.common.validators import is_valid_url
-    l = []
-    for r in readconfig(f, conffile=False):
-        if '#egg=' in r and is_valid_url(r):
-            l.append(r)
-    return l
-# def parse_dependency_links(file_name):
-#     """
-#     from:
-#         http://cburgmer.posterous.com/pip-requirementstxt-and-setuppy
-#     """
-#     dependency_links = []
-#     with open(file_name) as f:
-#         for line in f:
-#             if re.match(r'\s*-[ef]\s+', line):
-#                 dependency_links.append(re.sub(r'\s*-[ef]\s+',
-#                                                '', line))
-#     return dependency_links
+    dependency_links = []
+    for line in readconfig(filename, conffile=False):
+        if re.match(r'\s*-[ef]\s+', line):
+            dependency_links.append(re.sub(r'\s*-[ef]\s+', '', line))
+    return dependency_links
 
 
-def get_dependencies(f, l=[]):
-    l = []
-    for r in readconfig(f, conffile=False, strip_comments=False):
-        if '#egg=' in r:
-            l.append(r.split('#egg=')[1])
+def get_requirements(filename, l=[]):
+    requirements = []
+    for line in readconfig(filename, conffile=False, strip_comments=False):
+        if re.match(r'(\s*#)|(\s*$)', line):
+            continue
+        if re.match(r'\s*-e\s+', line):
+            requirements.append(re.sub(r'\s*-e\s+.*#egg=(.*)$', r'\1', line).strip())
+        elif re.match(r'\s*-f\s+', line):
+            pass
         else:
-            l.append(r)
-    return l
-# def parse_requirements(file_name):
-#     """
-#     from:
-#         http://cburgmer.posterous.com/pip-requirementstxt-and-setuppy
-#     """
-#     requirements = []
-#     with open(file_name, 'r') as f:
-#         for line in f:
-#             if re.match(r'(\s*#)|(\s*$)', line):
-#                 continue
-#             if re.match(r'\s*-e\s+', line):
-#                 requirements.append(re.sub(r'\s*-e\s+.*#egg=(.*)$',
-#                                            r'\1', line).strip())
-#             elif re.match(r'\s*-f\s+', line):
-#                 pass
-#             else:
-#                 requirements.append(line.strip())
-#     return requirements
+            requirements.append(line.strip())
+    return requirements
 
 
 def get_packages(path, exclude_packages=[]):
@@ -215,10 +217,10 @@ def get_packages(path, exclude_packages=[]):
     """
     __fname__ = inspect.stack()[0][3]
     packages = []
-    include = True
-
-    for init in find_files(basedir=path, pattern='__init__.py'):
-        package = os.path.dirname(init).replace(path, '').replace(os.sep, '.')
+    path = norm_path(path)
+    for init in find_files(path=path, pattern='__init__.py'):
+        include = True
+        package = path_to_package(os.path.dirname(init).replace(path+os.sep, ''))
         for exclude in exclude_packages+['ez_setup', 'distribute_setup']:
             if fnmatch.fnmatch(package, exclude+'*'):
                 include = False
@@ -241,32 +243,23 @@ def get_package_data(path, packages, data_files, exclude_packages=[], exclude_fi
     Returns a dictionary suitable for setup(package_data=<result>)
     """
     __fname__ = inspect.stack()[0][3]
+    path = norm_path(path)
     package_data = {}
     for package in packages:
         package_data[package] = []
-        for subdir in find_subdirectories(package_to_path(package)):
-            if not get_path([package_to_path(package), subdir]).replace(os.sep, '.') in packages:
-                package_data[package] += find_files(basedir=get_path([path, package_to_path(package), subdir]),
-                                                    pattern='*.*')
-    for files in data_files:
-        for f in files[1]:
-            exclude_files.append(f)
-
-    for p in exclude_packages:
-        exclude_files.append(get_path([path, package_to_path(p), '*']))
-
-    for e in exclude_files:
-        for k, v in package_data.iteritems():
-            for i in v:
-                if i in package_data[k] and fnmatch.fnmatch(i, e):
-                    package_data[k].remove(i)
-
-    for k, v in package_data.iteritems():
-        l = []
-        for i in v:
-            l.append(i.replace(path, ''))
-        package_data[k] = l
-
+        for f in find_files(path=get_path([path, package_to_path(package)]), pattern='*.*'):
+            package_data[package].append(f)
+            for e in exclude_packages+['ez_setup', 'distribute_setup']:
+                if fnmatch.fnmatch(f, get_path([path, package_to_path(e), '*'])) \
+                   and f in package_data[package]:
+                    package_data[package].remove(f)
+            for x in exclude_files+['*.py']:
+                if fnmatch.fnmatch(f, get_path([path, x])) \
+                   and f in package_data[package]:
+                    package_data[package].remove(f)
+        package_data[package] = list(set(package_data[package]) - set(flatten_list(list(zip(*data_files)[1]))))
+        for i, j in enumerate(package_data[package]):
+            package_data[package][i] = package_data[package][i].replace(path+os.sep, '')
     return package_data
 
 
@@ -293,19 +286,19 @@ def get_data_files(path, patterns, exclude_files=[]):
         This is a list of file patterns to exclude from the results.
     """
     __fname__ = inspect.stack()[0][3]
+    path = norm_path(path)
     d = []
     for l in patterns:
         src, rgx, dest = l.split()
-        for subdir in find_subdirectories(path=get_path([path, src])):
+        for subdir in find_dirs(path=get_path([path, src])):
             f = []
-            for files in list_files(d=get_path([path, src, subdir])):
+            for files in list_files(path=subdir):
                 f.append(files)
                 for exclude in exclude_files:
                     if fnmatch.fnmatch(files, exclude) and files in f:
                         f.remove(files)
-            if f:
-                d.append((get_path([dest, subdir]), f))
-                log.debug("[%s.%s] Adding files to install on \"%s\"." % (__name__, __fname__, get_path([dest, subdir])))
+            d.append((dest+subdir.replace(os.path.join(path, src), ''), f))
+            log.debug("[%s.%s] Adding files to install on \"%s\"." % (__name__, __fname__, get_path([dest, subdir])))
     return d
 
 
@@ -315,13 +308,14 @@ def get_setup_data(basedir):
     from tribus.config.pkg import (classifiers, long_description, install_requires, dependency_links,
                                    exclude_packages, exclude_sources, exclude_patterns,
                                    include_data_patterns, platforms, keywords)
-
+    __fname__ = inspect.stack()[0][3]
     packages = get_packages(path=basedir, exclude_packages=exclude_packages)
     data_files = get_data_files(path=basedir, patterns=include_data_patterns,
                                 exclude_files=exclude_sources+exclude_patterns)
     package_data = get_package_data(path=basedir, packages=packages, data_files=data_files,
                                     exclude_files=exclude_sources+exclude_patterns,
                                     exclude_packages=exclude_packages)
+    log.debug("[%s.%s] All setup data processed and ready to use." % (__name__, __fname__))
     return {
         'name': NAME,
         'version': get_version(VERSION),
@@ -341,19 +335,3 @@ def get_setup_data(basedir):
         'dependency_links': dependency_links,
         'zip_safe': False,
     }
-
-if __name__ == '__main__':
-    from tribus.config.pkg import (classifiers, long_description, install_requires, dependency_links,
-                               exclude_packages, exclude_sources, exclude_patterns,
-                               include_data_patterns)
-    print dependency_links
-    packages = get_packages(path='/home/huntingbears/desarrollo/tribus/', exclude_packages=exclude_packages)
-    data_files = get_data_files(path='/home/huntingbears/desarrollo/tribus/', patterns=include_data_patterns, exclude_files=exclude_sources+exclude_patterns)
-    s = get_package_data(path='/home/huntingbears/desarrollo/tribus/', packages=packages, data_files=data_files, exclude_packages=exclude_packages, exclude_files=exclude_sources+exclude_patterns)
-#     d = subdir_findall(dir='/home/huntingbears/desarrollo/tribus/', subdir='tribus')
-#     print p
-#     print d
-#     print s
-    # print find_subdirectories(path='/home/huntingbears/desarrollo/tribus/')
-    import pprint
-    pprint.pprint(s)
