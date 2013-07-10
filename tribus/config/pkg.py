@@ -28,15 +28,19 @@
 #
 # CODE IS POETRY
 
+from tribus.config.base import CONFDIR, DOCDIR
 from tribus.common.utils import (get_path, cat_file, readconfig, get_requirements,
                                  get_dependency_links, get_classifiers)
-from tribus.config.base import CONFDIR, DOCDIR
+from tribus.common.build import build_mo, build_html, build_man, build_img, build
+from tribus.common.clean import clean_mo, clean_html, clean_man, clean_img, clean
+from tribus.common.install import install_data
 
 platforms = ('Any')
 keywords = ('backup', 'archive', 'atom', 'rss', 'blog', 'weblog')
 f_readme = get_path([DOCDIR, 'README'])
-f_classifiers = get_path([CONFDIR, 'data', 'python-classifiers.list'])
-f_dependencies = get_path([CONFDIR, 'data', 'python-dependencies.list'])
+f_python_classifiers = get_path([CONFDIR, 'data', 'python-classifiers.list'])
+f_python_dependencies = get_path([CONFDIR, 'data', 'python-dependencies.list'])
+f_debian_dependencies = get_path([CONFDIR, 'data', 'debian-dependencies.list'])
 f_exclude_sources = get_path([CONFDIR, 'data', 'exclude-sources.list'])
 f_exclude_packages = get_path([CONFDIR, 'data', 'exclude-packages.list'])
 f_exclude_patterns = get_path([CONFDIR, 'data', 'exclude-patterns.list'])
@@ -51,3 +55,18 @@ long_description = cat_file(filename=f_readme)
 classifiers = get_classifiers(filename=f_classifiers)
 install_requires = get_requirements(filename=f_dependencies)
 dependency_links = get_dependency_links(filename=f_dependencies)
+debian_dependencies = readconfig(filename=f_debian_dependencies, conffile=False)
+
+cmdclass = {
+	'clean': clean,
+	'clean_img': clean_img,
+	'clean_mo': clean_mo,
+	'clean_man': clean_man,
+	'clean_html': clean_html,
+	'build': build,
+	'build_img': build_img,
+	'build_mo': build_mo,
+	'build_man': build_man,
+	'build_html': build_html,
+	'install_data': install_data,
+}

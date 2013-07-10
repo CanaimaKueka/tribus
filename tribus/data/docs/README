@@ -7,7 +7,8 @@ El reconocimiento (o valoración) se realiza según un patrón establecido de pu
 
 El reconocimiento sirve para establecer una metrica relativa de la cantidad de conocimiento adquirido por los miembros durante la interacción con la plataforma. Esto permite ofrecer responsabilidades de gestión dentro de la plataforma a los miembros con diferentes grados de experiencia, así como también establecer recompensas específicas a través de un sistema de rangos o privilegios.
 
-La plataforma permite realzar diferentes actividades para facilitar el desenvolvimiento de proyectos de software libre en las áreas de diseño gráfico, documentación, traducción, desarrollo y activismo social, a través de las cuales se valoran las diferentes tareas que caracterizan la experiencia y conocimiento.
+La plataforma permite realizar diferentes actividades para facilitar el desenvolvimiento de proyectos de software libre en las áreas de diseño gráfico, documentación, traducción, desarrollo y activismo social, a través de las cuales se valoran las diferentes tareas que caracterizan la experiencia y conocimiento. Cada una de estas actividades ha sido desglosada en procesos con el objetivo de establecer una automatización a gran escala, permitiendo intervención humana en los niveles estrictamente necesarios.
+
 
 Desarrollo
 ----------

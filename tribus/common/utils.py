@@ -307,7 +307,7 @@ def get_setup_data(basedir):
     from tribus.config.base import NAME, VERSION, URL, AUTHOR, AUTHOR_EMAIL, DESCRIPTION, LICENSE
     from tribus.config.pkg import (classifiers, long_description, install_requires, dependency_links,
                                    exclude_packages, exclude_sources, exclude_patterns,
-                                   include_data_patterns, platforms, keywords)
+                                   include_data_patterns, cmdclass, platforms, keywords)
     __fname__ = inspect.stack()[0][3]
     packages = get_packages(path=basedir, exclude_packages=exclude_packages)
     data_files = get_data_files(path=basedir, patterns=include_data_patterns,
@@ -334,4 +334,5 @@ def get_setup_data(basedir):
         'install_requires': install_requires,
         'dependency_links': dependency_links,
         'zip_safe': False,
+        'cmdclass': cmdclass,
     }
