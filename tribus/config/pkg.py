@@ -28,12 +28,11 @@
 #
 # CODE IS POETRY
 
+from tribus import BASEDIR
 from tribus.config.base import CONFDIR, DOCDIR
 from tribus.common.utils import (get_path, cat_file, readconfig, get_requirements,
-                                 get_dependency_links, get_classifiers)
-from tribus.common.build import build_mo, build_html, build_man, build_img, build
-from tribus.common.clean import clean_mo, clean_html, clean_man, clean_img, clean
-from tribus.common.install import install_data
+                                 get_dependency_links, get_classifiers, find_files,
+                                 )
 
 platforms = ('Any')
 keywords = ('backup', 'archive', 'atom', 'rss', 'blog', 'weblog')
@@ -52,21 +51,11 @@ exclude_patterns = readconfig(filename=f_exclude_patterns, conffile=False)
 include_data_patterns = readconfig(filename=f_data_patterns, conffile=False)
 
 long_description = cat_file(filename=f_readme)
-classifiers = get_classifiers(filename=f_classifiers)
-install_requires = get_requirements(filename=f_dependencies)
-dependency_links = get_dependency_links(filename=f_dependencies)
+classifiers = get_classifiers(filename=f_python_classifiers)
+install_requires = get_requirements(filename=f_python_dependencies)
+dependency_links = get_dependency_links(filename=f_python_dependencies)
 debian_dependencies = readconfig(filename=f_debian_dependencies, conffile=False)
 
-cmdclass = {
-	'clean': clean,
-	'clean_img': clean_img,
-	'clean_mo': clean_mo,
-	'clean_man': clean_man,
-	'clean_html': clean_html,
-	'build': build,
-	'build_img': build_img,
-	'build_mo': build_mo,
-	'build_man': build_man,
-	'build_html': build_html,
-	'install_data': install_data,
-}
+svg_file_list = find_files(path=BASEDIR, pattern='*.svg')
+png_file_list = find_files(path=BASEDIR, pattern='*.png')
+mo_file_list = find_files(path=BASEDIR, pattern='*.mo')

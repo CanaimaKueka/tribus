@@ -1,17 +1,46 @@
+import os
+import cairosvg
 from distutils.cmd import Command
 from distutils.command.build import build as base_build
 
+from tribus.config.pkg import svg_file_list
+from tribus.common.logger import get_logger
+
+log = get_logger()
+
 
 class build_img(Command):
-    description = 'Compile .po files into .mo files'
+    description = 'Compile SVG files into PNG images.'
+    user_options = []
+
     def initialize_options(self):
         pass
- 
+
     def finalize_options(self):
         pass
- 
+
     def run(self):
-        print 'Compiling images'
+        log.debug("[%s.%s] Compiling PNG images from SVG sources." % (__name__,
+                                                                      self.__class__.__name__))
+        for svg_file in svg_file_list:
+            try:
+                svg_code = open(svg_file, 'r').read()
+            except Exception, e:
+                print e
+
+            try:
+                png_file = open(os.path.splitext(svg_file)[0]+'.png', 'w')
+            except Exception, e:
+                print e
+
+            try:
+                cairosvg.svg2png(bytestring=svg_code, write_to=png_file)
+            except Exception, e:
+                print e
+
+            png_file.close()
+            log.debug("[%s.%s] %s > %s." % (__name__, self.__class__.__name__, svg_file,
+                                            os.path.splitext(os.path.basename(svg_file))[0]+'.png'))
 
 
 class build_html(Command):
@@ -38,36 +67,6 @@ class build_man(Command):
         print 'Compiling man'
 
 
-class build_mo(Command):
-    description = 'Compile .po files into .mo files'
-    def initialize_options(self):
-        pass
- 
-    def finalize_options(self):
-        pass
- 
-    def run(self):
-        print 'Compiling mo'
-        # po_dir = os.path.join(os.path.dirname(os.curdir), 'po')
-        # for path, names, filenames in os.walk(po_dir):
-        #     for f in filenames:
-        #         if f.endswith('.po'):
-        #             lang = f[:-3]
-        #             src = os.path.join(path, f)
-        #             dest_path = os.path.join('build', 'locale', lang, 'LC_MESSAGES')
-        #             dest = os.path.join(dest_path, 'mussorgsky.mo')
-        #             if not os.path.exists(dest_path):
-        #                 os.makedirs(dest_path)
-        #             if not os.path.exists(dest):
-        #                 print 'Compiling %s' % src
-        #                 msgfmt.make(src, dest)
-        #             else:
-        #                 src_mtime = os.stat(src)[8]
-        #                 dest_mtime = os.stat(dest)[8]
-        #                 if src_mtime > dest_mtime:
-        #                     print 'Compiling %s' % src
-        #                     msgfmt.make(src, dest)
-
 class build(base_build):
     def run(self):
         self.run_command('clean')
@@ -76,4 +75,3 @@ class build(base_build):
         self.run_command('build_html')
         self.run_command('build_man')
         base_build.run(self)
-

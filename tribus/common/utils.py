@@ -303,11 +303,15 @@ def get_data_files(path, patterns, exclude_files=[]):
 
 
 def get_setup_data(basedir):
+    from babel.messages import frontend as babel
     from tribus.common.version import get_version
+    from tribus.common.build import build_html, build_man, build_img, build
+    from tribus.common.clean import clean_mo, clean_html, clean_man, clean_img, clean
+    from tribus.common.install import install_data
     from tribus.config.base import NAME, VERSION, URL, AUTHOR, AUTHOR_EMAIL, DESCRIPTION, LICENSE
     from tribus.config.pkg import (classifiers, long_description, install_requires, dependency_links,
                                    exclude_packages, exclude_sources, exclude_patterns,
-                                   include_data_patterns, cmdclass, platforms, keywords)
+                                   include_data_patterns, platforms, keywords)
     __fname__ = inspect.stack()[0][3]
     packages = get_packages(path=basedir, exclude_packages=exclude_packages)
     data_files = get_data_files(path=basedir, patterns=include_data_patterns,
@@ -334,5 +338,20 @@ def get_setup_data(basedir):
         'install_requires': install_requires,
         'dependency_links': dependency_links,
         'zip_safe': False,
-        'cmdclass': cmdclass,
+        'cmdclass': {
+            'clean': clean,
+            'clean_img': clean_img,
+            'clean_mo': clean_mo,
+            'clean_man': clean_man,
+            'clean_html': clean_html,
+            'build': build,
+            'build_img': build_img,
+            'build_mo': babel.compile_catalog,
+            'build_man': build_man,
+            'build_html': build_html,
+            'install_data': install_data,
+            'create_pot': babel.extract_messages,
+            'create_po': babel.init_catalog,
+            'update_po': babel.update_catalog
+        },
     }
