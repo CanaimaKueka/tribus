@@ -354,4 +354,9 @@ def get_setup_data(basedir):
             'create_po': babel.init_catalog,
             'update_po': babel.update_catalog
         },
+        'entry_points':{
+            'console_scripts': [
+                'tbs = tribus.tbs:main',
+            ]
+        },
     }

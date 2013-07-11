@@ -1,20 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-
+import os
 from fabric.api import *
+
 from tribus import BASEDIR
-from tribus.config.pkg import debian_dependencies
+from tribus.config.pkg import debian_dependencies, f_workenv_preseed
 
 def development():
     env.user = 'canaima'
-    env.root_user = 'root'
+    env.root = 'root'
     env.environment = 'development'
-    env.hosts = ['localhost']
+    env.hosts = ['127.0.0.1']
     env.basedir = BASEDIR
     env.virtualenv = os.path.join(env.basedir, 'virtualenv')
     env.settings = 'tribus.config.web'
-    env.packages = debian_dependencies
 
 def workenv():
 	preseed_packages()
@@ -27,27 +27,20 @@ def workenv():
 
 
 def preseed_packages():
-	require('root_user', provided_by=('development'))
-	commands = [
-		'echo "slapd slapd/purge_database boolean true" | debconf-set-selections',
-		'echo "slapd slapd/domain string tribus.org" | debconf-set-selections',
-		'echo "slapd shared/organization string tribus" | debconf-set-selections',
-		'echo "slapd slapd/password1 password tribus" | debconf-set-selections',
-		'echo "slapd slapd/password2 password tribus" | debconf-set-selections',
-	]
-	run('su %s -c "%s"' % (env.root_user, ';'.join(commands)))
-
+	require('root', provided_by=['development'])
+	with settings(command='debconf-set-selections %s' % f_workenv_preseed):
+		local('su %(root)s -c "%(command)s"' % env)
 
 def install_packages():
-	require('root_user', 'packages', provided_by=('development'))
-	commands = [
-		'DEBIAN_FRONTEND="noninteractive" \
-			aptitude install --assume-yes --allow-untrusted \
-			-o DPkg::Options::="--force-confmiss" \
-			-o DPkg::Options::="--force-confnew" \
-			-o DPkg::Options::="--force-overwrite" %s' % ' '.join(env.packages),
-	]
-	run('su %s -c "%s"' % (env.root_user, ';'.join(commands)))
+	require('root', provided_by=['development'])
+	with settings(command='DEBIAN_FRONTEND="noninteractive" \
+aptitude install --assume-yes --allow-untrusted \
+-o DPkg::Options::="--force-confmiss" \
+-o DPkg::Options::="--force-confnew" \
+-o DPkg::Options::="--force-overwrite" \
+%s python3' % ' '.join(debian_dependencies)):
+		x = local('su %(root)s -c \'%(command)s\'' % env)
+		print x
 
 def configure_postgres():
 	require('root_user', 'packages', provided_by=('development'))

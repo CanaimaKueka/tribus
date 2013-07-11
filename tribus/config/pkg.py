@@ -28,7 +28,6 @@
 #
 # CODE IS POETRY
 
-from tribus import BASEDIR
 from tribus.config.base import CONFDIR, DOCDIR
 from tribus.common.utils import (get_path, cat_file, readconfig, get_requirements,
                                  get_dependency_links, get_classifiers, find_files,
@@ -44,6 +43,7 @@ f_exclude_sources = get_path([CONFDIR, 'data', 'exclude-sources.list'])
 f_exclude_packages = get_path([CONFDIR, 'data', 'exclude-packages.list'])
 f_exclude_patterns = get_path([CONFDIR, 'data', 'exclude-patterns.list'])
 f_data_patterns = get_path([CONFDIR, 'data', 'include-data-patterns.list'])
+f_workenv_preseed = get_path([CONFDIR, 'data', 'workenv-pkg-preseed.conf'])
 
 exclude_sources = readconfig(filename=f_exclude_sources, conffile=False)
 exclude_packages = readconfig(filename=f_exclude_packages, conffile=False)
@@ -55,7 +55,3 @@ classifiers = get_classifiers(filename=f_python_classifiers)
 install_requires = get_requirements(filename=f_python_dependencies)
 dependency_links = get_dependency_links(filename=f_python_dependencies)
 debian_dependencies = readconfig(filename=f_debian_dependencies, conffile=False)
-
-svg_file_list = find_files(path=BASEDIR, pattern='*.svg')
-png_file_list = find_files(path=BASEDIR, pattern='*.png')
-mo_file_list = find_files(path=BASEDIR, pattern='*.mo')

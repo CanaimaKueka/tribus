@@ -30,13 +30,13 @@
 
 from tribus import BASEDIR
 
-NAME = 'tribus'
+NAME = u'Tribus'
 VERSION = (0, 1, 0, 'alpha', 0)
-URL = 'https://github.com/HuntingBears/tribus'
-AUTHOR = 'Luis ALejandro Martínez Faneyth'
-AUTHOR_EMAIL = 'luis@huntingbears.com.ve'
-DESCRIPTION = ('Red social para la gestión de comunidades de Software Libre.'),
-LICENSE = 'GPL'
+URL = u'https://github.com/HuntingBears/tribus'
+AUTHOR = u'Luis ALejandro Martínez Faneyth'
+AUTHOR_EMAIL = u'luis@huntingbears.com.ve'
+DESCRIPTION = (u'Red social para la gestión de comunidades de Software Libre.'),
+LICENSE = u'GPL'
 
 
 if BASEDIR == '/usr/share/pyshared':
