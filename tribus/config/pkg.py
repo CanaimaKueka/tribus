@@ -44,6 +44,8 @@ f_exclude_packages = get_path([CONFDIR, 'data', 'exclude-packages.list'])
 f_exclude_patterns = get_path([CONFDIR, 'data', 'exclude-patterns.list'])
 f_data_patterns = get_path([CONFDIR, 'data', 'include-data-patterns.list'])
 f_workenv_preseed = get_path([CONFDIR, 'data', 'workenv-pkg-preseed.conf'])
+f_sql_preseed = get_path([CONFDIR, 'data', 'sql-preseed.sql'])
+f_users_ldif = get_path([CONFDIR, 'data', 'users.ldif'])
 
 exclude_sources = readconfig(filename=f_exclude_sources, conffile=False)
 exclude_packages = readconfig(filename=f_exclude_packages, conffile=False)

@@ -2,66 +2,114 @@
 # -*- coding: utf-8 -*-
 
 import os
+import pwd
+import getpass
 from fabric.api import *
+from fabric.decorators import *
 
 from tribus import BASEDIR
-from tribus.config.pkg import debian_dependencies, f_workenv_preseed
+from tribus.config.pkg import (debian_dependencies, f_workenv_preseed,
+                               f_sql_preseed, f_users_ldif, f_python_dependencies)
+
 
 def development():
-    env.user = 'canaima'
+    env.user = pwd.getpwuid(os.getuid()).pw_name
     env.root = 'root'
     env.environment = 'development'
-    env.hosts = ['127.0.0.1']
+    env.hosts = ['localhost']
     env.basedir = BASEDIR
-    env.virtualenv = os.path.join(env.basedir, 'virtualenv')
+    env.virtualenv_dir = os.path.join(env.basedir, 'virtualenv')
+    env.virtualenv_args = ' '.join(['--clear', '--no-site-packages', '--distribute'])
+    env.virtualenv_activate = os.path.join(env.virtualenv_dir, 'bin', 'activate')
     env.settings = 'tribus.config.web'
+    env.sudo_prompt = 'Executed'
+    # if not hasattr(env, 'password'):
+    #     env.password = prompt('Enter the password for \'%(user)s\':' % env)
+    # if not hasattr(env, 'root_password'):
+    #     env.root_password = prompt('Enter the root password :')
 
-def workenv():
-	preseed_packages()
-	install_packages()
-	configure_postgres()
-	populate_ldap()
-	create_virtualenv()
-	install_requirements()
-	configure_django()
+
+def environment():
+    preseed_packages()
+    install_packages()
+    configure_postgres()
+    populate_ldap()
+    create_virtualenv()
+    update_virtualenv()
+    # configure_django()
 
 
 def preseed_packages():
-	require('root', provided_by=['development'])
-	with settings(command='debconf-set-selections %s' % f_workenv_preseed):
-		local('su %(root)s -c "%(command)s"' % env)
+    with settings(command='debconf-set-selections %s' % f_workenv_preseed):
+        sudo('%(command)s' % env)
+
 
 def install_packages():
-	require('root', provided_by=['development'])
-	with settings(command='DEBIAN_FRONTEND="noninteractive" \
+    with settings(command='DEBIAN_FRONTEND="noninteractive" \
 aptitude install --assume-yes --allow-untrusted \
 -o DPkg::Options::="--force-confmiss" \
 -o DPkg::Options::="--force-confnew" \
 -o DPkg::Options::="--force-overwrite" \
-%s python3' % ' '.join(debian_dependencies)):
-		x = local('su %(root)s -c \'%(command)s\'' % env)
-		print x
+%s' % ' '.join(debian_dependencies)):
+        sudo('%(command)s' % env)
+
 
 def configure_postgres():
-	require('root_user', 'packages', provided_by=('development'))
-	commands = [
-		'echo "postgres:tribus" | chpasswd',
-		'su postgres -c \"psql -U postgres -c \\"DROP DATABASE tribus;\\"\"',
-		'su postgres -c \"psql -U postgres -c \\"DROP ROLE tribus;\\"\"',
-		'su postgres -c \"psql -U postgres -c \\"CREATE ROLE tribus PASSWORD \'md51a2031d64cd6f9dd4944bac9e73f52dd\' NOSUPERUSER CREATEDB CREATEROLE INHERIT LOGIN;\\"\"',
-		'su postgres -c \"psql -U postgres -c \\"CREATE DATABASE tribus OWNER tribus;\\"\"',
-		'su postgres -c \"psql -U postgres -c \\"GRANT ALL PRIVILEGES ON DATABASE tribus to tribus;\\"\"',
-	]
-	run('su %s -c "%s"' % (env.root_user, ';'.join(commands)))
+    with settings(command=[
+        'echo "postgres:tribus" | chpasswd',
+        'su postgres -c \"psql -U postgres -f %s\"' % f_sql_preseed,
+    ]):
+        sudo('%s' % '; '.join(env.command))
 
 
 def populate_ldap():
-	require('root_user', 'packages', provided_by=('development'))
-	commands = [
-		'',
-	]
-	run('su %s -c "%s"' % (env.root_user, ';'.join(commands)))
+    env.ldap_passwd = 'tribus'
+    env.ldap_writer = 'cn=admin,dc=tribus,dc=org'
+    env.ldap_server = 'localhost'
+    env.ldap_base = 'dc=tribus,dc=org'
+    env.users_ldif = f_users_ldif
+    with settings(command='ldapsearch -x -w "%(ldap_passwd)s" \
+-D "%(ldap_writer)s" -h "%(ldap_server)s" -b "%(ldap_base)s" \
+-LLL "(uid=*)" | perl -p00e \'s/\\r?\\n //g\' | grep "dn: "| \
+sed \'s/dn: //g\' | sed \'s/ /_@_/g\'' % env):
+        ldap_entries = run('%(command)s' % env)
 
+    for ldap_entry in ldap_entries.split():
+        env.ldap_entry = ldap_entry
+        with settings(command='ldapdelete -x -w "%(ldap_passwd)s" \
+-D "%(ldap_writer)s" -h "%(ldap_server)s" "%(ldap_entry)s"' % env):
+            run('%(command)s' % env)
+
+    with settings(command='ldapadd -x -w "%(ldap_passwd)s" \
+-D "%(ldap_writer)s" -h "%(ldap_server)s" -f "%(users_ldif)s"' % env):
+        run('%(command)s' % env)
+
+
+def create_virtualenv():
+    with settings(command='virtualenv %(virtualenv_args)s %(virtualenv_dir)s' % env):
+        run('%(command)s' % env)
+
+
+def update_virtualenv():
+    with prefix('source %(virtualenv_activate)s' % env):
+        run('pip install -r %s' % f_python_dependencies)
+
+
+def configure_django():
+    with prefix('source %(virtualenv_activate)s' % env):
+        run('python manage.py syncdb --noinput')
+        run('python manage.py createsuperuser --noinput --username admin --email admin@localhost.com')
+        run('python manage.py migrate')
+        run('python manage.py collectstatic --noinput')
+
+    sys.path.append(os.path.realpath(os.path.join(os.path.dirname(os.path.dirname(__file__)))))
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
+
+    from django.contrib.auth.models import User
+
+    u=User.objects.get(username__exact='admin')
+    u.set_password('tribus')
+    u.save()
 
 # import os
 

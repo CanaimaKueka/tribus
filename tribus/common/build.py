@@ -56,10 +56,10 @@ class build_html(Command):
 
     def initialize_options(self):
         pass
- 
+
     def finalize_options(self):
         pass
- 
+
     def run(self):
         log.debug("[%s.%s] Compiling documentation from RST sources." % (__name__,
                                                                          self.__class__.__name__))
@@ -75,10 +75,10 @@ class build_man(Command):
 
     def initialize_options(self):
         pass
- 
+
     def finalize_options(self):
         pass
- 
+
     def run(self):
         log.debug("[%s.%s] Compiling manual from RST sources." % (__name__,
                                                                   self.__class__.__name__))

@@ -37,10 +37,10 @@ class clean_html(Command):
 
     def initialize_options(self):
         pass
- 
+
     def finalize_options(self):
         pass
- 
+
     def run(self):
         for html_file in find_files(path=get_path([DOCDIR, 'html']), pattern='*.*'):
             if os.path.isfile(html_file):
@@ -64,10 +64,10 @@ class clean_man(Command):
 
     def initialize_options(self):
         pass
- 
+
     def finalize_options(self):
         pass
- 
+
     def run(self):
         man_file = get_path([DOCDIR, 'man', 'tribus.1'])
         if os.path.isfile(man_file):
@@ -84,10 +84,10 @@ class clean_mo(Command):
 
     def initialize_options(self):
         pass
- 
+
     def finalize_options(self):
         pass
- 
+
     def run(self):
         for mo_file in find_files(path=BASEDIR, pattern='*.mo'):
             if os.path.isfile(mo_file):
@@ -97,6 +97,7 @@ class clean_mo(Command):
                 except Exception, e:
                     print e
 
+
 class clean(base_clean):
     def run(self):
         self.run_command('clean_mo')
@@ -104,4 +105,3 @@ class clean(base_clean):
         self.run_command('clean_html')
         self.run_command('clean_man')
         base_clean.run(self)
-

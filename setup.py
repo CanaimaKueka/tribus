@@ -6,6 +6,6 @@ from tribus.common.utils import get_setup_data
 from setuptools import setup
 
 try:
-	setup(**get_setup_data(BASEDIR))
+    setup(**get_setup_data(BASEDIR))
 except Exception, e:
     print e

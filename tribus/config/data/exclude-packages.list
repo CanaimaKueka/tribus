@@ -1,5 +1,6 @@
 tribus.data
 tribus.tests
 tribus.i18n
+tribus.config
 dist
 build
