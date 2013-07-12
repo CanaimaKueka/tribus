@@ -145,6 +145,30 @@ def create_pot():
         with settings(command='python setup.py create_pot' % env):
             local('%(command)s' % env)
 
+
+def build_html():
+    with cd('%(basedir)s' % env):
+        with settings(command='python setup.py build_html ' % env):
+            local('%(command)s' % env)
+
+
+def build_img():
+    with cd('%(basedir)s' % env):
+        with settings(command='python setup.py build_img ' % env):
+            local('%(command)s' % env)
+
+
+def build_man():
+    with cd('%(basedir)s' % env):
+        with settings(command='python setup.py build_man ' % env):
+            local('%(command)s' % env)
+
+
+def build_mo():
+    with cd('%(basedir)s' % env):
+        with settings(command='python setup.py build_mo ' % env):
+            local('%(command)s' % env)
+
 #         with settings(command='sed -i -e \'s/# Translations template for Tribus./# $(POTITLE)./\' \
 # -e \'s/# Copyright (C).*/# Copyright (C) $(YEAR) $(AUTHOR)/\' \
 # -e \'s/# This file is distributed under.*/same license as the $(PACKAGE) package./\' \
