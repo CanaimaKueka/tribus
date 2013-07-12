@@ -4,3 +4,4 @@ tribus.i18n
 tribus.config
 dist
 build
+virtualenv

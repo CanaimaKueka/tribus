@@ -1,6 +1,7 @@
 # Makefile
 
 SHELL = sh -e
+PATH = "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
 # Project data
 AUTHOR = Luis Alejandro Martínez Faneyth
@@ -65,7 +66,7 @@ ICOTOOL = $(shell which icotool)
 #GIT = $(shell which git)
 SU = $(shell which su)
 APTITUDE = $(shell which aptitude)
-FABRIC = $(shell which fab)
+FAB = $(shell which fab)
 MSGMERGE = $(shell which msgmerge)
 XGETTEXT = $(shell which xgettext)
 #DEVSCRIPTS = $(shell which debuild)
@@ -203,85 +204,51 @@ checkpkg:
 	fi
 	@echo
 
-deploy:
-
-	@$(BASH) -c "source virtualenv/bin/activate; python manage.py runserver"
-
-runserver: syncdb
-
-	@$(BASH) -c "source virtualenv/bin/activate; python manage.py runserver"
-
-syncdb:
-
-	@$(BASH) -c "source virtualenv/bin/activate; python manage.py syncdb; python manage.py migrate"
-
-workenv:
+fabric:
 
 	@$(MAKE) checkpkg PACKAGE=fabric TESTBIN=fab
-	@$(FAB) workenv
-	# @su root -c "$(BASH) tools/install-packages.sh"
-	# @$(BASH) tools/create-virtualenv.sh
+	@$(MAKE) checkpkg PACKAGE=openssh-server TESTBIN=sshd
 
-update-environment:
+runserver: fabric
 
-	@$(BASH) tools/update-virtualenv.sh
+	@$(FAB) development runserver_django
 
-prepare: check-maintdep
+syncdb: fabric
 
-	@git submodule init
-	@git submodule update
-	@cd docs/githubwiki/ && git checkout development && git pull origin development
-	@cd docs/googlewiki/ && git checkout development && git pull origin development
+	@$(FAB) development syncdb_django
 
-gen-po: check-maintdep gen-pot
+development: fabric
 
-	@echo "Updating PO files ["
-	@for LOCALE in $(LOCALES); do \
-		$(MSGMERGE) --no-wrap -s -U locale/$${LOCALE}/LC_MESSAGES/messages.po $(POTFILE); \
-		rm -rf locale/$${LOCALE}/LC_MESSAGES/messages.po~; \
-	done
-	@echo "]"
+	@$(FAB) development environment
 
-gen-pot: check-maintdep
+update_po: fabric 
 
-	@echo "Updating POT template ..."
-	@rm $(POTLIST)
-	@for FILE in $(ALLPYS); do \
-		echo "../../.$${FILE}" >> $(POTLIST); \
-	done
-	@cd locale/pot/tribus/ && $(XGETTEXT) --msgid-bugs-address="$(MAILIST)" \
-		--package-version="$(VERSION)" --package-name="$(PACKAGE)" \
-		--copyright-holder="$(AUTHOR)" --no-wrap --from-code=utf-8 \
-		--language=python -k_ -s -j -o messages.pot -f POTFILES.in
-	@sed -i -e 's/# SOME DESCRIPTIVE TITLE./# $(POTITLE)./' \
-		-e 's/# Copyright (C) YEAR Luis Alejandro Martínez Faneyth/# Copyright (C) $(YEAR) $(AUTHOR)/' \
-		-e 's/same license as the PACKAGE package./same license as the $(PACKAGE) package./' \
-		-e 's/# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR./#\n# Translators:\n# $(AUTHOR) <$(EMAIL)>, $(YEAR)/' \
-		-e 's/"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\\n"/"PO-Revision-Date: $(PODATE)\\n"/' \
-		-e 's/"Last-Translator: FULL NAME <EMAIL@ADDRESS>\\n"/"Last-Translator: $(AUTHOR) <$(EMAIL)>\\n"/' \
-		-e 's/"Language-Team: LANGUAGE <LL@li.org>\\n"/"Language-Team: $(POTEAM) <$(MAILIST)>\\n"/' \
-		-e 's/"Language: \\n"/"Language: English\\n"/g' $(POTFILE)
+	@$(FAB) development update_po
 
-snapshot: check-maintdep prepare gen-html gen-wiki gen-po clean
+create_pot: fabric
 
-	@$(MAKE) clean
-	@$(BASH) tools/snapshot.sh
+	@$(FAB) development create_pot
 
-release: check-maintdep
+# snapshot: check-maintdep prepare gen-html gen-wiki gen-po clean
 
-	@$(BASH) tools/release.sh
+# 	@$(MAKE) clean
+# 	@$(BASH) tools/snapshot.sh
 
-deb-test-snapshot: check-maintdep
+# release: check-maintdep
 
-	@$(BASH) tools/buildpackage.sh test-snapshot
+# 	@$(BASH) tools/release.sh
 
-deb-test-release: check-maintdep
+# deb-test-snapshot: check-maintdep
 
-	@$(BASH) tools/buildpackage.sh test-release
+# 	@$(BASH) tools/buildpackage.sh test-snapshot
 
-deb-final-release: check-maintdep
+# deb-test-release: check-maintdep
 
-	@$(BASH) tools/buildpackage.sh final-release
+# 	@$(BASH) tools/buildpackage.sh test-release
+
+# deb-final-release: check-maintdep
+
+# 	@$(BASH) tools/buildpackage.sh final-release
 
 # CLEAN TASKS ------------------------------------------------------------------------------
 

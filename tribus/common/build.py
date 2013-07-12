@@ -4,15 +4,18 @@
 import os
 from distutils.cmd import Command
 from distutils.command.build import build as base_build
+from distutils.command.build_py import build_py as base_build_py
 from docutils.core import Publisher
 from docutils.writers import manpage
 from sphinx.application import Sphinx
 from cairosvg import svg2png
 
 from tribus.config.base import BASEDIR, DOCDIR
-from tribus.common.utils import get_path, find_files
+from tribus.common.utils import get_path, find_files, get_packages, get_package_data, get_data_files
 from tribus.common.logger import get_logger
-
+from tribus.config.pkg import (classifiers, long_description, install_requires, dependency_links,
+                               exclude_packages, exclude_sources, exclude_patterns,
+                               include_data_patterns, platforms, keywords)
 log = get_logger()
 
 

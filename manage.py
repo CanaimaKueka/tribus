@@ -6,7 +6,7 @@ if __name__ == "__main__":
     import os
     import sys
 
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.settings.web")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
 
     from django.core.management import execute_from_command_line
 

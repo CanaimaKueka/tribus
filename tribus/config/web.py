@@ -241,12 +241,12 @@ CACHES = {
 }
 
 try:
-    import tribus.settings.logging
+    from tribus.config.logging import *
 except:
     pass
 
 
 try:
-    import tribus.settings.web_local
+    from tribus.config.web_local import *
 except:
     pass

@@ -102,58 +102,6 @@ def find_dirs(path):
     return subdirectories
 
 
-# def get_split_path(path, result=None):
-#     """
-#     Split a pathname into components (the opposite of os.path.join)
-#     in a platform-neutral way.
-#     """
-#     if result is None:
-#         result = []
-#     head, tail = os.path.split(path)
-#     if head == '':
-#         return [tail] + result
-#     if head == path:
-#         return result
-#     return get_split_path(head, [tail] + result)
-
-
-# def get_files_from_pattern(path, pattern):
-#     """
-#     Generate a pair of (directory, file-list) for installation.
-
-#     'd' -- A directory
-#     'e' -- A glob pattern
-#     """
-#     return [f for f in glob.glob('%s/%s' % (path, pattern)) if os.path.isfile(f)]
-
-
-# def findall(dir=os.curdir):
-#     """
-#     Find all files under 'dir' and return the list of full filenames
-#     (relative to 'dir').
-#     """
-#     all_files = []
-#     for base, dirs, files in os.walk(dir):
-#         if base == os.curdir or base.startswith(os.curdir+os.sep):
-#             base = base[2:]
-#         if base:
-#             files = [os.path.join(base, f) for f in files]
-#         all_files.extend(filter(os.path.isfile, files))
-#     return all_files
-
-
-# def subdir_findall(dir, subdir):
-#     """
-#     Find all files in a subdirectory and return paths relative to dir
-
-#     This is similar to (and uses) setuptools.findall
-#     However, the paths returned are in the form needed for package_data
-#     """
-#     strip_n = len(dir.split('/'))
-#     path = '/'.join((dir, subdir))
-#     return ['/'.join(s.split('/')[strip_n:]) for s in findall(path)]
-
-
 def readconfig(filename, options=[], conffile=False, strip_comments=True):
     f = open(filename)
 
@@ -306,7 +254,7 @@ def get_setup_data(basedir):
     from babel.messages import frontend as babel
     from tribus.common.version import get_version
     from tribus.common.build import build_html, build_man, build_img, build
-    from tribus.common.clean import clean_mo, clean_html, clean_man, clean_img, clean
+    from tribus.common.clean import clean_mo, clean_html, clean_man, clean_img, clean_dist, clean
     from tribus.common.install import install_data
     from tribus.config.base import NAME, VERSION, URL, AUTHOR, AUTHOR_EMAIL, DESCRIPTION, LICENSE
     from tribus.config.pkg import (classifiers, long_description, install_requires, dependency_links,
@@ -340,6 +288,7 @@ def get_setup_data(basedir):
         'zip_safe': False,
         'cmdclass': {
             'clean': clean,
+            'clean_dist': clean_dist,
             'clean_img': clean_img,
             'clean_mo': clean_mo,
             'clean_man': clean_man,

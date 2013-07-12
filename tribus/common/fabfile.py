@@ -3,14 +3,13 @@
 
 import os
 import pwd
-import getpass
+import sys
+import site
 from fabric.api import *
-from fabric.decorators import *
 
 from tribus import BASEDIR
 from tribus.config.pkg import (debian_dependencies, f_workenv_preseed,
                                f_sql_preseed, f_users_ldif, f_python_dependencies)
-
 
 def development():
     env.user = pwd.getpwuid(os.getuid()).pw_name
@@ -23,10 +22,7 @@ def development():
     env.virtualenv_activate = os.path.join(env.virtualenv_dir, 'bin', 'activate')
     env.settings = 'tribus.config.web'
     env.sudo_prompt = 'Executed'
-    # if not hasattr(env, 'password'):
-    #     env.password = prompt('Enter the password for \'%(user)s\':' % env)
-    # if not hasattr(env, 'root_password'):
-    #     env.root_password = prompt('Enter the root password :')
+    env.f_python_dependencies = f_python_dependencies
 
 
 def environment():
@@ -36,7 +32,7 @@ def environment():
     populate_ldap()
     create_virtualenv()
     update_virtualenv()
-    # configure_django()
+    configure_django()
 
 
 def preseed_packages():
@@ -72,44 +68,89 @@ def populate_ldap():
 -D "%(ldap_writer)s" -h "%(ldap_server)s" -b "%(ldap_base)s" \
 -LLL "(uid=*)" | perl -p00e \'s/\\r?\\n //g\' | grep "dn: "| \
 sed \'s/dn: //g\' | sed \'s/ /_@_/g\'' % env):
-        ldap_entries = run('%(command)s' % env)
+        ldap_entries = local('%(command)s' % env)
 
     for ldap_entry in ldap_entries.split():
         env.ldap_entry = ldap_entry
         with settings(command='ldapdelete -x -w "%(ldap_passwd)s" \
 -D "%(ldap_writer)s" -h "%(ldap_server)s" "%(ldap_entry)s"' % env):
-            run('%(command)s' % env)
+            local('%(command)s' % env)
 
     with settings(command='ldapadd -x -w "%(ldap_passwd)s" \
 -D "%(ldap_writer)s" -h "%(ldap_server)s" -f "%(users_ldif)s"' % env):
-        run('%(command)s' % env)
+        local('%(command)s' % env)
 
 
 def create_virtualenv():
-    with settings(command='virtualenv %(virtualenv_args)s %(virtualenv_dir)s' % env):
-        run('%(command)s' % env)
+    with cd('%(basedir)s' % env):
+        with settings(command='virtualenv %(virtualenv_args)s %(virtualenv_dir)s' % env):
+            local('%(command)s' % env)
 
 
 def update_virtualenv():
-    with prefix('source %(virtualenv_activate)s' % env):
-        run('pip install -r %s' % f_python_dependencies)
+    with cd('%(basedir)s' % env):
+        with settings(command='source %(virtualenv_activate)s;' % env):
+            local('%(command)s pip install -r %(f_python_dependencies)s' % env)
+
+def py_activate_virtualenv():
+    os.environ['PATH'] = os.path.join(env.virtualenv_dir, 'bin') + os.pathsep + os.environ['PATH']
+    site.addsitedir(os.path.join(env.virtualenv_dir, 'lib', 'python%s' % sys.version[:3], 'site-packages'))
+    sys.prefix = env.virtualenv_dir
+    sys.path.insert(0, env.virtualenv_dir)
 
 
 def configure_django():
-    with prefix('source %(virtualenv_activate)s' % env):
-        run('python manage.py syncdb --noinput')
-        run('python manage.py createsuperuser --noinput --username admin --email admin@localhost.com')
-        run('python manage.py migrate')
-        run('python manage.py collectstatic --noinput')
+    syncdb_django()
+    createsuperuser_django()
 
-    sys.path.append(os.path.realpath(os.path.join(os.path.dirname(os.path.dirname(__file__)))))
+
+def createsuperuser_django():
+    with cd('%(basedir)s' % env):
+        with settings(command='source %(virtualenv_activate)s;' % env):
+            local('%(command)s python manage.py createsuperuser --noinput --username admin --email admin@localhost.com' % env)
+
+    py_activate_virtualenv()
+
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
-
     from django.contrib.auth.models import User
 
-    u=User.objects.get(username__exact='admin')
+    u = User.objects.get(username__exact='admin')
     u.set_password('tribus')
     u.save()
+
+
+def syncdb_django():
+    with cd('%(basedir)s' % env):
+        with settings(command='source %(virtualenv_activate)s;' % env):
+            local('%(command)s python manage.py syncdb --noinput' % env)
+            local('%(command)s python manage.py migrate' % env)
+
+
+def runserver_django():
+    with cd('%(basedir)s' % env):
+        with settings(command='source %(virtualenv_activate)s;' % env):
+            local('%(command)s python manage.py runserver' % env)
+
+
+def update_po():
+    with cd('%(basedir)s' % env):
+        with settings(command='python setup.py update_po' % env):
+            local('%(command)s' % env)
+
+def create_pot():
+    with cd('%(basedir)s' % env):
+        with settings(command='python setup.py create_pot' % env):
+            local('%(command)s' % env)
+
+#         with settings(command='sed -i -e \'s/# Translations template for Tribus./# $(POTITLE)./\' \
+# -e \'s/# Copyright (C).*/# Copyright (C) $(YEAR) $(AUTHOR)/\' \
+# -e \'s/# This file is distributed under.*/same license as the $(PACKAGE) package./\' \
+# -e \'s/# FIRST AUTHOR <EMAIL@ADDRESS>/#\\n# Translators:\\n# $(AUTHOR) <$(EMAIL)>, $(YEAR)/\' \
+# -e \'s/"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\\n"/"PO-Revision-Date: $(PODATE)\\n"/\' \
+# -e \'s/"Last-Translator: FULL NAME <EMAIL@ADDRESS>\\n"/"Last-Translator: $(AUTHOR) <$(EMAIL)>\\n"/\' \
+# -e \'s/"Language-Team: LANGUAGE <LL@li.org>\\n"/"Language-Team: $(POTEAM) <$(MAILIST)>\\n"/\' \
+# -e \'s/"Language: \\n"/"Language: English\\n"/g\' $(POTFILE)' % env):
+#             local('%(command)s' % env)
 
 # import os
 
