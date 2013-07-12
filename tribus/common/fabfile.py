@@ -11,6 +11,7 @@ from tribus import BASEDIR
 from tribus.config.pkg import (debian_dependencies, f_workenv_preseed,
                                f_sql_preseed, f_users_ldif, f_python_dependencies)
 
+
 def development():
     env.user = pwd.getpwuid(os.getuid()).pw_name
     env.root = 'root'
@@ -68,7 +69,7 @@ def populate_ldap():
 -D "%(ldap_writer)s" -h "%(ldap_server)s" -b "%(ldap_base)s" \
 -LLL "(uid=*)" | perl -p00e \'s/\\r?\\n //g\' | grep "dn: "| \
 sed \'s/dn: //g\' | sed \'s/ /_@_/g\'' % env):
-        ldap_entries = local('%(command)s' % env)
+        ldap_entries = local('%(command)s' % env, capture=True)
 
     for ldap_entry in ldap_entries.split():
         env.ldap_entry = ldap_entry
@@ -89,8 +90,9 @@ def create_virtualenv():
 
 def update_virtualenv():
     with cd('%(basedir)s' % env):
-        with settings(command='source %(virtualenv_activate)s;' % env):
+        with settings(command='. %(virtualenv_activate)s;' % env):
             local('%(command)s pip install -r %(f_python_dependencies)s' % env)
+
 
 def py_activate_virtualenv():
     os.environ['PATH'] = os.path.join(env.virtualenv_dir, 'bin') + os.pathsep + os.environ['PATH']
@@ -106,7 +108,7 @@ def configure_django():
 
 def createsuperuser_django():
     with cd('%(basedir)s' % env):
-        with settings(command='source %(virtualenv_activate)s;' % env):
+        with settings(command='. %(virtualenv_activate)s;' % env):
             local('%(command)s python manage.py createsuperuser --noinput --username admin --email admin@localhost.com' % env)
 
     py_activate_virtualenv()
@@ -121,14 +123,14 @@ def createsuperuser_django():
 
 def syncdb_django():
     with cd('%(basedir)s' % env):
-        with settings(command='source %(virtualenv_activate)s;' % env):
+        with settings(command='. %(virtualenv_activate)s;' % env):
             local('%(command)s python manage.py syncdb --noinput' % env)
             local('%(command)s python manage.py migrate' % env)
 
 
 def runserver_django():
     with cd('%(basedir)s' % env):
-        with settings(command='source %(virtualenv_activate)s;' % env):
+        with settings(command='. %(virtualenv_activate)s;' % env):
             local('%(command)s python manage.py runserver' % env)
 
 
@@ -136,6 +138,7 @@ def update_po():
     with cd('%(basedir)s' % env):
         with settings(command='python setup.py update_po' % env):
             local('%(command)s' % env)
+
 
 def create_pot():
     with cd('%(basedir)s' % env):

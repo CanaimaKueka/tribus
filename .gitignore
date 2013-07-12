@@ -79,3 +79,6 @@ nb-configuration.xml
 
 # SublimeText project files
 *.sublime-workspace
+
+
+#web_local.py

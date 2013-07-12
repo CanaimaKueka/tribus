@@ -1,3 +1,5 @@
+Acerca
+======
 
 Tribus es una red social para la gestión de comunidades de software libre. Permite una gestión descentralizada a través del reconocimiento mutuo de las capacidades de sus miembros y la asignación automática de responsabilidades según el nivel de experiencia alcanzado hasta el momento.
 

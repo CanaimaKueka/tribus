@@ -1,0 +1,1 @@
+tribus/data/docs/rst/copying.rst

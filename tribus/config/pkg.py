@@ -30,12 +30,11 @@
 
 from tribus.config.base import CONFDIR, DOCDIR
 from tribus.common.utils import (get_path, cat_file, readconfig, get_requirements,
-                                 get_dependency_links, get_classifiers, find_files,
-                                 )
+                                 get_dependency_links, get_classifiers)
 
 platforms = ('Any')
 keywords = ('backup', 'archive', 'atom', 'rss', 'blog', 'weblog')
-f_readme = get_path([DOCDIR, 'README'])
+f_readme = get_path([DOCDIR, 'rst', 'readme.rst'])
 f_python_classifiers = get_path([CONFDIR, 'data', 'python-classifiers.list'])
 f_python_dependencies = get_path([CONFDIR, 'data', 'python-dependencies.list'])
 f_debian_dependencies = get_path([CONFDIR, 'data', 'debian-dependencies.list'])
