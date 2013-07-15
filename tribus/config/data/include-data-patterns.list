@@ -1,0 +1,11 @@
+tribus/data/html 		*.*			share/tribus/data/html
+tribus/data/static 		*.*			share/tribus/data/static
+tribus/data/templates 	*.*			share/tribus/data/templates
+tribus/data/images 		*.*			share/tribus/data/images
+tribus/data/profiles 	*.*			share/tribus/data/profiles
+tribus/data/desktop 	*.*			share/applications
+tribus/data/icons 		*.*			share/icons
+tribus/data/docs/html	*.*			share/doc/tribus
+tribus/data/docs/man	*.*			share/man/man1
+tribus/i18n				*.*			share/locale
+tribus/config			*.*			etc/tribus

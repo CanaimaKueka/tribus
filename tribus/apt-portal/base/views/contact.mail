@@ -1,6 +1,0 @@
-Return-Path: ${sender}
-From: ${sender}
-Subject: Contact Form (${app_name}-${id})
-To: ${destination}
-
-${comment}

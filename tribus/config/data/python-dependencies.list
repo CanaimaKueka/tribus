@@ -1,0 +1,26 @@
+Django
+South
+amqp
+anyjson
+argparse
+billiard
+celery
+celery-with-redis
+distribute
+django-celery
+django-redis
+hiredis
+httplib2
+kombu
+oauth2
+psycopg2
+python-dateutil
+python-ldap
+python-openid
+pytz
+redis
+six
+wsgiref
+-e git+https://github.com/HuntingBears/django-ldapdb.git#egg=ldapdb
+-e git+https://github.com/HuntingBears/django-auth-ldap.git#egg=django_auth_ldap
+-e git+https://github.com/HuntingBears/django-social-auth.git#egg=social_auth

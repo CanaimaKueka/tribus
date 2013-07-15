@@ -1,0 +1,211 @@
+canaima-desarrollador
+apt-portal
+askbot-devel
+canaima-semilla
+clon-de-twitter-django-3.0
+debfactory
+django-achievements
+django-activity-stream
+django-filer
+django-photologue
+django-wiki
+postman
+profiles
+transifex
+django-inotifier
+gnotty
+django-projector
+django-static
+
+http://net.tutsplus.com/tutorials/python-tutorials/building-ribbit-with-django/
+
+
+-
+
+
+etherpad
+irc
+mailman
+project management
+
+
+
+
+Revisar vcs_support en readthedocs https://github.com/rtfd/readthedocs.org/tree/master/readthedocs/vcs_support
+Revisar anyvc https://bitbucket.org/RonnyPfannschmidt/anyvc
+Revisar ohcount https://github.com/blackducksw/ohcount
+Revisar pitweb para extenderlo a los otros vcs http://gitview.danfis.cz/pitweb.git?a=tree;id=HEAD;
+Revisar adhocracy https://github.com/liqd/adhocracy
+Revisar Launchpad
+	https://dev.launchpad.net/
+	https://dev.launchpad.net/Getting
+	https://dev.launchpad.net/Running
+Revisar Rhodecode http://pythonhosted.org/RhodeCode/
+Revisar Allura
+	http://sourceforge.net/p/allura/git/ci/master/tree/Allura/
+	http://allura.sourceforge.net/platform.html
+Revisar Klaus https://github.com/jonashaag/klaus
+Revisar ReadTheDocs https://github.com/rtfd/readthedocs.org
+Revisar Crate.io
+	https://github.com/crateio/crate.io
+	https://github.com/crateio/crate.web
+Revisar cache en django
+	https://docs.djangoproject.com/en/dev/topics/cache/
+	http://www.jeffknupp.com/blog/2012/02/24/django-memcached-optimizing-django-through-caching/
+
+Django+Ember.js+handlebars
+	http://www.rkblog.rk.edu.pl/w/p/creating-modern-web-applications-django-and-emberjs-javascript-framework/
+	http://discuss.emberjs.com/t/setting-up-a-django-api-to-use-with-ember-js/163/5
+	http://www.lostiemposcambian.com/blog/javascript/intro-framework-ember/
+	http://emberjs.com/guides/application/
+	http://handlebarsjs.com/
+Django+Node.js
+	http://stackoverflow.com/questions/8277299/using-node-js-with-django-and-backbone-js
+	http://maxburstein.com/blog/realtime-django-using-nodejs-and-socketio/
+
+Django Apps
+	http://www.rkblog.rk.edu.pl/w/p/django/
+	http://swizec.com/blog/django-protip-1-a-better-app-structure/swizec/1386
+
+Django+Redis
+	https://django-redis.readthedocs.org/en/latest/#django-redis
+
+coverage.py
+	http://ratnadeepdebnath.wordpress.com/2011/09/22/a-brief-introduction-to-coverage-py/
+
+Javascript charts
+	http://mbostock.github.com/d3/
+	http://code.shutterstock.com/rickshaw/
+
+Bootstrap
+	http://twitter.github.io/bootstrap/index.html
+
+Tastypie
+	http://django-tastypie.readthedocs.org/en/latest/tutorial.html#creating-resources
+
+Buildbot
+	http://i3wm.org/docs/buildbot.html
+	https://github.com/jollyroger/metabbotcfg/tree/434bea74cfbd37095ad21fe0c65af95bf8dce704
+	http://jacobian.org/writing/buildbot/configuration-and-architecture/
+	http://anonscm.debian.org/gitweb/?p=openstack/openstack-auto-builder.git;a=blob;f=build-openstack-pkg
+Fabric
+	http://docs.fabfile.org/en/1.6/index.html
+	http://agiletesting.blogspot.com/2009/11/automated-deployments-with-puppet-and.html
+Func https://fedorahosted.org/func/
+
+Python distribute http://guide.python-distribute.org/
+
+
+https://docs.djangoproject.com/en/dev/ref/urls/
+https://github.com/sunlightlabs/django-brainstorm/tree/master/brainstorm
+https://github.com/justinabrahms/django-ideas/tree/master/ideas
+http://beige.ucs.indiana.edu/I590/node150.html
+http://blog.beyondfog.com/7-tips-on-heroku-testing-and-more-for-python-django-from-a-ruby-on-rails-developer/#.UbtbRXH-CCg
+http://toastdriven.com/blog/2011/apr/17/guide-to-testing-in-django-2/
+http://toastdriven.com/blog/2011/apr/10/guide-to-testing-in-django/
+https://docs.djangoproject.com/en/dev/howto/custom-management-commands/
+http://stackoverflow.com/questions/5361521/celery-task-schedule-celery-django-and-rabbitmq?rq=1
+http://docs.celeryproject.org/en/master/django/index.html
+http://docs.celeryproject.org/en/master/django/first-steps-with-django.html
+http://docs.celeryproject.org/en/master/getting-started/brokers/redis.html#broker-redis
+http://www.caktusgroup.com/blog/2010/04/22/basic-django-deployment-with-virtualenv-fabric-pip-and-rsync/
+https://bitbucket.org/copelco/caktus-deployment/src/6ad8ad84a9385e18c91804aeb952412e7acc7710/example-django-project/caktus_website/fabfile.py?at=default
+https://pythonhosted.org/setuptools/setuptools.html
+http://www.sophomoredev.com/2012/06/using-fabric-to-deploy-on-aws/
+http://www.jeffknupp.com/blog/2012/10/24/starting-a-django-14-project-the-right-way/
+http://bartek.im/blog/2010/07/13/django-environment.html
+http://www.google.com/search?q=dploying%20django%20with%20virtualenv%20fabric
+http://www.coderholic.com/django-deployment-with-virtualenv-pip-and-fabric/
+http://www.saltycrane.com/blog/2009/05/notes-using-pip-and-virtualenv-django/
+http://lethain.com/deploying-django-with-fabric/
+http://www.abidibo.net/blog/2012/06/29/deploy-django-applications-nginx-uwsgi-virtualenv-south-git-and-fabric-part-5/
+http://auphonic.com/blog/2011/06/18/django-deployment-nginx-uwsgi-virtualenv-and-fabric/
+
+
+https://twitter.com/
+http://www.techrepublic.com/blog/programming-and-development/improve-web-page-load-time-with-yepnopejs/6789
+http://net.tutsplus.com/tutorials/javascript-ajax/easy-script-loading-with-yepnope-js/
+https://github.com/HuntingBears?tab=repositories
+http://www.slideshare.net/audreyr/django-package-thunderdome-by-audrey-roy-daniel-greenfeld
+http://easy-themes.tk/themes/preview/ace/form-elements.html
+https://drone.io/
+https://github.com/miki725/django-gevent-deploy/blob/master/django_gevent_deploy/management/commands/rungevent.py
+http://wordpress.maze.io/2010/06/03/django-chroot-securing-your-web-application-hosting/
+http://auphonic.com/blog/2011/06/18/django-deployment-nginx-uwsgi-virtualenv-and-fabric/
+http://blog.miki725.com/deploy-django-on-gevent-with-nginx/
+https://github.com/PaulUithol/backbone-tastypie
+http://stackoverflow.com/questions/11763798/using-backbone-ember-makes-django-being-a-simple-rest-api
+http://www.rkblog.rk.edu.pl/w/p/creating-modern-web-applications-django-and-emberjs-javascript-framework/
+http://discuss.emberjs.com/t/setting-up-a-django-api-to-use-with-ember-js/163
+https://github.com/escalant3/ember-data-tastypie-adapter
+https://github.com/toranb/complex-ember-data-example
+https://github.com/toranb/ember-data-django-rest-adapter
+https://github.com/escalant3/ember-data-tastypie-adapter
+https://github.com/escalant3/django-ember-example/tree/master/djangoapp/tasks/static/tasks/js/libs
+https://www.credicard.com.ve/credicard/jspEnLinea/enlineaBanco.jsp?xBco=830
+https://www.credicard.com.ve/credicard/jspEnLinea/error.jsp?codErr=901
+http://django-social-auth.readthedocs.org/en/latest/backends/google.html
+https://github.com/omab/django-social-auth/blob/master/social_auth/db/django_models.py
+https://bitbucket.org/kmike/django-coverage/
+http://docs.drone.io/buildscript.html
+https://github.com/eldarion/agon
+https://github.com/eldarion/metron
+https://github.com/eldarion/brabeion
+https://github.com/eldarion/phileo
+http://phileo.readthedocs.org/en/latest/usage.html
+https://github.com/eldarion/eventlog
+http://tastypieapi.org/
+http://django-tastypie.readthedocs.org/en/latest/tutorial.html
+http://django.es/blog/crear-feeds-con-django/
+http://www.jjude.com/adding-rss-feeds-to-django-applications/
+https://github.com/django-debug-toolbar/django-debug-toolbar
+
+
+
+
+
+
+
+
+
+
+
+
+https://twitter.com/
+http://www.techrepublic.com/blog/programming-and-development/improve-web-page-load-time-with-yepnopejs/6789
+http://net.tutsplus.com/tutorials/javascript-ajax/easy-script-loading-with-yepnope-js/
+https://github.com/HuntingBears?tab=repositories
+http://www.slideshare.net/audreyr/django-package-thunderdome-by-audrey-roy-daniel-greenfeld
+http://easy-themes.tk/themes/preview/ace/form-elements.html
+https://drone.io/
+https://github.com/miki725/django-gevent-deploy/blob/master/django_gevent_deploy/management/commands/rungevent.py
+http://wordpress.maze.io/2010/06/03/django-chroot-securing-your-web-application-hosting/
+http://auphonic.com/blog/2011/06/18/django-deployment-nginx-uwsgi-virtualenv-and-fabric/
+http://blog.miki725.com/deploy-django-on-gevent-with-nginx/
+https://github.com/PaulUithol/backbone-tastypie
+http://stackoverflow.com/questions/11763798/using-backbone-ember-makes-django-being-a-simple-rest-api
+http://www.rkblog.rk.edu.pl/w/p/creating-modern-web-applications-django-and-emberjs-javascript-framework/
+http://discuss.emberjs.com/t/setting-up-a-django-api-to-use-with-ember-js/163
+https://github.com/escalant3/ember-data-tastypie-adapter
+https://github.com/toranb/complex-ember-data-example
+https://github.com/toranb/ember-data-django-rest-adapter
+https://github.com/escalant3/ember-data-tastypie-adapter
+https://github.com/escalant3/django-ember-example/tree/master/djangoapp/tasks/static/tasks/js/libs
+https://www.credicard.com.ve/credicard/jspEnLinea/enlineaBanco.jsp?xBco=830
+https://www.credicard.com.ve/credicard/jspEnLinea/error.jsp?codErr=901
+http://django-social-auth.readthedocs.org/en/latest/backends/google.html
+https://github.com/omab/django-social-auth/blob/master/social_auth/db/django_models.py
+https://bitbucket.org/kmike/django-coverage/
+http://docs.drone.io/buildscript.html
+https://github.com/eldarion/agon
+https://github.com/eldarion/metron
+https://github.com/eldarion/brabeion
+https://github.com/eldarion/phileo
+http://phileo.readthedocs.org/en/latest/usage.html
+https://github.com/eldarion/eventlog
+http://tastypieapi.org/
+http://django-tastypie.readthedocs.org/en/latest/tutorial.html
+http://django.es/blog/crear-feeds-con-django/
+http://www.jjude.com/adding-rss-feeds-to-django-applications/
+https://github.com/django-debug-toolbar/django-debug-toolbar
+

@@ -1,0 +1,11 @@
+{% extends "twitter/base.html" %}
+{% block contenido %}
+<p>
+	Confirme que desea retwettear: {{ tweet.filtrar|safe|linebreaksbr }}<br>
+	<form action="/twitter/retweet/{{ tweet.id }}/" method="post">
+		{% csrf_token %}
+		<input class="btn btn-success" type="submit" value="Retweetear" name="confirma">
+		<a class="btn btn-danger" href="/twitter/">No retweetear</a>
+	</form>
+</p>
+{% endblock %}

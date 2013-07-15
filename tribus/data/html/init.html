@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
+        <div class="well jumbotron">
+            <div class="container">
+                <div class="row-fluid">
+                    <div class="span9 hero-unit">
+                        <h1>{%trans "The power is yours" %}</h1>
+                        <p>{% trans "Unleash the power of your creativity to bring amazing pieces of art to the free software world. We deliver a complete set of community services right to your computer" %}. <a href="/tour">{% trans "Take the tour" %}</a> {% trans "to know how" %}.</p>
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                    </div>
+                    <div class="span3">
+                        <div class="home-signin">
+                        <h3 class="lighter block">{% trans "Log in with" %}</h3>
+                        <div class="row-fluid bigger-200">
+                            <a href="{% url 'socialauth_begin' 'facebook' %}">
+                                <span class="span3 bigger-200 text-center blue">
+                                    <i class="icon-facebook-sign"></i>
+                                </span>
+                            </a>
+                            <a href="{% url 'socialauth_begin' 'twitter' %}">
+                                <span class="span3 bigger-200 text-center light-blue">
+                                    <i class="icon-twitter-sign"></i>
+                                </span>
+                            </a>
+                            <a href="{% url 'socialauth_begin' 'github' %}">
+                                <span class="span3 bigger-200 text-center dark">
+                                    <i class="icon-github-sign"></i>
+                                </span>
+                            </a>
+                            <a href="{% url 'socialauth_begin' 'google-oauth2' %}">
+                                <span class="span3 bigger-200 text-center red">
+                                    <i class="icon-google-plus-sign"></i>
+                                </span>
+                            </a>
+                        </div>
+                        <h3 class="lighter block ">{% trans "- or -" %}</h3>
+                        <form accept-charset="UTF-8" action="{% url 'user_login' %}" autocomplete="off" method="post">
+                            {% csrf_token %}
+                            <ul class="unstyled">
+                                <li>{{ loginform.username }}</li>
+                                <li>{{ loginform.password }}</li>
+                                <li>
+                                    <label for="id_remember_me">
+                                        {{ loginform.remember_me }}
+                                        <span class="lbl">
+                                             {{ loginform.remember_me.label }}
+                                        </span>
+                                    </label>
+                                </li>
+                            </ul>
+                            <button class="btn btn-yellow btn-block" type="submit">{% trans "Log in" %}</button>
+		                    <ul class="unstyled smaller-90">
+			                    <li><a href="{% url 'user_password_reset' %}">forgot your password?</a></li>
+		                    </ul>
+                        </form>
+                    </div>
+                        <div class="home-signup">
+                        <h3 class="lighter block">{% trans "Sign up" %}</h3>
+                        <form accept-charset="UTF-8" action="{% url 'user_signup' %}" autocomplete="off" method="post">
+                            {% csrf_token %}
+                            <ul class="unstyled">
+                                <li>{{ signupform.username }}</li>
+                                <li class="row-fluid">
+                                    <span class="span6">{{ signupform.first_name }}</span>
+                                    <span class="span6">{{ signupform.last_name }}</span>
+                                </li>
+                                <li>{{ signupform.email }}</li>
+                                <li>{{ signupform.password }}</li>
+                            </ul>
+                            <button class="btn btn-success btn-block" type="submit">{% trans "Sign up" %}</button>
+                            <p class="smaller-90">
+                                By clicking on this button, you agree to the
+                                <a href="/about/terms" target="_blank">Terms of Service</a>, the
+                                <a href="/about/privacy" target="_blank">Privacy Policy</a> and the
+                                <a href="/about/guidelines" target="_blank">Community Guidelines</a>.
+                            </p>
+                        </form>
+                    </div>
+                    </div>
+                </div>
+            </div>
+      </div>
+
+<!--      <div class="container">
+      <div class="row-fluid">
+          <div class="span4">
+            <img src="{{ TBS_STATIC }}/img/settings.png" />
+            <h2>Great collaboration starts with communication.</h2>
+            <p>Review changes, comment on lines of code, report issues, and plan the future of your project with <a href="http://github.com/features">flexible discussion tools</a>.</p>
+          </div>
+          <div class="span4">
+            <img src="{{ TBS_STATIC }}/img/clipboard.png" />
+            <h3>Manage and contribute from all your devices.</h3>
+            <p>Native clients for <a href="http://mac.github.com/">Mac</a>, <a href="http://windows.github.com/">Windows</a>, and <a href="http://mobile.github.com/">mobile</a> devices allow you to stay involved with your projects from anywhere.</p>
+          </div>
+          <div class="span4">
+            <img src="{{ TBS_STATIC }}/img/share.png" />
+            <h3>The world’s largest open source community.</h3>
+            <p>Share your code with the world and contribute to <a href="http://github.com/explore">the millions of public repositories</a> hosted on GitHub.</p>
+          </div>
+    </div>
+    </div>-->
+{% endblock %}

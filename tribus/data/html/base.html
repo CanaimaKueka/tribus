@@ -1,0 +1,17 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="{{ app_charset|lower }}" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}{% endblock %}</title>
+{% include "css.html" %}
+</head>
+<body>
+{% include "navbar.html" %}
+{% block content %}{% endblock %}
+{% include "footer.html" %}
+{% include "js.html" %}
+{% block innerscripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,7 @@
+{% extends 'twitter/base.html' %}
+{% block titulo %}Twitter - Reponder tweet{% endblock %}
+{% block textarea %}@{{ tweet.user }}: {% endblock %}
+{% block respuesta %}
+<input type="hidden" name="respuesta" value="{{ tweet.id }}">
+{% endblock %}
+{% block fasttweet %}Respuesta:{% endblock %}

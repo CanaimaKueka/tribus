@@ -1,0 +1,97 @@
+.navbar .logo {
+  background-image: url('../img/logo-min.png');
+  width: 100px;
+  height: 40px;
+  display: block;
+  float: left;
+  padding: 0px;
+  margin: 0px;
+}
+
+.navbar .form-search {
+  margin: 5px;
+}
+
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"]
+{
+ border-radius:4px !important;
+}
+
+.btn {
+ border-radius:4px !important;
+}
+
+.input-block {
+  display: block;
+  width: 100%;
+}
+
+.input-medium {
+  display: block;
+  width: 166px;
+}
+
+.input-large {
+  display: block;
+  width: 246px;
+}
+
+.input-small {
+  display: block;
+  width: 113px;
+}
+
+.input-xlarge {
+  display: block;
+  width: 356px;
+}
+
+.hero-unit {
+  padding: 30px;
+  margin: 0px !important;
+}
+
+input, button, select, textarea {
+    font-family: "Open Sans",Helvetica,Arial,sans-serif;
+}
+
+.jumbotron {
+  padding: 60px;
+}
+
+.home-signin, .home-signup {
+    padding: 5px;
+    margin: 0 0 5px 0;
+}
+
+.hero-unit h1 {
+    font-size: 90px;
+    line-height:1.4;
+    word-spacing:0;
+}
+
+.hero-unit p {
+    font-size: 25px;
+    line-height:1;
+    font-weight: 200;
+}
+
+.alert {
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+}

@@ -1,0 +1,33 @@
+{% extends "user/base.html" %}
+{% block title %}Sign up for an account{% endblock %}
+{% block content %}
+<div class="well jumbotron">
+	<div class="container">
+        <div class="row-fluid">
+	        <div class="span4">
+		        <h3 class="lighter block blue">Sign up to Tribus</h3>
+		        <hr />
+		        <p>Después de introducir sus datos de usuario, usted podrá editar su información de perfil.</p>
+		        <form method="post" action="{% url 'user_signup' %}">
+                    {% csrf_token %}
+                    <ul class="unstyled">
+                        <li>{{ form.username }}</li>
+                        <li class="row-fluid">
+                            <span class="span6">{{ form.first_name }}</span>
+                            <span class="span6">{{ form.last_name }}</span>
+                        </li>
+                        <li>{{ form.email }}</li>
+                        <li>{{ form.password }}</li>
+                    </ul>
+			        <button class="btn btn-yellow btn-block" type="submit">Sign up</button>
+			        <input type="hidden" name="next" value="{{ next }}" />
+		        </form>
+	        </div>
+		    <div class="span1"></div>
+		    <div class="span7">
+                {% include 'user/form_errors.html' %}
+		    </div>
+	    </div>
+	</div>
+</div>
+{% endblock %}

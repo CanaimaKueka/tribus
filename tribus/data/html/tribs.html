@@ -1,0 +1,52 @@
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}twitter/css/newtweets.css">
+<script type="text/javascript">
+	busqueda = '{{ busqueda }}';
+	perfil = '{% if user != logueado %}{{ user }}{% endif %}';
+</script>
+<script src="{{ STATIC_URL }}twitter/js/newtweets.js" type="text/javascript"></script>
+<h4 id="nuevostweets"><a href="#">5 nuevos tweets</a></h4>
+<section id="tweets">
+	{% if tribs|length %}
+		{% for trib in tribs %}
+			{% if forloop.counter0 == 0 %}
+				<script>tweet_id = {{ tweet.id }}</script>
+			{% endif %}
+			<article>
+				<header>
+					<img src="{% if tweet.profile.avatar %}{{ tweet.profile.avatar }}{% else %}{{ STATIC_URL }}twitter/default.png{% endif %}" class="perfil">
+					<h3>{{ tweet.user.get_full_name }} (<a href="/twitter/profile/{{ tweet.user }}">@{{ tweet.user }}</a>)</h3>
+				</header>
+				{{ tweet.filtrar|safe|linebreaksbr }}
+				<footer>
+					<p>
+						{% if tweet.retwitteado %}
+							<strong>Retwitteado por <a href="/twitter/profile/{{ tweet.retweetter }}/">@{{ tweet.retweetter }}</a></strong>
+							{% if tweet.retweetter == logueado or logueado.is_staff %}<a href="/twitter/borrar/{{ tweet.rt_id }}/"><i class="icon-trash"></i>Deshacer retweet</a>{% endif %}<br>
+						{% endif %}
+						{% if tweet.respuesta %}
+							<a href="/twitter/conversacion/{{ tweet.id }}/">Ver conversacion completa</a><br>
+						{% endif %}
+						<strong>Publicado: {{ tweet.fecha }}</strong>
+						<a href="/twitter/retweet/{{ tweet.id }}/"><i class="icon-retweet"></i>Retweet</a>
+						<a href="/twitter/responder/{{ tweet.id }}/"><i class="icon-share-alt"></i>Responder</a>
+						{% if tweet.user == logueado or logueado.is_staff %}
+							<a href="/twitter/borrar/{{ tweet.id }}/"><i class="icon-trash"></i>Borrar</a>
+						{% endif %}
+					</p>
+				</footer>
+			</article>
+		{% endfor %}
+	{% else %}
+		<header>
+			<h3>No hay ningun tweet</h3>
+		</header>
+	{% endif %}
+		<footer>
+			<div class="pagination">
+				<ul>
+				<li class="prev{% if page < 2 %} disabled{% endif %}"><a href="/twitter/{{ page_prefix }}page/{{ prev }}/{{ page_sufix }}">&larr; Anterior</a></li>
+				<li class="next"><a href="/twitter/{{ page_prefix }}page/{{ next }}/{{ page_sufix }}">Siguiente &rarr;</a></li>
+				</ul>
+			</div>
+		</footer>
+</section>

@@ -1,0 +1,14 @@
+python-virtualenv
+python-dev
+libldap2-dev
+libsasl2-dev
+libpq-dev
+postgresql
+slapd
+ldap-utils
+redis-server
+fabric
+gcc
+python-cairosvg
+python-babel
+python-sphinx
