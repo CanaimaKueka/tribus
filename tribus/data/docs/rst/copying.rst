@@ -1,7 +1,7 @@
 Copyright:
 
     Copyright (C) 2013 Desarrolladores de Tribus
-    Please refer to CONTRIBUTING.rst for a complete list of Copyright
+    Please refer to AUTHORS.rst for a complete list of Copyright
     holders.
 
 License:
