@@ -32,9 +32,9 @@ from tribus import BASEDIR
 
 NAME = u'Tribus'
 VERSION = (0, 1, 0, 'alpha', 0)
-URL = u'https://github.com/HuntingBears/tribus'
-AUTHOR = u'Luis ALejandro Martínez Faneyth'
-AUTHOR_EMAIL = u'luis@huntingbears.com.ve'
+URL = u'http://git.canaima.softwarelibre.gob.ve/?p=tribus.git;a=summary'
+AUTHOR = u'Desarrolladores de Tribus'
+AUTHOR_EMAIL = u'desarrolladores@canaima.softwarelibre.gob.ve'
 DESCRIPTION = (u'Red social para la gestión de comunidades de Software Libre.'),
 LICENSE = u'GPL'
 
