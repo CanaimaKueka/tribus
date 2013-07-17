@@ -1,65 +1,83 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-#
-# ==============================================================================
-# PAQUETE: canaima-semilla
-# ARCHIVO: scripts/c-s.sh
-# DESCRIPCIÓN: Script principal. Se encarga de invocar a los demás módulos y
-#              funciones según los parámetros proporcionados.
-# USO: ./c-s.sh [MÓDULO] [PARÁMETROS] [...]
-# COPYRIGHT:
-#       (C) 2010-2012 Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>
-#       (C) 2012 Niv Sardi <xaiki@debian.org>
-# LICENCIA: GPL-3
-# ==============================================================================
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# COPYING file for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program. If not, see <http://www.gnu.org/licenses/>.
-#
-# CODE IS POETRY
-
-import os
 import sys
-import gtk
-import gettext
-import locale
+import os
+from optparse import OptionParser
 
-from tribus.settings.gtk import LOCALEDIR
-from tribus.common.utils import get_path
-from tribus.gtk.main import Main
-from tribus.gtk.constructor import UserMessage
-from tribus.gtk.translator import MAIN_ROOT_ERROR_TITLE, MAIN_ROOT_ERROR_MSG
+path = os.path.join(os.path.dirname(__file__), '..')
+base = os.path.realpath(os.path.abspath(os.path.normpath(path)))
+os.environ['PATH'] = base + os.pathsep + os.environ['PATH']
+sys.prefix = base
+sys.path.insert(0, base)
 
-gtk.gdk.threads_init()
+DEFAULT_OPTIONS = {
+    'version': [['-v', '--version'], {
+        'action': 'store_true',
+        'dest': 'print_version',
+        'default': False
+    }],
+    'help': [['-h', '--help', '--ayuda'], {
+        'action': 'store_true',
+        'dest': 'print_help',
+        'default': False
+    }],
+    'usage': [['-u', '--usage', '--uso'], {
+        'action': 'store_true',
+        'dest': 'print_usage',
+        'default': False
+    }],
+}
 
-if __name__ == "__main__":
-    settinglocale = locale.setlocale(locale.LC_ALL, '')
-    naminglocale = get_path([
-        LOCALEDIR, locale.getlocale()[0], 'LC_MESSAGES', '%s.mo' % localedomain
-        ])
 
+def main():
+    """
+    Main command-line execution loop.
+    """
     try:
-        gettext.GNUTranslations(open(naminglocale, 'rb')).install()
-    except Exception:
-        gettext.NullTranslations().install()
 
-    if os.geteuid() != 0:
-        dialog = UserMessage(
-            message = MAIN_ROOT_ERROR_MSG, title = MAIN_ROOT_ERROR_TITLE,
-            type = gtk.MESSAGE_ERROR, buttons = gtk.BUTTONS_OK,
-            c_1 = gtk.RESPONSE_OK, f_1 = sys.exit, p_1 = (1,)
-            )
-    else:
-        app = Main()
-        gtk.main()
-        sys.exit()
+        parser = OptionParser(usage=("tbs [COMMAND] [:arg1,arg2=val2,...] ..."))
+
+        for _args, _kwargs in DEFAULT_OPTIONS.values():
+            if parser.has_option(_args[0]):
+                parser.remove_option(_args[0])
+            parser.add_option(*_args, **_kwargs)
+
+        # Parse command line options
+        options, command = parser.parse_args()
+        print options, command
+        if not command:
+            if options.print_help:
+                parser.print_help()
+            elif options.print_version:
+                parser.print_version()
+            else:
+                parser.print_usage()
+            parser.destroy()
+        elif isinstance(command, list) and len(command) > 0:
+            command = command[len(command) - 1]
+        
+            try:
+                command_module = __import__('tribus.cli.commands.%s' % command)
+                try:
+                    if callable(command_module.execute):
+                        command_module.execute(options=options)
+                except Exception, e:
+                    print e
+            except ImportError:
+                print 'The \'%s\' command does not exist. execute tbs --commands for an available command list.' % command
+        
+    except SystemExit:
+        # a number of internal functions might raise this one.
+        raise
+    except KeyboardInterrupt:
+        sys.stderr.write("\nStopped.\n")
+        sys.exit(1)
+    except:
+        sys.excepthook(*sys.exc_info())
+        # we might leave stale threads if we don't explicitly exit()
+        sys.exit(1)
+    finally:
+        print 'end'
+    sys.exit(0)
+
+
+if __name__ == '__main__':
+    main()

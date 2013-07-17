@@ -37,7 +37,7 @@ syncdb: fabric
 
 	@$(FAB) development syncdb_django
 
-development: fabric
+environment: fabric
 
 	@$(FAB) development environment
 
