@@ -1,7 +1,7 @@
 import sys
 import os
 import inspect
-import argparse 
+import argparse
 
 path = os.path.join(os.path.dirname(__file__), '..')
 base = os.path.realpath(os.path.abspath(os.path.normpath(path)))
@@ -12,7 +12,7 @@ sys.path.insert(0, base)
 from tribus import BASEDIR
 from tribus.common.logger import get_logger
 from tribus.common.utils import find_files, package_to_path, get_path
-from tribus.common.cmd import Command
+from tribus.common.cmd import Helper
 from tribus.config.base import DEFAULT_CLI_OPTIONS
 
 log = get_logger()
@@ -29,11 +29,12 @@ def find_tbs_subcommands(path, package):
                 module = vars(__import__(name=package, fromlist=[pymod]))[pymod]
                 for item in vars(module).values():
                     if inspect.isclass(item) and callable(item):
-                        if issubclass(item, Command) and item != Command:
+                        if issubclass(item, Helper) and item != Helper:
                             _subcommands.append(item)
             except Exception, e:
                 print e
     return _subcommands
+
 
 def main():
     """
@@ -43,25 +44,22 @@ def main():
 
         parser = argparse.ArgumentParser(description='Tribus FTW',
                                          epilog='Tribus END', add_help=False, prog='Tribus')
-        
         for _args, _kwargs in DEFAULT_CLI_OPTIONS.values():
             parser.add_argument(*_args, **_kwargs)
 
-        # subparsers = parser.add_subparsers(title='subcommands',
-        #                                    description='valid subcommands', help='additional help')
+        subparsers = parser.add_subparsers(title='subcommands',
+                                           description='valid subcommands', help='additional help')
 
-        # for cmd in find_tbs_subcommands(BASEDIR, 'tribus.cli.commands'):
-        #     subparser = subparsers.add_parser(cmd.subcommand_name, help=cmd.subcommand_help)
-        #     subparser.set_defaults(func=cmd)
-        #     # for _args, _kwargs in cmd.subcommand_args.values():
-        #     #     subparser.add_argument(*_args, **_kwargs)
+        for cmd in find_tbs_subcommands(BASEDIR, 'tribus.cli.commands'):
+            subparser = subparsers.add_parser(cmd.helper_name, help=cmd.helper_help)
+            subparser.set_defaults(func=cmd)
+            for _args, _kwargs in cmd.helper_args.values():
+                subparser.add_argument(*_args, **_kwargs)
 
         args = parser.parse_args()
 
         if args.print_help:
             parser.print_help()
-        elif args.print_version:
-            print 'version'            
         elif hasattr(args, 'func'):
             args.func(args)
         else:

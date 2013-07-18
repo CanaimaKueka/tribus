@@ -1,26 +1,17 @@
-from tribus.common.cmd import Command
+from tribus.common.cmd import Helper
 
-class BuildPackage(Command):
-	
-    subcommand_name = 'buildpackage'
-    subcommand_help = 'Helps build a package'
-    subcommand_args = {
-	    'version': [['-v', '--version'], {
-	        'action': 'store_true',
-	        'dest': 'print_version',
-	        'default': False
-	    }],
-	    # 'help': [['-h', '--help', '--ayuda'], {
-	    #     'action': 'store_true',
-	    #     'dest': 'print_help',
-	    #     'default': False
-	    # }],
-	    'usage': [['-u', '--usage', '--uso'], {
-	        'action': 'store_true',
-	        'dest': 'print_usage',
-	        'default': False
-	    }],
-	}
+
+class BuildPackage(Helper):
+
+    helper_name = 'buildpackage'
+    helper_help = 'Helps build a package'
+    helper_args = {
+        'version': [['-v', '--version'], {
+            'action': 'store_true',
+            'dest': 'print_version',
+            'default': False
+        }],
+    }
 
     def __init__(self, *args, **kwargs):
         return self.run(*args, **kwargs)

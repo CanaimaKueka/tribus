@@ -1,4 +1,4 @@
-class Command:
+class Helper(object):
 
     def __init__(self, *args, **kwargs):
         pass

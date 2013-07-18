@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from tribus import BASEDIR
+from tribus.common.version import get_version
 
 NAME = u'Tribus'
 VERSION = (0, 1, 0, 'alpha', 0)
@@ -29,8 +30,8 @@ else:
 
 DEFAULT_CLI_OPTIONS = {
     'version': [['-v', '--version'], {
-        'action': 'store_true',
-        'dest': 'print_version',
+        'action': 'version',
+        'version': '%s %s' % (NAME, get_version(VERSION)),
         'default': False
     }],
     'help': [['-h', '--help', '--ayuda'], {
