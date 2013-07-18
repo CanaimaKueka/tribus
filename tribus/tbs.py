@@ -1,6 +1,7 @@
 import sys
 import os
-from optparse import OptionParser
+import inspect
+import argparse 
 
 path = os.path.join(os.path.dirname(__file__), '..')
 base = os.path.realpath(os.path.abspath(os.path.normpath(path)))
@@ -8,24 +9,31 @@ os.environ['PATH'] = base + os.pathsep + os.environ['PATH']
 sys.prefix = base
 sys.path.insert(0, base)
 
-DEFAULT_OPTIONS = {
-    'version': [['-v', '--version'], {
-        'action': 'store_true',
-        'dest': 'print_version',
-        'default': False
-    }],
-    'help': [['-h', '--help', '--ayuda'], {
-        'action': 'store_true',
-        'dest': 'print_help',
-        'default': False
-    }],
-    'usage': [['-u', '--usage', '--uso'], {
-        'action': 'store_true',
-        'dest': 'print_usage',
-        'default': False
-    }],
-}
+from tribus import BASEDIR
+from tribus.common.logger import get_logger
+from tribus.common.utils import find_files, package_to_path, get_path
+from tribus.common.cmd import Command
+from tribus.config.base import DEFAULT_CLI_OPTIONS
 
+log = get_logger()
+
+
+def find_tbs_subcommands(path, package):
+    _subcommands = []
+    _subcommands_dir = get_path([BASEDIR]+package_to_path(package).split(os.sep))
+    for pyfile in find_files(path=_subcommands_dir, pattern='*.py'):
+        pyname = os.path.basename(pyfile)
+        pymod = os.path.splitext(pyname)[0]
+        if pyname != '__init__.py':
+            try:
+                module = vars(__import__(name=package, fromlist=[pymod]))[pymod]
+                for item in vars(module).values():
+                    if inspect.isclass(item) and callable(item):
+                        if issubclass(item, Command) and item != Command:
+                            _subcommands.append(item)
+            except Exception, e:
+                print e
+    return _subcommands
 
 def main():
     """
@@ -33,37 +41,32 @@ def main():
     """
     try:
 
-        parser = OptionParser(usage=("tbs [COMMAND] [:arg1,arg2=val2,...] ..."))
-
-        for _args, _kwargs in DEFAULT_OPTIONS.values():
-            if parser.has_option(_args[0]):
-                parser.remove_option(_args[0])
-            parser.add_option(*_args, **_kwargs)
-
-        # Parse command line options
-        options, command = parser.parse_args()
-        print options, command
-        if not command:
-            if options.print_help:
-                parser.print_help()
-            elif options.print_version:
-                parser.print_version()
-            else:
-                parser.print_usage()
-            parser.destroy()
-        elif isinstance(command, list) and len(command) > 0:
-            command = command[len(command) - 1]
+        parser = argparse.ArgumentParser(description='Tribus FTW',
+                                         epilog='Tribus END', add_help=False, prog='Tribus')
         
-            try:
-                command_module = __import__('tribus.cli.commands.%s' % command)
-                try:
-                    if callable(command_module.execute):
-                        command_module.execute(options=options)
-                except Exception, e:
-                    print e
-            except ImportError:
-                print 'The \'%s\' command does not exist. execute tbs --commands for an available command list.' % command
-        
+        for _args, _kwargs in DEFAULT_CLI_OPTIONS.values():
+            parser.add_argument(*_args, **_kwargs)
+
+        # subparsers = parser.add_subparsers(title='subcommands',
+        #                                    description='valid subcommands', help='additional help')
+
+        # for cmd in find_tbs_subcommands(BASEDIR, 'tribus.cli.commands'):
+        #     subparser = subparsers.add_parser(cmd.subcommand_name, help=cmd.subcommand_help)
+        #     subparser.set_defaults(func=cmd)
+        #     # for _args, _kwargs in cmd.subcommand_args.values():
+        #     #     subparser.add_argument(*_args, **_kwargs)
+
+        args = parser.parse_args()
+
+        if args.print_help:
+            parser.print_help()
+        elif args.print_version:
+            print 'version'            
+        elif hasattr(args, 'func'):
+            args.func(args)
+        else:
+            parser.print_usage()
+
     except SystemExit:
         # a number of internal functions might raise this one.
         raise

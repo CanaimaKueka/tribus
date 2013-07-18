@@ -27,6 +27,23 @@ else:
     LOCALEDIR = BASEDIR+'/tribus/i18n'
     ICONDIR = BASEDIR+'/tribus/data/icons'
 
+DEFAULT_CLI_OPTIONS = {
+    'version': [['-v', '--version'], {
+        'action': 'store_true',
+        'dest': 'print_version',
+        'default': False
+    }],
+    'help': [['-h', '--help', '--ayuda'], {
+        'action': 'store_true',
+        'dest': 'print_help',
+        'default': False
+    }],
+    'usage': [['-u', '--usage', '--uso'], {
+        'action': 'store_true',
+        'dest': 'print_usage',
+        'default': False
+    }],
+}
 # forbidden_filename_chars = {
 #     '/':'', ':':'', 'http':'', 'file':'', 'ftp':'', '?':'', '=':'', '&':'',
 #     '-':'', '(':'', ')':'', '+':'', '-':'', '#':'', '$':'', '%':'', '@':'',
