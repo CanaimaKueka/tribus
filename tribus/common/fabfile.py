@@ -52,11 +52,11 @@ aptitude install --assume-yes --allow-untrusted \
 
 
 def configure_postgres():
-    with settings(command=[
-        'echo "postgres:tribus" | chpasswd',
-        'su postgres -c \"psql -U postgres -f %s\"' % f_sql_preseed,
-    ]):
-        sudo('%s' % '; '.join(env.command))
+    with settings(command='echo "postgres:tribus" | chpasswd'):
+        sudo('%(command)s' % env)
+    
+    with settings(command='su postgres -c \"psql -U postgres -f %s\"' % f_sql_preseed):
+        sudo('%(command)s' % env)
 
 
 def populate_ldap():

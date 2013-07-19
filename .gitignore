@@ -1,6 +1,7 @@
 # Python
 *.py[cod]
 
+
 # C extensions
 *.so
 
@@ -81,7 +82,7 @@ nb-configuration.xml
 *.sublime-workspace
 
 # Eclipse projects
-
+.settings
 .project
 
 

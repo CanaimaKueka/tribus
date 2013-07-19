@@ -41,6 +41,10 @@ development: fabric
 
 	@$(FAB) development environment
 
+update_virtualenv: fabric
+
+	@$(FAB) development update_virtualenv
+
 update_po: fabric 
 
 	@$(FAB) development update_po
