@@ -181,6 +181,24 @@ def build_mo():
         with settings(command='python setup.py build_mo ' % env):
             local('%(command)s' % env)
 
+
+def sdist():
+    with cd('%(basedir)s' % env):
+        with settings(command='python setup.py sdist ' % env):
+            local('%(command)s' % env)
+
+
+def bdist():
+    with cd('%(basedir)s' % env):
+        with settings(command='python setup.py bdist ' % env):
+            local('%(command)s' % env)
+
+
+def install():
+    with cd('%(basedir)s' % env):
+        with settings(command='python setup.py install ' % env):
+            local('%(command)s' % env)
+
 #         with settings(command='sed -i -e \'s/# Translations template for Tribus./# $(POTITLE)./\' \
 # -e \'s/# Copyright (C).*/# Copyright (C) $(YEAR) $(AUTHOR)/\' \
 # -e \'s/# This file is distributed under.*/same license as the $(PACKAGE) package./\' \
