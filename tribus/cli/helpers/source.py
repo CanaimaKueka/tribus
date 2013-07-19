@@ -1,7 +1,8 @@
+
 from tribus.common.cmd import Helper
 
 
-class BuildImage(Helper):
+class Image(Helper):
 
     helper_name = 'buildimage'
     helper_help = 'Helps build a package'

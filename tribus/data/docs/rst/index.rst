@@ -9,11 +9,15 @@ Tribus
 Desarrollo
 ==========
 
+
+
 Esta aplicación está en período de desarrollo, así que lo más probable es que **no funcione**. Aún no existe un método de instalación para medios en producción, así que si deseas usarla, la forma más rápida es que nos eches una mano.
 
 .. toctree::
 
     contributing
+    where
+    maintaining
     roadmap
     todo
     style
@@ -39,4 +43,3 @@ Para generar un tarball del código fuente::
 	python setup.py sdist
 
 
-.. include:: links.rst
