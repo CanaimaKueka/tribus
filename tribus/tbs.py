@@ -1,65 +1,84 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-#
-# ==============================================================================
-# PAQUETE: canaima-semilla
-# ARCHIVO: scripts/c-s.sh
-# DESCRIPCIÓN: Script principal. Se encarga de invocar a los demás módulos y
-#              funciones según los parámetros proporcionados.
-# USO: ./c-s.sh [MÓDULO] [PARÁMETROS] [...]
-# COPYRIGHT:
-#       (C) 2010-2012 Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>
-#       (C) 2012 Niv Sardi <xaiki@debian.org>
-# LICENCIA: GPL-3
-# ==============================================================================
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# COPYING file for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program. If not, see <http://www.gnu.org/licenses/>.
-#
-# CODE IS POETRY
-
-import os
 import sys
-import gtk
-import gettext
-import locale
+import os
+import inspect
+import argparse
 
-from tribus.settings.gtk import LOCALEDIR
-from tribus.common.utils import get_path
-from tribus.gtk.main import Main
-from tribus.gtk.constructor import UserMessage
-from tribus.gtk.translator import MAIN_ROOT_ERROR_TITLE, MAIN_ROOT_ERROR_MSG
+path = os.path.join(os.path.dirname(__file__), '..')
+base = os.path.realpath(os.path.abspath(os.path.normpath(path)))
+os.environ['PATH'] = base + os.pathsep + os.environ['PATH']
+sys.prefix = base
+sys.path.insert(0, base)
 
-gtk.gdk.threads_init()
+from tribus import BASEDIR
+from tribus.common.logger import get_logger
+from tribus.common.utils import find_files, package_to_path, get_path
+from tribus.common.cmd import Helper
+from tribus.config.base import DEFAULT_CLI_OPTIONS
 
-if __name__ == "__main__":
-    settinglocale = locale.setlocale(locale.LC_ALL, '')
-    naminglocale = get_path([
-        LOCALEDIR, locale.getlocale()[0], 'LC_MESSAGES', '%s.mo' % localedomain
-        ])
+log = get_logger()
 
+
+def find_tbs_subcommands(path, package):
+    _subcommands = []
+    _subcommands_dir = get_path([BASEDIR]+package_to_path(package).split(os.sep))
+    for pyfile in find_files(path=_subcommands_dir, pattern='*.py'):
+        pyname = os.path.basename(pyfile)
+        pymod = os.path.splitext(pyname)[0]
+        if pyname != '__init__.py':
+            try:
+                module = vars(__import__(name=package, fromlist=[pymod]))[pymod]
+                for item in vars(module).values():
+                    if inspect.isclass(item) and callable(item):
+                        if issubclass(item, Helper) and item != Helper:
+                            _subcommands.append(item)
+            except Exception, e:
+                print e
+    return _subcommands
+
+
+def main():
+    """
+    Main command-line execution loop.
+    """
     try:
-        gettext.GNUTranslations(open(naminglocale, 'rb')).install()
-    except Exception:
-        gettext.NullTranslations().install()
 
-    if os.geteuid() != 0:
-        dialog = UserMessage(
-            message = MAIN_ROOT_ERROR_MSG, title = MAIN_ROOT_ERROR_TITLE,
-            type = gtk.MESSAGE_ERROR, buttons = gtk.BUTTONS_OK,
-            c_1 = gtk.RESPONSE_OK, f_1 = sys.exit, p_1 = (1,)
-            )
-    else:
-        app = Main()
-        gtk.main()
-        sys.exit()
+        parser = argparse.ArgumentParser(description='Tribus FTW',
+                                         epilog='Tribus END', add_help=False, prog='Tribus')
+        for _args, _kwargs in DEFAULT_CLI_OPTIONS.values():
+            parser.add_argument(*_args, **_kwargs)
+
+        subparsers = parser.add_subparsers(title='subcommands',
+                                           description='valid subcommands', help='additional help')
+
+        for cmd in find_tbs_subcommands(BASEDIR, 'tribus.cli.commands'):
+            subparser = subparsers.add_parser(cmd.helper_name, help=cmd.helper_help)
+            subparser.set_defaults(func=cmd)
+            for _args, _kwargs in cmd.helper_args.values():
+                subparser.add_argument(*_args, **_kwargs)
+
+        args = parser.parse_args()
+
+        if args.print_help:
+            parser.print_help()
+        elif hasattr(args, 'func'):
+            args.func(args)
+        else:
+            parser.print_usage()
+
+    except SystemExit:
+        # a number of internal functions might raise this one.
+        raise
+    except KeyboardInterrupt:
+        sys.stderr.write("\nStopped.\n")
+        sys.exit(1)
+    except:
+        sys.excepthook(*sys.exc_info())
+        # we might leave stale threads if we don't explicitly exit()
+        sys.exit(1)
+    finally:
+        print 'end'
+    sys.exit(0)
+
+
+if __name__ == '__main__':
+    main()

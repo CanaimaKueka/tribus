@@ -1,40 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-#
-# ==============================================================================
-# PAQUETE: canaima-semilla
-# ARCHIVO: scripts/c-s.sh
-# DESCRIPCIÓN: Script principal. Se encarga de invocar a los demás módulos y
-#              funciones según los parámetros proporcionados.
-# USO: ./c-s.sh [MÓDULO] [PARÁMETROS] [...]
-# COPYRIGHT:
-#       (C) 2010-2012 Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>
-#       (C) 2012 Niv Sardi <xaiki@debian.org>
-# LICENCIA: GPL-3
-# ==============================================================================
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# COPYING file for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program. If not, see <http://www.gnu.org/licenses/>.
-#
-# CODE IS POETRY
 
 from tribus import BASEDIR
+from tribus.common.version import get_version
 
 NAME = u'Tribus'
 VERSION = (0, 1, 0, 'alpha', 0)
-URL = u'https://github.com/HuntingBears/tribus'
-AUTHOR = u'Luis ALejandro Martínez Faneyth'
-AUTHOR_EMAIL = u'luis@huntingbears.com.ve'
+URL = u'http://git.canaima.softwarelibre.gob.ve/?p=tribus.git;a=summary'
+AUTHOR = u'Desarrolladores de Tribus'
+AUTHOR_EMAIL = u'desarrolladores@canaima.softwarelibre.gob.ve'
 DESCRIPTION = (u'Red social para la gestión de comunidades de Software Libre.'),
 LICENSE = u'GPL'
 
@@ -54,6 +28,23 @@ else:
     LOCALEDIR = BASEDIR+'/tribus/i18n'
     ICONDIR = BASEDIR+'/tribus/data/icons'
 
+DEFAULT_CLI_OPTIONS = {
+    'version': [['-v', '--version'], {
+        'action': 'version',
+        'version': '%s %s' % (NAME, get_version(VERSION)),
+        'default': False
+    }],
+    'help': [['-h', '--help', '--ayuda'], {
+        'action': 'store_true',
+        'dest': 'print_help',
+        'default': False
+    }],
+    'usage': [['-u', '--usage', '--uso'], {
+        'action': 'store_true',
+        'dest': 'print_usage',
+        'default': False
+    }],
+}
 # forbidden_filename_chars = {
 #     '/':'', ':':'', 'http':'', 'file':'', 'ftp':'', '?':'', '=':'', '&':'',
 #     '-':'', '(':'', ')':'', '+':'', '-':'', '#':'', '$':'', '%':'', '@':'',

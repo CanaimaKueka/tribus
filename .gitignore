@@ -85,5 +85,5 @@ nb-configuration.xml
 .settings
 .project
 
-
+# Configuración local de Django
 web_local.py

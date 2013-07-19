@@ -27,6 +27,7 @@ def development():
 
 
 def environment():
+    configure_sudo()
     preseed_packages()
     install_packages()
     configure_postgres()
@@ -34,29 +35,40 @@ def environment():
     create_virtualenv()
     update_virtualenv()
     configure_django()
+    deconfigure_sudo()
+
+
+def configure_sudo():
+    with settings(command='su root -c "echo \'%(user)s ALL= NOPASSWD: ALL\' > /etc/sudoers.d/tribus"' % env):
+        local('%(command)s' % env)
+
+
+def deconfigure_sudo():
+    with settings(command='sudo /bin/bash -c "rm -rf /etc/sudoers.d/tribus"' % env):
+        local('%(command)s' % env)
 
 
 def preseed_packages():
-    with settings(command='debconf-set-selections %s' % f_workenv_preseed):
-        sudo('%(command)s' % env)
+    with settings(command='sudo /bin/bash -c "debconf-set-selections %s"' % f_workenv_preseed):
+        local('%(command)s' % env)
 
 
 def install_packages():
-    with settings(command='DEBIAN_FRONTEND="noninteractive" \
+    with settings(command='sudo /bin/bash -c "DEBIAN_FRONTEND=noninteractive \
 aptitude install --assume-yes --allow-untrusted \
--o DPkg::Options::="--force-confmiss" \
--o DPkg::Options::="--force-confnew" \
--o DPkg::Options::="--force-overwrite" \
-%s' % ' '.join(debian_dependencies)):
-        sudo('%(command)s' % env)
+-o DPkg::Options::=--force-confmiss \
+-o DPkg::Options::=--force-confnew \
+-o DPkg::Options::=--force-overwrite \
+%s"' % ' '.join(debian_dependencies)):
+        local('%(command)s' % env)
 
 
 def configure_postgres():
-    with settings(command='echo "postgres:tribus" | chpasswd'):
-        sudo('%(command)s' % env)
-    
-    with settings(command='su postgres -c \"psql -U postgres -f %s\"' % f_sql_preseed):
-        sudo('%(command)s' % env)
+    with settings(command='sudo /bin/bash -c "echo \'postgres:tribus\' | chpasswd"'):
+        local('%(command)s' % env)
+
+    with settings(command='sudo /bin/bash -c "su postgres -c \'psql -U postgres -f %s\'"' % f_sql_preseed):
+        local('%(command)s' % env)
 
 
 def populate_ldap():
@@ -167,6 +179,24 @@ def build_man():
 def build_mo():
     with cd('%(basedir)s' % env):
         with settings(command='python setup.py build_mo ' % env):
+            local('%(command)s' % env)
+
+
+def sdist():
+    with cd('%(basedir)s' % env):
+        with settings(command='python setup.py sdist ' % env):
+            local('%(command)s' % env)
+
+
+def bdist():
+    with cd('%(basedir)s' % env):
+        with settings(command='python setup.py bdist ' % env):
+            local('%(command)s' % env)
+
+
+def install():
+    with cd('%(basedir)s' % env):
+        with settings(command='python setup.py install ' % env):
             local('%(command)s' % env)
 
 #         with settings(command='sed -i -e \'s/# Translations template for Tribus./# $(POTITLE)./\' \

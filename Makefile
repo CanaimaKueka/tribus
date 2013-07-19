@@ -18,7 +18,7 @@ checkpkg:
 		echo "[ABSENT]"; \
 		echo "Installing $(PACKAGE) ... "; \
 		echo "Enter your root password:"; \
-		$(SU) root -c "$(APTITUDE) install $(PACKAGE)"; \
+		$(SU) root -c 'DEBIAN_FRONTEND="noninteractive" $(APTITUDE) install --assume-yes --allow-untrusted -o DPkg::Options::="--force-confmiss" -o DPkg::Options::="--force-confnew" -o DPkg::Options::="--force-overwrite" $(PACKAGE)'; \
 	else \
 		echo "[OK]"; \
 	fi
@@ -37,7 +37,7 @@ syncdb: fabric
 
 	@$(FAB) development syncdb_django
 
-development: fabric
+environment: fabric
 
 	@$(FAB) development environment
 

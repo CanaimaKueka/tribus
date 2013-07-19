@@ -46,7 +46,7 @@ def package_to_path(package):
 
     No idea if this works on windows
     """
-    return get_path(package.split('.'))
+    return os.path.join(*package.split('.'))
 
 
 def path_to_package(path):
