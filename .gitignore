@@ -80,5 +80,8 @@ nb-configuration.xml
 # SublimeText project files
 *.sublime-workspace
 
+# Eclipse
+.settings
 
+# Configuración local de Django
 web_local.py
