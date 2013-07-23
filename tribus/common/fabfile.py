@@ -44,31 +44,31 @@ def configure_sudo():
 
 
 def deconfigure_sudo():
-    with settings(command='sudo rm -rf /etc/sudoers.d/tribus' % env):
+    with settings(command='sudo /bin/bash -c "rm -rf /etc/sudoers.d/tribus"' % env):
         local('%(command)s' % env)
 
 
 def preseed_packages():
-    with settings(command='sudo debconf-set-selections %s' % f_workenv_preseed):
+    with settings(command='sudo /bin/bash -c "debconf-set-selections %s"' % f_workenv_preseed):
         local('%(command)s' % env)
 
 
 def install_packages():
-    with settings(command='sudo DEBIAN_FRONTEND="noninteractive" \
+    with settings(command='sudo /bin/bash -c "DEBIAN_FRONTEND=noninteractive \
 aptitude install --assume-yes --allow-untrusted \
--o DPkg::Options::="--force-confmiss" \
--o DPkg::Options::="--force-confnew" \
--o DPkg::Options::="--force-overwrite" \
-%s' % ' '.join(debian_dependencies)):
+-o DPkg::Options::=--force-confmiss \
+-o DPkg::Options::=--force-confnew \
+-o DPkg::Options::=--force-overwrite \
+%s"' % ' '.join(debian_dependencies)):
         local('%(command)s' % env)
 
 
 def configure_postgres():
-    with settings(command=[
-        'sudo echo "postgres:tribus" | chpasswd',
-        'sudo su postgres -c \"psql -U postgres -f %s\"' % f_sql_preseed,
-    ]):
-        local('%s' % '; '.join(env.command))
+    with settings(command='sudo /bin/bash -c "echo \'postgres:tribus\' | chpasswd"'):
+        local('%(command)s' % env)
+
+    with settings(command='sudo /bin/bash -c "su postgres -c \'psql -U postgres -f %s\'"' % f_sql_preseed):
+        local('%(command)s' % env)
 
 
 def populate_ldap():

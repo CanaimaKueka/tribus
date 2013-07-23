@@ -17,9 +17,10 @@ urlpatterns = patterns(
     url(r'^tour/$', 'tribus.web.views.tour'),
 
     url(r'', include('tribus.web.user.urls')),
+    url(r'', include('tribus.web.paqueteria.urls')),
     url(r'', include('social_auth.urls')),
-
-
+    
+    
 #   url('^page/(?P<page>\\d+)/$', 'index'),
 #   url('^register/$', 'register'),
 #   url('^configuracion/$', 'conf'),

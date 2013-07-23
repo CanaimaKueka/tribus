@@ -21,6 +21,8 @@ pytz
 redis
 six
 wsgiref
+python-debian
+chardet
 -e git+https://github.com/HuntingBears/django-ldapdb.git#egg=ldapdb
 -e git+https://github.com/HuntingBears/django-auth-ldap.git#egg=django_auth_ldap
 -e git+https://github.com/HuntingBears/django-social-auth.git#egg=social_auth

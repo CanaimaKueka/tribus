@@ -9,7 +9,6 @@ try:
 except:
     pass
 
-
 SITE_ID = 1
 
 DEBUG = True
@@ -50,6 +49,7 @@ WSGI_APPLICATION = 'tribus.web.wsgi.application'
 #
 
 AUTHENTICATION_BACKENDS = (
+#     'django.contrib.auth.backends.ModelBackend',
     'social_auth.backends.twitter.TwitterBackend',
     'social_auth.backends.facebook.FacebookBackend',
     'social_auth.backends.google.GoogleOAuth2Backend',
@@ -169,6 +169,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'tribus.web',
     'tribus.web.user',
+    'tribus.web.paqueteria',
     'ldapdb',
     'django_auth_ldap',
     'social_auth',
