@@ -28,7 +28,7 @@ Esta aplicación está en período de desarrollo, así que lo más probable es q
 Instalación
 ===========
 
-La instalación se hace a través del método tradicional de instalación con setuptools/distutils. El esquema d eempaquetamiento para Debian aún no está implementado por ser una aplicación en desarrollo.
+La instalación se hace a través del método tradicional de instalación con setuptools/distutils. El esquema de empaquetamiento para Debian aún no está implementado por ser una aplicación en desarrollo.
 
 Para instalar::
 
