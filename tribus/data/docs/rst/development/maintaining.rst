@@ -1,20 +1,21 @@
-Actividades de mantenimiento y desarrollo
------------------------------------------
+==========================================
+Herramientas de mantenimiento y desarrollo
+==========================================
 
-Tribus necesita de una serie de herramientas, servicios y configuraciones iniciales para poder ejecutar las tareas rutinarias de desarrollo (p. ej. iniciar el servidor de desarrollo de Django, autenticar usuarios de prueba contra OpenLDAP, et. al.). Conforme el proceso de desarrollo va avanzando, las dependencias que necesita Tribus para funcionar van cambiando y necesitan ser corregidas de la forma más sencilla posible.
+Tribus necesita de una serie de herramientas, servicios y configuraciones iniciales para poder ejecutar las tareas rutinarias de desarrollo (p. ej. iniciar el servidor de desarrollo de *Django*, autenticar usuarios de prueba contra *OpenLDAP*, et. al.). Conforme el proceso de desarrollo va avanzando, las dependencias que necesita Tribus para funcionar van cambiando y necesitan ser corregidas de la forma más sencilla posible.
 
 Para facilitar esto, Tribus contiene una serie de comandos que asisten en las tareas de mantenimiento y desarrollo. Para ello, se utilizan una serie de scripts escritos en `Make <http://make.org/>`_ y `Fabric <http://fabfile.org>`_.
 
 Se recomienda trabajar en un sistema Debian Sid, Debian Testing o en su defecto, Canaima 4.0 o Ubuntu 13.04.
 
-.. _makedevelopement:
+.. _make_environment:
 
 Recreando el ambiente de desarrollo
 -----------------------------------
 
 ::
 
-	make development
+	make environment
 
 Tribus utiliza `Virtualenv <http://virtualenv.org/>`_ para crear un entorno aislado de ejecución en Python. Esto permite que los accidentes e inestabilidades propias del proceso de desarrollo no afecten directamente el entorno de trabajo del desarrollador, mientras que a su vez, permite instalar las últimas versiones de paquetes python sin preocuparse de los problemas de dependencias del sistema huésped.
 

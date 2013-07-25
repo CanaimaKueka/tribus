@@ -34,20 +34,12 @@ class build_img(Command):
                                                                       self.__class__.__name__))
         for svg_file in find_files(path=BASEDIR, pattern='*.svg'):
             try:
-                svg_code = open(svg_file, 'r').read()
+                png_code = svg2png(url=svg_file)
             except Exception, e:
                 print e
-
-            try:
-                png_file = open(os.path.splitext(svg_file)[0]+'.png', 'w')
-            except Exception, e:
-                print e
-
-            try:
-                svg2png(bytestring=svg_code, write_to=png_file)
-            except Exception, e:
-                print e
-
+    
+            png_file = open(os.path.splitext(svg_file)[0]+'.png', 'w')
+            png_file.write(png_code)
             png_file.close()
             log.debug("[%s.%s] %s > %s." % (__name__, self.__class__.__name__, svg_file,
                                             os.path.splitext(os.path.basename(svg_file))[0]+'.png'))

@@ -4,281 +4,6 @@
 <hook NAME="accessories/plugins/NodeNote.properties">
 <text>Revisar vcs_support en readthedocs https://github.com/rtfd/readthedocs.org/tree/master/readthedocs/vcs_support&#xa;Revisar anyvc https://bitbucket.org/RonnyPfannschmidt/anyvc&#xa;Revisar ohcount https://github.com/blackducksw/ohcount&#xa;Revisar pitweb para extenderlo a los otros vcs http://gitview.danfis.cz/pitweb.git?a=tree;id=HEAD;&#xa;Revisar adhocracy https://github.com/liqd/adhocracy&#xa;Revisar Launchpad&#xa;&#x9;https://dev.launchpad.net/&#xa;&#x9;https://dev.launchpad.net/Getting&#xa;&#x9;https://dev.launchpad.net/Running&#xa;Revisar Rhodecode http://pythonhosted.org/RhodeCode/&#xa;Revisar Allura&#xa;&#x9;http://sourceforge.net/p/allura/git/ci/master/tree/Allura/&#xa;&#x9;http://allura.sourceforge.net/platform.html&#xa;Revisar Klaus https://github.com/jonashaag/klaus&#xa;Revisar ReadTheDocs https://github.com/rtfd/readthedocs.org&#xa;Revisar Crate.io&#xa;&#x9;https://github.com/crateio/crate.io&#xa;&#x9;https://github.com/crateio/crate.web&#xa;Revisar cache en django&#xa;&#x9;https://docs.djangoproject.com/en/dev/topics/cache/&#xa;&#x9;http://www.jeffknupp.com/blog/2012/02/24/django-memcached-optimizing-django-through-caching/&#xa;&#xa;Django+Ember.js+handlebars&#xa;&#x9;http://www.rkblog.rk.edu.pl/w/p/creating-modern-web-applications-django-and-emberjs-javascript-framework/&#xa;&#x9;http://discuss.emberjs.com/t/setting-up-a-django-api-to-use-with-ember-js/163/5&#xa;&#x9;http://www.lostiemposcambian.com/blog/javascript/intro-framework-ember/&#xa;&#x9;http://emberjs.com/guides/application/&#xa;&#x9;http://handlebarsjs.com/&#xa;Django+Node.js&#xa;&#x9;http://stackoverflow.com/questions/8277299/using-node-js-with-django-and-backbone-js&#xa;&#x9;http://maxburstein.com/blog/realtime-django-using-nodejs-and-socketio/&#xa;&#xa;Django Apps&#xa;&#x9;http://www.rkblog.rk.edu.pl/w/p/django/&#xa;&#x9;http://swizec.com/blog/django-protip-1-a-better-app-structure/swizec/1386&#xa;&#xa;Django+Redis&#xa;&#x9;https://django-redis.readthedocs.org/en/latest/#django-redis&#xa;&#xa;coverage.py&#xa;&#x9;http://ratnadeepdebnath.wordpress.com/2011/09/22/a-brief-introduction-to-coverage-py/&#xa;&#xa;Javascript charts&#xa;&#x9;http://mbostock.github.com/d3/&#xa;&#x9;http://code.shutterstock.com/rickshaw/&#xa;&#xa;Bootstrap&#xa;&#x9;http://twitter.github.io/bootstrap/index.html&#xa;&#xa;Tastypie&#xa;&#x9;http://django-tastypie.readthedocs.org/en/latest/tutorial.html#creating-resources&#xa;&#xa;Buildbot&#xa;&#x9;http://i3wm.org/docs/buildbot.html&#xa;&#x9;https://github.com/jollyroger/metabbotcfg/tree/434bea74cfbd37095ad21fe0c65af95bf8dce704&#xa;&#x9;http://jacobian.org/writing/buildbot/configuration-and-architecture/&#xa;&#x9;http://anonscm.debian.org/gitweb/?p=openstack/openstack-auto-builder.git;a=blob;f=build-openstack-pkg&#xa;Fabric&#xa;&#x9;http://docs.fabfile.org/en/1.6/index.html&#xa;&#x9;http://agiletesting.blogspot.com/2009/11/automated-deployments-with-puppet-and.html&#xa;Func https://fedorahosted.org/func/&#xa;&#xa;Python distribute http://guide.python-distribute.org/&#xa;</text>
 </hook>
-<node CREATED="1370964668441" ID="20i6pa5nqp6tqlslgqbv0e7fu0" MODIFIED="1371824581023" POSITION="right" TEXT="Descripci&#xf3;n">
-<edge WIDTH="thin"/>
-<node CREATED="1370964668442" ID="389sgln9meq9ahbr299h7k4inj" MODIFIED="1371824581023" TEXT="Tribus es una red social para la gesti&#xf3;n&#xa;de comunidades de software libre">
-<node CREATED="1370964668442" ID="4gj3f23i1t8d2ve937g6ttp3r5" MODIFIED="1371824581029" STYLE="fork" TEXT="para">
-<node CREATED="1370964668442" ID="3vtojdnfg41dihp27234tcksj3" MODIFIED="1371824581029" TEXT="Automatizar e integrar las tareas comunes y repetitivas"/>
-<node CREATED="1370964668442" ID="0m00lial6tcr8lndsc2fgb6t5v" MODIFIED="1371824581029" TEXT="Establecer un sistema de valoraci&#xf3;n de contribuciones">
-<node CREATED="1370964668442" ID="7qrnbbc5hi9fuvfektgtiq0so9" MODIFIED="1371824581029" TEXT="que">
-<node CREATED="1370964668442" ID="0aqp4k1q6a1k7re576mdmn7b51" MODIFIED="1371824581029" TEXT="Estimule la participaci&#xf3;n"/>
-<node CREATED="1370964668442" ID="1c417di2eurp83ob0gf0kg4v0b" MODIFIED="1371824581029" TEXT="Permita conceder privilegios"/>
-</node>
-</node>
-<node CREATED="1370964668442" ID="485rp0io5acs6bn2vlqidfc52j" MODIFIED="1371824581029" TEXT="Establecer un bus de servicios comunitario">
-<node CREATED="1370964668442" ID="0f9oj3mhr4btdkrh6gv56rlr1u" MODIFIED="1371824581030" TEXT="compuesto por">
-<node CREATED="1370964668442" ID="68l4ist8t9scjhi14on38g643r" MODIFIED="1371824602746" STYLE="fork" TEXT="Almacenamiento de c&#xf3;digo fuente personal">
-<arrowlink DESTINATION="2448j7covqg2a75j5bpt657nfj" ENDARROW="Default" ENDINCLINATION="722;0;" ID="0q2hbsb8o7pocf3jou2j7ti3m9" STARTARROW="None" STARTINCLINATION="299;0;"/>
-</node>
-<node CREATED="1370964668442" ID="1me1tbdc5uu8gf5rsjuu151apc" MODIFIED="1371824581030" STYLE="fork" TEXT="Repositorios de paquetes">
-<node CREATED="1370964668442" ID="4unsrhn1ld81tcqqofp8olf6pv" MODIFIED="1371824581030" TEXT="Personales (PPAs)"/>
-<node CREATED="1370964668442" ID="6593qd1278fibfsfnfhncjld7c" MODIFIED="1371824581030" TEXT="Metadistribuci&#xf3;n"/>
-</node>
-<node CREATED="1370964668442" ID="5jsrl8bg4gaf0da082a3bsaog3" MODIFIED="1371824581030" STYLE="fork" TEXT="Compilaci&#xf3;n peri&#xf3;dica de paquetes">
-<node CREATED="1371825444879" ID="ID_1647607658" MODIFIED="1371827534651" TEXT="reutilizando canaima-desarrollador+buildbot"/>
-</node>
-<node CREATED="1370964668443" ID="2scdhjkntlkfiuea9s26g9mrqr" MODIFIED="1371824581030" STYLE="fork" TEXT="Generaci&#xf3;n de im&#xe1;genes instalables">
-<node CREATED="1371825459392" ID="ID_1303859017" MODIFIED="1371825467042" TEXT="reutilizando canaima-semilla"/>
-</node>
-<node CREATED="1370964668443" ID="6mkdmrlltp876d8lu5at2rpi5e" MODIFIED="1371824581030" STYLE="fork" TEXT="Wiki"/>
-<node CREATED="1370964668443" ID="7dnqhs8gbp26o0u2u2qk3e626m" MODIFIED="1371824581030" STYLE="fork" TEXT="LDAP"/>
-<node CREATED="1370964668443" ID="5keo52oiohn4e0f9ulbhm4p509" MODIFIED="1371824581030" STYLE="fork" TEXT="Portal"/>
-<node CREATED="1370964668443" ID="6h6t2blbqing0aq5bos9ij5bd0" MODIFIED="1371824581030" STYLE="fork" TEXT="Listas de Correo"/>
-<node CREATED="1370964668443" ID="40sdac2tcg8r2rsgemmr1lnulb" MODIFIED="1371824581030" STYLE="fork" TEXT="Monitorizaci&#xf3;n"/>
-<node CREATED="1370964668443" ID="6lqueqeao71cgtp1dccbl0fc56" MODIFIED="1371824581031" STYLE="fork" TEXT="Trac"/>
-<node CREATED="1370964668443" ID="6urb8qsdhsj9vmfklgvc9da80t" MODIFIED="1371824581031" STYLE="fork" TEXT="Planeta"/>
-<node CREATED="1370964668443" ID="4bfoh5jst3rkn64phjsgqhfmnt" MODIFIED="1371824581031" STYLE="fork" TEXT="Directorio de descargas"/>
-<node CREATED="1370964668443" ID="7mt69puflp0ro18lpper5gi7eg" MODIFIED="1371824581031" STYLE="fork" TEXT="Estad&#xed;sticas"/>
-<node CREATED="1370964668443" ID="6e0r5djgj9i9jls8h0ht9dhbnk" MODIFIED="1371824581031" STYLE="fork" TEXT="Servidor de correos con cuotas personales"/>
-<node CREATED="1370964668443" ID="1fafck24jjpte6kbe2jlung6kb" MODIFIED="1371824581031" STYLE="fork" TEXT="Preguntas y Respuestas"/>
-<node CREATED="1370964668443" ID="06di116rf248ti99vg7fne1tpn" MODIFIED="1371824581031" STYLE="fork" TEXT="Gesti&#xf3;n de proyectos asociados a sabores"/>
-<node CREATED="1370964668443" ID="7b88rk32lrkvv7quvjlvtkg18e" MODIFIED="1371824581031" STYLE="fork" TEXT="Gesti&#xf3;n de Ideas"/>
-<node CREATED="1370964668443" ID="0iv1irtb5jh4235ccos1m32grl" MODIFIED="1371824581031" STYLE="fork" TEXT="Gesti&#xf3;n de eventos"/>
-</node>
-</node>
-<node CREATED="1370964668443" ID="20stu21aitfr5sj8p1gk9nu2fp" MODIFIED="1371824581031" TEXT="Facilitar el despliegue de plataforma en proyectos de software libre"/>
-</node>
-<node CREATED="1370964668443" ID="7b1kcldn5dtsk8biqfcc7r70ku" MODIFIED="1371824598264" STYLE="fork" TEXT="compuesto por">
-<node CREATED="1370964668443" ID="401mlubm29e56ht890s93k08ne" MODIFIED="1371824598265" TEXT="buildbot"/>
-<node CREATED="1370964668443" ID="5r0nocc6q13kneej40k4rot2n7" MODIFIED="1371824598265" TEXT="Django"/>
-<node CREATED="1370964668444" ID="0mnuj352frkbodlp6i304an1lf" MODIFIED="1371824598266" TEXT="cowbuilder">
-<node CREATED="1370964668444" ID="1n21ajs34j9snpl2i9kaafsc8p" MODIFIED="1371824598266" TEXT="con">
-<node CREATED="1370964668444" ID="06g0edrr1l9edkhqkfui48hhho" MODIFIED="1371824598267" TEXT="ccache"/>
-<node CREATED="1370964668444" ID="3da3t4n5rh8qupp9hugbtdjkd1" MODIFIED="1371824598267" TEXT="eatmydata"/>
-</node>
-<node CREATED="1370964668444" ID="3ua450nufdgdfqoabice7p0kqs" MODIFIED="1371825360135" TEXT="adaptado a">
-<node CREATED="1370964668444" ID="2mqlfpi1onb3cgrh7mkbjg8ida" MODIFIED="1371824598268" TEXT="Paquetes fuente (*.tar.{gz,bz2,lzma,xz})"/>
-<node CREATED="1370964668444" ID="2448j7covqg2a75j5bpt657nfj" MODIFIED="1371824602746" STYLE="fork" TEXT="Sistemas de Versionamiento">
-<node CREATED="1370964668444" HGAP="29" ID="4t9l133mnjme2lt9dh3m1qjv7k" MODIFIED="1371824598268" TEXT="Git"/>
-<node CREATED="1370964668444" ID="0qqaqr4svlbam2obpnk6j42udr" MODIFIED="1371824598268" TEXT="Bazaar"/>
-<node CREATED="1370964668444" ID="2f5l9rjj48ir9nujc0fjaakdq8" MODIFIED="1371824598268" TEXT="Subversion"/>
-<node CREATED="1370964668444" ID="45n0c15kbufgbic1bqq04j5ov0" MODIFIED="1371824598268" TEXT="Mercurial"/>
-</node>
-</node>
-<node CREATED="1371825364943" ID="ID_1706274481" MODIFIED="1371825383116" TEXT="que trabaje en conjunto con buildbot"/>
-</node>
-<node CREATED="1370964668444" ID="4onjfpiusmcd1ab84rd05jkhbf" MODIFIED="1371824598269" TEXT="live-build"/>
-<node CREATED="1371824166421" ID="ID_854748157" MODIFIED="1371827679337">
-<richcontent TYPE="NODE"><html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      otras aplicaciones reutilizables
-    </p>
-  </body>
-</html>
-</richcontent>
-<node CREATED="1371824182839" HGAP="17" ID="ID_971134885" MODIFIED="1371825027785" TEXT="como" VSHIFT="2">
-<node CREATED="1371824187286" ID="ID_1216820588" MODIFIED="1371824598269" TEXT="django-registration">
-<node CREATED="1371826775702" ID="ID_955013515" MODIFIED="1371826782017" TEXT="para el sistema de registro"/>
-</node>
-<node CREATED="1371824231962" ID="ID_1344920665" MODIFIED="1371824598270" TEXT="django-auth-ldap">
-<node CREATED="1371826764447" ID="ID_1507801017" MODIFIED="1371826774435" TEXT="para leer usuarios en el LDAP"/>
-</node>
-<node CREATED="1371824248649" ID="ID_612280949" MODIFIED="1371824598270" TEXT="django-ldapdb">
-<node CREATED="1371826783313" ID="ID_868975866" MODIFIED="1371826791582" TEXT="para escribir usuarios en el LDAP"/>
-</node>
-<node CREATED="1371824260841" ID="ID_28440332" MODIFIED="1371824598270" TEXT="django-celery">
-<node CREATED="1371826627436" ID="ID_1939289016" MODIFIED="1371826647664" TEXT="para automatizar las tareas internas"/>
-</node>
-<node CREATED="1371824283640" ID="ID_1309358018" MODIFIED="1371824598270" TEXT="celery-with-redis">
-<node CREATED="1371826651380" ID="ID_521915925" MODIFIED="1371826660274" TEXT="para integrar redis con celery"/>
-</node>
-<node CREATED="1371824303869" ID="ID_846666608" MODIFIED="1371824720095" TEXT="gnotty">
-<node CREATED="1371826735441" ID="ID_1354064862" MODIFIED="1371826751966" TEXT="para la sala de chat irc"/>
-</node>
-<node CREATED="1371824721406" ID="ID_1036115785" MODIFIED="1371824729576" TEXT="askbot-devel">
-<node CREATED="1371826754288" ID="ID_1016964197" MODIFIED="1371826761449" TEXT="para las preguntas y respuestas"/>
-</node>
-<node CREATED="1371824730168" ID="ID_1126719740" MODIFIED="1371824779961">
-<richcontent TYPE="NODE"><html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      django-achievements
-    </p>
-  </body>
-</html>
-</richcontent>
-<node CREATED="1371826805200" ID="ID_1337485815" MODIFIED="1371826813186" TEXT="para el sistema de valoraci&#xf3;n"/>
-</node>
-<node CREATED="1371824779965" ID="ID_1422574468" MODIFIED="1371824779968">
-<richcontent TYPE="NODE"><html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      django-activity-stream
-    </p>
-  </body>
-</html>
-</richcontent>
-<node CREATED="1371826821218" ID="ID_1616439067" MODIFIED="1371826925783" TEXT="para listar las actividades realizadas"/>
-</node>
-<node CREATED="1371824768862" ID="ID_1900564874" MODIFIED="1371824801944">
-<richcontent TYPE="NODE"><html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      django-filer
-    </p>
-  </body>
-</html>
-</richcontent>
-<node CREATED="1371826934957" ID="ID_186902200" MODIFIED="1371826952618" TEXT="para la gesti&#xf3;n de archivos de usuario"/>
-</node>
-<node CREATED="1371824801947" ID="ID_1172531194" MODIFIED="1371824807951">
-<richcontent TYPE="NODE"><html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      django-photologue
-    </p>
-  </body>
-</html>
-</richcontent>
-<node CREATED="1371826955635" ID="ID_1166232547" MODIFIED="1371826970426" TEXT="para la galer&#xed;a interna de arte"/>
-</node>
-<node CREATED="1371824807955" ID="ID_1853601047" MODIFIED="1371824886346">
-<richcontent TYPE="NODE"><html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      django-wiki
-    </p>
-  </body>
-</html>
-</richcontent>
-<node CREATED="1371826975541" ID="ID_401882755" MODIFIED="1371826984553" TEXT="para la wiki"/>
-</node>
-<node CREATED="1371824886350" ID="ID_364239823" MODIFIED="1371824886354">
-<richcontent TYPE="NODE"><html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      django-postman
-    </p>
-  </body>
-</html>
-</richcontent>
-<node CREATED="1371827024312" ID="ID_441852015" MODIFIED="1371827030156" TEXT="para la mensajer&#xed;a interna"/>
-</node>
-<node CREATED="1371824882673" ID="ID_881626659" MODIFIED="1371824882676">
-<richcontent TYPE="NODE"><html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      django-profiles
-    </p>
-  </body>
-</html>
-</richcontent>
-<node CREATED="1371827035764" ID="ID_1731075077" MODIFIED="1371827041957" TEXT="para los perfiles de usuario"/>
-</node>
-<node CREATED="1371824878078" ID="ID_1886774684" MODIFIED="1371824878081">
-<richcontent TYPE="NODE"><html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      transifex
-    </p>
-  </body>
-</html>
-</richcontent>
-<node CREATED="1371827048475" ID="ID_1721749982" MODIFIED="1371827060539" TEXT="para el sistema de traducciones"/>
-</node>
-<node CREATED="1371824874013" ID="ID_1660068958" MODIFIED="1371824874017">
-<richcontent TYPE="NODE"><html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      django-inotifier
-    </p>
-  </body>
-</html>
-</richcontent>
-<node CREATED="1371827103042" ID="ID_1211797153" MODIFIED="1371827128153" TEXT="para la ejecuci&#xf3;n de eventos basados en cambios de archivos"/>
-</node>
-<node CREATED="1371824857416" ID="ID_673187912" MODIFIED="1371824857419">
-<richcontent TYPE="NODE"><html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      django-projector
-    </p>
-  </body>
-</html>
-</richcontent>
-<node CREATED="1371827135700" ID="ID_569654136" MODIFIED="1371827145456" TEXT="para la gesti&#xf3;n de proyectos de desarrollo"/>
-</node>
-<node CREATED="1371824854211" ID="ID_949483888" MODIFIED="1371827709071">
-<richcontent TYPE="NODE"><html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      django-static
-    </p>
-  </body>
-</html>
-</richcontent>
-<node CREATED="1371827153551" ID="ID_1926271899" MODIFIED="1371827515544" TEXT="para el manejo de los archivos est&#xe1;ticos (css, js, ...)"/>
-</node>
-<node CREATED="1371827683859" ID="ID_1147947602" MODIFIED="1371828109965" TEXT="trac">
-<node CREATED="1371827687583" ID="ID_850599943" MODIFIED="1371827694976" TEXT="para el sistema de tickets"/>
-</node>
-<node CREATED="1371828021992" ID="ID_1541602285" MODIFIED="1371829211326" TEXT="readthedocs.org">
-<node CREATED="1371828036388" ID="ID_1915672097" MODIFIED="1371828123089" TEXT="para la compilaci&#xf3;n de la documentaci&#xf3;n interna de paquetes"/>
-</node>
-<node CREATED="1371828483905" ID="ID_1944755085" MODIFIED="1371828489872" TEXT="django-planet">
-<node CREATED="1371828491230" ID="ID_1117050983" MODIFIED="1371828500321" TEXT="para indexar los blogs de los usuarios"/>
-</node>
-<node CREATED="1371829390596" ID="ID_1106846663" MODIFIED="1371829409282" TEXT="etherpad-lite (node)"/>
-</node>
-</node>
-</node>
-<node CREATED="1370964668444" ID="7vovha8rivgdtgvjpi4nq5gb4c" MODIFIED="1371824581033" TEXT="desarrollado en">
-<node CREATED="1370964668444" ID="5rfitn3au7h96ud36b9mgcofgi" MODIFIED="1371824581033" TEXT="Python (Django)"/>
-<node CREATED="1370964668444" ID="1bj3ncpkjfmcura708qs8n3uii" MODIFIED="1371824581034" TEXT="Node.js"/>
-<node CREATED="1370964668444" ID="291frp4i9rkfb7nhkj86524hs5" MODIFIED="1371824581034" TEXT="Ember.js"/>
-<node CREATED="1370964668445" ID="02has1vq0gdco2l340n41okkm2" MODIFIED="1371824581034" TEXT="Socket.io"/>
-<node CREATED="1370964668445" ID="0e42f7mo7qnp3brmkh2s6fpnvq" MODIFIED="1371824581034" TEXT="Redis"/>
-<node CREATED="1370964668445" ID="1ht84ndc7aqlkmljoulpdidg43" MODIFIED="1371824581035" TEXT="MongoDB"/>
-</node>
-</node>
-</node>
 <node CREATED="1370964668445" ID="625s2ogeto8ki9pssgu763har8" MODIFIED="1371824590762" POSITION="right" STYLE="fork" TEXT="Perfil de paquetes">
 <edge WIDTH="thin"/>
 <node CREATED="1370964668445" ID="0f69quq3rnhba1h1d01dk8hain" MODIFIED="1371824590763" TEXT="necesita ">
@@ -294,8 +19,7 @@
       usando python-apt
     </p>
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 <node CREATED="1370964668445" HGAP="21" ID="1ts131514rd6ltefcakuh4mkhd" MODIFIED="1371825052549" TEXT="extraemos arquitecturas&#xa;y componentes" VSHIFT="2">
 <node CREATED="1370964668445" ID="3tifl7lrh9jeajnm50l0ijjv8j" MODIFIED="1371824590775" TEXT="para listar">
 <node CREATED="1370964668445" ID="46ilplo0ehctrm2274ba05nbf6" MODIFIED="1371824590775" TEXT="Package"/>
@@ -376,8 +100,7 @@
       tickets de error pertenecientes al paquete
     </p>
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 <node CREATED="1370964668448" ID="1qac95o1g255tqdoaue9nk4efm" MODIFIED="1371824590792" TEXT="permitir ">
 <node CREATED="1371827858272" ID="ID_1868950326" MODIFIED="1371827880352" TEXT="abrir tickets"/>
 <node CREATED="1371827881018" ID="ID_508444334" MODIFIED="1371827891164" TEXT="listar tickets"/>
@@ -479,6 +202,15 @@
 </node>
 <node CREATED="1370964668451" ID="3lhs11o78tlbfinu1l94mh4ppi" MODIFIED="1371824581066" POSITION="left" TEXT="Gesti&#xf3;n de desarrollo">
 <edge WIDTH="thin"/>
+<node CREATED="1374640861013" ID="ID_1765862898" MODIFIED="1374640872655" TEXT="Ejemplo de rama con hijo 1">
+<node CREATED="1374640884217" ID="ID_1208978423" MODIFIED="1374640886122" TEXT="Ejemplo de rama con hijo 1">
+<node CREATED="1374640886123" ID="ID_1471954157" MODIFIED="1374640888407" TEXT="Ejemplo de rama con hijo 1">
+<node CREATED="1374640888407" ID="ID_1757516269" MODIFIED="1374640890920" TEXT="Ejemplo de rama con hijo 1">
+<node CREATED="1374640890920" ID="ID_863769487" MODIFIED="1374640896524" TEXT="Ejemplo de rama con hijo 1"/>
+</node>
+</node>
+</node>
+</node>
 </node>
 <node CREATED="1370964668451" ID="724f44dlbk2bhmm12atagjoj73" MODIFIED="1371824581066" POSITION="left" TEXT="Creaci&#xf3;n de sabores">
 <edge WIDTH="thin"/>

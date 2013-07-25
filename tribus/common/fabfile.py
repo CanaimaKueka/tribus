@@ -160,25 +160,73 @@ def create_pot():
 
 def build_html():
     with cd('%(basedir)s' % env):
-        with settings(command='python setup.py build_html ' % env):
+        with settings(command='python setup.py build_html' % env):
             local('%(command)s' % env)
 
 
 def build_img():
     with cd('%(basedir)s' % env):
-        with settings(command='python setup.py build_img ' % env):
+        with settings(command='python setup.py build_img' % env):
             local('%(command)s' % env)
 
 
 def build_man():
     with cd('%(basedir)s' % env):
-        with settings(command='python setup.py build_man ' % env):
+        with settings(command='python setup.py build_man' % env):
             local('%(command)s' % env)
 
 
 def build_mo():
     with cd('%(basedir)s' % env):
-        with settings(command='python setup.py build_mo ' % env):
+        with settings(command='python setup.py build_mo' % env):
+            local('%(command)s' % env)
+
+
+def build():
+    with cd('%(basedir)s' % env):
+        with settings(command='python setup.py build' % env):
+            local('%(command)s' % env)
+
+
+def clean_img():
+    with cd('%(basedir)s' % env):
+        with settings(command='python setup.py clean_img' % env):
+            local('%(command)s' % env)
+
+
+def clean_html():
+    with cd('%(basedir)s' % env):
+        with settings(command='python setup.py clean_html' % env):
+            local('%(command)s' % env)
+
+
+def clean_mo():
+    with cd('%(basedir)s' % env):
+        with settings(command='python setup.py clean_mo' % env):
+            local('%(command)s' % env)
+
+
+def clean_man():
+    with cd('%(basedir)s' % env):
+        with settings(command='python setup.py clean_man' % env):
+            local('%(command)s' % env)
+
+
+def clean_dist():
+    with cd('%(basedir)s' % env):
+        with settings(command='python setup.py clean_dist' % env):
+            local('%(command)s' % env)
+
+
+def clean_pyc():
+    with cd('%(basedir)s' % env):
+        with settings(command='python setup.py clean_pyc' % env):
+            local('%(command)s' % env)
+
+
+def clean():
+    with cd('%(basedir)s' % env):
+        with settings(command='python setup.py clean' % env):
             local('%(command)s' % env)
 
 
