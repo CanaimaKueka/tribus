@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-###############################################################
-# MODELOS RELACIONADOS CON EL REGISTRO Y BUSQUEDA DE PAQUETES #
-###############################################################
 from django.db import models
 import string
 
@@ -26,34 +23,33 @@ class RelacionSimple(models.Model):
         ordering = ["dep"]
                 
 class DependenciaSimple(RelacionSimple):
-    pass
+    nombre = "cadena"
 
 class PreDependenciaSimple(RelacionSimple):
-    pass
+    nombre = "cadena"
 
 class RecomendacionSimple(RelacionSimple):
-    pass
+    nombre = "cadena"
 
 class SugerenciaSimple(RelacionSimple):
-    pass
+    nombre = "cadena"
 
 class ProveeSimple(RelacionSimple):
-    pass
+    nombre = "cadena"
 
 class Mejora(RelacionSimple):
-    pass
+    nombre = "cadena"
 
 class Rompe(RelacionSimple):
-    pass
+    nombre = "cadena"
 
 class Reemplaza(RelacionSimple):
-    pass
+    nombre = "cadena"
 
 class Conflicto(RelacionSimple):
-    pass
+    nombre = "cadena"
 
 class RelacionOR(models.Model):
-    dep = models.ManyToManyField(DependenciaSimple, null=True, symmetrical = False, blank=True)
     
     def __unicode__(self): 
         x = ""
@@ -65,19 +61,19 @@ class RelacionOR(models.Model):
         abstract = True
 
 class DependenciaOR(RelacionOR):
-    pass
+    dep = models.ManyToManyField(DependenciaSimple, null=True, symmetrical = False, blank=True)
     
 class PreDependenciaOR(RelacionOR):
-    pass
+    dep = models.ManyToManyField(PreDependenciaSimple, null=True, symmetrical = False, blank=True)
     
 class RecomendacionOR(RelacionOR):
-    pass
+    dep = models.ManyToManyField(RecomendacionSimple, null=True, symmetrical = False, blank=True)
 
 class SugerenciaOR(RelacionOR):
-    pass
+    dep = models.ManyToManyField(SugerenciaSimple, null=True, symmetrical = False, blank=True)
     
 class ProveeOR(RelacionOR):
-    pass
+    dep = models.ManyToManyField(ProveeSimple, null=True, symmetrical = False, blank=True)
     
 class ValorTag(models.Model):
     valor = models.CharField("valor etiqueta", max_length = 100)
@@ -94,12 +90,6 @@ class Etiqueta(models.Model):
      
     class Meta:
         ordering = ["nombre"]
-        
-class Arquitectura(models.Model):
-    valor = models.CharField("arquitectura del paquete", max_length = 20)
-    
-    def __unicode__(self):
-        return self.valor
     
 class Paquete(models.Model):
     Package = models.CharField("nombre del paquete", max_length = 150)
@@ -116,8 +106,7 @@ class Paquete(models.Model):
     Section = models.CharField("seccion del paquete", max_length = 50, null = True)
     Priority = models.CharField("prioridad del paquete", max_length = 50, null = True)
     Filename = models.CharField("nombre del archivo del paquete", max_length = 150, null = True)
-    Architecture = models.ForeignKey(Arquitectura, verbose_name = "arquitectura del paquete", null = True)
-    #Architecture = models.CharField("arquitectura del paquete", null = True, max_length = 200)
+    Architecture = models.CharField("arquitectura del paquete", null = True, max_length = 200)
     MultiArch = models.CharField("multi-arquitectura", null = True, max_length = 50)
     Essential = models.CharField("es esencial?", null = True, max_length = 10)
     Bugs = models.CharField("bugs existentes", null = True, max_length = 200)

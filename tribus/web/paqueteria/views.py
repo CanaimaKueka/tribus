@@ -4,6 +4,7 @@ from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, render_to_response
 from tribus.web.paqueteria.models import Paquete, Mantenedor, DependenciaSimple, DependenciaOR, Etiqueta
 from django.core.context_processors import request
+import string
 
 def index(request):
     pqt = Paquete.objects.all()
@@ -43,6 +44,12 @@ def inicio (request):
 
 def busqueda(request, pqt):
     print pqt
-    x = Paquete.objects.all().get(Package = pqt)
+    x = Paquete.objects.filter(Package = pqt)
+    contexto = {"i":x}
+    return render(request,'paqueteria/arqs.html', contexto)
+
+def info(request, args):
+    l = string.splitfields(args, "-")
+    x = Paquete.objects.get(Package = l[0], Architecture = l[1])
     contexto = {"i":x}
     return render(request,'paqueteria/detalles.html', contexto)

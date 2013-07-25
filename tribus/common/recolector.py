@@ -30,7 +30,7 @@ class Recolector(object):
     def __init__(self):
         self.relaciones = {}
         self.etiquetas = {}
-        
+    
     def quitar_separador(self, cadena, sep):
         return string.join(string.splitfields(cadena, sep), "")
     
@@ -44,88 +44,99 @@ class Recolector(object):
                     d[str(i[0])] = i[1]    
         return d
     
-    def buscar(self, tipo, dic):
-        existe = self.objetos[tipo].objects.filter(**dic)
-        if existe:
-            return existe[0]
+    def buscarAtributos(self, atributo, datos = None, agregar = False):
+        
+        #
+        #    BUSCA UN MANTENEDOR, SI AGREGRAR ES TRUE LO CREA
+        #
+        
+        if atributo == "mantenedor":
+            nombreMan, correoMan = email.Utils.parseaddr(datos)
+            existe = self.objetos[atributo].objects.filter(nombre_completo = nombreMan, correo = correoMan)
+            if not existe:
+                Man = Mantenedor(nombre_completo = nombreMan, correo = correoMan)
+                if agregar:
+                    Man.save()
+                    return Man
+                else: 
+                    return 0
+            else:
+                return existe[0]
     
-    def crearMantenedor(self, datos):
-        nombreMan, correoMan = email.Utils.parseaddr(datos)
-        existe = self.objetos["mantenedor"].objects.filter(nombre_completo = nombreMan, correo = correoMan)
-        if existe:
-            return existe[0]
+        #
+        #    BUSCA UN ATRIBUTO, SI AGREGRAR ES TRUE LO CREA
+        #
+            
         else:
-            Man = Mantenedor(nombre_completo = nombreMan, correo = correoMan)
-            Man.save()
-            return Man
-    
+            existe = self.objetos[atributo].objects.filter(**datos)
+            if existe:
+                return existe[0]
+            else:
+            
+            #
+            #    AQUI SE AGREGAN LOS TIPOS DE ATRIBUTO 
+            #    
+                if agregar:
+                    # Y ese 2 magico ahi que significa? 
+                    if atributo[len(atributo)-2:len(atributo)] == "OR":
+                        obj = self.objetos[atributo]()
+                        obj.save()
+                    else:
+                        obj = self.objetos[atributo](**datos)
+                        obj.save()
+                    return obj
+                return 0
+            
     def crearPaquete(self, paquete):
-        existe = self.objetos["paquete"].objects.filter(Package = paquete['Package'])
+        existe = self.buscarAtributos("paquete", {'Package' : paquete['Package'], 'Architecture' : paquete['Architecture']})
         if existe:
             return existe
         else:
             man = paquete['Maintainer']
             padap = self.clonar_diccionario(paquete, self.necesarios)
-            nPaquete = self.objetos["paquete"](**padap)
-            nPaquete.Maintainer = self.crearMantenedor(man)
+            nPaquete = Paquete(**padap)
+            nPaquete.Maintainer = self.buscarAtributos("mantenedor", man, 1)
             nPaquete.save()
             return nPaquete
-        
-    def buscarPaquete(self, nombre_pq):
-        existe = Paquete.objects.filter(Package = nombre_pq)
-        if existe:
-            return existe[0]
-        else:
-            nPaquete = Paquete(Package = nombre_pq)
-            nPaquete.save()
-            return nPaquete
-    
-    def crearRelacionSimple(self, tipo, dic):
-        existe = self.objetos[tipo].objects.filter(**dic)
-        if existe:
-            return existe[0]
-        else:
-            objeto = self.objetos[tipo](**dic)
-            objeto.save()
-            return objeto
-    
-    def crearRelacionOR(self, tipo, dic):
-        existe = self.objetos[tipo].objects.filter(**dic)
-        if existe:
-            return existe[0]
-        else:
-            objeto = self.objetos[tipo]()
-            objeto.save()
-            return objeto
+            
+    def verificarRelaciones(self, rel):
+        for r in rel.items():
+            if r[1]:
+                return True
+        return False
         
     def mapearRelaciones(self, paquete):
-        self.relaciones[paquete['Package']] = {}
-        for rel in paquete.relations.items():
-            if rel[1]:
-                self.relaciones[paquete['Package']][rel[0]] = rel[1]
-                
+        if self.verificarRelaciones(paquete.relations):
+            self.relaciones[paquete['Package']] = {}
+            for rel in paquete.relations.items():
+                if rel[1]:
+                    self.relaciones[paquete['Package']][rel[0]] = rel[1]
+                    # Hack para guardar en memoria la architectura de cada paquete
+                    self.relaciones[paquete['Package']].update({"arq": paquete['Architecture']})
+    
     def mapearTags(self, paquete):
         if paquete.has_key('Tag'):    
             self.etiquetas[paquete['Package']] = string.splitfields(self.quitar_separador(paquete['Tag'], "\n"), ", ")
-        
+                    
     def registrarTags(self):
         for et in self.etiquetas.items():
             pq = Paquete.objects.get(Package = et[0])
             for t in et[1]:
                 l = string.splitfields(t, "::")
-                valor = self.crearRelacionSimple("valorTag", {"valor" : l[1]})
-                etiqueta = self.crearRelacionSimple("etiqueta", {"nombre" : l[0], "valores" : valor})
+                valor = self.buscarAtributos("valorTag", {"valor" : l[1]}, 1)
+                etiqueta = self.buscarAtributos("etiqueta", {"nombre" : l[0], "valores" : valor}, 1)
                 pq.Tags.add(etiqueta)
     
     def registrarRelaciones(self):
         for paquete in self.relaciones.items():
-            pack = self.buscar("paquete", {"Package": paquete[0]})
+            arq = paquete[1].pop("arq") # Todos los paquetes deben tener registrado el campo arq
+            pack = self.buscarAtributos("paquete", {"Package": paquete[0], "Architecture" : arq})
             for rel in paquete[1].items():
                 for r in rel[1]:
                     if len(r) > 1:
                         ###### RELACIONES OR ###########
                         tipo = rel[0] + "OR"
-                        rel_or = self.crearRelacionOR(tipo, {"dep__dep__Package" : pack.Package})
+                        rel_or = self.buscarAtributos(tipo, {"dep__dep__Package" : pack.Package},1)
                         if rel[0] == "depends":
                             pack.DependsO.add(rel_or)
                         elif rel[0] == "suggests":
@@ -137,13 +148,13 @@ class Recolector(object):
                         elif rel[0] == "provides":
                             pack.ProvidesO.add(rel_or)
                         for ror in r:
-                            pq = self.buscarPaquete(ror['name'])
-                            obj_rel = self.crearRelacionSimple(rel[0], {"dep": pq})
+                            pq = self.buscarAtributos("paquete",{"Package":ror['name']},1)
+                            obj_rel = self.buscarAtributos(rel[0], {"dep": pq},1)
                             rel_or.dep.add(obj_rel)
                     else:
                         ###### RELACIONES SIMPLES ######
-                        pq = self.buscarPaquete(r[0]['name'])
-                        obj_rel = self.crearRelacionSimple(rel[0], {"dep": pq})
+                        pq = self.buscarAtributos("paquete",{"Package":r[0]['name']},1)
+                        obj_rel = self.buscarAtributos(rel[0], {"dep": pq},1)
                         if rel[0] == "depends":
                             pack.DependsS.add(obj_rel)
                         elif rel[0] == "suggests":

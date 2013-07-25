@@ -1,9 +1,8 @@
-{%extends 'base.html'%}
+{%extends 'paqueteria/base.html'%}
 {% load url from future %}
-
-{% block titulo%}Sistema de busqueda{%endblock%}
-{% block encabezado%}<p><h1>Busqueda</h1></p>{%endblock%}
-{%block contenido%}
+{% block title%}Sistema de busqueda{%endblock%}
+{% block header%}<p><h1>Busqueda</h1></p>{%endblock%}
+{%block content%}
 	<div><p>Paquete: {{i.Package}}</p></div>
 	<div> 
 	   <p> Version: {{i.Version}} </p>
@@ -18,36 +17,36 @@
 	   <p> Etiquetas:{%for etiqueta in i.Tags.only%} <a href="/paqueteria/categoria/{{etiqueta.nombre}}"> {{etiqueta.nombre}}</a>:<a href="/paqueteria/tags/{{etiqueta.valores.valor}}">{{etiqueta.valores.valor}}</a> {%endfor%}</p>	   
 	   <p> Mejora:
 	   {%for x in i.Enhances.only%}
-			<a href="{{x}}" >{{x}}</a>
+			<a href="/paqueteria/busqueda/{{x}}" >{{x}}</a>
 	   {% endfor %}
 	   </p>
 	   <p> Rompe:
 	   {%for x in i.Breaks.only%}
-			<a href="{{x}}" >{{x}}</a>
+			<a href="/paqueteria/busqueda/{{x}}" >{{x}}</a>
 	   {% endfor %}
 	   </p>
 	   
 	   <p> Reemplaza:
 	   {%for x in i.Replaces.only%}
-			<a href="{{x}}" >{{x}}</a>
+			<a href="/paqueteria/busqueda/{{x}}" >{{x}}</a>
 	   {% endfor %}
 	   </p>
 	   
 	   <p> Conflictos:
 	   {%for x in i.Conflicts.only%}
-			<a href="{{x}}" >{{x}}</a>
+			<a href="/paqueteria/busqueda/{{x}}" >{{x}}</a>
 	   {% endfor %}
 	   </p>
 	   
 	   <p> Paqueteves provistos:
 	   {%for x in i.ProvidesS.only%}
-			<a href="{{x}}" >{{x}}</a>
+			<a href="/paqueteria/busqueda/{{x}}" >{{x}}</a>
 	   {% endfor %}
 	   
 	   {%for x in i.ProvidesO.only%}
 	   		<span class="or" >
 	   		{%for m in x.dep.only%}	
-				<a href= "{{m}}">{{m}}</a>
+				<a href= "/paqueteria/busqueda/{{m}}">{{m}}</a>
 			{% endfor %}
 			</span>
 	   {% endfor %}
@@ -55,13 +54,13 @@
 	   
 	   <p> Sugerencias:
 	   {%for x in i.SuggestsS.only%}
-			<a href="{{x}}" >{{x}}</a>
+			<a href="/paqueteria/busqueda/{{x}}" >{{x}}</a>
 	   {% endfor %}
 	   
 	   {%for x in i.SuggestsO.only%}
 	   		<span class="or" >
 	   		{%for m in x.dep.only%}	
-				<a href= "{{m}}">{{m}}</a>
+				<a href= "/paqueteria/busqueda/{{m}}">{{m}}</a>
 			{% endfor %}
 			</span>
 	   {% endfor %}
@@ -69,13 +68,13 @@
 	  
 	   <p> Recomendaciones:
 	   {%for x in i.RecommendsS.only%}
-			<a href="{{x}}" >{{x}}</a>
+			<a href="/paqueteria/busqueda/{{x}}" >{{x}}</a>
 	   {% endfor %}
 	   
 	   {%for x in i.RecommendsO.only%}
 	   		<span class="or" >
 	   		{%for m in x.dep.only%}	
-				<a href= "{{m}}">{{m}}</a>
+				<a href= "/paqueteria/busqueda/{{m}}">{{m}}</a>
 			{% endfor %}
 			</span>
 	   {% endfor %}
@@ -83,13 +82,13 @@
 	   
 	   <p> Predependencias:
 	   {%for x in i.PreDependsS.only%}
-			<a href="{{x}}" >{{x}}</a>
+			<a href="/paqueteria/busqueda/{{x}}" >{{x}}</a>
 	   {% endfor %}
 	   
 	   {%for x in i.PreDependsO.only%}
 	   		<span class="or" >
 	   		{%for m in x.dep.only%}	
-				<a href= "{{m}}">{{m}}</a>
+				<a href= "/paqueteria/busqueda/{{m}}">{{m}}</a>
 			{% endfor %}
 			</span>
 	   {% endfor %}
@@ -97,13 +96,13 @@
 	   </p>
 	   <p> dependencias:
 	   {%for x in i.DependsS.only%}
-			<a href="{{x}}" >{{x}}</a>
+			<a href="/paqueteria/busqueda/{{x}}" >{{x}}</a>
 	   {% endfor %}
 	   
 	   {%for x in i.DependsO.only%}
 	   		<span class="or" >
-	   		{%for m in x.dep.only%}	
-				<a href= "{{m}}">{{m}}</a>
+	   		{%for m in x.dep.only%}
+				<a href= "/paqueteria/busqueda/{{m}}">{{m}}</a>
 			{% endfor %}
 			</span>
 	   {% endfor %}
