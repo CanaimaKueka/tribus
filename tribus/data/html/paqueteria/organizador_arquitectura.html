@@ -4,6 +4,11 @@
 {% block header%}<p><h1>Busqueda por arquitectura</h1></p>{%endblock%}
 {%block content%}
 	<p>
-		Arquitecturas: <br> {%for arq in i%} <a href="/paqueteria/busqueda/info/{{arq.Package}}-{{arq.Architecture}}"> {{arq.Package}}-{{arq.Architecture}} </a> <br> {%endfor%}
+	{%for p in i%}
+	<p>
+		<br>Paquete para: {{p.Architecture}}
+		<br><a href="/paquetes/busqueda/{{p.Package}}&{{p.Architecture}}"> {{p.Package}}</a>
+	</p>
+	{%endfor%}
 	</p>
 {%endblock%}

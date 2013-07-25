@@ -1,0 +1,19 @@
+{%extends 'paqueteria/base.html'%}
+{% load url from future %}
+{% block title%}Sistema de busqueda{%endblock%}
+{% block header%}<p><h1>Busqueda por arquitectura</h1></p>{%endblock%}
+{%block content%}
+
+{% if valido %}
+	<h1> completado =D deberia ir redirigiendo</h1>
+{% else %}
+	<p>
+		<form action="." method="POST">
+			{% csrf_token %}
+			
+			{{form}}
+			<input type="submit" value="submit">
+		</form>
+	</p>
+{% endif %}
+{%endblock%}
