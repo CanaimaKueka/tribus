@@ -7,6 +7,7 @@ Para facilitar esto, Tribus contiene una serie de comandos que asisten en las ta
 
 Se recomienda trabajar en un sistema Debian Sid, Debian Testing o en su defecto, Canaima 4.0 o Ubuntu 13.04.
 
+.. _makedevelopement:
 
 Recreando el ambiente de desarrollo
 -----------------------------------
@@ -15,21 +16,21 @@ Recreando el ambiente de desarrollo
 
 	make development
 
-Tribus utiliza `Virtualenv`_ para crear un entorno aislado de ejecución en Python. Esto permite que los accidentes e inestabilidades propias del proceso de desarrollo no afecten directamente el entorno de trabajo del desarrollador, mientras que a su vez, permite instalar las últimas versiones de paquetes python sin preocuparse de los problemas de dependencias del sistema huésped.
+Tribus utiliza `Virtualenv <http://virtualenv.org/>`_ para crear un entorno aislado de ejecución en Python. Esto permite que los accidentes e inestabilidades propias del proceso de desarrollo no afecten directamente el entorno de trabajo del desarrollador, mientras que a su vez, permite instalar las últimas versiones de paquetes python sin preocuparse de los problemas de dependencias del sistema huésped.
 
 Este comando además instalará los paquetes indispensables para el funcionamiento de los servicios (OpenLDAP, PostgreSQL, Redis, Celery, et. al.), entre otras tareas:
 
 * Instalar las dependencias de construcción listadas en ``tribus/config/data/debian-dependencies.list``.
 * Configurar el Servidor OpenLDAP con las siguientes características:
 
-	* Domain: tribus.org
-	* Base: dc=tribus,dc=org
-	* Admin DN: cn=admin,dc=tribus,dc=org
-	* Admin Password: tribus
+	* Domain: ``tribus.org``
+	* Base: ``dc=tribus,dc=org``
+	* Admin DN: ``cn=admin,dc=tribus,dc=org``
+	* Admin Password: ``tribus``
 
 * Borrar todas las entradas de usuario del OpenLDAP.
-* Agregar un usuario de pruebas ``uid=maria,dc=tribus,dc=org`` al OpenLDAP con contraseña 123456 (más detalles ``tribus/config/data/users.ldif``)
-* Agregar un usuario de pruebas ``uid=luis,dc=tribus,dc=org`` al OpenLDAP con contraseña 654321 (más detalles ``tribus/config/data/users.ldif``)
+* Agregar un usuario de pruebas ``uid=maria,dc=tribus,dc=org`` al OpenLDAP con contraseña ``123456`` (más detalles ``tribus/config/data/users.ldif``)
+* Agregar un usuario de pruebas ``uid=luis,dc=tribus,dc=org`` al OpenLDAP con contraseña ``654321`` (más detalles ``tribus/config/data/users.ldif``)
 * Cambiar la contraseña del servidor PostgreSQL a ``tribus``.
 * Crea una base de datos con nombre ``tribus`` (si ya existe una, la borra primero).
 * Crea un usuario de nombre ``tribus`` con contraseña ``tribus`` y le concede todos los privilegios sobre la base de datos ``tribus`` (si ya existe uno, lo borra primero).
