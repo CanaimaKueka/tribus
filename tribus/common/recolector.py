@@ -1,4 +1,10 @@
-import email.Utils
+import email.Utils, os, sys
+path = os.path.join(os.path.dirname(__file__), '..', '..')
+base = os.path.realpath(os.path.abspath(os.path.normpath(path)))
+os.environ['PATH'] = base + os.pathsep + os.environ['PATH']
+sys.prefix = base
+sys.path.insert(0, base)
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
 from tribus.web.paqueteria.models import *
 
 class Recolector(object):
@@ -43,6 +49,21 @@ class Recolector(object):
                 else:
                     d[str(i[0])] = i[1]    
         return d
+    
+    def buscarAtributos2(self, atributo, datos = None, agregar = False):
+        existe = self.objetos[atributo].objects.filter(**datos)
+        if not existe:
+            if agregar:
+                if "OR" in atributo:
+                    obj = self.objetos[atributo]()
+                else:
+                    obj = self.objetos[atributo](**datos)
+                obj.save()
+                return obj
+            else:
+                return False
+        else:
+            return existe[0]
     
     def buscarAtributos(self, atributo, datos = None, agregar = False):
         

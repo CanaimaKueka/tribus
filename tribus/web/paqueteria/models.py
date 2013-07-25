@@ -131,3 +131,7 @@ class Paquete(models.Model):
     
     def __unicode__(self):
         return self.Package
+    
+class ListasPaquetes(models.Model):
+    ruta = models.CharField("ruta del archivo", max_length = 150)
+    md5actual = models.CharField("ruta del archivo", max_length = 150)

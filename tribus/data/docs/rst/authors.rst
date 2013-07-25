@@ -5,6 +5,7 @@ Si usted es un colaborador activo de este proyecto, agregue una entrada en el lu
 
 Las siguientes personas han trabajado en este proyecto (en orden alfabético):
 
-
+- José Francisco Guerrero Rangel <jsfrncscg@gmail.com>, Twitter: @jsfrncscg
 - Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>, Twitter: @LuisAlejandro
+
 

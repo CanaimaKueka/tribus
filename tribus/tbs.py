@@ -12,7 +12,7 @@ sys.path.insert(0, base)
 from tribus import BASEDIR
 from tribus.common.logger import get_logger
 from tribus.common.utils import find_files, package_to_path, get_path
-from tribus.common.cmd import Helper
+from tribus.common.commands import Helper
 from tribus.config.base import DEFAULT_CLI_OPTIONS
 
 log = get_logger()

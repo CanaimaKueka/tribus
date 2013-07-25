@@ -1,4 +1,4 @@
-from tribus.common.cmd import Helper
+from tribus.common.commands import Helper
 
 
 class Image(Helper):
