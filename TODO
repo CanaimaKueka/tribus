@@ -1,3 +1,6 @@
-* Cambiar el sistema de configuración de setuptools. El proceso de generación de la lista de archivos se ejecuta siempre que se llama al setup.py.
-* Documentar la función de cada uno de los paquetes de tribus en su __init__.py para que sea recogido por Sphinx.
-* Incluir cada uno de los módulos de los paquetes de tribus dentro de la documentación de la API (development/api).
+* [HECHO] Cambiar el sistema de configuración de setuptools. El proceso de generación de la lista de archivos se ejecuta siempre que se llama al setup.py.
+* [] Documentar la función de cada uno de los paquetes de tribus en su __init__.py para que sea recogido por Sphinx.
+* [] Incluir cada uno de los módulos de los paquetes de tribus dentro de la documentación de la API (development/api).
+* [] Instalar las dependencias de construcción en el virtualenv.
+* [] Comprobar si cableando el prefix para el comando 'install' del setup.py, dañamos la instalación de tribus en un virtualenv.
+* [] Mejorar el sistema de conversión de SVG a PNG con otra librería, CairoSVG apesta.

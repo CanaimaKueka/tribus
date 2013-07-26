@@ -4,14 +4,13 @@
 import os
 from distutils.cmd import Command
 from distutils.command.build import build as base_build
-from distutils.command.build_py import build_py as base_build_py
 from docutils.core import Publisher
 from docutils.writers import manpage
-from sphinx.application import Sphinx
 from cairosvg import svg2png
 
 from tribus.config.base import BASEDIR, DOCDIR
-from tribus.common.utils import get_path, find_files, get_packages, get_package_data, get_data_files
+from tribus.common.setup.utils import get_packages, get_package_data, get_data_files
+from tribus.common.utils import get_path, find_files
 from tribus.common.logger import get_logger
 from tribus.config.pkg import (classifiers, long_description, install_requires, dependency_links,
                                exclude_packages, exclude_sources, exclude_patterns,
@@ -36,6 +35,7 @@ class build_img(Command):
             try:
                 png_code = svg2png(url=svg_file)
             except Exception, e:
+                png_code = ''
                 print e
     
             png_file = open(os.path.splitext(svg_file)[0]+'.png', 'w')
@@ -43,25 +43,6 @@ class build_img(Command):
             png_file.close()
             log.debug("[%s.%s] %s > %s." % (__name__, self.__class__.__name__, svg_file,
                                             os.path.splitext(os.path.basename(svg_file))[0]+'.png'))
-
-
-class build_html(Command):
-    description = 'Compile .po files into .mo files'
-    user_options = []
-
-    def initialize_options(self):
-        pass
-
-    def finalize_options(self):
-        pass
-
-    def run(self):
-        log.debug("[%s.%s] Compiling documentation from RST sources." % (__name__,
-                                                                         self.__class__.__name__))
-        app = Sphinx(buildername='html', srcdir=get_path([DOCDIR, 'rst']),
-                     confdir=get_path([DOCDIR, 'rst']), outdir=get_path([DOCDIR, 'html']),
-                     doctreedir=get_path([DOCDIR, 'html', '.doctrees']))
-        app.build(force_all=False, filenames=[])
 
 
 class build_man(Command):
@@ -87,8 +68,8 @@ class build_man(Command):
 class build(base_build):
     def run(self):
         self.run_command('clean')
-        self.run_command('build_mo')
+        self.run_command('compile_catalog')
         self.run_command('build_img')
-        self.run_command('build_html')
+        self.run_command('build_sphinx')
         self.run_command('build_man')
         base_build.run(self)

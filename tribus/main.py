@@ -3,12 +3,6 @@ import os
 import inspect
 import argparse
 
-path = os.path.join(os.path.dirname(__file__), '..')
-base = os.path.realpath(os.path.abspath(os.path.normpath(path)))
-os.environ['PATH'] = base + os.pathsep + os.environ['PATH']
-sys.prefix = base
-sys.path.insert(0, base)
-
 from tribus import BASEDIR
 from tribus.common.logger import get_logger
 from tribus.common.utils import find_files, package_to_path, get_path

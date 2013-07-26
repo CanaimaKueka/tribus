@@ -146,21 +146,21 @@ def runserver_django():
             local('%(command)s python manage.py runserver' % env)
 
 
-def update_po():
+def update_catalog():
     with cd('%(basedir)s' % env):
-        with settings(command='python setup.py update_po' % env):
+        with settings(command='python setup.py update_catalog' % env):
             local('%(command)s' % env)
 
 
-def create_pot():
+def extract_messages():
     with cd('%(basedir)s' % env):
-        with settings(command='python setup.py create_pot' % env):
+        with settings(command='python setup.py extract_messages' % env):
             local('%(command)s' % env)
 
 
-def build_html():
+def build_sphinx():
     with cd('%(basedir)s' % env):
-        with settings(command='python setup.py build_html' % env):
+        with settings(command='python setup.py build_sphinx' % env):
             local('%(command)s' % env)
 
 
@@ -176,9 +176,9 @@ def build_man():
             local('%(command)s' % env)
 
 
-def build_mo():
+def compile_catalog():
     with cd('%(basedir)s' % env):
-        with settings(command='python setup.py build_mo' % env):
+        with settings(command='python setup.py compile_catalog' % env):
             local('%(command)s' % env)
 
 
@@ -194,9 +194,9 @@ def clean_img():
             local('%(command)s' % env)
 
 
-def clean_html():
+def clean_sphinx():
     with cd('%(basedir)s' % env):
-        with settings(command='python setup.py clean_html' % env):
+        with settings(command='python setup.py clean_sphinx' % env):
             local('%(command)s' % env)
 
 

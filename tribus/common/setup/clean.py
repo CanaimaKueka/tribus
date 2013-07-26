@@ -35,7 +35,7 @@ class clean_img(Command):
                     print e
 
 
-class clean_html(Command):
+class clean_sphinx(Command):
     description = 'Compile .po files into .mo files'
     user_options = []
 
@@ -46,7 +46,7 @@ class clean_html(Command):
         pass
 
     def run(self):
-        for html_dir in reversed(find_dirs(path=get_path([DOCDIR, 'html']))):
+        for html_dir in reversed(find_dirs(path=get_path([DOCDIR, 'html']))+find_dirs(path=get_path([DOCDIR, 'doctrees']))):
             try:
                 shutil.rmtree(html_dir)
                 log.debug("[%s.%s] Removing \"%s\"." % (__name__, self.__class__.__name__, html_dir))
@@ -119,6 +119,6 @@ class clean(base_clean):
         self.run_command('clean_dist')
         self.run_command('clean_mo')
         self.run_command('clean_img')
-        self.run_command('clean_html')
+        self.run_command('clean_sphinx')
         self.run_command('clean_man')
         base_clean.run(self)

@@ -18,7 +18,7 @@ from django.utils.translation.trans_real import inline_re, block_re, \
                                                 endblock_re, plural_re, \
                                                 constant_re
 
-def extract_django(fileobj, keywords, comment_tags, options):
+def django(fileobj, keywords, comment_tags, options):
     """Extract messages from Django template files.
 
     :param fileobj: the file-like object the messages should be extracted from

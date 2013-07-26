@@ -30,8 +30,9 @@
 
 from tribus import BASEDIR
 from tribus.config.base import CONFDIR
-from tribus.common.utils import (get_path, cat_file, readconfig, get_requirements,
-                                 get_dependency_links, get_classifiers)
+from tribus.common.utils import get_path, cat_file, readconfig
+from tribus.common.setup.utils import (get_requirements, get_dependency_links,
+								 	   get_classifiers)
 
 platforms = ('Any')
 keywords = ('backup', 'archive', 'atom', 'rss', 'blog', 'weblog')
