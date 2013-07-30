@@ -1,8 +1,10 @@
-{%extends 'paqueteria/base.html'%}
+{%extends 'paqueteria/buscador.html'%}
+
 {% load url from future %}
 {% block title%}Sistema de busqueda{%endblock%}
 {% block header%}<p><h1>Busqueda por arquitectura</h1></p>{%endblock%}
-{%block content%}
+{%block datos%}
+	
 	<p>
 	{%for p in i%}
 	<p>

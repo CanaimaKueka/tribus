@@ -1,8 +1,8 @@
-{%extends 'paqueteria/base.html'%}
+{%extends 'paqueteria/buscador.html'%}
 {% load url from future %}
 {% block title%}Sistema de busqueda{%endblock%}
 {% block header%}<p><h1>Busqueda</h1></p>{%endblock%}
-{%block content%}
+{%block datos%}
 	<div><p>Paquete: {{i.Package}}</p></div>
 	<div> 
 	   <p> Version: {{i.Version}} </p>

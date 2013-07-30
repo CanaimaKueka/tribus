@@ -24,6 +24,7 @@ def tags (request, tag):
     contexto = {"i":x}
     return render(request,'paqueteria/tags.html', contexto)
 
+
 # def search (request):
 #     query = request.Get.get('q', '')
 #     if query:
@@ -46,6 +47,7 @@ def inicio (request):
 
 def busquedaForm(request):
     frase = ""
+    form = busquedaPaquete()
     if request.method =="POST":
         formulario = busquedaPaquete(request.POST)
         if formulario.is_valid():
@@ -54,23 +56,20 @@ def busquedaForm(request):
             print (pqt[0].Package, len(pqt))
             if len(pqt)>1:
                 
-                contexto = {"i":pqt}
+                contexto = {"i":pqt,'form':form}
                 return render(request,'paqueteria/organizador_arquitectura.html', contexto)
             else:
-                contexto = {"i":pqt[0]}
+                contexto = {"i":pqt[0],'form':form}
                 return render(request,'paqueteria/detalles.html', contexto)
     else:
-        formulario = busquedaPaquete()
-    contexto   = {'form':formulario, "frase":frase}
-    
+        contexto   = {'form':form, "frase":frase}
     return render(request,'paqueteria/buscador.html',contexto)
 
 
 def busqueda(request, pqt):
-    
-    
+    form = busquedaPaquete()
     l = string.splitfields(pqt, "&")
     x = Paquete.objects.get(Package = l[0], Architecture = l[1])
     print (x.Package)
-    contexto = {"i":x,}
+    contexto = {"i":x,'form':form}
     return render(request,'paqueteria/detalles.html', contexto)

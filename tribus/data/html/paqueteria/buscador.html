@@ -1,19 +1,33 @@
 {%extends 'paqueteria/base.html'%}
 {% load url from future %}
 {% block title%}Sistema de busqueda{%endblock%}
+
+{% block style %} 
+
+
+{% endblock %}
 {% block header%}<p><h1>Busqueda por arquitectura</h1></p>{%endblock%}
 {%block content%}
 
-{% if valido %}
-	<h1> completado =D deberia ir redirigiendo</h1>
-{% else %}
-	<p>
-		<form action="." method="POST">
-			{% csrf_token %}
+
+<div class="well jumbotron">
+	<div class="container">
+		<div class="row-fluid">
+			<div class="span9 hero-unit">
+					{%block datos%} <h1>Descripcion <br>de paquetes de<br>canaima =D  <h1>{%endblock%}
+			</div>
+			<div class="span3">
+					<form class="input" action="." method="POST">
+						{% csrf_token %}
+						{{form}}
+						<input class = "btn" type="submit" value="Buscar">
+					</form>
+			</div>
+
+			<div class="span3">
+				<h1>LOGO</h1>
+			</div>
+	</div>
+</div>
 			
-			{{form}}
-			<input type="submit" value="submit">
-		</form>
-	</p>
-{% endif %}
 {%endblock%}
