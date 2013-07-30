@@ -17,15 +17,18 @@
 					{%block datos%} <h1>Descripcion <br>de paquetes de<br>canaima =D  <h1>{%endblock%}
 			</div>
 			<div class="span3">
-					<form class="input" action="." method="POST">
+					<p><legend>Buscador</legend></p>
+					<form class="form-search" action="." method="POST">
 						{% csrf_token %}
 						{{form}}
 						<input class = "btn" type="submit" value="Buscar">
+
 					</form>
+					<p><legend></legend></p>
 			</div>
 
 			<div class="span3">
-				<h1>LOGO</h1>
+				<h1 align = "center" >LOGO</h1>
 			</div>
 	</div>
 </div>
