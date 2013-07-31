@@ -52,7 +52,7 @@ def busquedaForm(request):
         formulario = busquedaPaquete(request.POST)
         if formulario.is_valid():
             frase = formulario.cleaned_data["frase"]
-            pqt = Paquete.objects.filter(Package = frase)
+            pqt = Paquete.objects.filter(Package = frase.strip())
             print (pqt[0].Package, len(pqt))
             if len(pqt)>1:
                 

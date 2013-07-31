@@ -1,10 +1,23 @@
 {%extends 'paqueteria/buscador.html'%}
 {% load url from future %}
 {% block title%}Sistéma de busqueda{%endblock%}
+{%block style%}
+
+	#margenes-separadores{
+
+	size: 8px;	
+}
+
+
+{%endblock%}
 {%block datos%}
 
-	<div><h2>	{{i.Package}}</h2></div>
-	<div> 
+	<div >
+		<legend></legend>
+			<h2 align="center">{{i.Package}}</h2>
+		<legend></legend>
+	</div>
+	<div id = "margenes-separadores"> 
 	   <p> Version: {{i.Version}} </p>
 	   <p> Tamaño: {{i.Size}} Kb</p>
 	   <p> Tamaño instalado: {{i.InstalledSize}} Kb</p>
