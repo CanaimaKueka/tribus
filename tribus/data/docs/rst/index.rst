@@ -2,7 +2,7 @@
 Tribus
 ======
 
-.. include:: ../../../../readme.rst
+.. include:: ../readme.rst
 
 Documentación para usuarios
 ===========================
