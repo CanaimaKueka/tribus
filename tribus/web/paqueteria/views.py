@@ -69,7 +69,10 @@ def busquedaForm(request):
 def busqueda(request, pqt):
     form = busquedaPaquete()
     l = string.splitfields(pqt, "&")
-    x = Paquete.objects.get(Package = l[0], Architecture = l[1])
+    if len(l)>1:
+        x = Paquete.objects.get(Package = l[0], Architecture = l[1])
+    else:
+        x = Paquete.objects.get(Package = l[0])
     print (x.Package)
     contexto = {"i":x,'form':form}
     return render(request,'paqueteria/detalles.html', contexto)
