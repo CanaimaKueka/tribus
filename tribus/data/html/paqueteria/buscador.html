@@ -4,11 +4,9 @@
 
 {% block style %} 
 
-
 {% endblock %}
 {% block header%}<p><h1>Busqueda por arquitectura</h1></p>{%endblock%}
 {%block content%}
-
 
 <div class="well jumbotron">
 	<div class="container">
@@ -18,12 +16,14 @@
 			</div>
 			<div class="span3">
 					<p><legend>Buscador</legend></p>
-					<form class="form-search" action="." method="POST">
+					<form class="input-medium search-query" action="." method="POST">
 						{% csrf_token %}
-						{{form}}
-						<input class = "btn" type="submit" value="Buscar">
+						<input class="input" id="id_username" name="frase" placeholder="" type="text">
+						<input class="btn" type="submit" value="Buscar">
 
 					</form>
+
+					<br>
 					<p><legend></legend></p>
 			</div>
 

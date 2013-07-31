@@ -4,7 +4,7 @@ from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, render_to_response
 from tribus.web.paqueteria.models import Paquete, Mantenedor, DependenciaSimple, DependenciaOR, Etiqueta
 from django.core.context_processors import request
-from tribus.web.paqueteria.form import busquedaPaquete
+from tribus.web.paqueteria.forms import busquedaPaquete
 import string
 
 def index(request):

@@ -1,9 +1,9 @@
 {%extends 'paqueteria/buscador.html'%}
 {% load url from future %}
-{% block title%}Sistema de busqueda{%endblock%}
-{% block header%}<p><h1>Busqueda</h1></p>{%endblock%}
+{% block title%}Sistéma de busqueda{%endblock%}
 {%block datos%}
-	<div><p>Paquete: {{i.Package}}</p></div>
+
+	<div><h2>	{{i.Package}}</h2></div>
 	<div> 
 	   <p> Version: {{i.Version}} </p>
 	   <p> Tamaño: {{i.Size}} Kb</p>
