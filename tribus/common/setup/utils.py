@@ -139,14 +139,18 @@ def get_data_files(path, patterns, exclude_files=[]):
 
 
 def get_setup_data(basedir):
-    from tribus.common.version import get_version
-    from tribus.common.setup.build import build_man, build_img, build
-    from tribus.common.setup.clean import clean_mo, clean_sphinx, clean_man, clean_img, clean_dist, clean
-    from tribus.common.setup.install import install_data, build_py
     from tribus.config.base import NAME, VERSION, URL, AUTHOR, AUTHOR_EMAIL, DESCRIPTION, LICENSE, DOCDIR
     from tribus.config.pkg import (classifiers, long_description, install_requires, dependency_links,
                                    exclude_packages, exclude_sources, exclude_patterns,
                                    include_data_patterns, platforms, keywords)
+    from tribus.common.version import get_version
+    from tribus.common.setup.build import build_man, build_img, build_sphinx, compile_catalog, build
+    from tribus.common.setup.clean import clean_mo, clean_sphinx, clean_man, clean_img, clean_dist, clean
+    from tribus.common.setup.install import install_data, build_py
+    from tribus.common.setup.maint import extract_messages, init_catalog, update_catalog
+
+    packages = get_packages(path=basedir, exclude_packages=exclude_packages)
+
     return {
         'name': NAME,
         'version': get_version(VERSION),
@@ -154,14 +158,14 @@ def get_setup_data(basedir):
         'author': AUTHOR,
         'author_email': AUTHOR_EMAIL,
         'description': DESCRIPTION,
+        'long_description': long_description,
         'license': LICENSE,
+        'classifiers': classifiers,
         'keywords': keywords,
         'platforms': platforms,
-        'packages': get_packages(path=basedir, exclude_packages=exclude_packages),
-        'data_files': [('', [])],
-        'package_data': {'': []},
-        'classifiers': classifiers,
-        'long_description': long_description,
+        'packages': packages,
+        'data_files': [('', [])],               # data_files is empty because it is filled during execution of install_data
+        'package_data': {'': []},               # package_data is empty because it is filled during execution of build_py
         'install_requires': install_requires,
         'dependency_links': dependency_links,
         'zip_safe': False,
@@ -176,9 +180,24 @@ def get_setup_data(basedir):
             'build_img': build_img,
             'build_man': build_man,
             'build_py': build_py,
+            'build_sphinx': build_sphinx,
+            'compile_catalog': compile_catalog,
+            'init_catalog': init_catalog,
+            'update_catalog': update_catalog,
+            'extract_messages': extract_messages,
             'install_data': install_data,
         },
+        'message_extractors': {
+            'tribus': [
+                ('**.html', 'tribus.common.setup.message_extractors:django', ''),
+                ('**.py', 'python', ''),
+                ],
+        },
         'command_options': {
+            'egg_info': {
+                'tag_build': ('setup.py', ''),
+                'tag_svn_revision': ('setup.py', False),
+            },
             'install': {
                 'prefix': ('setup.py', '/usr'),
                 'exec_prefix': ('setup.py', '/usr'),
@@ -186,7 +205,7 @@ def get_setup_data(basedir):
             },       
             'update_catalog': {
                 'domain': ('setup.py', 'tribus'),
-                'input_file': ('setup.py', 'tribus/i18n/tribus.pot'),
+                'input_file': ('setup.py', 'tribus/i18n/pot/tribus.pot'),
                 'output_dir': ('setup.py', 'tribus/i18n'),
             },
             'compile_catalog': {
@@ -195,21 +214,16 @@ def get_setup_data(basedir):
             },
             'init_catalog': {
                 'domain': ('setup.py', 'tribus'),
-                'input_file': ('setup.py', 'tribus/i18n/tribus.pot'),
+                'input_file': ('setup.py', 'tribus/i18n/pot/tribus.pot'),
                 'output_dir': ('setup.py', 'tribus/i18n'),
             },
             'extract_messages': {
-                'add_comments': ('setup.py', 'TRANSLATOR:'),
+                # 'add_comments': ('setup.py', 'TRANSLATOR:'),
                 'copyright_holder': ('setup.py', 'Desarrolladores de Tribus'),
                 'msgid_bugs_address': ('setup.py', 'desarrolladores@canaima.softwarelibre.gob.ve'),
-                'output_file': ('setup.py', 'tribus/i18n/tribus.pot'),
-                'keywords': ('setup.py', '_'),
-                'mapping_file': ('setup.py', 'extractors.cfg'),
+                'output_file': ('setup.py', 'tribus/i18n/pot/tribus.pot'),
+                # 'keywords': ('setup.py', '_'),
                 'charset': ('setup.py', 'utf-8'),
-            },
-            'egg_info': {
-                'tag_build': ('setup.py', ''),
-                'tag_svn_revision': ('setup.py', False),
             },
             'build_sphinx': {
                 'source_dir': ('setup.py', get_path([DOCDIR, 'rst'])),

@@ -4,3 +4,4 @@
 * [] Instalar las dependencias de construcción en el virtualenv.
 * [] Comprobar si cableando el prefix para el comando 'install' del setup.py, dañamos la instalación de tribus en un virtualenv.
 * [] Mejorar el sistema de conversión de SVG a PNG con otra librería, CairoSVG apesta.
+* [] Separar las dependencias de construcción de las dependencias de operación.
