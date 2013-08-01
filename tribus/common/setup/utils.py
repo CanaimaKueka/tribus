@@ -18,7 +18,6 @@ def get_classifiers(filename):
 
 
 def get_dependency_links(filename):
-    from tribus.common.validators import is_valid_url
     dependency_links = []
     for line in readconfig(filename, conffile=False):
         if re.match(r'\s*-[ef]\s+', line):
@@ -141,8 +140,7 @@ def get_data_files(path, patterns, exclude_files=[]):
 def get_setup_data(basedir):
     from tribus.config.base import NAME, VERSION, URL, AUTHOR, AUTHOR_EMAIL, DESCRIPTION, LICENSE, DOCDIR
     from tribus.config.pkg import (classifiers, long_description, install_requires, dependency_links,
-                                   exclude_packages, exclude_sources, exclude_patterns,
-                                   include_data_patterns, platforms, keywords)
+                                   exclude_packages, platforms, keywords)
     from tribus.common.version import get_version
     from tribus.common.setup.build import build_man, build_img, build_sphinx, compile_catalog, build
     from tribus.common.setup.clean import clean_mo, clean_sphinx, clean_man, clean_img, clean_dist, clean
@@ -211,6 +209,7 @@ def get_setup_data(basedir):
             'compile_catalog': {
                 'domain': ('setup.py', 'tribus'),
                 'directory': ('setup.py', 'tribus/i18n'),
+                'use_fuzzy': ('setup.py', True),
             },
             'init_catalog': {
                 'domain': ('setup.py', 'tribus'),
