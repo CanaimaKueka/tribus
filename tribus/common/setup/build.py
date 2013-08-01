@@ -72,42 +72,7 @@ class build_sphinx(base_build_sphinx):
         return set(filter(None, list_dirs(get_path([DOCDIR, 'rst', 'i18n'])))) - set(['pot'])
 
     def run(self):
-        if not color_terminal():
-            # Windows' poor cmd box doesn't understand ANSI sequences
-            nocolor()
-        if not self.verbose:
-            status_stream = StringIO()
-        else:
-            status_stream = sys.stdout
-        confoverrides = {}
-        if self.project:
-             confoverrides['project'] = self.project
-        if self.version:
-             confoverrides['version'] = self.version
-        if self.release:
-             confoverrides['release'] = self.release
-        if self.today:
-             confoverrides['today'] = self.today
-        app = Sphinx(self.source_dir, self.config_dir,
-                     self.builder_target_dir, self.doctree_dir,
-                     self.builder, confoverrides, status_stream,
-                     freshenv=self.fresh_env)
-
-        try:
-            app.build(force_all=self.all_files)
-        except Exception, err:
-            from docutils.utils import SystemMessage
-            if isinstance(err, SystemMessage):
-                print >>sys.stderr, darkred('reST markup error:')
-                print >>sys.stderr, err.args[0].encode('ascii',
-                                                       'backslashreplace')
-            else:
-                raise
-
-        if self.link_index:
-            src = app.config.master_doc + app.builder.out_suffix
-            dst = app.builder.get_outfilename('index')
-            os.symlink(src, dst)
+        base_build_sphinx.run(self)
 
 
 class compile_catalog(base_compile_catalog):
