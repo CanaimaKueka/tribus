@@ -1,0 +1,362 @@
+@charset "utf-8";
+/* CSS Document */
+
+body, html{
+	margin: 0;
+	padding: 0;
+	height:100%;
+	background-size:50%;
+}
+
+body {
+	display:block;
+}
+
+img{
+	border: 0;
+}
+
+.story{
+	margin: 0 auto;
+	min-width: 980px;
+	overflow: auto;
+	width: 980px;
+}
+
+.story .float-left, .story .float-right{
+	padding: 100px 0 0 0;
+	position: relative;
+	width: 350px;	
+}
+
+#fond1{
+	background: url(images/fond1.jpg) 50% no-repeat fixed;
+	background-color:#f4d0ad;
+	background-size:1071px;
+	color: white;
+	height: 120%;
+	width:100%;
+	margin: 0 auto;
+	padding-top:0;
+	overflow: hidden;
+	position:relative;
+}
+
+#fond1 .bg{
+	background: url(images/velo1.png) 50% 84.5% no-repeat fixed;
+	height: 120%;
+	padding: 0;
+	position: absolute;
+	width:inherit;
+	z-index: 10;
+}
+
+
+#fond2{
+	background: url(images/fond2.jpg) 50% 0 no-repeat fixed;
+	background-color:#b1deed;
+	background-size:1071px;
+	color: white;
+	height: 120%;
+	padding:0;	
+}
+
+#fond2 .bg{
+	background: url(images/velo2.png) 50% 78.5% no-repeat fixed;
+	height: 120%;
+	padding: 0;
+	position: absolute;
+	width:inherit;
+	z-index: 10;
+}
+
+#fond3{
+	background: url(images/fond3.jpg) 50% 0 no-repeat fixed;
+	background-color:#f79cc1;
+	background-size:1071px;
+	color: white;
+	height: 120%;
+	padding:0;	
+}
+
+#fond3 .bg{
+	background: url(images/velo3.png) 50% 83% no-repeat fixed;
+	height: 120%;
+	padding: 0;
+	position: absolute;
+	width:inherit;
+	z-index: 10;
+}
+
+#fond4{
+	background: url(images/fond4.jpg) 50% 0 no-repeat fixed;
+	background-color:#abe7f4;
+	background-size:1071px;
+	color: white;
+	height: 120%;
+	padding:0;	
+}
+
+#fond4 .bg{
+	background: url(images/velo4.png) 50% 85% no-repeat fixed;
+	height: 120%;
+	padding: 0;
+	position: absolute;
+	width:inherit;
+	z-index: 10;
+}
+
+#fond5{
+	background: url(images/fond5.jpg) 50% 0 no-repeat fixed;
+	background-color:#f8d5b8;
+	background-size:1071px;
+	color: white;
+	height: 120%;
+	padding:0;	
+}
+
+#fond5 .bg{
+	background: url(images/velo5.png) 50% 85% no-repeat fixed;
+	height: 120%;
+	padding: 0;
+	position: absolute;
+	width:inherit;
+	z-index: 10;
+}
+#fond6{
+	background: url(images/fond6.jpg) 50% 0 no-repeat fixed;
+	background-color:#a0e3ff;
+	background-size:1071px;
+	color: white;
+	height: 120%;
+	padding:0;	
+}
+
+#fond6 .bg{
+	background: url(images/velo6.png) 50% 82% no-repeat fixed;
+	height: 120%;
+	padding: 0;
+	position: absolute;
+	width:inherit;
+	z-index: 10;
+}
+#fond7{
+	background: url(images/fond7.jpg) 50% 0 no-repeat fixed;
+	background-color:#f7ca7d;
+	background-size:1071px;
+	color: white;
+	height: 120%;
+	padding:0;	
+}
+
+#fond7 .bg{
+	background: url(images/velo7.png) 50% 84% no-repeat fixed;
+	height: 120%;
+	padding: 0;
+	position: absolute;
+	width:inherit;
+	z-index: 10;
+}
+#fond8{
+	background: url(images/fond8.jpg) 50% 0 no-repeat fixed;
+	background-color:#fbdff8;
+	background-size:1071px;
+
+	color: white;
+	height: 120%;
+	padding:0;	
+}
+
+#fond8 .bg{
+	background: url(images/velo8.png) 50% 86% no-repeat fixed;
+	height: 120%;
+	padding: 0;
+	position: absolute;
+	width:inherit;
+	z-index: 10;
+}
+#fond9{
+	background: url(images/fond9.jpg) 50% 0 no-repeat fixed;
+	background-color:#c6deff;
+	background-size:1071px;
+
+	color: white;
+	height: 120%;
+	padding:0;	
+}
+
+#fond9 .bg{
+	background: url(images/velo9.png) 50% 82% no-repeat fixed;
+	height: 120%;
+	padding: 0;
+	position: absolute;
+	width:inherit;
+	z-index: 10;
+}
+#fond10{
+	background: url(images/fond10.jpg) 50% 0 no-repeat fixed;
+	background-color:#91f9d3;
+	background-size:1071px;
+
+	color: white;
+	height: 120%;
+	padding:0;	
+}
+
+#fond10 .bg{
+	background: url(images/velo10.png) 50% 83% no-repeat fixed;
+	height: 120%;
+	padding: 0;
+	position: absolute;
+	width:inherit;
+	z-index: 10;
+}
+#fond11{
+	background: url(images/fond11.jpg) 50% 0 no-repeat fixed;
+	background-color:#f8c075;
+	background-size:1071px;
+
+	color: white;
+	height: 120%;
+	padding:0;	
+}
+
+#fond11 .bg{
+	background: url(images/velo11.png) 50% 80% no-repeat fixed;
+	height: 120%;
+	padding: 0;
+	position: absolute;
+	width:inherit;
+	z-index: 10;
+}
+#fond12{
+	background: url(images/fond12.jpg) 50% 0 no-repeat fixed;
+	background-color:#ffd4ab;
+	background-size:1071px;
+
+	color: white;
+	height: 120%;
+	padding:0;	
+}
+
+#fond12 .bg{
+	background: url(images/velo12.png) 50% 80.5% no-repeat fixed;
+	height: 120%;
+	padding: 0;
+	position: absolute;
+	width:inherit;
+	z-index: 10;
+}
+#fond13{
+	background: url(images/fond13.jpg) 50% 0 no-repeat fixed;
+	background-color:#b2fad7;
+	background-size:1071px;
+
+	color: white;
+	height: 120%;
+	padding:0;	
+}
+
+#fond13 .bg{
+	background: url(images/velo13.png) 50% 82% no-repeat fixed;
+	height: 120%;
+	padding: 0;
+	position: absolute;
+	width:inherit;
+	z-index: 10;
+}
+#fond14{
+	background: url(images/fond14.jpg) 50% 0 no-repeat fixed;
+	background-color:#dbdbdb;
+	background-size:1071px;
+
+	color: white;
+	height: 120%;
+	padding:0;	
+}
+
+#fond14 .bg{
+	background: url(images/velo14.png) 50% 83.5% no-repeat fixed;
+	height: 120%;
+	padding: 0;
+	position: absolute;
+	width:inherit;
+	z-index: 10;
+}
+#fond15{
+	background: url(images/fond15.jpg) 50% 0 no-repeat fixed;
+	background-color:#fddcae;
+	background-size:1071px;
+
+	color: white;
+	height: 120%;
+	padding:0;	
+}
+
+#fond15 .bg{
+	background: url(images/velo15.png) 50% 83% no-repeat fixed;
+	height: 120%;
+	padding: 0;
+	position: absolute;
+	width:inherit;
+	z-index: 10;
+}
+#fond16{
+	background: url(images/fond16.jpg) 50% 0 no-repeat fixed;
+	background-color:#fb9d79;
+	background-size:1071px;
+
+	color: white;
+	height: 120%;
+	padding:0;	
+}
+
+#fond16 .bg{
+	background: url(images/velo16.png) 50% 82.5% no-repeat fixed;
+	height: 120%;
+	padding: 0;
+	position: absolute;
+	width:inherit;
+	z-index: 10;
+}
+#fond17{
+	background: url(images/fond17.jpg) 50% 0 no-repeat fixed;
+	background-color:#f6978f;
+	background-size:1071px;
+
+	color: white;
+	height: 120%;
+	padding:0;	
+}
+
+#fond17 .bg{
+	background: url(images/velo17.png) 50% 79.5% no-repeat fixed;
+	height: 120%;
+	padding: 0;
+	position: absolute;
+	width:inherit;
+	z-index: 10;
+}
+
+#fond18{
+	background: url(images/fond18.jpg) 50% no-repeat fixed;
+	background-color:#000;
+	background-size:1071px;
+	color: white;
+	height: 120%;
+	width:100%;
+	margin: 0 auto;
+	padding-top:0;
+	overflow: hidden;
+	position:relative;
+}
+
+#fond18 .bg{
+	background: url(images/velo18.png) 50% 113% no-repeat fixed;
+	height: 120%;
+	padding: 0;
+	position: absolute;
+	width:inherit;
+	z-index: 10;
+	top:0px;
+}
