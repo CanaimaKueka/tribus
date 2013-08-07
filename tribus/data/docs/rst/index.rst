@@ -2,7 +2,12 @@
 Tribus
 ======
 
-.. include:: ../readme.rst
+.. include:: readme.rst
+
+.. toctree::
+    :hidden:
+
+    readme
 
 Documentación para usuarios
 ===========================
