@@ -11,7 +11,7 @@
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.4 r9939"
+   inkscape:version="0.48.3.1 r9886"
    width="500"
    height="250"
    sodipodi:docname="logo-500.svg">
@@ -23,7 +23,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -140,17 +140,17 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1598"
+     inkscape:window-width="1438"
      inkscape:window-height="875"
      id="namedview4"
      showgrid="false"
      inkscape:zoom="0.5264265"
-     inkscape:cx="349.68043"
-     inkscape:cy="227.054"
+     inkscape:cx="114.62076"
+     inkscape:cy="154.56731"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg2"
+     inkscape:current-layer="g3313"
      showguides="true"
      inkscape:snap-object-midpoints="false"
      inkscape:snap-center="false"
@@ -258,7 +258,7 @@
        id="text3067-2"
        y="49.601868"
        x="413.73865"
-       style="font-size:133.05131531px;font-style:normal;font-weight:normal;line-height:0%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       style="font-size:133.05131531000000678px;font-style:normal;font-weight:normal;line-height:0%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Passion One;-inkscape-font-specification:Passion One"
        xml:space="preserve"><tspan
          dy="0"
          rotate="0 0 0 0 0 0 0"
@@ -266,7 +266,8 @@
          y="49.601868"
          x="413.73865"
          id="tspan3069-3"
-         sodipodi:role="line">Tribus</tspan></text>
+         sodipodi:role="line"
+         style="-inkscape-font-specification:Passion One;font-family:Passion One;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;font-size:171.96004055px">Tribus</tspan></text>
   </g>
   <g
      id="g3237"

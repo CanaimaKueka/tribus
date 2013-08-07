@@ -96,33 +96,7 @@ class build_sphinx(base_build_sphinx):
 
     def run(self):
         for locale in self.get_sphinx_locale_list():
-            self.builder = 'html'
-            self.source_dir = get_path([DOCDIR, 'rst'])
-            self.config_dir = self.source_dir
-            self.doctree_dir = get_path([DOCDIR, 'doctrees'])
-            self.build_dir = get_path([DOCDIR, self.builder])
-            self.builder_target_dir = get_path([self.build_dir, locale])
-            self.fresh_env = True
-            self.all_files = True
-            self.confoverrides = {
-                'language': locale,
-            }
-            self.mkpath(self.doctree_dir)
-            self.mkpath(self.build_dir)
-            self.mkpath(self.builder_target_dir)
-            app = Sphinx(srcdir=self.source_dir, confdir=self.source_dir, outdir=self.builder_target_dir,
-                         doctreedir=self.doctree_dir, buildername=self.builder, confoverrides=self.confoverrides,
-                         status=sys.stdout, warning=sys.stderr, freshenv=self.fresh_env, warningiserror=False,
-                         tags=None)
-            try:
-                app.build(force_all=self.all_files)
-            except Exception, e:
-                print e
-
-            try:
-                shutil.rmtree(self.doctree_dir)
-            except Exception, e:
-                print e
+            base_build_sphinx.run(self)
 
 
 class compile_catalog(base_compile_catalog):

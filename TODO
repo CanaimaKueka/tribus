@@ -7,3 +7,4 @@
 * [] Separar las dependencias de construcción de las dependencias de operación.
 * [] Agregar pruebas de calidad de código con PEP8, PyLint y Tox.
 * [] Buscar el origen de tribus/common/setup/message_extractors.py y colocarlo en COPYING.
+* [] Agregar una página de resultados a la aplicación de paquetería.
