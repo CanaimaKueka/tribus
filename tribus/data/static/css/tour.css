@@ -1,0 +1,85 @@
+@font-face {
+  font-family: 'Open Sans Light';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Open Sans Light'), local('OpenSans-Light'), url(../font/OpenSans-Light.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url(../font/OpenSans.woff) format('woff');
+}
+
+body, html
+{
+	margin: 0;
+	padding: 0;
+	height: 100%;
+}
+
+body
+{
+	display:block;
+}
+
+img
+{
+	border: 0;
+}
+
+h2
+{
+font-family: 'Open Sans Light'
+}
+
+
+.scrollblock
+{
+width: 100%;
+padding:0;	
+}
+
+#slide_1
+{
+/*background-color: #000;
+color: white;*/
+/*float: left;*/
+width:100%;
+}
+
+#slide_2
+{
+/*background-color: #000;
+color: white;*/
+/*float: left;*/
+width:100%;
+}
+
+#slide_3
+{
+/*background-color: #000;
+color: white;*/
+width:100%;
+/*float: left;*/
+height:1000px;
+}
+
+
+@keyframes Rotation
+{
+	0%		{transform: rotate(0deg);}
+	100%	{transform: rotate(360deg);}
+}
+
+#flat_earth
+{
+	position: relative;
+	margin: 0px auto;
+	height: 400px;
+	width: 400px;
+	/*background: transparent url('../img/flat_earth.svg') no-repeat;*/
+	animation: Rotation 200s ease-in-out 0s infinite;
+	animation-play-state: running;
+}
