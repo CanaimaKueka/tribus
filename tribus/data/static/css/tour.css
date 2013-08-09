@@ -22,6 +22,7 @@ body, html
 body
 {
 	display:block;
+	overflow-x: hidden;
 }
 
 img
@@ -37,35 +38,56 @@ font-family: 'Open Sans Light'
 
 .scrollblock
 {
-width: 100%;
-padding:0;	
+/*width: 100%;*/
+padding:0;
+margin:50px;
+/*background-color: #eee;*/
+/*border-radius: 5px;*/
+}
 }
 
 #slide_1
 {
-/*background-color: #000;
-color: white;*/
-/*float: left;*/
-width:100%;
+margin:20px;
+}
+
+#slide_1a
+{
+margin:20px;
+}
+
+#slide_1b
+{
+margin:20px;
 }
 
 #slide_2
 {
-/*background-color: #000;
-color: white;*/
-/*float: left;*/
 width:100%;
 }
 
 #slide_3
 {
-/*background-color: #000;
-color: white;*/
 width:100%;
-/*float: left;*/
-height:1000px;
 }
 
+#slide_1a, #slide_1b
+{
+width:100%;
+}
+
+#slide_1b
+{
+	width: 50%;
+	line-height: 2em;
+	font-weight: 200;
+	font-size: 1.7em;
+}
+
+#slide_1a h1
+{
+	font-size: 5em;
+}
 
 @keyframes Rotation
 {
@@ -79,7 +101,15 @@ height:1000px;
 	margin: 0px auto;
 	height: 400px;
 	width: 400px;
-	/*background: transparent url('../img/flat_earth.svg') no-repeat;*/
-	animation: Rotation 200s ease-in-out 0s infinite;
+	animation: Rotation 200s linear 0s infinite;
 	animation-play-state: running;
+}
+
+#flat_newton
+{
+	position: relative;
+	height: 1000px;
+	width: 500px;
+	top:-2000;
+	background: url('../img/flat_newton.png');
 }
