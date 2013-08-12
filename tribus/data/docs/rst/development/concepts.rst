@@ -9,9 +9,9 @@ Tribus está desarrollado en Python, entre otras tecnologías modernas. Desde el
    :target: ../_images/philosophy.png
    :align: center
 
-Existen otras interfaces: la interfaz por consola (cli -- command line interface) y la interfaz gráfica (gui -- graphical user interface) contienen una serie de funciones que permiten interactuar con la instancia maestra o ejecutar tareas localmente.
+Existen otras interfaces además de la interfaz web: la interfaz por consola (cli -- command line interface) y la interfaz gráfica (gui -- graphical user interface) contienen una serie de funciones que permiten interactuar con la instancia maestra o ejecutar tareas localmente.
 
-Las diferentes tareas dentro de Tribus son registradas según área de conocimiento (o "Tribu"), hasta ahora hemos identificado las siguientes:
+Las diferentes tareas dentro de Tribus son registradas según área de conocimiento (o "Tribu"), hasta ahora se han identificado las siguientes:
 
 * Desarrollo
 * Documentación

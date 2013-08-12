@@ -5,7 +5,7 @@ from distutils.command.install_data import install_data as base_install_data
 from distutils.command.build_py import build_py as base_build_py
 
 from tribus.config.base import BASEDIR
-from tribus.common.setup.utils import get_data_files, get_packages, get_package_data
+from tribus.common.setup.utils import get_data_files, get_package_data
 from tribus.common.logger import get_logger
 from tribus.config.pkg import exclude_sources, exclude_patterns, include_data_patterns, exclude_packages
 

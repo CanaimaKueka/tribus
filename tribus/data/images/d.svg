@@ -1,0 +1,12 @@
+                                	<svg version="1.1" id="fittogether" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="104px" height="104px" viewBox="0 0 104 104" enable-background="new 0 0 104 104" xml:space="preserve">
+                                        <circle id="shadow" opacity="0.05" cx="50" cy="54" r="50"/>
+                                        <circle id="bg" fill="#34495E" cx="54" cy="50" r="50"/>
+                                        <g id="shape" transform="rotate(0,54,50)">
+                                            <path id="whitehalf" fill="#FFFFFF" d="M54,91c-22,0-41-18.355-41-41S32,9,54,9C54,32.5,54,71.25,54,91z" transform="rotate(0,54,50)" data="white"/>
+                                            <path id="darkhalf" fill="#34495E" d="M54,9c22,0,41,18.355,41,41S76,91,54,91C54,67.5,54,28.75,54,9z" transform="rotate(0,54,50)"/>
+                                            <circle id="whilelarge" fill="#FFFFFF" cx="54.5" cy="70.5" r="20.5"/>
+                                            <circle id="darksmall" fill="#34495E" cx="54.5" cy="70.5" r="8.5"/>
+                                            <circle id="darklarge" fill="#34495E" cx="53.5" cy="29.5" r="20.5"/>
+                                            <circle id="whitesmall" fill="#FFFFFF" cx="54" cy="29.5" r="8.5"/>
+                                        </g>
+                                    </svg>

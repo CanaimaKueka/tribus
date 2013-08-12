@@ -8,9 +8,7 @@ from tribus.web.paqueteria.forms import busquedaPaquete
 import string
 
 def index(request):
-    pqt = Paquete.objects.all()
-    contexto = {"pqt":pqt}
-    return render(request,'paqueteria/paquetes.html', contexto)
+    return render(request,'paqueteria/buscador.html', {})
 
 def categoria(request, categoria):
     print categoria
@@ -42,6 +40,7 @@ def tags (request, tag):
 #                                )
 
 def inicio (request):
+    buscar(request)
     return render(request, 'paqueteria/inicio.html')
 
 
@@ -71,8 +70,46 @@ def busqueda(request, pqt):
     l = string.splitfields(pqt, "&")
     if len(l)>1:
         x = Paquete.objects.get(Package = l[0], Architecture = l[1])
+        contexto = {"i":x,'form':form}
     else:
-        x = Paquete.objects.get(Package = l[0])
-    print (x.Package)
-    contexto = {"i":x,'form':form}
+        print pqt
+        x = Paquete.objects.filter(Package = pqt)
+
+        if len(x)>1:
+            contexto = {"i":x,'form':form}
+            return render(request,'paqueteria/organizador_arquitectura.html', contexto)
+        print len(x)
+        contexto = {"i":x,'form':form}
+    
     return render(request,'paqueteria/detalles.html', contexto)
+
+
+def organizador(request,pqt):
+    x = Paquete.objects.filter(Package = pqt)
+    contexto = {"i":x}
+    return render(request,'paqueteria/organizador_arquitectura.html', contexto)
+
+def detallador(request,pqt):
+    x = Paquete.objects.get(Package = pqt)
+    contexto = {"i":x}
+    return render(request,'paqueteria/detalles.html', contexto)
+
+def buscar(request):   
+    error=[]
+    if request.method=="POST":
+        if "busqueda" in request.POST:
+            busqueda = request.POST["busqueda"]
+            if not busqueda:
+                error.append("coloca algo para buscar")
+            else:
+                pqt = Paquete.objects.filter(Package__startswith__contains = busqueda)
+                if len(pqt)>1:
+                    return render (request, "paqueteria/organizador_arquitectura.html",{"i":pqt})
+                elif not pqt:
+
+                    """aqui se puede redireeccionar a una pag donde se listen una serie de opciones o paquetes parecidos"""
+
+                    return render (request, "404.html",{"i":pqt})
+                else:
+                    return render (request, "paqueteria/detalles.html",{"i":pqt[0]})
+    return render(request,"404.html", {})

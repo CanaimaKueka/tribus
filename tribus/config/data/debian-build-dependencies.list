@@ -1,5 +1,6 @@
 make
 fabric
-python-cairosvg
+python-rsvg
 python-babel
 python-sphinx
+python-cairo

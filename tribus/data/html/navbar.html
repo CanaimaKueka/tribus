@@ -46,12 +46,20 @@
                     <ul class="nav">
                         <li class="divider-vertical"></li>
                         <li><a href="/paquetes">Paqueteria</a></li>
-                        <li class="divider-vertical"></li>                        
-                    <!--    <li>
-                            <form class="form-search">
-                                <input type="text" class="input-xlarge">
+                        <li class="divider-vertical"></li>
+                        <!--!<li>
+                            <form class="input-medium search-query" action="/paquetes/" method="POST">
+                                {% csrf_token %}
+                                <input class="input" id="id_username" name="frase" placeholder="" type="text">
+                            </form>                   
+                        </li>
+                        <li><input class="btn" type="submit" value="Buscar"></li> -->
+                        <li>
+                            <form class="form-search" action = "/paquetes/busqueda/" method = "POST">
+                                {% csrf_token %}
+                                <input type="text" class="input-xlarge" name="busqueda">
                             </form>
-                        </li> -->
+                        </li> 
                     </ul>                    
                     <ul class="nav pull-right">
                         <li class="dropdown">

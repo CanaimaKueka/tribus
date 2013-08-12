@@ -1,0 +1,35 @@
+<svg width="100px" height="100px" id="bootstrap" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+<circle id="bootstrap-bg" fill-rule="evenodd" clip-rule="evenodd" fill="#4A245A" cx="50" cy="50" r="50"/>
+<g id="lines">
+<clipPath id="bootstrapmask">
+<path d="M49.952,99.999c-27.64,0-50.046-22.385-50.046-50C-0.094,22.385,22.312,0,49.952,0C77.594,0,100,22.385,100,49.999C100,77.614,77.594,99.999,49.952,99.999z"/>
+</clipPath>
+<g id="all-lines" clip-path="url(#bootstrapmask)" opacity="0.2" transform="rotate(0,50,50)">
+<line id="line-6-1" fill="none" stroke="#FFFFFF" stroke-width="2" x2="17" y2="31" x1="50" y1="12"/>
+<line id="line-6" fill="none" stroke="#FFFFFF" stroke-width="2" x1="17" y1="31" x2="-16" y2="12"/>
+<line id="line-5-6" fill="none" stroke="#FFFFFF" stroke-width="2" x2="17" y2="69" x1="17" y1="31" opacity="0"/>
+<line id="line-5" fill="none" stroke="#FFFFFF" stroke-width="2" x2="-16" y2="88" x1="17" y1="69"/>
+<line id="line-4-5" fill="none" stroke="#FFFFFF" stroke-width="2" x2="50" y2="88" x1="17" y1="69"/>
+<line id="line-4" fill="none" stroke="#FFFFFF" stroke-width="2" x2="50" y2="126" x1="50" y1="88" opacity="0"/>
+<line id="line-3-4" fill="none" stroke="#FFFFFF" stroke-width="2" x1="50" y1="88" x2="83" y2="69" opacity="0"/>
+<line id="line-3" fill="none" stroke="#FFFFFF" stroke-width="2" x1="83" y1="69" x2="116" y2="88"/>
+<line id="line-2-3" fill="none" stroke="#FFFFFF" stroke-width="2" x1="83" y1="69" x2="83" y2="31"/>
+<line id="line-2" fill="none" stroke="#FFFFFF" stroke-width="2" x1="83" y1="31" x2="116" y2="12"/>
+<line id="line-1-2" fill="none" stroke="#FFFFFF" stroke-width="2" x1="83" y1="31" x2="50" y2="12"/>
+<line id="line-1" fill="none" stroke="#FFFFFF" stroke-width="2" x1="50" y1="12" x2="50" y2="-33"/>
+<circle id="circle-3-child" fill-rule="evenodd" fill="#FFFFFF" cx="83" cy="69" r="4"/>
+<circle id="circle-3" fill-rule="evenodd" fill="#4A245A" cx="83" cy="69" r="2"/>
+<circle id="circle-4-child"  fill-rule="evenodd" fill="#FFFFFF" cx="50" cy="88" r="4"/>
+<circle id="circle-4"  fill-rule="evenodd" fill="#4A245A" cx="50" cy="88" r="2"/>
+<circle id="circle-5-child" fill-rule="evenodd" fill="#ffffff"  cx="17" cy="69" r="4"/>
+<circle id="circle-5" fill-rule="evenodd" fill="#4A245A" cx="17" cy="69" r="2"/>
+<circle id="circle-6-child" fill-rule="evenodd" fill="#ffffff" cx="17" cy="31" r="4"/>
+<circle id="circle-6" fill-rule="evenodd" fill="#4A245A" cx="17" cy="31" r="2"/>
+<circle id="circle-1-child" fill-rule="evenodd" fill="#ffffff" cx="50" cy="12" r="4" />
+<circle id="circle-1" fill-rule="evenodd" fill="#4A245A" cx="50" cy="12" r="2"/>
+<circle id="circle-2-child" fill-rule="evenodd" fill="#ffffff" cx="83" cy="31" r="4"/>
+<circle id="circle-2" fill-rule="evenodd" fill="#4A245A" cx="83" cy="31" r="2"/>
+</g>
+<path id="b-letter" fill="#FFFFFF" d="M52.67,30.995c2.578,0,4.698,0.283,6.361,0.85c1.927,0.812,2.891,2.486,2.891,5.021c0,2.289-0.729,3.884-2.188,4.782c-1.457,0.898-3.354,1.347-5.69,1.347H40.963v-12H52.67z M54.745,53.006c2.403,0.023,4.271,0.342,5.597,0.953c2.379,1.091,3.567,3.098,3.567,6.02c0,3.455-1.228,5.791-3.681,7.014c-1.353,0.658-3.244,0.99-5.67,0.99H40.962V53.006H54.745z M56.541,22.006L30,22v54.994L54.751,77c2.783,0,5.362-0.247,7.741-0.745c2.378-0.497,4.439-1.418,6.189-2.761c1.551-1.169,2.844-2.612,3.879-4.327C74.188,66.579,75,63.657,75,60.398c0-3.159-0.711-5.847-2.134-8.061c-1.423-2.213-3.532-3.831-6.328-4.851c1.84-0.944,3.233-1.989,4.178-3.133c1.691-2.04,2.538-4.739,2.538-8.097c0-3.258-0.839-6.056-2.516-8.394C67.953,24.058,63.223,22.105,56.541,22.006L56.541,22.006z"/>
+</g>
+</svg> 
