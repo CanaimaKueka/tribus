@@ -159,24 +159,29 @@ Si ya has leído el :ref:`tutorial`, la :ref:`usage_docs`, las :ref:`faq` y la :
 
 .. _mail_list:
 
-Lista de Correos
-----------------
+Foro
+----
 
-La manera más expedita de conseguir ayuda con Tribus es a través de la `lista de correos <http://listas.canaima.softwarelibre.gob.ve/mailman/listinfo/tribus>`_. Los desarrolladores de Tribus hacen su mejor esfuerzo para contestar rápidamente, ten un poco de paciencia si no te responden inmediatamente.
-
-
-Twitter
--------
-
-Tribus tiene una cuenta de twitter `@Tribus <http://twitter.com/Tribus>`_, la cual es utilizada para anuncios, información acerca del desarrollo, soporte e información relacionada.
-
+La manera más expedita de conseguir ayuda con Tribus es a través del `foro <https://groups.google.com/forum/#!forum/tribusdev>`_. Los desarrolladores de Tribus hacen su mejor esfuerzo para contestar rápidamente, ten un poco de paciencia si no te responden inmediatamente.
 
 Bugs/ticket tracker
 -------------------
 
-TODO
+Puedes revisar si ya se ha reportado un error relacionado con el problema que estás presentando en el gestor de `tickets <https://github.com/CanaimaGNULinux/tribus/issues>`_.
+
+Twitter
+-------
+
+Tribus tiene una cuenta de twitter `@tribusdev <http://twitter.com/tribusdev>`_, la cual es utilizada para anuncios, información acerca del desarrollo, soporte e información relacionada.
+
+Grupo en Facebook
+-----------------
+
+Diversas cosas pueden compartirse en el `Grupo de Facebook <https://www.facebook.com/groups/tribusdev>`_.
 
 IRC
 ---
 
-TODO
+Existe un canal IRC, en donde los desarrolladores comúnmente se reúnen: `tribus en FreeNode <http://webchat.freenode.net/?channels=tribus&uio=MTE9NTE3a>`_.
+
+
