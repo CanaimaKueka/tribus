@@ -102,7 +102,7 @@ def buscar(request):
             if not busqueda:
                 error.append("coloca algo para buscar")
             else:
-                pqt = Paquete.objects.filter(Package__startswith__contains = busqueda)
+                pqt = Paquete.objects.filter(Package__contains = busqueda)
                 if len(pqt)>1:
                     return render (request, "paqueteria/organizador_arquitectura.html",{"i":pqt})
                 elif not pqt:
