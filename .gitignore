@@ -87,3 +87,6 @@ nb-configuration.xml
 
 # Configuración local de Django
 web_local.py
+
+# Configuración en producción de Django
+web_production.py

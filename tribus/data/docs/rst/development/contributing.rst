@@ -18,9 +18,9 @@ Obteniendo el código
 
 Los desarrolladores de Tribus gestionan el código fuente del proyecto a través de `Git <http://git-scm.com>`_. Para seguir de cerca el desarrollo de Tribus a través de Git, en vez de estar descargando archivos comprimidos, tienes las siguientes opciones:
 
-* Clonar el repositorio principal directamente desde la `cuenta oficial de los desarrolladores de Tribus en GitHub <https://github.com/tribus/tribus>`_, ``git://github.com/tribus/tribus.git``
+* Clonar el repositorio principal directamente desde la `cuenta oficial de los desarrolladores de Tribus en GitHub <https://github.com/CanaimaGNULinux/tribus>`_, ``git://github.com/CanaimaGNULinux/tribus.git``
 
-* Hacer tu propia derivación del repositorio de Tribus en GitHub, visitando `la página del repositorio <https://github.com/tribus/tribus>`_ y haciendo click en el botón "fork" (necesitas una cuenta activa en GitHub). 
+* Hacer tu propia derivación del repositorio de Tribus en GitHub, visitando `la página del repositorio <https://github.com/CanaimaGNULinux/tribus>`_ y haciendo click en el botón "fork" (necesitas una cuenta activa en GitHub). 
 
 Reproduciendo el entorno de desarrollo
 --------------------------------------

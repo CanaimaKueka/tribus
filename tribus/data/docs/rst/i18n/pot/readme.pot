@@ -6,9 +6,15 @@
 #, fuzzy
 msgid ""
 msgstr ""
+<<<<<<< HEAD
 "Project-Id-Version: Tribus 0.1.dev20130731203547\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-31 21:14-0530\n"
+=======
+"Project-Id-Version: Tribus 0.1.dev20130801213753\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-08-01 20:08\n"
+>>>>>>> 8e51eac97d33e11cccf5520b7602eed2f6a91cf2
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,47 +23,83 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../../readme.rst:2
+<<<<<<< HEAD
 # ffe6458799ab44dd9ff9bd4f4f61398c
+=======
+# b97df39ed1d64e428d541dca7d764b3d
+>>>>>>> 8e51eac97d33e11cccf5520b7602eed2f6a91cf2
 msgid "Acerca"
 msgstr ""
 
 #: ../../readme.rst:4
+<<<<<<< HEAD
 # e36f55cc0ef24980815f0d08f99feed7
+=======
+# b4c88189c4d540b3bda32f7ed2c45db5
+>>>>>>> 8e51eac97d33e11cccf5520b7602eed2f6a91cf2
 msgid "*Tribus* es una **red social** para la gestión de comunidades de software libre. Su objetivo es simplificar las tediosas y repetitivas tareas de mantenimiento, mientras pone a disposición de sus miembros **las mejores herramientas** que le permitirán **expresar su creatividad** y **desarrollar el máximo potencial de sus capacidades**."
 msgstr ""
 
 #: ../../readme.rst:6
+<<<<<<< HEAD
 # 2815590656074cbb912365646a41f16c
+=======
+# 87b3955d30b54781a95574d65456dd58
+>>>>>>> 8e51eac97d33e11cccf5520b7602eed2f6a91cf2
 msgid "*Tribus* promueve la **autogestión** y la **corresponsabilidad** en las diversas áreas del proceso productivo de software, estableciendo un **modelo organizacional** que permite una **progresión** y **rotación natural** de los roles."
 msgstr ""
 
 #: ../../readme.rst:9
+<<<<<<< HEAD
 # 00f1c70aab6c42af926005680aec21f9
+=======
+# 9182fc49494c4c3cab56f0786018a7c9
+>>>>>>> 8e51eac97d33e11cccf5520b7602eed2f6a91cf2
 msgid "¿Cómo funciona?"
 msgstr ""
 
 #: ../../readme.rst:11
+<<<<<<< HEAD
 # 298d8ad0637240daba153b25dfea3016
+=======
+# ff19446384b746f1ae0a7436dabbc56e
+>>>>>>> 8e51eac97d33e11cccf5520b7602eed2f6a91cf2
 msgid "*Tribus* permite una gestión descentralizada a través del reconocimiento mutuo de las capacidades de sus miembros y la asignación proporcional de responsabilidades según el nivel de experiencia alcanzado."
 msgstr ""
 
 #: ../../readme.rst:13
+<<<<<<< HEAD
 # a08a0c4517b24bc8826cd019578fe09f
+=======
+# 9dd183b00ff1471aa3bf8c3a26a0fc2f
+>>>>>>> 8e51eac97d33e11cccf5520b7602eed2f6a91cf2
 msgid "El reconocimiento (o valoración) se realiza según un patrón establecido de puntos que representan la cantidad de experiencia obtenida a partir del cumplimiento de una o más actividades dentro de la plataforma. Hablamos de reconocimiento mutuo puesto que cada miembro inscrito en la red debe firmar un *contrato social* en el cuál acepta las condiciones en que él y todos los demás miembros serán valorados."
 msgstr ""
 
 #: ../../readme.rst:15
+<<<<<<< HEAD
 # b736e0b271d5446c8964561b89513b9b
+=======
+# 332f6bf52db94a4d8092fb3ee4a5e256
+>>>>>>> 8e51eac97d33e11cccf5520b7602eed2f6a91cf2
 msgid "El reconocimiento sirve para establecer una metrica relativa de la cantidad de conocimiento adquirido por los miembros durante la interacción con la plataforma. Esto permite ofrecer responsabilidades de gestión dentro de la plataforma a los miembros con diferentes grados de experiencia, así como también establecer recompensas específicas a través de un *sistema de rangos o privilegios*."
 msgstr ""
 
 #: ../../readme.rst:17
+<<<<<<< HEAD
 # 10e2171640014d368fe0ee569939effd
+=======
+# 82cca995fa2043d3acbd8f90662b2e05
+>>>>>>> 8e51eac97d33e11cccf5520b7602eed2f6a91cf2
 msgid "La plataforma permite realizar diferentes actividades para facilitar el desenvolvimiento de proyectos de software libre en las áreas de diseño gráfico, documentación, traducción, desarrollo y activismo social, a través de las cuales se valoran las diferentes tareas que caracterizan la experiencia y conocimiento. Cada una de estas actividades ha sido desglosada en procesos con el objetivo de establecer una automatización a gran escala, permitiendo intervención humana en los niveles estrictamente necesarios."
 msgstr ""
 
 #: ../../readme.rst:19
+<<<<<<< HEAD
 # 535aa7a2e7f74a7ea00cccb8cd098be5
+=======
+# e6c36c8aee714c33bcf3b6cf91b392b2
+>>>>>>> 8e51eac97d33e11cccf5520b7602eed2f6a91cf2
 msgid "Para mayor información, consulte la documentación en ``tribus/data/docs/html`` (primero debe hacer ``make build_html`` para construirla)."
 msgstr ""
 

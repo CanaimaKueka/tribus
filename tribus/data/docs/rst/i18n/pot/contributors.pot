@@ -6,9 +6,10 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Tribus 0.1.dev20130731203547\n"
+
+"Project-Id-Version: Tribus 0.1.dev20130801213753\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-31 21:14-0530\n"
+"POT-Creation-Date: 2013-08-01 20:08\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,12 +23,12 @@ msgid "Autores"
 msgstr ""
 
 #: ../../contributors.rst:5
-# f2629b5b598541808f3243de5f4cb54d
+# c95aeea60a3b45ac9a4c3e314f3d3c8a
 msgid "Si usted es un colaborador activo de este proyecto, agregue una entrada en el lugar correspondiente según el siguiente formato::"
 msgstr ""
 
 #: ../../contributors.rst:9
-# 0b5462ad1add4926b21ae8fe6830b036
+# 5bd08e9366a2465388c6506d481f7eca
 msgid "Las siguientes personas han trabajado en este proyecto y son titulares de derecho de autor (en orden alfabético):"
 msgstr ""
 

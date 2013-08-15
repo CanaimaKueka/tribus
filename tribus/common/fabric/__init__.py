@@ -20,13 +20,10 @@
 
 '''
 
-Fabric deploy script for Tribus
-===============================
+tribus.common.setup.fabric
+==========================
 
-This file is a *placeholder* for the scripts that help to deploy and setup
-a development environment for Tribus. For more information, see the
-documentation in ``tribus/common/fabric/__init__.py``.
 
 '''
 
-from tribus.common.fabric import *
+from tribus.common.fabric.local import *

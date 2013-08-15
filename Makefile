@@ -80,9 +80,9 @@ build: fabric
 
 	@$(FAB) development build
 
-build_html: fabric
+build_sphinx: fabric
 
-	@$(FAB) development build_html
+	@$(FAB) development build_sphinx
 
 build_mo: fabric
 
@@ -111,9 +111,9 @@ clean_mo: fabric
 
 	@$(FAB) development clean_mo
 
-clean_html: fabric
+clean_sphinx: fabric
 
-	@$(FAB) development clean_html
+	@$(FAB) development clean_sphinx
 
 clean_man: fabric
 
