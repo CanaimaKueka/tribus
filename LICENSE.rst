@@ -1,1 +1,0 @@
-tribus/data/docs/rst/license.rst

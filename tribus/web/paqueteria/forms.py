@@ -1,5 +1,6 @@
 from django import forms
 
-#def busquedaForm(forms.Form):
-#    busqueda = forms.CharField()
+class busquedaPaquete(forms.Form):
+    frase   = forms.CharField(widget = forms.TextInput)
     
+

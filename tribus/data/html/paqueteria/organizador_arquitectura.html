@@ -1,0 +1,18 @@
+{%extends 'paqueteria/buscador.html'%}
+
+{% load url from future %}
+
+{% block title%}Sistema de busqueda{%endblock%}
+{% block header%}<p><h1>Busqueda por arquitectura</h1></p>{%endblock%}
+{%block datos%}
+	<p>
+	{%for p in i%}
+	<p>
+		<h4>Paquete para {{p.Architecture}}</h4>
+		<legend></legend>
+		<h5 align= "center"><a href="/paquetes/busqueda/{{p.Package}}&{{p.Architecture}}"> {{p.Package}}</a></h5>
+		
+	</p>
+	{%endfor%}
+	</p>
+{%endblock%}

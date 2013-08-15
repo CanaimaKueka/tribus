@@ -23,7 +23,7 @@ LOGGING = {
         'tribus': {
             'handlers': ['console'],
             'propagate': True,
-            'level': 'INFO',
+            'level': 'DEBUG',
         },
     },
 }

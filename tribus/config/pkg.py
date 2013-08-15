@@ -28,9 +28,11 @@
 #
 # CODE IS POETRY
 
+from tribus import BASEDIR
 from tribus.config.base import CONFDIR, DOCDIR
-from tribus.common.utils import (get_path, cat_file, readconfig, get_requirements,
-                                 get_dependency_links, get_classifiers)
+from tribus.common.utils import get_path, cat_file, readconfig
+from tribus.common.setup.utils import (get_requirements, get_dependency_links,
+								 	   get_classifiers)
 
 platforms = ('Any')
 keywords = ('backup', 'archive', 'atom', 'rss', 'blog', 'weblog')
@@ -42,9 +44,9 @@ f_exclude_sources = get_path([CONFDIR, 'data', 'exclude-sources.list'])
 f_exclude_packages = get_path([CONFDIR, 'data', 'exclude-packages.list'])
 f_exclude_patterns = get_path([CONFDIR, 'data', 'exclude-patterns.list'])
 f_data_patterns = get_path([CONFDIR, 'data', 'include-data-patterns.list'])
-f_workenv_preseed = get_path([CONFDIR, 'data', 'workenv-pkg-preseed.conf'])
-f_sql_preseed = get_path([CONFDIR, 'data', 'sql-preseed.sql'])
-f_users_ldif = get_path([CONFDIR, 'data', 'users.ldif'])
+f_workenv_preseed = get_path([CONFDIR, 'data', 'preseed-debconf.conf'])
+f_sql_preseed = get_path([CONFDIR, 'data', 'preseed-postgres.sql'])
+f_users_ldif = get_path([CONFDIR, 'data', 'preseed-ldap.ldif'])
 
 exclude_sources = readconfig(filename=f_exclude_sources, conffile=False)
 exclude_packages = readconfig(filename=f_exclude_packages, conffile=False)

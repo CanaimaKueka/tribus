@@ -17,9 +17,11 @@ def registrarPaquetesBinarios(rutaArchivo, local = False):
     print "Finalizado"
 
 def main():
-    i386 = "http://localhost/repositorio/dists/waraira/main/binary-i386/Packages"
-    amd64 = "http://localhost/repositorio/dists/waraira/main/binary-amd64/Packages"
+    i386  = "http://10.16.106.152/repositorio/dists/waraira/main/binary-i386/Packages"
+    amd64 = "http://10.16.106.152/repositorio/dists/waraira/main/binary-amd64/Packages"
+    armel = "http://10.16.106.152/repositorio/dists/waraira/main/binary-armel/Packages"
+    temp  = "http://10.16.106.152/repositorio/dists/waraira/main/binary-armel/Packages"
     registrarPaquetesBinarios(i386)
     registrarPaquetesBinarios(amd64)
-    
+
 main()

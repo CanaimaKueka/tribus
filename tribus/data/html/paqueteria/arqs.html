@@ -1,9 +1,0 @@
-{%extends 'paqueteria/base.html'%}
-{% load url from future %}
-{% block title%}Sistema de busqueda{%endblock%}
-{% block header%}<p><h1>Busqueda por arquitectura</h1></p>{%endblock%}
-{%block content%}
-	<p>
-		Arquitecturas: <br> {%for arq in i%} <a href="/paqueteria/busqueda/info/{{arq.Package}}-{{arq.Architecture}}"> {{arq.Package}}-{{arq.Architecture}} </a> <br> {%endfor%}
-	</p>
-{%endblock%}

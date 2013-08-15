@@ -6,6 +6,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{% block title %}{% endblock %}</title>
 {% include "css.html" %}
+
+<style type="text/css"> 
+	{% block style %}{% endblock %}
+</style>
 </head>
 <body>
 {% include "navbar.html" %}

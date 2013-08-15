@@ -1,6 +1,7 @@
     
         <div class="navbar">
                 <div class="container-fluid">
+               <!--<div class="nav-inner">-->
                     <a class="brand" href="/">
                     <span class="smaller-90">
                         <i class="icon-leaf"></i>
@@ -42,6 +43,24 @@
                         </li>
                     </ul>
                     {% else %}
+                    <ul class="nav">
+                        <li class="divider-vertical"></li>
+                        <li><a href="/paquetes">Paqueteria</a></li>
+                        <li class="divider-vertical"></li>
+                        <!--!<li>
+                            <form class="input-medium search-query" action="/paquetes/" method="POST">
+                                {% csrf_token %}
+                                <input class="input" id="id_username" name="frase" placeholder="" type="text">
+                            </form>                   
+                        </li>
+                        <li><input class="btn" type="submit" value="Buscar"></li> -->
+                        <li>
+                            <form class="form-search" action = "/paquetes/busqueda/" method = "POST">
+                                {% csrf_token %}
+                                <input type="text" class="input-xlarge" name="busqueda">
+                            </form>
+                        </li> 
+                    </ul>                    
                     <ul class="nav pull-right">
                         <li class="dropdown">
                           <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Languages <b class="caret"></b></a>
