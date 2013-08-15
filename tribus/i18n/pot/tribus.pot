@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Tribus 0.1.dev20130731203547\n"
+"Project-Id-Version: Tribus 0.1.dev20130815170959\n"
 "Report-Msgid-Bugs-To: desarrolladores@canaima.softwarelibre.gob.ve\n"
-"POT-Creation-Date: 2013-07-31 21:14-0530\n"
+"POT-Creation-Date: 2013-08-15 12:41-0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,14 +50,6 @@ msgstr ""
 
 #: tribus/data/html/init.html:72 tribus/data/html/init.html:84
 msgid "Sign up"
-msgstr ""
-
-#: tribus/data/html/tour.html:88
-msgid "login"
-msgstr ""
-
-#: tribus/data/html/tour.html:91
-msgid "signup"
 msgstr ""
 
 #: tribus/gtk/translator.py:34
