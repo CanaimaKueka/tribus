@@ -19,4 +19,5 @@ Tribus 0.1
 * `Ticket <http://github.com/canaimagnulinux/tribus/issues/3>`_: Creación del sistema de mantenimiento de la aplicación (:doc:`Documento de Especificaciones <drafts/maint_system>`).
 * `Ticket <http://github.com/canaimagnulinux/tribus/issues/4>`_: Sistema de lectura(autenticación), escritura y manipulación de datos de usuario con OpenLDAP y Django (:doc:`Documento de Especificaciones <drafts/user_app>`).
 * `Ticket <http://github.com/canaimagnulinux/tribus/issues/5>`_: Sistema de registro y consulta de paquetes (:doc:`Documento de Especificaciones <drafts/package_app>`).
+* `Ticket <http://github.com/canaimagnulinux/tribus/issues/6>`_: Sistema para la publicación de mensajes cortos (Trib) (:doc:`Documento de Especificaciones <drafts/trib>`).
 
