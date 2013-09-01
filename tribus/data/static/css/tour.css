@@ -63,7 +63,10 @@ margin:20px;
 
 #slide_2
 {
-width:100%;
+width:70%;
+	line-height: 2em;
+	font-weight: 200;
+	font-size: 1.7em;
 }
 
 #slide_3
@@ -89,6 +92,11 @@ width:100%;
 	font-size: 5em;
 }
 
+#slide_2 h1
+{
+	font-size: 3em;
+}
+
 @keyframes Rotation
 {
 	0%		{transform: rotate(0deg);}
@@ -103,6 +111,76 @@ width:100%;
 	width: 400px;
 	animation: Rotation 200s linear 0s infinite;
 	animation-play-state: running;
+}
+
+.fancy_title
+{
+	position: absolute;
+	margin: 0px auto;
+	width: 600px;
+}
+
+.fancy_title .title0
+{
+	position: relative;
+line-height: 1em;
+font-weight: 700;
+font-size: 15em;
+top: -50px;
+
+}
+
+.fancy_title .title1
+{
+position: relative;
+line-height: 1em;
+font-weight: 200;
+font-size: 9em;
+top: -100px;
+}
+
+.fancy_title .title2
+{
+line-height: 2em;
+font-weight: 200;
+font-size: 5em;
+margin-left: 210px;
+top: -130px;
+position: relative;
+}
+
+.fancy_title .title3
+{
+line-height: 0.2em;
+font-weight: 200;
+font-size: 10em;
+position: relative;
+top: -120px;
+}
+
+.fancy_title .title4
+{
+font-size: 5em;
+position: relative;
+top: -170px;
+font-weight: 200;
+margin-left: 20px;
+}
+
+.fancy_title .title5
+{
+line-height: 0.4em;
+font-weight: 400;
+font-size: 12em;
+position: relative;
+top: -80px;
+}
+
+.fancy_title .title6
+{
+	line-height: 0.4em;
+	font-weight: 400;
+	font-size: 30em;
 }
 
 #flat_newton

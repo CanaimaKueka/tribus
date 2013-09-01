@@ -4,6 +4,8 @@ $(document).ready(function() {
 		return $(window).height();
 	});
 
+	$('#slide_1').css('margin-left', '200px');
+
 	$('#flat_earth').css('top', function() {
 		return ($(window).height()-$('#flat_earth').height())/2.5;
 	});
@@ -15,10 +17,17 @@ $(document).ready(function() {
 	// 	return $(window).height();
 	// });
 	
-	// $('#slide_2').css('height', function() {
-	// 	return $(window).height();
-	// });
+	$('#slide_2').css('height', function() {
+		return $(window).height();
+	});
+	
+	$('#slide_2').css('width', function() {
+		return $(window).width()*0.5;
+	});
 	$('#slide_3').css('height', function() {
+		return $(window).height()*1.5;
+	});
+	$('#slide_4').css('height', function() {
 		return $(window).height();
 	});
 	$('.scrollblock').css('width', function() {
@@ -31,13 +40,15 @@ $(document).ready(function() {
 
 	// animate the parallaxing
 	scrollorama
+		.animate('#slide_0',{ delay: 0, duration: 1000, property:'opacity', start:1, end:0 })
 		.animate('#slide_1',{ delay: 0, duration: 3000, property:'zoom', start:1, end:5, pin: true })
 		.animate('#slide_1',{ delay: 0, duration: 3000, property:'left', end:$(window).width()-200, pin: true})
-		.animate('#slide_1a',{ delay: 3000, duration: 1000, property:'top', end:$(window).height()*(-1), pin: true})
-		.animate('#slide_1b',{ delay: 3000, duration: 1000, property:'top', end:$(window).height()*(-0.9), pin: true})
-		.animate('#slide_2',{ delay: 0, duration: 6000, property:'left', start:0, end:-1000})
-		.animate('#slide_2',{ delay: 0, duration: 3000, property:'top', start:-500, end:1500})
-		.animate('#slide_2',{ delay: 0, duration: 6000, property:'zoom', start:1, end:3})
-		.animate('#slide_3',{ delay: 6000, duration: 3000, property:'top', end:$(window).height()*(-1)})
+		.animate('#slide_1a',{ delay: 3000, duration: 2000, property:'top', end:$(window).height()*(-1), pin: true})
+		.animate('#slide_1b',{ delay: 3000, duration: 3000, property:'top', end:$(window).height()*(-1), pin: true})
+		.animate('#slide_2',{ delay: 0, duration: 1000, property:'top', start:-500, end:500})
+		.animate('#slide_2',{ delay: 0, duration: 1000, property:'left', start:0, end:$(window).width()*0.5})
+		.animate('#slide_3',{ delay: 0, duration: 3000, property:'top', start:200, end:600})
+		.animate('#slide_3',{ delay: 0, duration: 3000, property:'left', start:$(window).width()*0.5, end:300})
+		// .animate('#slide_4',{ delay: 2000, duration: 1000, property:'top', start:0, end:1500})
 
 });
