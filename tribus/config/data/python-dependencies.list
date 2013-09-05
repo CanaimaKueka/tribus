@@ -1,28 +1,16 @@
-Django
-South
-amqp
-anyjson
-argparse
-billiard
-celery
-celery-with-redis
-distribute
-django-celery
-django-redis
-hiredis
-httplib2
-kombu
-oauth2
-psycopg2
-python-dateutil
-python-ldap
-python-openid
-pytz
-redis
-six
-wsgiref
-python-debian
-chardet
+Django==1.5.2
+South==0.8.2
+celery==3.0.23
+celery-with-redis==3.0
+django-celery==3.0.23
+django-redis==3.3
+hiredis==0.1.1
+oauth2==1.5.211
+psycopg2==2.5.1
+python-debian==0.1.21
+python-ldap==2.4.13
+python-openid==2.2.5
+redis==2.8.0
 -e git+https://github.com/HuntingBears/django-ldapdb.git#egg=ldapdb
 -e git+https://github.com/HuntingBears/django-auth-ldap.git#egg=django_auth_ldap
 -e git+https://github.com/HuntingBears/django-social-auth.git#egg=social_auth
