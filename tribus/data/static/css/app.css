@@ -1,11 +1,24 @@
+.navbar .brand {
+  padding: 10px 20px 0px;
+}
+
 .navbar .logo {
   background-image: url('../img/logo-min.png');
-  width: 100px;
-  height: 40px;
+  width: 30px;
+  height: 20px;
   display: block;
   float: left;
   padding: 0px;
   margin: 0px;
+}
+
+.navbar .logo_title {
+  font-family: 'League Gothic';
+margin-left: 5px;
+font-size: 1.7em;
+font-weight: 400;
+text-transform: uppercase;
+/*letter-spacing: -4px;*/
 }
 
 .navbar .form-search {
