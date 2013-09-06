@@ -9,66 +9,65 @@
                     </a>
                     {% if user.is_authenticated %}
                     <ul class="nav">
-                        <li><a href="#">A</a></li>
-                        <li><a href="#">B</a></li>
-                        <li><a href="#">C</a></li>
-                        <li>
-                            <form class="form-search">
-                                <input type="text" class="input-xlarge">
-                            </form>
-                        </li>
-                    </ul>
-                    <ul class="nav pull-right">
-                        <li class="dropdown">
-                          <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Languages <b class="caret"></b></a>
-                          <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Spanish</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Deutch</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">French</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Italian</a></li>
-                          </ul>
-                        </li>
-                        <li class="dropdown">
-                          <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Languages <b class="caret"></b></a>
-                          <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Spanish</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Deutch</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">French</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Italian</a></li>
-                          </ul>
-                        </li>
-                    </ul>
-                    {% else %}
-                    <ul class="nav">
-                        <li class="divider-vertical"></li>
-                        <li><a href="/paquetes">Paqueteria</a></li>
-                        <li class="divider-vertical"></li>
-                        <!--!<li>
-                            <form class="input-medium search-query" action="/paquetes/" method="POST">
-                                {% csrf_token %}
-                                <input class="input" id="id_username" name="frase" placeholder="" type="text">
-                            </form>                   
-                        </li>
-                        <li><input class="btn" type="submit" value="Buscar"></li> -->
                         <li>
                             <form class="form-search" action = "/paquetes/busqueda/" method = "POST">
                                 {% csrf_token %}
                                 <input type="text" class="input-xlarge" name="busqueda">
                             </form>
-                        </li> 
-                    </ul>                    
+                        </li>
+                    </ul>
+                    <ul class="nav pull-right">
+                        <li><a href="#"><span class="bigger-150 icon-home"></span></a></li>
+                        <li class="divider-vertical"></li>
+                        <li class="dropdown">
+                            <a id="drop-tasks" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="bigger-150 icon-tasks"></i>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">X</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Y</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Z</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a id="drop-inbox" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="bigger-150 icon-inbox"></i>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">X</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Y</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Z</a></li>
+                            </ul>
+                        </li>
+                        <li class="divider-vertical"></li>
+                        <li class="dropdown">
+                            <a id="drop-cog" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="bigger-150 icon-cog"></i>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Settings</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="/logout">Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    {% else %}
+                    <ul class="nav">
+                        <li>
+                            <form class="form-search" action = "/paquetes/busqueda/" method = "POST">
+                                {% csrf_token %}
+                                <input type="text" class="input-xlarge" name="busqueda">
+                            </form>
+                        </li>
+                    </ul>
                     <ul class="nav pull-right">
                         <li class="dropdown">
-                          <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Languages <b class="caret"></b></a>
-                          <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Spanish</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Deutch</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">French</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Italian</a></li>
-                          </ul>
+                            <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="bigger-125 icon-globe"></i>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Spanish</a></li>
+                            </ul>
                         </li>
                     </ul>
                     {% endif %}

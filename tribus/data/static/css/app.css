@@ -3,7 +3,7 @@
 }
 
 .navbar .logo {
-  background-image: url('../img/logo-min.png');
+  background: url('../img/logo-min.png') no-repeat;
   width: 30px;
   height: 20px;
   display: block;
@@ -18,7 +18,16 @@ margin-left: 5px;
 font-size: 1.7em;
 font-weight: 400;
 text-transform: uppercase;
-/*letter-spacing: -4px;*/
+}
+
+.navbar .nav > li > a {
+    padding: 5px 5px;
+    margin: 5px;
+}
+
+.intro-slogan {
+height:720px;
+background: url('../img/init-slogan-background.png') no-repeat;
 }
 
 .navbar .form-search {
@@ -92,7 +101,7 @@ input, button, select, textarea {
 }
 
 .hero-unit h1 {
-    font-size: 90px;
+    font-size: 70px;
     line-height:1.4;
     word-spacing:0;
 }
@@ -102,6 +111,7 @@ input, button, select, textarea {
     line-height:1;
     font-weight: 200;
 }
+
 
 .alert {
   -webkit-border-radius: 4px;

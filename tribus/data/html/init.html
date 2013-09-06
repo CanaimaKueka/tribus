@@ -4,23 +4,10 @@
         <div class="well jumbotron">
             <div class="container">
                 <div class="row-fluid">
-                    <div class="span9 hero-unit">
+                    <div class="span9 hero-unit intro-slogan white">
                         <h1>{%trans "The power is yours" %}</h1>
                         <p>{% trans "Unleash the power of your creativity to bring amazing pieces of art to the free software world. We deliver a complete set of community services right to your computer" %}. <a href="/tour">{% trans "Take the tour" %}</a> {% trans "to know how" %}.</p>
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <br />
+
                     </div>
                     <div class="span3">
                         <div class="home-signin">
@@ -64,7 +51,7 @@
                             </ul>
                             <button class="btn btn-yellow btn-block" type="submit">{% trans "Log in" %}</button>
 		                    <ul class="unstyled smaller-90">
-			                    <li><a href="{% url 'user_password_reset' %}">forgot your password?</a></li>
+			                    <li><a href="{% url 'user_password_reset' %}">{% trans "forgot your password?" %}</a></li>
 		                    </ul>
                         </form>
                     </div>
@@ -83,10 +70,10 @@
                             </ul>
                             <button class="btn btn-success btn-block" type="submit">{% trans "Sign up" %}</button>
                             <p class="smaller-90">
-                                By clicking on this button, you agree to the
-                                <a href="/about/terms" target="_blank">Terms of Service</a>, the
-                                <a href="/about/privacy" target="_blank">Privacy Policy</a> and the
-                                <a href="/about/guidelines" target="_blank">Community Guidelines</a>.
+                                {% trans "By clicking on this button, you agree to the" %}
+                                <a href="/about/terms" target="_blank">{% trans "Terms of Service" %}</a>{% trans ", the" %}
+                                <a href="/about/privacy" target="_blank">{% trans "Privacy Policy" %}</a>{% trans " and the" %}
+                                <a href="/about/guidelines" target="_blank">{% trans "Community Guidelines" %}</a>.
                             </p>
                         </form>
                     </div>

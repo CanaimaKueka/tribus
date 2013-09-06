@@ -1,17 +1,3 @@
-@font-face {
-  font-family: 'Open Sans Light';
-  font-style: normal;
-  font-weight: 300;
-  src: local('Open Sans Light'), local('OpenSans-Light'), url(../font/OpenSans-Light.woff) format('woff');
-}
-
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Open Sans'), local('OpenSans'), url(../font/OpenSans.woff) format('woff');
-}
-
 body, html
 {
 	margin: 0;
@@ -32,7 +18,7 @@ img
 
 h2
 {
-font-family: 'Open Sans Light'
+font-family: 'Open Sans'
 }
 
 
@@ -61,17 +47,12 @@ margin:20px;
 margin:20px;
 }
 
-#slide_2
+#slide_2, #slide_3
 {
-width:70%;
+width:80%;
 	line-height: 2em;
 	font-weight: 200;
 	font-size: 1.7em;
-}
-
-#slide_3
-{
-width:100%;
 }
 
 #slide_1a, #slide_1b
@@ -92,7 +73,7 @@ width:100%;
 	font-size: 5em;
 }
 
-#slide_2 h1
+#slide_2 h1, #slide_3 h1
 {
 	font-size: 3em;
 }
@@ -191,3 +172,119 @@ top: -80px;
 	top:-2000;
 	background: url('../img/flat_newton.png');
 }
+	
+	@keyframes threeLarge
+	{
+		0%		{transform: translate(-8px, 4px);}
+		33%		{transform: translate(-10px, 10px);}	/*collide*/
+		50%		{transform: translate(-7px, 15px);} 	/*collide*/
+		75%		{transform: translate(-4px, 10px);}
+		100%	{transform: translate(-8px, 4px);}
+	}
+ 	
+	@keyframes threeSmall
+	{
+		0%		{transform: translate(4px, 10px);}
+		33%		{transform: translate(28px, 15px);}		/*collide*/
+		66%		{transform: translate(20px, 4px);}
+		100%	{transform: translate(4px, 10px);}
+	}
+
+	@keyframes threeMedium
+	{
+		0%		{transform: translate(8px, -4px);}
+		25%		{transform: translate(4px, -20px);}
+		50%		{transform: translate(13px, -30px);}	/*collide*/
+		100%	{transform: translate(8px, -4px);}
+	}
+
+	.img_threecircles
+	{
+		position: relative;
+		display: block;
+		float: left;
+		clear: none;
+		width: 330px;
+		height: 380px;
+		
+		margin-top: 0px;
+		top:-200px;
+	}
+	
+		.img_threeSmall, .img_threeMedium, .img_threeLarge
+		{
+			position: relative;
+			float: left;
+			display: block;
+			clear: none;
+			
+			width: 100px;
+			height: 100px;
+			
+		}
+		
+		.img_threeSmall
+		{
+			-webkit-animation: threeSmall 2s linear 0s infinite;
+			-webkit-animation-play-state: running;
+			
+			-moz-animation: threeSmall 2s linear 0s infinite;
+			-moz-animation-play-state: running;
+			
+			-ms-animation: threeSmall 2s linear 0s infinite;
+			-ms-animation-play-state: running;
+			
+			-o-animation: threeSmall 2s linear 0s infinite;
+			-o-animation-play-state: running;
+			
+			animation: threeSmall 2s linear 0s infinite;
+			animation-play-state: running;
+		}
+		
+		.img_threeMedium
+		{
+			float: left;
+			
+			width: 180px;
+			height: 180px;
+			
+			
+			-webkit-animation: threeMedium 2s linear 0s infinite;
+			-webkit-animation-play-state: running;
+			
+			-moz-animation: threeMedium 2s linear 0s infinite;
+			-moz-animation-play-state: running;
+			
+			-ms-animation: threeMedium 2s linear 0s infinite;
+			-ms-animation-play-state: running;
+			
+			-o-animation: threeMedium 2s linear 0s infinite;
+			-o-animation-play-state: running;
+			
+			animation: threeMedium 2s linear 0s infinite;
+			animation-play-state: running;
+		}
+		
+		.img_threeLarge
+		{
+			float: right;
+			
+			width: 200px;
+			height: 200px;
+			
+			
+			-webkit-animation: threeLarge 2s linear 0s infinite;
+			-webkit-animation-play-state: running;
+			
+			-moz-animation: threeLarge 2s linear 0s infinite;
+			-moz-animation-play-state: running;
+			
+			-ms-animation: threeLarge 2s linear 0s infinite;
+			-ms-animation-play-state: running;
+			
+			-o-animation: threeLarge 2s linear 0s infinite;
+			-o-animation-play-state: running;
+			
+			animation: threeLarge 2s linear 0s infinite;
+			animation-play-state: running;
+		}
