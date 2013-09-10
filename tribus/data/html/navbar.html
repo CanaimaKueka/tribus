@@ -12,7 +12,10 @@
                         <li>
                             <form class="form-search" action = "/paquetes/busqueda/" method = "POST">
                                 {% csrf_token %}
-                                <input type="text" class="input-xlarge" name="busqueda">
+                                <span class="input-icon">
+                                    <input type="text" class="nav-search-input input-xlarge" name="busqueda" placeholder="Search or type a command" />
+                                    <i class="icon-search nav-search-icon"></i>
+                                </span>
                             </form>
                         </li>
                     </ul>
@@ -55,7 +58,10 @@
                         <li>
                             <form class="form-search" action = "/paquetes/busqueda/" method = "POST">
                                 {% csrf_token %}
-                                <input type="text" class="input-xlarge" name="busqueda">
+                                <span class="input-icon">
+                                    <input type="text" class="nav-search-input input-xlarge" name="busqueda" placeholder="Search or type a command" />
+                                    <i class="icon-search nav-search-icon"></i>
+                                </span>
                             </form>
                         </li>
                     </ul>

@@ -26,8 +26,8 @@ text-transform: uppercase;
 }
 
 .intro-slogan {
-height:720px;
-background: url('../img/init-slogan-background.png') no-repeat;
+*height:720px;
+*background: url('../img/init-slogan-background.png') no-repeat;
 }
 
 .navbar .form-search {
@@ -117,4 +117,25 @@ input, button, select, textarea {
   -webkit-border-radius: 4px;
      -moz-border-radius: 4px;
           border-radius: 4px;
+}
+
+.chiclet {
+  padding: 60px;
+  margin-bottom: 30px;
+  font-size: 18px;
+  font-weight: 200;
+  line-height: 30px;
+  color: inherit;
+  background-color: #eeeeee;
+  -webkit-border-radius: 6px;
+     -moz-border-radius: 6px;
+          border-radius: 6px;
+}
+
+.chiclet h2 {
+  margin-bottom: 0;
+  font-size: 60px;
+  line-height: 1;
+  letter-spacing: -1px;
+  color: inherit;
 }
