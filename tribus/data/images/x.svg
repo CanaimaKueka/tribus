@@ -1,7 +1,0 @@
-                                	<svg width="100px" height="100px" id="loop" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
-										<g id="circle">
-											<path fill="#E74C3C" d="M50,0c27.613,0,50,22.386,50,50s-22.387,50-50,50C22.386,100,0,77.614,0,50S22.386,0,50,0z"/>
-										</g>
-										<path id="loop-sign"  fill="none" stroke="#F0C419" stroke-width="8" stroke-miterlimit="10"  stroke-dashoffset="43" stroke-linecap="square" stroke-dasharray="216,0.000001" d="M12.5,50.5c0,10,7,17,17,17c17,0,26-34,43-34c10,0,18,7,18,17s-8,17-18,17c-17,0-26-34-43-34C19.5,33.5,12.5,40.5,12.5,50.5z"/>
-										<path id="shade" opacity="0.15" enable-background="new    " d="M45.938,50.5l5.047,6.516c0,0-2.141,2.797-3.5,4.25c0,0-3.621-3.552-5.746-5.583C43.047,54.281,45.938,50.5,45.938,50.5z"/>
-                                	</svg>

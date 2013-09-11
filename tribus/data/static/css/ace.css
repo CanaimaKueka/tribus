@@ -7687,4 +7687,179 @@ body.login-layout:before {
 
 
 
+.navbar .brand {
+  padding: 10px 20px 0px;
+}
+
+.navbar .logo {
+  background: url('../img/logo-min.svg') no-repeat;
+  width: 30px;
+  height: 20px;
+  display: block;
+  float: left;
+  padding: 0px;
+  margin: 0px;
+}
+
+.navbar .logo_title {
+  font-family: 'League Gothic';
+margin-left: 5px;
+font-size: 1.7em;
+font-weight: 400;
+text-transform: uppercase;
+}
+
+.navbar .nav > li > a {
+    padding: 5px 5px;
+    margin: 5px;
+}
+
+.navbar .nav .btn {
+  line-height:10px;
+}
+
+.intro-slogan {
+*height:720px;
+*background: url('../img/init-slogan-background.png') no-repeat;
+}
+
+.navbar .form-search {
+  margin: 5px;
+}
+
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"]
+{
+ border-radius:4px !important;
+}
+
+.btn {
+ border-radius:4px !important;
+}
+
+.input-block {
+  display: block;
+  width: 100%;
+}
+
+.input-medium {
+  display: block;
+  width: 166px;
+}
+
+.input-large {
+  display: block;
+  width: 246px;
+}
+
+.input-small {
+  display: block;
+  width: 113px;
+}
+
+.input-xlarge {
+  display: block;
+  width: 356px;
+}
+
+.hero-unit {
+  padding: 30px;
+  margin: 0px !important;
+}
+
+input, button, select, textarea {
+    font-family: "Open Sans",Helvetica,Arial,sans-serif;
+}
+
+.jumbotron {
+  min-height: 20px;
+  padding: 60px;
+  margin-bottom: 20px;
+  background-color: #f2f2e8;
+  border-top: 1px solid #d7d7b8;
+  border-bottom: 1px solid #d7d7b8;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.home-signin, .home-signup {
+    padding: 5px;
+    margin: 0 0 5px 0;
+}
+
+.hero-unit h1 {
+    font-size: 70px;
+    line-height:1.4;
+    word-spacing:0;
+}
+
+.hero-unit p {
+    font-size: 25px;
+    line-height:1;
+    font-weight: 200;
+}
+
+
+.alert {
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+}
+
+.chiclets li {
+  padding: 120px 30px 30px;
+  margin-bottom: 30px;
+  font-size: 1em;
+  font-weight: 200;
+  line-height: 1.5em;
+  -webkit-border-radius: 6px;
+     -moz-border-radius: 6px;
+          border-radius: 6px;
+}
+
+.chiclets li h3 {
+  margin-bottom: 0;
+  font-size: 1.9em;
+  line-height: 2em;
+}
+
+.ch-cloud {
+  background: url('../img/ch-cloud.svg') no-repeat #f2f2e8;
+}
+
+.ch-ticket {
+  background: url('../img/ch-ticket.svg') no-repeat #f2f2e8;
+}
+
+.ch-docs {
+  background: url('../img/ch-docs.svg') no-repeat #f2f2e8;
+}
+
+.ch-social {
+  background: url('../img/ch-social.svg') no-repeat #f2f2e8;
+}
+
+.ch-source {
+  background: url('../img/ch-source.svg') no-repeat #f2f2e8;
+}
+
+.ch-ci {
+  background: url('../img/ch-ci.svg') no-repeat #f2f2e8;
+}
+
+
 

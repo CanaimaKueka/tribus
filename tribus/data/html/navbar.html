@@ -1,3 +1,4 @@
+{% load i18n %}
         <div class="navbar">
                 <div class="container-fluid">
                     <a class="brand" href="/">
@@ -9,6 +10,7 @@
                     </a>
                     {% if user.is_authenticated %}
                     <ul class="nav">
+                        <li class="divider-vertical"></li>
                         <li>
                             <form class="form-search" action = "/paquetes/busqueda/" method = "POST">
                                 {% csrf_token %}
@@ -55,6 +57,7 @@
                     </ul>
                     {% else %}
                     <ul class="nav">
+                        <li class="divider-vertical"></li>
                         <li>
                             <form class="form-search" action = "/paquetes/busqueda/" method = "POST">
                                 {% csrf_token %}
@@ -66,6 +69,8 @@
                         </li>
                     </ul>
                     <ul class="nav pull-right">
+                        <li><a class="btn btn-yellow btn-block" href="/login">{% trans "Log in" %}</a></li>
+                        <li class="divider-vertical"></li>
                         <li class="dropdown">
                             <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="bigger-125 icon-globe"></i>
