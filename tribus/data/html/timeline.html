@@ -1,4 +1,20 @@
-<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}twitter/css/newtweets.css">
+{% block content %}
+        <div class="jumbotron">
+            <div class="container">
+                <div class="row-fluid">
+                    <div class="span9">
+						X
+                    </div>
+                    <div class="span3">
+                        Y
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
+
+
+<!-- <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}twitter/css/newtweets.css">
 <script type="text/javascript">
 	busqueda = '{{ busqueda }}';
 	perfil = '{% if user != logueado %}{{ user }}{% endif %}';
@@ -50,3 +66,4 @@
 			</div>
 		</footer>
 </section>
+ -->
