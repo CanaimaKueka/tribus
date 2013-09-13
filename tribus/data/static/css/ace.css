@@ -7720,11 +7720,20 @@ text-transform: uppercase;
 
 .navbar .nav > li > a {
     padding: 5px 5px;
-    margin: 5px;
+    margin: 3px 5px;
 }
 
 .navbar .nav .btn {
   line-height:10px;
+}
+
+.navbar .nav li.dropdown.open > .dropdown-toggle,
+.navbar .nav li.dropdown.active > .dropdown-toggle,
+.navbar .nav li.dropdown.open.active > .dropdown-toggle {
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+	background-color: #f2f2e8;
 }
 
 .intro-slogan {
