@@ -24,7 +24,7 @@ LANGUAGE_CODE = 'es-ve'
 DATABASE_OPTIONS = {'charset': 'utf8'}
 DEFAULT_CHARSET = 'utf-8'
 
-
+DJANGO_STATIC = True
 BASEDIR = get_path([__file__, '..', '..'])
 SITE_ROOT = get_path([BASEDIR, 'web'])
 MEDIA_ROOT = ''
@@ -178,7 +178,8 @@ INSTALLED_APPS = (
     'django_auth_ldap',
     'social_auth',
     'djcelery',
-    'south'
+    'south',
+    'django_static'
 )
 
 # EMAIL_USE_TLS = True

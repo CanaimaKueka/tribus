@@ -89,9 +89,15 @@ def index(request, page = 1):
         signupform.fields['email'].widget.attrs['class'] = 'input-large'
         signupform.fields['password'].widget.attrs['class'] = 'input-large'
 
+        render_css = ['normalize', 'fonts', 'bootstrap', 'bootstrap-responsive',
+                        'font-awesome', 'tribus', 'tribus-responsive']
+        render_js = ['jquery', 'bootstrap']
+
         return render_to_response(
             'init.html', {
                 'signupform': signupform,
+                'render_css': render_css,
+                'render_js': render_js,
             },
             RequestContext(request)
         )

@@ -1,27 +1,11 @@
-    <script src="{{ TBS_STATIC }}/js/jquery.js"></script>
+{% load static %}
+{% load django_static %}
 
-    <!--[if lte IE 8]>
-      <script src="{{ TBS_STATIC }}/js/excanvas.js"></script>
-    <![endif]-->
+{% slimall %}
+    {% for js in render_js %}
+        <script src="{% static 'js/'|add:js|add:'.js' %}"></script>
+    {% endfor %}
+{% endslimall %}
 
-    <script src="{{ TBS_STATIC }}/js/jquery.ui.custom.js"></script>
-    <script src="{{ TBS_STATIC }}/js/jquery.ui.touch-punch.js"></script>
-    <script src="{{ TBS_STATIC }}/js/jquery.slimscroll.js"></script>
-    <script src="{{ TBS_STATIC }}/js/jquery.easy-pie-chart.js"></script>
-    <script src="{{ TBS_STATIC }}/js/jquery.sparkline.js"></script>
-    <script src="{{ TBS_STATIC }}/js/jquery.flot.js"></script>
-    <script src="{{ TBS_STATIC }}/js/jquery.flot.pie.js"></script>
-    <script src="{{ TBS_STATIC }}/js/jquery.flot.resize.js"></script>
-
-    <script src="{{ TBS_STATIC }}/js/ace-elements.js"></script>
-    <script src="{{ TBS_STATIC }}/js/ace.js"></script>
-
-    <script src="{{ TBS_STATIC }}/js/handlebars.js"></script>
-    <script src="{{ TBS_STATIC }}/js/ember.js"></script>
-    <script src="{{ TBS_STATIC }}/js/ember-data.js"></script>
-    <script src="{{ TBS_STATIC }}/js/bootstrap.js"></script>
-    <script src="{{ TBS_STATIC }}/js/app.js"></script>
-
-    <!--[if lt IE 9]>
-    <script src="{{ TBS_STATIC }}/js/html5shiv.js"></script>
-    <![endif]-->
+<!--[if lte IE 8]><script src="{% static 'js/excanvas.js' %}"></script><![endif]-->
+<!--[if lt IE 9]><script src="{% static 'js/html5shiv.js' %}"></script><![endif]-->
