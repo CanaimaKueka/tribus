@@ -24,7 +24,6 @@ LANGUAGE_CODE = 'es-ve'
 DATABASE_OPTIONS = {'charset': 'utf8'}
 DEFAULT_CHARSET = 'utf-8'
 
-DJANGO_STATIC = True
 BASEDIR = get_path([__file__, '..', '..'])
 SITE_ROOT = get_path([BASEDIR, 'web'])
 MEDIA_ROOT = ''
@@ -32,8 +31,12 @@ MEDIA_URL = '/media/'
 ADMIN_MEDIA_PREFIX = '/media/admin/'
 STATIC_ROOT = ''
 STATIC_URL = '/static/'
-STATICFILES_DIRS = get_path([BASEDIR, 'data', 'static', '']),
-TEMPLATE_DIRS = get_path([BASEDIR, 'data', 'html', '']),
+STATICFILES_DIRS = [get_path([BASEDIR, 'data', 'static', ''])]
+TEMPLATE_DIRS = [get_path([BASEDIR, 'data', 'html', ''])]
+
+DJANGO_STATIC = True
+DJANGO_STATIC_JSMIN = True
+DJANGO_STATIC_MEDIA_ROOTS = [get_path([BASEDIR, 'data', ''])]
 
 LOGIN_URL='/login/'
 LOGOUT_URL='/logout/'

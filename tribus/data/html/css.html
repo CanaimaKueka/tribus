@@ -1,6 +1,0 @@
-{% load static %}
-{% for css in render_css %}
-<link href="{% static 'css/'|add:css|add:'.css' %}" rel="stylesheet" />
-{% endfor %}
-<!--[if IE 7]><link rel="stylesheet" href="{% static 'css/font-awesome-ie7.css' %}" /><![endif]-->
-<!--[if lte IE 8]><link rel="stylesheet" href="{% static 'css/tribus-ie.css' %}" /><![endif]-->

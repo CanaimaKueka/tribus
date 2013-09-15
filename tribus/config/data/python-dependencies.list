@@ -2,6 +2,8 @@ buildbot==0.8.8
 buildbot-slave==0.8.8
 django-static==1.5.5
 django-tastypie==0.10.0
+cssmin==0.1.4
+jsmin==2.0.4
 Django==1.5.2
 South==0.8.2
 celery==3.0.23
