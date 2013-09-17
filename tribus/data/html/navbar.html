@@ -59,7 +59,7 @@
                     <ul class="nav">
                         <li class="divider-vertical"></li>
                         <li>
-                            <form class="form-search" action = "/paquetes/busqueda/" method = "POST">
+                            <form class="form-search" action="/paquetes/busqueda/" method="POST">
                                 {% csrf_token %}
                                 <span class="input-icon">
                                     <input type="text" class="nav-search-input input-xlarge" name="busqueda" placeholder="Search or type a command" />
@@ -70,7 +70,7 @@
                     </ul>
                     <ul class="nav pull-right">
                         <li><a class="btn btn-yellow btn-block" href="{% url 'user_login' %}">{% trans "Log in" %}</a></li>
-                        <li class="divider-vertical"></li>
+<!--                    <li class="divider-vertical"></li>
                         <li class="dropdown">
                             <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="bigger-125 icon-globe"></i>
@@ -79,7 +79,7 @@
                                 <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English</a></li>
                                 <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Spanish</a></li>
                             </ul>
-                        </li>
+                        </li> -->
                     </ul>
                     {% endif %}
                 </div>

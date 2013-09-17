@@ -67,6 +67,10 @@ def index(request, page = 1):
         #     else:
         #         tweets.append(t)
 
+        render_css = ['normalize', 'fonts', 'bootstrap', 'bootstrap-responsive',
+                        'font-awesome', 'tribus', 'tribus-responsive']
+        render_js = ['jquery', 'bootstrap']
+
         return render_to_response(
             'index.html', {
                 'p' : profile,
@@ -77,6 +81,8 @@ def index(request, page = 1):
                 'tribs_c' : len(tribs),
                 'follows_c' : len(follows),
                 'followers_c' : len(followers),
+                'render_css': render_css,
+                'render_js': render_js,
                 #'trending' : tt(5, 200),
                 #'recommended' : randuser(request.user, 3),
             }, RequestContext(request))
@@ -91,7 +97,7 @@ def index(request, page = 1):
 
         render_css = ['normalize', 'fonts', 'bootstrap', 'bootstrap-responsive',
                         'font-awesome', 'tribus', 'tribus-responsive']
-        render_js = ['jquery', 'bootstrap']
+        render_js = []
 
         return render_to_response(
             'init.html', {
