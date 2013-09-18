@@ -8,8 +8,9 @@ import site
 from fabric.api import *
 
 from tribus import BASEDIR
-from tribus.config.pkg import (debian_dependencies, f_workenv_preseed,
-                               f_sql_preseed, f_users_ldif, f_python_dependencies)
+from tribus.config.pkg import (debian_run_dependencies, debian_build_dependencies,
+                               f_workenv_preseed, f_sql_preseed, f_users_ldif,
+                               f_python_dependencies)
 
 
 def development():
@@ -29,7 +30,8 @@ def development():
 def environment():
     configure_sudo()
     preseed_packages()
-    install_packages()
+    install_packages(debian_build_dependencies)
+    install_packages(debian_run_dependencies)
     configure_postgres()
     populate_ldap()
     create_virtualenv()
@@ -53,13 +55,13 @@ def preseed_packages():
         local('%(command)s' % env)
 
 
-def install_packages():
+def install_packages(dependencies):
     with settings(command='sudo /bin/bash -c "DEBIAN_FRONTEND=noninteractive \
 aptitude install --assume-yes --allow-untrusted \
 -o DPkg::Options::=--force-confmiss \
 -o DPkg::Options::=--force-confnew \
 -o DPkg::Options::=--force-overwrite \
-%s"' % ' '.join(debian_dependencies)):
+%s"' % ' '.join(dependencies)):
         local('%(command)s' % env)
 
 

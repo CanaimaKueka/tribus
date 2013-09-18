@@ -1,21 +1,30 @@
 {% load i18n %}
+{% load static %}
+{% load django_static %}
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="{{ app_charset|lower }}" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{% block title %}{% endblock %}</title>
-{% include "css.html" %}
-
-<style type="text/css"> 
-	{% block style %}{% endblock %}
-</style>
-</head>
-<body>
-{% include "navbar.html" %}
-{% block content %}{% endblock %}
-{% include "footer.html" %}
-{% include "js.html" %}
-{% block innerscripts %}{% endblock %}
-</body>
+	<head>
+		<title>{% block title %}{% endblock %}</title>
+		<meta charset="{{ app_charset|lower }}" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		{% slimall %}
+			{% for css in render_css %}
+				<link href="{% static 'css/'|add:css|add:'.css' %}" rel="stylesheet" />
+			{% endfor %}
+		{% endslimall %}
+		<!--[if IE 7]><link rel="stylesheet" href="{% static 'css/font-awesome-ie7.css' %}" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="{% static 'css/tribus-ie.css' %}" /><![endif]-->
+	</head>
+	<body>
+		{% include "navbar.html" %}
+		{% block content %}{% endblock %}
+		{% include "footer.html" %}
+		{% slimall %}
+		    {% for js in render_js %}
+		        <script src="{% static 'js/'|add:js|add:'.js' %}"></script>
+		    {% endfor %}
+		{% endslimall %}
+		<!--[if lte IE 8]><script src="{% static 'js/excanvas.js' %}"></script><![endif]-->
+		<!--[if lt IE 9]><script src="{% static 'js/html5shiv.js' %}"></script><![endif]-->
+	</body>
 </html>

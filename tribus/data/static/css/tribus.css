@@ -23,7 +23,16 @@ body:before {
  background-color:#FFF;
 }
 
+a {
+  color: #229853;
+  text-decoration: none;
+}
 
+a:hover,
+a:focus {
+  color: #2ecc71;
+  text-decoration: underline;
+}
 
 
 /* ace default theme layout */
@@ -2937,7 +2946,7 @@ button.btn:active  {
 }
 
 .dropdown-menu {
- border-radius:0;
+
  box-shadow:0 2px 4px rgba(0, 0, 0, 0.2);
 }
 .dropdown-submenu > a:after {
@@ -2968,7 +2977,7 @@ button.btn:active  {
  padding-left:11px; padding-right:11px;
 }
 .dropdown-menu li a:hover , .dropdown-menu .active > a, .dropdown-menu .active > a:hover, .dropdown-submenu:hover > a , .dropdown-menu li > a:focus , .nav-tabs .dropdown-menu li > a:focus{
- background:#4F99C6;
+ background:#9cd082;
 }
 .dropdown-menu.dropdown-default li a:hover , .dropdown-menu.dropdown-default .active > a, .dropdown-menu.dropdown-default .active > a:hover,
 .dropdown-default > .dropdown-submenu:hover > a , .dropdown-default li > a:focus , .nav-tabs .dropdown-default li > a:focus{
@@ -7685,6 +7694,198 @@ body.login-layout:before {
 
 
 
+
+
+.navbar .brand {
+  padding: 10px 20px 0px;
+}
+
+.navbar .logo {
+  background: url('../img/logo-min.svg') no-repeat;
+  width: 30px;
+  height: 20px;
+  display: block;
+  float: left;
+  padding: 0px;
+  margin: 0px;
+}
+
+.navbar .logo_title {
+  font-family: 'League Gothic';
+margin-left: 5px;
+font-size: 1.7em;
+font-weight: 400;
+text-transform: uppercase;
+}
+
+.navbar .nav > li > a {
+    padding: 5px 5px;
+    margin: 3px 5px;
+}
+
+.navbar .nav .btn {
+  line-height:10px;
+}
+
+.navbar .nav li.dropdown.open > .dropdown-toggle,
+.navbar .nav li.dropdown.active > .dropdown-toggle,
+.navbar .nav li.dropdown.open.active > .dropdown-toggle {
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+	background-color: #f2f2e8;
+}
+
+.intro-slogan {
+	height:420px;
+}
+
+.intro-background {
+	background: url('../img/intro-slogan-background.svg') no-repeat center bottom;
+}
+
+.navbar .form-search {
+  margin: 5px;
+}
+
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"]
+{
+ border-radius:4px !important;
+}
+
+.btn {
+ border-radius:4px !important;
+}
+
+.input-block {
+  display: block;
+  width: 100%;
+}
+
+.input-medium {
+  display: block;
+  width: 166px;
+}
+
+.input-large {
+  display: block;
+  width: 246px;
+}
+
+.input-small {
+  display: block;
+  width: 113px;
+}
+
+.input-xlarge {
+  display: block;
+  width: 356px;
+}
+
+.hero-unit {
+  padding: 30px;
+  background: #e4e4d6;
+  margin: 0px !important;
+}
+
+input, button, select, textarea {
+    font-family: "Open Sans",Helvetica,Arial,sans-serif;
+}
+
+.jumbotron {
+  min-height: 20px;
+  padding: 60px;
+  margin-bottom: 20px;
+  background-color: #f2f2e8;
+  border-top: 1px solid #d7d7b8;
+  border-bottom: 1px solid #d7d7b8;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.home-signin, .home-signup {
+    padding: 5px;
+    margin: 0 0 5px 0;
+}
+
+.hero-unit h1, .intro-slogan h1 {
+    font-size: 50px;
+    line-height:1.4;
+    word-spacing:0;
+}
+
+.hero-unit p, .intro-slogan p {
+    font-size: 25px;
+    line-height:1;
+    font-weight: 200;
+}
+
+
+.alert {
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+}
+
+.chiclets {
+	padding: 30px 0px;
+}
+
+.chiclets ul li {
+  padding: 120px 30px 30px;
+  margin-bottom: 30px;
+  font-size: 1.2em;
+  font-weight: 200;
+  line-height: 1.5em;
+  -webkit-border-radius: 6px;
+     -moz-border-radius: 6px;
+          border-radius: 6px;
+}
+
+.chiclets ul li h3 {
+  margin-bottom: 0;
+  font-size: 1.8em;
+  line-height: 2em;
+}
+
+.ch-cloud {
+  background: url('../img/ch-cloud.png') no-repeat #f2f2e8;
+}
+
+.ch-ticket {
+  background: url('../img/ch-ticket.png') no-repeat #f2f2e8;
+}
+
+.ch-docs {
+  background: url('../img/ch-docs.png') no-repeat #f2f2e8;
+}
+
+.ch-social {
+  background: url('../img/ch-social.png') no-repeat #f2f2e8;
+}
+
+.ch-source {
+  background: url('../img/ch-source.png') no-repeat #f2f2e8;
+}
+
+.ch-ci {
+  background: url('../img/ch-ci.png') no-repeat #f2f2e8;
+}
 
 
 
