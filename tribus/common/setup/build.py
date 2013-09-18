@@ -28,29 +28,88 @@ tribus.common.setup.install
 '''
 
 import os
-import sys
-import shutil
+import scss
+
 from distutils.cmd import Command
 from distutils.command.build import build as base_build
 from docutils.core import Publisher
 from docutils.writers import manpage
-
-from sphinx.application import Sphinx
 from sphinx.setup_command import BuildDoc as base_build_sphinx
 from babel.messages.frontend import compile_catalog as base_compile_catalog
 
 from tribus.config.base import BASEDIR, DOCDIR
 from tribus.common.images import svg2png
-from tribus.common.utils import get_path, find_files, list_dirs, list_files
+from tribus.common.utils import get_path, find_files, list_files, list_dirs, find_dirs
 from tribus.common.logger import get_logger
 
 log = get_logger()
 
-import sys
-from StringIO import StringIO
 
-from sphinx.application import Sphinx
-from sphinx.util.console import darkred, nocolor, color_terminal
+class build_css(Command):
+    description = 'Compile SCSS files into CSS.'
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+
+    def run(self):
+        log.debug("[%s.%s] Compiling CSS from SCSS sources." % (__name__, self.__class__.__name__))
+        
+        scss_path = get_path([BASEDIR, 'tribus', 'data', 'static', 'source', 'scss'])
+
+        for scss_file in find_files(path=scss_path, pattern='*.master'):
+            try:
+                css_file = os.path.splitext(scss_file)[0]+'.css'
+                scss.STATIC_ROOT = get_path([BASEDIR, 'data', 'static'])
+                scss.STATIC_URL = '/static/'
+                scss.ASSETS_ROOT = get_path([BASEDIR, 'data', 'static', 'assets'])
+                scss.ASSETS_URL = get_path([scss.STATIC_URL, 'assets'])
+                scss.LOAD_PATHS = find_dirs(get_path([scss.STATIC_ROOT, 'source', 'scss']))
+                print scss.STATIC_ROOT
+                print scss.STATIC_URL
+                print scss.ASSETS_ROOT
+                print scss.ASSETS_URL
+                print scss.LOAD_PATHS
+                scss_compiler = scss.Scss(scss_opts={'compress': True, 'debug_info': True})
+                css = scss_compiler.compile(scss_file=os.path.basename(scss_file))
+                print css
+
+                # f = open(css_file, 'w')
+                # f.write(css)
+                # f.close()
+
+            except Exception, e:
+                print e
+
+            # log.debug("[%s.%s] %s > %s." % (__name__, self.__class__.__name__, scss_file,
+            #                                 os.path.splitext(os.path.basename(scss_file))[0]+'.css'))
+
+
+class build_js(Command):
+    description = 'Compile SVG files into PNG images.'
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        log.debug("[%s.%s] Compiling PNG images from SVG sources." % (__name__,
+                                                                      self.__class__.__name__))
+        for svg_file in find_files(path=BASEDIR, pattern='*.svg'):
+            try:
+                svg2png(input_file=svg_file, output_file=os.path.splitext(svg_file)[0]+'.png')
+            except Exception, e:
+                print e
+
+            log.debug("[%s.%s] %s > %s." % (__name__, self.__class__.__name__, svg_file,
+                                            os.path.splitext(os.path.basename(svg_file))[0]+'.png'))
 
 
 class build_img(Command):

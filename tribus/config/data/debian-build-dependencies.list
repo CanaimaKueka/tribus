@@ -4,3 +4,5 @@ python-rsvg
 python-babel
 python-sphinx
 python-cairo
+slimit
+python-pyscss
