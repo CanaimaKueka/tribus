@@ -249,7 +249,7 @@ CACHES = {
 }
 
 try:
-    from tribus.config.logging import *
+    from tribus.config.logger import *
 except:
     pass
 

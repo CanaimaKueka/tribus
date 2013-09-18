@@ -61,26 +61,22 @@ class build_css(Command):
         
         scss_path = get_path([BASEDIR, 'tribus', 'data', 'static', 'source', 'scss'])
 
-        for scss_file in find_files(path=scss_path, pattern='*.master'):
+        for scss_file in find_files(path=scss_path, pattern='*.master1'):
             try:
                 css_file = os.path.splitext(scss_file)[0]+'.css'
-                scss.STATIC_ROOT = get_path([BASEDIR, 'data', 'static'])
-                scss.STATIC_URL = '/static/'
-                scss.ASSETS_ROOT = get_path([BASEDIR, 'data', 'static', 'assets'])
-                scss.ASSETS_URL = get_path([scss.STATIC_URL, 'assets'])
-                scss.LOAD_PATHS = find_dirs(get_path([scss.STATIC_ROOT, 'source', 'scss']))
-                print scss.STATIC_ROOT
-                print scss.STATIC_URL
-                print scss.ASSETS_ROOT
-                print scss.ASSETS_URL
-                print scss.LOAD_PATHS
-                scss_compiler = scss.Scss(scss_opts={'compress': True, 'debug_info': True})
-                css = scss_compiler.compile(scss_file=os.path.basename(scss_file))
+                scss.config.STATIC_ROOT = get_path([BASEDIR, 'tribus', 'data', 'static', ''])
+                scss.config.STATIC_URL = '/static/'
+                scss.config.ASSETS_ROOT = get_path([BASEDIR, 'tribus', 'data', 'static', 'assets', ''])
+                scss.config.ASSETS_URL = get_path([scss.config.STATIC_URL, 'assets', ''])
+                scss.config.LOAD_PATHS = find_dirs(get_path([scss.config.STATIC_ROOT, 'source', 'scss', '']))
+
+                scss_compiler = scss.Scss(scss_opts={'compress': True})
+                css = scss_compiler.compile(scss_file=scss_file)
                 print css
 
-                # f = open(css_file, 'w')
-                # f.write(css)
-                # f.close()
+                f = open(css_file, 'w')
+                f.write(css)
+                f.close()
 
             except Exception, e:
                 print e
