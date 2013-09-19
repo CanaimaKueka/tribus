@@ -60,9 +60,9 @@ class build_css(Command):
         log.debug("[%s.%s] Compiling CSS from SCSS sources." % (__name__, self.__class__.__name__))
         
         scss.config.STATIC_ROOT = get_path([BASEDIR, 'tribus', 'data', 'static'])
-        scss.config.STATIC_URL = '/static/'
+        scss.config.STATIC_URL = get_path(['/static/', 'assets'])
         scss.config.ASSETS_ROOT = get_path([scss.config.STATIC_ROOT, 'assets', 'css'])
-        scss.config.ASSETS_URL = get_path([scss.config.STATIC_URL, 'assets', 'css'])
+        scss.config.ASSETS_URL = get_path([scss.config.STATIC_URL, 'css'])
 
         try:
             os.makedirs(scss.config.ASSETS_ROOT)
@@ -77,7 +77,7 @@ class build_css(Command):
                 css_file = get_path([scss.config.ASSETS_ROOT, css_filename])
                 scss.config.LOAD_PATHS = find_dirs(os.path.dirname(scss_file))
 
-                scss_compiler = scss.Scss(scss_opts={'compress': True})
+                scss_compiler = scss.Scss(scss_opts={'compress': False})
                 css = scss_compiler.compile(scss_file=scss_file)
                 
                 f = open(css_file, 'w')
@@ -92,7 +92,7 @@ class build_css(Command):
 
 
 class build_js(Command):
-    description = 'Compile SVG files into PNG images.'
+    description = 'Compress JS files.'
     user_options = []
 
     def initialize_options(self):
@@ -102,7 +102,7 @@ class build_js(Command):
         pass
 
     def run(self):
-        log.debug("[%s.%s] Compiling PNG images from SVG sources." % (__name__,
+        log.debug("[%s.%s] Compressing JS." % (__name__,
                                                                       self.__class__.__name__))
         for svg_file in find_files(path=BASEDIR, pattern='*.svg'):
             try:

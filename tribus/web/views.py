@@ -67,8 +67,8 @@ def index(request, page = 1):
         #     else:
         #         tweets.append(t)
 
-        render_css = ['normalize', 'fonts', 'bootstrap', 'bootstrap-responsive',
-                        'font-awesome', 'tribus', 'tribus-responsive']
+        render_css = ['normalize', 'fonts', 'font-awesome', 'bootstrap',
+                        'bootstrap-responsive', 'tribus', 'tribus-responsive']
         render_js = ['jquery', 'bootstrap']
 
         return render_to_response(
@@ -95,8 +95,8 @@ def index(request, page = 1):
         signupform.fields['email'].widget.attrs['class'] = 'input-large'
         signupform.fields['password'].widget.attrs['class'] = 'input-large'
 
-        render_css = ['normalize', 'fonts', 'bootstrap', 'bootstrap-responsive',
-                        'font-awesome', 'tribus', 'tribus-responsive']
+        render_css = ['normalize', 'fonts', 'font-awesome', 'bootstrap',
+                        'bootstrap-responsive', 'tribus', 'tribus-responsive']
         render_js = []
 
         return render_to_response(
