@@ -92,6 +92,14 @@ build_img: fabric
 
 	@$(FAB) development build_img
 
+build_css: fabric
+
+	@$(FAB) development build_css
+
+build_js: fabric
+
+	@$(FAB) development build_js
+
 build_man: fabric
 
 	@$(FAB) development build_man
@@ -102,6 +110,14 @@ build_man: fabric
 clean: fabric
 
 	@$(FAB) development clean
+
+clean_css: fabric
+
+	@$(FAB) development clean_css
+
+clean_js: fabric
+
+	@$(FAB) development clean_js
 
 clean_img: fabric
 

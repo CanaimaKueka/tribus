@@ -90,3 +90,9 @@ web_local.py
 
 # Configuración en producción de Django
 web_production.py
+
+# Javascript minificado
+tribus/data/static/js/min/
+
+# CSS minificado
+tribus/data/static/css/min/

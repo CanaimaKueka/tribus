@@ -25,5 +25,10 @@ LOGGING = {
             'propagate': True,
             'level': 'DEBUG',
         },
+        'scss': {
+            'handlers': ['console'],
+            'propagate': True,
+            'level': 'DEBUG',
+        },
     },
 }
