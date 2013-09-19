@@ -12,7 +12,6 @@ from tribus.config.pkg import (debian_run_dependencies, debian_build_dependencie
                                f_workenv_preseed, f_sql_preseed, f_users_ldif,
                                f_python_dependencies)
 
-
 def development():
     env.user = pwd.getpwuid(os.getuid()).pw_name
     env.root = 'root'
@@ -40,12 +39,18 @@ def environment():
     deconfigure_sudo()
     
     
-def resetbd():
+def resetdb():
     configure_sudo()
     configure_postgres()
     configure_django()
     deconfigure_sudo()
     
+    
+def filldb():
+    py_activate_virtualenv()
+    from tribus.common.recorder import fill_database
+    fill_database()
+
 
 def configure_sudo():
     with settings(command='su root -c "echo \'%(user)s ALL= NOPASSWD: ALL\' > /etc/sudoers.d/tribus"' % env):

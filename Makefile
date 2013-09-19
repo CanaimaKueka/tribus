@@ -47,9 +47,13 @@ environment: fabric
 
 	@$(FAB) development environment
 	
-reset: fabric
+resetdb: fabric
 
-	@$(FAB) development resetbd
+	@$(FAB) development resetdb
+	
+filldb: fabric
+
+	@$(FAB) development filldb 
 
 update_virtualenv: fabric
 

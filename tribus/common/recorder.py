@@ -449,5 +449,4 @@ def fill_database():
     for section in deb822.Packages.iter_paragraphs(file2):
         record_section(section)
     record_repository(local)
-
-#fill_database()
+    
