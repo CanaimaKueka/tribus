@@ -28,7 +28,7 @@ tribus.common.setup.install
 '''
 
 import os
-import scss
+import cssmin
 
 from distutils.cmd import Command
 from distutils.command.build import build as base_build
@@ -57,38 +57,31 @@ class build_css(Command):
 
 
     def run(self):
-        log.debug("[%s.%s] Compiling CSS from SCSS sources." % (__name__, self.__class__.__name__))
+        log.debug("[%s.%s] Compressing CSS." % (__name__, self.__class__.__name__))
         
-        scss.config.STATIC_ROOT = get_path([BASEDIR, 'tribus', 'data', 'static'])
-        scss.config.STATIC_URL = get_path(['/static/', 'assets'])
-        scss.config.ASSETS_ROOT = get_path([scss.config.STATIC_ROOT, 'assets', 'css'])
-        scss.config.ASSETS_URL = get_path([scss.config.STATIC_URL, 'css'])
+        CSSFULL_ROOT = get_path([BASEDIR, 'tribus', 'data', 'static', 'css', 'full'])
+        CSSMIN_ROOT = get_path([BASEDIR, 'tribus', 'data', 'static', 'css', 'min'])
 
         try:
-            os.makedirs(scss.config.ASSETS_ROOT)
+            os.makedirs(CSSMIN_ROOT)
         except Exception, e:
             print e
 
-        scss_dir = get_path([scss.config.STATIC_ROOT, 'source', 'css'])
+        for CSS_FILE in find_files(path=CSSFULL_ROOT, pattern='*.css'):
 
-        for scss_file in find_files(path=scss_dir, pattern='*.master'):
+            CSSMIN_FILE =get_path([CSSFULL_ROOT, os.path.basename(CSS_FILE)])
+
             try:
-                css_filename = os.path.splitext(os.path.basename(scss_file))[0]+'.css'
-                css_file = get_path([scss.config.ASSETS_ROOT, css_filename])
-                scss.config.LOAD_PATHS = find_dirs(os.path.dirname(scss_file))
 
-                scss_compiler = scss.Scss(scss_opts={'compress': False})
-                css = scss_compiler.compile(scss_file=scss_file)
-                
-                f = open(css_file, 'w')
-                f.write(css)
-                f.close()
+                with open(CSSMIN_FILE, 'w') as _file:
+                    _file.write(cssmin.cssmin(open(CSS_FILE).read()))
+                    _file.close()
 
             except Exception, e:
                 print e
 
             log.debug("[%s.%s] %s > %s." % (__name__, self.__class__.__name__,
-                                            scss_file, css_filename))
+                                            CSS_FILE, CSSMIN_FILE))
 
 
 class build_js(Command):
