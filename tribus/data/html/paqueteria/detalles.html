@@ -2,20 +2,15 @@
 {% load url from future %}
 {% block title%}Sistéma de busqueda{%endblock%}
 {%block style%}
-
 	#margenes-separadores{
-
-	size: 8px;	
-}
-
-
+		size: 8px;	
+	}
 {%endblock%}
 {%block datos%}
-
 	<div >
-		<legend></legend>
+		<legend> </legend>
 			<h2 align="center">{{i.Package}}</h2>
-		<legend></legend>
+		<legend> </legend>
 	</div>
 	<div id = "margenes-separadores"> 
 	   <p> Version: {{i.Version}} </p>
@@ -27,99 +22,81 @@
 	   <p> Descripcion: {{i.Description}}</p>
 	   <p> Pagina: <a href="{{i.Homepage}}">{{i.Homepage }}</a></p>
 	   <p> Descripcion MD5: {{i.DescriptionMD5}}</p>
-	   <p> Etiquetas:{%for etiqueta in i.Tags.only%} <a href="/paquetes/categoria/{{etiqueta.nombre}}"> {{etiqueta.nombre}}</a>:<a href="/paquetes/tags/{{etiqueta.valores.valor}}">{{etiqueta.valores.valor}}</a> {%endfor%}</p>	   
-	   <p> Mejora:
-	   {%for x in i.Enhances.only%}
-			<a href="/paquetes/busqueda/{{x}}" >{{x}}</a>
-	   {% endfor %}
-	   </p>
-	   <p> Rompe:
-	   {%for x in i.Breaks.only%}
-			<a href="/paquetes/busqueda/{{x}}" >{{x}}</a>
-	   {% endfor %}
-	   </p>
+	   <p> Etiquetas:{%for etiqueta in i.Tags.only%} <a href="/paquetes/categoria/{{etiqueta.nombre}}"> {{etiqueta.nombre}}</a>:<a href="/paquetes/tags/{{etiqueta.valores.valor}}">{{etiqueta.valores.valor}}</a> {%endfor%}</p>
 	   
-	   <p> Reemplaza:
-	   {%for x in i.Replaces.only%}
-			<a href="/paquetes/busqueda/{{x}}" >{{x}}</a>
-	   {% endfor %}
-	   </p>
+	   {% if enhances %}
+		   <p> Mejora:
+		   {%for x in enhances %}
+				<a href="/paquetes/busqueda/{{i.Architecture}}/{{x}}" >{{x}}</a>
+		   {% endfor %}
+		   </p>
+	   {% endif %}
 	   
-	   <p> Conflictos:
-	   {%for x in i.Conflicts.only%}
-			<a href="/paquetes/busqueda/{{x}}" >{{x}}</a>
-	   {% endfor %}
-	   </p>
+	   {% if breaks %}
+		   <p> Rompe:
+		   {%for x in breaks%}
+				<a href="/paquetes/busqueda/{{i.Architecture}}/{{x}}" >{{x}}</a>
+		   {% endfor %}
+		   </p>
+	   {% endif %}
 	   
-	   <p> Paqueteves provistos:
-	   {%for x in i.ProvidesS.only%}
-			<a href="/paquetes/busqueda/{{x}}" >{{x}}</a>
-	   {% endfor %}
+	   {% if replaces %}
+		   <p> Reemplaza:
+		   {%for x in replaces%}
+				<a href="/paquetes/busqueda/{{i.Architecture}}/{{x}}" >{{x}}</a>
+		   {% endfor %}
+		   </p>
+	   {% endif %}
 	   
-	   {%for x in i.ProvidesO.only%}
-	   		<span class="or" >
-	   		{%for m in x.dep.only%}	
-				<a href= "/paquetes/busqueda/{{m}}">{{m}}</a>
-			{% endfor %}
-			</span>
-	   {% endfor %}
-	   </p>
+	   {% if conflicts %}
+		   <p> Conflictos:
+		   {%for x in conflicts%}
+				<a href="/paquetes/busqueda/{{i.Architecture}}/{{x}}" >{{x}}</a>
+		   {% endfor %}
+		   </p>
+	   {% endif %}
 	   
-	   <p> Sugerencias:
-	   {%for x in i.SuggestsS.only%}
-			<a href="/paquetes/busqueda/{{x}}" >{{x}}</a>
-	   {% endfor %}
+	   {% if provides%}
+		   <p> Paqueteves provistos:
+		   {%for x in provides%}
+				<a href="/paquetes/busqueda/{{i.Architecture}}/{{x}}" >{{x}}</a>
+		   {% endfor %}
+		   </p>
+	   {% endif %}
 	   
-	   {%for x in i.SuggestsO.only%}
-	   		<span class="or" >
-	   		{%for m in x.dep.only%}	
-				<a href= "/paquetes/busqueda/{{m}}">{{m}}</a>
-			{% endfor %}
-			</span>
-	   {% endfor %}
-	   </p>
-	  
-	   <p> Recomendaciones:
-	   {%for x in i.RecommendsS.only%}
-			<a href="/paquetes/busqueda/{{x}}" >{{x}}</a>
-	   {% endfor %}
+	   {% if suggests%}
+		   <p> Sugerencias:
+		   {%for x in suggests%}
+				<a href="/paquetes/busqueda/{{i.Architecture}}/{{x}}" >{{x}}</a>
+		   {% endfor %}
+		   </p>
+	   {% endif %}
 	   
-	   {%for x in i.RecommendsO.only%}
-	   		<span class="or" >
-	   		{%for m in x.dep.only%}	
-				<a href= "/paquetes/busqueda/{{m}}">{{m}}</a>
-			{% endfor %}
-			</span>
-	   {% endfor %}
-	   </p>
+	   {% if recommends%}
+		   <p> Recomendaciones:
+		   {%for x in recommends%}
+				<a href="/paquetes/busqueda/{{i.Architecture}}/{{x}}" >{{x}}</a>
+		   {% endfor %}
+		   </p>
+	   {% endif %}
 	   
-	   <p> Predependencias:
-	   {%for x in i.PreDependsS.only%}
-			<a href="/paquetes/busqueda/{{x}}" >{{x}}</a>
-	   {% endfor %}
+	   {% if predepends%}
+		   <p> Predependencias:
+			   {%for x in predepends.only%}
+					<a href="/paquetes/busqueda/{{i.Architecture}}/{{x}}" >{{x}}</a>
+			   {% endfor %}
+		   </p>
+	   {% endif %}
 	   
-	   {%for x in i.PreDependsO.only%}
-	   		<span class="or" >
-	   		{%for m in x.dep.only%}	
-				<a href= "/paquetes/busqueda/{{m}}">{{m}}</a>
-			{% endfor %}
-			</span>
-	   {% endfor %}
+	   {%if depends%}
+		   <p> dependencias:
+		   {%for x in depends%}
+				<a href="/paquetes/busqueda/{{i.Architecture}}/{{x.Package}}" >{{x}}</a>
+		   {% endfor %}
+	   {%endif%}
 	   
 	   </p>
-	   <p> dependencias:
-	   {%for x in i.DependsS.only%}
-			<a href="/paquetes/busqueda/{{x}}" >{{x}}</a>
-	   {% endfor %}
 	   
-	   {%for x in i.DependsO.only%}
-	   		<span class="or" >
-	   		{%for m in x.dep.only%}
-				<a href= "/paquetes/busqueda/{{m}}">{{m}}</a>
-			{% endfor %}
-			</span>
-	   {% endfor %}
-	   </p>
 	   <p> Mantenedor: {{i.Maintainer}} </p>
 	   <p> Seccion: {{i.Section }}</p>
 	   <p> Prioridad: {{i.Priority }}</p>
