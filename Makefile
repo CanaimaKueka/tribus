@@ -33,6 +33,12 @@ runserver: fabric
 
 	@$(FAB) development runserver_django
 
+prepare: fabric
+
+	@$(FAB) development build_js
+	@$(FAB) development build_css
+	@$(FAB) development build_img
+
 syncdb: fabric
 
 	@$(FAB) development syncdb_django
