@@ -28,29 +28,99 @@ tribus.common.setup.install
 '''
 
 import os
-import sys
-import shutil
+import cssmin
+import slimit
+
 from distutils.cmd import Command
 from distutils.command.build import build as base_build
 from docutils.core import Publisher
 from docutils.writers import manpage
-
-from sphinx.application import Sphinx
 from sphinx.setup_command import BuildDoc as base_build_sphinx
 from babel.messages.frontend import compile_catalog as base_compile_catalog
 
 from tribus.config.base import BASEDIR, DOCDIR
 from tribus.common.images import svg2png
-from tribus.common.utils import get_path, find_files, list_dirs, list_files
+from tribus.common.utils import get_path, find_files, list_files, list_dirs
 from tribus.common.logger import get_logger
 
 log = get_logger()
 
-import sys
-from StringIO import StringIO
 
-from sphinx.application import Sphinx
-from sphinx.util.console import darkred, nocolor, color_terminal
+class build_css(Command):
+    description = 'Compress CSS files.'
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+
+    def run(self):
+        log.debug("[%s.%s] Compressing CSS." % (__name__, self.__class__.__name__))
+        
+        CSSFULL_DIR = get_path([BASEDIR, 'tribus', 'data', 'static', 'css', 'full'])
+        CSSMIN_DIR = get_path([BASEDIR, 'tribus', 'data', 'static', 'css', 'min'])
+
+        try:
+            os.makedirs(CSSMIN_DIR)
+        except Exception, e:
+            print e
+
+        for CSS_FILE in find_files(path=CSSFULL_DIR, pattern='*.css'):
+
+            CSSMIN_FILE =get_path([CSSMIN_DIR, os.path.basename(CSS_FILE)])
+
+            try:
+
+                with open(CSSMIN_FILE, 'w') as _file:
+                    _file.write(cssmin.cssmin(open(CSS_FILE).read()))
+                    _file.close()
+
+            except Exception, e:
+                print e
+
+            log.debug("[%s.%s] %s > %s." % (__name__, self.__class__.__name__,
+                                            CSS_FILE, CSSMIN_FILE))
+
+
+class build_js(Command):
+    description = 'Compress JS files.'
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        log.debug("[%s.%s] Compressing JS." % (__name__, self.__class__.__name__))
+        
+        JSFULL_DIR = get_path([BASEDIR, 'tribus', 'data', 'static', 'js', 'full'])
+        JSMIN_DIR = get_path([BASEDIR, 'tribus', 'data', 'static', 'js', 'min'])
+
+        try:
+            os.makedirs(JSMIN_DIR)
+        except Exception, e:
+            print e
+
+        for JS_FILE in find_files(path=JSFULL_DIR, pattern='*.js'):
+
+            JSMIN_FILE =get_path([JSMIN_DIR, os.path.basename(JS_FILE)])
+
+            try:
+
+                with open(JSMIN_FILE, 'w') as _file:
+                    _file.write(slimit.minify(open(JS_FILE).read()))
+                    _file.close()
+
+            except Exception, e:
+                print e
+
+            log.debug("[%s.%s] %s > %s." % (__name__, self.__class__.__name__,
+                                            JS_FILE, JSMIN_FILE))
 
 
 class build_img(Command):

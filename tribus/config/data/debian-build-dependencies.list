@@ -1,6 +1,2 @@
-make
-fabric
 python-rsvg
-python-babel
-python-sphinx
 python-cairo
