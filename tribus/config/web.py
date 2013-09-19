@@ -3,6 +3,7 @@
 
 import os, sys, djcelery
 from tribus.common.utils import get_path
+from celery.schedules import crontab
 
 try:
     djcelery.setup_loader()
@@ -165,6 +166,15 @@ PASSWORD_HASHERS = (
 ACCOUNT_ACTIVATION_DAYS = 7
 
 BROKER_URL = 'redis://localhost:6379/0'
+# Programacion de task para djcelery
+CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
+CELERYBEAT_SCHEDULE = {
+    "verify_repository": {
+        "task": "tribus.web.paqueteria.tasks.verify_repository",
+        "schedule": crontab(),
+        "args": (),
+    },
+}
 
 INSTALLED_APPS = (
     'django.contrib.admin',

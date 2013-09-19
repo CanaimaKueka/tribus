@@ -38,7 +38,14 @@ def environment():
     update_virtualenv()
     configure_django()
     deconfigure_sudo()
-
+    
+    
+def resetbd():
+    configure_sudo()
+    configure_postgres()
+    configure_django()
+    deconfigure_sudo()
+    
 
 def configure_sudo():
     with settings(command='su root -c "echo \'%(user)s ALL= NOPASSWD: ALL\' > /etc/sudoers.d/tribus"' % env):

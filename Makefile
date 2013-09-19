@@ -40,6 +40,10 @@ syncdb: fabric
 environment: fabric
 
 	@$(FAB) development environment
+	
+reset: fabric
+
+	@$(FAB) development resetbd
 
 update_virtualenv: fabric
 
