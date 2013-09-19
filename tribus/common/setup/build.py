@@ -29,6 +29,7 @@ tribus.common.setup.install
 
 import os
 import cssmin
+import slimit
 
 from distutils.cmd import Command
 from distutils.command.build import build as base_build
@@ -39,14 +40,14 @@ from babel.messages.frontend import compile_catalog as base_compile_catalog
 
 from tribus.config.base import BASEDIR, DOCDIR
 from tribus.common.images import svg2png
-from tribus.common.utils import get_path, find_files, list_files, list_dirs, find_dirs
+from tribus.common.utils import get_path, find_files, list_files, list_dirs
 from tribus.common.logger import get_logger
 
 log = get_logger()
 
 
 class build_css(Command):
-    description = 'Compile SCSS files into CSS.'
+    description = 'Compress CSS files.'
     user_options = []
 
     def initialize_options(self):
@@ -59,17 +60,17 @@ class build_css(Command):
     def run(self):
         log.debug("[%s.%s] Compressing CSS." % (__name__, self.__class__.__name__))
         
-        CSSFULL_ROOT = get_path([BASEDIR, 'tribus', 'data', 'static', 'css', 'full'])
-        CSSMIN_ROOT = get_path([BASEDIR, 'tribus', 'data', 'static', 'css', 'min'])
+        CSSFULL_DIR = get_path([BASEDIR, 'tribus', 'data', 'static', 'css', 'full'])
+        CSSMIN_DIR = get_path([BASEDIR, 'tribus', 'data', 'static', 'css', 'min'])
 
         try:
-            os.makedirs(CSSMIN_ROOT)
+            os.makedirs(CSSMIN_DIR)
         except Exception, e:
             print e
 
-        for CSS_FILE in find_files(path=CSSFULL_ROOT, pattern='*.css'):
+        for CSS_FILE in find_files(path=CSSFULL_DIR, pattern='*.css'):
 
-            CSSMIN_FILE =get_path([CSSFULL_ROOT, os.path.basename(CSS_FILE)])
+            CSSMIN_FILE =get_path([CSSMIN_DIR, os.path.basename(CSS_FILE)])
 
             try:
 
@@ -95,16 +96,31 @@ class build_js(Command):
         pass
 
     def run(self):
-        log.debug("[%s.%s] Compressing JS." % (__name__,
-                                                                      self.__class__.__name__))
-        for svg_file in find_files(path=BASEDIR, pattern='*.svg'):
+        log.debug("[%s.%s] Compressing JS." % (__name__, self.__class__.__name__))
+        
+        JSFULL_DIR = get_path([BASEDIR, 'tribus', 'data', 'static', 'js', 'full'])
+        JSMIN_DIR = get_path([BASEDIR, 'tribus', 'data', 'static', 'js', 'min'])
+
+        try:
+            os.makedirs(JSMIN_DIR)
+        except Exception, e:
+            print e
+
+        for JS_FILE in find_files(path=JSFULL_DIR, pattern='*.js'):
+
+            JSMIN_FILE =get_path([JSMIN_DIR, os.path.basename(JS_FILE)])
+
             try:
-                svg2png(input_file=svg_file, output_file=os.path.splitext(svg_file)[0]+'.png')
+
+                with open(JSMIN_FILE, 'w') as _file:
+                    _file.write(slimit.minify(open(JS_FILE).read()))
+                    _file.close()
+
             except Exception, e:
                 print e
 
-            log.debug("[%s.%s] %s > %s." % (__name__, self.__class__.__name__, svg_file,
-                                            os.path.splitext(os.path.basename(svg_file))[0]+'.png'))
+            log.debug("[%s.%s] %s > %s." % (__name__, self.__class__.__name__,
+                                            JS_FILE, JSMIN_FILE))
 
 
 class build_img(Command):

@@ -34,7 +34,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [get_path([BASEDIR, 'data', 'static', ''])]
 TEMPLATE_DIRS = [get_path([BASEDIR, 'data', 'html', ''])]
 
-DJANGO_STATIC = not DEBUG
+DJANGO_STATIC = True
 DJANGO_STATIC_MEDIA_ROOTS = [get_path([BASEDIR, 'data', ''])]
 
 LOGIN_URL = '/login/'

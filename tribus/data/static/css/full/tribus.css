@@ -7,7 +7,7 @@ body {
     padding-bottom: 0px;
 	background-color:#E4E6E9;
 	
-	font-family: 'OpenSans';
+	font-family: 'Open Sans';
 	font-size:13px;
 	color:#393939;
 	
@@ -7703,7 +7703,7 @@ body.login-layout:before {
 }
 
 .navbar .logo {
-  background: url('../img/logo-min.svg') no-repeat;
+  background: url('../../img/logo-min.svg') no-repeat;
   width: 30px;
   height: 20px;
   display: block;
@@ -7713,7 +7713,7 @@ body.login-layout:before {
 }
 
 .navbar .logo_title {
-  font-family: 'LeagueGothic';
+  font-family: 'League Gothic';
 margin-left: 5px;
 font-size: 1.7em;
 font-weight: 400;
@@ -7743,7 +7743,7 @@ text-transform: uppercase;
 }
 
 .intro-background {
-	background: url('../img/intro-slogan-background.svg') no-repeat center bottom;
+	background: url('../../img/intro-slogan-background.svg') no-repeat center bottom;
 }
 
 .navbar .form-search {
@@ -7805,7 +7805,7 @@ input[type="color"]
 }
 
 input, button, select, textarea {
-    font-family: "OpenSans",Helvetica,Arial,sans-serif;
+    font-family: "Open Sans",Helvetica,Arial,sans-serif;
 }
 
 .jumbotron {
@@ -7866,27 +7866,27 @@ input, button, select, textarea {
 }
 
 .ch-cloud {
-  background: url('../img/ch-cloud.png') no-repeat #f2f2e8;
+  background: url('../../img/ch-cloud.png') no-repeat #f2f2e8;
 }
 
 .ch-ticket {
-  background: url('../img/ch-ticket.png') no-repeat #f2f2e8;
+  background: url('../../img/ch-ticket.png') no-repeat #f2f2e8;
 }
 
 .ch-docs {
-  background: url('../img/ch-docs.png') no-repeat #f2f2e8;
+  background: url('../../img/ch-docs.png') no-repeat #f2f2e8;
 }
 
 .ch-social {
-  background: url('../img/ch-social.png') no-repeat #f2f2e8;
+  background: url('../../img/ch-social.png') no-repeat #f2f2e8;
 }
 
 .ch-source {
-  background: url('../img/ch-source.png') no-repeat #f2f2e8;
+  background: url('../../img/ch-source.png') no-repeat #f2f2e8;
 }
 
 .ch-ci {
-  background: url('../img/ch-ci.png') no-repeat #f2f2e8;
+  background: url('../../img/ch-ci.png') no-repeat #f2f2e8;
 }
 
 
