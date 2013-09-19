@@ -59,21 +59,27 @@ class build_css(Command):
     def run(self):
         log.debug("[%s.%s] Compiling CSS from SCSS sources." % (__name__, self.__class__.__name__))
         
-        scss_path = get_path([BASEDIR, 'tribus', 'data', 'static', 'source', 'scss'])
+        scss.config.STATIC_ROOT = get_path([BASEDIR, 'tribus', 'data', 'static'])
+        scss.config.STATIC_URL = '/static/'
+        scss.config.ASSETS_ROOT = get_path([scss.config.STATIC_ROOT, 'assets', 'css'])
+        scss.config.ASSETS_URL = get_path([scss.config.STATIC_URL, 'assets', 'css'])
 
-        for scss_file in find_files(path=scss_path, pattern='*.master1'):
+        try:
+            os.makedirs(scss.config.ASSETS_ROOT)
+        except Exception, e:
+            print e
+
+        scss_dir = get_path([scss.config.STATIC_ROOT, 'source', 'css'])
+
+        for scss_file in find_files(path=scss_dir, pattern='*.master'):
             try:
-                css_file = os.path.splitext(scss_file)[0]+'.css'
-                scss.config.STATIC_ROOT = get_path([BASEDIR, 'tribus', 'data', 'static', ''])
-                scss.config.STATIC_URL = '/static/'
-                scss.config.ASSETS_ROOT = get_path([BASEDIR, 'tribus', 'data', 'static', 'assets', ''])
-                scss.config.ASSETS_URL = get_path([scss.config.STATIC_URL, 'assets', ''])
-                scss.config.LOAD_PATHS = find_dirs(get_path([scss.config.STATIC_ROOT, 'source', 'scss', '']))
+                css_filename = os.path.splitext(os.path.basename(scss_file))[0]+'.css'
+                css_file = get_path([scss.config.ASSETS_ROOT, css_filename])
+                scss.config.LOAD_PATHS = find_dirs(os.path.dirname(scss_file))
 
                 scss_compiler = scss.Scss(scss_opts={'compress': True})
                 css = scss_compiler.compile(scss_file=scss_file)
-                print css
-
+                
                 f = open(css_file, 'w')
                 f.write(css)
                 f.close()
@@ -81,8 +87,8 @@ class build_css(Command):
             except Exception, e:
                 print e
 
-            # log.debug("[%s.%s] %s > %s." % (__name__, self.__class__.__name__, scss_file,
-            #                                 os.path.splitext(os.path.basename(scss_file))[0]+'.css'))
+            log.debug("[%s.%s] %s > %s." % (__name__, self.__class__.__name__,
+                                            scss_file, css_filename))
 
 
 class build_js(Command):
