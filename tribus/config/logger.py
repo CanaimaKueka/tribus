@@ -35,5 +35,20 @@ LOGGING = {
             'propagate': True,
             'level': 'DEBUG',
         },
+#         'django': {
+#             'handlers': ['console'],
+#             'propagate': True,
+#             'level': 'DEBUG',
+#         },
+#         'django_auth_ldap': {
+#             'handlers': ['console'],
+#             'propagate': True,
+#             'level': 'DEBUG',
+#         },
+#         'SocialAuth': {
+#             'handlers': ['console'],
+#             'propagate': True,
+#             'level': 'DEBUG',
+#         },
     },
 }
