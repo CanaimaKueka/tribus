@@ -20,6 +20,11 @@ LOGGING = {
         },
     },
     'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'propagate': True,
+            'level': 'DEBUG',
+        },
         'tribus': {
             'handlers': ['console'],
             'propagate': True,

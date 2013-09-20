@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os, sys, djcelery
+import djcelery
 from tribus.common.utils import get_path
 from celery.schedules import crontab
 
@@ -231,7 +231,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.static',
     'django.contrib.auth.context_processors.auth',
     'django.contrib.messages.context_processors.messages',
-    'tribus.web.processors.tribusconf',
+    'tribus.web.processors.default_context',
     'social_auth.context_processors.social_auth_by_type_backends',
 )
 
