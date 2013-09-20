@@ -11,6 +11,8 @@
                     {% if user.is_authenticated %}
                     <ul class="nav">
                         <li class="divider-vertical"></li>
+                        <li><a href="#" role="button" data-toggle="modal" data-target="#trib"><span class="bigger-150 icon-edit"></span></a></li>
+
                         <li>
                             <form class="form-search" action = "/paquetes/busqueda/" method = "POST">
                                 {% csrf_token %}

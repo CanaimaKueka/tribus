@@ -1,8 +1,41 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% block content %}
-{% include 'timeline.html' %}
+        <div class="jumbotron">
+            <div class="container">
+                <div class="row-fluid dashboard_container">
+                    <div class="span8 dashboard_timeline">
+						<div class="action_publisher">
+							<div class="container">
+								<textarea rows="1" class="action-box" autofocus></textarea>
+								<button class="btn btn-primary">{% trans 'Publish' %}</button>
+							</div>
+						</div>
+                    </div>
+                    <div class="span4 dashboard_panel">
+                        {{ tribs }}
+                        <br />
+						{{ follows_c }}
+                    </div>
+                </div>
+            </div>
+        </div>
+		<div id="trib" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h3 id="myModalLabel">{% trans 'What are you doing?' %}</h3>
+			</div>
+			<div class="modal-body">
+				<textarea rows="3" class="trib-box" autofocus></textarea>
+			</div>
+			<div class="modal-footer">
+				<button class="btn" data-dismiss="modal" aria-hidden="true">{% trans 'Close' %}</button>
+				<button class="btn btn-primary">{% trans 'Publish' %}</button>
+			</div>
+		</div>
 {% endblock %}
-{% block trending %}
+
+<!-- {% block trending %}
 	{% if index %}
 		{% if trending %}<h3>Trending Topics</h3>
 		{% for topic in trending %}
@@ -19,3 +52,4 @@
 		{% endfor %}{% endif %}
 	{% endif %}
 {% endblock %}
+ -->
