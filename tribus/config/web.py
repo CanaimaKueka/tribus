@@ -3,6 +3,7 @@
 
 import os, sys, djcelery
 from tribus.common.utils import get_path
+from celery.schedules import crontab
 
 try:
     djcelery.setup_loader()
@@ -35,12 +36,11 @@ STATICFILES_DIRS = [get_path([BASEDIR, 'data', 'static', ''])]
 TEMPLATE_DIRS = [get_path([BASEDIR, 'data', 'html', ''])]
 
 DJANGO_STATIC = True
-DJANGO_STATIC_JSMIN = True
 DJANGO_STATIC_MEDIA_ROOTS = [get_path([BASEDIR, 'data', ''])]
 
-LOGIN_URL='/login/'
-LOGOUT_URL='/logout/'
-LOGIN_REDIRECT_URL="/"
+LOGIN_URL = '/login/'
+LOGOUT_URL = '/logout/'
+LOGIN_REDIRECT_URL = '/'
 
 ROOT_URLCONF = 'tribus.web.urls'
 
@@ -165,6 +165,15 @@ PASSWORD_HASHERS = (
 ACCOUNT_ACTIVATION_DAYS = 7
 
 BROKER_URL = 'redis://localhost:6379/0'
+# Programacion de task para djcelery
+CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
+CELERYBEAT_SCHEDULE = {
+    "verify_repository": {
+        "task": "tribus.web.paqueteria.tasks.verify_repository",
+        "schedule": crontab(),
+        "args": (),
+    },
+}
 
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -250,7 +259,7 @@ CACHES = {
 }
 
 try:
-    from tribus.config.logging import *
+    from tribus.config.logger import *
 except:
     pass
 

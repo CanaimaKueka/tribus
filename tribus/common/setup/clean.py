@@ -61,6 +61,46 @@ class clean_img(Command):
                     print e
 
 
+class clean_css(Command):
+    description = 'Compile .po files into .mo files'
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+
+        CSSMIN_DIR = get_path([BASEDIR, 'tribus', 'data', 'static', 'css', 'min'])
+
+        try:
+            shutil.rmtree(CSSMIN_DIR)
+            log.debug("[%s.%s] Removing \"%s\"." % (__name__, self.__class__.__name__, CSSMIN_DIR))
+        except Exception, e:
+            print e
+
+class clean_js(Command):
+    description = 'Compile .po files into .mo files'
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+
+        JSMIN_DIR = get_path([BASEDIR, 'tribus', 'data', 'static', 'js', 'min'])
+        
+        try:
+            shutil.rmtree(JSMIN_DIR)
+            log.debug("[%s.%s] Removing \"%s\"." % (__name__, self.__class__.__name__, JSMIN_DIR))
+        except Exception, e:
+            print e
+
 class clean_sphinx(Command):
     description = 'Compile .po files into .mo files'
     user_options = []
@@ -145,6 +185,8 @@ class clean(base_clean):
         self.run_command('clean_dist')
         self.run_command('clean_mo')
         self.run_command('clean_img')
+        self.run_command('clean_js')
+        self.run_command('clean_css')
         self.run_command('clean_sphinx')
         self.run_command('clean_man')
         base_clean.run(self)

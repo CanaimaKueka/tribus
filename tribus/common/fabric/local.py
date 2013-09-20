@@ -12,7 +12,6 @@ from tribus.config.pkg import (debian_run_dependencies, debian_build_dependencie
                                f_workenv_preseed, f_sql_preseed, f_users_ldif,
                                f_python_dependencies)
 
-
 def development():
     env.user = pwd.getpwuid(os.getuid()).pw_name
     env.root = 'root'
@@ -20,7 +19,7 @@ def development():
     env.hosts = ['localhost']
     env.basedir = BASEDIR
     env.virtualenv_dir = os.path.join(env.basedir, 'virtualenv')
-    env.virtualenv_args = ' '.join(['--clear', '--no-site-packages', '--distribute'])
+    env.virtualenv_args = ' '.join(['--clear', '--system-site-packages', '--distribute'])
     env.virtualenv_activate = os.path.join(env.virtualenv_dir, 'bin', 'activate')
     env.settings = 'tribus.config.web'
     env.sudo_prompt = 'Executed'
@@ -38,6 +37,19 @@ def environment():
     update_virtualenv()
     configure_django()
     deconfigure_sudo()
+    
+    
+def resetdb():
+    configure_sudo()
+    configure_postgres()
+    configure_django()
+    deconfigure_sudo()
+    
+    
+def filldb():
+    py_activate_virtualenv()
+    from tribus.common.recorder import fill_database
+    fill_database()
 
 
 def configure_sudo():
@@ -150,104 +162,128 @@ def runserver_django():
 
 def update_catalog():
     with cd('%(basedir)s' % env):
-        with settings(command='python setup.py update_catalog' % env):
-            local('%(command)s' % env)
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s python setup.py update_catalog' % env)
 
 
 def extract_messages():
     with cd('%(basedir)s' % env):
-        with settings(command='python setup.py extract_messages' % env):
-            local('%(command)s' % env)
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s python setup.py extract_messages' % env)
 
 
 def build_sphinx():
     with cd('%(basedir)s' % env):
-        with settings(command='python setup.py build_sphinx' % env):
-            local('%(command)s' % env)
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s python setup.py build_sphinx' % env)
 
 
 def build_img():
     with cd('%(basedir)s' % env):
-        with settings(command='python setup.py build_img' % env):
-            local('%(command)s' % env)
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s python setup.py build_img' % env)
+
+
+def build_css():
+    with cd('%(basedir)s' % env):
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s python setup.py build_css' % env)
+
+
+def build_js():
+    with cd('%(basedir)s' % env):
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s python setup.py build_js' % env)
 
 
 def build_man():
     with cd('%(basedir)s' % env):
-        with settings(command='python setup.py build_man' % env):
-            local('%(command)s' % env)
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s python setup.py build_man' % env)
 
 
 def compile_catalog():
     with cd('%(basedir)s' % env):
-        with settings(command='python setup.py compile_catalog' % env):
-            local('%(command)s' % env)
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s python setup.py compile_catalog' % env)
 
 
 def build():
     with cd('%(basedir)s' % env):
-        with settings(command='python setup.py build' % env):
-            local('%(command)s' % env)
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s python setup.py build' % env)
+
+
+def clean_css():
+    with cd('%(basedir)s' % env):
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s python setup.py clean_css' % env)
+
+
+def clean_js():
+    with cd('%(basedir)s' % env):
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s python setup.py clean_js' % env)
 
 
 def clean_img():
     with cd('%(basedir)s' % env):
-        with settings(command='python setup.py clean_img' % env):
-            local('%(command)s' % env)
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s python setup.py clean_img' % env)
 
 
 def clean_sphinx():
     with cd('%(basedir)s' % env):
-        with settings(command='python setup.py clean_sphinx' % env):
-            local('%(command)s' % env)
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s python setup.py clean_sphinx' % env)
 
 
 def clean_mo():
     with cd('%(basedir)s' % env):
-        with settings(command='python setup.py clean_mo' % env):
-            local('%(command)s' % env)
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s python setup.py clean_mo' % env)
 
 
 def clean_man():
     with cd('%(basedir)s' % env):
-        with settings(command='python setup.py clean_man' % env):
-            local('%(command)s' % env)
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s python setup.py clean_man' % env)
 
 
 def clean_dist():
     with cd('%(basedir)s' % env):
-        with settings(command='python setup.py clean_dist' % env):
-            local('%(command)s' % env)
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s python setup.py clean_dist' % env)
 
 
 def clean_pyc():
     with cd('%(basedir)s' % env):
-        with settings(command='python setup.py clean_pyc' % env):
-            local('%(command)s' % env)
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s python setup.py clean_pyc' % env)
 
 
 def clean():
     with cd('%(basedir)s' % env):
-        with settings(command='python setup.py clean' % env):
-            local('%(command)s' % env)
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s python setup.py clean' % env)
 
 
 def sdist():
     with cd('%(basedir)s' % env):
-        with settings(command='python setup.py sdist ' % env):
-            local('%(command)s' % env)
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s python setup.py sdist' % env)
 
 
 def bdist():
     with cd('%(basedir)s' % env):
-        with settings(command='python setup.py bdist ' % env):
-            local('%(command)s' % env)
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s python setup.py bdist' % env)
 
 
 def install():
     with cd('%(basedir)s' % env):
-        with settings(command='python setup.py install ' % env):
-            local('%(command)s' % env)
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s python setup.py install' % env)
 
 #         with settings(command='sed -i -e \'s/# Translations template for Tribus./# $(POTITLE)./\' \
 # -e \'s/# Copyright (C).*/# Copyright (C) $(YEAR) $(AUTHOR)/\' \

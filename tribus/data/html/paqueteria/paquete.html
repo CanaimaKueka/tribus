@@ -1,0 +1,61 @@
+{%extends 'paqueteria/buscador.html'%}
+{% load url from future %}
+{% block title%}Sistéma de busqueda{%endblock%}
+{%block style%}
+	#margenes-separadores{
+		size: 8px;	
+	}
+{%endblock%}
+
+{%block datos%}
+	<div >
+		<legend> </legend>
+			<h2 align="center"><b>{{paquete.Package}}</b></h2>
+		<legend> </legend>
+	</div>
+	<div id = "margenes-separadores">
+		<p><b>Mantenedor:</b>  {{paquete.Maintainer}} </p>
+		<p><b>Seccion:</b>  {{paquete.Section }}</p>
+		<p><b>Prioridad:</b>  {{paquete.Priority }}</p>
+		<p align="justify"> <b>Descripcion:</b> {{paquete.Description}}</p>
+		{% if paquete.Homepage %}
+			<p><b>Pagina:</b> <a href="{{paquete.Homepage}}">{{paquete.Homepage }}</a></p>
+		{% endif %}
+		
+		{% if detalles %}
+			{%for n in detalles.values %}
+				<legend> </legend>
+				<h2 align="center"><b>para {{n.data.Architecture}}</b></h2>
+				<p>- <b>Version:</b> {{n.data.Version}} </p>
+				<p>- <b>Tamaño: </b> {{n.data.Size}}</p>
+				<p>- <b>Tamaño instalado: </b> {{n.data.InstalledSize}}</p>
+				<p>- <b>MD5sum: </b> {{n.data.MD5sum}}</p>
+				<p>- <b><a href= "{{raiz}}{{n.data.Filename}}">Descargar</a></b></p>
+				<legend> </legend>
+			
+				{%for tipo in n.relations.items %}
+					<legend> </legend>
+					<p> * <b> {{ tipo.0 }} </b> </p>
+					<legend> </legend>
+					{%for relacion in tipo.1 %}
+						{% if relacion.alt_id %}
+							{% ifchanged relacion.alt_id %}
+								{% if forloop.first %}
+									<p><a href="/paquetes/busqueda/{{relacion.related_package}}"> {{relacion.related_package}} </a> {% if relacion.version %} ({{relacion.relation}} {{relacion.version}}) {% endif %} 
+								{% else %}	
+									</p><p> <a href="/paquetes/busqueda/{{relacion.related_package}}"> {{relacion.related_package}} </a> {% if relacion.version %} ({{relacion.relation}} {{relacion.version}}) {% endif %}
+								{% endif %} 
+							{% else %}
+							    or	<a href="/paquetes/busqueda/{{relacion.related_package}}"> {{relacion.related_package}} </a> {% if relacion.version %} ({{relacion.relation}} {{relacion.version}}) {% endif %}
+							{% endifchanged %}
+						{% else %}
+							<p> <a href="/paquetes/busqueda/{{relacion.related_package}}"> {{relacion.related_package}} </a> {% if relacion.version %} ({{relacion.relation}} {{relacion.version}}) {% endif %} </p>
+						{% endif %}
+					{% endfor %}
+				{% endfor %}
+			{% endfor %}	
+		{% endif %}
+		<!--
+	   -->
+	</div>
+{%endblock%}
