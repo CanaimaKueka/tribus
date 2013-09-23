@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from tastypie.authorization import Authorization
-from tastypie.authentication import SessionAuthentication
+from tastypie.authentication import SessionAuthentication, Authentication
 from tastypie_mongoengine.resources import MongoEngineResource
 from tastypie.resources import ModelResource, ALL
 from django.contrib.auth.models import User
@@ -26,9 +26,10 @@ class TribResource(MongoEngineResource):
         resource_name = 'trib'
         include_resource_uri = False
         authorization = Authorization()
-        authentication = SessionAuthentication()
+        # authentication = SessionAuthentication()
+        authentication = Authentication()
         filtering = {
-            'trib_id': ALL,
+            'author_id': ALL,
         }
     '''
     {

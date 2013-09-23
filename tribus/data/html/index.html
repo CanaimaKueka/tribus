@@ -8,14 +8,15 @@
                     <div class="span8 dashboard_timeline" ng-controller="TribListCtrl">
 						<div class="action_publisher">
 							<div class="container">
-								<textarea rows="1" class="action-box" autofocus></textarea>
-								<button class="btn btn-primary">{% trans 'Publish' %}</button>
+								<textarea ng-model="newtrib.trib_content" rows="1" class="action-box" autofocus></textarea>
+								<button ng-click="createNewTrib()" class="btn btn-primary">{% trans 'Publish' %}</button>
 							</div>
 						</div>
 						<ul ng-repeat="trib in tribs.objects">
 							<li>
 								{% verbatim %}
-									{{ trib.author_first_name }}
+									{{ trib.trib_content }}
+									{{ trib.author_id }}
 								{% endverbatim %}
 							</li>
 						</ul>
