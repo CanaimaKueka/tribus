@@ -2,7 +2,7 @@
 {% load static %}
 {% load django_static %}
 <!DOCTYPE html>
-<html>
+<html ng-app="{% block ngapp %}index{% endblock %}">
 	<head>
 		<title>{% block title %}{% endblock %}</title>
 		<meta charset="{{ app_charset|lower }}" />
@@ -14,6 +14,11 @@
 		{% endstaticall %}
 		<!--[if IE 7]><link rel="stylesheet" href="{% static 'css/min/font-awesome-ie7.css' %}" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="{% static 'css/min/tribus-ie.css' %}" /><![endif]-->
+        {% if user.is_authenticated %}
+		<script>
+			var user_id = {{ user.id }}
+		</script>
+        {% endif %}
 	</head>
 	<body>
 		{% include "navbar.html" %}

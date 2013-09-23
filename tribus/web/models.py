@@ -9,6 +9,9 @@ from django.db.models.signals import post_save
 from django.conf import settings
 
 
+from mongoengine import (Document, IntField, StringField, DateTimeField,
+    ListField, ReferenceField, CASCADE)
+
 class UserProfile(models.Model):
 
     user = models.OneToOneField(User, related_name='profile_user')
@@ -26,41 +29,66 @@ def create_user_profile(sender, instance, created, **kwargs):
 
 post_save.connect(create_user_profile, sender=User)
 
-class Trib(models.Model):
 
-    user = models.ForeignKey(User, related_name='trib_user')
-    date = models.DateTimeField()
-    content = models.CharField(max_length = 140)
-    comments = models.ForeignKey('self')
-    likes = models.ManyToManyField(User, related_name='trib_likes')
-    dislikes = models.ManyToManyField(User, related_name='trib_dislikes')
+#
+# MongoDB Documents ----------------------------
+#
 
-    def __unicode__(self):
-        return self.content
 
-    def filter(self):
-        """Filtra XSS enlaza hashtags, menciones y enlaces """
-        t = self.contenido
+class Trib(Document):
+    author_id = IntField()
+    author_nick = StringField(max_length=200, required=True)
+    author_first_name = StringField(max_length=200, required=True)
+    author_last_name = StringField(max_length=200, required=True)
+    trib_id = IntField()
+    trib_content = StringField(max_length=200, required=True)
+    trib_pub_date = DateTimeField()
+    retribs = ListField(IntField())
 
-        t = t.replace('&','&amp;')
-        t = t.replace('<','&lt;')
-        t = t.replace('>','&gt;')
-        t = t.replace('\'','&#39;')
-        t = t.replace('"','&quot;')
 
-        hashtags = re.findall('#[a-zA-Z][a-zA-Z0-9_]*', t)
-        for hashtag in hashtags:
-            t = t.replace(hashtag, '<a href="/twitter/buscar/?%s">%s</a>' % (urlencode({'busqueda':hashtag}), hashtag))
+class ReTrib(Document):
+    author_id = IntField()
+    author_nick = StringField(max_length=200, required=True)
+    author_first_name = StringField(max_length=200, required=True)
+    author_last_name = StringField(max_length=200, required=True)
+    trib = ReferenceField(Trib, reverse_delete_rule=CASCADE)
+    trib_pub_date = DateTimeField()
 
-        links = re.findall('http\\:\\/\\/[^ ]+', t)
-        for link in links:
-            t = t.replace(link, '<a href="%s">%s</a>' % (link, link))
+# class Trib(models.Model):
 
-        menciones = re.findall('\\@[a-zA-Z0-9_]+', t)
-        for mencion in menciones:
-            t = t.replace(mencion, '<a href="/twitter/profile/%s/">%s</a>' % (mencion[1:], mencion))
+#     user = models.ForeignKey(User, related_name='trib_user')
+#     date = models.DateTimeField()
+#     content = models.CharField(max_length = 140)
+#     comments = models.ForeignKey('self')
+#     likes = models.ManyToManyField(User, related_name='trib_likes')
+#     dislikes = models.ManyToManyField(User, related_name='trib_dislikes')
 
-        return t
+#     def __unicode__(self):
+#         return self.content
+
+#     def filter(self):
+#         """Filtra XSS enlaza hashtags, menciones y enlaces """
+#         t = self.contenido
+
+#         t = t.replace('&','&amp;')
+#         t = t.replace('<','&lt;')
+#         t = t.replace('>','&gt;')
+#         t = t.replace('\'','&#39;')
+#         t = t.replace('"','&quot;')
+
+#         hashtags = re.findall('#[a-zA-Z][a-zA-Z0-9_]*', t)
+#         for hashtag in hashtags:
+#             t = t.replace(hashtag, '<a href="/twitter/buscar/?%s">%s</a>' % (urlencode({'busqueda':hashtag}), hashtag))
+
+#         links = re.findall('http\\:\\/\\/[^ ]+', t)
+#         for link in links:
+#             t = t.replace(link, '<a href="%s">%s</a>' % (link, link))
+
+#         menciones = re.findall('\\@[a-zA-Z0-9_]+', t)
+#         for mencion in menciones:
+#             t = t.replace(mencion, '<a href="/twitter/profile/%s/">%s</a>' % (mencion[1:], mencion))
+
+#         return t
 
 # class Follow(models.Model):
 #     fecha = models.DateTimeField()

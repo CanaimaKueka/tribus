@@ -25,3 +25,6 @@ webdriverwrapper==1.0.1
 django-ldapdb==0.1.0
 django-auth-ldap==1.1.4
 django-social-auth==0.7.28
+mongoengine
+mimeparse
+django-tastypie-mongoengine

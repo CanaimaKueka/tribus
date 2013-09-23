@@ -69,7 +69,7 @@ def index(request, page = 1):
 
         render_css = ['normalize', 'fonts', 'font-awesome', 'bootstrap',
                         'bootstrap-responsive', 'tribus', 'tribus-responsive']
-        render_js = ['jquery', 'bootstrap']
+        render_js = ['jquery', 'bootstrap', 'angular', 'angular-resource', 'index.app', 'index.controllers', 'index.services']
 
         return render_to_response(
             'index.html', {

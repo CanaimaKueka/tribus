@@ -9,4 +9,5 @@ postgresql
 slapd
 ldap-utils
 redis-server
+mongodb-server
 gcc

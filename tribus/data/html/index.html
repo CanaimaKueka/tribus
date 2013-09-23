@@ -1,16 +1,24 @@
 {% extends 'base.html' %}
 {% load i18n %}
+{% block ngapp %}index{% endblock %}
 {% block content %}
         <div class="jumbotron">
             <div class="container">
                 <div class="row-fluid dashboard_container">
-                    <div class="span8 dashboard_timeline">
+                    <div class="span8 dashboard_timeline" ng-controller="TribListCtrl">
 						<div class="action_publisher">
 							<div class="container">
 								<textarea rows="1" class="action-box" autofocus></textarea>
 								<button class="btn btn-primary">{% trans 'Publish' %}</button>
 							</div>
 						</div>
+						<ul ng-repeat="trib in tribs.objects">
+							<li>
+								{% verbatim %}
+									{{ trib.author_first_name }}
+								{% endverbatim %}
+							</li>
+						</ul>
                     </div>
                     <div class="span4 dashboard_panel">
                         {{ tribs }}

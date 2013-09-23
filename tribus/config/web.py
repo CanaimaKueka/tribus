@@ -2,11 +2,20 @@
 # -*- coding: utf-8 -*-
 
 import djcelery
+import mongoengine
+
 from tribus.common.utils import get_path
 from celery.schedules import crontab
 
 try:
     djcelery.setup_loader()
+except:
+    pass
+
+try:
+    mongoengine.connect(db='tribus',
+        host='localhost', port=27017
+        )
 except:
     pass
 
@@ -161,7 +170,7 @@ PASSWORD_HASHERS = (
     #'tribus.web.user.hashers.DummyPasswordHasher',
 )
 
-
+TASTYPIE_DEFAULT_FORMATS = ['json']
 ACCOUNT_ACTIVATION_DAYS = 7
 
 BROKER_URL = 'redis://localhost:6379/0'
@@ -191,7 +200,9 @@ INSTALLED_APPS = (
     'social_auth',
     'djcelery',
     'south',
-    'django_static'
+    'django_static',
+    'tastypie',
+    'tastypie_mongoengine',
 )
 
 # EMAIL_USE_TLS = True
