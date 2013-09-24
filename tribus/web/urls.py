@@ -9,11 +9,11 @@ admin.autodiscover()
 
 from django.conf.urls import patterns, include, url
 
-
 urlpatterns = patterns(
     '',
 
     url(r'^$', 'tribus.web.views.index'),
+    url(r'^profile/$', 'tribus.web.views.UserProfile'),
     url(r'^tour/$', 'tribus.web.views.tour'),
 
     url(r'', include('tribus.web.user.urls')),

@@ -175,6 +175,13 @@ CELERYBEAT_SCHEDULE = {
     },
 }
 
+# GRAVATAR_URL # Gravatar base url. Defaults to 'http://www.gravatar.com/'
+# GRAVATAR_SECURE_URL # Gravatar base secure https url. Defaults to 'https://secure.gravatar.com/'
+# GRAVATAR_DEFAULT_SIZE # Gravatar size in pixels. Defaults to '80'
+# GRAVATAR_DEFAULT_IMAGE # An image url or one of the following: 'mm', 'identicon', 'monsterid', 'wavatar', 'retro'. Defaults to 'mm'
+# GRAVATAR_DEFAULT_RATING # One of the following: 'g', 'pg', 'r', 'x'. Defaults to 'g'
+# GRAVATAR_DEFAULT_SECURE # True to use https by default, False for plain http. Defaults to True
+
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -191,7 +198,9 @@ INSTALLED_APPS = (
     'social_auth',
     'djcelery',
     'south',
+    'django_gravatar',
     'django_static'
+
 )
 
 # EMAIL_USE_TLS = True

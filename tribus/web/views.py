@@ -40,6 +40,20 @@ def tour(request):
     return render_to_response('tour.html', data, context)
 
 
+def UserProfile(request):
+    render_js = ['jquery', 'bootstrap']
+    render_css = ['normalize', 'fonts', 'font-awesome', 'bootstrap',
+                        'bootstrap-responsive', 'tribus', 'tribus-responsive']
+
+    data = {"render_css": render_css , "render_js":render_js}
+    context = RequestContext(request)
+    if request.user.is_authenticated():
+        
+        return render_to_response('profiles.html', data, context)
+
+    return HttpResponseRedirect('/')
+
+
 def index(request, page = 1):
 
     if request.user.is_authenticated():

@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block content%}
+
+<div class="jumbotron">
+	<div class="container">
+		<div class="row-fluid">
+
+			<div class="span3">
+				<div>
+                    {% load gravatar %}
+					
+                    <a href = "http://gravatar.com/emails/">{% gravatar user.email 200 %}</a>
+				</div>
+                <div>
+				<legend></legend>
+
+                {% block datos %}
+					<p>{{ user.first_name }} {{user.last_name}}
+					<p>{{ user.email }}
+					<p>{{ user.last_login }}
+					<p>{{ user.data_joined }}
+                    <p align = "center"> <a href = "edicion">Editar información</a>
+                {% endblock %}
+				<legend></legend>
+				</div>
+
+			</div>
+			<div class="span9">
+				<div class="navbar">
+				 	<h2 class= "nav"> {{ user.username }}</h2>
+					<ul class="nav pull-right">
+                        <li>
+                            <a href="#">
+                                <span class="bigger-150 icon-home"></span>
+                            </a>
+                        </li>
+
+                        <li class="divider-vertical"></li>
+
+                        <li>
+                            <a href="/profile">
+                            <i class="bigger-150 icon-user"></i>
+                            </a>
+                        </li>
+
+                        <li class="divider-vertical"></li>
+                        <li class="dropdown">
+                            <a id="drop-tasks" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="bigger-150 icon-tasks"></i>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">X</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Y</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Z</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <legend></legend>	
+
+				<div class = "row-fluid">
+
+                    {%block informacion%}
+					<div>
+						<h2>noticia 1</h2>
+						<p> Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
+						</div>
+					<div >
+						<h2>noticia 2</h2>
+						<p> Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
+						</div>
+					<div>
+						<h2>noticia 3</h2>
+						<p> Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
+						</div>
+					<div>
+						<h2>noticia 4</h2>
+						<p> Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
+						</div>	
+                    {%endblock%}
+		</div>
+	</div>
+</div>
+
+{% endblock %}
