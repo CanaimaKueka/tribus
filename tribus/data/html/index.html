@@ -6,59 +6,62 @@
             <div class="container">
                 <div class="row-fluid dashboard_container">
                     <div class="span8 dashboard_timeline" ng-controller="TribListCtrl">
-						<div class="action_publisher">
-							<div class="container">
-								<textarea ng-model="newtrib.trib_content" rows="1" class="action-box" autofocus></textarea>
-								<button ng-click="createNewTrib()" class="btn btn-primary">{% trans 'Publish' %}</button>
-							</div>
-						</div>
-						<ul ng-repeat="trib in tribs.objects">
-							<li>
-								{% verbatim %}
-									{{ trib.trib_content }}
-									{{ trib.author_id }}
-								{% endverbatim %}
-							</li>
-						</ul>
+                        <div class="action_publisher">
+                            <div class="container">
+                                <form>
+                                <textarea ng-model="newtrib.trib_content" rows="1" class="action-box" autofocus>
+                                </textarea>
+                                <button ng-click="createNewTrib()" class="btn btn-primary">{% trans 'Publish' %}</button>
+                                </form>
+                            </div>
+                        </div>
+                        <ul ng-repeat="trib in tribs.objects">
+                            <li>
+                                {% verbatim %}
+                                    {{ trib.trib_content }}
+                                    {{ trib.author_id }}
+                                {% endverbatim %}
+                            </li>
+                        </ul>
                     </div>
                     <div class="span4 dashboard_panel">
                         {{ tribs }}
                         <br />
-						{{ follows_c }}
+                        {{ follows_c }}
                     </div>
                 </div>
             </div>
         </div>
-		<div id="trib" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="myModalLabel">{% trans 'What are you doing?' %}</h3>
-			</div>
-			<div class="modal-body">
-				<textarea rows="3" class="trib-box" autofocus></textarea>
-			</div>
-			<div class="modal-footer">
-				<button class="btn" data-dismiss="modal" aria-hidden="true">{% trans 'Close' %}</button>
-				<button class="btn btn-primary">{% trans 'Publish' %}</button>
-			</div>
-		</div>
+        <div id="trib" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">{% trans 'What are you doing?' %}</h3>
+            </div>
+            <div class="modal-body">
+                <textarea rows="3" class="trib-box" autofocus></textarea>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">{% trans 'Close' %}</button>
+                <button class="btn btn-primary">{% trans 'Publish' %}</button>
+            </div>
+        </div>
 {% endblock %}
 
 <!-- {% block trending %}
-	{% if index %}
-		{% if trending %}<h3>Trending Topics</h3>
-		{% for topic in trending %}
-			<a href="/twitter/buscar/?busqueda=%23{{ topic }}">#{{ topic }}</a><br>
-		{% endfor %}{% endif %}
-		{% if seguir %}<br><h3>Quizás te interese seguir a</h3>
-		{% for u in seguir %}
-			<a href="/twitter/profile/{{ u }}/">{{ u.get_full_name }} (@{{ u }})</a><br>
-			<form action="/twitter/follow/" method="post">
-				{% csrf_token %}
-				<input type="hidden" name="user" value="{{ u }}">
-				<input class="btn btn-success" type="submit" value="Seguir"><br>
-			</form>
-		{% endfor %}{% endif %}
-	{% endif %}
+    {% if index %}
+        {% if trending %}<h3>Trending Topics</h3>
+        {% for topic in trending %}
+            <a href="/twitter/buscar/?busqueda=%23{{ topic }}">#{{ topic }}</a><br>
+        {% endfor %}{% endif %}
+        {% if seguir %}<br><h3>Quizás te interese seguir a</h3>
+        {% for u in seguir %}
+            <a href="/twitter/profile/{{ u }}/">{{ u.get_full_name }} (@{{ u }})</a><br>
+            <form action="/twitter/follow/" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="user" value="{{ u }}">
+                <input class="btn btn-success" type="submit" value="Seguir"><br>
+            </form>
+        {% endfor %}{% endif %}
+    {% endif %}
 {% endblock %}
  -->
