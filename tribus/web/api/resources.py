@@ -34,17 +34,16 @@ class TribResource(MongoEngineResource):
     '''
     {
     'author_id': 1,
-    'author_nick': 'luis',
+    'author_username': 'luis',
     'author_first_name': 'Menganito',
     'author_last_name': 'Fulanito',
-    'trib_id': 1,
     'trib_content': 'Hola, vengo a flotar.',
     'trib_pub_date': '2013-05-26T05:00:00.000Z',
     'retribs': [1, 2, 3]
     }
     '''
     '''
-    curl --dump-header - -H "Content-Type: application/json" -X POST --data '{"author_id": 1, "author_nick": "luis", "author_first_name": "Menganito", "author_last_name": "Fulanito", "trib_id": 1, "trib_content": "Hola, vengo a flotar.", "trib_pub_date": "2013-05-26T05:00:00.000Z", "retribs": [1, 2, 3]}' http://localhost:8000/api/0.1/trib/
+    curl --dump-header - -H "Content-Type: application/json" -X POST --data '{"author_id": 1, "author_nick": "luis", "author_first_name": "Menganito", "author_last_name": "Fulanito", "trib_content": "Hola, vengo a flotar.", "trib_pub_date": "2013-05-26T05:00:00.000Z", "retribs": [1, 2, 3]}' http://localhost:8000/api/0.1/trib/
     '''
     '''
     curl --dump-header - -H "Content-Type: application/json" -X DELETE  http://localhost:8000/api/0.1/trib/523f66e6ea10251a1b8664af/

@@ -37,12 +37,11 @@ post_save.connect(create_user_profile, sender=User)
 
 class Trib(Document):
     author_id = IntField()
-    author_nick = StringField(max_length=200, required=True)
+    author_username = StringField(max_length=200, required=True)
     author_first_name = StringField(max_length=200, required=True)
     author_last_name = StringField(max_length=200, required=True)
-    trib_id = IntField()
     trib_content = StringField(max_length=200, required=True)
-    trib_pub_date = DateTimeField()
+    trib_pub_date = DateTimeField(required=True)
     retribs = ListField(IntField())
 
 

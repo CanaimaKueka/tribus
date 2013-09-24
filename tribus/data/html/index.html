@@ -9,6 +9,10 @@
 						<div class="action_publisher">
 							<div class="container">
 								<textarea ng-model="newtrib.trib_content" rows="1" class="action-box" autofocus></textarea>
+								<input type="hidden" ng-model="newtrib.author_id" value="{{ user.id }}" />
+								<input type="hidden" ng-model="newtrib.author_username" value="{{ user.username }}" />
+								<input type="hidden" ng-model="newtrib.author_first_name" value="{{ user.first_name }}" />
+								<input type="hidden" ng-model="newtrib.author_last_name" value="{{ user.last_name }}" />
 								<button ng-click="createNewTrib()" class="btn btn-primary">{% trans 'Publish' %}</button>
 							</div>
 						</div>
@@ -35,7 +39,7 @@
 				<h3 id="myModalLabel">{% trans 'What are you doing?' %}</h3>
 			</div>
 			<div class="modal-body">
-				<textarea rows="3" class="trib-box" autofocus></textarea>
+				<textarea rows="3" class="trib-box-modal" autofocus></textarea>
 			</div>
 			<div class="modal-footer">
 				<button class="btn" data-dismiss="modal" aria-hidden="true">{% trans 'Close' %}</button>

@@ -7880,6 +7880,14 @@ input, button, select, textarea {
   background: url('../../img/ch-ci.png') no-repeat #f2f2e8;
 }
 
+.trib-box-modal {
+    width: 98%;
+    padding: 1%;
+    vertical-align: top;
+    overflow: hidden;
+    text-shadow: none;
+}
+
 .trib-box {
     width: 98%;
     padding: 1%;
