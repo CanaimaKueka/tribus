@@ -5,30 +5,39 @@
         <div class="jumbotron">
             <div class="container">
                 <div class="row-fluid dashboard_container">
-                    <div class="span8 dashboard_timeline" ng-controller="TribListCtrl">
+                    <div class="span8 dashboard_timeline" ng-controller="TribList">
                         <div class="action_publisher">
-                            <div class="container">
-                                <textarea ng-model="newtrib.trib_content" rows="1" class="action-box" autofocus></textarea>
-                                <input type="hidden" ng-model="newtrib.author_id" value="{{ user.id }}" />
-                                <input type="hidden" ng-model="newtrib.author_username" value="{{ user.username }}" />
-                                <input type="hidden" ng-model="newtrib.author_first_name" value="{{ user.first_name }}" />
-                                <input type="hidden" ng-model="newtrib.author_last_name" value="{{ user.last_name }}" />
-                                <button ng-click="createNewTrib()" class="btn btn-primary">{% trans 'Publish' %}</button>
+                            <div class="row-fluid">
+                                <form ng-submit="createNewTrib()">
+                                    <span class="span2">
+                                        <span class="action_avatar"></span>
+                                    </span>
+                                    <span class="span8 action_content">
+                                        <span class="icon-caret-left white bigger-300"></span>
+                                        <textarea ng-model="newtrib.trib_content" rows="1" class="action_box" placeholder="{% blocktrans %}What's happening?{% endblocktrans %}">
+                                        </textarea>
+                                    </span>
+                                    <span class="span2 action_submit">
+                                        <button class="btn btn-small btn-success">
+                                            <i class="icon-pencil bigger-200"></i>
+                                            {% trans 'Publish' %}
+                                        </button>
+                                    </span>
+                                </form>
                             </div>
                         </div>
-                        <ul ng-repeat="trib in tribs.objects">
-                            <li>
-                                {% verbatim %}
-                                    {{ trib.trib_content }}
-                                    {{ trib.author_id }}
-                                {% endverbatim %}
-                            </li>
-                        </ul>
+                        <div class="trib_list">
+                            <ul ng-repeat="trib in tribs.objects">
+                                <li>
+                                    {% verbatim %}
+                                        {{ trib.trib_content }}
+                                    {% endverbatim %}
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="span4 dashboard_panel">
-                        {{ tribs }}
-                        <br />
-                        {{ follows_c }}
+
                     </div>
                 </div>
             </div>

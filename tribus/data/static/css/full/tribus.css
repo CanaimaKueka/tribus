@@ -1053,6 +1053,8 @@ a:focus , a:active{
 .bigger-125 { font-size:125%;}
 .bigger-150 { font-size:150%; }
 .bigger-200 { font-size:200%; }
+.bigger-300 { font-size:300%; }
+.bigger-400 { font-size:400%; }
 .smaller-90 {font-size:90%;}
 .smaller-75 { font-size:75%;}
 .smaller-50 { font-size:50%; }
@@ -7928,4 +7930,45 @@ input, button, select, textarea {
 	     -o-border-radius: 6px;
 	        border-radius: 6px;
 	
+}
+
+.action_content > .icon-caret-left {
+	position:relative;
+	left: 1%;
+    margin: 4% 0%;
+}
+
+.action_content > .action_box {
+    padding: 2%;
+    margin: 2% 0%;
+    width: 92%;
+    resize:none;
+    vertical-align: top;
+    overflow: hidden;
+    text-shadow: none;
+    box-shadow: none;
+    border: none;
+}
+
+.action_submit {
+    margin: 2% 0%;
+	
+}
+
+.action_avatar {
+	background-color: #fff;
+	-webkit-border-radius: 6px;
+	   -moz-border-radius: 6px;
+	     -o-border-radius: 6px;
+	        border-radius: 6px;
+	margin: 10px 10px 10px 40px;
+	float:left;
+	display: block;
+	width: 70px;
+	height: 70px;
+}
+
+[class^="icon-"],
+[class*=" icon-"] {
+  vertical-align: middle;
 }
