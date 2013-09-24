@@ -4,6 +4,6 @@ function TribListCtrl($scope, TribsFactory) {
 
 	$scope.createNewTrib = function(){
 		TribsFactory.create($scope.newtrib);
-	}
-
+		console.log($scope.newtrib);
+	};
 }

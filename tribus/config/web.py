@@ -170,6 +170,8 @@ PASSWORD_HASHERS = (
     #'tribus.web.user.hashers.DummyPasswordHasher',
 )
 
+APPEND_SLASH = False
+TASTYPIE_ALLOW_MISSING_SLASH = True
 TASTYPIE_DEFAULT_FORMATS = ['json']
 ACCOUNT_ACTIVATION_DAYS = 7
 
