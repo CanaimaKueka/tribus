@@ -15,11 +15,14 @@ urlpatterns = patterns(
     url(r'^$', 'tribus.web.views.index'),
     url(r'^profile/$', 'tribus.web.views.UserProfile'),
     url(r'^tour/$', 'tribus.web.views.tour'),
+    url(r'^settings/$', 'tribus.web.views.EditUserProfile'),
+    url(r'^settings/edition$', 'tribus.web.views.EditUserProfile'),
+    url(r'^settings/changepassword$', 'tribus.web.views.ChangePassword'),
+
 
     url(r'', include('tribus.web.user.urls')),
     url(r'', include('tribus.web.paqueteria.urls')),
     url(r'', include('social_auth.urls')),
-    
     
 #   url('^page/(?P<page>\\d+)/$', 'index'),
 #   url('^register/$', 'register'),

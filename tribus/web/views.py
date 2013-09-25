@@ -47,9 +47,46 @@ def UserProfile(request):
 
     data = {"render_css": render_css , "render_js":render_js}
     context = RequestContext(request)
+
     if request.user.is_authenticated():
         
-        return render_to_response('profiles.html', data, context)
+        return render_to_response('profile/profiles.html', data, context)
+
+    return HttpResponseRedirect('/')
+
+
+def EditUserProfile(request):
+    render_js = ['jquery', 'bootstrap']
+    render_css = ['normalize', 'fonts', 'font-awesome', 'bootstrap',
+                        'bootstrap-responsive', 'tribus', 'tribus-responsive']
+
+    data = {"render_css": render_css , "render_js":render_js}
+    context = RequestContext(request)
+    
+        # aqui debe estar la logica del los formularios cn su valudacion
+
+
+    if request.user.is_authenticated():
+        
+        return render_to_response('profile/edit.html', data, context)
+
+    return HttpResponseRedirect('/')
+
+
+def ChangePassword(request):
+    render_js = ['jquery', 'bootstrap']
+    render_css = ['normalize', 'fonts', 'font-awesome', 'bootstrap',
+                        'bootstrap-responsive', 'tribus', 'tribus-responsive']
+
+    data = {"render_css": render_css , "render_js":render_js}
+    context = RequestContext(request)
+    
+        # aqui debe estar la logica del los formularios cn su valudacion
+
+
+    if request.user.is_authenticated():
+        
+        return render_to_response('profile/change_password.html', data, context)
 
     return HttpResponseRedirect('/')
 
@@ -62,9 +99,9 @@ def index(request, page = 1):
         t0 = TWEETS_EN_PAGE * (int(page) - 1)
         t1 = TWEETS_EN_PAGE + t0
 
-        profile = request.user.get_profile()        # Give me the user profile
-        followers = [followers for f in profile.followers.all()]
-        follows = [follows for f in profile.follows.all()]
+        #profile = request.user.get_profile()       # Give me the user profile
+        followers = [followers for f in request.user.followers.all()]
+        follows = [follows for f in request.user.follows.all()]
         follows.append(request.user)
 
         tribs = Trib.objects.filter(user__in = follows).order_by('-date')[t0:t1]
@@ -87,7 +124,7 @@ def index(request, page = 1):
 
         return render_to_response(
             'index.html', {
-                'p' : profile,
+                'p' : request.user,
                 'next' : int(page) + 1,
                 'page' : page,
                 'prev' : int(page) - 1,
