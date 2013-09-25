@@ -13,3 +13,5 @@
 * [] Documentación de tickets y funciones.
 * [] Traducciones.
 * [] Mejorar UI de índice de paquetes.
+* [] Infinite scroll + limitTo + angular.js.
+* [] Better API URls, better pagination.
