@@ -2945,8 +2945,8 @@ button.btn:active  {
 }
 
 .dropdown-menu {
-
- box-shadow:0 2px 4px rgba(0, 0, 0, 0.2);
+    margin: 7px 0px 0px;
+ /*box-shadow:0 2px 4px rgba(0, 0, 0, 0.2);*/
 }
 .dropdown-submenu > a:after {
  margin-right:-5px;
@@ -7924,12 +7924,37 @@ input, button, select, textarea {
 }
 
 .action_publisher {
-	background-color: rgb(228,228,214);
+	background-color: rgb(248, 248, 241);
 	-webkit-border-radius: 6px;
 	   -moz-border-radius: 6px;
 	     -o-border-radius: 6px;
 	        border-radius: 6px;
+	border: 1px solid rgba(180, 180, 159, 0.5);
 	
+}
+
+.trib_list {
+	margin:20px 0px;
+	background-color: rgb(248, 248, 241);
+	-webkit-border-radius: 6px;
+	   -moz-border-radius: 6px;
+	     -o-border-radius: 6px;
+	        border-radius: 6px;
+	border: 1px solid rgba(180, 180, 159, 0.5);
+	list-style: none inside none;
+}
+
+.trib_list > ul {
+	padding: 0;
+	margin: 0;
+	list-style: none inside none;
+}
+
+.trib_list > ul > li {
+}
+
+.trib_item {
+	border-bottom: 1px solid rgba(180, 180, 159, 0.5);
 }
 
 .action_content > .icon-caret-left {
@@ -7942,6 +7967,7 @@ input, button, select, textarea {
     padding: 2%;
     margin: 2% 0%;
     width: 92%;
+    min-height: 2em;
     resize:none;
     vertical-align: top;
     overflow: hidden;
@@ -7961,7 +7987,7 @@ input, button, select, textarea {
 	   -moz-border-radius: 6px;
 	     -o-border-radius: 6px;
 	        border-radius: 6px;
-	margin: 10px 10px 10px 40px;
+	margin: 10px 10px 10px 60px;
 	float:left;
 	display: block;
 	width: 70px;

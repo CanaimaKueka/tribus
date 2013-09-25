@@ -47,8 +47,8 @@ TEMPLATE_DIRS = [get_path([BASEDIR, 'data', 'html', ''])]
 DJANGO_STATIC = True
 DJANGO_STATIC_MEDIA_ROOTS = [get_path([BASEDIR, 'data', ''])]
 
-LOGIN_URL = '/login/'
-LOGOUT_URL = '/logout/'
+LOGIN_URL = '/login'
+LOGOUT_URL = '/logout'
 LOGIN_REDIRECT_URL = '/'
 
 ROOT_URLCONF = 'tribus.web.urls'

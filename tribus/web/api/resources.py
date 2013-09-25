@@ -22,12 +22,11 @@ class TribResource(MongoEngineResource):
     
     class Meta:
         queryset = Trib.objects.all()
-        excludes = ['id']
+        # excludes = ['id']
         resource_name = 'trib'
         include_resource_uri = False
         authorization = Authorization()
-        # authentication = SessionAuthentication()
-        authentication = Authentication()
+        authentication = SessionAuthentication()
         filtering = {
             'author_id': ALL,
         }

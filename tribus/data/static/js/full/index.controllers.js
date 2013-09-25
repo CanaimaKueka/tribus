@@ -5,11 +5,11 @@ function TribList($scope, Tribs) {
         author_username: user_username,
         author_first_name: user_first_name,
         author_last_name: user_last_name,
-        trib_pub_date: new Date(),
         retribs: []
     };
 
     $scope.createNewTrib = function(){
+        $scope.newtrib.trib_pub_date = new Date();
         Tribs.create($scope.newtrib);
         $scope.tribs = Tribs.query();
     };

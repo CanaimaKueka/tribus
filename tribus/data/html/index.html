@@ -14,11 +14,11 @@
                                     </span>
                                     <span class="span8 action_content">
                                         <span class="icon-caret-left white bigger-300"></span>
-                                        <textarea ng-model="newtrib.trib_content" rows="1" class="action_box" placeholder="{% blocktrans %}What's happening?{% endblocktrans %}">
+                                        <textarea ng-model="newtrib.trib_content" rows="1" class="action_box autosize expand" placeholder="{% blocktrans %}What's happening?{% endblocktrans %}">
                                         </textarea>
                                     </span>
                                     <span class="span2 action_submit">
-                                        <button class="btn btn-small btn-success">
+                                        <button class="action_button btn btn-small btn-success">
                                             <i class="icon-pencil bigger-200"></i>
                                             {% trans 'Publish' %}
                                         </button>
@@ -28,10 +28,24 @@
                         </div>
                         <div class="trib_list">
                             <ul ng-repeat="trib in tribs.objects">
-                                <li>
-                                    {% verbatim %}
-                                        {{ trib.trib_content }}
-                                    {% endverbatim %}
+                                <li class="trib_item">
+                                    <div class="row-fluid">
+                                        <span class="span2">
+                                            <span class="trib_avatar"></span>
+                                        </span>
+                                        <span class="span8 trib_content">
+                                            <h3>
+                                                {% verbatim %}
+                                                    {{ trib.author_first_name }}
+                                                {% endverbatim %}
+                                            </h3>
+                                            {% verbatim %}
+                                                {{ trib.trib_content }}
+                                                {{ trib.id }}
+
+                                            {% endverbatim %}
+                                        </span>
+                                    </div>
                                 </li>
                             </ul>
                         </div>
