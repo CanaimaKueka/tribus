@@ -196,35 +196,7 @@ def create_label(label_name, tag):
         label = Label(Name = label_name, Tags = tag)
         label.save()
         return label
-        
-# TODO: Documentar, cambiar nombres poco intuitivos, terminar de traducir
-def record_relationships(detail, rtype, rels):
-    limits = detail.Relations.filter(relation_type = rtype).aggregate(Max('alt_id'))
-    M = limits['alt_id__max']
-    if M:
-        M += 1
-    for r in rels:
-        record_relationship(detail, rtype, r, M)
-        
-# TODO: Documentar, cambiar nombres poco intuitivos, terminar de traducir
-def fix_index(pack, arch, rtype):
-    val = Relation.objects.filter(details__package__Package = pack,
-                                  details__Architecture = arch,
-                                  relation_type = rtype,
-                                  alt_id__gte = 1).values('alt_id')
-    ind_list = []                              
-    for n in val:
-        if n.values()[0] not in ind_list:
-            ind_list.append(n.values()[0])
-    ind_list.reverse()
-    total = len(ind_list)
-    for el in range(1, total +1):
-        print el
-        Relation.objects.filter(details__package__Package = pack,
-                                details__Architecture = arch,
-                                relation_type = rtype,
-                                alt_id = ind_list[el - 1]).update(**{'alt_id': el})
-   
+                
 # TODO: Documentar, cambiar nombres poco intuitivos, terminar de traducir
 def record_tags(section, pq):
     if section.has_key('Tag'):
@@ -234,22 +206,26 @@ def record_tags(section, pq):
             value = create_tag(div_tag[1])
             label = create_label(div_tag[0], value)
             pq.Labels.add(label)
-                                          
+            
 # TODO: Documentar, cambiar nombres poco intuitivos, terminar de traducir
-def record_section(section):
-    p = record_package(section)
-    d = record_details(section, p)
-    for rel in section.relations.items():
+def record_relations(details, relations):
+    for rel in relations:
         alt_id = 1
         if rel[1]:
             for r in rel[1]:
                 if len(r) > 1:
                     for rr in r:
-                        record_relationship(d, rel[0], rr, alt_id)
+                        record_relationship(details, rel[0], rr, alt_id)
                     alt_id += 1
                 else:
-                    record_relationship(d, rel[0], r[0])
+                    record_relationship(details, rel[0], r[0])
                     
+# TODO: Documentar, cambiar nombres poco intuitivos, terminar de traducir
+def record_section(section):
+    p = record_package(section)
+    d = record_details(section, p)
+    record_relations(d, section.relations.items())
+    
 # TODO: Documentar, cambiar nombres poco intuitivos, terminar de traducir
 def update_package(section):
     exists = Package.objects.filter(Package = section['Package'])
@@ -271,22 +247,6 @@ def update_details(pq, section):
     exists.update(**verify_fields(section, detail_fields))
     exists[0].save()
     return exists[0]
-    
-# TODO: Documentar, cambiar nombres poco intuitivos, terminar de traducir
-def verify_obsolete(section, rtype, rel_bd):
-    for relacion in rel_bd:
-        found = False
-        for name in section[rtype].replace(',', ' ').split():
-            if re.match('^'+relacion.related_package.Package.replace("+", "\+").replace("-", "\-")+'$' , name):
-                found = True
-                break
-        if not found:
-            print "######"
-            print "He detectado que esta relacion --> ", relacion
-            print "no esta en el archivo Packages, por lo tanto la eliminare "
-            relacion.delete()
-            if relacion.alt_id != None:
-                fix_index(section['Package'], section['Architecture'], rtype)
 
 # TODO: Documentar, cambiar nombres poco intuitivos, terminar de traducir
 def update_section(section):
@@ -294,75 +254,8 @@ def update_section(section):
     d = update_details(p, section)
     print "\nIniciando asistente de actualizacion"
     print "Actualizando la seccion -->", section['Package']
-    for rel in section.relations.items():
-        if rel[1]:
-            existent_rel = Relation.objects.filter(details__package__Package = section['Package'],
-                                                   details = d, relation_type = rel[0])
-            verify_obsolete(section, rel[0], existent_rel)
-            for r in rel[1]:
-                for relation in r:
-                    exists = Relation.objects.filter(related_package__Package = relation['name'],
-                                                     details = d, relation_type = rel[0])
-                    if exists and len(exists) == 1:
-                        print "######"
-                        print "He detectado que ya existe una relacion con el mismo nombre, que debo hacer?"
-                        print relation
-                        if relation['version']:
-                            o, n = relation['version']
-                            if exists[0].relation == o and exists[0].version != n:
-                                print "Tiene el mismo orden, pero con una version distinta"
-                                print "Actualizare la version de esta relacion -->", exists[0], n
-                                exists[0].version = n
-                                exists[0].save()
-                            elif exists[0].relation != o:
-                                print "Tiene orden distinto"
-                                print "Registrare esta nueva relacion -->", relation
-                                record_relationship(d, rel[0], relation)
-                            elif exists[0].relation == o and exists[0].version == n:
-                                print "El orden y la version son identicas, por lo tanto no hago nada =)"
-                                print relation
-                                print exists[0]
-                            else:
-                                print "Ha ocurrido un fallo en la logica del programador!"
-                                print "Esta es la informacion que puedo suministrar:"
-                                print relation
-                                print exists[0]
-                        else:
-                            print "La relacion no tiene version y por lo tanto no debo hacer nada"
-                            
-                    elif exists and len(exists) > 1:
-                        print "######"
-                        print "He detectado que existen varias relaciones con el mismo nombre, que debo hacer?"
-                        print relation
-                        actual = exists.filter(relation = relation['version'][0])
-                        if actual:
-                            print "Selecciono la relacion coincidente con el orden"
-                            print "Actualizare la version -->", actual[0], relation['version'][1]
-                            actual[0].version = relation['version'][1]
-                            actual[0].save()
-                        else:
-                            print "CDCNI: Caso desconocido y catastrofico no identificado"
-                            print relation
-                    else:
-                        if len(r) > 1:
-                            print "######"
-                            print "He detectado que hay una relacion multiple sin registrar"
-                            print "Procedere a registrarla"
-                            record_relationships(d, rel[0], r)
-                        else:
-                            print "######"
-                            print "No he encontrado la relacion en la base de datos, por lo tanto"
-                            print "Registrare esta nueva relacion -->", relation
-                            record_relationship(d, rel[0], relation)  
-        else:
-            listarelaciones = Relation.objects.filter(details = d, relation_type = rel[0])
-            if listarelaciones:
-                for relaciones in listarelaciones:
-                    print "######"
-                    print "He detectado que esta categoria ya no es valida, por lo tanto"
-                    print "Eliminare los campos en esta categoria vacia -->", listarelaciones
-                    relaciones.delete()
-
+    d.Relations.all().delete()
+    record_relations(d, section.relations.items())
     print "Actualizacion finalizada"
     
 # TODO: Documentar, cambiar nombres poco intuitivos, terminar de traducir
