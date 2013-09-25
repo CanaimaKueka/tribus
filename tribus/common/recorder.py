@@ -42,7 +42,7 @@ Este modulo contiene funciones comunes para registrar datos de paquetes desde un
 #   la base de datos.
 # 7. Documentar, documentar, documentar.
 # 8. Hacer casos de prueba para los metodos criticos.
-# 9. Un metodo en fabric para llenar la base de datos, sin romper otras cosas.
+# 9. Un metodo en fabric para llenar la base de datos, sin romper otras cosas. COMPLETADO
 # 10. Agregar seccion para agregar nuevos paquetes durante las actualizaciones. COMPLETADO
 # 11. Corregir descripcion de atributos en los modelos.
 # 12. IDEA: Separar el registro y actualizacion en modulos distintos, permitiendo que el de actualizacion
@@ -64,8 +64,18 @@ from django.db.models import Max
 from tribus.web.paqueteria.models import *
 from tribus.config.pkgrecorder import amd64, i386, package_fields, detail_fields, local, canaimai386
 
-# TODO: Documentar
+# TODO: Traducir documentacion
 def record_maintainer(maintainer_data):
+    """
+    Verifica si existe un mantenedor que coincida con los datos suministrados.
+    Si no existe crea uno nuevo con los datos suministrados.
+    
+    :param maintainer_data: cadena de texto que contiene los datos del mantenedor.
+    
+    :return: una representacion de un mantenedor
+             
+    :rtype: ``Maintainer``
+    """
     name, mail = email.Utils.parseaddr(maintainer_data)
     exists = Maintainer.objects.filter(Name = name, Email = mail)
     if not exists:
@@ -77,6 +87,13 @@ def record_maintainer(maintainer_data):
 
 # TODO: Documentar, cambiar nombres poco intuitivos
 def verify_fields(section, fields):
+    """
+    Verifica si los campos presentes en la lista ``fields`` estan en la 
+    seccion correspondiente. De ser asi copia el contenido del campo en 
+    un diccionario y en caso de que el nombre del campo contenga un guion
+    este se elimina.
+    """
+    
     d = {}
     for field in fields:
         if section.has_key(field):
@@ -226,7 +243,6 @@ def record_section(section):
         alt_id = 1
         if rel[1]:
             for r in rel[1]:
-                pass
                 if len(r) > 1:
                     for rr in r:
                         record_relationship(d, rel[0], rr, alt_id)
