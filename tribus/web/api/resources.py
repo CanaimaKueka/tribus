@@ -26,10 +26,14 @@ class TribResource(MongoEngineResource):
         resource_name = 'trib'
         include_resource_uri = False
         authorization = Authorization()
-        authentication = SessionAuthentication()
+        # authentication = SessionAuthentication()
+        authentication = Authentication()
         filtering = {
             'author_id': ALL,
         }
+        ordering = [
+            'trib_pub_date',
+        ]
     '''
     {
     'author_id': 1,

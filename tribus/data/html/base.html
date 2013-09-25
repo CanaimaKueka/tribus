@@ -16,10 +16,10 @@
         <!--[if lte IE 8]><link type="text/css" rel="stylesheet" href="{% static 'css/min/tribus-ie.css' %}" /><![endif]-->
         {% if user.is_authenticated %}
         <script type="text/javascript">
-            var user_id = '{{ user.id }}'
-            var user_first_name = '{{ user.first_name }}'
-            var user_last_name = '{{ user.last_name }}'
-            var user_username = '{{ user.username }}'
+            var user_id = '{{ user.id }}';
+            var user_first_name = '{{ user.first_name }}';
+            var user_last_name = '{{ user.last_name }}';
+            var user_username = '{{ user.username }}';
         </script>
         {% endif %}
     </head>

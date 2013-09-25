@@ -9,16 +9,18 @@
                         <div class="action_publisher">
                             <div class="row-fluid">
                                 <form ng-submit="createNewTrib()">
-                                    <span class="span2">
+                                    <span class="span1">
                                         <span class="action_avatar"></span>
                                     </span>
-                                    <span class="span8 action_content">
-                                        <span class="icon-caret-left white bigger-300"></span>
-                                        <textarea ng-model="newtrib.trib_content" rows="1" class="action_box autosize expand" placeholder="{% blocktrans %}What's happening?{% endblocktrans %}">
-                                        </textarea>
+                                    <span class="span9 action_content">
+                                        <span class="arrow_left"></span>
+                                        <span class="action_bubble">
+                                            <textarea ng-model="newtrib.trib_content" rows="1" class="action_box autosize expand" placeholder="{% blocktrans %}What's happening?{% endblocktrans %}">
+                                            </textarea>
+                                        </span>
                                     </span>
                                     <span class="span2 action_submit">
-                                        <button class="action_button btn btn-small btn-success">
+                                        <button class="action_button btn btn-success">
                                             <i class="icon-pencil bigger-200"></i>
                                             {% trans 'Publish' %}
                                         </button>
@@ -28,24 +30,43 @@
                         </div>
                         <div class="trib_list">
                             <ul ng-repeat="trib in tribs.objects">
-                                <li class="trib_item">
-                                    <div class="row-fluid">
-                                        <span class="span2">
-                                            <span class="trib_avatar"></span>
-                                        </span>
-                                        <span class="span8 trib_content">
+                                <li class="row-fluid trib_item">
+                                    <span class="span2">
+                                        <span class="trib_avatar"></span>
+                                    </span>
+                                    <span class="arrow_left"></span>
+                                    <span class="span9 trib_body">
+                                        <span class="trib_title">
                                             <h3>
-                                                {% verbatim %}
-                                                    {{ trib.author_first_name }}
-                                                {% endverbatim %}
-                                            </h3>
                                             {% verbatim %}
-                                                {{ trib.trib_content }}
-                                                {{ trib.id }}
-
+                                                {{ trib.author_first_name }}
+                                                {{ trib.author_last_name }}
                                             {% endverbatim %}
+                                            </h3>
+                                            <h4>
+                                            {% verbatim %}
+                                                @{{ trib.author_username }}
+                                            {% endverbatim %}
+                                            </h4>
                                         </span>
-                                    </div>
+                                        <span class="trib_content">
+                                        {% verbatim %}
+                                            {{ trib.trib_content }}
+                                        {% endverbatim %}
+                                        </span>
+                                        <span class="trib_interact">
+                                        {% verbatim %}
+                                            {{ trib.trib_pub_date }}
+                                        {% endverbatim %}
+                                            <span class="label label-warning">
+                                                <span class="icon-warning-sign bigger-120"></span>
+                                                Warning
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <span class="span1 trib_type">
+                                        TIPO
+                                    </span>
                                 </li>
                             </ul>
                         </div>

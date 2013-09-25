@@ -1,4 +1,4 @@
-function TribList($scope, Tribs) {
+function TribList($scope, $timeout, Tribs) {
     $scope.tribs = Tribs.query();
     $scope.newtrib = {
         author_id: user_id,
@@ -11,6 +11,11 @@ function TribList($scope, Tribs) {
     $scope.createNewTrib = function(){
         $scope.newtrib.trib_pub_date = new Date();
         Tribs.create($scope.newtrib);
-        $scope.tribs = Tribs.query();
     };
+
+    // (function tick() {
+    //     $scope.tribs = Tribs.query(function(){
+    //         $timeout(tick, 10000);
+    //     });
+    // })();
 }
