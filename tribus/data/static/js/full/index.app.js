@@ -1,1 +1,1 @@
-angular.module('index', ['index.services']);
+angular.module('index', ['index.services', 'infinite-scroll']);

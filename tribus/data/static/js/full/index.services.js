@@ -1,10 +1,11 @@
 angular.module('index.services', ['ngResource']).
-    factory('Tribs', function($resource){
+    factory('Tribs', function($resource, $http){
         return $resource('/api/0.1/trib/', {}, {
-            query: { method: 'GET', params: {
-                author_id: user_id,
-                order_by: '-trib_pub_date',
-            }},
+        	query: {
+        		method: 'GET',
+        		isArray: true,
+        		transformResponse: function(data){ return angular.fromJson(data).objects;}
+        	},
             create: { method: 'POST' }
         });
     });

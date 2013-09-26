@@ -69,8 +69,8 @@ def index(request, page = 1):
 
         render_css = ['normalize', 'fonts', 'font-awesome', 'bootstrap',
                         'bootstrap-responsive', 'tribus', 'tribus-responsive']
-        render_js = ['jquery', 'jquery.autogrow', 'bootstrap', 'angular',
-                        'angular-resource', 'index.app', 'index.controllers',
+        render_js = ['jquery', 'jquery.autogrow', 'spin', 'bootstrap', 'angular',
+                        'angular.resource', 'angular.infinite-scroll', 'index.app', 'index.controllers',
                         'index.services', 'index.jquery']
 
         return render_to_response(
