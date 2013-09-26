@@ -70,7 +70,7 @@ class build_css(Command):
 
         for CSS_FILE in find_files(path=CSSFULL_DIR, pattern='*.css'):
 
-            CSSMIN_FILE =get_path([CSSMIN_DIR, os.path.basename(CSS_FILE)])
+            CSSMIN_FILE = get_path([CSSMIN_DIR, os.path.basename(CSS_FILE)])
 
             try:
 

@@ -9,7 +9,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		{% staticall %}
 			{% for css in render_css %}
-				<link href="{% static 'css/min/'|add:css|add:'.css' %}" rel="stylesheet" />
+				<link href="{% static 'css/full/'|add:css|add:'.css' %}" rel="stylesheet" />
 			{% endfor %}
 		{% endstaticall %}
 		<!--[if IE 7]><link rel="stylesheet" href="{% static 'css/min/font-awesome-ie7.css' %}" /><![endif]-->
@@ -21,7 +21,7 @@
 		{% include "footer.html" %}
 		{% staticall %}
 		    {% for js in render_js %}
-		        <script src="{% static 'js/min/'|add:js|add:'.js' %}"></script>
+		        <script src="{% static 'js/full/'|add:js|add:'.js' %}"></script>
 		    {% endfor %}
 		{% endstaticall %}
 		<!--[if lte IE 8]><script src="{% static 'js/min/excanvas.js' %}"></script><![endif]-->
