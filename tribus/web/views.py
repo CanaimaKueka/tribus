@@ -47,17 +47,10 @@ def index(request, page = 1):
         # t0 = TWEETS_EN_PAGE * (int(page) - 1)
         # t1 = TWEETS_EN_PAGE + t0
 
-<<<<<<< HEAD
-        #profile = request.user.get_profile()       # Give me the user profile
-        followers = [followers for f in request.user.followers.all()]
-        follows = [follows for f in request.user.follows.all()]
-        follows.append(request.user)
-=======
         # profile = request.user.get_profile()        # Give me the user profile
         # followers = [followers for f in profile.followers.all()]
         # follows = [follows for f in profile.follows.all()]
         # follows.append(request.user)
->>>>>>> 205bb4ebb0330a588238c734d0ca7db6d79e02da
 
         # tribs = Trib.objects.filter(user__in = follows).order_by('-date')[t0:t1]
 
@@ -81,16 +74,6 @@ def index(request, page = 1):
 
         return render_to_response(
             'index.html', {
-<<<<<<< HEAD
-                'p' : request.user,
-                'next' : int(page) + 1,
-                'page' : page,
-                'prev' : int(page) - 1,
-                'tribs' : tribs,
-                'tribs_c' : len(tribs),
-                'follows_c' : len(follows),
-                'followers_c' : len(followers),
-=======
                 # 'p' : profile,
                 # 'next' : int(page) + 1,
                 # 'page' : page,
@@ -99,7 +82,6 @@ def index(request, page = 1):
                 # 'tribs_c' : len(tribs),
                 # 'follows_c' : len(follows),
                 # 'followers_c' : len(followers),
->>>>>>> 205bb4ebb0330a588238c734d0ca7db6d79e02da
                 'render_css': render_css,
                 'render_js': render_js,
                 #'trending' : tt(5, 200),

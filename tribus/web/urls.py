@@ -23,7 +23,6 @@ urlpatterns = patterns(
     url(r'', include('tribus.web.paqueteria.urls')),
     url(r'', include('tribus.web.profile.urls')),
     url(r'', include('social_auth.urls')),
-<<<<<<< HEAD
     
 #   url('^page/(?P<page>\\d+)/$', 'index'),
 #   url('^register/$', 'register'),
@@ -37,8 +36,6 @@ urlpatterns = patterns(
 #   url('^retweet/(?P<tweet_id>\\d+)/$', 'retweet'),
 #   url('^borrar/(?P<tweet_id>\\d+)/$', 'borrar'),
 #   url('^responder/(?P<tweet_id>\\d+)/$', 'responder'),
-=======
->>>>>>> 205bb4ebb0330a588238c734d0ca7db6d79e02da
 
     url(r'^api/', include(api_01.urls)),
 

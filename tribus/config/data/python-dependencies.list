@@ -28,3 +28,4 @@ django-social-auth==0.7.28
 mongoengine
 mimeparse
 django-tastypie-mongoengine
+django-gravatar2

@@ -7,9 +7,10 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.conf import settings
+from mongoengine import (Document, IntField, StringField, DateTimeField,
+    ListField, ReferenceField, CASCADE)
 
 
-<<<<<<< HEAD
 # class UserProfile(models.Model):
 
 #     user = models.OneToOneField(User, related_name='profile_user')
@@ -20,13 +21,6 @@ from django.conf import settings
 
 #     def __unicode__(self):
 #         return str(self.user)
-=======
-from mongoengine import (Document, IntField, StringField, DateTimeField,
-    ListField, ReferenceField, CASCADE)
-
-class UserProfile(models.Model):
->>>>>>> 205bb4ebb0330a588238c734d0ca7db6d79e02da
-
 
 
 # post_save.connect(create_user_profile, sender=User)
