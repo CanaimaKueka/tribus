@@ -28,9 +28,9 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="trib_list" infinite-scroll="addMoreItems()" infinite-scroll-disabled='controller_busy' infinite-scroll-distance="3">
-                            <ul ng-repeat="trib in tribs | orderBy: trib_orderby | limitTo: trib_offset track by trib.id">
-                                <li id="trib_{% verbatim %}{{ trib.id }}{% endverbatim %}" class="row-fluid trib_item">
+                        <div class="trib_list" infinite-scroll="addMoreItems()" infinite-scroll-disabled='controller_busy' infinite-scroll-distance="0">
+                            <ul>
+                                <li id="trib_{% verbatim %}{{ trib.id }}{% endverbatim %}" class="row-fluid trib_item" ng-repeat="trib in tribs | orderBy: trib_orderby | limitTo: trib_offset track by trib.id">
                                     <span class="span2">
                                         <span class="trib_avatar"></span>
                                     </span>
@@ -69,9 +69,6 @@
                                     </span>
                                 </li>
                             </ul>
-                            <div id="trib_list_spinner_wrap">
-                                <div id="trib_list_spinner" ng-show='controller_busy'>Loading</div>
-                            </div>
                         </div>
                     </div>
                     <div class="span4 dashboard_panel">
