@@ -8,4 +8,10 @@
 * [] Agregar pruebas de calidad de código con PEP8, PyLint y Tox.
 * [] Buscar el origen de tribus/common/setup/message_extractors.py y colocarlo en COPYING.
 * [] Agregar una página de resultados a la aplicación de paquetería.
-
+* [] MongoDB, Tastypie, AngularJS, Tribs
+* [] Hasher
+* [] Documentación de tickets y funciones.
+* [] Traducciones.
+* [] Mejorar UI de índice de paquetes.
+* [] Infinite scroll + limitTo + angular.js.
+* [] Better API URls, better pagination.

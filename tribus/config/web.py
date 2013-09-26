@@ -1,12 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os, sys, djcelery
+import djcelery
+import mongoengine
+
 from tribus.common.utils import get_path
 from celery.schedules import crontab
 
 try:
     djcelery.setup_loader()
+except:
+    pass
+
+try:
+    mongoengine.connect(db='tribus',
+        host='localhost', port=27017
+        )
 except:
     pass
 
@@ -38,8 +47,8 @@ TEMPLATE_DIRS = [get_path([BASEDIR, 'data', 'html', ''])]
 DJANGO_STATIC = True
 DJANGO_STATIC_MEDIA_ROOTS = [get_path([BASEDIR, 'data', ''])]
 
-LOGIN_URL = '/login/'
-LOGOUT_URL = '/logout/'
+LOGIN_URL = '/login'
+LOGOUT_URL = '/logout'
 LOGIN_REDIRECT_URL = '/'
 
 ROOT_URLCONF = 'tribus.web.urls'
@@ -161,7 +170,11 @@ PASSWORD_HASHERS = (
     #'tribus.web.user.hashers.DummyPasswordHasher',
 )
 
-
+APPEND_SLASH = False
+TASTYPIE_ALLOW_MISSING_SLASH = True
+TASTYPIE_FULL_DEBUG = DEBUG
+API_LIMIT_PER_PAGE = 50
+TASTYPIE_DEFAULT_FORMATS = ['json']
 ACCOUNT_ACTIVATION_DAYS = 7
 
 BROKER_URL = 'redis://localhost:6379/0'
@@ -199,9 +212,15 @@ INSTALLED_APPS = (
     'social_auth',
     'djcelery',
     'south',
+<<<<<<< HEAD
     'django_gravatar',
     'django_static'
 
+=======
+    'django_static',
+    'tastypie',
+    'tastypie_mongoengine',
+>>>>>>> 205bb4ebb0330a588238c734d0ca7db6d79e02da
 )
 
 # EMAIL_USE_TLS = True
@@ -241,7 +260,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.static',
     'django.contrib.auth.context_processors.auth',
     'django.contrib.messages.context_processors.messages',
-    'tribus.web.processors.tribusconf',
+    'tribus.web.processors.default_context',
     'social_auth.context_processors.social_auth_by_type_backends',
 )
 

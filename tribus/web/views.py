@@ -1,36 +1,36 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render_to_response, get_object_or_404
+# from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.contrib.auth.models import User
-from django.contrib.auth import login, authenticate, logout
-from django.core.serializers.json import json
-from django.core.urlresolvers import reverse
-from tribus.web.user.forms import LoginForm, SignupForm
-from tribus.web.models import *
+# from django.contrib.auth.models import User
+# from django.contrib.auth import login, authenticate, logout
+# from django.core.serializers.json import json
+# from django.core.urlresolvers import reverse
+from tribus.web.user.forms import SignupForm
+# from tribus.web.models import *
 
 
-# Create your views here.
+# # Create your views here.
 
-TWEETS_EN_PAGE = 10         #La cantidad de tweets que se muestran por página
-TWEETS_EN_PROFILE = 10      #La cantidad de tweets que se muestran en prefiles
-MENSAJES_POR_CHAT = 20      #La cantidad de mensajes que se muestran en el chat
-LONGITUD_MENSAJE_CHAT = 100 #La longitud máxima del mensaje de chat
-TIEMPO_CONEXION = 60        #El tiempo que pasa para marcar usuarios desconectados
-CHAT_BAN = []               #Usuarios baneados del chat
-CHAT_TIMEOUT = 10           #El tiempo máximo de espera para que se cargue el chat
-CHAT_LOOP = .5              #El tiempo que pasa hasta que se vuelve a cargarse el bucle
+# TWEETS_EN_PAGE = 10         #La cantidad de tweets que se muestran por página
+# TWEETS_EN_PROFILE = 10      #La cantidad de tweets que se muestran en prefiles
+# MENSAJES_POR_CHAT = 20      #La cantidad de mensajes que se muestran en el chat
+# LONGITUD_MENSAJE_CHAT = 100 #La longitud máxima del mensaje de chat
+# TIEMPO_CONEXION = 60        #El tiempo que pasa para marcar usuarios desconectados
+# CHAT_BAN = []               #Usuarios baneados del chat
+# CHAT_TIMEOUT = 10           #El tiempo máximo de espera para que se cargue el chat
+# CHAT_LOOP = .5              #El tiempo que pasa hasta que se vuelve a cargarse el bucle
 
-try:
-    import cPickle as pickle
-except ImportError:
-    import pickle
+# try:
+#     import cPickle as pickle
+# except ImportError:
+#     import pickle
 
-from urllib import urlencode
-import datetime, re, random
-from time import time, sleep
+# from urllib import urlencode
+# import datetime, re, random
+# from time import time, sleep
 
 
 
@@ -43,16 +43,23 @@ def index(request, page = 1):
 
     if request.user.is_authenticated():
 
-        tribs = []
-        t0 = TWEETS_EN_PAGE * (int(page) - 1)
-        t1 = TWEETS_EN_PAGE + t0
+        # tribs = []
+        # t0 = TWEETS_EN_PAGE * (int(page) - 1)
+        # t1 = TWEETS_EN_PAGE + t0
 
+<<<<<<< HEAD
         #profile = request.user.get_profile()       # Give me the user profile
         followers = [followers for f in request.user.followers.all()]
         follows = [follows for f in request.user.follows.all()]
         follows.append(request.user)
+=======
+        # profile = request.user.get_profile()        # Give me the user profile
+        # followers = [followers for f in profile.followers.all()]
+        # follows = [follows for f in profile.follows.all()]
+        # follows.append(request.user)
+>>>>>>> 205bb4ebb0330a588238c734d0ca7db6d79e02da
 
-        tribs = Trib.objects.filter(user__in = follows).order_by('-date')[t0:t1]
+        # tribs = Trib.objects.filter(user__in = follows).order_by('-date')[t0:t1]
 
 
         # for t in tribs:
@@ -68,10 +75,13 @@ def index(request, page = 1):
 
         render_css = ['normalize', 'fonts', 'font-awesome', 'bootstrap',
                         'bootstrap-responsive', 'tribus', 'tribus-responsive']
-        render_js = ['jquery', 'bootstrap']
+        render_js = ['jquery', 'jquery.autogrow', 'bootstrap', 'angular',
+                        'angular-resource', 'index.app', 'index.controllers',
+                        'index.services', 'index.jquery']
 
         return render_to_response(
             'index.html', {
+<<<<<<< HEAD
                 'p' : request.user,
                 'next' : int(page) + 1,
                 'page' : page,
@@ -80,6 +90,16 @@ def index(request, page = 1):
                 'tribs_c' : len(tribs),
                 'follows_c' : len(follows),
                 'followers_c' : len(followers),
+=======
+                # 'p' : profile,
+                # 'next' : int(page) + 1,
+                # 'page' : page,
+                # 'prev' : int(page) - 1,
+                # 'tribs' : tribs,
+                # 'tribs_c' : len(tribs),
+                # 'follows_c' : len(follows),
+                # 'followers_c' : len(followers),
+>>>>>>> 205bb4ebb0330a588238c734d0ca7db6d79e02da
                 'render_css': render_css,
                 'render_js': render_js,
                 #'trending' : tt(5, 200),

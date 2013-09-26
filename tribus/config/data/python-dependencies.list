@@ -21,6 +21,10 @@ python-ldap==2.4.13
 python-openid==2.2.5
 redis==2.8.0
 chardet==2.1.1
--e git+https://github.com/HuntingBears/django-ldapdb.git#egg=ldapdb
--e git+https://github.com/HuntingBears/django-auth-ldap.git#egg=django_auth_ldap
--e git+https://github.com/HuntingBears/django-social-auth.git#egg=social_auth
+webdriverwrapper==1.0.1
+django-ldapdb==0.1.0
+django-auth-ldap==1.1.4
+django-social-auth==0.7.28
+mongoengine
+mimeparse
+django-tastypie-mongoengine

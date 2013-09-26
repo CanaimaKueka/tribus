@@ -36,7 +36,7 @@ from tribus.web.user.forms import LoginForm, PasswordResetForm, PasswordChangeFo
 urlpatterns = patterns(
     '',
 
-    url(regex=r'^login/$',
+    url(regex=r'^login$',
         view=LoginView,
         kwargs={
             'template_name': 'user/login_form.html',
@@ -46,7 +46,7 @@ urlpatterns = patterns(
         name='user_login',
     ),
 
-    url(regex=r'^logout/$',
+    url(regex=r'^logout$',
         view='django.contrib.auth.views.logout',
         kwargs={
             'next_page': settings.LOGIN_REDIRECT_URL
@@ -54,37 +54,37 @@ urlpatterns = patterns(
         name='user_logout'
     ),
 
-    url(regex=r'^signup/$',
+    url(regex=r'^signup$',
         view=SignupView.as_view(template_name='user/signup_form.html'),
         name='user_signup',
     ),
 
-    url(regex=r'^signup/complete/$',
+    url(regex=r'^signup/complete$',
         view=TemplateView.as_view(template_name='user/signup_complete.html'),
         name='user_signup_complete',
     ),
 
-    url(regex=r'^activate/key/(?P<activation_key>\w+)/$',
+    url(regex=r'^activate/key/(?P<activation_key>\w+)$',
         view=ActivationView.as_view(template_name='user/activate_form.html'),
         name='user_activate',
     ),
 
-    url(regex=r'^activate/complete/$',
+    url(regex=r'^activate/complete$',
         view=TemplateView.as_view(template_name='user/activate_complete.html'),
         name='user_activate_complete',
     ),
 
-    url(regex=r'^password/change/$',
+    url(regex=r'^password/change$',
         view='django.contrib.auth.views.password_change',
         kwargs={
             'template_name': 'user/password_change_form.html',
-            'post_change_redirect': '/password/change/done/',
+            'post_change_redirect': '/password/change/done',
             'password_change_form': PasswordChangeForm
         },
         name='user_password_change',
     ),
 
-    url(regex=r'^password/change/done/$',
+    url(regex=r'^password/change/done$',
         view='django.contrib.auth.views.password_change_done',
         kwargs={
             'template_name': 'user/password_change_done.html'
@@ -92,19 +92,19 @@ urlpatterns = patterns(
         name='user_password_change_done',
     ),
 
-    url(regex=r'^password/reset/$',
+    url(regex=r'^password/reset$',
         view='django.contrib.auth.views.password_reset',
         kwargs={
             'template_name': 'user/password_reset_form.html',
             'email_template_name': 'user/password_reset_email.txt',
             'subject_template_name': 'user/password_reset_subject.txt',
             'password_reset_form': PasswordResetForm,
-            'post_reset_redirect': '/password/reset/done/'
+            'post_reset_redirect': '/password/reset/done'
         },
         name='user_password_reset',
     ),
 
-    url(regex=r'^password/reset/done/$',
+    url(regex=r'^password/reset/done$',
         view='django.contrib.auth.views.password_reset_done',
         kwargs={
             'template_name': 'user/password_reset_done.html'
@@ -112,17 +112,17 @@ urlpatterns = patterns(
         name='user_password_reset_done',
     ),
 
-    url(regex=r'^password/reset/confirm/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$',
+    url(regex=r'^password/reset/confirm/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)$',
         view='django.contrib.auth.views.password_reset_confirm',
         kwargs={
             'template_name': 'user/password_reset_confirm.html',
             'set_password_form': SetPasswordForm,
-            'post_reset_redirect': '/password/reset/complete/'
+            'post_reset_redirect': '/password/reset/complete'
         },
         name='user_password_reset_confirm',
     ),
 
-    url(regex=r'^password/reset/complete/$',
+    url(regex=r'^password/reset/complete$',
         view='django.contrib.auth.views.password_reset_complete',
         kwargs={
             'template_name': 'user/password_reset_complete.html'

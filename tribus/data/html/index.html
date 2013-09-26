@@ -1,21 +1,112 @@
 {% extends 'base.html' %}
+{% load i18n %}
+{% block ngapp %}index{% endblock %}
 {% block content %}
-{% include 'timeline.html' %}
+        <div class="jumbotron">
+            <div class="container">
+                <div class="row-fluid dashboard_container">
+                    <div class="span8 dashboard_timeline" ng-controller="TribList">
+                        <div class="action_publisher">
+                            <div class="row-fluid">
+                                <form ng-submit="createNewTrib()">
+                                    <span class="span1">
+                                        <span class="action_avatar"></span>
+                                    </span>
+                                    <span class="span9 action_content">
+                                        <span class="arrow_left"></span>
+                                        <span class="action_bubble">
+                                            <textarea ng-model="newtrib.trib_content" rows="1" class="action_box autosize expand" placeholder="{% blocktrans %}What's happening?{% endblocktrans %}">
+                                            </textarea>
+                                        </span>
+                                    </span>
+                                    <span class="span2 action_submit">
+                                        <button class="action_button btn btn-success">
+                                            <i class="icon-pencil bigger-200"></i>
+                                            {% trans 'Publish' %}
+                                        </button>
+                                    </span>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="trib_list">
+                            <ul ng-repeat="trib in tribs.objects">
+                                <li class="row-fluid trib_item">
+                                    <span class="span2">
+                                        <span class="trib_avatar"></span>
+                                    </span>
+                                    <span class="arrow_left"></span>
+                                    <span class="span9 trib_body">
+                                        <span class="trib_title">
+                                            <h3>
+                                            {% verbatim %}
+                                                {{ trib.author_first_name }}
+                                                {{ trib.author_last_name }}
+                                            {% endverbatim %}
+                                            </h3>
+                                            <h4>
+                                            {% verbatim %}
+                                                @{{ trib.author_username }}
+                                            {% endverbatim %}
+                                            </h4>
+                                        </span>
+                                        <span class="trib_content">
+                                        {% verbatim %}
+                                            {{ trib.trib_content }}
+                                        {% endverbatim %}
+                                        </span>
+                                        <span class="trib_interact">
+                                        {% verbatim %}
+                                            {{ trib.trib_pub_date }}
+                                        {% endverbatim %}
+                                            <span class="label label-warning">
+                                                <span class="icon-warning-sign bigger-120"></span>
+                                                Warning
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <span class="span1 trib_type">
+                                        TIPO
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="span4 dashboard_panel">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="trib" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">{% trans 'What are you doing?' %}</h3>
+            </div>
+            <div class="modal-body">
+                <textarea rows="3" class="trib-box" autofocus></textarea>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">{% trans 'Close' %}</button>
+                <button class="btn btn-primary">{% trans 'Publish' %}</button>
+            </div>
+        </div>
 {% endblock %}
-{% block trending %}
-	{% if index %}
-		{% if trending %}<h3>Trending Topics</h3>
-		{% for topic in trending %}
-			<a href="/twitter/buscar/?busqueda=%23{{ topic }}">#{{ topic }}</a><br>
-		{% endfor %}{% endif %}
-		{% if seguir %}<br><h3>Quizás te interese seguir a</h3>
-		{% for u in seguir %}
-			<a href="/twitter/profile/{{ u }}/">{{ u.get_full_name }} (@{{ u }})</a><br>
-			<form action="/twitter/follow/" method="post">
-				{% csrf_token %}
-				<input type="hidden" name="user" value="{{ u }}">
-				<input class="btn btn-success" type="submit" value="Seguir"><br>
-			</form>
-		{% endfor %}{% endif %}
-	{% endif %}
+
+<!-- {% block trending %}
+    {% if index %}
+        {% if trending %}<h3>Trending Topics</h3>
+        {% for topic in trending %}
+            <a href="/twitter/buscar/?busqueda=%23{{ topic }}">#{{ topic }}</a><br>
+        {% endfor %}{% endif %}
+        {% if seguir %}<br><h3>Quizás te interese seguir a</h3>
+        {% for u in seguir %}
+            <a href="/twitter/profile/{{ u }}/">{{ u.get_full_name }} (@{{ u }})</a><br>
+            <form action="/twitter/follow/" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="user" value="{{ u }}">
+                <input class="btn btn-success" type="submit" value="Seguir"><br>
+            </form>
+        {% endfor %}{% endif %}
+    {% endif %}
 {% endblock %}
+ -->

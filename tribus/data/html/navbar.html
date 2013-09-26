@@ -11,6 +11,8 @@
                     {% if user.is_authenticated %}
                     <ul class="nav">
                         <li class="divider-vertical"></li>
+                        <li><a href="#" role="button" data-toggle="modal" data-target="#trib"><span class="bigger-150 icon-edit-sign"></span></a></li>
+
                         <li>
                             <form class="form-search" action = "/paquetes/busqueda/" method = "POST">
                                 {% csrf_token %}
@@ -82,7 +84,7 @@
                         </li>
                     </ul>
                     <ul class="nav pull-right">
-                        <li><a class="btn btn-yellow btn-block" href="{% url 'user_login' %}">{% trans "Log in" %}</a></li>
+                        <li><a class="btn btn-yellow btn-block btn-small" href="{% url 'user_login' %}">{% trans "Log in" %}</a></li>
 <!--                    <li class="divider-vertical"></li>
                         <li class="dropdown">
                             <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
