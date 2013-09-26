@@ -193,6 +193,7 @@ INSTALLED_APPS = (
     'tribus.web',
     'tribus.web.user',
     'tribus.web.paqueteria',
+    'tribus.web.profile',
     'ldapdb',
     'django_auth_ldap',
     'social_auth',

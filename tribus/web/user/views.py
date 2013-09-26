@@ -30,6 +30,7 @@ from tribus.web.user.models import SignupProfile
 from tribus.web.user.pipeline import create_ldap_user
 
 
+
 class _RequestPassingFormView(FormView):
     """
     A version of FormView which passes extra arguments to certain
