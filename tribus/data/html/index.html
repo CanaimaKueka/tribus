@@ -28,7 +28,7 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="trib_list" infinite-scroll="addMoreItems()" infinite-scroll-disabled='controller_busy' infinite-scroll-distance="0">
+                        <div class="trib_list" infinite-scroll="addOldTribs()" infinite-scroll-disabled='controller_busy' infinite-scroll-distance="0">
                             <ul>
                                 <li id="trib_{% verbatim %}{{ trib.id }}{% endverbatim %}" class="row-fluid trib_item" ng-repeat="trib in tribs | orderBy: trib_orderby | limitTo: trib_offset track by trib.id">
                                     <span class="span2">
