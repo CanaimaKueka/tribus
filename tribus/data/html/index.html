@@ -15,7 +15,7 @@
                                     <span class="span9 action_content">
                                         <span class="arrow_left"></span>
                                         <span class="action_bubble">
-                                            <textarea ng-model="newtrib.trib_content" rows="1" class="action_box autosize expand" placeholder="{% blocktrans %}What's happening?{% endblocktrans %}">
+                                            <textarea ng-model="trib_content" rows="1" class="action_box autosize expand" placeholder="{% blocktrans %}What's happening?{% endblocktrans %}">
                                             </textarea>
                                         </span>
                                     </span>
@@ -28,9 +28,48 @@
                                 </form>
                             </div>
                         </div>
+
                         <div class="trib_list" infinite-scroll="addOldTribs()" infinite-scroll-disabled='controller_busy' infinite-scroll-distance="0">
                             <ul>
-                                <li id="trib_{% verbatim %}{{ trib.id }}{% endverbatim %}" class="row-fluid trib_item" ng-repeat="trib in tribs | orderBy: trib_orderby | limitTo: trib_offset track by trib.id">
+                                <li class="row-fluid trib_item" ng-repeat="temp_trib in temp_new_tribs">
+                                    <span class="span2">
+                                        <span class="trib_avatar"></span>
+                                    </span>
+                                    <span class="arrow_left"></span>
+                                    <span class="span9 trib_body">
+                                        <span class="trib_title">
+                                            <h3>
+                                            {% verbatim %}
+                                                {{ temp_trib.author_first_name }}
+                                                {{ temp_trib.author_last_name }}
+                                            {% endverbatim %}
+                                            </h3>
+                                            <h4>
+                                            {% verbatim %}
+                                                @{{ temp_trib.author_username }}
+                                            {% endverbatim %}
+                                            </h4>
+                                        </span>
+                                        <span class="trib_content">
+                                        {% verbatim %}
+                                            {{ temp_trib.trib_content }}
+                                        {% endverbatim %}
+                                        </span>
+                                        <span class="trib_interact">
+                                        {% verbatim %}
+                                            {{ temp_trib.trib_pub_date }}
+                                        {% endverbatim %}
+                                            <span class="label label-warning">
+                                                <span class="icon-warning-sign bigger-120"></span>
+                                                Warning
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <span class="span1 trib_type">
+                                        TIPO
+                                    </span>
+                                </li>
+                                <li id="trib_{% verbatim %}{{ trib.id }}{% endverbatim %}" class="row-fluid trib_item" ng-repeat="trib in tribs | orderBy: trib_orderby | limitTo: trib_limit_to track by trib.id">
                                     <span class="span2">
                                         <span class="trib_avatar"></span>
                                     </span>

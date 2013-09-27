@@ -1,5 +1,6 @@
 function TribList($scope, $timeout, Tribs) {
 
+    var trib_limit_to = 0;
     var trib_offset = 0;
     var trib_add = 10;
     var trib_limit = 10;
@@ -7,10 +8,29 @@ function TribList($scope, $timeout, Tribs) {
     var controller_busy = false;
 
     $scope.controller_busy = controller_busy;
+    $scope.trib_limit_to = trib_limit_to;
     $scope.trib_limit = trib_limit;
     $scope.trib_offset = trib_offset;
     $scope.trib_orderby = trib_orderby;
     $scope.tribs = [];
+    $scope.temp_new_tribs = [];
+
+    $scope.createNewTrib = function(){
+
+        var newtrib = {
+            author_id: user_id,
+            author_username: user_username,
+            author_first_name: user_first_name,
+            author_last_name: user_last_name,
+            trib_content: $('textarea.action_box').val(),
+            trib_pub_date: new Date(),
+            retribs: []
+        };
+
+        Tribs.create(newtrib, function(){
+            $scope.temp_new_tribs.unshift(newtrib);
+        });
+    };
 
     $scope.addOldTribs = function(){
 
@@ -37,8 +57,12 @@ function TribList($scope, $timeout, Tribs) {
                 if(!old_id_appears) $scope.tribs.push(old_tribs[i]);
             }
 
-            if($scope.tribs.length >= $scope.trib_offset){
+            if($scope.tribs.length > $scope.trib_offset){
                 $scope.trib_offset = $scope.trib_offset + trib_add;
+            }
+
+            if($scope.tribs.length > $scope.trib_limit_to){
+                $scope.trib_limit_to = $scope.tribs.length;
             }
 
             if(old_tribs.length === 0){
@@ -50,29 +74,10 @@ function TribList($scope, $timeout, Tribs) {
         });
     };
 
-    $scope.newtrib = {
-        author_id: user_id,
-        author_username: user_username,
-        author_first_name: user_first_name,
-        author_last_name: user_last_name,
-        retribs: []
-    };
-
-    $scope.createNewTrib = function(){
-        $scope.newtrib.trib_pub_date = new Date();
-        Tribs.create($scope.newtrib, function(){
-            // if($scope.tribs.length >= $scope.trib_offset){
-            //     $scope.trib_offset = $scope.trib_offset + 1;
-            // }
-            $scope.tribs.unshift($scope.newtrib);
-
-        });
-    };
-
-
     function addNewTribs($scope, trib_offset) {
 
         $scope.new_tribs_offset = trib_offset;
+        $scope.temp_new_tribs = [];
 
         var fresh_tribs = Tribs.query({
             author_id: user_id,
@@ -89,10 +94,11 @@ function TribList($scope, $timeout, Tribs) {
                     }
 
                     if(!fresh_id_appears){
-                        // if($scope.tribs.length >= $scope.trib_offset){
-                        //     $scope.trib_offset = $scope.trib_offset + 1;
-                        // }
                         $scope.tribs.unshift(fresh_tribs[i]);
+
+                        if($scope.tribs.length > $scope.trib_limit_to){
+                            $scope.trib_limit_to = $scope.tribs.length;
+                        }
                     }
 
                     if(i == (fresh_tribs.length-1)) addNewTribs($scope, trib_offset+trib_add);
