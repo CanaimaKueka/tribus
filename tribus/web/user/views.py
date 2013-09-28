@@ -43,6 +43,8 @@ class _RequestPassingFormView(FormView):
         form = self.get_form(form_class)
         return self.render_to_response(self.get_context_data(form=form))
 
+
+
     def post(self, request, *args, **kwargs):
         # Pass request to get_form_class and get_form for per-request
         # form control.
@@ -307,15 +309,25 @@ def LoginView(request, template_name='user/login_form.html',
 
         current_site = get_current_site(request)
 
+        render_css = ['normalize', 'fonts', 'bootstrap', 'bootstrap-responsive',
+                        'font-awesome', 'tribus', 'tribus-responsive']
+
+        render_js = ['jquery', 'bootstrap']
+
         context = {
             'form': form,
             'error_title': error_title,
             'redirect_field_name': redirect_to,
             'site': current_site,
             'site_name': current_site.name,
+            'render_js': render_js,
+            'render_css': render_css,
         }
 
         if extra_context is not None:
+            extra_context ['render_css']= render_css
+            extra_context ['render_js'] = render_js
+            
             context.update(extra_context)
 
         return TemplateResponse(request, template_name, context,
