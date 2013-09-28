@@ -1,11 +1,12 @@
-angular.module('index.services', ['ngResource']).
-    factory('Tribs', function($resource, $http){
-        return $resource('/api/0.1/trib/', {}, {
+angular.module('index.services', ['ngResource'])
+    .factory('Tribs', function($resource){        
+        return $resource('/api/0.1/tribs/', {},{
+            save: { method: 'POST' },
             query: {
                 method: 'GET',
                 isArray: true,
-                transformResponse: function(data){ return angular.fromJson(data).objects;}
-            },
-            create: { method: 'POST' }
+                headers: {'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()},
+                transformResponse: function(data){return angular.fromJson(data).objects;}
+            }
         });
     });

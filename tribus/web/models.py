@@ -47,7 +47,7 @@ class Trib(Document):
 
 class ReTrib(Document):
     author_id = IntField()
-    author_nick = StringField(max_length=200, required=True)
+    author_username = StringField(max_length=200, required=True)
     author_first_name = StringField(max_length=200, required=True)
     author_last_name = StringField(max_length=200, required=True)
     trib = ReferenceField(Trib, reverse_delete_rule=CASCADE)

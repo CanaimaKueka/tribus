@@ -1,12 +1,5 @@
 function TribList($scope, $timeout, Tribs) {
 
-    var trib_limit_to = 0;
-    var trib_offset = 0;
-    var trib_add = 10;
-    var trib_limit = 10;
-    var trib_orderby = '-trib_pub_date';
-    var controller_busy = false;
-
     $scope.controller_busy = controller_busy;
     $scope.trib_limit_to = trib_limit_to;
     $scope.trib_limit = trib_limit;
@@ -27,8 +20,9 @@ function TribList($scope, $timeout, Tribs) {
             retribs: []
         };
 
-        Tribs.create(newtrib, function(){
+        Tribs.save(newtrib, function(){
             $scope.temp_new_tribs.unshift(newtrib);
+            $('textarea.action_box').val('')
         });
     };
 
