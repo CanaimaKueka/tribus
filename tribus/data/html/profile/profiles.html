@@ -1,0 +1,59 @@
+{% extends 'profile/base.html' %}
+{% block title %} Profile {% endblock %}
+{% block content%}
+
+<div class="jumbotron">
+	<div class="container">
+		<div class="row-fluid">
+
+			<div class="span3">
+				<div>
+                    {% load gravatar %}
+					
+                    <a href = "http://gravatar.com/emails/">{% gravatar user.email 200 %}</a>
+				</div>
+                <div>
+                	<hr>
+				<legend></legend>
+
+                {% block datos %}
+					<p>{{ user.first_name }} {{user.last_name}}
+					<p>{{ user.email }}
+					<p>localizacion :{{ user.location }}
+					<p>descripcion: {{ user.description }}
+                    <p align = "center"> <a href = "/settings">Editar información</a>
+                {% endblock %}
+                	<hr>
+				<legend></legend>
+				</div>
+
+			</div>
+			<div class="span9">
+				{% include 'profile/navbar.html' %}
+                <legend></legend>	
+
+				<div class = "row-fluid">
+
+                    {%block informacion%}
+					<div>
+						<h2>noticia 1</h2>
+						<p> Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
+						</div>
+					<div >
+						<h2>noticia 2</h2>
+						<p> Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
+						</div>
+					<div>
+						<h2>noticia 3</h2>
+						<p> Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
+						</div>
+					<div>
+						<h2>noticia 4</h2>
+						<p> Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
+						</div>	
+                    {%endblock%}
+		</div>
+	</div>
+</div>
+
+{% endblock %}

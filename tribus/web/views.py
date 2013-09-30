@@ -39,7 +39,6 @@ def tour(request):
     context = RequestContext(request)
     return render_to_response('tour.html', data, context)
 
-
 def index(request, page = 1):
 
     if request.user.is_authenticated():
@@ -107,6 +106,8 @@ def index(request, page = 1):
                 'render_css': render_css,
                 'render_js': render_js,
             },
+
+
             RequestContext(request)
         )
 
