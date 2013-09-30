@@ -7,11 +7,12 @@ from django.contrib import admin
 admin.autodiscover()
 
 from tastypie.api import Api
-from tribus.web.api.resources import TribResource, UserResource
+from tribus.web.api.resources import TribResource, UserResource, TimelineResource
 
 api_01 = Api(api_name='0.1')
 api_01.register(TribResource())
 api_01.register(UserResource())
+api_01.register(TimelineResource())
 
 urlpatterns = patterns(
     '',
