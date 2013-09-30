@@ -4,7 +4,7 @@
 # from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-# from django.contrib.auth.models import User
+from django.contrib.auth.models import User
 # from django.contrib.auth import login, authenticate, logout
 # from django.core.serializers.json import json
 # from django.core.urlresolvers import reverse
@@ -71,7 +71,8 @@ def index(request, page = 1):
         render_js = ['jquery', 'jquery.autogrow', 'bootstrap', 'angular',
                         'angular.resource', 'angular.infinite-scroll', 'index.app', 'index.controllers',
                         'index.services', 'index.jquery']
-
+        X = User.objects.get(id__exact=request.user.id)
+        # print X.follows
         return render_to_response(
             'index.html', {
                 # 'p' : profile,

@@ -212,10 +212,10 @@ INSTALLED_APPS = (
     'social_auth',
     'djcelery',
     'south',
-    'django_gravatar',
     'django_static',
     'tastypie',
     'tastypie_mongoengine',
+    'django_gravatar',
 )
 
 # EMAIL_USE_TLS = True

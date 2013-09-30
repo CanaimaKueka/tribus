@@ -28,7 +28,6 @@
                                 </form>
                             </div>
                         </div>
-
                         <div class="trib_list" infinite-scroll="addOldTribs()" infinite-scroll-disabled='controller_busy' infinite-scroll-distance="0">
                             <ul>
                                 <li class="row-fluid trib_item" ng-repeat="temp_trib in temp_new_tribs">
@@ -131,21 +130,19 @@
         </div>
 {% endblock %}
 
-<!-- {% block trending %}
-    {% if index %}
-        {% if trending %}<h3>Trending Topics</h3>
-        {% for topic in trending %}
-            <a href="/twitter/buscar/?busqueda=%23{{ topic }}">#{{ topic }}</a><br>
-        {% endfor %}{% endif %}
-        {% if seguir %}<br><h3>Quizás te interese seguir a</h3>
-        {% for u in seguir %}
-            <a href="/twitter/profile/{{ u }}/">{{ u.get_full_name }} (@{{ u }})</a><br>
-            <form action="/twitter/follow/" method="post">
-                {% csrf_token %}
-                <input type="hidden" name="user" value="{{ u }}">
-                <input class="btn btn-success" type="submit" value="Seguir"><br>
-            </form>
-        {% endfor %}{% endif %}
-    {% endif %}
+{% block scripts %}
+    <script type="text/javascript">
+        {% if user.is_authenticated %}
+        var user_id = '{{ user.id }}';
+        var user_username = '{{ user.username }}';
+        var user_first_name = '{{ user.first_name }}';
+        var user_last_name = '{{ user.last_name }}';
+        {% endif %}
+        var trib_limit_to = 0;
+        var trib_offset = 0;
+        var trib_add = 10;
+        var trib_limit = 10;
+        var trib_orderby = '-trib_pub_date';
+        var controller_busy = false;
+    </script>
 {% endblock %}
- -->

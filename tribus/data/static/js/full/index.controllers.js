@@ -1,11 +1,4 @@
-function TribList($scope, $timeout, Tribs) {
-
-    var trib_limit_to = 0;
-    var trib_offset = 0;
-    var trib_add = 10;
-    var trib_limit = 10;
-    var trib_orderby = '-trib_pub_date';
-    var controller_busy = false;
+function TribList($scope, $timeout, Tribs, Timeline) {
 
     $scope.controller_busy = controller_busy;
     $scope.trib_limit_to = trib_limit_to;
@@ -27,8 +20,9 @@ function TribList($scope, $timeout, Tribs) {
             retribs: []
         };
 
-        Tribs.create(newtrib, function(){
+        Tribs.save(newtrib, function(){
             $scope.temp_new_tribs.unshift(newtrib);
+            $('textarea.action_box').val('')
         });
     };
 
@@ -40,8 +34,7 @@ function TribList($scope, $timeout, Tribs) {
 
         $scope.controller_busy = true;
 
-        var old_tribs = Tribs.query({
-            author_id: user_id,
+        var old_tribs = Timeline.query({
             order_by: $scope.trib_orderby,
             limit: $scope.trib_limit,
             offset: $scope.trib_offset
@@ -79,8 +72,7 @@ function TribList($scope, $timeout, Tribs) {
         $scope.new_tribs_offset = trib_offset;
         $scope.temp_new_tribs = [];
 
-        var fresh_tribs = Tribs.query({
-            author_id: user_id,
+        var fresh_tribs = Timeline.query({
             order_by: $scope.trib_orderby,
             limit: $scope.trib_limit,
             offset: $scope.new_tribs_offset

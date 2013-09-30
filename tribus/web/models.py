@@ -3,29 +3,12 @@
 
 import re
 from urllib import urlencode
-from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.conf import settings
+
 from mongoengine import (Document, IntField, StringField, DateTimeField,
     ListField, ReferenceField, CASCADE)
-
-
-# class UserProfile(models.Model):
-
-#     user = models.OneToOneField(User, related_name='profile_user')
-#     description = models.CharField(max_length = 160)
-#     location = models.CharField(max_length = 50)
-#     followers = models.ManyToManyField(User, related_name='profile_followers')
-#     follows = models.ManyToManyField(User, related_name='profile_follows')
-
-#     def __unicode__(self):
-#         return str(self.user)
-
-
-# post_save.connect(create_user_profile, sender=User)
-
-
 
 #
 # MongoDB Documents ----------------------------
@@ -44,7 +27,7 @@ class Trib(Document):
 
 class ReTrib(Document):
     author_id = IntField()
-    author_nick = StringField(max_length=200, required=True)
+    author_username = StringField(max_length=200, required=True)
     author_first_name = StringField(max_length=200, required=True)
     author_last_name = StringField(max_length=200, required=True)
     trib = ReferenceField(Trib, reverse_delete_rule=CASCADE)
