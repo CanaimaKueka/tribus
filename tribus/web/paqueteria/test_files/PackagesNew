@@ -1,18 +1,19 @@
 Package: 0ad
-Version: 0~r11863-2
+Source: 0ad (0.0.13-2)
+Version: 0.0.13-2+b1
 Architecture: i386
 Maintainer: Debian Games Team <pkg-games-devel@lists.alioth.debian.org>
-Installed-Size: 7745
+Installed-Size: 8388
 Pre-Depends: dpkg (>= 1.15.6~)
-Depends: 0ad-data (>= 0~r11863), 0ad-data (<= 0~r11863-2), gamin | fam, libboost-signals1.49.0 (>= 1.49.0-1), libc6 (>= 2.11), libcurl3-gnutls (>= 7.16.2), libenet1a, libgamin0 | libfam0, libgcc1 (>= 1:4.1.1), libgl1-mesa-glx | libgl1, libjpeg8 (>= 8c), libmozjs185-1.0 (>= 1.8.5-1.0.0+dfsg), libnvtt2, libopenal1, libpng12-0 (>= 1.2.13-4), libsdl1.2debian (>= 1.2.11), libstdc++6 (>= 4.6), libvorbisfile3 (>= 1.1.2), libwxbase2.8-0 (>= 2.8.12.1), libwxgtk2.8-0 (>= 2.8.12.1), libx11-6, libxcursor1 (>> 1.1.2), libxml2 (>= 2.7.4), zlib1g (>= 1:1.2.0)
-Homepage: http://www.wildfiregames.com/0ad/
+Depends: 0ad-data (>= 0.0.13), 0ad-data (<= 0.0.13-2), 0ad-data-common (>= 0.0.13), 0ad-data-common (<= 0.0.13-2), libboost-filesystem1.49.0 (>= 1.49.0-1), libboost-signals1.49.0 (>= 1.49.0-1), libc6 (>= 2.15), libcurl3-gnutls (>= 7.16.2), libenet2a (>= 1.3.7+ds), libgcc1 (>= 1:4.1.1), libgl1-mesa-glx | libgl1, libjpeg8 (>= 8c), libmozjs185-1.0 (>= 1.8.5-1.0.0+dfsg), libnvtt2, libopenal1, libpng12-0 (>= 1.2.13-4), libsdl1.2debian (>= 1.2.11), libstdc++6 (>= 4.6), libvorbisfile3 (>= 1.1.2), libwxbase2.8-0 (>= 2.8.12.1), libwxgtk2.8-0 (>= 2.8.12.1), libx11-6, libxcursor1 (>> 1.1.2), libxml2 (>= 2.7.4), zlib1g (>= 1:1.2.0)
+Homepage: http://play0ad.com/
 Priority: optional
 Section: main
-Filename: pool/main/0/0ad/0ad_0~r11863-2_i386.deb
-Size: 2226038
-SHA256: 2b092f5682ae14351d6f7e47a7c113b7c0cc9ec71046a2e3ecf95eb453909ad8
-SHA1: 602e20176706d3cc7535f01ffdbe91b270ae5012
-MD5sum: 93699f007bcd8a51e1ab5fba2ecdc400
+Filename: pool/main/0/0ad/0ad_0.0.13-2+b1_i386.deb
+Size: 2401370
+SHA256: 4e7360e07583875e83d8d2a820480d9704a8d0db7624355d048ff66f20c0b505
+SHA1: f7bec8eec5e020e831432822cb3f7f144f7186e0
+MD5sum: 84c16cecd430fdc6d9e306036c5cb643
 Description: Real-time strategy game of ancient warfare
  0 A.D. (pronounced "zero ey-dee") is a free, open-source, cross-platform
  real-time strategy (RTS) game of ancient warfare. In short, it is a
@@ -154,32 +155,6 @@ Description: The autopoint program from GNU gettext
  package, and copies the infrastructure files belonging to this version
  into the package.
 
-Package: banshee
-Source: banshee (2.4.1-3)
-Version: 2.4.1-3+b1
-Architecture: i386
-Maintainer: Debian CLI Applications Team <pkg-cli-apps-team@lists.alioth.debian.org>
-Installed-Size: 13447
-Depends: libc6 (>= 2.7), libglib2.0-0 (>= 2.32.3), libgstreamer-plugins-base0.10-0 (>= 0.10.26), libgstreamer0.10-0 (>= 0.10.26), libgtk2.0-0 (>= 2.24.0), libsoup-gnome2.4-1 (>= 2.27.4), libsoup2.4-1 (>= 2.26.1), libwebkitgtk-1.0-0 (>= 1.3.10), libx11-6 (>= 2:1.4.99.1), libxrandr2, libxxf86vm1, mono-runtime (>= 2.10.1), libboo2.0.9-cil (>= 0.9.5~git20110729.r1.202a430), libc6 (>= 2.13) | libc6.1 (>= 2.13) | libc0.1 (>= 2.13), libcairo2 (>= 1.12.0), libdbus-glib1.0-cil (>= 0.5), libdbus1.0-cil (>= 0.7), libgconf2.0-cil (>= 2.24.0), libgdata2.1-cil (>= 2.1.0.0), libgdk-pixbuf2.0-0 (>= 2.26.1), libgkeyfile1.0-cil, libglib2.0-cil (>= 2.12.10-1ubuntu1), libgpod4 (>= 0.7.94), libgtk-sharp-beans-cil, libgtk2.0-cil (>= 2.12.10-1ubuntu1), libgudev1.0-cil (>= 0.1), libkarma0, libmono-addins0.2-cil (>= 0.6), libmono-cairo4.0-cil (>= 2.10.1), libmono-corlib4.0-cil (>= 2.10.1), libmono-posix4.0-cil (>= 2.10.1), libmono-sharpzip4.84-cil (>= 1.0), libmono-system-core4.0-cil (>= 2.10.3), libmono-system-xml4.0-cil (>= 1.0), libmono-system4.0-cil (>= 2.10.7), libmono-zeroconf1.0-cil (>= 0.9.0), libmtp9, libnotify0.4-cil (>= 0.4.0~r2998), libpango1.0-0 (>= 1.29.4), libsqlite3-0, libtaglib2.0-cil (>= 2.0.4.0), libwnck22 (>= 2.30.0-3), gstreamer0.10-plugins-base, gstreamer0.10-plugins-good (>= 0.10.8-4), gstreamer0.10-alsa | gstreamer0.10-audiosink, gnome-icon-theme (>= 2.16)
-Recommends: brasero, avahi-daemon, media-player-info
-Suggests: gstreamer0.10-plugins-bad, gstreamer0.10-plugins-ugly, gstreamer0.10-ffmpeg, banshee-dbg (= 2.4.1-3+b1)
-Breaks: banshee-extensions-common (<< 2.0.1-2~)
-Provides: banshee-api-2.4, banshee-asm-2.4.0.0
-Homepage: http://www.banshee.fm
-Priority: optional
-Section: main
-Filename: pool/main/b/banshee/banshee_2.4.1-3+b1_i386.deb
-Size: 4589552
-SHA256: afa598cdd8c0d6ec935e55f33ee8d80e252ff9bb466a257c20c65c2482ad4423
-SHA1: d4b95504aa9d846ba97c48de60069261b87bf716
-MD5sum: fb92c25d2d07069516a81ae1c31cc4cd
-Description: Media Management and Playback application
- Banshee is a media management and playback application for the GNOME
- desktop, allowing users to import audio from CDs, search their library,
- create playlists of selections of their library, sync music to/from iPods
- and other media devices, play and manage video files and burn selections
- to a CD.
-
 Package: base-files
 Version: 7.1wheezy1canaima3
 Architecture: i386
@@ -206,20 +181,21 @@ Description: Sistema de Archivos Base de Canaima
  entre otros, y el texto de diferentes licencias libres en Canaima.
 
 Package: blender
-Version: 2.63a-1
+Version: 2.68a-3
 Architecture: i386
 Maintainer: Debian Multimedia Maintainers <pkg-multimedia-maintainers@lists.alioth.debian.org>
-Installed-Size: 55328
-Depends: python3.2, fonts-droid, libavcodec53 (>= 5:0.8-2~) | libavcodec-extra-53 (>= 5:0.8-2~), libavdevice53 (>= 5:0.8-2~), libavformat53 (>= 5:0.8-2~), libavutil51 (>= 5:0.8-2~), libc6 (>= 2.7), libfftw3-3, libfontconfig1 (>= 2.9.0), libfreetype6 (>= 2.2.1), libgcc1 (>= 1:4.1.1), libgl1-mesa-glx | libgl1, libglew1.7 (>= 1.7.0), libglu1-mesa | libglu1, libgomp1 (>= 4.2.1), libilmbase6 (>= 1.0.1), libjack-jackd2-0 (>= 1.9.5~dfsg-14) | libjack-0.116, libjpeg8 (>= 8c), libopenal1, libopenexr6 (>= 1.6.1), libopenjpeg2, libpng12-0 (>= 1.2.13-4), libpython3.2 (>= 3.2~a4), libsdl1.2debian (>= 1.2.11), libsndfile1 (>= 1.0.20), libstdc++6 (>= 4.6), libswscale2 (>= 5:0.8-2~), libtiff4 (>> 3.9.5-3~), libx11-6, libxi6, zlib1g (>= 1:1.2.3.3)
-Suggests: yafaray
-Homepage: http://blender.org
+Installed-Size: 55123
+Depends: blender-data (= 2.68a-3), fonts-droid, libjs-jquery, python3 (>= 3.3), libavcodec54 (>= 6:9.1-1) | libavcodec-extra-54 (>= 6:9.8), libavdevice53 (>= 6:9.1-1), libavformat54 (>= 6:9.1-1), libavutil52 (>= 6:9.1-1), libboost-date-time1.49.0 (>= 1.49.0-1), libboost-filesystem1.49.0 (>= 1.49.0-1), libboost-locale1.49.0 (>= 1.49.0-1), libboost-regex1.49.0 (>= 1.49.0-1), libboost-system1.49.0 (>= 1.49.0-1), libboost-thread1.49.0 (>= 1.49.0-1), libc6 (>= 2.15), libfftw3-double3, libfreetype6 (>= 2.2.1), libgcc1 (>= 1:4.1.1), libgl1-mesa-glx | libgl1, libglew1.7 (>= 1.7.0), libglu1-mesa | libglu1, libgomp1 (>= 4.2.1), libilmbase6 (>= 1.0.1), libjack-jackd2-0 (>= 1.9.5~dfsg-14) | libjack-0.116, libjpeg8 (>= 8c), libopenal1, libopenexr6 (>= 1.6.1), libopenimageio1.2, libopenjpeg2, libpng12-0 (>= 1.2.13-4), libpython3.3 (>= 3.3.1), libsdl1.2debian (>= 1.2.11), libsndfile1 (>= 1.0.20), libspnav0, libstdc++6 (>= 4.6), libswscale2 (>= 6:9.1-1), libtiff4 (>> 3.9.5-3~), libx11-6, libxi6, libxxf86vm1, zlib1g (>= 1:1.2.3.4)
+Suggests: yafaray-exporter
+Breaks: yafaray-exporter (<< 0.1.2+really0.1.2~beta5-1)
+Homepage: http://www.blender.org/
 Priority: optional
 Section: main
-Filename: pool/main/b/blender/blender_2.63a-1_i386.deb
-Size: 22484318
-SHA256: f281ba75ec6bf3d07d8c1e8f006a5317939aa86143e34f8697be5dd53983b9cb
-SHA1: b6c712fc29c3397f5db3afea9a8498db54f3b869
-MD5sum: 3917d6227e61324a29459303c0531587
+Filename: pool/main/b/blender/blender_2.68a-3_i386.deb
+Size: 23404642
+SHA256: 04dc08c9e93c81f07222ffaa8ca834a294eccac6eaa0b4ee812939e234e9c99b
+SHA1: b9d52f1d551aff8978c6389393736df12e6dc1b2
+MD5sum: 3ab5b9cb756858d2f759a47e75120898
 Description: Very fast and versatile 3D modeller/renderer
  Blender is an integrated 3d suite for modelling, animation, rendering,
  post-production, interactive creation and playback (games). Blender has its

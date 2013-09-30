@@ -114,21 +114,48 @@ def find_package(name):
         return p
     
 # TODO: Documentar, cambiar nombres poco intuitivos
+def create_relationship(fields):
+    exists = Relation.objects.filter(**fields)
+    if exists:
+        return exists[0]
+    else:
+        obj = Relation(**fields)
+        obj.save()
+        return obj
+ 
+# TODO: Documentar, cambiar nombres poco intuitivos, terminar de traducir
+def create_tag(val):
+    exists = Tag.objects.filter(Value = val)
+    if exists:
+        return exists[0]
+    else:
+        tag = Tag(Value = val)
+        tag.save()
+        return tag
+    
+# TODO: Documentar, cambiar nombres poco intuitivos, terminar de traducir
+def create_label(label_name, tag):
+    exists = Label.objects.filter(Name = label_name, Tags = tag)
+    if exists:
+        return exists[0]
+    else:
+        label = Label(Name = label_name, Tags = tag)
+        label.save()
+        return label
+
+# TODO: Documentar, cambiar nombres poco intuitivos
 def record_package(section):
     exists = Package.objects.filter(Package = section['Package'])
     if exists:
         if not exists[0].Maintainer:
-            print "Actualizando informacion de paquete"
             exists.update(**verify_fields(section, package_fields))
             p = Package.objects.filter(Package = section['Package'])[0]
             p.Maintainer = record_maintainer(section['Maintainer'])
             p.save()
             return p
         else:
-            print "Usando paquete ya existente"
             return exists[0]
     else:
-        print "Creando nuevo paquete"
         fields = verify_fields(section, package_fields)
         m = record_maintainer(section['Maintainer'])
         p = Package(**fields)
@@ -151,17 +178,20 @@ def record_details(section, pq, dist = "kerepakupai"):
         d.save()
         pq.Details.add(d)
         return d
-
-# TODO: Documentar, cambiar nombres poco intuitivos
-def create_relationship(fields):
-    exists = Relation.objects.filter(**fields)
-    if exists:
-        return exists[0]
-    else:
-        obj = Relation(**fields)
-        obj.save()
-        return obj
-
+    
+    
+    
+                
+# TODO: Documentar, cambiar nombres poco intuitivos, terminar de traducir
+def record_tags(section, pq):
+    if section.has_key('Tag'):
+        tag_list = section['Tag'].replace("\n", "").split(", ")
+        for tag in tag_list:
+            div_tag = tag.split("::")
+            value = create_tag(div_tag[1])
+            label = create_label(div_tag[0], value)
+            pq.Labels.add(label)
+                                
 # TODO: Documentar, cambiar nombres poco intuitivos, terminar de traducir
 def record_relationship(dt, rtype, fields, alt_id = None):
     if fields['version']:
@@ -176,37 +206,7 @@ def record_relationship(dt, rtype, fields, alt_id = None):
                                    "relation" : rv, "version": nv,
                                    "alt_id": alt_id})
     dt.Relations.add(new_rel)
- 
-# TODO: Documentar, cambiar nombres poco intuitivos, terminar de traducir
-def create_tag(val):
-    exists = Tag.objects.filter(Value = val)
-    if exists:
-        return exists[0]
-    else:
-        tag = Tag(Value = val)
-        tag.save()
-        return tag
     
-# TODO: Documentar, cambiar nombres poco intuitivos, terminar de traducir
-def create_label(label_name, tag):
-    exists = Label.objects.filter(Name = label_name, Tags = tag)
-    if exists:
-        return exists[0]
-    else:
-        label = Label(Name = label_name, Tags = tag)
-        label.save()
-        return label
-                
-# TODO: Documentar, cambiar nombres poco intuitivos, terminar de traducir
-def record_tags(section, pq):
-    if section.has_key('Tag'):
-        tag_list = section['Tag'].replace("\n", "").split(", ")
-        for tag in tag_list:
-            div_tag = tag.split("::")
-            value = create_tag(div_tag[1])
-            label = create_label(div_tag[0], value)
-            pq.Labels.add(label)
-            
 # TODO: Documentar, cambiar nombres poco intuitivos, terminar de traducir
 def record_relations(details, relations):
     for rel in relations:
@@ -250,10 +250,9 @@ def update_details(pq, section):
 
 # TODO: Documentar, cambiar nombres poco intuitivos, terminar de traducir
 def update_section(section):
+    print "Actualizando la seccion -->", section['Package']
     p = update_package(section)
     d = update_details(p, section)
-    print "\nIniciando asistente de actualizacion"
-    print "Actualizando la seccion -->", section['Package']
     d.Relations.all().delete()
     record_relations(d, section.relations.items())
     print "Actualizacion finalizada"
@@ -338,7 +337,7 @@ def update_package_list(raiz, ruta):
                 if l['name'] == ruta:
                     new_md5 = l['md5sum']
             path = PackageList.objects.filter(Path = ruta).update(MD5 = new_md5)
-                    
+                
 # TODO: Documentar, cambiar nombres poco intuitivos, terminar de traducir
 def verify_updates():
     diff = verify_package_list(local + "waraira")
