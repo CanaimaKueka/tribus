@@ -13,15 +13,17 @@
                     <a href = "http://gravatar.com/emails/">{% gravatar user.email 200 %}</a>
 				</div>
                 <div>
+                	<hr>
 				<legend></legend>
 
                 {% block datos %}
 					<p>{{ user.first_name }} {{user.last_name}}
 					<p>{{ user.email }}
-					<p>{{ user.last_login }}
-					<p>{{ user.data_joined }}
+					<p>localizacion :{{ user.location }}
+					<p>descripcion: {{ user.description }}
                     <p align = "center"> <a href = "/settings">Editar información</a>
                 {% endblock %}
+                	<hr>
 				<legend></legend>
 				</div>
 

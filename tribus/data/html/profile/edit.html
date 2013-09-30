@@ -7,10 +7,15 @@
 {% endblock %}
 
 {% block informacion %}
-	<div><h1> otra prueba edition</h1></div>
-	<div><h2> otra prueba edition</h2></div>
-	<div><h3> otra prueba edition</h3></div>
-	<div><h4> otra prueba edition</h4></div>
-	<div><h5> otra prueba edition</h5></div>
+    <form accept-charset="UTF-8" action="/settings/edition/done" autocomplete="on" method="post">
+        {% csrf_token %}
+        <ul class="unstyled">
+            <li>{{ editForm.descripcion }}</li>
+            <li>{{ editForm.location}}</li>
+        </ul>
+        <div class="span3 offset1" >
+        	<button class="btn btn-success btn-block" type="submit">Confirmar </button>
+    	</div>
+    </form>
 
 {% endblock %}
