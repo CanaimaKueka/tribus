@@ -6,7 +6,7 @@ from tastypie.authentication import SessionAuthentication, Authentication
 from tastypie_mongoengine.resources import MongoEngineResource
 from tastypie.resources import ModelResource, ALL
 from django.contrib.auth.models import User
-from tribus.web.models import Trib, UserProfile
+from tribus.web.models import Trib
 
 
 class UserResource(ModelResource):
@@ -51,8 +51,8 @@ class TimelineResource(MongoEngineResource):
 
     def get_object_list(self, request):
         
-        user_profile = UserProfile.objects.get(user_id__id__exact=request.user.id)
-        user_timeline = [u.id for u in user_profile.follows.all()]
+        user_profile = User.objects.get(user_id__id__exact=request.user.id)
+        user_timeline = [u.id for u in User.follows.all()]
         user_timeline.append(request.user.id)
 
         return super(TimelineResource, self).get_object_list(request).filter(author_id__in=user_timeline)
