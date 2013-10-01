@@ -50,11 +50,9 @@ class TimelineResource(MongoEngineResource):
         }
 
     def get_object_list(self, request):
-        
         user = User.objects.get(id__exact=request.user.id)
         timeline = [u.id for u in user.follows.all()]
         timeline.append(request.user.id)
-
         return super(TimelineResource, self).get_object_list(request).filter(author_id__in=timeline)
 
     def apply_authorization_limits(self, request, object_list):

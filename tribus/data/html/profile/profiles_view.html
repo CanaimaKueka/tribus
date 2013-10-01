@@ -10,7 +10,7 @@
 				<div>
 					<span>
                     {% load gravatar %}
-                    <a href = "http://gravatar.com/emails/">{% gravatar user.email 280 %}</a>
+                    <a href = "http://gravatar.com/emails/">{% gravatar user_view.email 280 %}</a>
 						</span>
 
 					
@@ -18,14 +18,14 @@
 									
 					{% if add %}
 
-					<a href="/profile/add_follow/{{user.username}}" class="btn btn-sm btn-block btn-success">
+					<a href="/profile/add_follow/{{user_view.username}}" class="btn btn-sm btn-block btn-success">
 						<i class="icon-plus-sign bigger-120"></i>
 						<span class="bigger-110">Add as a friend</span>
 					</a>
 				
 					{%elif eliminar%}
 
-					<a href="/profile/delete_follow/{{user.username}}" class="btn btn-sm btn-block btn-success">
+					<a href="/profile/delete_follow/{{user_view.username}}" class="btn btn-sm btn-block btn-success">
 						<i class="icon-plus-sign bigger-120"></i>
 						<span class="bigger-110">Delete as a friend</span>
 					</a>
@@ -37,21 +37,21 @@
 				<div class="space-36"></div>
                 <div>
                 {% block datos %}
-					<p>{{ user.first_name }} {{user.last_name}}
-					<p>{{ user.email }}
-					<p>localizacion: {{ user.location }}
-					<p>descripcion: {{ user.description }}
-					<p>sigues a:
+					<p>{{ user_view.first_name }} {{user_view.last_name}}
+					<p>{{ user_view.email }}
+					<p>localizacion: {{ user_view.location }}
+					<p>descripcion: {{ user_view.description }}
+					
 
 
-				<!-- solo para depurar -->
-					{%for i in user.follows.only%}
+				<p>sigues a:
+<!-- 				 solo para depurar -->
+					{%for i in user_view.follows.only%}
 
 					<p><a href="/profile/{{i.username}}">{{i.username}}</a>
-
+ 
 					{%endfor%}
 
-                    <p align = "center"> <a href = "/settings">Editar información</a>
                 {% endblock %}
                 	<hr>
 				<legend></legend>
@@ -59,7 +59,7 @@
 
 			</div>
 			<div class="span9">
-				{% include 'profile/navbar.html' %}
+				{% include 'profile/navbar_view.html' %}
                 <legend></legend>	
 
 				<div class = "row-fluid">
