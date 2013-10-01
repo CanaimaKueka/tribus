@@ -2,8 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.shortcuts import render
 from django.contrib.auth.models import User
 # from django.contrib.auth import login, authenticate, logout
 # from django.core.serializers.json import json
@@ -35,59 +34,21 @@ from tribus.web.user.forms import SignupForm
 
 
 def tour(request):
-    data = {}
-    context = RequestContext(request)
-    return render_to_response('tour.html', data, context)
+    return render('tour.html', {})
 
-def index(request, page = 1):
+def index(request):
 
     if request.user.is_authenticated():
-
-        # tribs = []
-        # t0 = TWEETS_EN_PAGE * (int(page) - 1)
-        # t1 = TWEETS_EN_PAGE + t0
-
-        # profile = request.user.get_profile()        # Give me the user profile
-        # followers = [followers for f in profile.followers.all()]
-        # follows = [follows for f in profile.follows.all()]
-        # follows.append(request.user)
-
-        # tribs = Trib.objects.filter(user__in = follows).order_by('-date')[t0:t1]
-
-
-        # for t in tribs:
-        #     t.profile = Profile.objects.get(user__username = t.user)
-        #     if t.retweet == True:
-        #         rt = Tweet.objects.get(pk = int(t.contenido))
-        #         rt.retwitteado = 1
-        #         rt.retweetter = t.user
-        #         rt.rt_id = t.id
-        #         tweets.append(rt)
-        #     else:
-        #         tweets.append(t)
-
         render_css = ['normalize', 'fonts', 'font-awesome', 'bootstrap',
                         'bootstrap-responsive', 'tribus', 'tribus-responsive']
         render_js = ['jquery', 'jquery.autogrow', 'bootstrap', 'angular',
-                        'angular.resource', 'angular.infinite-scroll', 'index.app', 'index.controllers',
-                        'index.services', 'index.jquery']
-        X = User.objects.get(id__exact=request.user.id)
-        # print X.follows
-        return render_to_response(
-            'index.html', {
-                # 'p' : profile,
-                # 'next' : int(page) + 1,
-                # 'page' : page,
-                # 'prev' : int(page) - 1,
-                # 'tribs' : tribs,
-                # 'tribs_c' : len(tribs),
-                # 'follows_c' : len(follows),
-                # 'followers_c' : len(followers),
-                'render_css': render_css,
-                'render_js': render_js,
-                #'trending' : tt(5, 200),
-                #'recommended' : randuser(request.user, 3),
-            }, RequestContext(request))
+                        'angular.resource', 'angular.infinite-scroll', 'index.app',
+                        'index.controllers', 'index.services', 'index.jquery']
+
+        return render(request, 'index.html', {
+            'render_css': render_css,
+            'render_js': render_js,
+            })
 
     else:
         signupform = SignupForm()
@@ -101,16 +62,11 @@ def index(request, page = 1):
                         'bootstrap-responsive', 'tribus', 'tribus-responsive']
         render_js = []
 
-        return render_to_response(
-            'init.html', {
-                'signupform': signupform,
-                'render_css': render_css,
-                'render_js': render_js,
-            },
-
-
-            RequestContext(request)
-        )
+        return render(request, 'init.html', {
+            'signupform': signupform,
+            'render_css': render_css,
+            'render_js': render_js,
+            })
 
 # def dashboard(request, page = 1):
 #     if page < 2:

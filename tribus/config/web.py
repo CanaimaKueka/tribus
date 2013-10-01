@@ -4,20 +4,9 @@
 import djcelery
 import mongoengine
 
+from tribus import BASEDIR
 from tribus.common.utils import get_path
 from celery.schedules import crontab
-
-try:
-    djcelery.setup_loader()
-except:
-    pass
-
-try:
-    mongoengine.connect(db='tribus',
-        host='localhost', port=27017
-        )
-except:
-    pass
 
 SITE_ID = 1
 
@@ -29,23 +18,22 @@ MANAGERS = ADMINS
 
 USE_I18N = True
 USE_L10N = True
+USE_TZ = True
 TIME_ZONE = 'America/Caracas'
 LANGUAGE_CODE = 'es-ve'
-DATABASE_OPTIONS = {'charset': 'utf8'}
+DATABASE_OPTIONS = { 'charset': 'utf8' }
 DEFAULT_CHARSET = 'utf-8'
 
-BASEDIR = get_path([__file__, '..', '..'])
-SITE_ROOT = get_path([BASEDIR, 'web'])
+SITE_ROOT = get_path([BASEDIR, 'tribus', 'web'])
 MEDIA_ROOT = ''
 MEDIA_URL = '/media/'
-ADMIN_MEDIA_PREFIX = '/media/admin/'
 STATIC_ROOT = ''
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [get_path([BASEDIR, 'data', 'static', ''])]
-TEMPLATE_DIRS = [get_path([BASEDIR, 'data', 'html', ''])]
+STATICFILES_DIRS = [get_path([BASEDIR, 'tribus', 'data', 'static'])]
+TEMPLATE_DIRS = [get_path([BASEDIR, 'tribus', 'data', 'html', ''])]
 
-DJANGO_STATIC = True
-DJANGO_STATIC_MEDIA_ROOTS = [get_path([BASEDIR, 'data', ''])]
+DJANGO_STATIC = not DEBUG
+DJANGO_STATIC_MEDIA_ROOTS = [get_path([BASEDIR, 'tribus', 'data', ''])]
 
 LOGIN_URL = '/login'
 LOGOUT_URL = '/logout'
@@ -60,7 +48,6 @@ WSGI_APPLICATION = 'tribus.web.wsgi.application'
 #
 
 AUTHENTICATION_BACKENDS = (
-#     'django.contrib.auth.backends.ModelBackend',
     'social_auth.backends.twitter.TwitterBackend',
     'social_auth.backends.facebook.FacebookBackend',
     'social_auth.backends.google.GoogleOAuth2Backend',
@@ -162,7 +149,6 @@ DATABASES = {
      }
  }
 
-AUTH_PROFILE_MODULE = 'web.UserProfile'
 DATABASE_ROUTERS = ['ldapdb.router.Router']
 
 PASSWORD_HASHERS = (
@@ -281,6 +267,17 @@ CACHES = {
         },
     },
 }
+
+
+try:
+    djcelery.setup_loader()
+except:
+    pass
+
+try:
+    mongoengine.connect(db='tribus')
+except:
+    pass
 
 try:
     from tribus.config.logger import *
