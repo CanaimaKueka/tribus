@@ -22,14 +22,14 @@ function TribList($scope, $timeout, Tribs, Timeline) {
 
         Tribs.save(newtrib, function(){
             $scope.temp_new_tribs.unshift(newtrib);
-            $('textarea.action_box').val('')
+            $('textarea.action_box').val('');
         });
     };
 
     $scope.addOldTribs = function(){
 
         if ($scope.tribs_end) return;
-        
+
         if ($scope.controller_busy) return;
 
         $scope.controller_busy = true;

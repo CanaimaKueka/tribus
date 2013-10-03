@@ -2,17 +2,13 @@
         <div class="navbar">
                 <div class="container-fluid">
                     <a class="brand" href="/">
-                        <span class="smaller-90">
-                            <span class="logo"></span>
-                            <span class="logo_title">Tribus</span>
-                        </span>
-                        <span class="smaller-50">alpha</span>
+                        <span class="logo"></span>
+                        <span class="logo_title">Tribus</span>
+                        <span class="logo_subtitle badge badge-yellow">alpha</span>
                     </a>
                     {% if user.is_authenticated %}
                     <ul class="nav">
                         <li class="divider-vertical"></li>
-                        <li><a href="#" role="button" data-toggle="modal" data-target="#trib"><span class="bigger-150 icon-edit-sign"></span></a></li>
-
                         <li>
                             <form class="form-search" action = "/paquetes/busqueda/" method = "POST">
                                 {% csrf_token %}
@@ -25,39 +21,11 @@
                     </ul>
                     <ul class="nav pull-right">
                         <li>
-                            <a href="#">
-                                <span class="bigger-150 icon-home"></span>
-                            </a>
+                            <a href="/"><span class="bigger-150 icon-home"></span></a>
                         </li>
-
                         <li class="divider-vertical"></li>
-
                         <li>
-                            <a href="/profile">
-                            <i class="bigger-150 icon-user"></i>
-                            </a>
-                        </li>
-
-                        <li class="divider-vertical"></li>
-                        <li class="dropdown">
-                            <a id="drop-tasks" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="bigger-150 icon-tasks"></i>
-                            </a>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">X</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Y</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Z</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a id="drop-inbox" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="bigger-150 icon-inbox"></i>
-                            </a>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">X</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Y</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Z</a></li>
-                            </ul>
+                            <a href="/profile"><i class="bigger-150 icon-user"></i></a>
                         </li>
                         <li class="divider-vertical"></li>
                         <li class="dropdown">
@@ -65,7 +33,6 @@
                                 <i class="bigger-150 icon-cog"></i>
                             </a>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Settings</a></li>
                                 <li role="presentation"><a role="menuitem" tabindex="-1" href="/logout">Logout</a></li>
                             </ul>
                         </li>
