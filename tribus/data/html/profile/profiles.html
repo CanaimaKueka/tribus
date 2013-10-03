@@ -1,4 +1,5 @@
 {% extends 'profile/base.html' %}
+{% block ngapp %}profiles{% endblock %}
 {% block title %} Profile {% endblock %}
 {% block content%}
 
@@ -65,25 +66,30 @@
 				<div class = "row-fluid">
 
                     {%block informacion%}
-					<div>
-						<h2>noticia 1</h2>
-						<p> Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
-						</div>
-					<div >
-						<h2>noticia 2</h2>
-						<p> Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
-						</div>
-					<div>
-						<h2>noticia 3</h2>
-						<p> Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
-						</div>
-					<div>
-						<h2>noticia 4</h2>
-						<p> Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
-						</div>	
+                    <div class="span12 dashboard_timeline" ng-controller="TribList">
+                    {% include 'tribs.html' %}
+                    </div>
                     {%endblock%}
 		</div>
 	</div>
 </div>
 
+{% endblock %}
+
+
+{% block scripts %}
+    <script type="text/javascript">
+        {% if user.is_authenticated %}
+        var user_id = '{{ user.id }}';
+        var user_username = '{{ user.username }}';
+        var user_first_name = '{{ user.first_name }}';
+        var user_last_name = '{{ user.last_name }}';
+        {% endif %}
+        var trib_limit_to = 0;
+        var trib_offset = 0;
+        var trib_add = 10;
+        var trib_limit = 10;
+        var trib_orderby = '-trib_pub_date';
+        var controller_busy = false;
+    </script>
 {% endblock %}

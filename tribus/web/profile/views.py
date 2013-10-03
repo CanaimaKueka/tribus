@@ -117,7 +117,9 @@ def AddFollow(request,nick):
 
 
 def UserProfile(request):
-    render_js = ['jquery', 'bootstrap']
+    render_js = ['jquery', 'jquery.autogrow', 'bootstrap', 'angular',
+                    'angular.resource', 'angular.infinite-scroll', 'profiles.app',
+                    'profiles.controllers', 'profiles.services', 'profiles.jquery']
     render_css = ['normalize', 'fonts', 'font-awesome', 'bootstrap',
                         'bootstrap-responsive', 'tribus', 'tribus-ie' ,'tribus-responsive']
 
