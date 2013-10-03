@@ -63,7 +63,7 @@ def get_dependency_links(filename=None):
     or a simple pip dependency file.
 
     :param filename: a filename containing python packages
-                     in a format exoected by pip (one per line).
+                     in a format expected by pip (one per line).
     :return: a list of dependency links.
     :rtype: ``list``
 
@@ -85,7 +85,7 @@ def get_requirements(filename=None):
     or a simple pip dependency file.
 
     :param filename: a filename containing python packages
-                     in a format exoected by pip (one per line).
+                     in a format expected by pip (one per line).
     :return: a list of dependencies (python packages).
     :rtype: ``list``
 

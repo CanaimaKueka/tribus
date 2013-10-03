@@ -5,9 +5,6 @@
 raiz = "http://localhost/repositorio/"
 local = "http://localhost/repositorio/dists/"
 
-i386  = "http://10.16.106.152/repositorio/dists/waraira/main/binary-i386/Packages"
-amd64 = "http://10.16.106.152/repositorio/dists/waraira/main/binary-amd64/Packages"
-
 canaimai386 = "http://paquetes.canaima.softwarelibre.gob.ve/dists/kerepakupai/main/binary-i386/Packages"
 canaimaamd64 = "http://paquetes.canaima.softwarelibre.gob.ve/dists/kerepakupai/main/binary-amd64/Packages"
 

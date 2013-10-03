@@ -21,38 +21,21 @@
 '''
 
 tribus.common.recorder
-===================
+======================
 
 This module contains common functions to record package data from a repository.
-Este modulo contiene funciones comunes para registrar datos de paquetes desde un repositorio.
 
 '''
 
 #===============================================================================
 # TODO: 
-# 1. Adaptar y probar los metodos de actualizacion de paquetes para esta estructura de tablas. COMPLETADO
-# 2. Incluir registro de tags. COMPLETADO
-# 3. Probablemente necesite actualizacion de tags. PENDIENTE
-# 4. Organizar y ubicar funciones que aun no se donde deben ir. EN PROCESO 
-# 5. Agregar registro de MD5 a la base de datos una vez se complete una actualizacion. COMPLETADO
-# 6. Separar los procesos de actualizacion: 
-# - Una tarea que se encargue de comparar y descargar la informacion de los archivos packages,
-#   luego crear un directorio donde organizar los archivos descargados.
-# - Una tarea para verificar el MD5 de los archivos Packages y actualizar dicha informacion en
-#   la base de datos.
-# 7. Documentar, documentar, documentar.
-# 8. Hacer casos de prueba para los metodos criticos.
-# 9. Un metodo en fabric para llenar la base de datos, sin romper otras cosas. COMPLETADO
-# 10. Agregar seccion para agregar nuevos paquetes durante las actualizaciones. COMPLETADO
-# 11. Corregir descripcion de atributos en los modelos.
-# 12. IDEA: Separar el registro y actualizacion en modulos distintos, permitiendo que el de actualizacion
-#     tenga acceso al modulo de registro.
-# 13. Parece necesario y correcto sustituir el None de las relacione simples por 0.
-# 14. Eliminar paquetes obsoletos durante las actualizaciones. Actualmente no elimina los paquetes que ya
-#     se registraron.
+# 1. Actualizacion de tags. PENDIENTE
+# 2. Parece necesario y correcto sustituir el None de las relacione simples por 0. PENDIENTE
+# 3. Eliminar paquetes obsoletos durante las actualizaciones. Actualmente no elimina los paquetes que ya
+#     se registraron. PENDIENTE
 #===============================================================================
 
-import urllib, urllib2, re, email.Utils, os, sys
+import urllib, re, email.Utils, os, sys
 path = os.path.join(os.path.dirname(__file__), '..', '..')
 base = os.path.realpath(os.path.abspath(os.path.normpath(path)))
 os.environ['PATH'] = base + os.pathsep + os.environ['PATH']
@@ -60,21 +43,24 @@ sys.prefix = base
 sys.path.insert(0, base)
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
 from debian import deb822
-from django.db.models import Max
 from tribus.web.paqueteria.models import *
-from tribus.config.pkgrecorder import amd64, i386, package_fields, detail_fields, local, canaimai386
+from tribus.config.pkgrecorder import package_fields, detail_fields
+from tribus.common.utils import find_files, md5Checksum, find_dirs
+from tribus.config.base import PACKAGECACHE
 
-# TODO: Traducir documentacion
+
 def record_maintainer(maintainer_data):
     """
-    Verifica si existe un mantenedor que coincida con los datos suministrados.
-    Si no existe crea uno nuevo con los datos suministrados.
+    Queries the database for an existent maintainer.
+    If it does not exists, it creates a new maintainer.
     
-    :param maintainer_data: cadena de texto que contiene los datos del mantenedor.
+    :param maintainer_data: a string which contains maintainer's name and email.
     
-    :return: una representacion de un mantenedor
+    :return: a `Maintainer` object.
              
     :rtype: ``Maintainer``
+    
+    .. versionadded:: 0.1
     """
     name, mail = email.Utils.parseaddr(maintainer_data)
     exists = Maintainer.objects.filter(Name = name, Email = mail)
@@ -85,13 +71,31 @@ def record_maintainer(maintainer_data):
     else:
         return exists[0]
 
-# TODO: Documentar, cambiar nombres poco intuitivos
-def verify_fields(section, fields):
+
+def select_paragraph_fields(section, fields):
     """
-    Verifica si los campos presentes en la lista ``fields`` estan en la 
-    seccion correspondiente. De ser asi copia el contenido del campo en 
-    un diccionario y en caso de que el nombre del campo contenga un guion
-    este se elimina.
+    Selects the necessary fields to record a debian control file paragraph
+    in the database. Hyphens in field's names are suppressed, e.g:  
+    "Multi-Arch" is replaced by "MultiArch".
+    
+    :param section: is a paragraph which contains data from a binary package.
+    
+    :param fields: is a list of the necessary fields to record a Package or a Details object in the 
+                   database. For a `Package` object, the necessary fields are::
+    
+                        ["Package", "Description", "Homepage", "Section",
+                         "Priority", "Essential", "Bugs", "Multi-Arch"]
+                         
+                   and for a `Details` object::
+                   
+                        ["Version", "Architecture", "Size", "MD5sum", "Filename",
+                         "Installed-Size"]
+                    
+    :return: a dictionary with the selected fields.
+             
+    :rtype: ``dict``
+    
+    .. versionadded:: 0.1
     """
     
     d = {}
@@ -103,8 +107,21 @@ def verify_fields(section, fields):
                 d[field] = section[field]
     return d
 
-# TODO: Documentar
+
 def find_package(name):
+    """
+    Queries the database for an existent package.
+    If it does not exists, it creates a new package only with its name.
+    
+    :param name: the package name.
+    
+    :return: a `Package` object.
+             
+    :rtype: ``Package``
+    
+    .. versionadded:: 0.1
+    """
+    
     exists = Package.objects.filter(Package = name)
     if exists:
         return exists[0]
@@ -112,9 +129,25 @@ def find_package(name):
         p = Package(Package = name)
         p.save()
         return p
-    
-# TODO: Documentar, cambiar nombres poco intuitivos
+
 def create_relationship(fields):
+    """
+    Queries the database for an existent relation.
+    If it does not exists, it creates a new relation.
+                 
+    :param fields: is a dictionary which contains the relation data. Its structure is similar to::  
+                                  
+                        {"related_package": "0ad-data", "relation_type": "depends",
+                        "relation": ">=", "version": "0~r11863", "alt_id": None}
+                   .
+                   
+    :return: a `Relation` object.
+             
+    :rtype: ``Relation``
+    
+    .. versionadded:: 0.1
+    """
+
     exists = Relation.objects.filter(**fields)
     if exists:
         return exists[0]
@@ -122,9 +155,22 @@ def create_relationship(fields):
         obj = Relation(**fields)
         obj.save()
         return obj
- 
-# TODO: Documentar, cambiar nombres poco intuitivos, terminar de traducir
+
+
 def create_tag(val):
+    """
+    Queries the database for an existent tag.
+    If it does not exists, it creates a new tag.
+    
+    :param val: string with the value of the tag.
+    
+    :return: a `Tag` object.
+             
+    :rtype: ``Tag``
+    
+    .. versionadded:: 0.1
+    """
+    
     exists = Tag.objects.filter(Value = val)
     if exists:
         return exists[0]
@@ -132,9 +178,24 @@ def create_tag(val):
         tag = Tag(Value = val)
         tag.save()
         return tag
-    
-# TODO: Documentar, cambiar nombres poco intuitivos, terminar de traducir
+
+
 def create_label(label_name, tag):
+    """
+    Queries the database for an existent label.
+    If it does not exists, it creates a new label.
+    
+    :param label_name: a string with the name of the label.
+    
+    :param tag: a `Tag` object.
+    
+    :return: a `Label` object.
+             
+    :rtype: ``Label``
+    
+    .. versionadded:: 0.1
+    """
+    
     exists = Label.objects.filter(Name = label_name, Tags = tag)
     if exists:
         return exists[0]
@@ -143,12 +204,28 @@ def create_label(label_name, tag):
         label.save()
         return label
 
-# TODO: Documentar, cambiar nombres poco intuitivos
+
 def record_package(section):
+    """
+    Queries the database for an existent package.
+    If the package does exists but it doesn't have
+    a maintainer, then the package data will be 
+    updated acording to the fields of the section provided.
+    If the package doesn't exists then it's created.
+    
+    :param section: paragraph which contains the package data.
+    
+    :return: a `Package` object.
+             
+    :rtype: ``Package``
+    
+    .. versionadded:: 0.1
+    """
+    
     exists = Package.objects.filter(Package = section['Package'])
     if exists:
         if not exists[0].Maintainer:
-            exists.update(**verify_fields(section, package_fields))
+            exists.update(**select_paragraph_fields(section, package_fields))
             p = Package.objects.filter(Package = section['Package'])[0]
             p.Maintainer = record_maintainer(section['Maintainer'])
             p.save()
@@ -156,7 +233,7 @@ def record_package(section):
         else:
             return exists[0]
     else:
-        fields = verify_fields(section, package_fields)
+        fields = select_paragraph_fields(section, package_fields)
         m = record_maintainer(section['Maintainer'])
         p = Package(**fields)
         p.Maintainer = m
@@ -164,72 +241,166 @@ def record_package(section):
         record_tags(section, p)
         return p
 
-# TODO: Documentar, cambiar nombres poco intuitivos
+
 def record_details(section, pq, dist = "kerepakupai"):
+    """
+    Queries the database for the details of a given package.
+    If there are no details then they are recorded.
+    
+    :param section: paragraph which contains the package data.
+    
+    :param pq: a `Package` object to which the details are related.
+    
+    :param dist: a string that indicates the name of Canaima's version.
+    
+    :return: a `Details` object.
+             
+    :rtype: ``Details``
+    
+    .. versionadded:: 0.1
+    """
+    
     exists = Details.objects.filter(package = pq,
                                     Architecture = section['Architecture'],
                                     Distribution = dist)
     if exists:
         return exists[0]
     else:
-        fields = verify_fields(section, detail_fields)
+        fields = select_paragraph_fields(section, detail_fields)
         d = Details(**fields)
         d.Distribution = dist
         d.save()
         pq.Details.add(d)
         return d
-    
-    
-    
-                
-# TODO: Documentar, cambiar nombres poco intuitivos, terminar de traducir
+
+
 def record_tags(section, pq):
+    """
+    Processes the contents of the 'Tag' field in the provided paragraph,
+    records the labels into the database and relates them to a package. 
+    
+    :param section: a paragraph which contains the package data.
+    
+    :param pq: a `Package` object to which the labels are related.
+    
+    .. versionadded:: 0.1
+    """
+    
     if section.has_key('Tag'):
         tag_list = section['Tag'].replace("\n", "").split(", ")
         for tag in tag_list:
-            div_tag = tag.split("::")
-            value = create_tag(div_tag[1])
-            label = create_label(div_tag[0], value)
+            tag_parts = tag.split("::")
+            value = create_tag(tag_parts[1])
+            label = create_label(tag_parts[0], value)
             pq.Labels.add(label)
-                                
-# TODO: Documentar, cambiar nombres poco intuitivos, terminar de traducir
+
+
 def record_relationship(dt, rtype, fields, alt_id = None):
+    """
+    Records a new relation in the database and then associates it to a `Details` object.
+    
+    :param dt: a `Details` object to which the relationship is related.
+    
+    :param rtype: a string indicating the relationship type.
+    
+    :param fields: a dictionary which contains the relation data. Its structure is similar to::
+               
+                       {"name": "0ad-data", "version": (">=", "0~r11863"), "arch": None}
+    
+    :param alt_id: an integer used to relate a relation with its alternatives, e.g:
+    
+                       +----+-----------------+---------------+-----------+---------+--------+ 
+                       | id | related_package | relation_type | relation  | version | alt_id | 
+                       +====+=================+===============+===========+=========+========+ 
+                       |  1 |       23        |     depends   |    <=     |  0.98   |        |
+                       +----+-----------------+---------------+-----------+---------+--------+
+                       |  2 |       24        |     depends   |    >=     |  0.64   |    1   |
+                       +----+-----------------+---------------+-----------+---------+--------+ 
+                       |  3 |       25        |     depends   |    >=     |  2.76   |    1   |
+                       +----+-----------------+---------------+-----------+---------+--------+
+                       |  4 |       26        |     depends   |           |         |    1   |
+                       +----+-----------------+---------------+-----------+---------+--------+
+                       |  5 |       27        |     depends   |    <<     |  2.14   |        |
+                       +----+-----------------+---------------+-----------+---------+--------+
+    
+                    in the above table, the relations with id 2, 3 and 4 are alternatives between 
+                    themselves because they have the same value in the field `alt_id`.
+    
+    .. versionadded:: 0.1
+    """
+    
     if fields['version']:
-        rv = fields['version'][0]
-        nv = fields['version'][1]
+        relation_version = fields['version'][0]
+        number_version = fields['version'][1]
     else:
-        rv = None
-        nv = None
+        relation_version = None
+        number_version = None
     related = find_package(fields['name'])
     new_rel = create_relationship({"related_package": related,
                                    "relation_type": rtype,
-                                   "relation" : rv, "version": nv,
+                                   "relation" : relation_version,
+                                   "version": number_version,
                                    "alt_id": alt_id})
     dt.Relations.add(new_rel)
+
+
+def record_relations(details, relations_list):
+    """
+    Records a set of relations associated to a `Details` object.
     
-# TODO: Documentar, cambiar nombres poco intuitivos, terminar de traducir
-def record_relations(details, relations):
-    for rel in relations:
+    :param details: a `Details` object to which each relationship is related.
+    
+    :param relations: a list of tuples containing package relations to another pacakges.  
+                      Its structure is similar to::
+                      
+                          [('depends', [[{'arch': None, 'name': u'libgl1-mesa-glx', 'version': None},
+                          {'arch': None, 'name': u'libgl1', 'version': None}]],
+                          [{'arch': None, 'name': u'0ad-data', 'version': (u'>=', u'0~r11863')}]), ('suggests', [])]
+
+    .. versionadded:: 0.1
+    """
+    
+    for relations in relations_list:
         alt_id = 1
-        if rel[1]:
-            for r in rel[1]:
-                if len(r) > 1:
-                    for rr in r:
-                        record_relationship(details, rel[0], rr, alt_id)
+        if relations[1]:
+            for relation in relations[1]:
+                if len(relation) > 1:
+                    for relation_part in relation:
+                        record_relationship(details, relations[0], relation_part, alt_id)
                     alt_id += 1
                 else:
-                    record_relationship(details, rel[0], r[0])
-                    
-# TODO: Documentar, cambiar nombres poco intuitivos, terminar de traducir
+                    record_relationship(details, relations[0], relation[0])
+
+
 def record_section(section):
+    """
+    Records the content of a paragraph in the database.
+    
+    :param section: a paragraph which contains the package data.
+    
+    .. versionadded:: 0.1
+    """
+    
+    print "Registrando seccion -->", section['Package'], "-", section['Architecture']
     p = record_package(section)
     d = record_details(section, p)
     record_relations(d, section.relations.items())
-    
-# TODO: Documentar, cambiar nombres poco intuitivos, terminar de traducir
+
+
 def update_package(section):
+    """
+    Updates the basic data of a package in the database.
+    
+    :param section: a paragraph which contains the package data.
+    
+    :return: a `Package` object.
+    
+    :rtype: ``Package``
+    
+    .. versionadded:: 0.1
+    """
     exists = Package.objects.filter(Package = section['Package'])
-    exists.update(**verify_fields(section, package_fields))
+    exists.update(**select_paragraph_fields(section, package_fields))
     # Necesito encontrar una mejor forma de hacer esto: 
     # Actualizar los datos del paquete y mantener el objeto seleccionado 
     # para (en este caso) agregarle el mantenedor
@@ -240,77 +411,61 @@ def update_package(section):
         paquete.save()
     return paquete
 
-# TODO: Documentar, cambiar nombres poco intuitivos, terminar de traducir
+
 def update_details(pq, section):
+    """
+    Updates the details of a Package in the database.
+    
+    :param pq: a `Package` object to which the details are related.
+    
+    :param section: a paragraph which contains the package data.
+    
+    :return: a `Details` object.
+             
+    :rtype: ``Details``
+    
+    .. versionadded:: 0.1
+    """
+    
     exists = Details.objects.filter(package = pq,
                                     Architecture = section['Architecture'])
-    exists.update(**verify_fields(section, detail_fields))
+    exists.update(**select_paragraph_fields(section, detail_fields))
     exists[0].save()
     return exists[0]
 
-# TODO: Documentar, cambiar nombres poco intuitivos, terminar de traducir
+
 def update_section(section):
+    """
+    Updates basic data and details of a package in the database.
+    It also updates the package's relations.
+    
+    :param section: a paragraph which contains the package data.
+    
+    .. versionadded:: 0.1
+    """
+    
     print "Actualizando la seccion -->", section['Package']
     p = update_package(section)
     d = update_details(p, section)
     d.Relations.all().delete()
     record_relations(d, section.relations.items())
     print "Actualizacion finalizada"
+
+
+
+def update_package_list(file_path):
+    """
+    Updates all packages from a debian control file.
+    If a package exists but the MD5sum field is different from the one
+    stored in the database then it updates the package data fields.
+    If the package doesn't exists then its created.
     
-# TODO: Documentar, cambiar nombres poco intuitivos, terminar de traducir
-def create_paths(raiz, distribuciones, componentes, arquitecturas):
-    rutas = []
-    for dist in distribuciones:
-        for comp in componentes:
-            for arq in arquitecturas:
-                ruta = raiz + dist + "/" + comp + "/" + arq
-                try:
-                    urllib2.urlopen(ruta)
-                    if arq != "source":
-                        rutas.append(comp + "/" + arq + "/Packages")
-                    else:
-                        rutas.append(comp + "/" + arq + "/Sources")
-                except:
-                    print "La ruta", ruta, "no existe"
-    return rutas
-
-# TODO: Documentar, cambiar nombres poco intuitivos, terminar de traducir
-def record_package_list(raiz, distribucion, rutas):
-    listapaq = []
-    datasource = urllib.urlopen(raiz + distribucion + "/Release")
-    rel = deb822.Release(datasource)
-    for l in rel['MD5Sum']:
-        if l['name'] in rutas:
-            listapaq.append((l['name'], l["md5sum"]))
-    for lp in listapaq:
-        existe = PackageList.objects.filter(Path = lp[0], MD5 = lp[1])
-        if not existe:
-            LP = PackageList(Path = lp[0], MD5 = lp[1])
-            LP.save()
-
-# TODO: Documentar, cambiar nombres poco intuitivos, terminar de traducir
-def record_repository(raiz):
-    rutas = create_paths(raiz, ["waraira"], ["main", "aportes", "no-libres"], 
-                ["binary-i386", "binary-amd64", "binary-armel", "binary-armhf", "source"])
-    record_package_list(raiz, "waraira", rutas)
+    :param file_path: path to the debian control file.
     
-# TODO: Documentar, cambiar nombres poco intuitivos, terminar de traducir
-def verify_package_list(raiz):
-    archivosMod = []
-    datasource = urllib.urlopen(raiz +  "/Release")
-    rel = deb822.Release(datasource)
-    for l in rel['MD5sum']:
-        lp = PackageList.objects.filter(Path = l['name'])
-        if lp:
-            if lp[0].MD5 != l['md5sum']:
-                archivosMod.append(l['name'])
-    return archivosMod
-
-# TODO: Documentar, cambiar nombres poco intuitivos, terminar de traducir
-def update_package_list(raiz, ruta):
-    datasource = urllib.urlopen(raiz + "/" + ruta)
-    print raiz, ruta
-    archivo = deb822.Packages.iter_paragraphs(datasource)
+    .. versionadded:: 0.1
+    """
+    
+    archivo = deb822.Packages.iter_paragraphs(file(file_path))
     print "Actualizando lista de paquetes"
     for section in archivo:
         existe = Details.objects.filter(package__Package = section['Package'], Architecture = section['Architecture'])
@@ -319,42 +474,118 @@ def update_package_list(raiz, ruta):
                 print "Se encontraron diferencias en la seccion -->", section['Package']
                 print section['md5sum'], existe[0].MD5sum
                 update_section(section)
-                # Esto deberia ser un metodo pero aun no lo tengo claro
-                new_md5 = ""
-                datasource = urllib.urlopen(raiz +  "/Release")
-                rel = deb822.Release(datasource)
-                for l in rel['MD5sum']:
-                    if l['name'] == ruta:
-                        new_md5 = l['md5sum']
-                path = PackageList.objects.filter(Path = ruta).update(MD5 = new_md5)
         else:
             record_section(section)
             print "Se estan agregando nuevos detalles"
-            new_md5 = ""
-            datasource = urllib.urlopen(raiz +  "/Release")
-            rel = deb822.Release(datasource)
-            for l in rel['MD5sum']:
-                if l['name'] == ruta:
-                    new_md5 = l['md5sum']
-            path = PackageList.objects.filter(Path = ruta).update(MD5 = new_md5)
-                
-# TODO: Documentar, cambiar nombres poco intuitivos, terminar de traducir
-def verify_updates():
-    diff = verify_package_list(local + "waraira")
-    if diff:
-        mod1 = diff[0]
-        print "Archivo con diferencias -->", mod1
-        update_package_list(local + "waraira", mod1)
-    else:
-        print "No hay cambios en la lista de paquetes"
 
-# TODO: Documentar, cambiar nombres poco intuitivos, terminar de traducir
-def fill_database():
-    file1 = urllib.urlopen(i386)
-    file2 = urllib.urlopen(amd64)
-    for section in deb822.Packages.iter_paragraphs(file1):
-        record_section(section)
-    for section in deb822.Packages.iter_paragraphs(file2):
-        record_section(section)
-    record_repository(local)
+
+def create_package_cache():
+    '''
+    Creates the necessary directories for all the existent
+    debian control files (Packages) in a repository.
     
+    .. versionadded:: 0.1
+    '''
+    base = PACKAGECACHE + '/waraira'
+    try:
+        datasource = urllib.urlopen("http://localhost/repositorio/dists/waraira/Release")
+    except:
+        datasource = None
+    if datasource:
+        rel = deb822.Release(datasource)
+        for l in rel['MD5sum']:
+            if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages$", l['name']):
+                archivo = base + "/" + l['name']
+                ruta = archivo.strip('Packages')
+                exists = find_dirs(ruta)
+                if not exists:
+                    os.makedirs(ruta)
+                else:
+                    os.remove(archivo)
+
+
+def clean_package_cache():
+    '''
+    Deletes all debian control files (Packages) in the packagecache directory.
+    
+    .. versionadded:: 0.1
+    '''
+    base = PACKAGECACHE + '/waraira'
+    files = find_files(base, "Packages")
+    for f in files:
+        os.remove(f)
+
+
+def populate_package_cache():
+    '''
+    Gets all existent debian control files (Packages) in a repository and
+    puts them in their respective place.
+    
+    .. versionadded:: 0.1
+    '''
+    
+    base = PACKAGECACHE + '/waraira/'
+    remote = "http://localhost/repositorio/dists/waraira/"
+    try:
+        datasource = urllib.urlopen("http://localhost/repositorio/dists/waraira/Release")
+    except:
+        datasource = None
+    if datasource:
+        rel = deb822.Release(datasource)
+        for l in rel['MD5sum']:
+            if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages$", l['name']):
+                remote_path = remote + l['name']
+                local_path = base + l['name']
+                try:
+                    urllib.urlretrieve(remote_path, local_path)
+                except IOError:
+                    print 'archivo %s no encontrado.' % (remote_path)
+
+
+def update_package_cache():
+    '''
+    Updates the debian control files (Packages) in the packagecache directory,
+    comparing the the ones in the repository with its local copy.
+    If there are differences in the MD5sum field then the local
+    copy is deleted and copied again from the repository.
+    
+    .. versionadded:: 0.1
+    '''
+    
+    base = PACKAGECACHE + '/waraira/'
+    remote = "http://localhost/repositorio/dists/waraira/"
+    try:
+        datasource = urllib.urlopen("http://localhost/repositorio/dists/waraira/Release")
+    except:
+        datasource = None
+    if datasource:
+        rel = deb822.Release(datasource)
+        for l in rel['MD5sum']:
+            if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages$", l['name']):
+                remote_file = remote + l['name']
+                local_file = base + l['name']
+                if not l['md5sum'] == md5Checksum(local_file):
+                    os.remove(local_file)
+                    urllib.urlretrieve(remote_file, local_file)
+                    print "Actualizando -->", local_file
+                    update_package_list(local_file)
+                else:
+                    print "No hay cambios en el repositorio -->", local_file
+    else:
+        print "No se ha podido llevar a cabo la actualizacion"
+
+
+def init_package_cache():
+    '''
+    Creates the packagecache directory, gets all the
+    debian control files (Packages) from the repository
+    and records the data from each Package in the database.
+    
+    .. versionadded:: 0.1
+    '''
+    
+    create_package_cache()
+    populate_package_cache()
+    for p in find_files(PACKAGECACHE, 'Packages'):
+        for section in deb822.Packages.iter_paragraphs(file(p)):
+            record_section(section)
