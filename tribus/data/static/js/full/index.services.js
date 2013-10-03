@@ -9,7 +9,11 @@ angular.module('Tribs', ['ngResource'])
                 method: 'GET',
                 isArray: true,
                 transformResponse: function(data){return angular.fromJson(data).objects;}
-            }
+            },
+            delete: {
+                method: 'DELETE',
+                headers: {'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()},
+            },
         });
     });
 

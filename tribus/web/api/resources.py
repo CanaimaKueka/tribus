@@ -1,59 +1,44 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from tastypie.authorization import Authorization
 from tastypie.authentication import SessionAuthentication
+from tastypie.cache import SimpleCache
 from tastypie_mongoengine.resources import MongoEngineResource
-from tastypie.resources import ModelResource, ALL
-from django.contrib.auth.models import User
-from tribus.web.models import Trib
 
-
-class UserResource(ModelResource):
-    class Meta:
-        queryset = User.objects.all()
-        resource_name = 'users'
-        filtering = {
-            'username': ALL,
-        }
+from tribus.web.api.authorization import (TimelineAuthorization, TribAuthorization)
+from tribus.web.documents import Trib
 
 
 class TribResource(MongoEngineResource):
     class Meta:
         queryset = Trib.objects.all()
         resource_name = 'user/tribs'
-        authorization = Authorization()
-        authentication = SessionAuthentication()
         ordering = ['trib_pub_date']
-        filtering = {
-            'author_id': ALL,
-        }
+        allowed_methods = ['get', 'post', 'delete']
+        authorization = TribAuthorization()
+        authentication = SessionAuthentication()
+        cache = SimpleCache(timeout=120)
 
-    def obj_create(self, bundle, **kwargs):
-        return super(TribResource, self).obj_create(bundle, author_id=bundle.request.user.id)
+    '''
+    {
+    "author_first_name": "Luis Alejandro",
+    "author_id": 2,
+    "author_last_name": "Martínez Faneyth",
+    "author_username": "luis",
+    "retribs": [],
+    "trib_content": "hola",
+    "trib_pub_date": "2013-09-25T00:03:55.804000"
+    }
 
-    def apply_authorization_limits(self, request, object_list):
-        print object_list
-        return object_list.filter(author_id=request.user.id)
-
+    curl --dump-data -X POST --data '{"author_first_name": "Luis Alejandro", "author_id": 2, "author_last_name": "Martínez Faneyth", "author_username": "luis", "retribs": [], "trib_content": "hola", "trib_pub_date": "2013-09-25T00:03:55.804000"}'
+    '''
 
 class TimelineResource(MongoEngineResource):
     class Meta:
         queryset = Trib.objects.all()
         resource_name = 'user/timeline'
-        authorization = Authorization()
-        authentication = SessionAuthentication()
         ordering = ['trib_pub_date']
-        filtering = {
-            'author_id': ALL,
-            'author_username': ALL,
-        }
-
-    def get_object_list(self, request):
-        user = User.objects.get(id__exact=request.user.id)
-        timeline = [u.id for u in user.follows.all()]
-        timeline.append(request.user.id)
-        return super(TimelineResource, self).get_object_list(request).filter(author_id__in=timeline)
-
-    def apply_authorization_limits(self, request, object_list):
-        return object_list.filter(author_id=request.user.id)
+        allowed_methods = ['get']
+        authorization = TimelineAuthorization()
+        authentication = SessionAuthentication()
+        cache = SimpleCache(timeout=120)

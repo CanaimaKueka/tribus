@@ -30,10 +30,10 @@ MEDIA_URL = '/media/'
 STATIC_ROOT = ''
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [get_path([BASEDIR, 'tribus', 'data', 'static'])]
-TEMPLATE_DIRS = [get_path([BASEDIR, 'tribus', 'data', 'html', ''])]
+TEMPLATE_DIRS = [get_path([BASEDIR, 'tribus', 'data', 'html'])]
 
 DJANGO_STATIC = not DEBUG
-DJANGO_STATIC_MEDIA_ROOTS = [get_path([BASEDIR, 'tribus', 'data', ''])]
+DJANGO_STATIC_MEDIA_ROOTS = [get_path([BASEDIR, 'tribus', 'data'])]
 
 LOGIN_URL = '/login'
 LOGOUT_URL = '/logout'
@@ -121,7 +121,7 @@ AUTH_LDAP_USER_ATTR_MAP = {
 AUTH_LDAP_ALWAYS_UPDATE_USER = True
 
 # Use LDAP group membership to calculate group permissions.
-AUTH_LDAP_FIND_GROUP_PERMS = True
+AUTH_LDAP_FIND_GROUP_PERMS = False
 
 # Cache group memberships for an hour to minimize LDAP traffic
 AUTH_LDAP_CACHE_GROUPS = True
