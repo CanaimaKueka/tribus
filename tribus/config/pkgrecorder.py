@@ -5,6 +5,10 @@
 raiz = "http://localhost/repositorio/"
 local = "http://localhost/repositorio/dists/"
 
+local_repo_root = "http://localhost/repositorio/dists/"
+auyantepui =  "auyantepui/"
+kerepakupai = "waraira/"
+
 canaimai386 = "http://paquetes.canaima.softwarelibre.gob.ve/dists/kerepakupai/main/binary-i386/Packages"
 canaimaamd64 = "http://paquetes.canaima.softwarelibre.gob.ve/dists/kerepakupai/main/binary-amd64/Packages"
 

@@ -44,7 +44,8 @@ sys.path.insert(0, base)
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
 from debian import deb822
 from tribus.web.paqueteria.models import *
-from tribus.config.pkgrecorder import package_fields, detail_fields
+from tribus.config.pkgrecorder import package_fields, detail_fields, local_repo_root,\
+auyantepui, kerepakupai
 from tribus.common.utils import find_files, md5Checksum, find_dirs
 from tribus.config.base import PACKAGECACHE
 
@@ -372,7 +373,7 @@ def record_relations(details, relations_list):
                     record_relationship(details, relations[0], relation[0])
 
 
-def record_section(section):
+def record_section(section, dist):
     """
     Records the content of a paragraph in the database.
     
@@ -383,7 +384,7 @@ def record_section(section):
     
     print "Registrando seccion -->", section['Package'], "-", section['Architecture']
     p = record_package(section)
-    d = record_details(section, p)
+    d = record_details(section, p, dist)
     record_relations(d, section.relations.items())
 
 
@@ -479,16 +480,16 @@ def update_package_list(file_path):
             print "Se estan agregando nuevos detalles"
 
 
-def create_package_cache():
+def create_package_cache(repo_root, dist):
     '''
     Creates the necessary directories for all the existent
     debian control files (Packages) in a repository.
     
     .. versionadded:: 0.1
     '''
-    base = PACKAGECACHE + '/waraira'
+    base = PACKAGECACHE + dist
     try:
-        datasource = urllib.urlopen("http://localhost/repositorio/dists/waraira/Release")
+        datasource = urllib.urlopen(repo_root + dist + "Release")
     except:
         datasource = None
     if datasource:
@@ -504,19 +505,19 @@ def create_package_cache():
                     os.remove(archivo)
 
 
-def clean_package_cache():
+def clean_package_cache(dist):
     '''
     Deletes all debian control files (Packages) in the packagecache directory.
     
     .. versionadded:: 0.1
     '''
-    base = PACKAGECACHE + '/waraira'
+    base = PACKAGECACHE + dist
     files = find_files(base, "Packages")
     for f in files:
         os.remove(f)
 
 
-def populate_package_cache():
+def populate_package_cache(repo_root, dist):
     '''
     Gets all existent debian control files (Packages) in a repository and
     puts them in their respective place.
@@ -524,10 +525,10 @@ def populate_package_cache():
     .. versionadded:: 0.1
     '''
     
-    base = PACKAGECACHE + '/waraira/'
-    remote = "http://localhost/repositorio/dists/waraira/"
+    base = PACKAGECACHE + dist
+    remote = repo_root + dist
     try:
-        datasource = urllib.urlopen("http://localhost/repositorio/dists/waraira/Release")
+        datasource = urllib.urlopen(remote + "Release")
     except:
         datasource = None
     if datasource:
@@ -542,7 +543,7 @@ def populate_package_cache():
                     print 'archivo %s no encontrado.' % (remote_path)
 
 
-def update_package_cache():
+def update_package_cache(repo_root, dist):
     '''
     Updates the debian control files (Packages) in the packagecache directory,
     comparing the the ones in the repository with its local copy.
@@ -552,10 +553,10 @@ def update_package_cache():
     .. versionadded:: 0.1
     '''
     
-    base = PACKAGECACHE + '/waraira/'
-    remote = "http://localhost/repositorio/dists/waraira/"
+    base = PACKAGECACHE + dist
+    remote = repo_root + dist
     try:
-        datasource = urllib.urlopen("http://localhost/repositorio/dists/waraira/Release")
+        datasource = urllib.urlopen(remote + "Release")
     except:
         datasource = None
     if datasource:
@@ -583,9 +584,17 @@ def init_package_cache():
     
     .. versionadded:: 0.1
     '''
-    
-    create_package_cache()
-    populate_package_cache()
+            
+    create_package_cache(local_repo_root, auyantepui)
+    populate_package_cache(local_repo_root, auyantepui)
     for p in find_files(PACKAGECACHE, 'Packages'):
         for section in deb822.Packages.iter_paragraphs(file(p)):
-            record_section(section)
+            record_section(section, "auyantepui")
+            
+    create_package_cache(local_repo_root, kerepakupai)
+    populate_package_cache(local_repo_root, kerepakupai)
+    for p in find_files(PACKAGECACHE, 'Packages'):
+        for section in deb822.Packages.iter_paragraphs(file(p)):
+            record_section(section, "kerepakupai")
+            
+            
