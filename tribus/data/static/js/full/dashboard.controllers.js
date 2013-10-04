@@ -10,6 +10,8 @@ function TribList($scope, $timeout, Tribs, Timeline) {
 
     $scope.createNewTrib = function(){
 
+        $scope.controller_busy = true;
+
         var newtrib = {
             author_id: user_id,
             author_username: user_username,
@@ -23,6 +25,7 @@ function TribList($scope, $timeout, Tribs, Timeline) {
         Tribs.save(newtrib, function(){
             $scope.temp_new_tribs.unshift(newtrib);
             $('textarea.action_box').val('');
+            $scope.controller_busy = false;
         });
     };
 
@@ -67,7 +70,7 @@ function TribList($scope, $timeout, Tribs, Timeline) {
         });
     };
 
-    function addNewTribs($scope, trib_offset) {
+    function addNewTribs ($scope, $timeout, Timeline, trib_offset) {
 
         $scope.new_tribs_offset = trib_offset;
         $scope.temp_new_tribs = [];
@@ -93,7 +96,7 @@ function TribList($scope, $timeout, Tribs, Timeline) {
                         }
                     }
 
-                    if(i == (fresh_tribs.length-1)) addNewTribs($scope, trib_offset+trib_add);
+                    if(i == (fresh_tribs.length-1)) addNewTribs($scope, $timeout, Timeline, trib_offset+trib_add);
 
                 } else {
                     break;
@@ -101,18 +104,18 @@ function TribList($scope, $timeout, Tribs, Timeline) {
             }
 
             $scope.first_trib_id = $scope.tribs[0].id;
-            $timeout(function(){addNewTribs($scope, trib_offset);}, 60000);
+            $timeout(function(){addNewTribs($scope, $timeout, Timeline, trib_offset);}, 60000);
         });
     }
 
-    function waitTribs($scope, trib_offset){
+    function waitTribs ($scope, $timeout, Timeline, trib_offset) {
         if($scope.tribs.length > 0){
             $scope.first_trib_id = $scope.tribs[0].id;
-            addNewTribs($scope, trib_offset);
+            addNewTribs($scope, $timeout, Timeline, trib_offset);
         } else {
-            $timeout(function(){waitTribs($scope, trib_offset);}, 10000);
+            $timeout(function(){waitTribs($scope, $timeout, Timeline, trib_offset);}, 10000);
         }
     }
 
-    waitTribs($scope, trib_offset);
+    waitTribs($scope, $timeout, Timeline, trib_offset);
 }

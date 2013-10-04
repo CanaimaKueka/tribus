@@ -5,7 +5,6 @@ html {
 
 body {
     padding-bottom: 0;
-    background-color: #e4e6e9;
     min-height: 100%;
     font-family: 'Open Sans';
     font-size: 13px;
@@ -4633,6 +4632,7 @@ textarea,input[type="text"],input[type="password"],input[type="datetime"],input[
     color: #858585;
     background-color: #fff;
     border: 1px solid #d5d5d5;
+    box-shadow: none;
     line-height: 1.2;
     font-size: 14px;
     font-family: inherit;
@@ -4791,9 +4791,8 @@ span.input-icon {
     padding: 0 3px;
     z-index: 2;
     position: absolute;
-    top: 1px;
-    bottom: 1px;
-    left: 3px;
+    top: 0px;
+    left: 2px;
     line-height: 28px;
     display: inline-block;
     color: #909090;
@@ -14571,11 +14570,15 @@ th[aria-selected=true] .ui-jqgrid-sortable {
     font-size: 10px;
 }
 
-.navbar .brand {
-    padding: 7px 10px 0 20px;
+.navbar .nav > li.brand {
+    padding: 0 10px 0 20px;
 }
 
-.navbar .logo {
+.navbar .nav > li.brand > a{
+    padding: 0;
+}
+
+.navbar .nav > li.brand > a > span.logo {
     background: url('../../img/logo-min.svg') no-repeat;
     width: 30px;
     height: 20px;
@@ -14586,7 +14589,7 @@ th[aria-selected=true] .ui-jqgrid-sortable {
     margin-top: 4px;
 }
 
-.navbar .logo_title {
+.navbar .nav > li.brand > a > span.logo_title {
     font-family: 'League Gothic';
     margin-left: 5px;
     font-size: 1.5em;
@@ -14598,11 +14601,11 @@ th[aria-selected=true] .ui-jqgrid-sortable {
     float: left;
 }
 
-.navbar .logo_subtitle {
+.navbar .nav > li.brand > a > span.logo_subtitle {
     margin: 0;
     padding: 2px;
     margin-left: 3px;
-    margin-top: 15px;
+    margin-top: 12px;
     font-size: 0.6em;
     line-height: 0.8em;
     display: block;
@@ -14611,8 +14614,10 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 }
 
 .navbar .nav > li > a {
-    padding: 5px;
+    padding: 7px;
     margin: 5px;
+    line-height: 1;
+    float:left;
 }
 
 .navbar .nav .btn {
@@ -14862,14 +14867,15 @@ input, button, select, textarea {
     line-height: 1.5em;
 }
 
-.trib_interact > .badge {
+.trib_interact > span {
     float: left;
-    margin: 0 5px 0 0;
+    margin: 0 10px 0 0;
+    line-height: 20px;
 }
 
 .trib_interact > .pull-right {
     float: right;
-    margin: 0 0 0 5px;
+    margin: 0 0 0 10px;
 }
 
 .trib_title > h3 {
@@ -14973,7 +14979,7 @@ input, button, select, textarea {
 
 [class^="icon-"],
 [class*=" icon-"] {
-  vertical-align: middle;
+  vertical-align: baseline;
 }
 
 
