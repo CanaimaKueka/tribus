@@ -86,8 +86,16 @@ body.breadcrumbs-fixed {
     text-align: center;
 }
 
-a:focus,a:active {
-    text-decoration: none;
+a {
+  color: #229853;
+  text-decoration: none;
+}
+
+a:hover,
+a:focus,
+a:active {
+  color: #2ecc71;
+  text-decoration: underline;
 }
 
 h1 {
@@ -4645,8 +4653,8 @@ textarea:hover,input[type="text"]:hover,input[type="password"]:hover,input[type=
 }
 
 textarea:focus,input[type="text"]:focus,input[type="password"]:focus,input[type="datetime"]:focus,input[type="datetime-local"]:focus,input[type="date"]:focus,input[type="month"]:focus,input[type="time"]:focus,input[type="week"]:focus,input[type="number"]:focus,input[type="email"]:focus,input[type="url"]:focus,input[type="search"]:focus,input[type="tel"]:focus,input[type="color"]:focus {
-    -webkit-box-shadow: none;
-    box-shadow: none;
+    box-shadow: 0px 0px 0px 2px rgba(245, 153, 66, 0.3);
+    -webkit-box-shadow: 0px 0px 0px 2px rgba(245, 153, 66, 0.3);
     color: #696969;
     border-color: #f59942;
     background-color: #fff;
@@ -4693,8 +4701,8 @@ input.block {
 }
 
 textarea.autosize-transition {
-    -webkit-transition-duration: "height 0.2s";
-    transition-duration: "height 0.2s";
+    -webkit-transition-duration: 0.2s;
+    transition-duration: 0.2s;
 }
 
 .limiterBox {
@@ -4996,7 +5004,6 @@ input[type=checkbox].ace.ace-switch+.lbl::before {
     font-weight: bold;
     font-size: 11px;
     line-height: 18px;
-    line-height: 21px\9;
     height: 20px;
     overflow: hidden;
     border-radius: 12px;
@@ -5009,7 +5016,6 @@ input[type=checkbox].ace.ace-switch+.lbl::before {
     padding: 0;
     width: 52px;
     text-indent: -19px;
-    text-indent: -21px\9;
     margin-right: 0;
     -webkit-transition: text-indent .4s ease;
     transition: text-indent .4s ease;
@@ -5075,14 +5081,12 @@ input[type=checkbox].ace.ace-switch.ace-switch-4+.lbl::before,input[type=checkbo
     line-height: 23px;
     height: 24px;
     overflow: hidden;
-    line-height: 25px\9;
     border-radius: 12px;
     background-color: #8b9aa3;
     border: 1px solid #8b9aa3;
     color: #FFF;
     width: 56px;
     text-indent: -25px;
-    text-indent: -28px\9;
     display: inline-block;
     position: relative;
     box-shadow: none;
@@ -5634,24 +5638,24 @@ input[type=checkbox].ace.ace-switch.ace-switch-7:checked+.lbl::after {
 }
 
 .ace-file-input input[type=file] {
-    width: 100% \0/;
-    height: 30px \0/;
-    position: absolute \0/;
-    z-index: 1 \0/;
+    width: 100%;
+    height: 30px;
+    position: absolute;
+    z-index: 1;
     filter: alpha(opacity=0);
-    cursor: pointer \0/;
+    cursor: pointer;
 }
 
 .ace-file-input input[type=file]:hover+.file-label {
-    border-color: #f59942 \0/;
+    border-color: #f59942;
 }
 
 .ace-file-multiple input[type=file] {
-    height: 100%\0/;
+    height: 100%;
 }
 
 .ace-file-input .remove {
-    z-index: 2\0/;
+    z-index: 2;
 }
 
 .form-group select,.form-group textarea,.form-group input[type="text"],.form-group input[type="password"],.form-group input[type="datetime"],.form-group input[type="datetime-local"],.form-group input[type="date"],.form-group input[type="month"],.form-group input[type="time"],.form-group input[type="week"],.form-group input[type="number"],.form-group input[type="email"],.form-group input[type="url"],.form-group input[type="search"],.form-group input[type="tel"],.form-group input[type="color"] {
@@ -6509,7 +6513,7 @@ th,td,.table-bordered {
     border-left-color: #f1f1f1;
 }
 
-.table thead tr th:left-child {
+.table thead tr th:last-child {
     border-right-color: #f1f1f1;
 }
 
@@ -11136,9 +11140,9 @@ ul.attachment-list>li {
 }
 
 .ace-spinner input[type=text].spinner-input.form-control {
-    width: auto\0/!important;
-    line-height: 1\0/!important;
-    padding-bottom: 4px\0/!important;
+    width: auto !important;
+    line-height: 1 !important;
+    padding-bottom: 4px !important;
 }
 
 .ace-spinner.touch-spinner .spinner-buttons {
@@ -11519,7 +11523,7 @@ ul.attachment-list>li {
 
 .tree img {
     display: inline;
-    veritcal-align: middle;
+    vertical-align: middle;
 }
 
 .gritter-item-wrapper {
@@ -13183,7 +13187,7 @@ th[aria-selected=true] .ui-jqgrid-sortable {
     background-repeat: repeat-x;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff',endColorstr='#ffeeeeee',GradientType=0);
     border-image: none;
-    border-bottom: 1px solid solid;
+    border-bottom: 1px solid #669fc7;
     color: #669fc7;
     min-height: 38px;
     position: relative;
@@ -13641,7 +13645,7 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 
     20% {
         -moz-transform: rotate(0deg);
-    };
+    }
 }
 
 @-webkit-keyframes ringing {
@@ -13687,7 +13691,7 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 
     20% {
         -webkit-transform: rotate(0deg);
-    };
+    }
 }
 
 @-ms-keyframes ringing {
@@ -13733,7 +13737,7 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 
     20% {
         -ms-transform: rotate(0deg);
-    };
+    }
 }
 
 @keyframes ringing {
@@ -13779,7 +13783,7 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 
     20% {
         transform: rotate(0deg);
-    };
+    }
 }
 
 .icon-animated-vertical {
@@ -13818,7 +13822,7 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 
     22% {
         -moz-transform: translate(0,0);
-    };
+    }
 }
 
 @-webkit-keyframes vertical {
@@ -13848,7 +13852,7 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 
     22% {
         -webkit-transform: translate(0,0);
-    };
+    }
 }
 
 @-ms-keyframes vertical {
@@ -13878,7 +13882,7 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 
     22% {
         -ms-transform: translate(0,0);
-    };
+    }
 }
 
 @keyframes vertical {
@@ -13908,7 +13912,7 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 
     22% {
         transform: translate(0,0);
-    };
+    }
 }
 
 .icon-animated-hand-pointer {
@@ -13947,7 +13951,7 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 
     36% {
         -moz-transform: translate(0,0);
-    };
+    }
 }
 
 .icon-animated-wrench {
@@ -14023,7 +14027,7 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 
     75% {
         -moz-transform: rotate(0deg);
-    };
+    }
 }
 
 @-webkit-keyframes wrenching {
@@ -14085,7 +14089,7 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 
     75% {
         -webkit-transform: rotate(0deg);
-    };
+    }
 }
 
 @-o-keyframes wrenching {
@@ -14147,7 +14151,7 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 
     75% {
         -o-transform: rotate(0deg);
-    };
+    }
 }
 
 @-ms-keyframes wrenching {
@@ -14209,7 +14213,7 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 
     75% {
         -ms-transform: rotate(0deg);
-    };
+    }
 }
 
 @keyframes wrenching {
@@ -14271,7 +14275,7 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 
     75% {
         transform: rotate(0deg);
-    };
+    }
 }
 
 .ace-settings-container {
@@ -14464,7 +14468,6 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 .tags-hover,.tags-hover:hover {
     border-color: #f59942;
     outline: 0;
-    outline: thin dotted \9;
 }
 
 .tags[class*="span"] {
@@ -14831,6 +14834,7 @@ input, button, select, textarea {
     margin: 10px 0;
     float: left;
     display: block;
+    cursor:pointer;
 }
 
 
@@ -14852,18 +14856,41 @@ input, button, select, textarea {
     display: block;
 }
 
+.trib_item > .trib_reply {
+    width: 100%;
+    margin:0;
+    padding:0;
+    min-height: 0;
+    float: left;
+    display: block;
+}
+
+.trib_reply .action_avatar {
+    width: 40px;
+    height: 40px;
+    margin: 10px 0;
+}
+
+.trib_reply .action_box {
+    width: 40px;
+    height: 40px;
+    margin: 10px 0;
+}
+
 .trib_title {
     float: left;
     display:block;
     padding: 0px;
     margin: 0 0 5px 0;
+    width:100%;
 }
 
 .trib_interact {
     float: left;
-    display:block;
+    display: block;
     padding-top: 5px;
     width: 100%;
+    height: 20px;
     line-height: 1.5em;
 }
 
@@ -14871,6 +14898,24 @@ input, button, select, textarea {
     float: left;
     margin: 0 10px 0 0;
     line-height: 20px;
+}
+
+.trib_interact > span > a {
+    color:#94947b;
+    text-decoration: none;
+}
+
+.trib_interact > span > a > span [class^="icon-"],
+.trib_interact > span > a > span [class*=" icon-"],
+{
+    margin: 0 3px;
+}
+
+.trib_interact > span > a:hover,
+.trib_interact > span > a:focus,
+.trib_interact > span > a:active {
+    color:#5b5b4a;
+    text-decoration: none;
 }
 
 .trib_interact > .pull-right {
@@ -14892,9 +14937,14 @@ input, button, select, textarea {
     font-size: 1em;
     line-height: 1.2em;
     float: left;
-    display:block;
+    display: block;
     margin: 0 5px;
-    color: #999;
+    color: #94947b;
+}
+
+.trib_title > h4.pull-right {
+    float: right;
+    margin: 0;
 }
 
 .trib_content {
@@ -14924,6 +14974,14 @@ input, button, select, textarea {
 
 .trib_item > .arrow_left {
     border-right: 10px solid rgb(248, 248, 241);
+}
+
+.trib_clicker {
+    float: left;
+}
+
+#trib_reply_seed {
+    display: none;
 }
 
 .action_content > .action_bubble {

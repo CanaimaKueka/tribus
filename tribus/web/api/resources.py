@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from tastypie.authentication import SessionAuthentication
-from tastypie.cache import SimpleCache
+from tastypie.cache import NoCache
 from tastypie_mongoengine.resources import MongoEngineResource
 
 from tribus.web.api.authorization import (TimelineAuthorization, TribAuthorization)
@@ -17,7 +17,7 @@ class TribResource(MongoEngineResource):
         allowed_methods = ['get', 'post', 'delete']
         authorization = TribAuthorization()
         authentication = SessionAuthentication()
-        cache = SimpleCache(timeout=120)
+        cache = NoCache()
 
     '''
     {
@@ -41,4 +41,4 @@ class TimelineResource(MongoEngineResource):
         allowed_methods = ['get']
         authorization = TimelineAuthorization()
         authentication = SessionAuthentication()
-        cache = SimpleCache(timeout=120)
+        cache = NoCache()

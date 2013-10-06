@@ -2,14 +2,14 @@
     .container.main-container:after {
         -webkit-box-shadow: 0 0 0 1px rgba(0,0,0,0.1);
         box-shadow: 0 0 0 1px rgba(0,0,0,0.1);
-    };
+    }
 }
 
 @media only screen and (max-width:767px) {
     .navbar-container {
         padding-left: 0;
         padding-right: 0;
-    };
+    }
 }
 
 @media only screen and (max-width:767px) {
@@ -31,7 +31,7 @@
 
     .user-menu.dropdown-close.pull-right {
         right: 0!important;
-    };
+    }
 }
 
 @media only screen and (max-width:480px) {
@@ -57,7 +57,7 @@
 
     .ace-nav>li:nth-last-child(2)>.dropdown-menu.pull-right:before,.ace-nav>li:nth-last-child(2)>.dropdown-menu.pull-right:after {
         right: 70px;
-    };
+    }
 }
 
 @media only screen and (max-width:460px) {
@@ -89,7 +89,7 @@
     .ace-nav>li:nth-last-child(2)>.dropdown-menu.pull-right:before,.ace-nav>li:nth-last-child(2)>.dropdown-menu.pull-right:after {
         left: 130px;
         right: auto;
-    };
+    }
 }
 
 @media only screen and (max-width:460px) {
@@ -126,13 +126,13 @@
 
     .ace-nav>li:last-child {
         border-right: 1px solid #DDD;
-    };
+    }
 }
 
 @media only screen and (max-width:320px) {
     .ace-nav>li>a {
         padding: 0 5px!important;
-    };
+    }
 }
 
 @media(min-width:461px) and (max-width:480px),(max-width:360px) {
@@ -172,7 +172,7 @@
 
     li.open .user-info {
         display: inline-block;
-    };
+    }
 }
 
 @media only screen and (max-width:991px) {
@@ -190,19 +190,19 @@
 
     body.breadcrumbs-fixed .ace-settings-container {
         top: 50px;
-    };
+    }
 }
 
 @media only screen and (max-width:480px) {
     .breadcrumb>li>a {
         padding: 0 1px;
-    };
+    }
 }
 
 @media only screen and (max-width:320px) {
     .breadcrumb {
         margin-left: 36px;
-    };
+    }
 }
 
 @media(min-width:768px) {
@@ -212,7 +212,7 @@
 
     .container.main-container .menu-min+.main-content .breadcrumbs.breadcrumbs-fixed {
         width: 701px;
-    };
+    }
 }
 
 @media(min-width:992px) {
@@ -222,7 +222,7 @@
 
     .container.main-container .menu-min+.main-content .breadcrumbs.breadcrumbs-fixed {
         width: 921px;
-    };
+    }
 }
 
 @media(min-width:1200px) {
@@ -232,7 +232,7 @@
 
     .container.main-container .menu-min+.main-content .breadcrumbs.breadcrumbs-fixed {
         width: 1121px;
-    };
+    }
 }
 
 
@@ -247,7 +247,7 @@
 
     .nav-search:hover .nav-search-input,.nav-search .nav-search-btn:active+.nav-search-input,.nav-search .nav-search-input:focus,.nav-search .nav-search-input:hover,.nav-search .nav-search-input:active {
         width: 145px;
-    };
+    }
 }
 
 @media only screen and (max-width:480px) {
@@ -276,14 +276,14 @@
         border: 0;
         border-radius: 0;
         padding: 0 3px!important;
-    };
+    }
 }
 
 
 @media screen and (-webkit-min-device-pixel-ratio:0) {
     ::safari-only,.sidebar-shortcuts-mini>.btn {
         margin: 0;
-    };
+    }
 }
 
 
@@ -420,7 +420,7 @@
 
     .menu-min .nav-list>li.active>a:after {
         display: block;
-    };
+    }
 }
 
 @media only screen and (max-width:320px) {
@@ -457,7 +457,7 @@
 
     .menu-toggler.display:after {
         top: 19px;
-    };
+    }
 }
 
 @media screen and (-webkit-min-device-pixel-ratio:0) {
@@ -467,21 +467,21 @@
 
     ::safari-only,.badge:empty {
         display: inline-block;
-    };
+    }
 }
 
 @media only screen and (max-width:767px) {
     .help-inline,.input-icon+.help-inline {
         padding-left: 0;
         display: block!important;
-    };
+    }
 }
 
 @media only screen and (max-width:767px) {
     .widget-box {
         margin-top: 7px;
         margin-bottom: 7px;
-    };
+    }
 }
 
 @media only screen and (max-width:460px) {
@@ -489,7 +489,7 @@
         min-width: 95%;
         margin-top: 2px;
         margin-bottom: 2px;
-    };
+    }
 }
 
 @media only screen and (max-width:768px) {
@@ -507,7 +507,7 @@
 
     .pricing-box:nth-child(even) {
         padding-right: 12px!important;
-    };
+    }
 }
 
 @media only screen and (max-width:460px) {
@@ -517,7 +517,7 @@
         width: 100%;
         padding-left: 12px!important;
         padding-right: 12px!important;
-    };
+    }
 }
 
 
@@ -525,20 +525,20 @@
     .pricing-span-body {
         padding-left: 0;
         padding-right: 0;
-    };
+    }
 }
 
 @media only screen and (max-width:480px) {
     .pricing-span-header,.pricing-span-body {
         width: 100%;
         padding-right: 12px;
-    };
+    }
 }
 
 @media only screen and (max-width:480px) {
     .login-layout .widget-box .widget-main {
         padding: 16px;
-    };
+    }
 }
 
 @media only screen and (max-width:480px) {
@@ -552,14 +552,14 @@
 
     .login-box .toolbar>div {
         width: auto;
-    };
+    }
 }
 
 @media only screen and (max-width:767px) {
     .login-layout .widget-box.visible {
         -webkit-transition: none;
         transition: none;
-    };
+    }
 }
 
 @media only screen and (max-width:480px) {
@@ -570,14 +570,14 @@
     .ace-thumbnails>li {
         float: none;
         display: inline-block;
-    };
+    }
 }
 
 @media only screen and (max-width:480px) {
     .itemdiv.memberdiv {
         float: none;
         width: auto;
-    };
+    }
 }
 
 
@@ -599,7 +599,7 @@
 
     .profile-user-info-striped .profile-info-value {
         margin-left: 10px;
-    };
+    }
 }
 
 @media only screen and (max-width:480px) {
@@ -607,7 +607,7 @@
         width: 50%;
         margin-left: 0;
         margin-right: 0;
-    };
+    }
 }
 
 
@@ -622,7 +622,7 @@
     .inbox-tabs>.li-new-mail>.btn-new-mail {
         display: inline-block;
         width: auto;
-    };
+    }
 }
 
 
@@ -633,7 +633,7 @@
 
     .message-item .sender {
         width: 100px;
-    };
+    }
 }
 
 @media only screen and (max-width:550px) {
@@ -651,45 +651,45 @@
 
     .message-item .summary .text {
         max-width: 95%;
-    };
+    }
 }
 
 @media only screen and (max-width:480px) {
     .message-bar {
         display: block;
         min-height: 60px;
-    };
+    }
 }
 
 @media only screen and (max-width:480px) {
     .message-form {
         padding-left: 16px;
         padding-right: 16px;
-    };
+    }
 }
 
 @media only screen and (max-width:480px) {
     .message-condensed .message-bar {
         min-height: 42px;
-    };
+    }
 }
 
 @media only screen and (max-width:767px) {
     .inbox-folders.inbox-folders-responsive .btn-block {
         width: 24%;
-    };
+    }
 }
 
 @media only screen and (max-width:600px) {
     .inbox-folders.inbox-folders-responsive .btn-block {
         width: 48%;
-    };
+    }
 }
 
 @media only screen and (max-width:320px) {
     .inbox-folders.inbox-folders-responsive .btn-block {
         width: 99%;
-    };
+    }
 }
 
 @media only screen and (max-width:480px) {
@@ -697,7 +697,7 @@
         display: block;
         width: auto;
         text-align: left;
-    };
+    }
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio:2),only screen and (min-resolution:144dpi) {
@@ -705,7 +705,7 @@
         background-image: none!important;
         background-repeat: no-repeat!important;
         background-size: auto!important;
-    };
+    }
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio:1.5),only screen and (min-resolution:144dpi) {
@@ -716,7 +716,7 @@
 
     .select2-search input {
         background-position: auto!important;
-    };
+    }
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio:1.5),only screen and (min-resolution:144dpi) {
@@ -728,7 +728,7 @@
 
     .select2-search input {
         background-position: auto!important;
-    };
+    }
 }
 
 @media only screen and (max-width:767px) {
@@ -754,7 +754,7 @@
 
     .step-content .step-pane {
         padding: 4px 4px 6px;
-    };
+    }
 }
 
 @media only screen and (max-width:767px) {
@@ -762,21 +762,21 @@
         left: 16%;
         right: 16%;
         top: 30%;
-    };
+    }
 }
 
 @media only screen and (max-width:480px) {
     .gritter-center {
         left: 30px;
         right: 30px;
-    };
+    }
 }
 
 @media only screen and (max-width:320px) {
     .gritter-center {
         left: 10px;
         right: 10px;
-    };
+    }
 }
 
 @media screen and (-webkit-min-device-pixel-ratio:0) {
@@ -802,28 +802,28 @@
         border: 1px solid #D00;
         background-color: #FFF;
         z-index: 1;
-    };
+    }
 }
 
 @media(min-width:768px) {
     .main-container.container>.btn-scroll-up {
         right: auto;
         margin-left: 708px;
-    };
+    }
 }
 
 @media(min-width:992px) {
     .main-container.container>.btn-scroll-up {
         right: auto;
         margin-left: 928px;
-    };
+    }
 }
 
 @media(min-width:1200px) {
     .main-container.container>.btn-scroll-up {
         right: auto;
         margin-left: 1128px;
-    };
+    }
 }
 
 
@@ -833,7 +833,7 @@
         padding-left: 0;
         padding-right: 0;
         float: none;
-    };
+    }
 }
 
 @media(min-width:992px) {
@@ -842,7 +842,7 @@
         padding-left: 0;
         padding-right: 0;
         float: none;
-    };
+    }
 }
 
 @media(min-width:1200px) {
@@ -851,57 +851,57 @@
         padding-left: 0;
         padding-right: 0;
         float: none;
-    };
+    }
 }
 
 
 @media only screen and (max-width:480px) {
     .hidden-480 {
         display: none!important;
-    };
+    }
 }
 
 @media only screen and (max-width:320px) {
     .hidden-320 {
         display: none!important;
-    };
+    }
 }
 
 @media only screen and (max-width:480px) {
 [    class*="vspace-xs"] {
         display: block;
-    };
+    }
 }
 
 @media only screen and (max-width:767px) {
 [    class*="vspace-sm"] {
         display: block;
-    };
+    }
 }
 
 @media only screen and (max-width:991px) {
 [    class*="vspace-md"] {
         display: block;
-    };
+    }
 }
 
 @media only screen and (max-width:1199px) {
 [    class*="vspace-lg"] {
         display: block;
-    };
+    }
 }
 
 @media only screen and (max-width:991px) {
     .main-content {
         margin-left: 0!important;
-    };
+    }
 }
 
 @media only screen and (max-width:767px) {
     .page-content {
         padding-left: 12px;
         padding-right: 12px;
-    };
+    }
 }
 
 @media(max-width:991px) {
@@ -915,25 +915,25 @@
 
     .sidebar.fixed,.sidebar.sidebar-fixed {
         position: absolute;
-    };
+    }
 }
 
 @media(max-width:460px) {
     body.navbar-fixed {
         padding-top: 90px;
-    };
+    }
 }
 
 @media only screen and (max-width:767px) {
     .error-container {
         margin: 12px;
-    };
+    }
 }
 
 @media only screen and (max-width:480px) {
     .error-container {
         margin: 6px;
-    };
+    }
 }
 
 @media only screen and (max-width:360px) {
@@ -959,32 +959,32 @@
 
     .grid2:last-child,.grid3:last-child,.grid4:last-child {
         border-bottom: 0;
-    };
+    }
 }
 
 @media only screen and (max-width:480px) {
     .ace-settings-container,body.breadcrumbs-fixed .ace-settings-container {
         top: 65px;
-    };
+    }
 }
 
 
 @media(min-width:768px) {
     .rtl [class*="col-sm-"] {
         float: right;
-    };
+    }
 }
 
 @media(min-width:992px) {
     .rtl [class*="col-md-"] {
         float: right;
-    };
+    }
 }
 
 @media(min-width:1200px) {
     .rtl [class*="col-lg-"] {
         float: right;
-    };
+    }
 }
 
 @media(min-width:768px) {
@@ -1130,7 +1130,7 @@
 
     .rtl .col-sm-offset-11 {
         margin-right: 91.6666%;
-    };
+    }
 }
 
 @media(min-width:992px) {
@@ -1276,7 +1276,7 @@
 
     .rtl .col-md-offset-11 {
         margin-right: 91.6666%;
-    };
+    }
 }
 
 @media(min-width:1200px) {
@@ -1422,14 +1422,14 @@
 
     .rtl .col-lg-offset-11 {
         margin-right: 91.6666%;
-    };
+    }
 }
 
 @media only screen and (max-width:460px) {
     .rtl .pricing-box,.rtl .pricing-box:nth-child(odd),.rtl .pricing-box:nth-child(even) {
         padding-left: 12px!important;
         padding-right: 12px!important;
-    };
+    }
 }
 
 @media only screen and (max-width:768px) {
@@ -1441,13 +1441,13 @@
     .rtl .pricing-box:nth-child(even) {
         padding-left: 12px!important;
         padding-right: 0!important;
-    };
+    }
 }
 
 @media only screen and (max-width:475px) {
     .rtl .inbox-tabs>.li-new-mail {
         text-align: left;
-    };
+    }
 }
 
 @media only screen and (max-width:767px) {
@@ -1469,7 +1469,7 @@
     .rtl .ace-nav>li:nth-last-child(3)>.dropdown-menu:before,.rtl .ace-nav>li:nth-last-child(3)>.dropdown-menu:after {
         right: auto;
         left: 60px;
-    };
+    }
 }
 
 @media only screen and (max-width:480px) {
@@ -1501,7 +1501,7 @@
     .rtl .ace-nav>li:nth-last-child(2)>.dropdown-menu:before,.rtl .ace-nav>li:nth-last-child(2)>.dropdown-menu:after {
         right: auto;
         left: 70px;
-    };
+    }
 }
 
 @media only screen and (max-width:460px) {
@@ -1533,7 +1533,7 @@
     .rtl .ace-nav>li:nth-last-child(2)>.dropdown-menu:before,.rtl .ace-nav>li:nth-last-child(2)>.dropdown-menu:after {
         left: auto;
         right: 130px;
-    };
+    }
 }
 
 @media only screen and (max-width:460px) {
@@ -1549,7 +1549,7 @@
 
     .rtl .ace-nav>li:last-child {
         border-left: 1px solid #DDD;
-    };
+    }
 }
 
 @media(min-width:422px) and (max-width:480px),(max-width:340px) {
@@ -1562,14 +1562,14 @@
         right: auto;
         margin-right: 1px;
         left: 2px;
-    };
+    }
 }
 
 @media only screen and (max-width:767px) {
     .rtl .nav-search {
         right: auto;
         left: 5px;
-    };
+    }
 }
 
 @media only screen and (max-width:991px) {
@@ -1631,20 +1631,20 @@
     .rtl .breadcrumb {
         margin-left: auto;
         margin-right: 90px;
-    };
+    }
 }
 
 @media only screen and (max-width:460px) {
     .rtl .navbar .navbar-brand {
         display: block;
         float: none;
-    };
+    }
 }
 
 @media only screen and (max-width:480px) {
     .rtl .ace-thumbnails>li {
         float: none;
-    };
+    }
 }
 
 @media only screen and (max-width:320px) {
@@ -1656,13 +1656,13 @@
     .rtl .menu-toggler>.menu-text:after {
         left: auto;
         right: -13px;
-    };
+    }
 }
 
 @media only screen and (max-width:480px) {
     .rtl .fc-header td {
         text-align: right;
-    };
+    }
 }
 
 @media only screen and (max-width:360px) {
@@ -1673,13 +1673,13 @@
     .rtl .grid2>[class*="pull-"],.rtl .grid3>[class*="pull-"],.rtl .grid4>[class*="pull-"] {
         right: auto;
         left: 11px;
-    };
+    }
 }
 
 @media only screen and (max-width:767px) {
     .rtl .help-inline,.rtl .input-icon+.help-inline {
         padding-right: 0;
-    };
+    }
 }
 
 @media only screen and (max-width:480px) {
@@ -1697,5 +1697,5 @@
     .rtl .profile-user-info-striped .profile-info-value {
         margin-left: auto;
         margin-right: 10px;
-    };
+    }
 }
