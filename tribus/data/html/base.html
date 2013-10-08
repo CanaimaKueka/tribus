@@ -2,29 +2,30 @@
 {% load static %}
 {% load django_static %}
 <!DOCTYPE html>
-<html>
-	<head>
-		<title>{% block title %}{% endblock %}</title>
-		<meta charset="{{ app_charset|lower }}" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		{% staticall %}
-			{% for css in render_css %}
-				<link href="{% static 'css/full/'|add:css|add:'.css' %}" rel="stylesheet" />
-			{% endfor %}
-		{% endstaticall %}
-		<!--[if IE 7]><link rel="stylesheet" href="{% static 'css/min/font-awesome-ie7.css' %}" /><![endif]-->
-		<!--[if lte IE 8]><link rel="stylesheet" href="{% static 'css/min/tribus-ie.css' %}" /><![endif]-->
-	</head>
-	<body>
-		{% include "navbar.html" %}
-		{% block content %}{% endblock %}
-		{% include "footer.html" %}
-		{% staticall %}
-		    {% for js in render_js %}
-		        <script src="{% static 'js/full/'|add:js|add:'.js' %}"></script>
-		    {% endfor %}
-		{% endstaticall %}
-		<!--[if lte IE 8]><script src="{% static 'js/min/excanvas.js' %}"></script><![endif]-->
-		<!--[if lt IE 9]><script src="{% static 'js/min/html5shiv.js' %}"></script><![endif]-->
-	</body>
+<html ng-app="{% block ngapp %}index{% endblock %}">
+    <head>
+        <title>{% block title %}{% endblock %}</title>
+        <meta charset="{{ app_charset|lower }}" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% staticall %}
+            {% for css in render_css %}
+                <link type="text/css" rel="stylesheet" href="{% static 'css/full/'|add:css|add:'.css' %}" />
+            {% endfor %}
+        {% endstaticall %}
+        <!--[if IE 7]><link type="text/css" rel="stylesheet" href="{% static 'css/min/font-awesome-ie7.css' %}" /><![endif]-->
+        <!--[if lte IE 8]><link type="text/css" rel="stylesheet" href="{% static 'css/min/tribus-ie.css' %}" /><![endif]-->
+    </head>
+    <body>
+        {% include "navbar.html" %}
+        {% block content %}{% endblock %}
+        {% block scripts %}{% endblock %}
+        {% include "footer.html" %}
+        {% staticall %}
+            {% for js in render_js %}
+                <script type="text/javascript" src="{% static 'js/full/'|add:js|add:'.js' %}"></script>
+            {% endfor %}
+        {% endstaticall %}
+        <!--[if lte IE 8]><script type="text/javascript" src="{% static 'js/min/excanvas.js' %}"></script><![endif]-->
+        <!--[if lt IE 9]><script type="text/javascript" src="{% static 'js/min/html5shiv.js' %}"></script><![endif]-->
+    </body>
 </html>

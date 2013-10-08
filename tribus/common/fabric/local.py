@@ -48,8 +48,8 @@ def resetdb():
     
 def filldb():
     py_activate_virtualenv()
-    from tribus.common.recorder import fill_database
-    fill_database()
+    from tribus.common.recorder import init_package_cache
+    init_package_cache()
 
 
 def configure_sudo():

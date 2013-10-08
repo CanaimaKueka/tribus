@@ -5,6 +5,7 @@
 import urllib, urllib2
 from debian import deb822
 from tribus.web.paqueteria.models import *
+import re
 
 def check_version(exists, rr, r):
     if exists and len(exists) == 1:
@@ -53,4 +54,19 @@ def comprobarActualizacion(paquete):
     print "RELACIONES EN BD -->", relations_bd 
     print "RELACIONES EN ARCHIVO -->", relations_file  
     
-comprobarActualizacion("banshee")
+def repeated_relation_counter():
+    i386  = "http://paquetes.canaima.softwarelibre.gob.ve/dists/kerepakupai/main/binary-i386/Packages"
+    archivo = urllib.urlopen(i386)
+    for section in deb822.Packages.iter_paragraphs(archivo):
+        for rel in section.relations.items():
+            if rel[1]:
+                for r in rel[1]:
+                    for rr in r:
+                        encontrados = 0
+                        for name in section[rel[0]].replace(',', ' ').split():
+                            lista = re.match('^'+rr['name'].replace("+", "\+").replace("-", "\-")+'$', name)
+                            if lista and rr['version']:
+                                encontrados += 1
+                        if encontrados > 2:
+                            print section['package']
+                            print r    

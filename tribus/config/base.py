@@ -20,6 +20,7 @@ if BASEDIR == '/usr/share/pyshared':
     DOCDIR = '/usr/share/doc/tribus'
     ICONDIR = '/usr/share/icons/hicolor'
     LOCALEDIR = '/usr/share/locale'
+    PACKAGECACHE = '/var/cache/tribus'
 else:
     CONFDIR = BASEDIR+'/tribus/config'
     BINDIR = BASEDIR
@@ -27,6 +28,7 @@ else:
     DOCDIR = BASEDIR+'/tribus/data/docs'
     LOCALEDIR = BASEDIR+'/tribus/i18n'
     ICONDIR = BASEDIR+'/tribus/data/icons'
+    PACKAGECACHE = BASEDIR+'/packagecache'
 
 DEFAULT_CLI_OPTIONS = {
     'version': [['-v', '--version'], {

@@ -28,7 +28,7 @@ This module contains common and low level functions to all modules in Tribus.
 '''
 
 import os
-import fnmatch
+import fnmatch, hashlib
 
 from tribus.common.logger import get_logger
 
@@ -147,3 +147,14 @@ def readconfig(filename, options=[], conffile=False, strip_comments=True):
 
     f.close()
     return options
+
+# Taken from http://www.joelverhagen.com/blog/2011/02/md5-hash-of-file-in-python/
+def md5Checksum(filePath):
+    with open(filePath, 'rb') as fh:
+        m = hashlib.md5()
+        while True:
+            data = fh.read(8192)
+            if not data:
+                break
+            m.update(data)
+        return m.hexdigest()

@@ -1,0 +1,87 @@
+{% extends 'profile/base.html' %}
+{% block title %} Profile {% endblock %}
+{% block content%}
+
+<div class="jumbotron">
+	<div class="container">
+		<div class="row-fluid">
+
+			<div class="span3">
+				<div>
+					<span>
+                    {% load gravatar %}
+                    <a href = "http://gravatar.com/emails/">{% gravatar user_view.email 280 %}</a>
+						</span>
+
+					
+				<div class="space-6"> {{add}}</div>
+									
+					{% if add %}
+
+					<a href="/profile/add_follow/{{user_view.username}}" class="btn btn-sm btn-block btn-success">
+						<i class="icon-plus-sign bigger-120"></i>
+						<span class="bigger-110">Add as a friend</span>
+					</a>
+				
+					{%elif eliminar%}
+
+					<a href="/profile/delete_follow/{{user_view.username}}" class="btn btn-sm btn-block btn-success">
+						<i class="icon-plus-sign bigger-120"></i>
+						<span class="bigger-110">Delete as a friend</span>
+					</a>
+				
+
+					{%endif%}
+				</div>
+
+				<div class="space-36"></div>
+                <div>
+                {% block datos %}
+					<p>{{ user_view.first_name }} {{user_view.last_name}}
+					<p>{{ user_view.email }}
+					<p>localizacion: {{ user_view.location }}
+					<p>descripcion: {{ user_view.description }}
+					
+				<p>sigues a:
+<!-- 				 solo para depurar -->
+					{%for i in user_view.follows.only%}
+
+					<p><a href="/profile/{{i.username}}">{{i.username}}</a>
+ 
+					{%endfor%}
+
+                {% endblock %}
+                	<hr>
+				<legend></legend>
+				</div>
+
+			</div>
+			<div class="span9">
+				{% include 'profile/navbar_view.html' %}
+                <legend></legend>	
+
+				<div class = "row-fluid">
+
+                    {%block informacion%}
+					<div>
+						<h2>noticia 1</h2>
+						<p> Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
+						</div>
+					<div >
+						<h2>noticia 2</h2>
+						<p> Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
+						</div>
+					<div>
+						<h2>noticia 3</h2>
+						<p> Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
+						</div>
+					<div>
+						<h2>noticia 4</h2>
+						<p> Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
+						</div>	
+                    {%endblock%}
+		</div>
+	</div>
+</div>
+
+{% endblock %}

@@ -35,3 +35,43 @@ ObjectClass: shadowAccount
 ObjectClass: organizationalPerson
 loginShell: /bin/false
 description: Tribus
+
+
+dn: uid=jose,dc=tribus,dc=org
+givenName: José Francisco
+sn: Guerrero Rangel
+cn: José Francisco Guerrero Rangel
+uid: jose
+mail: jsfrncscg@gmail.com
+uidNumber: 12
+gidNumber: 2000
+userPassword: 654321
+homeDirectory: /home/jose/
+ObjectClass: inetOrgPerson
+ObjectClass: posixAccount
+ObjectClass: top
+ObjectClass: person
+ObjectClass: shadowAccount
+ObjectClass: organizationalPerson
+loginShell: /bin/false
+description: Tribus
+
+
+dn: uid=homero,dc=tribus,dc=org
+givenName: Homero Salvador
+sn: Hernández Hernández
+cn: Homero Salvador Hernández Hernández
+uid: homero
+mail: hsh283@gmail.com
+uidNumber: 13
+gidNumber: 2000
+userPassword: 654321
+homeDirectory: /home/homero/
+ObjectClass: inetOrgPerson
+ObjectClass: posixAccount
+ObjectClass: top
+ObjectClass: person
+ObjectClass: shadowAccount
+ObjectClass: organizationalPerson
+loginShell: /bin/false
+description: Tribus

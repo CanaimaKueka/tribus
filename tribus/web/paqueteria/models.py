@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-
-class PackageList(models.Model):
-    Path = models.CharField("ruta del archivo", max_length = 150)
-    MD5 = models.CharField("ruta del archivo", max_length = 150)
     
 class Maintainer(models.Model):
     Name = models.CharField("nombre del mantenedor", max_length = 100)

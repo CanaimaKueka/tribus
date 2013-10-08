@@ -1,4 +1,3 @@
-from django.contrib.auth.models import User
-from django.contrib import admin
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
-# admin.site.register(User)

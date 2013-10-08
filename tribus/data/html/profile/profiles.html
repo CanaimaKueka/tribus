@@ -1,0 +1,95 @@
+{% extends 'profile/base.html' %}
+{% block ngapp %}profiles{% endblock %}
+{% block title %} Profile {% endblock %}
+{% block content%}
+
+<div class="jumbotron">
+	<div class="container">
+		<div class="row-fluid">
+
+			<div class="span3">
+				<div>
+					<span>
+                    {% load gravatar %}
+                    <a href = "http://gravatar.com/emails/">{% gravatar user.email 280 %}</a>
+						</span>
+
+					
+				<div class="space-6"> {{add}}</div>
+									
+					{% if add %}
+
+					<a href="/profile/add_follow/{{user.username}}" class="btn btn-sm btn-block btn-success">
+						<i class="icon-plus-sign bigger-120"></i>
+						<span class="bigger-110">Add as a friend</span>
+					</a>
+				
+					{%elif eliminar%}
+
+					<a href="/profile/delete_follow/{{user.username}}" class="btn btn-sm btn-block btn-success">
+						<i class="icon-plus-sign bigger-120"></i>
+						<span class="bigger-110">Delete as a friend</span>
+					</a>
+				
+
+					{%endif%}
+				</div>
+
+				<div class="space-36"></div>
+                <div>
+                {% block datos %}
+					<p>{{ user.first_name }} {{user.last_name}}
+					<p>{{ user.email }}
+					<p>localizacion: {{ user.location }}
+					<p>descripcion: {{ user.description }}
+					<p>sigues a:
+
+
+				<!-- solo para depurar -->
+					{%for i in user.follows.only%}
+
+					<p><a href="/profile/{{i.username}}">{{i.username}}</a>
+
+					{%endfor%}
+
+                    <p align = "center"> <a href = "/settings">Editar información</a>
+                {% endblock %}
+                	<hr>
+				<legend></legend>
+				</div>
+
+			</div>
+			<div class="span9">
+				{% include 'profile/navbar.html' %}
+                <legend></legend>	
+
+				<div class = "row-fluid">
+
+                    {%block informacion%}
+                    <div class="span12 dashboard_timeline" ng-controller="TribList">
+                    {% include 'tribs.html' %}
+                    </div>
+                    {%endblock%}
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+    <script type="text/javascript">
+        {% if user.is_authenticated %}
+        var user_id = '{{ user.id }}';
+        var user_username = '{{ user.username }}';
+        var user_first_name = '{{ user.first_name }}';
+        var user_last_name = '{{ user.last_name }}';
+        {% endif %}
+        var trib_limit_to = 0;
+        var trib_offset = 0;
+        var trib_add = 10;
+        var trib_limit = 10;
+        var trib_orderby = '-trib_pub_date';
+        var controller_busy = false;
+    </script>
+{% endblock %}

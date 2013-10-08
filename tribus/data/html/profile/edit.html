@@ -1,0 +1,21 @@
+{% extends 'profile/profiles.html' %}
+
+{% block title %} settings {% endblock %}
+
+{% block datos%}
+	{% include 'profile/menu_izquierdo.html' %}
+{% endblock %}
+
+{% block informacion %}
+    <form accept-charset="UTF-8" action="/settings/edition/done" autocomplete="on" method="post">
+        {% csrf_token %}
+        <ul class="unstyled">
+            <li>{{ editForm.descripcion }}</li>
+            <li>{{ editForm.location}}</li>
+        </ul>
+        <div class="span3 offset1" >
+        	<button class="btn btn-success btn-block" type="submit">Confirmar </button>
+    	</div>
+    </form>
+
+{% endblock %}
