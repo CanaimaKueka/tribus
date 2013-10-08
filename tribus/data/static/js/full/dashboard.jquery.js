@@ -14,7 +14,6 @@ $(document).ready(function(){
         if($(this).val().length === 0){
             $('button.action_button').attr('disabled', 'disabled');
         }
-
     });
 
     $('textarea.action_box').focus(function () {

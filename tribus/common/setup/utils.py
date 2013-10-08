@@ -227,6 +227,16 @@ def get_data_files(path=None, patterns=None, exclude_files=None):
 
 
 def get_setup_data(basedir):
+    '''
+    Prepares a dictionary of values to configure python Distutils.
+
+    :param basedir: the path where the files reside. Generally the top level
+                    directory of the project.
+    :return: a dic
+    :rtype: ``dictionary``
+
+    .. versionadded:: 0.1
+    '''
     from tribus.config.base import NAME, VERSION, URL, AUTHOR, AUTHOR_EMAIL, DESCRIPTION, LICENSE, DOCDIR
     from tribus.config.pkg import (classifiers, long_description, install_requires, dependency_links,
                                    exclude_packages, platforms, keywords)
@@ -310,11 +320,9 @@ def get_setup_data(basedir):
                 'output_dir': ('setup.py', 'tribus/i18n'),
             },
             'extract_messages': {
-                # 'add_comments': ('setup.py', 'TRANSLATOR:'),
                 'copyright_holder': ('setup.py', 'Desarrolladores de Tribus'),
                 'msgid_bugs_address': ('setup.py', 'desarrolladores@canaima.softwarelibre.gob.ve'),
                 'output_file': ('setup.py', 'tribus/i18n/pot/tribus.pot'),
-                # 'keywords': ('setup.py', '_'),
                 'charset': ('setup.py', 'utf-8'),
             },
             'build_sphinx': {

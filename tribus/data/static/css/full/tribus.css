@@ -14624,15 +14624,15 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 }
 
 .navbar .nav .btn {
-    line-height:10px;
+    line-height: 10px;
 }
 
 .navbar .nav li.dropdown.open > .dropdown-toggle,
 .navbar .nav li.dropdown.active > .dropdown-toggle,
 .navbar .nav li.dropdown.open.active > .dropdown-toggle {
-  -webkit-border-radius: 4px;
-     -moz-border-radius: 4px;
-          border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
     background-color: #f2f2e8;
 }
 
@@ -14659,41 +14659,41 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 }
 
 .input-large {
-  display: block;
-  width: 246px;
+    display: block;
+    width: 246px;
 }
 
 .input-small {
-  display: block;
-  width: 113px;
+    display: block;
+    width: 113px;
 }
 
 .input-xlarge {
-  display: block;
-  width: 356px;
+    display: block;
+    width: 356px;
 }
 
 .hero-unit {
-  padding: 30px;
-  background: #e4e4d6;
-  margin: 0px !important;
+    padding: 30px;
+    background: #e4e4d6;
+    margin: 0px !important;
 }
 
 input, button, select, textarea {
-    font-family: "Open Sans",Helvetica,Arial,sans-serif;
+    font-family: "Open Sans", Helvetica, sans-serif;
 }
 
 .jumbotron {
-  min-height: 20px;
-  padding: 60px;
-  margin-bottom: 20px;
-  background-color: #f2f2e8;
-  border-top: 1px solid #d7d7b8;
-  border-bottom: 1px solid #d7d7b8;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
-     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
-       -o-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
-          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    min-height: 20px;
+    padding: 60px;
+    margin-bottom: 20px;
+    background-color: #f2f2e8;
+    border-top: 1px solid #d7d7b8;
+    border-bottom: 1px solid #d7d7b8;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    -o-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
 }
 
 .home-signin, .home-signup {
@@ -14703,13 +14703,13 @@ input, button, select, textarea {
 
 .hero-unit h1, .intro-slogan h1 {
     font-size: 50px;
-    line-height:1.4;
-    word-spacing:0;
+    line-height: 1.4;
+    word-spacing: 0;
 }
 
 .hero-unit p, .intro-slogan p {
     font-size: 25px;
-    line-height:1;
+    line-height: 1;
     font-weight: 200;
 }
 
@@ -14718,45 +14718,45 @@ input, button, select, textarea {
 }
 
 .chiclets ul li {
-  padding: 120px 30px 30px;
-  margin-bottom: 30px;
-  font-size: 1.2em;
-  font-weight: 200;
-  line-height: 1.5em;
-  -webkit-border-radius: 6px;
-     -moz-border-radius: 6px;
-       -o-border-radius: 6px;
-          border-radius: 6px;
+    padding: 120px 30px 30px;
+    margin-bottom: 30px;
+    font-size: 1.2em;
+    font-weight: 200;
+    line-height: 1.5em;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -o-border-radius: 6px;
+    border-radius: 6px;
 }
 
 .chiclets ul li h3 {
-  margin-bottom: 0;
-  font-size: 1.8em;
-  line-height: 2em;
+    margin-bottom: 0;
+    font-size: 1.8em;
+    line-height: 2em;
 }
 
 .ch-cloud {
-  background: url('../../img/ch-cloud.png') no-repeat #f2f2e8;
+    background: url('../../img/ch-cloud.png') no-repeat #f2f2e8;
 }
 
 .ch-ticket {
-  background: url('../../img/ch-ticket.png') no-repeat #f2f2e8;
+    background: url('../../img/ch-ticket.png') no-repeat #f2f2e8;
 }
 
 .ch-docs {
-  background: url('../../img/ch-docs.png') no-repeat #f2f2e8;
+    background: url('../../img/ch-docs.png') no-repeat #f2f2e8;
 }
 
 .ch-social {
-  background: url('../../img/ch-social.png') no-repeat #f2f2e8;
+    background: url('../../img/ch-social.png') no-repeat #f2f2e8;
 }
 
 .ch-source {
-  background: url('../../img/ch-source.png') no-repeat #f2f2e8;
+    background: url('../../img/ch-source.png') no-repeat #f2f2e8;
 }
 
 .ch-ci {
-  background: url('../../img/ch-ci.png') no-repeat #f2f2e8;
+    background: url('../../img/ch-ci.png') no-repeat #f2f2e8;
 }
 
 .trib-box-modal {
@@ -14777,11 +14777,11 @@ input, button, select, textarea {
 
 .dashboard_container {
     background-color: #ebebdc;
+    padding: 10px;
     -webkit-border-radius: 6px;
-       -moz-border-radius: 6px;
-         -o-border-radius: 6px;
-            border-radius: 6px;
-            padding:10px;
+    -moz-border-radius: 6px;
+    -o-border-radius: 6px;
+    border-radius: 6px;
 }
 
 .dashboard_timeline {
@@ -14791,18 +14791,18 @@ input, button, select, textarea {
 .dashboard_panel {
     background-color: rgb(228,228,214);
     -webkit-border-radius: 6px;
-       -moz-border-radius: 6px;
-         -o-border-radius: 6px;
-            border-radius: 6px;
+    -moz-border-radius: 6px;
+    -o-border-radius: 6px;
+    border-radius: 6px;
 }
 
 .action_publisher {
     background-color: rgb(230, 230, 218);
     border: 1px solid rgba(180, 180, 159, 0.3);
     -webkit-border-radius: 6px;
-       -moz-border-radius: 6px;
-         -o-border-radius: 6px;
-            border-radius: 6px;
+    -moz-border-radius: 6px;
+    -o-border-radius: 6px;
+    border-radius: 6px;
 }
 
 .trib_list {
@@ -14825,30 +14825,30 @@ input, button, select, textarea {
 
 .trib_item > .trib_body {
     background-color: rgb(248, 248, 241);
-    -webkit-border-radius: 6px 0 0 6px;
-       -moz-border-radius: 6px 0 0 6px;
-         -o-border-radius: 6px 0 0 6px;
-            border-radius: 6px 0 0 6px;
     border: 1px solid rgba(180, 180, 159, 0.5);
     padding: 10px 10px 5px 10px;
     margin: 10px 0;
     float: left;
     display: block;
-    cursor:pointer;
+    cursor: pointer;
+    -webkit-border-radius: 6px 0 0 6px;
+    -moz-border-radius: 6px 0 0 6px;
+    -o-border-radius: 6px 0 0 6px;
+    border-radius: 6px 0 0 6px;
 }
 
 
 .trib_item > .trib_type {
     background-color: rgb(248, 248, 241);
-    -webkit-border-radius: 0 6px 6px 0;
-       -moz-border-radius: 0 6px 6px 0;
-         -o-border-radius: 0 6px 6px 0;
-            border-radius: 0 6px 6px 0;
     border: 1px solid rgba(180, 180, 159, 0.5);
     padding: 10px;
     margin: 10px 0;
     float: left;
     display: block;
+    -webkit-border-radius: 0 6px 6px 0;
+    -moz-border-radius: 0 6px 6px 0;
+    -o-border-radius: 0 6px 6px 0;
+    border-radius: 0 6px 6px 0;
 }
 
 .trib_item {
@@ -14906,8 +14906,7 @@ input, button, select, textarea {
 }
 
 .trib_interact > span > a > span [class^="icon-"],
-.trib_interact > span > a > span [class*=" icon-"],
-{
+.trib_interact > span > a > span [class*=" icon-"]{
     margin: 0 3px;
 }
 
@@ -14991,9 +14990,9 @@ input, button, select, textarea {
     background: rgb(255, 255, 255);
     border-left: 1px solid #aaa;
     -webkit-border-radius: 6px;
-       -moz-border-radius: 6px;
-         -o-border-radius: 6px;
-            border-radius: 6px;
+    -moz-border-radius: 6px;
+    -o-border-radius: 6px;
+    border-radius: 6px;
     float: left;
     display: block;
     position: relative;
@@ -15019,9 +15018,9 @@ input, button, select, textarea {
 .action_avatar, .trib_avatar {
     background-color: #fff;
     -webkit-border-radius: 6px;
-       -moz-border-radius: 6px;
-         -o-border-radius: 6px;
-            border-radius: 6px;
+    -moz-border-radius: 6px;
+    -o-border-radius: 6px;
+    border-radius: 6px;
     margin: 10px;
     float:left;
     display: block;
@@ -15037,7 +15036,5 @@ input, button, select, textarea {
 
 [class^="icon-"],
 [class*=" icon-"] {
-  vertical-align: baseline;
+    vertical-align: baseline;
 }
-
-

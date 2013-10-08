@@ -1,16 +1,17 @@
+// Declare use of strict javascript
 'use strict';
 
 
 // Application -----------------------------------------------------------------
 
 var dashboard = angular.module('dashboard',
-	['Tribs', 'Timeline', 'infinite-scroll']);
+    ['Tribs', 'Timeline', 'infinite-scroll']);
 
 
 // Events ----------------------------------------------------------------------
 
-dashboard.run(function($rootScope) {
-    $rootScope.$on('addNewTribsRefreshEmit', function(event, args) {
+dashboard.run(function($rootScope){
+    $rootScope.$on('addNewTribsRefreshEmit', function(event, args){
         $rootScope.$broadcast('addNewTribsRefreshReceive', args);
     });
 });
@@ -18,11 +19,18 @@ dashboard.run(function($rootScope) {
 
 // Controllers -----------------------------------------------------------------
 
-function CommentController($scope, $timeout, Tribs) {
+dashboard.controller('CommentController', ['$scope', '$timeout', 'Tribs',
+    CommentController]);
+dashboard.controller('NewTribController', ['$scope', '$timeout', 'Tribs',
+    NewTribController]);
+dashboard.controller('TribListController', ['$scope', '$timeout', 'Timeline',
+    TribListController]);
+
+function CommentController($scope, $timeout, Tribs){
 
 }
 
-function NewTribController($scope, $timeout, Tribs) {
+function NewTribController($scope, $timeout, Tribs){
 
     $scope.createNewTrib = function(){
 
@@ -61,7 +69,7 @@ function TribListController($scope, $timeout, Timeline){
     $scope.trib_orderby = trib_orderby;
     $scope.tribs = [];
 
-    $scope.$on('addNewTribsRefreshReceive', function(event, args) {
+    $scope.$on('addNewTribsRefreshReceive', function(event, args){
         $timeout(function(){
             $scope.addNewTribs($scope, $timeout, Timeline, trib_offset);
         });
@@ -158,14 +166,6 @@ function TribListController($scope, $timeout, Timeline){
     }
 }
 
-
-dashboard.controller('CommentController', ['$scope', '$timeout', 'Tribs',
-    CommentController]);
-dashboard.controller('NewTribController', ['$scope', '$timeout', 'Tribs',
-    NewTribController]);
-dashboard.controller('TribListController', ['$scope', '$timeout', 'Timeline',
-    TribListController]);
-
 CommentController.$inject = ['$scope'];
 NewTribController.$inject = ['$scope'];
 TribListController.$inject = ['$scope'];
@@ -174,7 +174,7 @@ TribListController.$inject = ['$scope'];
 // Services --------------------------------------------------------------------
 
 angular.module('Tribs', ['ngResource'])
-    .factory('Tribs',  function($resource){        
+    .factory('Tribs',  function($resource){
         return $resource('/api/0.1/user/tribs/', {},{
             save: {
                 method: 'POST',
@@ -199,8 +199,8 @@ angular.module('Tribs', ['ngResource'])
     });
 
 angular.module('Timeline', ['ngResource'])
-    .factory('Timeline', function($resource){        
-        return $resource('/api/0.1/user/timeline/', {},{
+    .factory('Timeline', function($resource){
+        return $resource('/api/0.1/user/timeline/', {}, {
             query: {
                 method: 'GET',
                 isArray: true,
