@@ -167,11 +167,11 @@ BROKER_URL = 'redis://localhost:6379/0'
 # Programacion de task para djcelery
 CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
 CELERYBEAT_SCHEDULE = {
-    "verify_repository": {
-        "task": "tribus.web.paqueteria.tasks.verify_repository",
+    "update_cache": {
+        "task": "tribus.web.paqueteria.tasks.update_cache",
         "schedule": crontab(),
         "args": (),
-    },
+    },               
 }
 
 # GRAVATAR_URL # Gravatar base url. Defaults to 'http://www.gravatar.com/'

@@ -1,9 +1,6 @@
 from celery import task
-from tribus.common.recorder import verify_updates
-
+from tribus.common.recorder import update_package_cache
+  
 @task
-def verify_repository(*args):
-    verify_updates()
-
-    
-    
+def update_cache(*args):
+    update_package_cache()
