@@ -81,7 +81,10 @@ def configure_postgres():
     with settings(command='sudo /bin/bash -c "echo \'postgres:tribus\' | chpasswd"'):
         local('%(command)s' % env)
 
-    with settings(command='sudo /bin/bash -c "su postgres -c \'psql -U postgres -f %s\'"' % f_sql_preseed):
+    with settings(command='cp %s /tmp/' % f_sql_preseed):
+        local('%(command)s' % env)
+
+    with settings(command='sudo -i -u postgres /bin/sh -c \'psql -f /tmp/preseed-db.sql\''):
         local('%(command)s' % env)
 
 
