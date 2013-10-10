@@ -25,7 +25,7 @@
 </div>
 <div class="trib_list" infinite-scroll="addOldTribs()" infinite-scroll-disabled="controller_busy" infinite-scroll-distance="0" ng-controller="TribListController">
     <ul>
-        <li class="row-fluid trib_item" ng-repeat="trib in tribs | orderBy: trib_orderby | limitTo: trib_limit_to track by trib.id" style="{% verbatim %}{{ tribs_style }}{% endverbatim %}">
+        <li class="row-fluid trib_item" style="{% verbatim %}{{ tribs_style }}{% endverbatim %}" ng-repeat="trib in tribs | orderBy: trib_orderby | limitTo: trib_limit_to track by trib.id" ng-click="$parent.toggleTrib($parent, 5)">
             <span class="span2">
                 
                 <span class="trib_avatar">
@@ -64,7 +64,9 @@
             <span class="span1 trib_type">
                 TIPO
             </span>
-            <span class="span12 trib_reply"></span>
+            <span class="span12 trib_reply">
+                {% verbatim %}{{ trib_reply_placer }}{% endverbatim %}
+            </span>
         </li>
     </ul>
 </div>

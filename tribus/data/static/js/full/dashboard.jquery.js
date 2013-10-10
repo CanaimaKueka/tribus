@@ -52,24 +52,24 @@ $(document).ready(function(){
             }
         );
 
-        $('.trib_body').on('click',
-            function(event){
+        // $('.trib_body').on('click',
+        //     function(event){
 
-                if($(this).parent().children('.trib_reply').html().length > 0){
-                    $(this).parent().children('.trib_reply').html('');
-                }else{
+        //         if($(this).parent().children('.trib_reply').html().length > 0){
+        //             $(this).parent().children('.trib_reply').html('');
+        //         }else{
 
-                    var $injector = angular.injector(['ng']);
+        //             var $injector = angular.injector(['ng']);
 
-                    $injector.invoke(function($rootScope, $compile){
-                        link = $compile($('#trib_reply_seed').html())($rootScope);
-                        $rootScope.$digest();
-                    });
+        //             $injector.invoke(function($rootScope, $compile){
+        //                 link = $compile($('#trib_reply_seed').html())($rootScope);
+        //                 $rootScope.$digest();
+        //             });
 
-                    $(this).parent().children('.trib_reply').html(link[0].outerHTML);
-                }
-            }
-        );
+        //             $(this).parent().children('.trib_reply').html(link[0].outerHTML);
+        //         }
+        //     }
+        // );
 
     });
 
