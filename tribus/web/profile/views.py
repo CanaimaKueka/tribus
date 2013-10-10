@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+import urllib, hashlib
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
@@ -17,7 +17,6 @@ def EditUserProfile(request):
     context = RequestContext(request)
     
         # aqui debe estar la logica del los formularios cn su valudacion
-
 
     if request.user.is_authenticated():
         if request.method == "POST":
@@ -117,17 +116,27 @@ def AddFollow(request,nick):
 
 
 def UserProfile(request):
+
     render_js = ['jquery', 'jquery.autogrow', 'bootstrap', 'angular',
                     'angular.resource', 'angular.infinite-scroll', 'profiles.app',
-                    'profiles.controllers', 'profiles.services', 'profiles.jquery']
+                    'profiles.jquery', 'md5', 'angular-gravatar']
+
     render_css = ['normalize', 'fonts', 'font-awesome', 'bootstrap',
                         'bootstrap-responsive', 'tribus', 'tribus-ie' ,'tribus-responsive']
 
 
+    gravatar_url = "http://www.gravatar.com/avatar/" + hashlib.md5(request.user.email.lower()).hexdigest() #+ "?"
+    # cambio de tamaño instanceable luego
+    # gravatar_url += urllib.urlencode({'d':default, 's':str(size)})
 
-    data = {"render_css": render_css , "render_js":render_js}
+    data = {"render_css": render_css , "render_js":render_js , 'url': gravatar_url}
     context = RequestContext(request)
+    
 
+
+    print gravatar_url
+
+    
     if request.user.is_authenticated():
         
         return render_to_response('profile/profiles.html', data, context)

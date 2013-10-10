@@ -5,7 +5,7 @@
 // Application -----------------------------------------------------------------
 
 var dashboard = angular.module('dashboard',
-    ['Tribs', 'Timeline', 'infinite-scroll']);
+    ['Tribs', 'Timeline', 'infinite-scroll', 'ui.gravatar']);
 
 
 // Events ----------------------------------------------------------------------
@@ -39,6 +39,7 @@ function NewTribController($scope, $timeout, Tribs){
             author_username: user_username,
             author_first_name: user_first_name,
             author_last_name: user_last_name,
+            author_email: user_email,
             trib_content: $scope.trib_content,
             trib_pub_date: new Date().toISOString(),
             retribs: []
