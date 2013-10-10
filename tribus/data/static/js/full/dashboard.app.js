@@ -75,6 +75,11 @@ function TribListController($scope, $timeout, Timeline){
         });
     });
 
+    $scope.toggleTrib = function(parentScope, childScope){
+        // childScope.trib_reply_placer = 'hola';
+        console.log(childScope);
+    }
+
     $scope.addOldTribs = function(){
 
         if ($scope.tribs_end) return;
@@ -126,8 +131,12 @@ function TribListController($scope, $timeout, Timeline){
 
         $scope.controller_busy = true;
         $scope.new_tribs_offset = trib_offset;
-        $scope.first_trib_id = $scope.tribs[0].id;
         $scope.temp_new_tribs = [];
+        $scope.first_trib_id = '';
+
+        if($scope.tribs.length > 0){
+            $scope.first_trib_id = $scope.tribs[0].id;
+        }
 
         var fresh_tribs = Timeline.query({
             order_by: $scope.trib_orderby,
