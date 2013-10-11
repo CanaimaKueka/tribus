@@ -2,11 +2,14 @@
 # -*- coding: utf-8 -*-
 
 import djcelery
+import mongoengine
+
+from tribus import BASEDIR
 from tribus.common.utils import get_path
 from celery.schedules import crontab
 
 try:
-    djcelery.setup_loader()
+    from tribus.config.ldap import *
 except:
     pass
 
@@ -20,26 +23,25 @@ MANAGERS = ADMINS
 
 USE_I18N = True
 USE_L10N = True
+USE_TZ = True
 TIME_ZONE = 'America/Caracas'
 LANGUAGE_CODE = 'es-ve'
-DATABASE_OPTIONS = {'charset': 'utf8'}
+DATABASE_OPTIONS = { 'charset': 'utf8' }
 DEFAULT_CHARSET = 'utf-8'
 
-BASEDIR = get_path([__file__, '..', '..'])
-SITE_ROOT = get_path([BASEDIR, 'web'])
+SITE_ROOT = get_path([BASEDIR, 'tribus', 'web'])
 MEDIA_ROOT = ''
 MEDIA_URL = '/media/'
-ADMIN_MEDIA_PREFIX = '/media/admin/'
 STATIC_ROOT = ''
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [get_path([BASEDIR, 'data', 'static', ''])]
-TEMPLATE_DIRS = [get_path([BASEDIR, 'data', 'html', ''])]
+STATICFILES_DIRS = [get_path([BASEDIR, 'tribus', 'data', 'static'])]
+TEMPLATE_DIRS = [get_path([BASEDIR, 'tribus', 'data', 'html'])]
 
-DJANGO_STATIC = True
-DJANGO_STATIC_MEDIA_ROOTS = [get_path([BASEDIR, 'data', ''])]
+DJANGO_STATIC = not DEBUG
+DJANGO_STATIC_MEDIA_ROOTS = [get_path([BASEDIR, 'tribus', 'data'])]
 
-LOGIN_URL = '/login/'
-LOGOUT_URL = '/logout/'
+LOGIN_URL = '/login'
+LOGOUT_URL = '/logout'
 LOGIN_REDIRECT_URL = '/'
 
 ROOT_URLCONF = 'tribus.web.urls'
@@ -51,7 +53,6 @@ WSGI_APPLICATION = 'tribus.web.wsgi.application'
 #
 
 AUTHENTICATION_BACKENDS = (
-#     'django.contrib.auth.backends.ModelBackend',
     'social_auth.backends.twitter.TwitterBackend',
     'social_auth.backends.facebook.FacebookBackend',
     'social_auth.backends.google.GoogleOAuth2Backend',
@@ -82,56 +83,6 @@ FACEBOOK_EXTENDED_PERMISSIONS = ['email']
 GITHUB_APP_ID = 'c3d70354858107387ef8'
 GITHUB_API_SECRET = 'b9defd6193c11c8fb27c9f65ddaba0747524afcc'
 
-# Baseline configuration.
-AUTH_LDAP_SERVER_URI = "ldap://localhost"
-AUTH_LDAP_BASE = "dc=tribus,dc=org"
-AUTH_LDAP_BIND_DN = "cn=admin,"+AUTH_LDAP_BASE
-AUTH_LDAP_BIND_PASSWORD = "tribus"
-AUTH_LDAP_USER_DN_TEMPLATE = 'uid=%(user)s,'+AUTH_LDAP_BASE
-
-# Set up the basic group parameters.
-#AUTH_LDAP_GROUP_SEARCH = LDAPSearch("ou=django,ou=groups,dc=example,dc=com",
-#    ldap.SCOPE_SUBTREE, "(objectClass=groupOfNames)"
-#)
-#AUTH_LDAP_GROUP_TYPE = GroupOfNamesType(name_attr="cn")
-
-# Simple group restrictions
-#AUTH_LDAP_REQUIRE_GROUP = "cn=enabled,ou=django,ou=groups,dc=example,dc=com"
-#AUTH_LDAP_DENY_GROUP = "cn=disabled,ou=django,ou=groups,dc=example,dc=com"
-
-# Populate the Django user from the LDAP directory.
-AUTH_LDAP_USER_ATTR_MAP = {
-    "first_name": "givenName",
-    "last_name": "sn",
-    "password": "userPassword",
-    "email": "mail"
-}
-
-#AUTH_LDAP_PROFILE_ATTR_MAP = {
-#    "employee_number": "employeeNumber"
-#}
-
-#AUTH_LDAP_USER_FLAGS_BY_GROUP = {
-#    "is_active": "cn=active,ou=django,ou=groups,dc=example,dc=com",
-#    "is_staff": "cn=staff,ou=django,ou=groups,dc=example,dc=com",
-#    "is_superuser": "cn=superuser,ou=django,ou=groups,dc=example,dc=com"
-#}
-
-#AUTH_LDAP_PROFILE_FLAGS_BY_GROUP = {
-#    "is_awesome": "cn=awesome,ou=django,ou=groups,dc=example,dc=com",
-#}
-
-# This is the default, but I like to be explicit.
-AUTH_LDAP_ALWAYS_UPDATE_USER = True
-
-# Use LDAP group membership to calculate group permissions.
-AUTH_LDAP_FIND_GROUP_PERMS = True
-
-# Cache group memberships for an hour to minimize LDAP traffic
-AUTH_LDAP_CACHE_GROUPS = True
-AUTH_LDAP_GROUP_CACHE_TIMEOUT = 3600
-
-
 #
 # DATABASE CONFIGURATION -------------------------------------------------------
 #
@@ -153,7 +104,6 @@ DATABASES = {
      }
  }
 
-AUTH_PROFILE_MODULE = 'web.UserProfile'
 DATABASE_ROUTERS = ['ldapdb.router.Router']
 
 PASSWORD_HASHERS = (
@@ -161,7 +111,11 @@ PASSWORD_HASHERS = (
     #'tribus.web.user.hashers.DummyPasswordHasher',
 )
 
-
+APPEND_SLASH = False
+TASTYPIE_ALLOW_MISSING_SLASH = True
+TASTYPIE_FULL_DEBUG = DEBUG
+API_LIMIT_PER_PAGE = 20
+TASTYPIE_DEFAULT_FORMATS = ['json']
 ACCOUNT_ACTIVATION_DAYS = 7
 
 BROKER_URL = 'redis://localhost:6379/0'
@@ -175,6 +129,13 @@ CELERYBEAT_SCHEDULE = {
     },               
 }
 
+# GRAVATAR_URL # Gravatar base url. Defaults to 'http://www.gravatar.com/'
+# GRAVATAR_SECURE_URL # Gravatar base secure https url. Defaults to 'https://secure.gravatar.com/'
+# GRAVATAR_DEFAULT_SIZE # Gravatar size in pixels. Defaults to '80'
+# GRAVATAR_DEFAULT_IMAGE # An image url or one of the following: 'mm', 'identicon', 'monsterid', 'wavatar', 'retro'. Defaults to 'mm'
+# GRAVATAR_DEFAULT_RATING # One of the following: 'g', 'pg', 'r', 'x'. Defaults to 'g'
+# GRAVATAR_DEFAULT_SECURE # True to use https by default, False for plain http. Defaults to True
+
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -186,12 +147,16 @@ INSTALLED_APPS = (
     'tribus.web',
     'tribus.web.user',
     'tribus.web.paqueteria',
+    'tribus.web.profile',
     'ldapdb',
     'django_auth_ldap',
     'social_auth',
     'djcelery',
     'south',
-    'django_static'
+    'django_static',
+    'tastypie',
+    'tastypie_mongoengine',
+    'django_gravatar',
 )
 
 # EMAIL_USE_TLS = True
@@ -257,6 +222,17 @@ CACHES = {
         },
     },
 }
+
+
+try:
+    djcelery.setup_loader()
+except:
+    pass
+
+try:
+    mongoengine.connect(db='tribus')
+except:
+    pass
 
 try:
     from tribus.config.logger import *

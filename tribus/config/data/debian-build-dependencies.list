@@ -1,2 +1,4 @@
 python-rsvg
 python-cairo
+libxml2-dev
+libxslt1-dev

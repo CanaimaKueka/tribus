@@ -1,0 +1,30 @@
+<div class="navbar">
+ 	<h2 class= "nav"> {{ user.username }}</h2>
+	<ul class="nav pull-right">
+        <li>
+            <a href="#">
+                <span class="bigger-150 icon-home"></span>
+            </a>
+        </li>
+
+        <li class="divider-vertical"></li>
+
+        <li>
+            <a href="/profile">
+            <i class="bigger-150 icon-user"></i>
+            </a>
+        </li>
+
+        <li class="divider-vertical"></li>
+        <li class="dropdown">
+            <a id="drop-tasks" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="bigger-150 icon-tasks"></i>
+            </a>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">X</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Y</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Z</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>

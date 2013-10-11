@@ -1,48 +1,32 @@
 {% extends 'base.html' %}
 {% load i18n %}
-<div class="container">
-	<div class="row">
-		{% if user.is_authenticated %}
-		<div class="span4">
-			<h3><i class="icon-edit"></i>Quick Trib</h3>
-				<form action="/i/trib/" method="post">
-					{% csrf_token %}
-					{% block respuesta %}{% endblock %}
-					<p>
-						<textarea id="textarea" name="content" maxlength="140" rows="5" cols="50">{% block textarea %}{% endblock %}</textarea>
-						<span id="count" class="label label-info">140</span><br>
-						<input class="btn btn-success" type="submit" value="Trib">
-					</p>
-				</form>
-			<section>
-				<header>
-					<img src="{% if p.avatar %}{{ p.avatar }}{% else %}{{ STATIC_URL }}default.png{% endif %}" class="perfil"><h3>{{ user.get_full_name }} (<a href="/twitter/profile/{{ logueado }}/">@{{ user }}</a>)</h3>
-					<div class="pagination" style="font-size: 11px">
-						<ul>
-							<li><a href="/twitter/profile/{{ logueado }}/">{{ ntweets }} tweet{{ ntweets|pluralize }}</a></li>
-							<li><a href="/twitter/seguidores/{{ logueado }}/">{{ u_seguidores }} seguidores</a></li>
-							<li><a href="/twitter/siguiendo/{{ user.username }}/">{{ u_siguiendo }} siguiendo</a></li>
-						</ul>
-					</div>
-					{% block trending %}{% endblock %}
-				</header>
-			</section>
-		</div>
-		{% endif %}
-		<div class="span{% if logueado %}5{% else %}12{% endif %} seccion">
-			{% block contenido %}
-			{{ mensaje }}
-			{% endblock %}
-		</div>
-		{% if logueado %}
-			<div class="span3 seccion">
-				<h3>Chat</h3>
-				<form id="normal" class="chatform" action="/twitter/chat/" method="POST">
-					<input id="inputderecho" type="text" name="mensaje" placeholder="Mensaje" autocomplete="off" maxlength="100">
-				</form>
-				<section class="chat"></section>
-			</div>
-		{% endif %}
-	</div>
-</div>
-
+{% block ngapp %}dashboard{% endblock %}
+{% block content %}
+        <div class="jumbotron">
+            <div class="container">
+                <div class="row-fluid dashboard_container">
+                    <div class="span8 dashboard_timeline">
+                    {% include 'tribs.html' %}
+                    </div>
+                    <div class="span4 dashboard_panel">
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript">
+        {% if user.is_authenticated %}
+        var user_id = '{{ user.id }}';
+        var user_username = '{{ user.username }}';
+        var user_first_name = '{{ user.first_name }}';
+        var user_last_name = '{{ user.last_name }}';
+        {% endif %}
+        var trib_limit_to = 0;
+        var trib_offset = 0;
+        var trib_add = 10;
+        var trib_limit = 10;
+        var trib_orderby = '-trib_pub_date';
+        var controller_busy = false;
+    </script>
+{% endblock %}
