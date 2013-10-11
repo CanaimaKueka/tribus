@@ -6,15 +6,15 @@ $(document).ready(function(){
 
     // Expands all textareas with "expand" class when
     // focusing on them. Uses "autosize" jQuery plugin
-    $('textarea.action_box').keyup(function () {
-        if($(this).val().length > 0){
-            $('button.action_button').removeAttr('disabled');
-        }
+    // $('textarea.action_box').keyup(function () {
+    //     if($(this).val().length > 0){
+    //         $('button.action_button').removeAttr('disabled');
+    //     }
 
-        if($(this).val().length === 0){
-            $('button.action_button').attr('disabled', 'disabled');
-        }
-    });
+    //     if($(this).val().length === 0){
+    //         $('button.action_button').attr('disabled', 'disabled');
+    //     }
+    // });
 
     $('textarea.action_box').focus(function () {
         if($(this).val().length === 0){
