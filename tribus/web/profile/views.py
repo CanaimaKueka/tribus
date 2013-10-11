@@ -70,7 +70,10 @@ def SearchProfile(request, nick):
         if not request.user.username == usuario.username and not btn_eliminar:
             btn_add = True
 
-        render_js = ['jquery', 'bootstrap']
+        render_js = ['jquery', 'jquery.autogrow', 'bootstrap', 'angular',
+                    'angular.resource', 'angular.infinite-scroll', 'profiles.app',
+                    'profiles.jquery', 'md5', 'angular-gravatar']
+
         render_css = ['normalize', 'fonts', 'font-awesome', 'bootstrap',
                         'bootstrap-responsive', 'tribus' ,'tribus-responsive']
 
@@ -129,7 +132,7 @@ def UserProfile(request):
     # cambio de tamaño instanceable luego
     # gravatar_url += urllib.urlencode({'d':default, 's':str(size)})
 
-    data = {"render_css": render_css , "render_js":render_js , 'url': gravatar_url}
+    data = {"render_css": render_css , "render_js":render_js , 'url': gravatar_url, 'user_view':request.user}
     context = RequestContext(request)
     
 
