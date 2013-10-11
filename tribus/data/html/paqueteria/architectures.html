@@ -1,0 +1,11 @@
+<legend> </legend>
+<h2 align="center"><b>para {{arch.data.Architecture}}</b></h2>
+<p>- <b>Version:</b> {{arch.data.Version}} </p>
+<p>- <b>Tamaño: </b> {{arch.data.Size}}</p>
+<p>- <b>Tamaño instalado: </b> {{arch.data.InstalledSize}}</p>
+<p>- <b>MD5sum: </b> {{arch.data.MD5sum}}</p>
+<p>- <b><a href= "{{raiz}}{{arch.data.Filename}}">Descargar</a></b></p>
+<legend> </legend>
+{%for tipo in arch.relations.items %}
+	{% include 'paqueteria/relations.html' %}
+{% endfor %}

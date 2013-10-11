@@ -3,8 +3,8 @@ from tribus.web.paqueteria import views
 
 urlpatterns = patterns('',
     url(r'^/index$', views.index, name='index'),
-    url(r'^paquetes/$', views.index, name='index'),
-    url(r'^paquetes/tags/(?P<tag>(\w*\W*)*)', views.tags, name='tags'),
-    url(r'^paquetes/categoria/(?P<categoria>(\w*\W*)*)', views.categoria, name='categoria'),
-    url(r'^paquetes/busqueda/(?P<nombre>(\w*\W*)*)', views.urlPaquetes, name='organizador'),    
+    url(r'^packages/$', views.index, name='index'),
+    url(r'^packages/tags/(?P<tag>(\w*\W*)*)', views.viewtags, name='tags'),
+    url(r'^packages/category/(?P<category>(\w*\W*)*)', views.viewcategory, name='category'),
+    url(r'^packages/search/(?P<name>(\w*\W*)*)', views.viewpackages, name='organizer'),
     )
