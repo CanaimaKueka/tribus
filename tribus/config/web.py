@@ -58,6 +58,10 @@ AUTHENTICATION_BACKENDS = (
     'social_auth.backends.google.GoogleOAuth2Backend',
     'social_auth.backends.contrib.github.GithubBackend',
     'django_auth_ldap.backend.LDAPBackend',
+
+
+    #acomoda aplicacion de ldap
+    #'django.contrib.auth.backends.ModelBackend',
 )
 
 # This should be secret, but as we are in development, doesn't matter

@@ -3,7 +3,9 @@
     <div class="row-fluid">
         <form ng-submit="createNewTrib()">
             <span class="span1">
-                <span class="action_avatar"></span>
+                <span class="action_avatar"> 
+                    <img gravatar-src="'{{user.email}}'" gravatar-size="100">
+                </span>
             </span>
             <span class="span9 action_content">
                 <span class="arrow_left"></span>
@@ -25,7 +27,10 @@
     <ul>
         <li class="row-fluid trib_item" style="{% verbatim %}{{ tribs_style }}{% endverbatim %}" ng-repeat="trib in tribs | orderBy: trib_orderby | limitTo: trib_limit_to track by trib.id">
             <span class="span2">
-                <span class="trib_avatar"></span>
+                
+                <span class="trib_avatar">
+                    <img gravatar-src="'{% verbatim %}{{trib.author_email}}{% endverbatim %}'" gravatar-size="100">
+                </span>
             </span>
             <span class="arrow_left"></span>
             <span class="span9 trib_body">
