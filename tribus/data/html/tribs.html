@@ -10,8 +10,7 @@
             <span class="span9 action_content">
                 <span class="arrow_left"></span>
                 <span class="action_bubble">
-                    <textarea ng-model="trib_content" rows="1" class="action_box autosize expand" placeholder="{% trans 'What are you doing?' %}">
-                    </textarea>
+                    <textarea ng-model="trib_content" rows="1" class="action_box autosize expand" placeholder="{% trans 'What are you doing?' %}"></textarea>
                 </span>
             </span>
             <span class="span2 action_submit">
@@ -25,15 +24,14 @@
 </div>
 <div class="trib_list" infinite-scroll="addOldTribs()" infinite-scroll-disabled="controller_busy" infinite-scroll-distance="0" ng-controller="TribListController">
     <ul>
-        <li class="row-fluid trib_item" style="{% verbatim %}{{ tribs_style }}{% endverbatim %}" ng-repeat="trib in tribs | orderBy: trib_orderby | limitTo: trib_limit_to track by trib.id">
+        <li class="row-fluid trib_item" ng-repeat="trib in tribs | orderBy: trib_orderby | limitTo: trib_limit_to track by trib.id">
             <span class="span2">
-                
                 <span class="trib_avatar">
                     <img gravatar-src="'{% verbatim %}{{trib.author_email}}{% endverbatim %}'" gravatar-size="100">
                 </span>
             </span>
             <span class="arrow_left"></span>
-            <span class="span9 trib_body">
+            <span class="span10 trib_body">
                 <span class="trib_title">
                     <h3>{% verbatim %}{{ trib.author_first_name }} {{ trib.author_last_name }}{% endverbatim %}</h3>
                     <h4>{% verbatim %}@{{ trib.author_username }}{% endverbatim %}</h4>
@@ -56,40 +54,37 @@
                     <span class="pull-right">
                         <a href="#"><span class="icon-thumbs-up-alt"></span></a>
                     </span>
-                    <span ng-click="$parent.toggleTrib($index)">
+                    <span ng-click="toggleTrib()">
                         <a href="#"><span class="icon-chevron-down"></span>{% trans 'Details' %}</a>
                     </span>
                     <span>
                         <a href="#"><span class="icon-trash"></span>{% trans 'Delete' %}</a>
                     </span>
                 </span>
-            </span>
-            <span class="span1 trib_type">
-                TIPO
-            </span>
-            <span class="span12 trib_reply">
-                <span id="{% verbatim %}{{ trib.id }}{% endverbatim %}" ng-show="trib.reply_show">
-                    <span class="row-fluid">
-                        <span class="span2"></span>
-                        <span class="span9">
-                            <form>
-                                <span class="span1">
-                                    <span class="action_avatar"></span>
-                                </span>
-                                <span class="span9 action_content">
-                                    <span class="arrow_left"></span>
-                                    <span class="action_bubble">
-                                        <textarea ng-model="comment" rows="1" class="action_box autosize expand" placeholder="{% blocktrans %}What do you want to say?{% endblocktrans %}"></textarea>
+                <span class="trib_reply">
+                    <span id="{% verbatim %}{{ trib.id }}{% endverbatim %}" ng-controller="CommentController" ng-if="trib.reply_show">
+                        <ul>
+                            <li class="row-fluid comment_item" ng-repeat="comment in comments | orderBy: trib_orderby | limitTo: trib_limit_to track by trib.id">{% verbatim %}{{ comment.comment_content }}{% endverbatim %}
+                            </li>
+                            <li class="comment_item">                        
+                                <form ng-submit="createNewComment(trib.id)">
+                                    <span class="span1">
+                                        <span class="action_avatar"></span>
                                     </span>
-                                </span>
-                                <span class="span2 action_submit">
-                                    <button class="btn btn-success action_button" ng-click="createNewComment(trib.id)">
-                                        {% trans 'Publish' %}
-                                    </button>
-                                </span>
-                            </form>
-                        </span>
-                        <span class="span1"></span>
+                                    <span class="span9 action_content">
+                                        <span class="arrow_left"></span>
+                                        <span class="action_bubble">
+                                            <textarea ng-model="comment_content" rows="1" class="action_box autosize expand" placeholder="{% blocktrans %}What do you want to say?{% endblocktrans %}"></textarea>
+                                        </span>
+                                    </span>
+                                    <span class="span2 action_submit">
+                                        <button class="btn btn-success action_button">
+                                            {% trans 'Publish' %}
+                                        </button>
+                                    </span>
+                                </form>
+                            </li>
+                        </ul>
                     </span>
                 </span>
             </span>
