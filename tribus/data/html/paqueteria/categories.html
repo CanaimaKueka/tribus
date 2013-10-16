@@ -1,0 +1,10 @@
+{%extends 'base.html'%}
+{% load url from future %}
+{% block titulo%}Sistema de busqueda{%endblock%}
+{% block encabezado%}<p><h1>Busqueda</h1></p>{%endblock%}
+{%block contenido%}
+	{%for m in i%}
+		<p> <a href="/paqueteria/tags/{{m}}" >{{m}}</a></p>
+		<legend></legend>
+	{%endfor%}
+{%endblock%}

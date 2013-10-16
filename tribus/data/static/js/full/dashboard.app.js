@@ -5,7 +5,7 @@
 // Application -----------------------------------------------------------------
 
 var dashboard = angular.module('dashboard',
-    ['Tribs', 'Timeline', 'infinite-scroll', 'ui.gravatar']);
+    ['Tribs', 'Timeline', 'Comments', 'infinite-scroll', 'ui.gravatar']);
 
 
 // Events ----------------------------------------------------------------------
@@ -21,8 +21,10 @@ dashboard.run(function($rootScope){
 
 dashboard.controller('NewTribController', ['$scope', '$timeout', 'Tribs',
     NewTribController]);
-dashboard.controller('TribListController', ['$scope', '$timeout', '$compile', 'Timeline',
+dashboard.controller('TribListController', ['$scope', '$timeout', 'Timeline',
     TribListController]);
+dashboard.controller('CommentController', ['$scope', '$timeout', 'Comments',
+    CommentController]);
 
 
 function NewTribController($scope, $timeout, Tribs){
@@ -37,7 +39,6 @@ function NewTribController($scope, $timeout, Tribs){
             author_email: user_email,
             trib_content: $scope.trib_content,
             trib_pub_date: new Date().toISOString(),
-            retribs: []
         };
 
         Tribs.save(newtrib, function(){
@@ -56,7 +57,50 @@ function NewTribController($scope, $timeout, Tribs){
     $scope.pollNewTribs();
 }
 
-function TribListController($scope, $timeout, $compile, Timeline){
+
+function CommentController($scope, $timeout, Comments){
+
+    $scope.comment_limit_to = comment_limit_to;
+    $scope.comment_limit = comment_limit;
+    $scope.comment_offset = comment_offset;
+    $scope.comment_orderby = comment_orderby;
+    $scope.comments = [];
+
+    $scope.createNewComment = function(trib_id){
+
+        var newcomment = {
+            author_id: user_id,
+            author_username: user_username,
+            author_first_name: user_first_name,
+            author_last_name: user_last_name,
+            author_email: user_email,
+            comment_content: this.comment_content,
+            comment_pub_date: new Date().toISOString(),
+            trib_id: trib_id
+        };
+
+        Comments.save(newcomment, function(){
+            $scope.comment_content = '';
+            $scope.addNewComments(trib_id);
+        });
+    };
+
+    $scope.addNewComments = function(trib_id){
+
+        var fresh_comments = Comments.query({
+            trib_id: trib_id,
+            order_by: $scope.comment_orderby,
+            limit: $scope.comment_limit,
+            offset: $scope.comment_offset
+        }, function(){
+            for(var i = 0; i < fresh_comments.length; i++){
+                $scope.comments.unshift(fresh_comments[i]);
+            }
+        });
+    };
+}
+
+function TribListController($scope, $timeout, Timeline){
 
     $scope.controller_busy = controller_busy;
     $scope.trib_limit_to = trib_limit_to;
@@ -71,12 +115,13 @@ function TribListController($scope, $timeout, $compile, Timeline){
         });
     });
 
-    $scope.createNewComment = function(index){
-        console.log(index);
-    }
-
-    $scope.toggleTrib = function(id){
-        console.log(id);
+    $scope.toggleTrib = function(){
+        if($scope.tribs[this.$index].reply_show === false ||
+           $scope.tribs[this.$index].reply_show === undefined){
+            $scope.tribs[this.$index].reply_show = true;
+        } else {
+            $scope.tribs[this.$index].reply_show = false;
+        }
     }
 
     $scope.addOldTribs = function(){
@@ -119,10 +164,6 @@ function TribListController($scope, $timeout, $compile, Timeline){
             $scope.controller_busy = false;
         });
     };
-
-    $scope.addNewComment = function(){
-        $scope.comment = "hola";
-    }
 
     $scope.addNewTribs = function(){
 
@@ -171,18 +212,20 @@ function TribListController($scope, $timeout, $compile, Timeline){
             $timeout(function(){$(".trib_list").trigger('reload_dom');});        
             $scope.controller_busy = false;
         });
-    }
+    };
 }
 
-NewTribController.$inject = ['$scope'];
-TribListController.$inject = ['$scope'];
+// NewTribController.$inject = ['$scope'];
+// TribListController.$inject = ['$scope'];
+// CommentController.$inject = ['$scope'];
 
 
 // Services --------------------------------------------------------------------
 
 angular.module('Tribs', ['ngResource'])
     .factory('Tribs',  function($resource){
-        return $resource('/api/0.1/user/tribs/', {},{
+        return $resource('/api/0.1/:author_username/tribs',
+            { author_username: '@author_username' }, {
             save: {
                 method: 'POST',
                 headers: {
@@ -207,7 +250,7 @@ angular.module('Tribs', ['ngResource'])
 
 angular.module('Timeline', ['ngResource'])
     .factory('Timeline', function($resource){
-        return $resource('/api/0.1/user/timeline/', {}, {
+        return $resource('/api/0.1/user/timeline', {}, {
             query: {
                 method: 'GET',
                 isArray: true,
@@ -215,5 +258,31 @@ angular.module('Timeline', ['ngResource'])
                     return angular.fromJson(data).objects;
                 }
             }
+        });
+    });
+
+angular.module('Comments', ['ngResource'])
+    .factory('Comments',  function($resource){
+        return $resource('/api/0.1/comments/:trib_id',
+            { trib_id: '@trib_id' }, {
+            save: {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
+                },
+            },
+            query: {
+                method: 'GET',
+                isArray: true,
+                transformResponse: function(data){
+                    return angular.fromJson(data).objects;
+                }
+            },
+            delete: {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
+                },
+            },
         });
     });

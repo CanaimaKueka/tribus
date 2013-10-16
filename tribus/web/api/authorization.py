@@ -51,12 +51,16 @@ class TimelineAuthorization(Authorization):
 class TribAuthorization(Authorization):
 
     def read_list(self, object_list, bundle):
-        return object_list.filter(author_id__exact=int(bundle.request.user.id))
+        '''
+        Everyone can list each other's tribs.
+        '''
+        return object_list
 
     def read_detail(self, object_list, bundle):
-        if int(bundle.obj.author_id) == int(bundle.request.user.id):
-            return True
-        raise Unauthorized("You are not allowed to access that resource.")
+        '''
+        Everyone can read details about each other's tribs.
+        '''
+        return True
 
     def create_detail(self, object_list, bundle):
         if int(bundle.obj.author_id) == int(bundle.request.user.id):
@@ -68,4 +72,30 @@ class TribAuthorization(Authorization):
 
     def delete_detail(self, object_list, bundle):
         raise Unauthorized("You are not allowed to access that resource.")
+
+class CommentAuthorization(Authorization):
+
+    def read_list(self, object_list, bundle):
+        return object_list
+
+    def read_detail(self, object_list, bundle):
+        return True
+
+    def create_list(self, object_list, bundle):
+        return object_list
+
+    def create_detail(self, object_list, bundle):
+        return True
+
+    def update_list(self, object_list, bundle):
+        return object_list
+
+    def update_detail(self, object_list, bundle):
+        return True
+
+    def delete_list(self, object_list, bundle):
+        return object_list
+
+    def delete_detail(self, object_list, bundle):
+        return True
 

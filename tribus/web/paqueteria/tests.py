@@ -18,9 +18,9 @@ class RecordTest(TestCase):
         packages_file = file("tribus/web/paqueteria/test_files/Packages")        
         
         for section in deb822.Packages.iter_paragraphs(packages_file, None, None, "windows-1252"):
-            record_section(section)
+            record_section(section, "kerepakupai")
             p = Package.objects.get(Package = section['Package'])
-            d = Details.objects.get(package = p, Architecture = section['Architecture'])
+            d = Details.objects.get(package = p, Architecture = section['Architecture'], Distribution = "kerepakupai")
             rs = d.Relations
             relations_bd = len(rs.all())
             if section.has_key('Package'):
@@ -82,9 +82,9 @@ class UpdateTest(TestCase):
         updated_packages = file("tribus/web/paqueteria/test_files/PackagesNew")
         
         for section in deb822.Packages.iter_paragraphs(updated_packages, None, None, "windows-1252"):
-            update_section(section)
+            update_section(section, "kerepakupai")
             p = Package.objects.get(Package = section['Package'])
-            d = Details.objects.get(package = p, Architecture = section['Architecture'])
+            d = Details.objects.get(package = p, Architecture = section['Architecture'], Distribution = "kerepakupai")
             rs = d.Relations
             relations_bd = len(rs.all())
             if section.has_key('Package'):
@@ -142,9 +142,9 @@ class UpdateTest(TestCase):
         updated_packages = file("tribus/web/paqueteria/test_files/Packages")
         
         for section in deb822.Packages.iter_paragraphs(updated_packages, None, None, "windows-1252"):
-            update_section(section)
+            update_section(section, "kerepakupai")
             p = Package.objects.get(Package = section['Package'])
-            d = Details.objects.get(package = p, Architecture = section['Architecture'])
+            d = Details.objects.get(package = p, Architecture = section['Architecture'], Distribution = "kerepakupai")
             rs = d.Relations
             relations_bd = len(rs.all())
             if section.has_key('Package'):

@@ -1,0 +1,27 @@
+{%extends 'paqueteria/base.html'%}
+{% load url from future %}
+{% block title%}Sistéma de busqueda{%endblock%}
+{%block datos%}
+	<div >
+		<legend> </legend>
+			<h2 align="center"><b>{{paquete.Package}}</b></h2>
+		<legend> </legend>
+	</div>
+	<div id = "margenes-separadores">
+		<p><b>Mantenedor:</b>  {{paquete.Maintainer}} </p>
+		<p><b>Seccion:</b>  {{paquete.Section }}</p>
+		<p><b>Prioridad:</b>  {{paquete.Priority }}</p>
+		<p align="justify"> <b>Descripcion:</b> {{paquete.Description}}</p>
+		{% if paquete.Homepage %}
+			<p><b>Pagina:</b> <a href="{{paquete.Homepage}}">{{paquete.Homepage }}</a></p>
+		{% endif %}
+		{% if detalles %}
+			{%for dists in detalles.items %}
+			<h2 align="center"><b>En Canaima {{dists.0}}</b></h2>				
+				{%for arch in dists.1.values %}
+					{% include 'paqueteria/architectures.html' %}
+				{% endfor %}
+			{% endfor %}
+		{% endif %}
+	</div>
+{%endblock%}
