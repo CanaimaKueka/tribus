@@ -19,16 +19,11 @@ dashboard.run(function($rootScope){
 
 // Controllers -----------------------------------------------------------------
 
-dashboard.controller('CommentController', ['$scope', '$timeout', 'Tribs',
-    CommentController]);
 dashboard.controller('NewTribController', ['$scope', '$timeout', 'Tribs',
     NewTribController]);
-dashboard.controller('TribListController', ['$scope', '$timeout', 'Timeline',
+dashboard.controller('TribListController', ['$scope', '$timeout', '$compile', 'Timeline',
     TribListController]);
 
-function CommentController($scope, $timeout, Tribs){
-
-}
 
 function NewTribController($scope, $timeout, Tribs){
 
@@ -60,7 +55,7 @@ function NewTribController($scope, $timeout, Tribs){
     $scope.pollNewTribs();
 }
 
-function TribListController($scope, $timeout, Timeline){
+function TribListController($scope, $timeout, $compile, Timeline){
 
     $scope.controller_busy = controller_busy;
     $scope.trib_limit_to = trib_limit_to;
@@ -75,9 +70,12 @@ function TribListController($scope, $timeout, Timeline){
         });
     });
 
-    $scope.toggleTrib = function(parentScope, childScope){
-        // childScope.trib_reply_placer = 'hola';
-        console.log(childScope);
+    $scope.createNewComment = function(index){
+        console.log(index);
+    }
+
+    $scope.toggleTrib = function(id){
+        console.log(id);
     }
 
     $scope.addOldTribs = function(){
@@ -175,7 +173,6 @@ function TribListController($scope, $timeout, Timeline){
     }
 }
 
-CommentController.$inject = ['$scope'];
 NewTribController.$inject = ['$scope'];
 TribListController.$inject = ['$scope'];
 
