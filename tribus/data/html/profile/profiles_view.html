@@ -1,4 +1,5 @@
 {% extends 'profile/base.html' %}
+{% block ngapp %}profiles{% endblock %}
 {% block title %} Profile {% endblock %}
 {% block content%}
 
@@ -7,7 +8,7 @@
 		<div class="row-fluid">
 
 			<div class="span3">
-				<div>
+				<div ng-controller >
 					<span>
                     {% load gravatar %}
                     <a href = "http://gravatar.com/emails/">{% gravatar user_view.email 280 %}</a>
