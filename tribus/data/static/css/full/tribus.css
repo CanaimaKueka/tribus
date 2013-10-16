@@ -2537,7 +2537,7 @@ li [class^="icon-"],li [class*=" icon-"],.nav-list li [class^="icon-"],.nav-list
 
 .btn-lg {
     border-width: 5px;
-    line-height: 1.35;
+    line-height: 1.4em;
     padding: 7px 16px;
 }
 
@@ -2545,18 +2545,21 @@ li [class^="icon-"],li [class*=" icon-"],.nav-list li [class^="icon-"],.nav-list
     border-width: 4px;
     font-size: 13px;
     padding: 4px 9px;
-    line-height: 1.39;
+    line-height: 1.3em;
 }
 
 .btn-xs {
+    padding: 2px 4px;
+    line-height: 1.2em;
     border-width: 3px;
+    font-size: 12px;
 }
 
 .btn-minier {
     padding: 0 4px;
     line-height: 18px;
     border-width: 2px;
-    font-size: 12px;
+    font-size: 10px;
 }
 
 button.btn:active {
@@ -14789,9 +14792,9 @@ input, button, select, textarea {
 
 .trib_list {
     margin: 20px 0px;
-    list-style: none inside none;
     float: left;
     display: block;
+    width:100%;
 }
 
 .trib_list > ul {
@@ -14813,7 +14816,6 @@ input, button, select, textarea {
     margin: 10px 0;
     float: left;
     display: block;
-    cursor: pointer;
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
     -o-border-radius: 6px;
@@ -14835,7 +14837,7 @@ input, button, select, textarea {
     margin: 10px 0;
 }
 
-.trib_reply .action_box {
+.trib_reply .action_textarea {
     width: 40px;
     height: 40px;
     margin: 10px 0;
@@ -14880,7 +14882,7 @@ input, button, select, textarea {
     width: 98%;
     height: 20px;
     line-height: 1.5em;
-    background: #ccc;
+    background: #E5E5DC;
 }
 
 .trib_interact > span {
@@ -14922,8 +14924,9 @@ input, button, select, textarea {
     line-height: 1.4em;
 }
 
-.action_content > .arrow_left,
-.trib_item > .arrow_left {
+.action_body > .arrow_left,
+.trib_item > .arrow_left,
+.comment_body > .arrow_left {
     width: 0;
     height: 0;
     float: left;
@@ -14942,7 +14945,7 @@ input, button, select, textarea {
 }
 
 
-.action_content > .action_bubble {
+.action_body > .action_bubble {
     padding: 2%;
     margin: 2% 0;
     width: 92%;
@@ -14957,7 +14960,7 @@ input, button, select, textarea {
     position: relative;
 }
 
-.action_bubble > .action_box {
+.action_bubble > .action_textarea {
     width: 100%;
     padding: 0;
     margin: 0;
@@ -14974,7 +14977,7 @@ input, button, select, textarea {
     margin: 2% 0;
 }
 
-.action_avatar, .trib_avatar {
+.action_avatar, .trib_avatar, .comment_avatar {
     background-color: #fff;
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
@@ -14991,4 +14994,85 @@ input, button, select, textarea {
     margin: 10px 10px 10px 30px;
     width: 70px;
     height: 70px;
+}
+
+.comment_list {
+    float: left;
+    display: block;
+    width:100%;
+}
+
+.comment_list > ul {
+    padding: 0;
+    margin: 0;
+    list-style: none inside none;
+    float:left;
+    display: block;
+    width:100%;
+}
+
+.comment_item,
+.comment_box {
+    float: left;
+    display: block;
+    margin: 1% 0;
+    padding: 0 5% 0 15%;
+    width: 80%;
+    background: #EDEDE3;
+}
+
+.comment_item {
+    margin: 0.25% 0;
+}
+
+.comment_item > span > .comment_avatar {
+    margin: 5px 10px;
+}
+
+.comment_avatar {
+    width: 30px;
+    height: 30px;
+    margin: 10px;
+}
+
+.comment_body > .comment_text {
+    margin: 1%;
+    width: 98%;
+    float: left;
+}
+
+.comment_body > .comment_bubble {
+    padding: 2%;
+    margin: 2% 0;
+    width: 92%;
+    background: rgb(255, 255, 255);
+    border-left: 1px solid #aaa;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -o-border-radius: 6px;
+    border-radius: 6px;
+    float: left;
+    display: block;
+    position: relative;
+}
+
+.comment_body > .comment_bubble > .comment_textarea {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    min-height: 1em;
+    resize:none;
+    vertical-align: top;
+    overflow: hidden;
+    text-shadow: none;
+    box-shadow: none;
+    border: none;
+}
+
+.comment_submit {
+    margin: 2% 0;
+}
+
+.comment_body > .arrow_left {
+    top:15px;
 }

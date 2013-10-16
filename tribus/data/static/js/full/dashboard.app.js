@@ -64,17 +64,7 @@ function CommentController($scope, $timeout, Comments){
     $scope.comment_limit = comment_limit;
     $scope.comment_offset = comment_offset;
     $scope.comment_orderby = comment_orderby;
-
-    $scope.comments = [{
-            author_id: user_id,
-            author_username: user_username,
-            author_first_name: user_first_name,
-            author_last_name: user_last_name,
-            author_email: user_email,
-            comment_content: 'hola',
-            comment_pub_date: new Date().toISOString(),
-            trib_id: '555'
-        }];
+    $scope.comments = [];
 
     $scope.createNewComment = function(trib_id){
 
@@ -90,7 +80,22 @@ function CommentController($scope, $timeout, Comments){
         };
 
         Comments.save(newcomment, function(){
-            $scope.$$childHead.comment_content = '';
+            $scope.comment_content = '';
+            $scope.addNewComments(trib_id);
+        });
+    };
+
+    $scope.addNewComments = function(trib_id){
+
+        var fresh_comments = Comments.query({
+            trib_id: trib_id,
+            order_by: $scope.comment_orderby,
+            limit: $scope.comment_limit,
+            offset: $scope.comment_offset
+        }, function(){
+            for(var i = 0; i < fresh_comments.length; i++){
+                $scope.comments.unshift(fresh_comments[i]);
+            }
         });
     };
 }
@@ -207,7 +212,7 @@ function TribListController($scope, $timeout, Timeline){
             $timeout(function(){$(".trib_list").trigger('reload_dom');});        
             $scope.controller_busy = false;
         });
-    }
+    };
 }
 
 // NewTribController.$inject = ['$scope'];
@@ -219,7 +224,7 @@ function TribListController($scope, $timeout, Timeline){
 
 angular.module('Tribs', ['ngResource'])
     .factory('Tribs',  function($resource){
-        return $resource('/api/0.1/:author_username/tribs/',
+        return $resource('/api/0.1/:author_username/tribs',
             { author_username: '@author_username' }, {
             save: {
                 method: 'POST',
@@ -245,7 +250,7 @@ angular.module('Tribs', ['ngResource'])
 
 angular.module('Timeline', ['ngResource'])
     .factory('Timeline', function($resource){
-        return $resource('/api/0.1/user/timeline/', {}, {
+        return $resource('/api/0.1/user/timeline', {}, {
             query: {
                 method: 'GET',
                 isArray: true,
@@ -258,7 +263,7 @@ angular.module('Timeline', ['ngResource'])
 
 angular.module('Comments', ['ngResource'])
     .factory('Comments',  function($resource){
-        return $resource('/api/0.1/comments/:trib_id/',
+        return $resource('/api/0.1/comments/:trib_id',
             { trib_id: '@trib_id' }, {
             save: {
                 method: 'POST',
