@@ -35,7 +35,7 @@ This module contains common functions to record package data from a repository.
 #     se registraron. PENDIENTE
 #===============================================================================
 
-import urllib, re, email.Utils, os, sys
+import urllib, re, email.Utils, os, sys, string
 path = os.path.join(os.path.dirname(__file__), '..', '..')
 base = os.path.realpath(os.path.abspath(os.path.normpath(path)))
 os.environ['PATH'] = base + os.pathsep + os.environ['PATH']
@@ -45,8 +45,8 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
 from debian import deb822
 from tribus.web.paqueteria.models import *
 from tribus.config.pkgrecorder import package_fields, detail_fields, local_repo_root,\
-auyantepui, kerepakupai
-from tribus.common.utils import find_files, md5Checksum, find_dirs
+roraima, kerepakupai
+from tribus.common.utils import find_files, md5Checksum, find_dirs, list_dirs
 from tribus.config.base import PACKAGECACHE
 
 
@@ -156,6 +156,9 @@ def create_relationship(fields):
         obj = Relation(**fields)
         obj.save()
         return obj
+#     obj = Relation(**fields)
+#     obj.save()
+#     return obj
 
 
 def create_tag(val):
@@ -243,7 +246,7 @@ def record_package(section):
         return p
 
 
-def record_details(section, pq, dist = "kerepakupai"):
+def record_details(section, pq, dist):
     """
     Queries the database for the details of a given package.
     If there are no details then they are recorded.
@@ -252,7 +255,7 @@ def record_details(section, pq, dist = "kerepakupai"):
     
     :param pq: a `Package` object to which the details are related.
     
-    :param dist: a string that indicates the name of Canaima's version.
+    :param dist: codename of the Canaima's version that will be recorded.
     
     :return: a `Details` object.
              
@@ -351,7 +354,7 @@ def record_relations(details, relations_list):
     
     :param details: a `Details` object to which each relationship is related.
     
-    :param relations: a list of tuples containing package relations to another pacakges.  
+    :param relations_list: a list of tuples containing package relations to another pacakges.  
                       Its structure is similar to::
                       
                           [('depends', [[{'arch': None, 'name': u'libgl1-mesa-glx', 'version': None},
@@ -379,10 +382,12 @@ def record_section(section, dist):
     
     :param section: a paragraph which contains the package data.
     
+    :param dist: codename of the Canaima's version that will be recorded.
+    
     .. versionadded:: 0.1
     """
     
-    print "Registrando seccion -->", section['Package'], "-", section['Architecture']
+    #print "Registrando seccion -->", section['Package'], "-", section['Architecture']
     p = record_package(section)
     d = record_details(section, p, dist)
     record_relations(d, section.relations.items())
@@ -413,13 +418,15 @@ def update_package(section):
     return paquete
 
 
-def update_details(pq, section):
+def update_details(pq, section, dist):
     """
     Updates the details of a Package in the database.
     
     :param pq: a `Package` object to which the details are related.
     
     :param section: a paragraph which contains the package data.
+    
+    :param dist: codename of the Canaima's version that will be updated.
     
     :return: a `Details` object.
              
@@ -429,32 +436,41 @@ def update_details(pq, section):
     """
     
     exists = Details.objects.filter(package = pq,
-                                    Architecture = section['Architecture'])
+                                    Architecture = section['Architecture'],
+                                    Distribution = dist)
     exists.update(**select_paragraph_fields(section, detail_fields))
-    exists[0].save()
-    return exists[0]
+    d = Details.objects.filter(package = pq,
+                               Architecture = section['Architecture'],
+                               Distribution = dist)
+    return d[0]
 
 
-def update_section(section):
+def update_section(section, dist):
     """
     Updates basic data and details of a package in the database.
     It also updates the package's relations.
     
     :param section: a paragraph which contains the package data.
     
+    :param dist: codename of the Canaima's version that will be updated.
+    
     .. versionadded:: 0.1
     """
     
     print "Actualizando la seccion -->", section['Package']
     p = update_package(section)
-    d = update_details(p, section)
-    d.Relations.all().delete()
+    d = update_details(p, section, dist)
+    for r in d.Relations.all():
+        d.Relations.remove(r)
+        exists = Details.objects.filter(Relations = r)
+        if not exists:
+            r.delete()
+    #d.Relations.all().delete()
     record_relations(d, section.relations.items())
     print "Actualizacion finalizada"
 
 
-
-def update_package_list(file_path):
+def update_package_list(file_path, dist):
     """
     Updates all packages from a debian control file.
     If a package exists but the MD5sum field is different from the one
@@ -463,20 +479,23 @@ def update_package_list(file_path):
     
     :param file_path: path to the debian control file.
     
+    :param dist: codename of the Canaima's version that will be updated.
+    
     .. versionadded:: 0.1
     """
     
     archivo = deb822.Packages.iter_paragraphs(file(file_path))
     print "Actualizando lista de paquetes"
     for section in archivo:
-        existe = Details.objects.filter(package__Package = section['Package'], Architecture = section['Architecture'])
+        existe = Details.objects.filter(package__Package = section['Package'], Architecture = section['Architecture'],
+                                        Distribution = dist)
         if existe:
             if section['md5sum'] != existe[0].MD5sum:
                 print "Se encontraron diferencias en la seccion -->", section['Package']
                 print section['md5sum'], existe[0].MD5sum
-                update_section(section)
+                update_section(section, dist)
         else:
-            record_section(section)
+            record_section(section, dist)
             print "Se estan agregando nuevos detalles"
 
 
@@ -485,29 +504,37 @@ def create_package_cache(repo_root, dist):
     Creates the necessary directories for all the existent
     debian control files (Packages) in a repository.
     
+    :param repo_root: is the repository url where the original debian control files
+                      are stored.
+    :param dist: codename of the Canaima's version that will be used to create the directories.
+    
     .. versionadded:: 0.1
     '''
-    base = PACKAGECACHE + dist
+    
+    base = PACKAGECACHE + "/" + dist
     try:
         datasource = urllib.urlopen(repo_root + dist + "Release")
     except:
         datasource = None
     if datasource:
         rel = deb822.Release(datasource)
-        for l in rel['MD5sum']:
-            if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages$", l['name']):
-                archivo = base + "/" + l['name']
-                ruta = archivo.strip('Packages')
-                exists = find_dirs(ruta)
-                if not exists:
-                    os.makedirs(ruta)
-                else:
-                    os.remove(archivo)
+        if rel.has_key('MD5sum'):
+            for l in rel['MD5sum']:
+                if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages$", l['name']):
+                    archivo = base + l['name']
+                    ruta = archivo.strip('Packages')
+                    exists = find_dirs(ruta)
+                    if not exists:
+                        os.makedirs(ruta)
+                    else:
+                        os.remove(archivo)
 
 
 def clean_package_cache(dist):
     '''
     Deletes all debian control files (Packages) in the packagecache directory.
+    
+    :param dist: codename of the Canaima's version that will be cleaned.
     
     .. versionadded:: 0.1
     '''
@@ -522,10 +549,15 @@ def populate_package_cache(repo_root, dist):
     Gets all existent debian control files (Packages) in a repository and
     puts them in their respective place.
     
+    :param repo_root: is the repository url where the original debian control files
+                      are stored.
+    :param dist: codename of the Canaima's version which debian control files are 
+                 required.
+                      
     .. versionadded:: 0.1
     '''
     
-    base = PACKAGECACHE + dist
+    base = PACKAGECACHE + "/" + dist
     remote = repo_root + dist
     try:
         datasource = urllib.urlopen(remote + "Release")
@@ -533,43 +565,56 @@ def populate_package_cache(repo_root, dist):
         datasource = None
     if datasource:
         rel = deb822.Release(datasource)
-        for l in rel['MD5sum']:
-            if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages$", l['name']):
-                remote_path = remote + l['name']
-                local_path = base + l['name']
-                try:
-                    urllib.urlretrieve(remote_path, local_path)
-                except IOError:
-                    print 'archivo %s no encontrado.' % (remote_path)
+        if rel.has_key('MD5sum'):
+            for l in rel['MD5sum']:
+                if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages$", l['name']):
+                    remote_path = remote + l['name']
+                    local_path = base + l['name']
+                    try:
+                        urllib.urlretrieve(remote_path, local_path)
+                    except IOError:
+                        print 'archivo %s no encontrado.' % (remote_path)
 
-
-def update_package_cache(repo_root, dist):
+def update_package_cache():
     '''
-    Updates the debian control files (Packages) in the packagecache directory,
-    comparing the the ones in the repository with its local copy.
+    Scans the packagecache directory to get the existent 
+    distributions and update them.
+    It is assumed that the packagecache directory was created previously.
+    '''
+    for dist in filter(None, list_dirs(PACKAGECACHE)):
+        update_dist_paragraphs(dist)
+    
+def update_dist_paragraphs(dist):
+    '''
+    Updates a debian control file (Packages),
+    comparing the the one in the repository with its local copy.
     If there are differences in the MD5sum field then the local
     copy is deleted and copied again from the repository.
     
+    :param dist: codename of the Canaima's version that will be updated.
+    
     .. versionadded:: 0.1
     '''
+    remote = local_repo_root + dist 
+    base = PACKAGECACHE + "/" + dist + "/"
     
-    base = PACKAGECACHE + dist
-    remote = repo_root + dist
     try:
-        datasource = urllib.urlopen(remote + "Release")
+        datasource = urllib.urlopen(remote + "/" + "Release")
     except:
         datasource = None
     if datasource:
         rel = deb822.Release(datasource)
         for l in rel['MD5sum']:
             if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages$", l['name']):
-                remote_file = remote + l['name']
+                remote_file = remote + "/" + l['name']
                 local_file = base + l['name']
+                print remote_file
+                print local_file
                 if not l['md5sum'] == md5Checksum(local_file):
                     os.remove(local_file)
                     urllib.urlretrieve(remote_file, local_file)
                     print "Actualizando -->", local_file
-                    update_package_list(local_file)
+                    update_package_list(local_file, dist)
                 else:
                     print "No hay cambios en el repositorio -->", local_file
     else:
@@ -584,17 +629,16 @@ def init_package_cache():
     
     .. versionadded:: 0.1
     '''
-            
-    create_package_cache(local_repo_root, auyantepui)
-    populate_package_cache(local_repo_root, auyantepui)
-    for p in find_files(PACKAGECACHE, 'Packages'):
-        for section in deb822.Packages.iter_paragraphs(file(p)):
-            record_section(section, "auyantepui")
-            
+
+    create_package_cache(local_repo_root, roraima)
+    populate_package_cache(local_repo_root, roraima)
     create_package_cache(local_repo_root, kerepakupai)
     populate_package_cache(local_repo_root, kerepakupai)
-    for p in find_files(PACKAGECACHE, 'Packages'):
+
+    for p in find_files(PACKAGECACHE + "/" + roraima, 'Packages'):
+        for section in deb822.Packages.iter_paragraphs(file(p)):
+            record_section(section, "roraima")
+
+    for p in find_files(PACKAGECACHE + "/" + kerepakupai, 'Packages'):
         for section in deb822.Packages.iter_paragraphs(file(p)):
             record_section(section, "kerepakupai")
-            
-            
