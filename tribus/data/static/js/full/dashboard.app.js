@@ -60,6 +60,11 @@ function NewTribController($scope, $timeout, Tribs){
 
 function CommentController($scope, $timeout, Comments){
 
+    $scope.comment_limit_to = comment_limit_to;
+    $scope.comment_limit = comment_limit;
+    $scope.comment_offset = comment_offset;
+    $scope.comment_orderby = comment_orderby;
+
     $scope.comments = [{
             author_id: user_id,
             author_username: user_username,
@@ -205,9 +210,9 @@ function TribListController($scope, $timeout, Timeline){
     }
 }
 
-NewTribController.$inject = ['$scope'];
-TribListController.$inject = ['$scope'];
-CommentController.$inject = ['$scope'];
+// NewTribController.$inject = ['$scope'];
+// TribListController.$inject = ['$scope'];
+// CommentController.$inject = ['$scope'];
 
 
 // Services --------------------------------------------------------------------
