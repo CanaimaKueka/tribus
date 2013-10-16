@@ -1,1 +1,0 @@
-angular.module('index', ['Tribs', 'Timeline', 'infinite-scroll']);

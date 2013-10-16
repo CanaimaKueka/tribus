@@ -1,103 +1,93 @@
 {% load i18n %}
-                        <div class="action_publisher">
-                            <div class="row-fluid">
-                                <form ng-submit="createNewTrib()">
-                                    <span class="span1">
-                                        <span class="action_avatar"></span>
-                                    </span>
-                                    <span class="span9 action_content">
-                                        <span class="arrow_left"></span>
-                                        <span class="action_bubble">
-                                            <textarea ng-model="trib_content" rows="1" class="action_box autosize expand" placeholder="{% blocktrans %}What's happening?{% endblocktrans %}">
-                                            </textarea>
-                                        </span>
-                                    </span>
-                                    <span class="span2 action_submit">
-                                        <button class="action_button btn btn-success">
-                                            <i class="icon-pencil bigger-200"></i>
-                                            {% trans 'Publish' %}
-                                        </button>
-                                    </span>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="trib_list" infinite-scroll="addOldTribs()" infinite-scroll-disabled='controller_busy' infinite-scroll-distance="0">
-                            <ul>
-                                <li class="row-fluid trib_item" ng-repeat="temp_trib in temp_new_tribs">
-                                    <span class="span2">
-                                        <span class="trib_avatar"></span>
-                                    </span>
+<div class="action_publisher" ng-controller="NewTribController">
+    <div class="row-fluid">
+        <form ng-submit="createNewTrib()">
+            <span class="span1">
+                <span class="action_avatar"></span>
+            </span>
+            <span class="span9 action_content">
+                <span class="arrow_left"></span>
+                <span class="action_bubble">
+                    <textarea ng-model="trib_content" rows="1" class="action_box autosize expand" placeholder="{% trans 'What are you doing?' %}">
+                    </textarea>
+                </span>
+            </span>
+            <span class="span2 action_submit">
+                <button class="btn btn-success action_button">
+                    <i class="icon-pencil"></i>
+                    {% trans 'Publish' %}
+                </button>
+            </span>
+        </form>
+    </div>
+</div>
+<div class="trib_list" infinite-scroll="addOldTribs()" infinite-scroll-disabled="controller_busy" infinite-scroll-distance="0" ng-controller="TribListController">
+    <ul>
+        <li class="row-fluid trib_item" style="{% verbatim %}{{ tribs_style }}{% endverbatim %}" ng-repeat="trib in tribs | orderBy: trib_orderby | limitTo: trib_limit_to track by trib.id">
+            <span class="span2">
+                <span class="trib_avatar"></span>
+            </span>
+            <span class="arrow_left"></span>
+            <span class="span9 trib_body">
+                <span class="trib_title">
+                    <h3>{% verbatim %}{{ trib.author_first_name }} {{ trib.author_last_name }}{% endverbatim %}</h3>
+                    <h4>{% verbatim %}@{{ trib.author_username }}{% endverbatim %}</h4>
+                    <h4 class="timeago pull-right" title="{% verbatim %}{{ trib.trib_pub_date }}{% endverbatim %}Z"></h4>
+                </span>
+                <span class="trib_content">{% verbatim %}{{ trib.trib_content }}{% endverbatim %}</span>
+                <span class="trib_interact">
+                    <span class="pull-right">
+                        <a href="#"><span class="icon-comment-alt"></span>{% trans 'Comment' %}</a>
+                    </span>
+                    <span class="pull-right">
+                        <a href="#"><span class="icon-bullhorn"></span>{% trans 'Share' %}</a>
+                    </span>
+                    <span class="pull-right">
+                        <a href="#"><span class="icon-star-empty"></span></a>
+                    </span>
+                    <span class="pull-right">
+                        <a href="#"><span class="icon-thumbs-down-alt"></span></a>
+                    </span>
+                    <span class="pull-right">
+                        <a href="#"><span class="icon-thumbs-up-alt"></span></a>
+                    </span>
+                    <span ng-click="$parent.toggleTrib($index)">
+                        <a href="#"><span class="icon-chevron-down"></span>{% trans 'Details' %}</a>
+                    </span>
+                    <span>
+                        <a href="#"><span class="icon-trash"></span>{% trans 'Delete' %}</a>
+                    </span>
+                </span>
+            </span>
+            <span class="span1 trib_type">
+                TIPO
+            </span>
+            <span class="span12 trib_reply">
+                <span id="{% verbatim %}{{ trib.id }}{% endverbatim %}" ng-show="trib.reply_show">
+                    <span class="row-fluid">
+                        <span class="span2"></span>
+                        <span class="span9">
+                            <form>
+                                <span class="span1">
+                                    <span class="action_avatar"></span>
+                                </span>
+                                <span class="span9 action_content">
                                     <span class="arrow_left"></span>
-                                    <span class="span9 trib_body">
-                                        <span class="trib_title">
-                                            <h3>
-                                            {% verbatim %}
-                                                {{ temp_trib.author_first_name }}
-                                                {{ temp_trib.author_last_name }}
-                                            {% endverbatim %}
-                                            </h3>
-                                            <h4>
-                                            {% verbatim %}
-                                                @{{ temp_trib.author_username }}
-                                            {% endverbatim %}
-                                            </h4>
-                                        </span>
-                                        <span class="trib_content">
-                                        {% verbatim %}
-                                            {{ temp_trib.trib_content }}
-                                        {% endverbatim %}
-                                        </span>
-                                        <span class="trib_interact">
-                                        {% verbatim %}
-                                            {{ temp_trib.trib_pub_date }}
-                                        {% endverbatim %}
-                                            <span class="label label-warning">
-                                                <span class="icon-warning-sign bigger-120"></span>
-                                                Warning
-                                            </span>
-                                        </span>
+                                    <span class="action_bubble">
+                                        <textarea ng-model="comment" rows="1" class="action_box autosize expand" placeholder="{% blocktrans %}What do you want to say?{% endblocktrans %}"></textarea>
                                     </span>
-                                    <span class="span1 trib_type">
-                                        TIPO
-                                    </span>
-                                </li>
-                                <li id="trib_{% verbatim %}{{ trib.id }}{% endverbatim %}" class="row-fluid trib_item" ng-repeat="trib in tribs | orderBy: trib_orderby | limitTo: trib_limit_to track by trib.id">
-                                    <span class="span2">
-                                        <span class="trib_avatar"></span>
-                                    </span>
-                                    <span class="arrow_left"></span>
-                                    <span class="span9 trib_body">
-                                        <span class="trib_title">
-                                            <h3>
-                                            {% verbatim %}
-                                                {{ trib.author_first_name }}
-                                                {{ trib.author_last_name }}
-                                            {% endverbatim %}
-                                            </h3>
-                                            <h4>
-                                            {% verbatim %}
-                                                @{{ trib.author_username }}
-                                            {% endverbatim %}
-                                            </h4>
-                                        </span>
-                                        <span class="trib_content">
-                                        {% verbatim %}
-                                            {{ trib.trib_content }}
-                                        {% endverbatim %}
-                                        </span>
-                                        <span class="trib_interact">
-                                        {% verbatim %}
-                                            {{ trib.trib_pub_date }}
-                                        {% endverbatim %}
-                                            <span class="label label-warning">
-                                                <span class="icon-warning-sign bigger-120"></span>
-                                                Warning
-                                            </span>
-                                        </span>
-                                    </span>
-                                    <span class="span1 trib_type">
-                                        TIPO
-                                    </span>
-                                </li>
-                            </ul>
-                        </div>
+                                </span>
+                                <span class="span2 action_submit">
+                                    <button class="btn btn-success action_button" ng-click="createNewComment(trib.id)">
+                                        {% trans 'Publish' %}
+                                    </button>
+                                </span>
+                            </form>
+                        </span>
+                        <span class="span1"></span>
+                    </span>
+                </span>
+            </span>
+        </li>
+    </ul>
+</div>

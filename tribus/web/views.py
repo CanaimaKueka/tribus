@@ -13,11 +13,11 @@ def index(request):
     if request.user.is_authenticated():
         render_css = ['normalize', 'fonts', 'font-awesome', 'bootstrap',
                         'bootstrap-responsive', 'tribus', 'tribus-responsive']
-        render_js = ['jquery', 'jquery.autogrow', 'bootstrap', 'angular',
-                        'angular.resource', 'angular.infinite-scroll', 'index.app',
-                        'index.controllers', 'index.services', 'index.jquery']
+        render_js = ['jquery', 'jquery.autogrow', 'jquery.timeago', 'bootstrap', 'angular',
+                        'angular.resource', 'angular.infinite-scroll', 'dashboard.app',
+                        'dashboard.jquery']
 
-        return render(request, 'index.html', {
+        return render(request, 'dashboard.html', {
             # 'newtribform': newtribform,
             'render_css': render_css,
             'render_js': render_js,
@@ -35,7 +35,7 @@ def index(request):
                         'bootstrap-responsive', 'tribus', 'tribus-responsive']
         render_js = []
 
-        return render(request, 'init.html', {
+        return render(request, 'index.html', {
             'signupform': signupform,
             'render_css': render_css,
             'render_js': render_js,

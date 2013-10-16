@@ -8,9 +8,12 @@ import site
 from fabric.api import *
 
 from tribus import BASEDIR
+from tribus.config.ldap import (AUTH_LDAP_SERVER_URI, AUTH_LDAP_BASE, AUTH_LDAP_BIND_DN,
+                               AUTH_LDAP_BIND_PASSWORD)
 from tribus.config.pkg import (debian_run_dependencies, debian_build_dependencies,
-                               f_workenv_preseed, f_sql_preseed, f_users_ldif,
-                               f_python_dependencies)
+                              f_workenv_preseed, f_sql_preseed, f_users_ldif,
+                              f_python_dependencies)
+
 
 def development():
     env.user = pwd.getpwuid(os.getuid()).pw_name
@@ -19,7 +22,7 @@ def development():
     env.hosts = ['localhost']
     env.basedir = BASEDIR
     env.virtualenv_dir = os.path.join(env.basedir, 'virtualenv')
-    env.virtualenv_args = ' '.join(['--clear', '--system-site-packages', '--distribute'])
+    env.virtualenv_args = ' '.join(['--clear', '--no-site-packages', '--distribute'])
     env.virtualenv_activate = os.path.join(env.virtualenv_dir, 'bin', 'activate')
     env.settings = 'tribus.config.web'
     env.sudo_prompt = 'Executed'
@@ -31,6 +34,7 @@ def environment():
     preseed_packages()
     install_packages(debian_build_dependencies)
     install_packages(debian_run_dependencies)
+    drop_mongo()
     configure_postgres()
     populate_ldap()
     create_virtualenv()
@@ -41,6 +45,7 @@ def environment():
     
 def resetdb():
     configure_sudo()
+    drop_mongo()
     configure_postgres()
     configure_django()
     deconfigure_sudo()
@@ -48,8 +53,8 @@ def resetdb():
     
 def filldb():
     py_activate_virtualenv()
-    from tribus.common.recorder import fill_database
-    fill_database()
+    from tribus.common.recorder import init_package_cache
+    init_package_cache()
 
 
 def configure_sudo():
@@ -81,18 +86,21 @@ def configure_postgres():
     with settings(command='sudo /bin/bash -c "echo \'postgres:tribus\' | chpasswd"'):
         local('%(command)s' % env)
 
-    with settings(command='sudo /bin/bash -c "su postgres -c \'psql -U postgres -f %s\'"' % f_sql_preseed):
+    with settings(command='cp %s /tmp/' % f_sql_preseed):
+        local('%(command)s' % env)
+
+    with settings(command='sudo /bin/bash -c "sudo -i -u postgres /bin/sh -c \'psql -f /tmp/preseed-db.sql\'"'):
         local('%(command)s' % env)
 
 
 def populate_ldap():
-    env.ldap_passwd = 'tribus'
-    env.ldap_writer = 'cn=admin,dc=tribus,dc=org'
-    env.ldap_server = 'localhost'
-    env.ldap_base = 'dc=tribus,dc=org'
+    env.ldap_passwd = AUTH_LDAP_BIND_PASSWORD
+    env.ldap_writer = AUTH_LDAP_BIND_DN
+    env.ldap_server = AUTH_LDAP_SERVER_URI
+    env.ldap_base = AUTH_LDAP_BASE
     env.users_ldif = f_users_ldif
     with settings(command='ldapsearch -x -w "%(ldap_passwd)s" \
--D "%(ldap_writer)s" -h "%(ldap_server)s" -b "%(ldap_base)s" \
+-D "%(ldap_writer)s" -H "%(ldap_server)s" -b "%(ldap_base)s" \
 -LLL "(uid=*)" | perl -p00e \'s/\\r?\\n //g\' | grep "dn: "| \
 sed \'s/dn: //g\' | sed \'s/ /_@_/g\'' % env):
         ldap_entries = local('%(command)s' % env, capture=True)
@@ -100,11 +108,11 @@ sed \'s/dn: //g\' | sed \'s/ /_@_/g\'' % env):
     for ldap_entry in ldap_entries.split():
         env.ldap_entry = ldap_entry
         with settings(command='ldapdelete -x -w "%(ldap_passwd)s" \
--D "%(ldap_writer)s" -h "%(ldap_server)s" "%(ldap_entry)s"' % env):
+-D "%(ldap_writer)s" -H "%(ldap_server)s" "%(ldap_entry)s"' % env):
             local('%(command)s' % env)
 
     with settings(command='ldapadd -x -w "%(ldap_passwd)s" \
--D "%(ldap_writer)s" -h "%(ldap_server)s" -f "%(users_ldif)s"' % env):
+-D "%(ldap_writer)s" -H "%(ldap_server)s" -f "%(users_ldif)s"' % env):
         local('%(command)s' % env)
 
 
@@ -130,6 +138,10 @@ def py_activate_virtualenv():
 def configure_django():
     syncdb_django()
     createsuperuser_django()
+
+def drop_mongo():
+    with settings(command='mongo tribus --eval \'db.dropDatabase()\'' % env):
+        local('%(command)s' % env)
 
 
 def createsuperuser_django():
