@@ -32,6 +32,18 @@ class Authorization(BaseAuthorization):
         raise Unauthorized("You are not allowed to access that resource.")
 
 
+class UserAuthorization(Authorization):
+
+    def read_list(self, object_list, bundle):
+        # try:
+        return object_list.filter(username = bundle.request.user.username)[0].follows
+        # except Exception as e:
+            # raise Unauthorized("You are not allowed to access that resource.")
+
+    def read_detail(self, object_list, bundle):
+        return object_list.filter(username = bundle.request.user.username)[0].follows
+
+
 class TimelineAuthorization(Authorization):
     def get_timeline(self, bundle):
         follows = bundle.request.user.follows.all()

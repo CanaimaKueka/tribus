@@ -8,30 +8,21 @@
 		<div class="row-fluid">
 
 			<div class="span3">
-				<div ng-controller >
+				<div ng-controller = "SocialController">
 					<span>
                     <img gravatar-src="'{{user_view.email}}'" gravatar-size="280">
 						</span>
 
 					
-				<div class="space-6"> {{add}}</div>
-									
-					{% if add %}
-
-					<a href="/profile/add_follow/{{user_view.username}}" class="btn btn-sm btn-block btn-success">
-						<i class="icon-plus-sign bigger-120"></i>
-						<span class="bigger-110">Add as a friend</span>
-					</a>
-				
-					{%elif eliminar%}
-
-					<a href="/profile/delete_follow/{{user_view.username}}" class="btn btn-sm btn-block btn-success">
-						<i class="icon-plus-sign bigger-120"></i>
-						<span class="bigger-110">Delete as a friend</span>
-					</a>
 				
 
-					{%endif%}
+					<a ng-click="follow()" class="btn btn-sm btn-block btn-success">
+						<i class="icon-plus-sign bigger-120"></i>
+						<span class="bigger-110">{% verbatim %}{{mensaje}}{% endverbatim %}</span>
+					</a>
+
+
+
 				</div>
 
 				<div class="space-36"></div>

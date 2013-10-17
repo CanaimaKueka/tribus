@@ -4,9 +4,24 @@
 from tastypie.authentication import SessionAuthentication
 from tastypie.cache import NoCache
 from tastypie_mongoengine.resources import MongoEngineResource
+from tastypie.resources import ModelResource
 
-from tribus.web.api.authorization import (TimelineAuthorization, TribAuthorization)
+
+
+from tribus.web.api.authorization import (TimelineAuthorization, TribAuthorization, UserAuthorization)
 from tribus.web.documents import Trib
+from django.contrib.auth.models import User
+
+
+class UserResource(ModelResource):
+    class Meta:
+        queryset = User.objects.all()
+        resource_name = 'user/follows'
+        allowed_methods = ['get']
+        authorization = UserAuthorization()
+        authentication = SessionAuthentication()
+        cache = NoCache()        
+
 
 
 class TribResource(MongoEngineResource):

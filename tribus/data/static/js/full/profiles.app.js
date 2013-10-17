@@ -7,7 +7,7 @@
 // nombre de la app, cambiar para nuevas aplicaciones, cambiando el nombre de la variable y el modulo
 
 var profiles = angular.module('profiles',
-    ['Tribs', 'infinite-scroll', 'ui.gravatar']);
+    ['Tribs', 'Social','infinite-scroll', 'ui.gravatar']);
 
 
 // Events ----------------------------------------------------------------------
@@ -27,10 +27,24 @@ profiles.controller('NewTribController', ['$scope', '$timeout', 'Tribs',
     NewTribController]);
 profiles.controller('TribListController', ['$scope', '$timeout', 'Tribs',
     TribListController]);
+profiles.controller('TribListController', ['$scope', '$timeout', 'Social',
+    SocialController]);
 
 function CommentController($scope, $timeout, Tribs){
 
 }
+
+function SocialController($scope){    
+    $scope.follow = function(){
+
+        alert($scope.Social.query());
+        $scope.mensaje = "add as follow"
+
+    }
+
+
+}
+
 
 function NewTribController($scope, $timeout, Tribs){
 
@@ -168,9 +182,9 @@ function TribListController($scope, $timeout, Tribs){
         });
     }
 }
-
-CommentController.$inject = ['$scope'];
-NewTribController.$inject = ['$scope'];
+SocialController.$inject   = ['$scope']; 
+CommentController.$inject  = ['$scope'];
+NewTribController.$inject  = ['$scope'];
 TribListController.$inject = ['$scope'];
 
 
@@ -200,4 +214,29 @@ angular.module('Tribs', ['ngResource'])
             },
         });
     });
+
+angular.module('Social', ['ngResource'])
+    .factory('Social',  function($resource){
+        return $resource('/api/0.1/user/follows/', {},{
+            save: {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
+                },
+            },
+            query: {
+                method: 'GET',
+                isArray: true,
+                transformResponse: function(data){
+                    return angular.fromJson(data).objects;
+                }
+            },
+            delete: {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
+                },
+            },
+        });
+    });    
 
