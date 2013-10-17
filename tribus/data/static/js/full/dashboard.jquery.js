@@ -18,13 +18,13 @@ $(document).ready(function(){
 
     $('textarea.action_textarea').focus(function () {
         if($(this).val().length === 0){
-            $(this).animate({ height: "3.5em" }, 200);
+            $(this).animate({ height: "3em" }, 200);
         }
     });
 
     $('textarea.action_textarea').blur(function(){
         if($(this).val().length === 0){
-            $(this).animate({ height: "2em" }, 200);
+            $(this).animate({ height: "1em" }, 200);
         }
     });
 
@@ -32,28 +32,34 @@ $(document).ready(function(){
 
         $("h4.timeago").timeago();
 
-    $('textarea.comment_textarea').keyup(function () {
-        if($(this).val().length > 0){
-            $('button.comment_button').removeAttr('disabled');
-        }
+        $('textarea.comment_textarea').keyup(function () {
+            if($(this).val().length > 0){
+                $(this).parents('.comment_box')
+                    .contents()
+                    .find('button.comment_button')
+                    .removeAttr('disabled');
+            }
 
-        if($(this).val().length === 0){
-            $('button.comment_button').attr('disabled', 'disabled');
-        }
-    });
+            if($(this).val().length === 0){
+                $(this).parents('.comment_box')
+                    .contents()
+                    .find('button.comment_button')
+                    .attr('disabled', 'disabled');
+            }
+        });
 
-    $('textarea.comment_textarea').focus(function () {
-        if($(this).val().length === 0){
-            $(this).animate({ height: "3.5em" }, 200);
-        }
-    });
+        $('textarea.comment_textarea').focus(function () {
+            if($(this).val().length === 0){
+                $(this).animate({ height: "2em" }, 200);
+            }
+        });
 
-    $('textarea.comment_textarea').blur(function(){
-        if($(this).val().length === 0){
-            $(this).animate({ height: "1em" }, 200);
-        }
-    });
+        $('textarea.comment_textarea').blur(function(){
+            if($(this).val().length === 0){
+                $(this).animate({ height: "1em" }, 200);
+            }
+        });
 
-    });
+        });
 
 });

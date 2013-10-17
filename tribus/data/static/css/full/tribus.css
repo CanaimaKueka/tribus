@@ -14839,7 +14839,7 @@ input, button, select, textarea {
     display: block;
 }
 
-.trib_reply .action_avatar {
+/*.trib_reply .action_avatar {
     width: 40px;
     height: 40px;
     margin: 10px 0;
@@ -14850,7 +14850,7 @@ input, button, select, textarea {
     height: 40px;
     margin: 10px 0;
 }
-
+*/
 .trib_title {
     float: left;
     display:block;
@@ -14969,9 +14969,10 @@ input, button, select, textarea {
 
 .action_bubble > .action_textarea {
     width: 100%;
+    height: 1.5em;
+    min-height: 1.5em;
     padding: 0;
     margin: 0;
-    min-height: 2em;
     resize:none;
     vertical-align: top;
     overflow: hidden;
@@ -14998,7 +14999,7 @@ input, button, select, textarea {
 }
 
 .trib_avatar {
-    margin: 10px 10px 10px 30px;
+    margin: 10% 35%;
     width: 70px;
     height: 70px;
 }
@@ -15048,7 +15049,7 @@ input, button, select, textarea {
 }
 
 .comment_body > .comment_text {
-    margin: 1% 5% 0 0;
+    margin: 1% 0 0 0;
     width: 95%;
     float: left;
     font-size: 1em;
@@ -15089,9 +15090,10 @@ input, button, select, textarea {
 }
 
 .comment_body > .arrow_left {
-    top:15px;
+    top: 15px;
     border-top: 8px solid transparent;
     border-bottom: 8px solid transparent;
+    border-right: 8px solid rgb(255, 255, 255);
 }
 
 .comment_text > h3 {
@@ -15103,6 +15105,12 @@ input, button, select, textarea {
     line-height: 1.2em;
 }
 
+.comment_body > .close {
+    line-height: 90%;
+    font-size: 90%;
+    margin: 0.5%;
+}
+
 .trib_title > h3 > a,
 .comment_text > h3 > a {
     color: rgb(57, 57, 57);
@@ -15111,6 +15119,11 @@ input, button, select, textarea {
 .trib_title > h3 > a:hover,
 .comment_text > h3 > a:hover {
     color: rgb(0, 0, 0);
+}
+
+.comment_date {
+    float:left;
+    width:100%;
 }
 
 .comment_date > h4 {
