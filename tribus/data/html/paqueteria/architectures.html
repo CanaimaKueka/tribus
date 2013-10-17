@@ -1,10 +1,15 @@
+{% load i18n %}
 <legend> </legend>
-<h2 align="center"><b>para {{arch.data.Architecture}}</b></h2>
-<p>- <b>Version:</b> {{arch.data.Version}} </p>
-<p>- <b>Tamaño: </b> {{arch.data.Size}}</p>
-<p>- <b>Tamaño instalado: </b> {{arch.data.InstalledSize}}</p>
-<p>- <b>MD5sum: </b> {{arch.data.MD5sum}}</p>
-<p>- <b><a href= "{{raiz}}{{arch.data.Filename}}">Descargar</a></b></p>
+{% if arch.data.Architecture == 'all' %}
+	<h2 align="center"><b> {% trans 'for all architectures' %}</b></h2>
+{% else %}
+	<h2 align="center"><b> {% trans 'for the architecture:' %} {{arch.data.Architecture}}</b></h2>
+{% endif %}
+<p>- <b>{% trans 'Version:'%} </b> {{arch.data.Version}} </p>
+<p>- <b>{% trans 'Size:' %} </b> {{arch.data.Size}}</p>
+<p>- <b>{% trans 'Installed Size:' %} </b> {{arch.data.InstalledSize}}</p>
+<p>- <b>{% trans 'MD5sum:' %} </b> {{arch.data.MD5sum}}</p>
+<p>- <b><a href= "{{raiz}}{{arch.data.Filename}}">{% trans 'Download' %}</a></b></p>
 <legend> </legend>
 {%for tipo in arch.relations.items %}
 	{% include 'paqueteria/relations.html' %}

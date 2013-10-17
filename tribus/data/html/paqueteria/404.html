@@ -1,6 +1,7 @@
 {%extends 'paqueteria/base.html'%}
+{% load i18n %}
 {% load url from future %}
-{% block title%}Sistéma de busqueda{%endblock%}
+{% block title%} {% trans 'Tribus Search' %} {%endblock%}
 {%block datos%}
-	<h2 align="center"><b>Package not found!</b></h2>
+	<h2 align="center"><b> {% trans 'Package not found!' %} </b></h2>
 {%endblock%}

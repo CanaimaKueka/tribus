@@ -1,6 +1,7 @@
 {%extends 'paqueteria/base.html'%}
+{% load i18n %}
 {% load url from future %}
-{% block title%}Sistéma de busqueda{%endblock%}
+{% block title%} {% trans 'Tribus Search' %} {%endblock%}
 {%block datos%}
 	<div >
 		<legend> </legend>
@@ -8,20 +9,26 @@
 		<legend> </legend>
 	</div>
 	<div id = "margenes-separadores">
-		<p><b>Mantenedor:</b>  {{paquete.Maintainer}} </p>
-		<p><b>Seccion:</b>  {{paquete.Section }}</p>
-		<p><b>Prioridad:</b>  {{paquete.Priority }}</p>
-		<p align="justify"> <b>Descripcion:</b> {{paquete.Description}}</p>
-		{% if paquete.Homepage %}
-			<p><b>Pagina:</b> <a href="{{paquete.Homepage}}">{{paquete.Homepage }}</a></p>
-		{% endif %}
-		{% if detalles %}
-			{%for dists in detalles.items %}
-			<h2 align="center"><b>En Canaima {{dists.0}}</b></h2>				
-				{%for arch in dists.1.values %}
-					{% include 'paqueteria/architectures.html' %}
+		<!--Aqui estoy asumiendo que si el paquete no tiene mantenedor
+			es un paquete virtual o no registrado. -->
+		{% if paquete.Maintainer == None %}
+			<p align="center">{% trans 'This is a virtual/unregistered package' %}  </p>
+		{% else %}
+			<p><b>{% trans 'Maintainer:' %} </b> {{paquete.Maintainer}}</p>
+			<p><b>{% trans 'Section:' %} </b> {{paquete.Section }}</p>
+			<p><b>{% trans 'Priority:' %} </b> {{paquete.Priority }}</p>
+			<p align="justify"> <b> {% trans 'Description:' %} </b> {{paquete.Description}}</p>
+			{% if paquete.Homepage %}
+				<p><b> {% trans 'Homepage:' %} </b> <a href="{{paquete.Homepage}}">{{paquete.Homepage }}</a></p>
+			{% endif %}
+			{% if detalles %}
+				{%for dists in detalles.items %}
+				<h2 align="center"><b> {% trans 'In Canaima' %} {{dists.0}}</b></h2>				
+					{%for arch in dists.1.values %}
+						{% include 'paqueteria/architectures.html' %}
+					{% endfor %}
 				{% endfor %}
-			{% endfor %}
+			{% endif %}
 		{% endif %}
 	</div>
 {%endblock%}

@@ -1,5 +1,6 @@
+{% load i18n %}
 <legend> </legend>
-<p> * <b> {{ tipo.0 }} </b> </p>
+<p> * <b> {% trans tipo.0 %} </b> </p>
 <legend> </legend>
 {%for relacion in tipo.1 %}
 	{% if relacion.alt_id %}
@@ -10,7 +11,7 @@
 				</p><p> <a href="{% url 'organizer' relacion.related_package %}"> {{relacion.related_package}} </a> {% if relacion.version %} ({{relacion.relation}} {{relacion.version}}) {% endif %}
 			{% endif %} 
 		{% else %}
-		    or	<a href="{% url 'organizer' relacion.related_package %}"> {{relacion.related_package}} </a> {% if relacion.version %} ({{relacion.relation}} {{relacion.version}}) {% endif %}
+		    {% trans 'or' %} <a href="{% url 'organizer' relacion.related_package %}"> {{relacion.related_package}} </a> {% if relacion.version %} ({{relacion.relation}} {{relacion.version}}) {% endif %}
 		{% endifchanged %}
 	{% else %}
 		<p> <a href="{% url 'organizer' relacion.related_package %}"> {{relacion.related_package}} </a> {% if relacion.version %} ({{relacion.relation}} {{relacion.version}}) {% endif %} </p>
