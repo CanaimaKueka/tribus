@@ -66,7 +66,7 @@ function CommentController($scope, $timeout, Comments){
     $scope.comment_orderby = comment_orderby;
     $scope.comments = [];
 
-    $scope.createNewComment = function(trib_id){
+    $scope.createNewComment = function(){
 
         var newcomment = {
             author_id: user_id,
@@ -76,28 +76,29 @@ function CommentController($scope, $timeout, Comments){
             author_email: user_email,
             comment_content: this.comment_content,
             comment_pub_date: new Date().toISOString(),
-            trib_id: trib_id
+            trib_id: $scope.trib_id
         };
 
         Comments.save(newcomment, function(){
             $scope.comment_content = '';
-            $scope.addNewComments(trib_id);
+            $scope.addNewComments();
         });
     };
 
-    $scope.addNewComments = function(trib_id){
+    $scope.addNewComments = function(){
 
         var fresh_comments = Comments.query({
-            trib_id: trib_id,
+            trib_id: $scope.trib_id,
             order_by: $scope.comment_orderby,
             limit: $scope.comment_limit,
             offset: $scope.comment_offset
         }, function(){
-            for(var i = 0; i < fresh_comments.length; i++){
-                $scope.comments.unshift(fresh_comments[i]);
-            }
+            $scope.comments = fresh_comments;
+            $timeout(function(){$('.trib_list').trigger('reload_dom');});
         });
     };
+
+    $timeout(function(){$scope.addNewComments();});
 }
 
 function TribListController($scope, $timeout, Timeline){
