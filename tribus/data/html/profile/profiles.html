@@ -9,11 +9,7 @@
 
 			<div class="span3">
 				<div>
-					<span>
-                    {% load gravatar %}
-                    <a href = "http://gravatar.com/emails/">{% gravatar user.email 280 %}</a>
-						</span>
-
+                    <img gravatar-src="'{{user.email}}'" gravatar-size="280">
 					
 				<div class="space-6"> {{add}}</div>
 									
@@ -66,9 +62,9 @@
 				<div class = "row-fluid">
 
                     {%block informacion%}
-                    <div class="span12 dashboard_timeline" ng-controller="TribList">
+   
                     {% include 'tribs.html' %}
-                    </div>
+   
                     {%endblock%}
 		</div>
 	</div>
@@ -84,6 +80,7 @@
         var user_username = '{{ user.username }}';
         var user_first_name = '{{ user.first_name }}';
         var user_last_name = '{{ user.last_name }}';
+        var user_email = '{{ user.email }}';
         {% endif %}
         var trib_limit_to = 0;
         var trib_offset = 0;

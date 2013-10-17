@@ -3,7 +3,7 @@
 {% block ngapp %}dashboard{% endblock %}
 {% block content %}
         <div class="jumbotron">
-            <div class="container">
+            <div class="container-fluid">
                 <div class="row-fluid dashboard_container">
                     <div class="span8 dashboard_timeline">
                     {% include 'tribs.html' %}
@@ -17,16 +17,27 @@
 {% block scripts %}
     <script type="text/javascript">
         {% if user.is_authenticated %}
+        // User data
         var user_id = '{{ user.id }}';
         var user_username = '{{ user.username }}';
         var user_first_name = '{{ user.first_name }}';
         var user_last_name = '{{ user.last_name }}';
+        var user_email = '{{user.email}}';
         {% endif %}
+
+        // Tribs data
         var trib_limit_to = 0;
         var trib_offset = 0;
         var trib_add = 10;
         var trib_limit = 10;
         var trib_orderby = '-trib_pub_date';
         var controller_busy = false;
+
+        // Comments data
+        var comment_limit_to = 10;
+        var comment_offset = 0;
+        var comment_add = 10;
+        var comment_limit = 10;
+        var comment_orderby = 'comment_pub_date';
     </script>
 {% endblock %}
