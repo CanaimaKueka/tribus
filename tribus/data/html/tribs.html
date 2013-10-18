@@ -67,12 +67,12 @@
                 <span class="trib_reply">
                     <span class="comment_list" ng-controller="CommentController" ng-if="trib.reply_show" ng-init="this.trib_id = trib.id;">
                         <ul>
-                            <li ng-if="more_comments">
-                                <button class="btn btn-yellow more_comments_button">
+                            <li>
+                                <button class="btn btn-yellow more_comments_button" ng-click="addNewComments()">
                                     {% trans 'Load more comments' %}
                                 </button>
                             </li>
-                            <li id="{% verbatim %}{{ comment.id }}{% endverbatim %}" class="row-fluid comment_item" ng-repeat="comment in comments">
+                            <li id="{% verbatim %}{{ comment.id }}{% endverbatim %}" class="row-fluid comment_item" ng-repeat="comment in comments | orderBy: comment_orderby | limitTo: comment_limit_to track by comment.id">
                                 <span class="span1">
                                     <span class="comment_avatar"></span>
                                 </span>
@@ -87,9 +87,12 @@
                                         </h3>
                                         {% verbatim %}{{ comment.comment_content }}{% endverbatim %}
                                     </span>
-                                    <span class="close">x</span>
+                                    <span class="close" ng-click="deleteComment()">x</span>
                                     <span class="comment_date">
-                                        <h4 class="timeago pull-right" title="{% verbatim %}{{ comment.comment_pub_date }}{% endverbatim %}Z"></h4>
+                                        <h4 class="timeago" title="{% verbatim %}{{ comment.comment_pub_date }}{% endverbatim %}Z"></h4>
+                                        <span class="comment_number pull-right smaller-80">
+                                            {% verbatim %}{{ $index+1 }}{% endverbatim %}
+                                        </span>
                                     </span>
                                 </span>
                             </li>
