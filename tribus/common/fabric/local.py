@@ -171,6 +171,10 @@ def runserver_django():
         with settings(command='. %(virtualenv_activate)s;' % env):
             local('%(command)s python manage.py runserver' % env)
 
+def shell_django():
+    with cd('%(basedir)s' % env):
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s python manage.py shell' % env)
 
 def update_catalog():
     with cd('%(basedir)s' % env):

@@ -33,6 +33,10 @@ runserver: fabric
 
 	@$(FAB) development runserver_django
 
+shell: fabric
+
+	@$(FAB) development shell_django
+
 prepare: fabric
 
 	@$(FAB) development build_js
