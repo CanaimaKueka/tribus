@@ -15108,7 +15108,7 @@ input, button, select, textarea {
 .comment_body > .close {
     line-height: 90%;
     font-size: 90%;
-    margin: 0.5%;
+    margin: 0.5% 1%;
 }
 
 .trib_title > h3 > a,
@@ -15134,4 +15134,8 @@ input, button, select, textarea {
     padding:0;
     font-weight: 500;
     color: #94947b;
+}
+
+.comment_date > .comment_number {
+    margin: 0 1%;
 }

@@ -85,7 +85,19 @@ function CommentController($scope, $timeout, Comments){
         });
     };
 
+    $scope.deleteComment = function(){
+        console.log(this);
+    }
+
     $scope.addNewComments = function(){
+
+        var test_comments_query = Comments.query({
+            trib_id: $scope.trib_id,
+            limit: 1,
+            offset: 0
+        }, function(){
+            var total_comments_count = test_comments_query.meta.total_count
+        });
 
         var fresh_comments = Comments.query({
             trib_id: $scope.trib_id,
@@ -93,7 +105,9 @@ function CommentController($scope, $timeout, Comments){
             limit: $scope.comment_limit,
             offset: $scope.comment_offset
         }, function(){
-            $scope.comments = fresh_comments;
+            $scope.comments = fresh_comments.objects;
+            $scope.comment_limit_to = $scope.comments.length;
+            $scope.comment_limit = $scope.comment_limit + comment_add;
             $timeout(function(){$('.trib_list').trigger('reload_dom');});
         });
     };
@@ -274,10 +288,7 @@ angular.module('Comments', ['ngResource'])
             },
             query: {
                 method: 'GET',
-                isArray: true,
-                transformResponse: function(data){
-                    return angular.fromJson(data).objects;
-                }
+                isArray: false
             },
             delete: {
                 method: 'DELETE',
