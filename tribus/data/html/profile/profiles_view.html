@@ -8,19 +8,16 @@
 		<div class="row-fluid">
 
 			<div class="span3">
-				<div ng-controller = "SocialController">
+				<div ng-controller = "UserController">
 					<span>
                     <img gravatar-src="'{{user_view.email}}'" gravatar-size="280">
 						</span>
 
-					
-				
 
 					<a ng-click="follow()" class="btn btn-sm btn-block btn-success">
 						<i class="icon-plus-sign bigger-120"></i>
 						<span class="bigger-110">{% verbatim %}{{mensaje}}{% endverbatim %}</span>
 					</a>
-
 
 
 				</div>

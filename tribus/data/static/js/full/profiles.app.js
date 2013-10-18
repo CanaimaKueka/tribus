@@ -7,7 +7,7 @@
 // nombre de la app, cambiar para nuevas aplicaciones, cambiando el nombre de la variable y el modulo
 
 var profiles = angular.module('profiles',
-    ['Tribs', 'Social','infinite-scroll', 'ui.gravatar']);
+    ['Tribs', 'User', 'infinite-scroll', 'ui.gravatar']);
 
 
 // Events ----------------------------------------------------------------------
@@ -27,18 +27,30 @@ profiles.controller('NewTribController', ['$scope', '$timeout', 'Tribs',
     NewTribController]);
 profiles.controller('TribListController', ['$scope', '$timeout', 'Tribs',
     TribListController]);
-profiles.controller('TribListController', ['$scope', '$timeout', 'Social',
-    SocialController]);
+profiles.controller('UserController', ['$scope', 'User',
+    UserController]);
 
 function CommentController($scope, $timeout, Tribs){
 
 }
 
-function SocialController($scope){    
+function UserController($scope, User){    
     $scope.follow = function(){
 
-        alert($scope.Social.query());
-        $scope.mensaje = "add as follow"
+        var user = User.query({author_username: 'luis'},
+            function(){
+                user[0].follows.push("/api/0.1/luis/details/3");
+                user[0].$modify({author_id: 3, author_username: 'luis'});
+        });
+
+
+        // var follow = User.modify({follows:[], author_id: 3},
+        //     function(){
+        //         console.log(follow);
+
+        //         });
+        // alert($scope.);
+        // $scope.mensaje = "add as follow"
 
     }
 
@@ -182,7 +194,7 @@ function TribListController($scope, $timeout, Tribs){
         });
     }
 }
-SocialController.$inject   = ['$scope']; 
+UserController.$inject     = ['$scope']; 
 CommentController.$inject  = ['$scope'];
 NewTribController.$inject  = ['$scope'];
 TribListController.$inject = ['$scope'];
@@ -192,7 +204,7 @@ TribListController.$inject = ['$scope'];
 
 angular.module('Tribs', ['ngResource'])
     .factory('Tribs',  function($resource){
-        return $resource('/api/0.1/user/tribs/', {},{
+        return $resource('/api/0.1/user/tribs', {},{
             save: {
                 method: 'POST',
                 headers: {
@@ -215,22 +227,31 @@ angular.module('Tribs', ['ngResource'])
         });
     });
 
-angular.module('Social', ['ngResource'])
-    .factory('Social',  function($resource){
-        return $resource('/api/0.1/user/follows/', {},{
+angular.module('User', ['ngResource'])
+    .factory('User',  function($resource){
+        return $resource('/api/0.1/:author_username/details/:author_id',
+            { author_id: '@author_id', author_username: '@author_username' }, {
             save: {
                 method: 'POST',
                 headers: {
                     'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
                 },
             },
+
+            modify: {
+                method: 'PATCH',
+                headers: {
+                    'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
+                },
+            },            
             query: {
                 method: 'GET',
                 isArray: true,
                 transformResponse: function(data){
                     return angular.fromJson(data).objects;
-                }
+                },
             },
+
             delete: {
                 method: 'DELETE',
                 headers: {

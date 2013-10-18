@@ -1,1 +1,28 @@
 {% extends "base.html" %}
+{% load url from future %}
+{% block title%} Busqueda de paquetes {%endblock%}
+
+{%block style%}
+	#margenes-separadores{
+		size: 8px;	
+	}
+{%endblock%}
+
+{%block content%}
+	<div class="well jumbotron">
+		<div class="container">
+		<div class="row-fluid">
+		<div class="span9 hero-unit">
+			{%block datos%} {%endblock%}				
+		</div>
+		<div class="span3">
+			<br>
+			<p><legend> </legend></p>
+		</div>
+		<div class="span3">
+			<h1 align="center"> </h1>
+		</div>
+		</div>
+		</div>
+		</div>
+{%endblock%}

@@ -1,0 +1,19 @@
+{% load i18n %}
+<legend> </legend>
+<p> * <b> {% trans tipo.0 %} </b> </p>
+<legend> </legend>
+{%for relacion in tipo.1 %}
+	{% if relacion.alt_id %}
+		{% ifchanged relacion.alt_id %}
+			{% if forloop.first %}
+				<p><a href="{% url 'organizer' relacion.related_package %}"> {{relacion.related_package}} </a> {% if relacion.version %} ({{relacion.relation}} {{relacion.version}}) {% endif %} 
+			{% else %}	
+				</p><p> <a href="{% url 'organizer' relacion.related_package %}"> {{relacion.related_package}} </a> {% if relacion.version %} ({{relacion.relation}} {{relacion.version}}) {% endif %}
+			{% endif %} 
+		{% else %}
+		    {% trans 'or' %} <a href="{% url 'organizer' relacion.related_package %}"> {{relacion.related_package}} </a> {% if relacion.version %} ({{relacion.relation}} {{relacion.version}}) {% endif %}
+		{% endifchanged %}
+	{% else %}
+		<p> <a href="{% url 'organizer' relacion.related_package %}"> {{relacion.related_package}} </a> {% if relacion.version %} ({{relacion.relation}} {{relacion.version}}) {% endif %} </p>
+	{% endif %}
+{% endfor %}
