@@ -1,19 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import hashlib
-import re
-from django.db import models
+
+from django.db.models import OneToOneField, ManyToManyField, Model
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
 
+class UserProfile(Model):
+    user = OneToOneField(User, related_name='user_profile')
+    follows = ManyToManyField(User, related_name='follows_profile', blank=True)
+    followers = ManyToManyField(User, related_name='followers_profile', blank=True)
 
-def __unicode__(self):
-    return self.username
+    def __unicode__(self):
+        return self.user
 
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.create(user=instance)
 
-User.add_to_class('description', models.CharField(max_length = 160, null = True, blank = True))
-User.add_to_class('location',    models.CharField(max_length = 50, null = True, blank = True))
-User.add_to_class('telefono',    models.IntegerField(null = True, blank = True))
-
-User.add_to_class('follows',   models.ManyToManyField('self', symmetrical = False, related_name='profile_follows',  blank = True))
-User.add_to_class('followers',   models.ManyToManyField('self',symmetrical = False, related_name='profile_followers', blank = True))
-User.add_to_class('__unicode__',__unicode__)
+post_save.connect(create_user_profile, sender=User)

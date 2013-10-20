@@ -55,7 +55,7 @@ def ChangePassword(request):
 
 def SearchProfile(request, nick):
     try:
-        usuario= User.objects.get(username = nick)
+        usuario = User.objects.get(username = nick)
     except:
         return HttpResponseRedirect('/')
 
@@ -64,7 +64,8 @@ def SearchProfile(request, nick):
             return HttpResponseRedirect('/profile')  
         btn_add  = False
         btn_eliminar = False
-        if [x for x in request.user.follows.only() if x ==usuario]:
+        profile = request.user.get_profile()
+        if [x for x in profile.follows.only() if x ==usuario]:
             btn_eliminar=True
 
         if not request.user.username == usuario.username and not btn_eliminar:

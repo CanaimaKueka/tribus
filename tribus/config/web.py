@@ -40,6 +40,7 @@ TEMPLATE_DIRS = [get_path([BASEDIR, 'tribus', 'data', 'html'])]
 DJANGO_STATIC = not DEBUG
 DJANGO_STATIC_MEDIA_ROOTS = [get_path([BASEDIR, 'tribus', 'data'])]
 
+AUTH_PROFILE_MODULE = "web.profile.UserProfile"
 LOGIN_URL = '/login'
 LOGOUT_URL = '/logout'
 LOGIN_REDIRECT_URL = '/'
