@@ -64,7 +64,7 @@ def SearchProfile(request, nick):
             return HttpResponseRedirect('/profile')  
         btn_add  = False
         btn_eliminar = False
-        if [x for x in request.user.follows.only() if x ==usuario]:
+        if [x for x in request.user.Social.follows.only() if x ==usuario]:
             btn_eliminar=True
 
         if not request.user.username == usuario.username and not btn_eliminar:
@@ -99,7 +99,7 @@ def DeleteFollow(request,nick):
     if request.user.is_authenticated():
 
         usuario = User.objects.get (username = request.user.username)
-        usuario.follows.remove(follow)
+        usuario.Social.follows.remove(follow)
         print ("borrando seguidor:")
     return HttpResponseRedirect('/profile/'+nick)
 
