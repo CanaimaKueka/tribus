@@ -39,7 +39,7 @@ function UserController($scope, User){
 
         var user = User.query({author_username: 'luis'},
             function(){
-                user[0].follows.push("/api/0.1/luis/details/3");
+                user[0].follows.push("/api/0.1/luis/profile");
                 user[0].$modify({author_id: 3, author_username: 'luis'});
         });
 
@@ -53,8 +53,6 @@ function UserController($scope, User){
         // $scope.mensaje = "add as follow"
 
     }
-
-
 }
 
 

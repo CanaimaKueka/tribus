@@ -1,22 +1,22 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from django.db.models import OneToOneField, ManyToManyField, Model
+from django.db.models import OneToOneField, ManyToManyField, Model, CharField, IntegerField, ForeignKey
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 
 def __unicode__(self):
     return self.username
 
-User.add_to_class('description', models.CharField(max_length = 160, null = True, blank = True))
-User.add_to_class('location',    models.CharField(max_length = 50, null = True, blank = True))
-User.add_to_class('telefono',    models.IntegerField(null = True, blank = True))
+User.add_to_class('description', CharField(max_length = 160, null = True, blank = True))
+User.add_to_class('location',    CharField(max_length = 50, null = True, blank = True))
+User.add_to_class('telefono',    IntegerField(null = True, blank = True))
 User.add_to_class('__unicode__',__unicode__)
 
 class UserProfile(Model):
     user = OneToOneField(User, related_name='user_profile')
-    follows = ManyToManyField(User, related_name='follows_profile', blank=True)
-    followers = ManyToManyField(User, related_name='followers_profile', blank=True)
+    follows = ForeignKey(User, related_name='follows_profile',null = True, blank=True)
+    followers = ForeignKey(User, related_name='followers_profile',null = True, blank=True)
 
     def __unicode__(self):
         return self.user

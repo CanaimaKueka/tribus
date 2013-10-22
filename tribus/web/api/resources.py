@@ -26,16 +26,17 @@ class UserResource(ModelResource):
     class Meta:
         queryset = User.objects.all()
         resource_name = 'details'
-        detail_uri_name = 'id'
+        detail_uri_name = 'pk'
         ordering = ['id']
-        allowed_methods = ['get', 'patch']
-        hierarchy = 'username'
-        filtering = { 'username': ALL_WITH_RELATIONS }
+        allowed_methods = ['get', 'patch','put']
+        hierarchy = 'id'
+        filtering = { 'id': ALL_WITH_RELATIONS }
         authorization = Authorization()
         authentication = Authentication()
         cache = NoCache()        
 
     def base_urls(self):
+        print "hierarchy:",self._meta.hierarchy
         return [
             url(r'^(?P<%s>[\w\d_.-]+)/(?P<resource_name>%s)$' %
                 (self._meta.hierarchy, self._meta.resource_name),
@@ -75,7 +76,7 @@ class UserProfileResource(ModelResource):
         resource_name = 'profile'
         detail_uri_name = 'id'
         ordering = ['id']
-        allowed_methods = ['get', 'patch']
+        allowed_methods = ['get', 'patch','put']
         hierarchy = 'user'
         filtering = { 'user': ALL_WITH_RELATIONS }
         authorization = Authorization()
@@ -83,6 +84,7 @@ class UserProfileResource(ModelResource):
         cache = NoCache()        
 
     def base_urls(self):
+        print "hierarchy:",self._meta.hierarchy
         return [
             url(r'^(?P<%s>[\w\d_.-]+)/(?P<resource_name>%s)$' %
                 (self._meta.hierarchy, self._meta.resource_name),
@@ -130,8 +132,8 @@ class TribResource(MongoEngineResource):
         detail_uri_name = 'id'
         ordering = ['trib_pub_date']
         allowed_methods = ['get', 'post', 'delete']
-        hierarchy = 'author_username'
-        filtering = { 'author_username': ALL_WITH_RELATIONS }
+        hierarchy = 'author_id'
+        filtering = { 'author_id': ALL_WITH_RELATIONS }
         authorization = TribAuthorization()
         authentication = SessionAuthentication()
         cache = NoCache()
