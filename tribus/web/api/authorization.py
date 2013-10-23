@@ -35,11 +35,23 @@ class Authorization(BaseAuthorization):
 class UserAuthorization(Authorization):
 
     def read_list(self, object_list, bundle):
-        # try:
-        return object_list
-        # return object_list.filter(username = bundle.request.user.username)
-        # except Exception as e:
-            # raise Unauthorized("You are not allowed to access that resource.")
+        return object_list.filter(id=bundle.request.user.id)
+
+    def read_detail(self, object_list, bundle):
+        if int(bundle.obj.id) == bundle.request.user.id:
+            return True
+        raise Unauthorized("You are not allowed to access that resource.")
+
+    def update_detail(self, object_list, bundle):
+        if int(bundle.obj.id) == bundle.request.user.id:
+            return True
+        raise Unauthorized("You are not allowed to access that resource.")
+
+
+class UserProfileAuthorization(Authorization):
+
+    def read_list(self, object_list, bundle):
+        return object_list.filter(id=bundle.request.user.id)
 
     def read_detail(self, object_list, bundle):
         return True

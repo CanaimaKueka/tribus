@@ -39,8 +39,9 @@ function UserController($scope, User){
 
         var user = User.query({author_username: 'luis'},
             function(){
-                user[0].follows.push("/api/0.1/luis/profile");
-                user[0].$modify({author_id: 3, author_username: 'luis'});
+                console.log(user[0]);
+                // user[0].follows.push("/api/0.1/luis/profile");
+                // user[0].$modify({author_id: 3, author_username: 'luis'});
         });
 
 
@@ -227,8 +228,8 @@ angular.module('Tribs', ['ngResource'])
 
 angular.module('User', ['ngResource'])
     .factory('User',  function($resource){
-        return $resource('/api/0.1/:author_username/details/:author_id',
-            { author_id: '@author_id', author_username: '@author_username' }, {
+        return $resource('/api/0.1/:author_id/details/:author_id',
+            { author_id: '@author_id' }, {
             save: {
                 method: 'POST',
                 headers: {

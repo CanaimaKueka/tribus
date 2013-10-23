@@ -15,8 +15,8 @@ User.add_to_class('__unicode__',__unicode__)
 
 class UserProfile(Model):
     user = OneToOneField(User, related_name='user_profile')
-    follows = ForeignKey(User, related_name='follows_profile',null = True, blank=True)
-    followers = ForeignKey(User, related_name='followers_profile',null = True, blank=True)
+    follows = ManyToManyField(User, related_name='follows_profile',null = True, blank=True)
+    followers = ManyToManyField(User, related_name='followers_profile',null = True, blank=True)
 
     def __unicode__(self):
         return self.user
