@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import djcelery
-import mongoengine
+import djcelery, mongoengine, os
 
 from tribus import BASEDIR
 from tribus.common.utils import get_path
@@ -134,6 +133,17 @@ CELERYBEAT_SCHEDULE = {
     },               
 }
 
+# Configuracion de haystack y whoosh
+WHOOSH_INDEX = os.path.join(BASEDIR, 'whoosh_index/')
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': WHOOSH_INDEX,
+    },
+}
+
+
 # GRAVATAR_URL # Gravatar base url. Defaults to 'http://www.gravatar.com/'
 # GRAVATAR_SECURE_URL # Gravatar base secure https url. Defaults to 'https://secure.gravatar.com/'
 # GRAVATAR_DEFAULT_SIZE # Gravatar size in pixels. Defaults to '80'
@@ -162,6 +172,8 @@ INSTALLED_APPS = (
     'tastypie',
     'tastypie_mongoengine',
     'django_gravatar',
+    'haystack',
+    'whoosh'
 )
 
 # EMAIL_USE_TLS = True
