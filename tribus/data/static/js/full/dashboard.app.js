@@ -239,8 +239,7 @@ function TribListController($scope, $timeout, Timeline){
 
 angular.module('Tribs', ['ngResource'])
     .factory('Tribs',  function($resource){
-        return $resource('/api/0.1/:author_username/tribs',
-            { author_username: '@author_username' }, {
+        return $resource('/api/0.1/user/tribs', {}, {
             save: {
                 method: 'POST',
                 headers: {
@@ -278,8 +277,7 @@ angular.module('Timeline', ['ngResource'])
 
 angular.module('Comments', ['ngResource'])
     .factory('Comments',  function($resource){
-        return $resource('/api/0.1/comments/:trib_id',
-            { trib_id: '@trib_id' }, {
+        return $resource('/api/0.1/tribs/comments', {}, {
             save: {
                 method: 'POST',
                 headers: {

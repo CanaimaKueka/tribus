@@ -62,14 +62,14 @@ class UserProfileAuthorization(Authorization):
     def create_detail(self, object_list, bundle):
         return True
 
-    def update_list(self, object_list, bundle):
-        print object_list, 'LIST'
-        return object_list
+# HACER AUTORIZACION PARA PATCH
+
 
     def update_detail(self, object_list, bundle):
-        print object_list, 'DETAIL'
-        print bundle, 'DETAIL'
+        print "details"
+        # if int(bundle.obj.id) == bundle.request.user.id:
         return True
+        # raise Unauthorized("You are not allowed to access that resource.")
 
     def delete_list(self, object_list, bundle):
         return object_list
@@ -79,7 +79,7 @@ class UserProfileAuthorization(Authorization):
 
 class TimelineAuthorization(Authorization):
     def get_timeline(self, bundle):
-        follows = bundle.request.user.follows.all()
+        follows = bundle.request.user.user_profile.follows.all()
         timeline = [int(f.id) for f in follows]
         timeline.append(bundle.request.user.id)
         return timeline

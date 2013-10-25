@@ -25,15 +25,17 @@
 				<div class="space-36"></div>
                 <div>
                 {% block datos %}
+    
 					<p>{{ user_view.first_name }} {{user_view.last_name}}
+					<p>{{ user.first_name }} {{user.last_name}}
 					<p>{{ user_view.email }}
 					<p>localizacion: {{ user_view.location }}
 					<p>descripcion: {{ user_view.description }}
 					
 				<p>sigues a:
 <!-- 				 solo para depurar -->
-					{%for i in user_view.follows.only%}
-
+					{%for i in user_view.user_profile.follows.only%}
+<!-- 					<p ng-repeat = > -->
 					<p><a href="/profile/{{i.username}}">{{i.username}}</a>
  
 					{%endfor%}
@@ -64,11 +66,19 @@
 {% block scripts %}
     <script type="text/javascript">
         {% if user.is_authenticated %}
-        var user_id = '{{ user_view.id }}';
-        var user_username = '{{ user_view.username }}';
-        var user_first_name = '{{ user_view.first_name }}';
-        var user_last_name = '{{ user_view.last_name }}';
-        var user_email = '{{ user_view.email }}';
+
+        var user_id = '{{ user.id }}';
+        var user_username = '{{ user.username }}';
+        // NO SE USA POR AHORA
+        var user_first_name = '{{ user.first_name }}';
+        var user_last_name = '{{ user.last_name }}';
+        var user_email = '{{ user.email }}';
+
+        var userview_id = '{{ user_view.id }}';
+        var userview_username = '{{ user_view.username }}';
+        var userview_first_name = '{{ user_view.first_name }}';
+        var userview_last_name = '{{ user_view.last_name }}';
+        var userview_email = '{{ user_view.email }}';        
         {% endif %}
         var trib_limit_to = 0;
         var trib_offset = 0;

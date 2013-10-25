@@ -4,14 +4,6 @@ from django.contrib.auth.views import *
 
 urlpatterns = patterns('',
 
-    url(r'^profile/add_follow/(?P<nick>(\w*\W*)*)', 
-        view='tribus.web.profile.views.AddFollow'
-        ),
-
-    url(r'^profile/delete_follow/(?P<nick>(\w*\W*)*)', 
-        view='tribus.web.profile.views.DeleteFollow'
-        ),    
-
     url(r'^profile/(?P<nick>(\w*\W*)*)', 
         view='tribus.web.profile.views.SearchProfile'
         ),

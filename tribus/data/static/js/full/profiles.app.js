@@ -7,7 +7,7 @@
 // nombre de la app, cambiar para nuevas aplicaciones, cambiando el nombre de la variable y el modulo
 
 var profiles = angular.module('profiles',
-    ['Tribs', 'User', 'infinite-scroll', 'ui.gravatar']);
+    ['Tribs', 'User', 'UserProfile', 'infinite-scroll', 'ui.gravatar']);
 
 
 // Events ----------------------------------------------------------------------
@@ -21,27 +21,32 @@ profiles.run(function($rootScope){
 
 // Controllers -----------------------------------------------------------------
 
-profiles.controller('CommentController', ['$scope', '$timeout', 'Tribs',
+profiles.controller('CommentController',['$scope','$timeout','Tribs',
     CommentController]);
-profiles.controller('NewTribController', ['$scope', '$timeout', 'Tribs',
+profiles.controller('NewTribController',['$scope','$timeout','Tribs',
     NewTribController]);
-profiles.controller('TribListController', ['$scope', '$timeout', 'Tribs',
+profiles.controller('TribListController',['$scope','$timeout','Tribs',
     TribListController]);
-profiles.controller('UserController', ['$scope', 'User',
+profiles.controller('UserController',['$scope','UserProfile','User',
     UserController]);
 
 function CommentController($scope, $timeout, Tribs){
 
 }
 
-function UserController($scope, User){    
+function UserController($scope, UserProfile, User){    
     $scope.follow = function(){
 
-        var user = User.query({author_username: 'luis'},
+        var profile = UserProfile.query({id:user_id},
             function(){
-                console.log(user[0]);
-                // user[0].follows.push("/api/0.1/luis/profile");
-                // user[0].$modify({author_id: 3, author_username: 'luis'});
+                console.log(profile);
+                console.log(userview_id);
+                console.log(userview_username);
+                // console.log("/api/0.1/user/profile/"+userview_id);
+
+                profile[0].follows.push("/api/0.1/user/details/"+userview_id);
+                console.log(profile[0]);
+                profile[0].$modify({author_id: user_id});
         });
 
 
@@ -226,9 +231,37 @@ angular.module('Tribs', ['ngResource'])
         });
     });
 
+angular.module('UserProfile', ['ngResource'])
+    .factory('UserProfile',  function($resource){
+        return $resource('/api/0.1/user/profile/:author_id',
+            { author_id: '@author_id' }, {
+            save: {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
+                },
+            },
+
+            modify: {
+                method: 'PATCH',
+                headers: {
+                    'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
+                },
+            },            
+            query: {
+                method: 'GET',
+                isArray: true,
+                transformResponse: function(data){
+                    return angular.fromJson(data).objects;
+                },
+            },
+        });
+    });
+
+
 angular.module('User', ['ngResource'])
     .factory('User',  function($resource){
-        return $resource('/api/0.1/:author_id/details/:author_id',
+        return $resource('/api/0.1/user/details/:author_id',
             { author_id: '@author_id' }, {
             save: {
                 method: 'POST',
@@ -258,5 +291,5 @@ angular.module('User', ['ngResource'])
                 },
             },
         });
-    });    
+    });  
 

@@ -54,22 +54,21 @@ def ChangePassword(request):
 
 
 def SearchProfile(request, nick):
+    user = User.objects.get(username = request.user.username)
     try:
-        usuario = User.objects.get(username = nick)
+        user_view = User.objects.get(username = nick)
     except:
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect('/profile')
 
     if request.user.is_authenticated():
         if request.user.username == nick:
             return HttpResponseRedirect('/profile')  
-        btn_add  = False
-        btn_eliminar = False
+
         # if request.user.user_profile.follows:
         #     if [x for x in request.user.user_profile.follows if x ==usuario]:
         #         btn_eliminar=True
 
-        if not request.user.username == usuario.username and not btn_eliminar:
-            btn_add = True
+
 
         render_js = ['jquery', 'jquery.autogrow', 'bootstrap', 'angular',
                     'angular.resource', 'angular.infinite-scroll', 'profiles.app',
@@ -80,43 +79,14 @@ def SearchProfile(request, nick):
 
         data = {"render_css": render_css ,
                 "render_js":render_js,
-                "user_view":usuario,
-                "add":btn_add ,
-                "eliminar":btn_eliminar
+                "user": user,
+                "user_view":user_view,            
                 }
         context = RequestContext(request)
         #modificar el template redireccion
         return render_to_response('profile/profiles_view.html', data, context)
     else:
-        return HttpResponseRedirect('/')        
-
-
-   
-def DeleteFollow(request,nick):
-    try:
-        follow= User.objects.get(username = nick)
-    except:
-        return HttpResponseRedirect('/')
-    if request.user.is_authenticated():
-
-        usuario = User.objects.get (username = request.user.username)
-        usuario.user_profile.follows.remove(follow)
-        print ("borrando seguidor:")
-    return HttpResponseRedirect('/profile/'+nick)
-
-
-   
-def AddFollow(request,nick):
-    try:
-        follow= User.objects.get(username = nick)
-    except:
-        return HttpResponseRedirect('/')
-    if request.user.is_authenticated():
-        usuario = User.objects.get (username = request.user.username)
-        usuario.follows.add(follow)
-    return HttpResponseRedirect('/profile/'+nick)
-
-
+        return HttpResponseRedirect('/profile')
 
 
 def UserProfile(request):
