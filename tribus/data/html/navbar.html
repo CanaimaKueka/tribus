@@ -1,5 +1,5 @@
 {% load i18n %}
-        <div class="navbar">
+        <div class="navbar" >
                 <div class="container-fluid">
                     <ul class="nav">
                         <li class="brand">
@@ -10,17 +10,28 @@
                             </a>
                         </li>
                         <li class="divider-vertical"></li>
-                        <li>
-                            <form class="form-search" action = "/paquetes/busqueda/" method = "POST">
-                                {% csrf_token %}
-                                <span class="input-icon">
-                                    <input type="text" class="nav-search-input input-xlarge" name="busqueda" placeholder="Search or type a command" />
-                                    <i class="icon-search nav-search-icon"></i>
-                                </span>
-                            </form>
-                        </li>
+                    
+                   
                     </ul>
                     {% if user.is_authenticated %}
+                    <ul class="nav">
+                         <li class="dropdown">
+                         	<form class="form-search" action = "/paquetes/busqueda/" method = "POST">
+                                {% csrf_token %}
+                                <span class="input-icon">
+                                	
+                                    <input type="text" class="nav-search-input input-large top_search_input"
+                                    name="busqueda" placeholder="Search or type a command" />
+                                    
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
+                                		<li role="presentation"><a role="menuitem" tabindex="-1" href="#">LOL</a></li>
+                            		</ul>
+                                    <i class="icon-search nav-search-icon"></i>
+                                </span>
+                            </form>     
+                        </li>                       
+                   
+                    </ul>
                     <ul class="nav pull-right">
                         <li>
                             <a href="/"><span class="bigger-150 icon-home"></span></a>

@@ -2,7 +2,7 @@
 {% load static %}
 {% load django_static %}
 <!DOCTYPE html>
-<html ng-app="{% block ngapp %}index{% endblock %}">
+<html ng-app="tribus">
     <head>
         <title>{% block title %}{% endblock %}</title>
         <meta charset="{{ app_charset|lower }}" />
@@ -16,7 +16,8 @@
         <!--[if lte IE 8]><link type="text/css" rel="stylesheet" href="{% static 'css/min/tribus-ie.css' %}" /><![endif]-->
     </head>
     <body>
-        {% include "navbar.html" %}
+    	
+        {% include 'navbar.html' %}
         {% block content %}{% endblock %}
         {% block scripts %}{% endblock %}
         {% include "footer.html" %}

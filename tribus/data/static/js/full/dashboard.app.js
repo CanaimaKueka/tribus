@@ -4,13 +4,12 @@
 
 // Application -----------------------------------------------------------------
 
-var dashboard = angular.module('dashboard',
-    ['Tribs', 'Timeline', 'Comments', 'infinite-scroll', 'ui.gravatar']);
-
+var tribus = angular.module('tribus',
+	['Tribs', 'Timeline', 'Comments', 'infinite-scroll', 'ui.gravatar']);
 
 // Events ----------------------------------------------------------------------
 
-dashboard.run(function($rootScope){
+tribus.run(function($rootScope){
     $rootScope.$on('addNewTribsRefreshEmit', function(event, args){
         $rootScope.$broadcast('addNewTribsRefreshReceive', args);
     });
@@ -19,11 +18,11 @@ dashboard.run(function($rootScope){
 
 // Controllers -----------------------------------------------------------------
 
-dashboard.controller('NewTribController', ['$scope', '$timeout', 'Tribs',
+tribus.controller('NewTribController', ['$scope', '$timeout', 'Tribs',
     NewTribController]);
-dashboard.controller('TribListController', ['$scope', '$timeout', 'Timeline',
+tribus.controller('TribListController', ['$scope', '$timeout', 'Timeline',
     TribListController]);
-dashboard.controller('CommentController', ['$scope', '$timeout', 'Comments',
+tribus.controller('CommentController', ['$scope', '$timeout', 'Comments',
     CommentController]);
 
 
@@ -229,10 +228,6 @@ function TribListController($scope, $timeout, Timeline){
         });
     };
 }
-
-// NewTribController.$inject = ['$scope'];
-// TribListController.$inject = ['$scope'];
-// CommentController.$inject = ['$scope'];
 
 
 // Services --------------------------------------------------------------------

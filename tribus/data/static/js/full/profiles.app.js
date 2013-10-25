@@ -6,8 +6,10 @@
 
 // nombre de la app, cambiar para nuevas aplicaciones, cambiando el nombre de la variable y el modulo
 
-var profiles = angular.module('profiles',
-    ['Tribs', 'User', 'UserProfile', 'infinite-scroll', 'ui.gravatar']);
+/*
+var profiles = angular.module('tribus',
+    ['Tribs','packages', 'User', 'infinite-scroll', 'ui.gravatar']);
+*/
 
 
 // Events ----------------------------------------------------------------------
@@ -29,6 +31,29 @@ profiles.controller('TribListController',['$scope','$timeout','Tribs',
     TribListController]);
 profiles.controller('UserController',['$scope','UserProfile','User',
     UserController]);
+
+profiles.controller('autoController', ['$scope', 'packages',
+    autoController]);
+
+function autoController($scope){
+	
+	 $scope.autocompletar = function ($scope, packages){
+		var paquetes = packages.query();
+		console.log(paquetes);
+		        	/*$.ajax({
+					url: "/api/0.1/packages/search/", 
+					dataType: 'json',
+					data: {'q': $(this).val()},
+					success: function(data) {
+						console.log(data);*/
+						
+			};
+	$scope.prueba = function(){
+		alert("funciona =D ");
+	};
+
+}
+
 
 function CommentController($scope, $timeout, Tribs){
 
@@ -202,6 +227,7 @@ UserController.$inject     = ['$scope'];
 CommentController.$inject  = ['$scope'];
 NewTribController.$inject  = ['$scope'];
 TribListController.$inject = ['$scope'];
+autoController.$inject = ['$scope'];
 
 
 // Services --------------------------------------------------------------------
@@ -293,3 +319,13 @@ angular.module('User', ['ngResource'])
         });
     });  
 
+
+angular.module('packages', ['ngResource'])
+    .factory('packages',  function($resource){
+        return $resource('/api/0.1/packages/search/?=:package_name',
+            { package_name: '@package_name' }, {
+            query: {
+                method: 'GET',
+            },
+        });
+    });
