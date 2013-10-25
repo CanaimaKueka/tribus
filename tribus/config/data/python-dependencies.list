@@ -29,3 +29,5 @@ mongoengine
 mimeparse
 django-tastypie-mongoengine
 django-gravatar2
+whoosh==2.5.4
+django-haystack==2.1.0

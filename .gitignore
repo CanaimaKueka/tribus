@@ -42,6 +42,9 @@ virtualenv
 # Packagecache
 packagecache
 
+# Whoosh index
+whoosh_index
+
 # Vim
 .*.s[a-w][a-z]
 *.un~
