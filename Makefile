@@ -51,7 +51,7 @@ environment: fabric
 
 	@$(FAB) development environment
 	
-resetdb: fabric
+resetdb:
 
 	@$(FAB) development resetdb
 	

@@ -21,12 +21,16 @@
 celulares.controller('PhoneListCtrl', function PhoneListCtrl($scope, $http) {
                $http.get('phones/phones.json').success(function(data){
                        $scope.telefonos*/ 
-/*
-navbar.controller('autoController', ['$scope', packages,
-    autoController]);
 
-function autoController($scope){
+tribus.controller('SearchListController', ['$scope', 'Packages',
+    SearchListController]);
+
+function SearchListController($scope){
 	
+	$scope.results = [];
+
+	
+	/*
 	 $scope.autocompletar = function ($scope, packages){
 		var paquetes = packages.query();
 		console.log(paquetes);
@@ -40,22 +44,17 @@ function autoController($scope){
 			};
 	$scope.prueba = function(){
 		alert("funciona =D ");
-	};
+	};*/
 
 }
-*/
 
 
-// autoController.$inject = ['$scope'];
-// TribListController.$inject = ['$scope'];
-// CommentController.$inject = ['$scope'];
 
 
 // Services --------------------------------------------------------------------
 
-/*
-angular.module('packages', ['ngResource'])
-    .factory('packages',  function($resource){
+angular.module('Packages', ['ngResource'])
+    .factory('Packages',  function($resource){
         return $resource('/api/0.1/packages/search/?=:package_name',
             { package_name: '@package_name' }, {
             query: {
@@ -65,4 +64,3 @@ angular.module('packages', ['ngResource'])
         });
     });
     
-*/

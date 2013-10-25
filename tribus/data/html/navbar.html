@@ -15,17 +15,21 @@
                     </ul>
                     {% if user.is_authenticated %}
                     <ul class="nav">
-                         <li class="dropdown">
+                         <li class="dropdown" ng-controller="SearchListController">
                          	<form class="form-search" action = "/paquetes/busqueda/" method = "POST">
                                 {% csrf_token %}
                                 <span class="input-icon">
                                 	
                                     <input type="text" class="nav-search-input input-large top_search_input"
-                                    name="busqueda" placeholder="Search or type a command" />
+                                    name="busqueda" placeholder="Search or type a command" ng-model="top_search" />
                                     
                                     <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
-                                		<li role="presentation"><a role="menuitem" tabindex="-1" href="#">LOL</a></li>
+                                		<li role="presentation" ng-repeat="result in results">
+                                			<a role="menuitem" tabindex="-1" href="#">{% verbatim %}{{ result.nombre }}{% endverbatim %}</a>
+                                			{% verbatim %}{{ result.descripcion }}{% endverbatim %}
+                                		</li>
                             		</ul>
+                            		
                                     <i class="icon-search nav-search-icon"></i>
                                 </span>
                             </form>     
