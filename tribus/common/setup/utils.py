@@ -278,7 +278,6 @@ def get_setup_data(basedir):
             'build': build,
             'build_js': build_js,
             'build_css': build_css,
-            'build_img': build_img,
             'build_man': build_man,
             'build_py': build_py,
             'build_sphinx': build_sphinx,

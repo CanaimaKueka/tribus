@@ -14756,7 +14756,7 @@ input, button, select, textarea {
 
 .chiclets > ul > li.span4,
 .chiclets > ul > li.span4:first-child {
-    padding: 130px 2% 2% 2%;
+    padding: 10% 2% 2% 2%;
     margin: 0 2.4%;
     font-size: 1.2em;
     font-weight: 200;
@@ -14776,27 +14776,33 @@ input, button, select, textarea {
 }
 
 .ch-cloud {
-    background: url('../../img/ch-cloud.png') no-repeat #f2f2e8;
+    background: url('../../img/ch-cloud.svg') no-repeat #f2f2e8;
+    background-size: contain;
 }
 
 .ch-ticket {
-    background: url('../../img/ch-ticket.png') no-repeat #f2f2e8;
+    background: url('../../img/ch-ticket.svg') no-repeat #f2f2e8;
+    background-size: contain;
 }
 
 .ch-docs {
-    background: url('../../img/ch-docs.png') no-repeat #f2f2e8;
+    background: url('../../img/ch-docs.svg') no-repeat #f2f2e8;
+    background-size: contain;
 }
 
 .ch-social {
-    background: url('../../img/ch-social.png') no-repeat #f2f2e8;
+    background: url('../../img/ch-social.svg') no-repeat #f2f2e8;
+    background-size: contain;
 }
 
 .ch-source {
-    background: url('../../img/ch-source.png') no-repeat #f2f2e8;
+    background: url('../../img/ch-source.svg') no-repeat #f2f2e8;
+    background-size: contain;
 }
 
 .ch-ci {
-    background: url('../../img/ch-ci.png') no-repeat #f2f2e8;
+    background: url('../../img/ch-ci.svg') no-repeat #f2f2e8;
+    background-size: contain;
 }
 
 .dashboard_container {
