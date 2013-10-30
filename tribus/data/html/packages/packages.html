@@ -1,14 +1,13 @@
-{%extends 'paqueteria/base.html'%}
+{%extends 'packages/base.html'%}
 {% load i18n %}
-{% load url from future %}
-{% block title%} {% trans 'Tribus Search' %} {%endblock%}
+{% block title%}{% trans 'Tribus Search' %}{%endblock%}
 {%block datos%}
 	<div >
 		<legend> </legend>
 			<h2 align="center"><b>{{paquete.Package}}</b></h2>
 		<legend> </legend>
 	</div>
-	<div id = "margenes-separadores">
+	<div id="margenes-separadores">
 		<!--Aqui estoy asumiendo que si el paquete no tiene mantenedor
 			es un paquete virtual o no registrado. -->
 		{% if paquete.Maintainer == None %}
@@ -25,7 +24,7 @@
 				{%for dists in detalles.items %}
 				<h2 align="center"><b> {% trans 'In Canaima' %} {{dists.0}}</b></h2>				
 					{%for arch in dists.1.values %}
-						{% include 'paqueteria/architectures.html' %}
+						{% include 'packages/architectures.html' %}
 					{% endfor %}
 				{% endfor %}
 			{% endif %}

@@ -1,5 +1,5 @@
 from haystack import indexes
-from tribus.web.paqueteria.models import Package
+from tribus.web.packages.models import Package
 
 class PackageIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document = True)

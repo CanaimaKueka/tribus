@@ -3,7 +3,7 @@
 
 '''
 
-tribus.web.paqueteria
+tribus.web.packages
 ==========
 
 
