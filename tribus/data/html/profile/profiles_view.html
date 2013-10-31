@@ -12,12 +12,12 @@
                     <img gravatar-src="'{{user_view.email}}'" gravatar-size="280">
 						</span>
 
-
+					{% if user.is_authenticated %}
 					<a ng-click="follow()" class="btn btn-sm btn-block btn-success">
 						<i class="icon-plus-sign bigger-120"></i>
 						<span class="bigger-110">{% verbatim %}{{mensaje}}{% endverbatim %}</span>
 					</a>
-
+					{%endif%}
 
 				</div>
 
@@ -71,14 +71,17 @@
         // NO SE USA POR AHORA
         var user_first_name = '{{ user.first_name }}';
         var user_last_name = '{{ user.last_name }}';
-        var user_email = '{{ user.email }}';
+        var user_email = '{{ user.email }}';      
+        
+        {% endif %}
 
         var userview_id = '{{ user_view.id }}';
         var userview_username = '{{ user_view.username }}';
         var userview_first_name = '{{ user_view.first_name }}';
         var userview_last_name = '{{ user_view.last_name }}';
-        var userview_email = '{{ user_view.email }}';        
-        {% endif %}
+        var userview_email = '{{ user_view.email }}';  
+
+
         var trib_limit_to = 0;
         var trib_offset = 0;
         var trib_add = 10;
