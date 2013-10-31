@@ -71,7 +71,7 @@ def SearchProfile(request, nick):
 
         render_js = ['jquery', 'jquery.autogrow', 'bootstrap', 'angular',
                     'angular.resource', 'angular.infinite-scroll',  
-                    'dashboard.jquery', 'dashboard.app','profiles.app','profiles.jquery', 'navbar.app',
+                    'profiles.app','profiles.jquery', 'navbar.app',
                     'navbar.jquery','md5', 'angular-gravatar']
 
         render_css = ['normalize', 'fonts', 'font-awesome', 'bootstrap',
@@ -93,7 +93,7 @@ def UserProfile(request):
 
     render_js = ['jquery', 'jquery.autogrow', 'bootstrap', 'angular',
                     'angular.resource', 'angular.infinite-scroll',
-                    'md5','dashboard.app', 'dashboard.jquery',
+                    'md5',# 'dashboard.app', 'dashboard.jquery',
                     'profiles.app', 'profiles.jquery',
                     'navbar.app', 'navbar.jquery', 'angular-gravatar']
 

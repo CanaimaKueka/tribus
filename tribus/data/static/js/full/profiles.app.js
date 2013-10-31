@@ -6,10 +6,11 @@
 
 // nombre de la app, cambiar para nuevas aplicaciones, cambiando el nombre de la variable y el modulo
 
-/*
-var profiles = angular.module('tribus',
-    ['Tribs','packages', 'User', 'infinite-scroll', 'ui.gravatar']);
-*/
+
+var tribus = angular.module('tribus',
+//     ['packages', 'UserProfile', 'Tribs', 'User', 'infinite-scroll', 'ui.gravatar']);
+    ['Tribs' , 'Timeline', 'Comments', 'Packages', 'UserProfile', 'User',
+    'infinite-scroll', 'ui.gravatar']);
 
 
 // Events ----------------------------------------------------------------------
@@ -130,12 +131,72 @@ angular.module('User', ['ngResource'])
     });  
 
 
-angular.module('packages', ['ngResource'])
+angular.module('Packages', ['ngResource'])
     .factory('packages',  function($resource){
         return $resource('/api/0.1/packages/search/?=:package_name',
             { package_name: '@package_name' }, {
             query: {
                 method: 'GET',
+            },
+        });
+    });
+
+angular.module('Tribs', ['ngResource'])
+    .factory('Tribs',  function($resource){
+        return $resource('/api/0.1/user/tribs', {}, {
+            save: {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
+                },
+            },
+            query: {
+                method: 'GET',
+                isArray: true,
+                transformResponse: function(data){
+                    return angular.fromJson(data).objects;
+                }
+            },
+            delete: {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
+                },
+            },
+        });
+    });
+
+angular.module('Timeline', ['ngResource'])
+    .factory('Timeline', function($resource){
+        return $resource('/api/0.1/user/timeline', {}, {
+            query: {
+                method: 'GET',
+                isArray: true,
+                transformResponse: function(data){
+                    return angular.fromJson(data).objects;
+                }
+            }
+        });
+    });
+
+angular.module('Comments', ['ngResource'])
+    .factory('Comments',  function($resource){
+        return $resource('/api/0.1/tribs/comments', {}, {
+            save: {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
+                },
+            },
+            query: {
+                method: 'GET',
+                isArray: false
+            },
+            delete: {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
+                },
             },
         });
     });
