@@ -3,7 +3,6 @@
 
 from django.shortcuts import render
 from tribus.web.packages.models import *
-from tribus.web.packages.forms import busquedaPaquete
 from tribus.config.pkgrecorder import raiz, relation_types
 
 
