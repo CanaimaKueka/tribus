@@ -75,7 +75,10 @@ class TribResource(MongoEngineResource):
         allowed_methods = ['get', 'post', 'delete']
         filtering = { 'author_id': ALL_WITH_RELATIONS }
         authorization = TribAuthorization()
-        authentication = SessionAuthentication()
+
+        
+        #puedes ver los tribs asi no estes logueado =P
+        authentication = Authentication()
         cache = NoCache()
 
 

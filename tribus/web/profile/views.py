@@ -8,10 +8,11 @@ from tribus.web.profile.forms import data_change
 
 
 def EditUserProfile(request):
-    render_js = ['jquery','jquery.autogrow', 'bootstrap','profiles.app',
-                'angular','angular.resource','profiles.jquery'
-                'md5','navbar.app', 'navbar.jquery', 'angular-gravatar'
-                ]
+    render_js = ['jquery', 'jquery.autogrow',  'jquery.timeago','bootstrap', 'angular',
+                'angular.resource', 'angular.infinite-scroll', 'profiles.app', 
+                'profiles.jquery', 'navbar.app', 'navbar.jquery', 'md5','angular-gravatar']
+
+                
     render_css = ['normalize', 'fonts', 'font-awesome', 'bootstrap',
                 'bootstrap-responsive', 'tribus', 'tribus-responsive']
 
@@ -62,15 +63,14 @@ def ChangePassword(request):
 
 
 def SearchProfile(request, nick):
-    user = User.objects.get(username = request.user.username)
+    user = User.objects.filter(username =  'luis')
     try:
         user_view = User.objects.get(username = nick)
     except:
         return HttpResponseRedirect('/profile')
 
-    if request.user.is_authenticated():
-        if request.user.username == nick:
-            return HttpResponseRedirect('/profile')  
+    if request.user.username == nick:
+        return HttpResponseRedirect('/profile')  
 
         # if request.user.user_profile.follows:
         #     if [x for x in request.user.user_profile.follows if x ==usuario]:
@@ -78,33 +78,28 @@ def SearchProfile(request, nick):
 
 
 
-        render_js = ['jquery', 'jquery.autogrow', 'bootstrap', 'angular',
-                    'angular.resource', 'angular.infinite-scroll',  
-                    'profiles.app','profiles.jquery', 'navbar.app',
-                    'navbar.jquery','md5', 'angular-gravatar']
+    render_js = ['jquery', 'jquery.autogrow',  'jquery.timeago','bootstrap', 'angular',
+                'angular.resource', 'angular.infinite-scroll', 'profiles.app', 
+                'profiles.jquery', 'navbar.app', 'navbar.jquery', 'md5','angular-gravatar']
+    render_css = ['normalize', 'fonts', 'font-awesome', 'bootstrap',
+                    'bootstrap-responsive', 'tribus' ,'tribus-responsive']
 
-        render_css = ['normalize', 'fonts', 'font-awesome', 'bootstrap',
-                        'bootstrap-responsive', 'tribus' ,'tribus-responsive']
+    data = {"render_css": render_css ,
+            "render_js":render_js,
+            "user": user,
+            "user_view":user_view,            
+            }
+    context = RequestContext(request)
+    #modificar el template redireccion
+    return render_to_response('profile/profiles_view.html', data, context)
 
-        data = {"render_css": render_css ,
-                "render_js":render_js,
-                "user": user,
-                "user_view":user_view,            
-                }
-        context = RequestContext(request)
-        #modificar el template redireccion
-        return render_to_response('profile/profiles_view.html', data, context)
-    else:
-        return HttpResponseRedirect('/profile')
 
 
 def UserProfile(request):
 
-    render_js = ['jquery', 'jquery.autogrow', 'bootstrap', 'angular',
-                    'angular.resource', 'angular.infinite-scroll',
-                    'md5',# 'dashboard.app', 'dashboard.jquery',
-                    'profiles.app', 'profiles.jquery',
-                    'navbar.app', 'navbar.jquery', 'angular-gravatar']
+    render_js = ['jquery', 'jquery.autogrow',  'jquery.timeago','bootstrap', 'angular',
+                    'angular.resource', 'angular.infinite-scroll', 'profiles.app', 
+                    'profiles.jquery', 'navbar.app', 'navbar.jquery', 'md5','angular-gravatar']
 
     render_css = ['normalize', 'fonts', 'font-awesome', 'bootstrap',
                         'bootstrap-responsive', 'tribus', 'tribus-ie' ,'tribus-responsive']

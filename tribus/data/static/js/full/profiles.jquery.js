@@ -1,34 +1,12 @@
 $(document).ready(function(){
 
-    $('input.top_search_input').keyup(function () {
-        if($(this).val().length > 2){
-        	$(this).next().css('display', 'block');
-        	/*$.ajax({
-				url: "/api/0.1/packages/search/", 
-				dataType: 'json',
-				data: {'q': $(this).val()},
-				success: function(data) {
-					console.log(data);
-				},
-			});*/
-        }
-
-        if($(this).val().length === 0){
-        	$(this).next().css('display', 'none');
-        }
-    });
-
-
-
-
-
     // Autoresize all textareas with "autosize" class when
     // writing on them. Uses "autogrow" jQuery plugin
-    $('textarea.autosize').autogrow({ animate: false, fixMinHeight: false, cloneClass: 'autosize' });
+    $('textarea.autosize').autogrow({ animate: false,
+                                      fixMinHeight: false,
+                                      cloneClass: 'autosize' });
 
-    // Expands all textareas with "expand" class when
-    // focusing on them. Uses "autosize" jQuery plugin
-    $('textarea.action_box').keyup(function () {
+    $('textarea.action_textarea').keyup(function () {
         if($(this).val().length > 0){
             $('button.action_button').removeAttr('disabled');
         }
@@ -38,61 +16,50 @@ $(document).ready(function(){
         }
     });
 
-    $('textarea.action_box').focus(function () {
+    $('textarea.action_textarea').focus(function () {
         if($(this).val().length === 0){
-            $(this).animate({ height: "3.5em" }, 200);
+            $(this).animate({ height: "3em" }, 200);
         }
     });
 
-    $('textarea.action_box').blur(function(){
+    $('textarea.action_textarea').blur(function(){
         if($(this).val().length === 0){
-            $(this).animate({ height: "2em" }, 200);
+            $(this).animate({ height: "1em" }, 200);
         }
     });
 
-    $('textarea.action_box').trigger('keyup');
+    $(".trib_list").on('reload_dom', function(event){
 
-    // $(".trib_list").on('reload_dom', function(event){
+        $("h4.timeago").timeago();
 
-        // $("h4.timeago").timeago();
+        $('textarea.comment_textarea').keyup(function () {
+            if($(this).val().length > 0){
+                $(this).parents('.comment_box')
+                    .contents()
+                    .find('button.comment_button')
+                    .removeAttr('disabled');
+            }
 
-        // $('.trib_item').off('mouseenter');
-        // $('.trib_item').off('mouseleave');
-        // $('.trib_body').off('click');
+            if($(this).val().length === 0){
+                $(this).parents('.comment_box')
+                    .contents()
+                    .find('button.comment_button')
+                    .attr('disabled', 'disabled');
+            }
+        });
 
-        // $('.trib_item').on('mouseenter',
-        //     function(event){
-        //         $(this).children('span.arrow_left').css('border-right-color', 'rgb(255, 255, 255)');
-        //         $(this).children('span.trib_body').css('background-color', 'rgb(255, 255, 255)');
-        //     }
-        // );
+        $('textarea.comment_textarea').focus(function () {
+            if($(this).val().length === 0){
+                $(this).animate({ height: "2em" }, 200);
+            }
+        });
 
-        // $('.trib_item').on('mouseleave',
-        //     function(event){
-        //         $(this).children('span.arrow_left').css('border-right-color', 'rgb(248, 248, 241)');
-        //         $(this).children('span.trib_body').css('background-color', 'rgb(248, 248, 241)');
-        //     }
-        // );
+        $('textarea.comment_textarea').blur(function(){
+            if($(this).val().length === 0){
+                $(this).animate({ height: "1em" }, 200);
+            }
+        });
 
-        // $('.trib_body').on('click',
-        //     function(event){
-
-        //         if($(this).parent().children('.trib_reply').html().length > 0){
-        //             $(this).parent().children('.trib_reply').html('');
-        //         }else{
-
-        //             var $injector = angular.injector(['ng']);
-
-        //             $injector.invoke(function($rootScope, $compile){
-        //                 link = $compile($('#trib_reply_seed').html())($rootScope);
-        //                 $rootScope.$digest();
-        //             });
-
-        //             $(this).parent().children('.trib_reply').html(link[0].outerHTML);
-        //         }
-        //     }
-        // );
-
-    // });
+        });
 
 });

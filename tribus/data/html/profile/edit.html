@@ -3,20 +3,20 @@
 {% block title %} settings {% endblock %}
 
 {% block datos%}
-    
+
     <div align="center">
-        <p><a href = "/settings/edition">Edicion</a>
+        <p><a href = "/settings/edition">Modificar perfil</a>
         <p><a href = "/password/change">Cambiar contraseña</a>
-        <p><a href = "http://gravatar.com/emails/">Cambiar Avatar</a>
+        <p><a href = "http://gravatar.com/emails/">Cambiar ávatar</a>
     </div>
 {% endblock %}
 
 {% block informacion %}
-    <form accept-charset="UTF-8" action="/settings/edition/done" autocomplete="on" method="post">
+    <form accept-charset="UTF-8" action="/settings/edition/done" autocomplete="off" method="post">
         {% csrf_token %}
         <ul class="unstyled">
             <li>{{ editForm.descripcion }}</li>
-            <li>{{ editForm.location}}</li>
+           
         </ul>
         <div class="span3 offset1" >
         	<button class="btn btn-success btn-block" type="submit">Confirmar </button>
