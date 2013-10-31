@@ -1,0 +1,47 @@
+{% extends 'packages/base.html' %}
+{% load i18n %}
+{% block content %}
+        <div class="jumbotron package-background">
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span3"></div>
+                    <div class="span7 section-slogan">
+                        <h1>{% trans "Package Cloud" %}</h1>
+                        <p>
+                            {% blocktrans %}
+                            The Package Cloud is the place where you will find all the available applications stored in Canaima's repository.
+                            {% endblocktrans %}
+                        </p>
+
+                        <p>
+                            <span class="hr32 block"></span>
+                            <a href="/packages/upload" class="btn btn-app btn-success">
+                                <i class="icon-refresh bigger-230"></i>
+                                Upload a new package
+                            </a>
+                            <span class="hr32 block"></span>
+                            <a href="/packages/index" class="btn btn-app btn-light">
+                                <i class="icon-refresh bigger-230"></i>
+                                List packages alphabetically
+                            </a>
+                            <a href="/packages/tag" class="btn btn-app btn-light">
+                                <i class="icon-refresh bigger-230"></i>
+                                List packages by tag
+                            </a>
+                            <a href="/packages/category" class="btn btn-app btn-light">
+                                <i class="icon-refresh bigger-230"></i>
+                                List packages by category
+                            </a>
+                            <span class="hr32 block"></span>
+                            <a href="/packages/stats" class="btn btn-app btn-yellow">
+                                <i class="icon-refresh bigger-230"></i>
+                                Show package statistics
+                            </a>
+                        </p>
+
+                    </div>
+                    <div class="span2"></div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

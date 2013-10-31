@@ -1,4 +1,7 @@
-python-rsvg
-python-cairo
 libxml2-dev
 libxslt1-dev
+python-dev
+libldap2-dev
+libsasl2-dev
+libpq-dev
+gcc

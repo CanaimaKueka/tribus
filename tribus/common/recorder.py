@@ -43,7 +43,7 @@ sys.prefix = base
 sys.path.insert(0, base)
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
 from debian import deb822
-from tribus.web.paqueteria.models import *
+from tribus.web.packages.models import *
 from tribus.config.pkgrecorder import package_fields, detail_fields, local_repo_root,\
 roraima, kerepakupai
 from tribus.common.utils import find_files, md5Checksum, find_dirs, list_dirs

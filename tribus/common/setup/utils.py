@@ -241,7 +241,7 @@ def get_setup_data(basedir):
     from tribus.config.pkg import (classifiers, long_description, install_requires, dependency_links,
                                    exclude_packages, platforms, keywords)
     from tribus.common.version import get_version
-    from tribus.common.setup.build import build_man, build_css, build_js, build_img, build_sphinx, compile_catalog, build
+    from tribus.common.setup.build import build_man, build_css, build_js, build_sphinx, compile_catalog, build
     from tribus.common.setup.clean import clean_mo, clean_sphinx, clean_js, clean_css, clean_man, clean_img, clean_dist, clean
     from tribus.common.setup.install import install_data, build_py
     from tribus.common.setup.maint import extract_messages, init_catalog, update_catalog
@@ -278,7 +278,6 @@ def get_setup_data(basedir):
             'build': build,
             'build_js': build_js,
             'build_css': build_css,
-            'build_img': build_img,
             'build_man': build_man,
             'build_py': build_py,
             'build_sphinx': build_sphinx,

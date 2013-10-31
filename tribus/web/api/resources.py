@@ -22,7 +22,7 @@ from django.contrib.auth.models import User
 from tribus.web.profile.models import UserProfile
 
 from haystack.query import SearchQuerySet
-from tribus.web.paqueteria.models import Package
+from tribus.web.packages.models import Package
 
 
 class UserResource(ModelResource):

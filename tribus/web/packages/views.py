@@ -1,23 +1,20 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
 from django.shortcuts import render
-from tribus.web.paqueteria.models import *
-from tribus.web.paqueteria.forms import busquedaPaquete
+from tribus.web.packages.models import *
+from tribus.web.packages.forms import busquedaPaquete
 from tribus.config.pkgrecorder import raiz, relation_types
 
-def index(request):
-    return render(request,'base.html', {})
 
-def viewcategory(request, category):
-    l = Label.objects.filter(Name = category)
-    context = {"categories":l}
-    return render(request,'paqueteria/categories.html', context)
+def frontpage(request):
 
-def viewtags(request, tag):
-    p = Package.objects.filter(Labels__Tags__Value = tag)
-    context = {"tags":p}
-    return render(request,'paqueteria/tags.html', context)
+    
+    
+    return render(request, 'packages/frontpage.html', {})
 
-def viewpackages(request, name):
+
+def profile(request, name):
     context = {}
     p = Package.objects.filter(Package = name)
     if p:
@@ -47,6 +44,18 @@ def viewpackages(request, name):
         context['render_js'] = render_js
         context['render_css'] = render_css
         
-        return render(request,'paqueteria/packages.html', context)
+        return render(request,'packages/packages.html', context)
     else:
-        return render(request,'paqueteria/404.html')
+        return render(request,'packages/404.html')
+
+
+def by_category(request, category):
+    l = Label.objects.filter(Name = category)
+    context = {"categories":l}
+    return render(request,'packages/categories.html', context)
+
+
+def by_tag(request, tag):
+    p = Package.objects.filter(Labels__Tags__Value = tag)
+    context = {"tags":p}
+    return render(request,'packages/tags.html', context)

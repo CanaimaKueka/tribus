@@ -4,7 +4,7 @@
 import email.Utils
 from django.test import TestCase
 from debian import deb822
-from tribus.web.paqueteria.models import *
+from tribus.web.packages.models import *
 from tribus.common.recorder import record_section, record_package,\
     record_details, record_relationship, update_section
 
@@ -15,7 +15,7 @@ class RecordTest(TestCase):
         Verifica si una seccion de un archivo Packages se registra correctamente en la
         base de datos.
         """
-        packages_file = file("tribus/web/paqueteria/test_files/Packages")        
+        packages_file = file("tribus/web/packages/test_files/Packages")        
         
         for section in deb822.Packages.iter_paragraphs(packages_file, None, None, "windows-1252"):
             record_section(section, "kerepakupai")
@@ -76,10 +76,10 @@ class RecordTest(TestCase):
 
 class UpdateTest(TestCase):
     
-    fixtures = ['paqueteria_before.json']
+    fixtures = ['packages_before.json']
     
     def test_update_forward(self):
-        updated_packages = file("tribus/web/paqueteria/test_files/PackagesNew")
+        updated_packages = file("tribus/web/packages/test_files/PackagesNew")
         
         for section in deb822.Packages.iter_paragraphs(updated_packages, None, None, "windows-1252"):
             update_section(section, "kerepakupai")
@@ -139,7 +139,7 @@ class UpdateTest(TestCase):
             self.assertEqual(relations_bd, relations_file)
             
     def test_update_backward(self):
-        updated_packages = file("tribus/web/paqueteria/test_files/Packages")
+        updated_packages = file("tribus/web/packages/test_files/Packages")
         
         for section in deb822.Packages.iter_paragraphs(updated_packages, None, None, "windows-1252"):
             update_section(section, "kerepakupai")
