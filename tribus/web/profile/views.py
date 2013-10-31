@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import urllib, hashlib
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
@@ -71,8 +70,9 @@ def SearchProfile(request, nick):
 
 
         render_js = ['jquery', 'jquery.autogrow', 'bootstrap', 'angular',
-                    'angular.resource', 'angular.infinite-scroll', 'profiles.app',
-                    'profiles.jquery', 'md5', 'angular-gravatar']
+                    'angular.resource', 'angular.infinite-scroll',  
+                    'dashboard.jquery', 'dashboard.app','profiles.app','profiles.jquery', 'navbar.app',
+                    'navbar.jquery','md5', 'angular-gravatar']
 
         render_css = ['normalize', 'fonts', 'font-awesome', 'bootstrap',
                         'bootstrap-responsive', 'tribus' ,'tribus-responsive']
@@ -92,24 +92,16 @@ def SearchProfile(request, nick):
 def UserProfile(request):
 
     render_js = ['jquery', 'jquery.autogrow', 'bootstrap', 'angular',
-                    'angular.resource', 'angular.infinite-scroll', 'profiles.app',
-                    'profiles.jquery', 'md5', 'angular-gravatar']
+                    'angular.resource', 'angular.infinite-scroll',
+                    'md5','dashboard.app', 'dashboard.jquery',
+                    'profiles.app', 'profiles.jquery',
+                    'navbar.app', 'navbar.jquery', 'angular-gravatar']
 
     render_css = ['normalize', 'fonts', 'font-awesome', 'bootstrap',
                         'bootstrap-responsive', 'tribus', 'tribus-ie' ,'tribus-responsive']
 
-
-    gravatar_url = "http://www.gravatar.com/avatar/" + hashlib.md5(request.user.email.lower()).hexdigest() #+ "?"
-    # cambio de tamaño instanceable luego
-    # gravatar_url += urllib.urlencode({'d':default, 's':str(size)})
-
-    data = {"render_css": render_css , "render_js":render_js , 'url': gravatar_url, 'user_view':request.user}
+    data = {"render_css": render_css , "render_js":render_js , 'user_view':request.user}
     context = RequestContext(request)
-    
-
-
-    print gravatar_url
-
     
     if request.user.is_authenticated():
         

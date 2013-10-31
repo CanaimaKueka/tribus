@@ -15,8 +15,8 @@ def index(request):
                         'bootstrap-responsive', 'tribus', 'tribus-responsive']
         render_js = ['jquery', 'jquery.autogrow', 'jquery.timeago', 'bootstrap', 'angular',
                         'angular.resource', 'angular.infinite-scroll', 'dashboard.app',
-                        'dashboard.jquery', 'navbar.app', 'navbar.jquery', 'md5',
-                        'angular-gravatar']
+                        'dashboard.jquery', 'profiles.app','profiles.jquery','navbar.app', 
+                        'navbar.jquery', 'md5','angular-gravatar']
 
         return render(request, 'dashboard.html', {
             # 'newtribform': newtribform,

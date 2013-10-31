@@ -1,5 +1,5 @@
 {% load i18n %}
-<div class="action_publisher" ng-controller="NewTribController">
+<div class="action_publisher" ng-controller="NewTribController" ng-cloak>
     <div class="row-fluid">
         <form ng-submit="createNewTrib()">
             <span class="span1">
@@ -22,7 +22,7 @@
         </form>
     </div>
 </div>
-<div class="trib_list" infinite-scroll="addOldTribs()" infinite-scroll-disabled="controller_busy" infinite-scroll-distance="0" ng-controller="TribListController">
+<div class="trib_list" infinite-scroll="addOldTribs()" infinite-scroll-disabled="controller_busy" infinite-scroll-distance="0" ng-controller="TribListController" ng-cloak>
     <ul>
         <li id="{% verbatim %}{{ trib.id }}{% endverbatim %}" class="row-fluid trib_item" ng-repeat="trib in tribs | orderBy: trib_orderby | limitTo: trib_limit_to track by trib.id">
             <span class="span2">

@@ -41,7 +41,7 @@
 
 
 				<!-- solo para depurar -->
-					{%for i in user.follows.only%}
+					{%for i in user.user_profile.follows.only%}
 
 					<p><a href="/profile/{{i.username}}">{{i.username}}</a>
 

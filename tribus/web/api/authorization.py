@@ -37,15 +37,17 @@ class UserAuthorization(Authorization):
     def read_list(self, object_list, bundle):
         return object_list.filter(id=bundle.request.user.id)
 
+
+# SE DEBE PERMITIR LEER 
     def read_detail(self, object_list, bundle):
-        if int(bundle.obj.id) == bundle.request.user.id:
-            return True
-        raise Unauthorized("You are not allowed to access that resource.")
+        #if int(bundle.obj.id) == bundle.request.user.id:
+        return True
+        #raise Unauthorized("You are not allowed to access that resource.")
+     
 
     def update_detail(self, object_list, bundle):
-        if int(bundle.obj.id) == bundle.request.user.id:
-            return True
-        raise Unauthorized("You are not allowed to access that resource.")
+        #if int(bundle.obj.id) == bundle.request.user.id:
+        return True
 
 
 class UserProfileAuthorization(Authorization):
@@ -54,28 +56,21 @@ class UserProfileAuthorization(Authorization):
         return object_list.filter(id=bundle.request.user.id)
 
     def read_detail(self, object_list, bundle):
-        return True
+        if int(bundle.obj.id) == bundle.request.user.id:
+            return True
+        raise Unauthorized("You are not allowed to access that resource.")            
 
-    def create_list(self, object_list, bundle):
-        return object_list
-
-    def create_detail(self, object_list, bundle):
-        return True
 
 # HACER AUTORIZACION PARA PATCH
 
-
     def update_detail(self, object_list, bundle):
-        print "details"
-        # if int(bundle.obj.id) == bundle.request.user.id:
-        return True
-        # raise Unauthorized("You are not allowed to access that resource.")
+        if int(bundle.obj.id) == bundle.request.user.id:
+            return True
+        raise Unauthorized("You are not allowed to access that resource.")
 
     def delete_list(self, object_list, bundle):
         return object_list
 
-    def delete_detail(self, object_list, bundle):
-        return True
 
 class TimelineAuthorization(Authorization):
     def get_timeline(self, bundle):

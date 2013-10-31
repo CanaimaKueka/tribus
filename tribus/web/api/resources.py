@@ -36,7 +36,7 @@ class UserResource(ModelResource):
         allowed_methods = ['get', 'patch']
         filtering = { 'id': ALL_WITH_RELATIONS }
         authorization = UserAuthorization()
-        authentication = SessionAuthentication()
+        authentication = Authentication()
         cache = NoCache()
 
 
@@ -52,7 +52,7 @@ class UserProfileResource(ModelResource):
         allowed_methods = ['get', 'patch']
         filtering = { 'id': ALL_WITH_RELATIONS }
         authorization = UserProfileAuthorization()
-        authentication = SessionAuthentication()
+        authentication = Authentication()
         cache = NoCache()
 
 

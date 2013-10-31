@@ -5,7 +5,8 @@
 // Application -----------------------------------------------------------------
 
 var tribus = angular.module('tribus',
-	['Tribs', 'Timeline', 'Comments', 'Packages', 'infinite-scroll', 'ui.gravatar']);
+	['Tribs' , 'Timeline', 'Comments', 'Packages', 'UserProfile', 'User',
+    'infinite-scroll', 'ui.gravatar']);
 
 // Events ----------------------------------------------------------------------
 
@@ -20,7 +21,7 @@ tribus.run(function($rootScope){
 
 tribus.controller('NewTribController', ['$scope', '$timeout', 'Tribs',
     NewTribController]);
-tribus.controller('TribListController', ['$scope', '$timeout', 'Timeline',
+tribus.controller('TribListController',['$scope', '$timeout', 'Timeline',
     TribListController]);
 tribus.controller('CommentController', ['$scope', '$timeout', 'Comments',
     CommentController]);
