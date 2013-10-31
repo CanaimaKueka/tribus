@@ -8,12 +8,11 @@ from tribus.config.pkgrecorder import raiz, relation_types
 
 def frontpage(request):
 
-    render_js = ['jquery', 'bootstrap', 'angular',
-                'angular.resource', 'packages.frontpage.app',
-                'packages.frontpage.jquery', 'navbar.app', 'navbar.jquery']
     
     return render(request, 'packages/frontpage.html', {
-        'render_js': render_js,
+        'render_js': ['jquery', 'bootstrap', 'angular', 'angular.resource',
+                    'packages.frontpage.app', 'packages.frontpage.jquery',
+                    'navbar.app', 'navbar.jquery'],
         })
 
 
@@ -39,13 +38,10 @@ def profile(request, name):
                     dict_details[det.Distribution][det.Architecture]['relations'][n.relation_type].append(n)
         context["raiz"] = raiz
         context["detalles"] = dict_details
-        
-        render_css = ['normalize', 'fonts', 'bootstrap', 'bootstrap-responsive',
+
+        context['render_js'] = ['jquery', 'bootstrap']
+        context['render_css'] = ['normalize', 'fonts', 'bootstrap', 'bootstrap-responsive',
                            'font-awesome', 'tribus', 'tribus-responsive']
-        render_js = ['jquery', 'bootstrap']
-        
-        context['render_js'] = render_js
-        context['render_css'] = render_css
         
         return render(request,'packages/packages.html', context)
     else:
