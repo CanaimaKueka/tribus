@@ -5,7 +5,7 @@
 // Application -----------------------------------------------------------------
 
 var tribus = angular.module('tribus',
-	['Tribs', 'Timeline', 'Comments', 'Packages', 'infinite-scroll', 'ui.gravatar']);
+	['Tribs', 'Timeline', 'Comments', 'Search', 'infinite-scroll', 'ui.gravatar']);
 
 // Events ----------------------------------------------------------------------
 

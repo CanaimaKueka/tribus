@@ -1,62 +1,52 @@
 // Declare use of strict javascript
 'use strict';
 
-
-// Application -----------------------------------------------------------------
-
-//var tribus = angular.module('tribus', []);
-
-
-// Events ----------------------------------------------------------------------
-
-/*navbar.run(function($rootScope){
-    $rootScope.$on('addNewTribsRefreshEmit', function(event, args){
-        $rootScope.$broadcast('addNewTribsRefreshReceive', args);
-    });
-});*/
-
-
 // Controllers -----------------------------------------------------------------
-/*
-celulares.controller('PhoneListCtrl', function PhoneListCtrl($scope, $http) {
-               $http.get('phones/phones.json').success(function(data){
-                       $scope.telefonos*/ 
 
-tribus.controller('SearchListController', ['$scope', 'Packages',
+tribus.controller('SearchListController', ['$scope', 'Search',
     SearchListController]);
 
-function SearchListController($scope){
-	
-	$scope.results = [];
+function SearchListController($scope, Search){
 
-	
-	/*
-	 $scope.autocompletar = function ($scope, packages){
-		var paquetes = packages.query();
-		console.log(paquetes);
-		        	$.ajax({
-					url: "/api/0.1/packages/search/", 
-					dataType: 'json',
-					data: {'q': $(this).val()},
-					success: function(data) {
-						console.log(data);
+	$scope.refreshResults = function(){
+		if ($scope.top_search.length > 0) {
+			$scope.no_results = false
+			$scope.package_results = [];
+			$scope.user_results = [];
+			
+			var q = Search.query(
+				{
+					q: $scope.top_search
+				}, function(){
+					if (q.objects.length === 0) {
+						$scope.no_results = true
+					}else{
+						for(var i = 0; i < q.objects.length; i++){
+							
+							if (q.objects[i].type === "user"){
+								q.objects[i].url = user_url_placer.replace('%PACKAGE%', q.objects[i].dest);
+								$scope.package_results.push(q.objects[i]);
+							}
+							else if (q.objects[i].type === "package"){
+								q.objects[i].url = packages_url_placer.replace('%PACKAGE%', q.objects[i].dest);
+								$scope.user_results.push(q.objects[i]);
+							}
+						}
 						
-			};
-	$scope.prueba = function(){
-		alert("funciona =D ");
-	};*/
+						//$scope.results = q.objects;
+					}
+				}
+			);
 
+		}
+	}
 }
-
-
-
 
 // Services --------------------------------------------------------------------
 
-angular.module('Packages', ['ngResource'])
-    .factory('Packages',  function($resource){
-        return $resource('/api/0.1/packages/search/?=:package_name',
-            { package_name: '@package_name' }, {
+angular.module('Search', ['ngResource'])
+    .factory('Search',  function($resource){
+        return $resource('/api/0.1/search/', {}, {
             query: {
                 method: 'GET',
                 isArray: false
