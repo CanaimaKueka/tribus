@@ -9,9 +9,13 @@ from tribus.config.pkgrecorder import raiz, relation_types
 
 def frontpage(request):
 
+    render_js = ['jquery', 'bootstrap', 'angular',
+                'angular.resource', 'packages.frontpage.app',
+                'packages.frontpage.jquery', 'navbar.app', 'navbar.jquery']
     
-    
-    return render(request, 'packages/frontpage.html', {})
+    return render(request, 'packages/frontpage.html', {
+        'render_js': render_js,
+        })
 
 
 def profile(request, name):
