@@ -1,7 +1,7 @@
-{%extends 'packages/base.html'%}
+{% extends 'packages/base.html' %}
 {% load i18n %}
-{% block title%}{% trans 'Tribus Search' %}{%endblock%}
-{%block datos%}
+{% block title %}{% trans 'Tribus Search' %}{% endblock %}
+{% block content %}
 	<div >
 		<legend> </legend>
 			<h2 align="center"><b>{{paquete.Package}}</b></h2>
@@ -30,4 +30,4 @@
 			{% endif %}
 		{% endif %}
 	</div>
-{%endblock%}
+{% endblock %}

@@ -8,9 +8,18 @@ from tribus.web.profile.forms import data_change
 
 
 def EditUserProfile(request):
-    render_js = ['jquery', 'bootstrap']
+    render_js = ['jquery','jquery.autogrow', 'bootstrap','profiles.app',
+                'angular','angular.resource','profiles.jquery'
+                'md5','navbar.app', 'navbar.jquery', 'angular-gravatar'
+                ]
     render_css = ['normalize', 'fonts', 'font-awesome', 'bootstrap',
-                        'bootstrap-responsive', 'tribus', 'tribus-responsive']
+                'bootstrap-responsive', 'tribus', 'tribus-responsive']
+
+
+            # ['jquery', 'jquery.autogrow', 'bootstrap', 'angular',
+            #         'angular.resource', 'angular.infinite-scroll',  
+            #         'profiles.app','profiles.jquery', 'navbar.app',
+            #         'navbar.jquery','md5', 'angular-gravatar']                        
 
     data = {"render_css": render_css , "render_js":render_js}
     context = RequestContext(request)

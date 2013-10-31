@@ -12,11 +12,11 @@ urlpatterns = patterns('',
         'tribus.web.packages.views.profile',
         name='packages_profile'),
 
-    url(r'^packages/t/(?P<tag>(\w*\W*)*)',
+    url(r'^packages/tag/(?P<tag>(\w*\W*)*)',
         'tribus.web.packages.views.by_tag',
         name='packages_by_tag'),
 
-    url(r'^packages/c/(?P<category>(\w*\W*)*)',
+    url(r'^packages/category/(?P<category>(\w*\W*)*)',
         'tribus.web.packages.views.by_category',
         name='packages_by_category'),
     )
