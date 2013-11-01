@@ -19,12 +19,11 @@ from tribus.web.user.models import LdapUser
 class data_change(Form):
 	required_css_class = 'required'
 	descripcion = forms.RegexField(
-	                                label = _('Descriccion'), required = False,
+	                                label = _('Descripcion'), required = False,
 	                                regex = r'^[\w.@+-]+$',
 	                                widget = forms.Textarea(
 	                                    attrs = {
-	                                        'placeholder': _('coloca tu descripcion'),
-	                                        'class': 'input-xlarge'
+	                                        'class': 'input-largue'
 	                                    }
 	                                ),
 	                                max_length = 254,
@@ -33,34 +32,4 @@ class data_change(Form):
 	                                }
 	                            )
 
-	direction = forms.RegexField(
-	                                label = _('Direccion'), required = False,
-	                                regex = r'^[\w.@+-]+$',
-	                                widget = forms.Textarea(
-	                                    attrs = {
-	                                        'placeholder': _('Coloca tu direccion'),
-	                                        'class': 'input-xlarge'
-	                                    }
-	                                ),
-	                                max_length = 254,
-	                                error_messages = {
-	                                'invalid': _("This value may contain only letters, numbers and @/./+/-/_ characters.")
-	                                }
-	                            )
-
-	location = forms.RegexField(
-	                                label = _('localidad'), required = False,
-	                                regex = r'^[\w.@+-]+$',
-	                                widget = forms.Textarea(
-	                                    attrs = {
-	                                        'placeholder': _('Coloca tu Localidad'),
-
-	                                        'class': 'input-xlarge'
-	                                    }
-	                                ),
-	                                max_length = 254,
-	                                error_messages = {
-	                                'invalid': _("This value may contain only letters, numbers and @/./+/-/_ characters.")
-	                                }
-	                            )
-
+	email = forms.EmailField(label = _('email'), required = False)

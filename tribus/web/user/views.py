@@ -284,7 +284,7 @@ class ActivationView(BaseActivationView):
         activated_user = SignupProfile.objects.activate_user(activation_key)
 
         if activated_user:
-            
+
             ldapuser = create_ldap_user(activated_user)
             signals.user_activated.send(sender=self.__class__,
                                         user=activated_user,

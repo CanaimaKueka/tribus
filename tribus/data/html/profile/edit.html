@@ -1,26 +1,29 @@
-{% extends 'profile/profiles.html' %}
+<!-- {% extends 'profile/profiles.html' %}
 
 {% block title %} settings {% endblock %}
 
 {% block datos%}
     <div align="center">
         <hr>
+
         <p><a href = "/settings/edition">Modificar perfil</a>
         <p><a href = "/password/change">Cambiar contraseña</a>
         <p><a href = "http://gravatar.com/emails/">Cambiar ávatar</a>
+
     </div>
 {% endblock %}
 
 {% block informacion %}
     <form accept-charset="UTF-8" action="/settings/edition/done" autocomplete="off" method="post">
         {% csrf_token %}
-        <ul class="unstyled">
-            <li>{{ editForm.descripcion }}</li>
+        <ul class="unstyled row-fluid">
+            <li><label class ="span2 offset1">Email:</label>{{editForm.email}}</li>            
+            <li><label class ="span2 offset1">Descripcion:</label>{{editForm.descripcion}}</li>
            
         </ul>
-        <div class="span3 offset1" >
+        <div class="span2 offset3" >
         	<button class="btn btn-success btn-block" type="submit">Confirmar </button>
     	</div>
     </form>
 
-{% endblock %}
+{% endblock %} -->

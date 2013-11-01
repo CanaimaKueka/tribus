@@ -32,10 +32,11 @@
 				<div class="space-36"></div>
                 <div>
                 {% block datos %}
-	    				<hr>
-						<p>{{ user_view.email }}
+
+	    			<hr>
+	    			<ul>
 						<p>{{ user_view.first_name }} {{user_view.last_name}}
-						
+						<p>{{ user_view.email }}
 						<p>descripcion: {{ user_view.description }}
 						<hr>
 		
@@ -47,7 +48,6 @@
 							<p><a href="/profile/{{i.username}}">{{i.username}}</a>
 						{%endfor%}
 
-                    <p align = "center"> <a href = "/settings">Editar información</a>
                 {% endblock %}
                 	<hr>
 				<legend></legend>
@@ -60,11 +60,55 @@
 
 				<div class = "row-fluid">
 
-                    {%block informacion%}
-   
-                    {% include 'tribs.html' %}
-   
-                    {%endblock%}
+					<div class="tabbable tabs">
+						<ul class="nav nav-tabs" id="myTab3">
+
+							<li class="active">
+								<a data-toggle="tab" href="#home3">
+									<i class="pink icon-dashboard bigger-110"></i>
+									Muro
+									<span class="badge badge-danger">4</span>
+								</a>
+							</li>
+
+							<li class="">
+								<a data-toggle="tab" href="#profile3">
+									<i class="blue icon-user bigger-110"></i>
+									Edit Profile
+								</a>
+							</li>
+
+							<li class="">
+								<a data-toggle="tab" href="#dropdown13">
+									<i class="icon-rocket"></i>
+									More
+								</a>
+							</li>
+						</ul>
+
+						<div class="tab-content">
+							<div id="home3" class="tab-pane active">
+					            	{% include 'tribs.html' %}
+							</div>
+
+							<div id="profile3" class="tab-pane">
+							    <form accept-charset="UTF-8" action="profile/done" autocomplete="off" method="post">
+							        {% csrf_token %}
+							        <ul class="unstyled row-fluid">
+							            <li><label class ="span2 offset1">Email:</label>{{editForm.email}}</li>            
+							            <li><label class ="span2 offset1">Descripcion:</label>{{editForm.descripcion}}</li>
+							           
+							        </ul>
+							        <div class="span2 offset3" >
+							        	<button class="btn btn-success btn-block" type="submit">Confirmar </button>
+							    	</div>
+							    </form>
+							</div>
+
+							<div id="dropdown13" class="tab-pane ">
+							</div>
+						</div>
+					</div>
 		</div>
 	</div>
 </div>

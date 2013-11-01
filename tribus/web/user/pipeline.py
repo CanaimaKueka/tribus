@@ -55,6 +55,7 @@ def edit_ldap_user(u):
     l.email = u.email
     l.description = u.description
     l.save()
+    print u.username ," Actualizado"
 
 #def create_ldap_password(password, algorithm='SSHA', salt=None):
 #    """
