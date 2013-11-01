@@ -7,41 +7,37 @@
 		<div class="row-fluid">
 
 			<div class="span3">
-				<div ng-controller = "UserController">
+				<div >
 					<span>
                     <img gravatar-src="'{{user_view.email}}'" gravatar-size="280">
 						</span>
 
-					{% if user.is_authenticated %}
-					<a ng-click="follow()" class="btn btn-sm btn-block btn-success">
-						<i class="icon-plus-sign bigger-120"></i>
-						<span class="bigger-110">{% verbatim %}{{mensaje}}{% endverbatim %}</span>
-					</a>
-					{%endif%}
-
 				</div>
-
 				<div class="space-36"></div>
-                <div>
-                {% block datos %}
-    
-					<p>{{ user_view.first_name }} {{user_view.last_name}}
-					<p>{{ user.first_name }} {{user.last_name}}
-					<p>{{ user_view.email }}
-					<p>localizacion: {{ user_view.location }}
-					<p>descripcion: {{ user_view.description }}
-					
-				<p>sigues a:
-<!-- 				 solo para depurar -->
-					{%for i in user_view.user_profile.follows.only%}
-<!-- 					<p ng-repeat = > -->
-					<p><a href="/profile/{{i.username}}">{{i.username}}</a>
- 
-					{%endfor%}
+                <div ng-controller = "UserController">
+	                {% block datos %}
+	    				<hr>
+						<p>{{ user_view.first_name }} {{user_view.last_name}}
+						<p>{{ user_view.email }}
+						<p>descripcion: {{ user_view.description }}
+						<hr>
+						<a ng-click="follow()" class="btn btn-sm btn-block btn-success">
+							<i class="icon-plus-sign bigger-120"></i>
+							<span class="bigger-110">{% verbatim %}{{mensaje}}{% endverbatim %}</span>
+						</a>			
 
-                {% endblock %}
-                	<hr>
-				<legend></legend>
+						<p>sigues a:
+	<!-- 				 solo para depurar -->
+						{%for i in user_view.user_profile.follows.only%}
+	<!-- 					<p ng-repeat = > -->
+							<p><a href="/profile/{{i.username}}">{{i.username}}</a>
+						{%endfor%}
+
+	                {% endblock %}
+						<legend></legend>
+					<!-- {% if user.is_authenticated %} -->
+
+					<!-- {%endif%} -->
 				</div>
 
 			</div>
@@ -56,9 +52,9 @@
                     {% include 'tribs.html' %}
    
                     {%endblock%}
-		</div>
-	</div>
-</div>
+				</div>
+			</div>
+			</div>
 
 {% endblock %}
 
@@ -72,7 +68,7 @@
         var user_first_name = '{{ user.first_name }}';
         var user_last_name = '{{ user.last_name }}';
         var user_email = '{{ user.email }}';      
-        
+
         {% endif %}
 
         var userview_id = '{{ user_view.id }}';
@@ -80,7 +76,6 @@
         var userview_first_name = '{{ user_view.first_name }}';
         var userview_last_name = '{{ user_view.last_name }}';
         var userview_email = '{{ user_view.email }}';  
-
 
         var trib_limit_to = 0;
         var trib_offset = 0;
