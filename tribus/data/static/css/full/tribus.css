@@ -20,6 +20,10 @@ body.breadcrumbs-fixed {
     padding-top: 86px;
 }
 
+input, button, select, textarea {
+    font-family: "Open Sans", Helvetica, sans-serif;
+}
+
 .main-container {
     position: static;
     padding: 0;
@@ -811,6 +815,10 @@ blockquote,blockquote.pull-right {
 
 .hr-double.dotted {
     border-bottom-style: dotted;
+}
+
+.hr-64,.hr64 {
+    margin: 64px 0;
 }
 
 .hr-32,.hr32 {
@@ -14689,9 +14697,6 @@ th[aria-selected=true] .ui-jqgrid-sortable {
     margin: 0px !important;
 }
 
-input, button, select, textarea {
-    font-family: "Open Sans", Helvetica, sans-serif;
-}
 
 .jumbotron {
     min-height: 20px;
@@ -14737,7 +14742,7 @@ input, button, select, textarea {
 }
 
 .section-slogan {
-    margin-top: 70px;
+    margin: 100px 0;
 }
 
 .section-slogan > p > a.btn-app > [class*="icon"] {

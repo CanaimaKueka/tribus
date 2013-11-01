@@ -11,8 +11,8 @@ def frontpage(request):
     
     return render(request, 'cloud/frontpage.html', {
         'render_js': ['jquery', 'bootstrap', 'angular', 'angular.resource',
-                    'packages.frontpage.app', 'packages.frontpage.jquery',
-                    'navbar.app', 'navbar.jquery'],
+                        'cloud.frontpage.app', 'cloud.frontpage.jquery',
+                        'navbar.app', 'navbar.jquery'],
         })
 
 
