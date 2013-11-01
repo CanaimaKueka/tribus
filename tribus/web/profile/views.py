@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.template import RequestContext
 from django.contrib.auth.models import User
 from tribus.web.profile.forms import data_change
@@ -22,8 +22,7 @@ def EditUserProfile(request):
             #         'profiles.app','profiles.jquery', 'navbar.app',
             #         'navbar.jquery','md5', 'angular-gravatar']                        
 
-    data = {"render_css": render_css , "render_js":render_js}
-    context = RequestContext(request)
+    context = {"render_css": render_css , "render_js":render_js}
     
         # aqui debe estar la logica del los formularios cn su valudacion
 
@@ -37,8 +36,8 @@ def EditUserProfile(request):
             return HttpResponseRedirect('/profile')
         else:
             form = data_change()
-            data['editForm'] = form
-            return render_to_response('profile/edit.html', data, context)
+            context['editForm'] = form
+            return render(request, 'profile/edit.html', context)
 
 
     return HttpResponseRedirect('/')
@@ -49,15 +48,14 @@ def ChangePassword(request):
     render_css = ['normalize', 'fonts', 'font-awesome', 'bootstrap',
                         'bootstrap-responsive', 'tribus', 'tribus-responsive']
 
-    data = {"render_css": render_css , "render_js":render_js}
-    context = RequestContext(request)
+    context = {"render_css": render_css , "render_js":render_js}
     
         # aqui debe estar la logica del los formularios cn su valudacion
 
 
     if request.user.is_authenticated():
         
-        return render_to_response('profile/change_password.html', data, context)
+        return render(request, 'profile/change_password.html', context)
 
     return HttpResponseRedirect('/')
 
@@ -87,14 +85,13 @@ def SearchProfile(request, nick):
     render_css = ['normalize', 'fonts', 'font-awesome', 'bootstrap',
                     'bootstrap-responsive', 'tribus' ,'tribus-responsive']
 
-    data = {"render_css": render_css ,
+    context = {"render_css": render_css ,
             "render_js":render_js,
             "user": user,
             "user_view":user_view,            
             }
-    context = RequestContext(request)
     #modificar el template redireccion
-    return render_to_response('profile/profiles_view.html', data, context)
+    return render(request, 'profile/profiles_view.html', context)
 
 
 
@@ -107,11 +104,10 @@ def UserProfile(request):
     render_css = ['normalize', 'fonts', 'font-awesome', 'bootstrap',
                         'bootstrap-responsive', 'tribus', 'tribus-ie' ,'tribus-responsive']
 
-    data = {"render_css": render_css , "render_js":render_js , 'user_view':request.user}
-    context = RequestContext(request)
+    context = {"render_css": render_css , "render_js":render_js , 'user_view':request.user}
     
     if request.user.is_authenticated():
         
-        return render_to_response('profile/profiles.html', data, context)
+        return render(request, 'profile/profiles.html', context)
 
     return HttpResponseRedirect('/')

@@ -25,20 +25,19 @@
                                     
                                     <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
                                 		<li role="presentation" ng-repeat="result in package_results">
-                                			<a role="menuitem" tabindex="-1" href="{% verbatim %}{{ result.url }}{% endverbatim %}">{% verbatim %}{{ result.auto_name }}{% endverbatim %}</a>
+                                			<a role="menuitem" tabindex="-1" href="{% verbatim %}{{ result.url }}{% endverbatim %}">{% verbatim %}{{ result.autoname }}{% endverbatim %}</a>
                                 		</li>
                                 		
                                 		<li role="presentation" ng-repeat="result in user_results">
-	                                		<a role="menuitem" tabindex="-1" href="{% verbatim %}{{ result.url }}{% endverbatim %}">{% verbatim %}{{ result.auto_name }}{% endverbatim %}</a>
+	                                		<a role="menuitem" tabindex="-1" href="{% verbatim %}{{ result.url }}{% endverbatim %}">
+	                                			{% verbatim %}{{ result.autoname }}{% endverbatim %}
+	                                		</a>
 	                                	</li>
                                 		
                                 		<li ng-if="no_results">
                                 			No hay resultados.
                                 		</li>
                             		</ul>
-                            		
-                            		
-                            		
                                     <i class="icon-search nav-search-icon"></i>
                                 </span>
                             </form>     
@@ -75,6 +74,6 @@
                 </div>
         </div>
 	    <script type="text/javascript">
-	        var packages_url_placer = '/packages/search/%PACKAGE%';
+	        var packages_url_placer = '/packages/%PACKAGE%';
 	        var user_url_placer = '/profile/%PACKAGE%';
 		</script>

@@ -289,7 +289,6 @@ class ActivationView(BaseActivationView):
             signals.user_activated.send(sender=self.__class__,
                                         user=activated_user,
                                         request=request)
-
         return activated_user
 
     def get_success_url(self, request, user):

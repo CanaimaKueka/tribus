@@ -8,8 +8,7 @@
 
 
 var tribus = angular.module('tribus',
-//     ['packages', 'UserProfile', 'Tribs', 'User', 'infinite-scroll', 'ui.gravatar']);
-    ['ui.gravatar', 'Tribs' , 'Comments', 'Search', 'UserProfile', 'User', 'infinite-scroll']);
+	['ui.gravatar', 'Tribs' , 'Comments', 'Search', 'UserProfile', 'User', 'infinite-scroll']);
 
 
 // Events ----------------------------------------------------------------------
