@@ -63,7 +63,10 @@ def ChangePassword(request):
 
 
 def SearchProfile(request, nick):
-    user = User.objects.filter(username =  'luis')
+    try:
+        user = User.objects.get(username = request.user.username)
+    except:
+        user = None
     try:
         user_view = User.objects.get(username = nick)
     except:

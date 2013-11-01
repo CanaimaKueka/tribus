@@ -44,11 +44,17 @@ def create_ldap_user(u):
     l.group = 1234
     l.home_directory = '/home/'+u.username
     l.login_shell = '/bin/false'
-    l.description = 'Created by Tribus'
+    l.description = u.description
     l.save()
 
     return l
 
+
+def edit_ldap_user(u):
+    l = LdapUser.objects.get(username = u.username)
+    l.email = u.email
+    l.description = u.description
+    l.save()
 
 #def create_ldap_password(password, algorithm='SSHA', salt=None):
 #    """

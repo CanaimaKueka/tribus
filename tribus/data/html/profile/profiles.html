@@ -5,7 +5,6 @@
 <div class="jumbotron">
 	<div class="container">
 		<div class="row-fluid">
-
 			<div class="span3">
 				<div>
                     <img gravatar-src="'{{user.email}}'" gravatar-size="280">
@@ -33,19 +32,20 @@
 				<div class="space-36"></div>
                 <div>
                 {% block datos %}
-					<p>{{ user.first_name }} {{user.last_name}} {{user.id}}
-					<p>{{ user.email }}
-					<p>localizacion: {{ user.location }}
-					<p>descripcion: {{ user.description }}
-					<p>sigues a:
+	    				<hr>
+						<p>{{ user_view.email }}
+						<p>{{ user_view.first_name }} {{user_view.last_name}}
+						
+						<p>descripcion: {{ user_view.description }}
+						<hr>
+		
 
-
-				<!-- solo para depurar -->
-					{%for i in user.user_profile.follows.only%}
-
-					<p><a href="/profile/{{i.username}}">{{i.username}}</a>
-
-					{%endfor%}
+						<p>sigues a:
+	<!-- 				 solo para depurar -->
+						{%for i in user_view.user_profile.follows.only%}
+	<!-- 					<p ng-repeat = > -->
+							<p><a href="/profile/{{i.username}}">{{i.username}}</a>
+						{%endfor%}
 
                     <p align = "center"> <a href = "/settings">Editar información</a>
                 {% endblock %}
