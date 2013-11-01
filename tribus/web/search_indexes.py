@@ -1,6 +1,6 @@
 from haystack import indexes
-from tribus.web.packages.models import Package
 from celery_haystack.indexes import CelerySearchIndex
+from tribus.web.cloud.models import Package
 from django.contrib.auth.models import User
 
 class PackageIndex(CelerySearchIndex, indexes.Indexable):

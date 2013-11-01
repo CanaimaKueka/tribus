@@ -126,7 +126,7 @@ BROKER_URL = 'redis://localhost:6379/0'
 CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
 CELERYBEAT_SCHEDULE = {
     "update_cache": {
-        "task": "tribus.web.packages.tasks.update_cache",
+        "task": "tribus.web.cloud.tasks.update_cache",
         "schedule": crontab(),
         "args": (),
     },               
@@ -162,7 +162,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'tribus.web',
     'tribus.web.user',
-    'tribus.web.packages',
+    'tribus.web.cloud',
     'tribus.web.profile',
     'ldapdb',
     'django_auth_ldap',

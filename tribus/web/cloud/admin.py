@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #from django.contrib import admin
-#from tribus.web.packages.models import *
+#from tribus.web.cloud.models import *
 
 # class PaqueteAlin(admin.TabularInline):
 #     model = Paquete
