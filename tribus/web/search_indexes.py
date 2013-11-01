@@ -1,5 +1,5 @@
 from haystack import indexes
-from tribus.web.packages.models import Package
+from tribus.web.cloud.models import Package
 from django.contrib.auth.models import User
 
 class PackageIndex(indexes.SearchIndex, indexes.Indexable):

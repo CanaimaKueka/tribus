@@ -14649,7 +14649,9 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 }
 
 .package-background {
-    background: url('../../img/package-slogan-background.svg') no-repeat center bottom;
+    background: url('../../img/package-slogan-background.svg') no-repeat center top;
+    background-color: rgba(236, 247, 249, 0.7) !important;
+    background-size: contain;
 }
 
 .navbar .form-search {

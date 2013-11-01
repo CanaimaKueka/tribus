@@ -23,7 +23,7 @@ from django.contrib.auth.models import User
 from tribus.web.profile.models import UserProfile
 
 from haystack.query import SearchQuerySet
-from tribus.web.packages.models import Package
+from tribus.web.cloud.models import Package
 
 class UserResource(ModelResource):
     user_profile = OneToOneField(to='tribus.web.api.resources.UserProfileResource', attribute='user_profile', related_name='user')
