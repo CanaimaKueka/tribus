@@ -126,7 +126,7 @@ BROKER_URL = 'redis://localhost:6379/0'
 CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
 CELERYBEAT_SCHEDULE = {
     "update_cache": {
-        "task": "tribus.web.packages.tasks.update_cache",
+        "task": "tribus.web.cloud.tasks.update_cache",
         "schedule": crontab(),
         "args": (),
     },               
@@ -141,6 +141,8 @@ HAYSTACK_CONNECTIONS = {
         'PATH': WHOOSH_INDEX,
     },
 }
+
+HAYSTACK_SIGNAL_PROCESSOR = 'celery_haystack.signals.CelerySignalProcessor'
 
 
 # GRAVATAR_URL # Gravatar base url. Defaults to 'http://www.gravatar.com/'
@@ -160,7 +162,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'tribus.web',
     'tribus.web.user',
-    'tribus.web.packages',
+    'tribus.web.cloud',
     'tribus.web.profile',
     'ldapdb',
     'django_auth_ldap',
@@ -172,7 +174,8 @@ INSTALLED_APPS = (
     'tastypie_mongoengine',
     'django_gravatar',
     'haystack',
-    'whoosh'
+    'whoosh',
+    'celery_haystack'
 )
 
 # EMAIL_USE_TLS = True

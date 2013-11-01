@@ -1,0 +1,105 @@
+{% extends 'cloud/base.html' %}
+{% load i18n %}
+{% block content %}
+        <div class="jumbotron package-background">
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span4"></div>
+                    <div class="span6 section-slogan">
+                        <h1>{% trans "Application Cloud" %}</h1>
+                        <p>
+                            {% blocktrans %}
+                            The application cloud is a storage, integration and distribution system designed for the software stored in {{ tribus_distro }}. It allows {{ tribus_role_1 }}, {{ tribus_role_2 }} and {{ tribus_role_3 }} to empower their applications by using the cloud.
+                            {% endblocktrans %}
+                        </p>
+                        <p><a href="#read_more">Read more ...</a></p>
+                        <p>
+                            <span class="hr32 block"></span>
+                            <a href="/cloud/upload" class="btn btn-app btn-success">
+                                <i class="icon-cloud-upload bigger-230"></i>
+                                Upload a new application
+                            </a>
+                            <span class="hr32 block"></span>
+                            <a href="/cloud/index" class="btn btn-app btn-light">
+                                <i class="icon-reorder bigger-230"></i>
+                                List alphabetically
+                            </a>
+                            <a href="/cloud/tag" class="btn btn-app btn-light">
+                                <i class="icon-reorder bigger-230"></i>
+                                List by tag
+                            </a>
+                            <a href="/cloud/category" class="btn btn-app btn-light">
+                                <i class="icon-reorder bigger-230"></i>
+                                List by category
+                            </a>
+                            <span class="hr32 block"></span>
+                            <a href="/cloud/stats" class="btn btn-app btn-yellow">
+                                <i class="icon-signal bigger-230"></i>
+                                Show statistics
+                            </a>
+                        </p>
+
+                    </div>
+                    <div class="span2"></div>
+                </div>
+            </div>
+            <div class="container-fluid" id="read_more">
+                <span class="row-fluid">
+                    <span class="span1"></span>
+                    <span class="span2 bigger-300 align-center">
+                        <i class="icon-gears bigger-300"></i>
+                    </span>
+                    <span class="span8 bigger-200 lighter">
+                        ¿Cómo funciona?
+                    </span>
+                    <span class="span1"></span>
+                </span>
+                <span class="hr64 block"></span>
+                <span class="row-fluid">
+                    <span class="span1"></span>
+                    <span class="span2 bigger-300 align-center">
+                        <i class="icon-gears bigger-300"></i>
+                    </span>
+                    <span class="span8 bigger-200 lighter">
+                        fdgdfjglkdfgkljdflglkdfklg
+                        gfsdgslakg as ga sdlñgjksakldj  sñdlgsdj ñkg jlñsñ sd jklg
+                        fdgdfjglkdfgkljdflglkdfklg
+                        gfsdgslakg as ga sdlñgjksakldj  sñdlgsdj ñkg jlñsñ sd jklg
+                    </span>
+                    <span class="span1"></span>
+                </span>
+                <span class="hr64 block"></span>
+                <span class="row-fluid">
+                    <span class="span1"></span>
+                    <span class="span2 bigger-300 align-center">
+                        <i class="icon-gears bigger-300"></i>
+                    </span>
+                    <span class="span8 bigger-200 lighter">
+                        fdgdfjglkdfgkljdflglkdfklg
+                        gfsdgslakg as ga sdlñgjksakldj  sñdlgsdj ñkg jlñsñ sd jklg
+                        fdgdfjglkdfgkljdflglkdfklg
+                        gfsdgslakg as ga sdlñgjksakldj  sñdlgsdj ñkg jlñsñ sd jklg
+                        fdgdfjglkdfgkljdflglkdfklg
+                        gfsdgslakg as ga sdlñgjksakldj  sñdlgsdj ñkg jlñsñ sd jklg
+                    </span>
+                    <span class="span1"></span>
+                </span>
+                <span class="hr64 block"></span>
+                <span class="row-fluid">
+                    <span class="span1"></span>
+                    <span class="span2 bigger-300 align-center">
+                        <i class="icon-gears bigger-300"></i>
+                    </span>
+                    <span class="span8 bigger-200 lighter">
+                        fdgdfjglkdfgkljdflglkdfklg
+                        gfsdgslakg as ga sdlñgjksakldj  sñdlgsdj ñkg jlñsñ sd jklg
+                        fdgdfjglkdfgkljdflglkdfklg
+                        gfsdgslakg as ga sdlñgjksakldj  sñdlgsdj ñkg jlñsñ sd jklg
+                        fdgdfjglkdfgkljdflglkdfklg
+                        gfsdgslakg as ga sdlñgjksakldj  sñdlgsdj ñkg jlñsñ sd jklg
+                    </span>
+                    <span class="span1"></span>
+                </span>
+            </div>
+        </div>
+{% endblock %}

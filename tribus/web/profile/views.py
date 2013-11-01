@@ -1,11 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from django.http import HttpResponse, HttpResponseRedirect
+<<<<<<< HEAD
 from django.shortcuts import render, get_object_or_404
 from django.template import RequestContext
 from django.contrib.auth.models import User
 from tribus.web.profile.forms import data_change
 from tribus.web.user.pipeline import edit_ldap_user
+=======
+from django.shortcuts import get_object_or_404, render
+from django.template import RequestContext
+from django.contrib.auth.models import User
+from tribus.web.profile.forms import data_change
+
 
 def SearchProfile(request, nick):
     try:
@@ -37,6 +44,7 @@ def SearchProfile(request, nick):
             "user": user,
             "user_view":user_view,            
             }
+
             
     context = RequestContext(request)
     #modificar el template redireccion
@@ -68,5 +76,4 @@ def UserProfile(request):
             form = data_change()
             context['editForm'] = form
             return render(request,'profile/profiles.html', context)
-
     return HttpResponseRedirect('/')

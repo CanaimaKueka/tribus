@@ -4,7 +4,7 @@
 
 import urllib, urllib2
 from debian import deb822
-from tribus.web.packages.models import *
+from tribus.web.cloud.models import *
 import re
 
 def check_version(exists, rr, r):
