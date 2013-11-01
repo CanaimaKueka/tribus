@@ -61,17 +61,16 @@ body.breadcrumbs-fixed {
 
 .page-header {
     margin: 0 0 12px;
-    border-bottom: 1px dotted #e2e2e2;
-    padding-bottom: 16px;
-    padding-top: 7px;
+    border-bottom: 0.5em solid #dcd9c2;
+    padding-bottom: 1.5em;
+    padding-top: 1em;
 }
 
 .page-header h1 {
     padding: 0;
     margin: 0 8px;
-    font-size: 24px;
-    font-weight: lighter;
-    color: #2679b5;
+    font-size: 4em;
+    font-weight: 700;
 }
 
 .page-header h1 small {
@@ -14622,7 +14621,7 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 }
 
 .navbar .nav > li > a {
-    padding: 7px;
+    padding: 3px 6px;
     margin: 5px;
     line-height: 1;
     float:left;
@@ -14806,6 +14805,15 @@ input, button, select, textarea {
 }
 
 .dashboard_container {
+/*    background-color: #ebebdc;
+    padding: 10px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -o-border-radius: 6px;
+    border-radius: 6px;*/
+}
+
+.dashboard_timeline {
     background-color: #ebebdc;
     padding: 10px;
     -webkit-border-radius: 6px;
