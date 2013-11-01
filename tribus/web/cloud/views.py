@@ -17,10 +17,10 @@ def frontpage(request):
 
 
 def profile(request, name):
-    p = get_object_or_404(Package, Package=name)
-    context["paquete"] = p
-    details_list = Details.objects.filter(package = p[0])
     dict_details = {}
+    package_info = get_object_or_404(Package, Package=name)
+    details_list = Details.objects.filter(package=package_info)
+
     for det in details_list:
         dict_details[det.Distribution] = {}
         dict_details[det.Distribution][det.Architecture] = {}
@@ -33,14 +33,12 @@ def profile(request, name):
                 if not dict_details[det.Distribution][det.Architecture]['relations'].has_key(n.relation_type):
                     dict_details[det.Distribution][det.Architecture]['relations'][n.relation_type] = []
                 dict_details[det.Distribution][det.Architecture]['relations'][n.relation_type].append(n)
-    context["raiz"] = raiz
-    context["detalles"] = dict_details
-
-    context['render_js'] = ['jquery', 'bootstrap']
-    context['render_css'] = ['normalize', 'fonts', 'bootstrap', 'bootstrap-responsive',
-                       'font-awesome', 'tribus', 'tribus-responsive']
     
-    return render(request,'cloud/packages.html', context)
+    return render(request, 'cloud/packages.html', {
+        'paquete': package_info,
+        'raiz': raiz,
+        'detalles': dict_details,
+        })
 
 
 def by_category(request, category):

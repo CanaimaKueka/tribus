@@ -106,7 +106,7 @@
                             {% for dists in detalles.items %}
                             <h2 align="center"><b> {% trans 'In Canaima' %} {{dists.0}}</b></h2>                
                                 {%for arch in dists.1.values %}
-                                    {% include 'packages/architectures.html' %}
+                                    {% include 'cloud/architectures.html' %}
                                 {% endfor %}
                             {% endfor %}
                         {% endif %}
@@ -114,7 +114,7 @@
                     {% endif %}
                     </div>
                     <div class="span4 dashboard_panel">
-                            <a href="/packages/" class="btn btn-app btn-success">
+                            <a href="/cloud/" class="btn btn-app btn-success">
                                 <i class="icon-refresh bigger-230"></i>
                                 Package cloud
                             </a>

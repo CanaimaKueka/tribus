@@ -5,6 +5,6 @@ def default_context(request):
 	return {
 		'render_css': ['normalize', 'bootstrap', 'bootstrap-responsive',
 			'fonts', 'font-awesome', 'tribus', 'tribus-responsive'],
-		'render_js': [],
+		'render_js': ['jquery', 'bootstrap'],
 	}
 
