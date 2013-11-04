@@ -7,8 +7,7 @@
 // nombre de la app, cambiar para nuevas aplicaciones, cambiando el nombre de la variable y el modulo
 
 
-var tribus = angular.module('tribus',
-	['ui.gravatar', 'Tribs' , 'Comments', 'Search', 'UserProfile', 'User', 'infinite-scroll']);
+var tribus = angular.module('tribus',['ui.gravatar', 'Tribs' , 'Comments', 'Search', 'UserProfile', 'User', 'infinite-scroll']);
 
 
 // Events ----------------------------------------------------------------------
@@ -17,16 +16,16 @@ var tribus = angular.module('tribus',
 
 // Controllers -----------------------------------------------------------------
 
-tribus.controller('CommentController',['$scope','$timeout','Comments',
+tribus.controller('CommentController', ['$scope','$timeout','Comments',
     CommentController]);
-tribus.controller('NewTribController',['$scope','$timeout','Tribs',
+tribus.controller('NewTribController', ['$scope','$timeout','Tribs',
     NewTribController]);
 tribus.controller('TribListController',['$scope','$timeout','Tribs',
     TribListController]);
 tribus.controller('UserController',['$scope','UserProfile', 'User' ,
     UserController]);
 
-function UserController($scope, UserProfile, User){
+function UserController($scope, UserProfile){
     $scope.follow = function(){
 
         var profile = UserProfile.query({id:user_id},
@@ -48,20 +47,16 @@ function UserController($scope, UserProfile, User){
                     profile[0].follows.push("/api/0.1/user/details/"+userview_id);
                     profile[0].$modify({author_id: user_id});
                     }
-
                 });
-        };
+            };
+        }
 
-
-        // var follow = User.modify({follows:[], author_id: 3},
-        //     function(){
-        //         console.log(follow);
-
-        //         });
-        // alert($scope.);
-        // $scope.mensaje = "add as follow"
-
+function FollowsController ($scope, $timeout, Tribs){
+    var follow ={
+        
     }
+}
+
 
 function NewTribController($scope, $timeout, Tribs){
 

@@ -7,26 +7,7 @@
 		<div class="row-fluid">
 			<div class="span3">
 				<div>
-                    <img gravatar-src="'{{user.email}}'" gravatar-size="280">
-					
-				<div class="space-6"> {{add}}</div>
-									
-					{% if add %}
-
-					<a href="/profile/add_follow/{{user.username}}" class="btn btn-sm btn-block btn-success">
-						<i class="icon-plus-sign bigger-120"></i>
-						<span class="bigger-110">Add as a friend</span>
-					</a>
-				
-					{%elif eliminar%}
-
-					<a href="/profile/delete_follow/{{user.username}}" class="btn btn-sm btn-block btn-success">
-						<i class="icon-plus-sign bigger-120"></i>
-						<span class="bigger-110">Delete as a friend</span>
-					</a>
-				
-
-					{%endif%}
+                    <img gravatar-src="'{{user.email}}'" gravatar-size="280">					
 				</div>
 
 				<div class="space-36"></div>
@@ -63,10 +44,10 @@
 					<div class="tabbable tabs">
 						<ul class="nav nav-tabs" id="myTab3">
 
-							<li class="active">
+							<li class="">
 								<a data-toggle="tab" href="#home3">
 									<i class="pink icon-dashboard bigger-110"></i>
-									Muro
+									Walk
 									<span class="badge badge-danger">4</span>
 								</a>
 							</li>
@@ -78,21 +59,21 @@
 								</a>
 							</li>
 
-							<li class="">
+							<li class="active">
 								<a data-toggle="tab" href="#dropdown13">
 									<i class="icon-rocket"></i>
-									More
+									Follows
 								</a>
 							</li>
 						</ul>
 
 						<div class="tab-content">
-							<div id="home3" class="tab-pane active">
+							<div id="home3" class="tab-pane">
 					            	{% include 'tribs.html' %}
 							</div>
 
 							<div id="profile3" class="tab-pane">
-							    <form accept-charset="UTF-8" action="profile/done" autocomplete="off" method="post">
+							    <form name = "Form" accept-charset="UTF-8" action="profile/done" autocomplete="off" method="post">
 							        {% csrf_token %}
 							        <ul class="unstyled row-fluid">
 							            <li><label class ="span2 offset1">Email:</label>{{editForm.email}}</li>            
@@ -105,13 +86,42 @@
 							    </form>
 							</div>
 
-							<div id="dropdown13" class="tab-pane ">
+							<div id="dropdown13" class="tab-pane active">
+								<div class = "row-fluid">
+									<label class = "span2 offset6">Search:</label>
+									<input class = "span2" name = "filtro" method = "GET"></input>
+								</div>
+
+
+
+								<div class = "container-fluid">
+									<div class = "span12">
+
+							        </div>
+
+									<div class = "span">
+										<div ng-repeat="follow in follows |limitTo:5">
+											<span class= "span2 offset">
+								                <span class="trib_avatar">
+								                    <img gravatar-src="'{% verbatim %}{{follow.email}}{% endverbatim %}'" gravatar-size="100">
+								                </span>
+								            </span>
+
+											<span class= "span4">
+												<h>esto es una prueba
+								            </span>
+							        	</div>
+							        </div>
+
+								</div>
 							</div>
 						</div>
 					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-</div>
+</div>			
 
 {% endblock %}
 
