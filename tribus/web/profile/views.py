@@ -23,7 +23,7 @@ def SearchProfile(request, nick):
 
     render_js = ['jquery', 'jquery.autogrow',  'jquery.timeago','bootstrap', 'angular',
                 'angular.resource', 'angular.infinite-scroll', 'profiles.app', 
-                'profiles.jquery', 'navbar.app', 'navbar.jquery', 'md5','angular-gravatar']
+                'profiles_view.jquery', 'navbar.app', 'navbar.jquery', 'md5','angular-gravatar']
 
     render_css = ['normalize', 'fonts', 'font-awesome', 'bootstrap',
                     'bootstrap-responsive', 'tribus' ,'tribus-responsive']

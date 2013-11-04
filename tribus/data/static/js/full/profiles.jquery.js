@@ -2,7 +2,7 @@ $(document).ready(function(){
 
     //$("id_email").name.defaultValue = user_email;
     document.Form.email.defaultValue= user_email;
-    document.Form.email.defaultValue= user_descripcion;
+    
     // Autoresize all textareas with "autosize" class when
     // writing on them. Uses "autogrow" jQuery plugin
     $('textarea.autosize').autogrow({ animate: false,
