@@ -10,8 +10,6 @@
                             </a>
                         </li>
                         <li class="divider-vertical"></li>
-                    
-                   
                     </ul>
                     {% if user.is_authenticated %}
                     <ul class="nav">
@@ -19,30 +17,23 @@
                          	<form class="form-search" action = "/paquetes/busqueda/" method = "POST">
                                 {% csrf_token %}
                                 <span class="input-icon">
-                                	
                                     <input type="text" class="nav-search-input input-large top_search_input" autocomplete="off"
                                     name="busqueda" placeholder="Search or type a command" ng-model="top_search" ng-keyup="refreshResults()" />
-                                    
                                     <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
+                                    	<h3 ng-if="hasPackages()">Packages</h3>
                                 		<li role="presentation" ng-repeat="result in package_results">
                                 			<a role="menuitem" tabindex="-1" href="{% verbatim %}{{ result.url }}{% endverbatim %}">{% verbatim %}{{ result.autoname }}{% endverbatim %}</a>
                                 		</li>
-                                		
-                                		<li role="presentation" ng-repeat="result in user_results">
-	                                		<a role="menuitem" tabindex="-1" href="{% verbatim %}{{ result.url }}{% endverbatim %}">
-	                                			{% verbatim %}{{ result.autoname }}{% endverbatim %}
-	                                		</a>
+                                		<h3 ng-if="hasUsers()">Users</h3>
+                                		<li role="presentation" ng-repeat="result in users_results">
+	                                		<a role="menuitem" tabindex="-1" href="{% verbatim %}{{ result.url }}{% endverbatim %}">{% verbatim %}{{ result.autoname }}{% endverbatim %}</a>
 	                                	</li>
-                                		
-                                		<li ng-if="no_results">
-                                			No hay resultados.
-                                		</li>
+                                		<h3 ng-if="noResults()">No matching results</h3>
                             		</ul>
                                     <i class="icon-search nav-search-icon"></i>
                                 </span>
                             </form>     
                         </li>                       
-                   
                     </ul>
                     <ul class="nav pull-right">
                         <li>
