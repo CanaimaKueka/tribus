@@ -23,7 +23,8 @@ tribus.controller('NewTribController',['$scope','$timeout','Tribs',
     NewTribController]);
 tribus.controller('TribListController',['$scope','$timeout','Tribs',
     TribListController]);
-tribus.controller('UserController',['$scope','UserProfile', 'User' ,UserController]);
+tribus.controller('UserController',['$scope','UserProfile', 'User' ,
+    UserController]);
 
 function UserController($scope, UserProfile, User){
     $scope.follow = function(){
@@ -354,19 +355,6 @@ angular.module('Tribs', ['ngResource'])
                     'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
                 },
             },
-        });
-    });
-
-angular.module('Timeline', ['ngResource'])
-    .factory('Timeline', function($resource){
-        return $resource('/api/0.1/user/timeline', {}, {
-            query: {
-                method: 'GET',
-                isArray: true,
-                transformResponse: function(data){
-                    return angular.fromJson(data).objects;
-                }
-            }
         });
     });
 
