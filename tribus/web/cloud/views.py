@@ -31,11 +31,16 @@ def profile(request, name):
                 if not dict_details[det.Distribution][det.Architecture]['relations'].has_key(n.relation_type):
                     dict_details[det.Distribution][det.Architecture]['relations'][n.relation_type] = []
                 dict_details[det.Distribution][det.Architecture]['relations'][n.relation_type].append(n)
+                
+    render_js = ['jquery', 'jquery.autogrow', 'bootstrap', 'angular', 'angular.resource', 
+                 'angular.infinite-scroll', 'dashboard.app', 'dashboard.jquery',
+                 'navbar.app', 'navbar.jquery', 'md5', 'angular-gravatar']
     
     return render(request, 'cloud/packages.html', {
         'paquete': package_info,
         'raiz': raiz,
         'detalles': dict_details,
+        'render_js': render_js,
         })
 
 
