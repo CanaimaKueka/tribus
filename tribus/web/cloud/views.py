@@ -7,8 +7,6 @@ from tribus.config.pkgrecorder import raiz, relation_types
 
 
 def frontpage(request):
-
-    
     return render(request, 'cloud/frontpage.html', {
         'render_js': ['jquery', 'bootstrap', 'angular', 'angular.resource',
                         'cloud.frontpage.app', 'cloud.frontpage.jquery',

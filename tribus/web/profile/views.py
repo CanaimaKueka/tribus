@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
 from django.http import HttpResponse, HttpResponseRedirect
-from tribus.web.user.pipeline import edit_ldap_user
-from django.shortcuts import get_object_or_404, render
+
+from django.shortcuts import render, get_object_or_404
 from django.template import RequestContext
 from django.contrib.auth.models import User
 from tribus.web.profile.forms import data_change
-
+from tribus.web.user.pipeline import edit_ldap_user
 
 def SearchProfile(request, nick):
     try:
@@ -28,13 +29,13 @@ def SearchProfile(request, nick):
     render_css = ['normalize', 'fonts', 'font-awesome', 'bootstrap',
                     'bootstrap-responsive', 'tribus' ,'tribus-responsive']
 
-    context = {"render_css": render_css ,
-            "render_js":render_js,
-            "user": user,
-            "user_view":user_view,            
+    context = {
+            'render_css': render_css,
+            'render_js': render_js,
+            'user': user,
+            'user_view': user_view,            
             }
 
-    #modificar el template redireccion
     return render(request,'profile/profiles_view.html',context)
 
 
