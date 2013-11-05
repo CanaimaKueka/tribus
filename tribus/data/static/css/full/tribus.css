@@ -14999,9 +14999,9 @@ th[aria-selected=true] .ui-jqgrid-sortable {
     border-right: 10px solid rgb(248, 248, 241);
 }
 
-
 .action_body > .action_bubble {
     padding: 2%;
+    padding-bottom: 0;
     margin: 2% 0;
     width: 92%;
     background: rgb(255, 255, 255);
@@ -15013,6 +15013,36 @@ th[aria-selected=true] .ui-jqgrid-sortable {
     float: left;
     display: block;
     position: relative;
+}
+
+.action_bubble > .ng-valid-maxlength:focus:invalid,
+.action_bubble > .ng-valid-minlength:focus:invalid,
+.action_bubble > .ng-dirty:focus:invalid,
+.action_bubble > .ng-invalid:focus:invalid,
+.action_bubble > .ng-invalid-required:focus:invalid,
+.action_bubble > .ng-valid-maxlength:focus:invalid:focus,
+.action_bubble > .ng-valid-minlength:focus:invalid:focus,
+.action_bubble > .ng-dirty:focus:invalid:focus,
+.action_bubble > .ng-invalid:focus:invalid:focus,
+.action_bubble > .ng-invalid-required:focus:invalid:focus {
+    color: rgb(133, 133, 133);
+    border: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+.action_bubble > .action_validation {
+    padding: 0;
+    margin: 0;
+    margin-bottom: 1%;
+    width: 100%;
+    color: rgb(133, 133, 133);
+    float: left;
+    display: block;
+    position: relative;
+    text-align: right;
+    line-height: 1;
 }
 
 .action_bubble > .action_textarea {

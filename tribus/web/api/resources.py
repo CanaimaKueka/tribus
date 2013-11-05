@@ -1,29 +1,30 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from django.conf.urls import url
 from tastypie.cache import NoCache
-from tastypie.authentication import SessionAuthentication, Authentication
+from tastypie.authentication import SessionAuthentication
 from tastypie.authorization import Authorization
+from tastypie.validation import FormValidation
 from tastypie.constants import ALL_WITH_RELATIONS
-from tastypie.utils import trailing_slash
 from tastypie.bundle import Bundle
 from tastypie import fields
 from tastypie_mongoengine.resources import MongoEngineResource
-from django.core.paginator import Paginator, InvalidPage
-from django.http import Http404
+
 
 from tastypie.resources import ModelResource, Resource
 from tastypie.fields import ManyToManyField, OneToOneField
 from tribus.web.api.authorization import (TimelineAuthorization, TribAuthorization, CommentAuthorization, UserAuthorization, UserProfileAuthorization)
 from tribus.web.documents import Trib, Comment
 
-from tastypie_mongoengine.fields import EmbeddedListField
 from django.contrib.auth.models import User
 from tribus.web.profile.models import UserProfile
 
 from haystack.query import SearchQuerySet
 from tribus.web.cloud.models import Package
+
+
+from tribus.web.forms import TribForm
+
 
 class UserResource(ModelResource):
     user_profile = OneToOneField(to='tribus.web.api.resources.UserProfileResource', attribute='user_profile', related_name='user')
@@ -36,7 +37,7 @@ class UserResource(ModelResource):
         allowed_methods = ['get', 'patch']
         filtering = { 'id': ALL_WITH_RELATIONS }
         authorization = UserAuthorization()
-        authentication = Authentication()
+        authentication = SessionAuthentication()
         cache = NoCache()
 
 
@@ -52,7 +53,7 @@ class UserProfileResource(ModelResource):
         allowed_methods = ['get', 'patch']
         filtering = { 'id': ALL_WITH_RELATIONS }
         authorization = UserProfileAuthorization()
-        authentication = Authentication()
+        authentication = SessionAuthentication()
         cache = NoCache()
 
 
@@ -75,10 +76,8 @@ class TribResource(MongoEngineResource):
         allowed_methods = ['get', 'post', 'delete']
         filtering = { 'author_id': ALL_WITH_RELATIONS }
         authorization = TribAuthorization()
-
-        
-        #puedes ver los tribs asi no estes logueado =P
-        authentication = Authentication()
+        authentication = SessionAuthentication()
+        validation = FormValidation(form_class=TribForm)
         cache = NoCache()
 
 
@@ -93,9 +92,6 @@ class CommentResource(MongoEngineResource):
         authentication = SessionAuthentication()
         cache = NoCache()
 
-        '''
-curl --dump-header - -H "Content-Type: application/json" -X POST --data '{"author_id": 2, "author_username": "luis", "author_first_name": "Luis Alejandro", "author_last_name": "Martínez Faneyth", "author_email": "luis@huntingbears.com.ve", "comment_content": "hola", "comment_pub_date": "2013-09-25T00:03:55.804000", "trib_id": "525b5e4fea10251d9969b97e"}' http://localhost:8000/api/0.1/comments/525b5e4fea10251d9969b97e
-        '''
 
 class SearchResource(Resource):
     type = fields.CharField(attribute='model_name')
@@ -106,6 +102,7 @@ class SearchResource(Resource):
         resource_name = 'search'
         object_class = SearchQuerySet
         authorization = Authorization()
+        authentication = SessionAuthentication()
                  
     def detail_uri_kwargs(self, bundle_or_obj):
         kwargs = {}

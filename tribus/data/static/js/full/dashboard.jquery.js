@@ -7,12 +7,34 @@ $(document).ready(function(){
                                       cloneClass: 'autosize' });
 
     $('textarea.action_textarea').keyup(function () {
-        if($(this).val().length > 0){
+
+        if(this.value.length === 0){
+            $('button.action_button').attr('disabled', 'disabled');
+        }
+        
+        if(this.value.length > 0){
             $('button.action_button').removeAttr('disabled');
         }
+        
+        if(this.value.length >= 190){
+            $(this).siblings('.action_validation').css('color', '#ED6E28');
+        } else {
+            $(this).siblings('.action_validation').css('color', 'rgb(133, 133, 133)');
+        }
+        
+        $(this).siblings('.action_validation').text(200-this.value.length);
 
-        if($(this).val().length === 0){
-            $('button.action_button').attr('disabled', 'disabled');
+    });
+
+    $('textarea.action_textarea').keypress(function(e) {
+        if (e.which < 0x20) {
+            return;
+        }
+
+        if (this.value.length == 200) {
+            e.preventDefault();
+        } else if (this.value.length > 200) {
+            this.value = this.value.substring(0, 200);
         }
     });
 

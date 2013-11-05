@@ -8,26 +8,22 @@ var tribus = angular.module('tribus',
 	['Tribs', 'Timeline', 'Comments', 'Search', 'infinite-scroll', 'ui.gravatar']);
 
 
-// Events ----------------------------------------------------------------------
-
-tribus.run(function($rootScope){
-    $rootScope.$on('addNewTribsRefreshEmit', function(event, args){
-        $rootScope.$broadcast('addNewTribsRefreshReceive', args);
-    });
-});
-
-
 // Controllers -----------------------------------------------------------------
 
-tribus.controller('NewTribController', ['$scope', '$timeout', 'Tribs',
-    NewTribController]);
-tribus.controller('TribListController',['$scope', '$timeout', 'Timeline',
-    TribListController]);
+tribus.controller('TribController', ['$scope', '$timeout', 'Tribs', 'Timeline',
+    TribController]);
 tribus.controller('CommentController', ['$scope', '$timeout', 'Comments',
     CommentController]);
 
 
-function NewTribController($scope, $timeout, Tribs){
+function TribController($scope, $timeout, Tribs, Timeline){
+
+    $scope.controller_busy = controller_busy;
+    $scope.trib_limit_to = trib_limit_to;
+    $scope.trib_limit = trib_limit;
+    $scope.trib_offset = trib_offset;
+    $scope.trib_orderby = trib_orderby;
+    $scope.tribs = [];
 
     $scope.createNewTrib = function(){
 
@@ -43,92 +39,17 @@ function NewTribController($scope, $timeout, Tribs){
 
         Tribs.save(newtrib, function(){
             $scope.trib_content = '';
-            $scope.$emit('addNewTribsRefreshEmit', {});
+            $timeout(function(){$scope.addNewTribs();});
+            $timeout(function(){$('textarea.action_textarea').trigger('keyup');});
         });
     };
 
     $scope.pollNewTribs = function() {
-       $timeout(function() {
-          $scope.$emit('addNewTribsRefreshEmit', {});
-          $scope.pollNewTribs();
-       }, 60000);
+        $timeout(function() {
+            $timeout(function(){$scope.addNewTribs();});
+            $timeout(function(){$scope.pollNewTribs();});
+        }, 60000);
     };
-
-    $scope.pollNewTribs();
-}
-
-
-function CommentController($scope, $timeout, Comments){
-
-    $scope.comment_limit_to = comment_limit_to;
-    $scope.comment_limit = comment_limit;
-    $scope.comment_offset = comment_offset;
-    $scope.comment_orderby = comment_orderby;
-    $scope.comments = [];
-
-    $scope.createNewComment = function(){
-
-        var newcomment = {
-            author_id: user_id,
-            author_username: user_username,
-            author_first_name: user_first_name,
-            author_last_name: user_last_name,
-            author_email: user_email,
-            comment_content: this.comment_content,
-            comment_pub_date: new Date().toISOString(),
-            trib_id: $scope.trib_id
-        };
-
-        Comments.save(newcomment, function(){
-            $scope.comment_content = '';
-            $scope.addNewComments();
-        });
-    };
-
-    $scope.deleteComment = function(){
-        console.log(this);
-    }
-
-    $scope.addNewComments = function(){
-
-        var test_comments_query = Comments.query({
-            trib_id: $scope.trib_id,
-            limit: 1,
-            offset: 0
-        }, function(){
-            var total_comments_count = test_comments_query.meta.total_count
-        });
-
-        var fresh_comments = Comments.query({
-            trib_id: $scope.trib_id,
-            order_by: $scope.comment_orderby,
-            limit: $scope.comment_limit,
-            offset: $scope.comment_offset
-        }, function(){
-            $scope.comments = fresh_comments.objects;
-            $scope.comment_limit_to = $scope.comments.length;
-            $scope.comment_limit = $scope.comment_limit + comment_add;
-            $timeout(function(){$('.trib_list').trigger('reload_dom');});
-        });
-    };
-
-    $timeout(function(){$scope.addNewComments();});
-}
-
-function TribListController($scope, $timeout, Timeline){
-
-    $scope.controller_busy = controller_busy;
-    $scope.trib_limit_to = trib_limit_to;
-    $scope.trib_limit = trib_limit;
-    $scope.trib_offset = trib_offset;
-    $scope.trib_orderby = trib_orderby;
-    $scope.tribs = [];
-
-    $scope.$on('addNewTribsRefreshReceive', function(event, args){
-        $timeout(function(){
-            $scope.addNewTribs($scope, $timeout, Timeline, trib_offset);
-        });
-    });
 
     $scope.toggleTrib = function(){
         if($scope.tribs[this.$index].reply_show === false ||
@@ -228,6 +149,63 @@ function TribListController($scope, $timeout, Timeline){
             $scope.controller_busy = false;
         });
     };
+}
+
+
+function CommentController($scope, $timeout, Comments){
+
+    $scope.comment_limit_to = comment_limit_to;
+    $scope.comment_limit = comment_limit;
+    $scope.comment_offset = comment_offset;
+    $scope.comment_orderby = comment_orderby;
+    $scope.comments = [];
+
+    $scope.createNewComment = function(){
+
+        var newcomment = {
+            author_id: user_id,
+            author_username: user_username,
+            author_first_name: user_first_name,
+            author_last_name: user_last_name,
+            author_email: user_email,
+            comment_content: this.comment_content,
+            comment_pub_date: new Date().toISOString(),
+            trib_id: $scope.trib_id
+        };
+
+        Comments.save(newcomment, function(){
+            $scope.comment_content = '';
+            $scope.addNewComments();
+        });
+    };
+
+    $scope.deleteComment = function(){
+        console.log(this);
+    }
+
+    $scope.addNewComments = function(){
+
+        // var test_comments_query = Comments.query({
+        //     trib_id: $scope.trib_id,
+        //     limit: 1,
+        //     offset: 0
+        // }, function(){
+        //     var total_comments_count = test_comments_query.meta.total_count
+        // });
+
+        var fresh_comments = Comments.query({
+            trib_id: $scope.trib_id,
+            order_by: $scope.comment_orderby,
+            limit: $scope.comment_limit,
+            offset: $scope.comment_offset
+        }, function(){
+            $scope.comments = fresh_comments.objects;
+            $scope.comment_limit_to = $scope.comments.length;
+            $scope.comment_limit = $scope.comment_limit + comment_add;
+            $timeout(function(){$('.trib_list').trigger('reload_dom');});
+        });
+    };
+
 }
 
 

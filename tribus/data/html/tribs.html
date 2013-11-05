@@ -1,123 +1,126 @@
 {% load i18n %}
-<div class="action_publisher" ng-controller="NewTribController" ng-cloak>
-    <div class="row-fluid">
-        <form ng-submit="createNewTrib()">
-            <span class="span1">
-                <span class="action_avatar"> 
-                    <img gravatar-src="'{{user.email}}'" gravatar-size="100">
+<div ng-controller="TribController">
+    <div class="action_publisher">
+        <div class="row-fluid">
+            <form autocomplete="off" name="action_form" ng-submit="createNewTrib()">
+                <span class="span1">
+                    <span class="action_avatar"> 
+                        <img gravatar-src="'{{user.email}}'" gravatar-size="100">
+                    </span>
                 </span>
-            </span>
-            <span class="span9 action_body">
-                <span class="arrow_left"></span>
-                <span class="action_bubble">
-                    <textarea ng-model="trib_content" rows="1" class="action_textarea autosize expand" placeholder="{% trans 'What are you doing?' %}"></textarea>
+                <span class="span9 action_body">
+                    <span class="arrow_left"></span>
+                    <span class="action_bubble">
+                        {{ tribform.trib_content }}
+                        <span class="action_validation">200</span>
+                    </span>
                 </span>
-            </span>
-            <span class="span2 action_submit">
-                <button class="btn btn-success action_button" disabled="disabled">
-                    <i class="icon-pencil"></i>
-                    {% trans 'Publish' %}
-                </button>
-            </span>
-        </form>
+                <span class="span2 action_submit">
+                    <button class="btn btn-success action_button" disabled="disabled">
+                        <i class="icon-pencil"></i>
+                        {% trans 'Publish' %}
+                    </button>
+                </span>
+            </form>
+        </div>
     </div>
-</div>
-<div class="trib_list" infinite-scroll="addOldTribs()" infinite-scroll-disabled="controller_busy" infinite-scroll-distance="0" ng-controller="TribListController" ng-cloak>
-    <ul>
-        <li id="{% verbatim %}{{ trib.id }}{% endverbatim %}" class="row-fluid trib_item" ng-repeat="trib in tribs | orderBy: trib_orderby | limitTo: trib_limit_to track by trib.id">
-            <span class="span2">
-                <span class="trib_avatar">
-                    <img gravatar-src="'{% verbatim %}{{trib.author_email}}{% endverbatim %}'" gravatar-size="100">
-                </span>
-            </span>
-            <span class="arrow_left"></span>
-            <span class="span10 trib_body">
-                <span class="trib_title">
-                    <h3>
-                        <a href="/profile/{% verbatim %}{{ trib.author_username }}{% endverbatim %}">
-                            {% verbatim %}
-                            {{ trib.author_first_name }} {{ trib.author_last_name }}
-                            {% endverbatim %}
-                        </a>
-                    </h3>
-                    <h4>{% verbatim %}@{{ trib.author_username }}{% endverbatim %}</h4>
-                    <h4 class="timeago pull-right" title="{% verbatim %}{{ trib.trib_pub_date }}{% endverbatim %}Z"></h4>
-                </span>
-                <span class="trib_content">{% verbatim %}{{ trib.trib_content }}{% endverbatim %}</span>
-                <span class="trib_interact">
-                    <span class="pull-right" ng-click="toggleTrib()">
-                        <a href=""><span class="icon-chevron-down"></span>{% trans 'Comment' %}</a>
-                    </span>
-                    <span class="pull-right" ng-click="shareTrib()">
-                        <a href=""><span class="icon-bullhorn"></span>{% trans 'Share' %}</a>
-                    </span>
-                    <span class="pull-right" ng-click="favTrib()">
-                        <a href=""><span class="icon-star-empty"></span>{% trans 'Favorite' %}</a>
-                    </span>
-                    <span class="pull-right" ng-click="dislikeTrib()">
-                        <a href=""><span class="icon-thumbs-down-alt"></span>{% trans 'Dislike' %}</a>
-                    </span>
-                    <span class="pull-right" ng-click="likeTrib()">
-                        <a href=""><span class="icon-thumbs-up-alt"></span>{% trans 'Like' %}</a>
-                    </span>
-                    <span ng-click="deleteTrib()">
-                        <a href=""><span class="icon-trash"></span>{% trans 'Delete' %}</a>
+    <div class="trib_list" infinite-scroll="addOldTribs()" infinite-scroll-disabled="controller_busy" infinite-scroll-distance="0">
+        <ul>
+            <li id="{% verbatim %}{{ trib.id }}{% endverbatim %}" class="row-fluid trib_item" ng-repeat="trib in tribs | orderBy: trib_orderby | limitTo: trib_limit_to track by trib.id">
+                <span class="span2">
+                    <span class="trib_avatar">
+                        <img gravatar-src="'{% verbatim %}{{trib.author_email}}{% endverbatim %}'" gravatar-size="100">
                     </span>
                 </span>
-                <span class="trib_reply">
-                    <span class="comment_list" ng-controller="CommentController" ng-if="trib.reply_show" ng-init="this.trib_id = trib.id;">
-                        <ul>
-                            <li>
-                                <button class="btn btn-yellow more_comments_button" ng-click="addNewComments()">
-                                    {% trans 'Load more comments' %}
-                                </button>
-                            </li>
-                            <li id="{% verbatim %}{{ comment.id }}{% endverbatim %}" class="row-fluid comment_item" ng-repeat="comment in comments | orderBy: comment_orderby | limitTo: comment_limit_to track by comment.id">
-                                <span class="span1">
-                                    <span class="comment_avatar"></span>
-                                </span>
-                                <span class="span11 comment_body">
-                                    <span class="comment_text">
-                                        <h3>
-                                            <a href="/profile/{% verbatim %}{{ comment.author_username }}{% endverbatim %}">
-                                                {% verbatim %}
-                                                {{ comment.author_first_name }} {{ comment.author_last_name }}
-                                                {% endverbatim %}
-                                            </a>
-                                        </h3>
-                                        {% verbatim %}{{ comment.comment_content }}{% endverbatim %}
-                                    </span>
-                                    <span class="close" ng-click="deleteComment()">x</span>
-                                    <span class="comment_date">
-                                        <h4 class="timeago" title="{% verbatim %}{{ comment.comment_pub_date }}{% endverbatim %}Z"></h4>
-                                        <span class="comment_number pull-right smaller-80">
-                                            {% verbatim %}{{ $index+1 }}{% endverbatim %}
-                                        </span>
-                                    </span>
-                                </span>
-                            </li>
-                            <li class="comment_box">                        
-                                <form ng-submit="createNewComment()">
+                <span class="arrow_left"></span>
+                <span class="span10 trib_body">
+                    <span class="trib_title">
+                        <h3>
+                            <a href="/profile/{% verbatim %}{{ trib.author_username }}{% endverbatim %}">
+                                {% verbatim %}
+                                {{ trib.author_first_name }} {{ trib.author_last_name }}
+                                {% endverbatim %}
+                            </a>
+                        </h3>
+                        <h4>{% verbatim %}@{{ trib.author_username }}{% endverbatim %}</h4>
+                        <h4 class="timeago pull-right" title="{% verbatim %}{{ trib.trib_pub_date }}{% endverbatim %}Z"></h4>
+                    </span>
+                    <span class="trib_content">{% verbatim %}{{ trib.trib_content }}{% endverbatim %}</span>
+                    <span class="trib_interact">
+                        <span class="pull-right" ng-click="toggleTrib()">
+                            <a href=""><span class="icon-chevron-down"></span>{% trans 'Comment' %}</a>
+                        </span>
+                        <span class="pull-right" ng-click="shareTrib()">
+                            <a href=""><span class="icon-bullhorn"></span>{% trans 'Share' %}</a>
+                        </span>
+                        <span class="pull-right" ng-click="favTrib()">
+                            <a href=""><span class="icon-star-empty"></span>{% trans 'Favorite' %}</a>
+                        </span>
+                        <span class="pull-right" ng-click="dislikeTrib()">
+                            <a href=""><span class="icon-thumbs-down-alt"></span>{% trans 'Dislike' %}</a>
+                        </span>
+                        <span class="pull-right" ng-click="likeTrib()">
+                            <a href=""><span class="icon-thumbs-up-alt"></span>{% trans 'Like' %}</a>
+                        </span>
+                        <span ng-click="deleteTrib()">
+                            <a href=""><span class="icon-trash"></span>{% trans 'Delete' %}</a>
+                        </span>
+                    </span>
+                    <span class="trib_reply">
+                        <span class="comment_list" ng-controller="CommentController" ng-if="trib.reply_show" ng-init="this.trib_id = trib.id;addNewComments();">
+                            <ul>
+                                <li>
+                                    <button class="btn btn-yellow more_comments_button" ng-click="addNewComments()">
+                                        {% trans 'Load more comments' %}
+                                    </button>
+                                </li>
+                                <li id="{% verbatim %}{{ comment.id }}{% endverbatim %}" class="row-fluid comment_item" ng-repeat="comment in comments | orderBy: comment_orderby | limitTo: comment_limit_to track by comment.id">
                                     <span class="span1">
                                         <span class="comment_avatar"></span>
                                     </span>
-                                    <span class="span9 comment_body">
-                                        <span class="arrow_left"></span>
-                                        <span class="comment_bubble">
-                                            <textarea ng-model="comment_content" rows="1" class="comment_textarea autosize expand" placeholder="{% blocktrans %}What do you want to say?{% endblocktrans %}"></textarea>
+                                    <span class="span11 comment_body">
+                                        <span class="comment_text">
+                                            <h3>
+                                                <a href="/profile/{% verbatim %}{{ comment.author_username }}{% endverbatim %}">
+                                                    {% verbatim %}
+                                                    {{ comment.author_first_name }} {{ comment.author_last_name }}
+                                                    {% endverbatim %}
+                                                </a>
+                                            </h3>
+                                            {% verbatim %}{{ comment.comment_content }}{% endverbatim %}
+                                        </span>
+                                        <span class="close" ng-click="deleteComment()">x</span>
+                                        <span class="comment_date">
+                                            <h4 class="timeago" title="{% verbatim %}{{ comment.comment_pub_date }}{% endverbatim %}Z"></h4>
+                                            <span class="comment_number pull-right smaller-80">
+                                                {% verbatim %}{{ $index+1 }}{% endverbatim %}
+                                            </span>
                                         </span>
                                     </span>
-                                    <span class="span2">
-                                        <button class="btn btn-success btn-xs comment_button" disabled="disabled">
-                                            {% trans 'Comment' %}
-                                        </button>
-                                    </span>
-                                </form>
-                            </li>
-                        </ul>
+                                </li>
+                                <li class="comment_box">                        
+                                    <form ng-submit="createNewComment()">
+                                        <span class="span1">
+                                            <span class="comment_avatar"></span>
+                                        </span>
+                                        <span class="span9 comment_body">
+                                            <span class="arrow_left"></span>
+                                            <span class="comment_bubble">
+                                                <textarea ng-model="comment_content" rows="1" class="comment_textarea autosize expand" placeholder="{% blocktrans %}What do you want to say?{% endblocktrans %}"></textarea>
+                                            </span>
+                                        </span>
+                                        <span class="span2">
+                                            <button class="btn btn-success btn-xs comment_button" disabled="disabled">
+                                                {% trans 'Comment' %}
+                                            </button>
+                                        </span>
+                                    </form>
+                                </li>
+                            </ul>
+                        </span>
                     </span>
                 </span>
-            </span>
-        </li>
-    </ul>
+            </li>
+        </ul>
+    </div>
 </div>
