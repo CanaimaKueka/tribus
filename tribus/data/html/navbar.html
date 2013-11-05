@@ -14,11 +14,11 @@
                     {% if user.is_authenticated %}
                     <ul class="nav">
                          <li class="dropdown" ng-controller="SearchListController">
-                         	<form class="form-search" action = "/paquetes/busqueda/" method = "POST">
+                         	<form class="form-search" action = "/search/" method = "GET">
                                 {% csrf_token %}
                                 <span class="input-icon">
                                     <input type="text" class="nav-search-input input-large top_search_input" autocomplete="off"
-                                    name="busqueda" placeholder="Search or type a command" ng-model="top_search" ng-keyup="refreshResults()" />
+                                    name="q" placeholder="Search or type a command" ng-model="top_search" ng-keyup="refreshResults()" />
                                     <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
                                     	<h3 ng-if="hasPackages()">Packages</h3>
                                 		<li role="presentation" ng-repeat="result in package_results">

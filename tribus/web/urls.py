@@ -11,6 +11,9 @@ urlpatterns = patterns(
     '',
     url(r'^$', 'tribus.web.views.index'),
     url(r'^tour/$', 'tribus.web.views.tour'),
+    url(r'^search/$', 'tribus.web.views.tribus_search'),
+    #url(r'^search/', include('haystack.urls')),
+    
     url(r'', include('tribus.web.user.urls')),
     url(r'', include('tribus.web.cloud.urls')),
     url(r'', include('tribus.web.profile.urls')),

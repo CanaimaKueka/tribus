@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans 'Tribus Search' %}{% endblock %}
+{% block content %}
+
+<script type="text/javascript">
+    var packages_url_placer = '/cloud/';
+    var user_url_placer = '/profile/';
+</script>
+
+<div class="jumbotron">
+	<div class="container-fluid">
+		<div class="row-fluid dashboard_container">
+			<div class="span8 dashboard_timeline">
+				<div class="page-header">
+					<h1> {% trans 'Search results' %} </h1>
+				</div>
+				{% for result in page.object_list %}
+					{% if result.model_name == "package" %}
+				    	<p> {{ forloop.counter}}.- <b> <a href="/cloud/{{ result.autoname }}">{{ result.autoname }}</a> </b> 
+				    		{% if result.description %} {{ result.description|truncatechars:200 }}
+				    		{% else %} <i>Virtual package</i> {% endif %}</p>
+				    {% elif result.model_name == "user" %}
+				   		<p> {{ forloop.counter}}.- <b> <a href="/profile/{{ result.autoname }}">{{ result.autoname }}</a> </b>
+				   			{{ result.description|truncatechars:25 }}</p>
+				    {% endif %}
+				{% empty %}
+				   <p>No results found.</p>
+				{% endfor %}
+				
+				<div class="pagination">
+				    <span class="step-links">
+				        {% if page.has_previous %}
+				            <a href="?q={{query}}&page={{ page.previous_page_number }}">previous</a>
+				        {% endif %}
+				
+				        <span class="current">
+				            Page {{ page.number }} of {{ page.paginator.num_pages }}.
+				        </span>
+				
+				        {% if page.has_next %}
+				            <a href="?q={{query}}&page={{ page.next_page_number }}">next</a>
+				        {% endif %}
+				    </span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
