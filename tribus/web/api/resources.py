@@ -101,11 +101,13 @@ class SearchResource(Resource):
     type = fields.CharField(attribute='model_name')
     autoname = fields.CharField(attribute='autoname')
     username = fields.CharField(attribute='username', null=True)
+    description = fields.CharField(attribute='description', null=True)
     
     class Meta:
         resource_name = 'search'
         object_class = SearchQuerySet
         authorization = Authorization()
+        limit = 10
                  
     def detail_uri_kwargs(self, bundle_or_obj):
         kwargs = {}
