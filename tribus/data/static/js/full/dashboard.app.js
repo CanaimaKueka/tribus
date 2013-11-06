@@ -64,6 +64,17 @@ function TribController($scope, $timeout, Tribs, Timeline){
         }
     };
 
+    $scope.toggleDeleteModal = function(){
+        if($scope.tribs[this.$index].delete_modal_show === false ||
+           $scope.tribs[this.$index].delete_modal_show === undefined){
+            $scope.tribs[this.$index].delete_modal_show = true;
+            // $('#myModal').modal('toggle')
+        } else {
+            $scope.tribs[this.$index].delete_modal_show = false;
+            // $('#myModal').modal('toggle')
+        }
+    };
+
     $scope.addOldTribs = function(){
 
         if ($scope.tribs_end) return;

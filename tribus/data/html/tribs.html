@@ -50,21 +50,24 @@
                         <span class="pull-right" ng-click="toggleTrib()">
                             <a href=""><span class="icon-chevron-down"></span>{% trans 'Comment' %}</a>
                         </span>
-                        <span class="pull-right" ng-click="shareTrib()">
+                        <span ng-if="trib.author_id != {{ user.id }}" ng-click="shareTrib()" class="pull-right">
                             <a href=""><span class="icon-bullhorn"></span>{% trans 'Share' %}</a>
                         </span>
-                        <span class="pull-right" ng-click="favTrib()">
+                        <span ng-if="trib.author_id != {{ user.id }}" ng-click="favTrib()" class="pull-right">
                             <a href=""><span class="icon-star-empty"></span>{% trans 'Favorite' %}</a>
                         </span>
-                        <span class="pull-right" ng-click="dislikeTrib()">
+                        <span ng-if="trib.author_id != {{ user.id }}" ng-click="dislikeTrib()" class="pull-right">
                             <a href=""><span class="icon-thumbs-down-alt"></span>{% trans 'Dislike' %}</a>
                         </span>
-                        <span class="pull-right" ng-click="likeTrib()">
+                        <span ng-if="trib.author_id != {{ user.id }}" ng-click="likeTrib()" class="pull-right">
                             <a href=""><span class="icon-thumbs-up-alt"></span>{% trans 'Like' %}</a>
                         </span>
-                        <span ng-click="deleteTrib()">
+                        <span ng-if="trib.author_id == {{ user.id }}" ng-click="toggleDeleteModal()">
                             <a href=""><span class="icon-trash"></span>{% trans 'Delete' %}</a>
                         </span>
+                    </span>
+                    <span ng-if="trib.delete_modal_show">
+
                     </span>
                     <span class="trib_reply">
                         <span class="comment_list" ng-controller="CommentController" ng-if="trib.reply_show" ng-init="this.trib_id = trib.id;addNewComments();">
