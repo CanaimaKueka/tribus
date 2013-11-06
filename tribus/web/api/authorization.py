@@ -107,10 +107,9 @@ class TribAuthorization(Authorization):
             return True
         raise Unauthorized("You are not allowed to access that resource.")
 
-    def delete_list(self, object_list, bundle):
-        return EmptyQuerySet()
-
     def delete_detail(self, object_list, bundle):
+        if int(bundle.obj.author_id) == int(bundle.request.user.id):
+            return True
         raise Unauthorized("You are not allowed to access that resource.")
 
 class CommentAuthorization(Authorization):

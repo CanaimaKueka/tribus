@@ -4,7 +4,6 @@
 from tastypie.cache import NoCache
 from tastypie.authentication import SessionAuthentication
 from tastypie.authorization import Authorization
-from tastypie.validation import FormValidation
 from tastypie.constants import ALL_WITH_RELATIONS
 from tastypie.bundle import Bundle
 from tastypie import fields
@@ -23,6 +22,7 @@ from haystack.query import SearchQuerySet
 from tribus.web.cloud.models import Package
 
 
+from tribus.web.api.validation import DocumentFormValidation
 from tribus.web.forms import TribForm
 
 
@@ -77,7 +77,7 @@ class TribResource(MongoEngineResource):
         filtering = { 'author_id': ALL_WITH_RELATIONS }
         authorization = TribAuthorization()
         authentication = SessionAuthentication()
-        validation = FormValidation(form_class=TribForm)
+        validation = DocumentFormValidation(form_class=TribForm)
         cache = NoCache()
 
 

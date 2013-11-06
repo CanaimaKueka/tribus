@@ -22,14 +22,12 @@ def tour(request):
 
 def index(request):
     if request.user.is_authenticated():
-        tribform = TribForm()
         render_js = ['jquery', 'jquery.autogrow', 'jquery.timeago', 'bootstrap', 'angular',
                         'angular.resource', 'angular.infinite-scroll', 'dashboard.app',
                         'dashboard.jquery', 'navbar.app', 'navbar.jquery', 'md5','angular-gravatar']
 
         return render(request, 'dashboard.html', {
             'render_js': render_js,
-            'tribform': tribform,
             })
     else:
         signupform = SignupForm()

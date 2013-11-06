@@ -45,10 +45,14 @@ function TribController($scope, $timeout, Tribs, Timeline){
     };
 
     $scope.pollNewTribs = function() {
-        $timeout(function() {
+        $timeout(function(){
             $timeout(function(){$scope.addNewTribs();});
             $timeout(function(){$scope.pollNewTribs();});
         }, 60000);
+    };
+
+    $scope.deleteTrib = function(){
+        Tribs.delete({id: $scope.tribs[this.$index].id});
     };
 
     $scope.toggleTrib = function(){
@@ -58,7 +62,7 @@ function TribController($scope, $timeout, Tribs, Timeline){
         } else {
             $scope.tribs[this.$index].reply_show = false;
         }
-    }
+    };
 
     $scope.addOldTribs = function(){
 
@@ -213,7 +217,8 @@ function CommentController($scope, $timeout, Comments){
 
 angular.module('Tribs', ['ngResource'])
     .factory('Tribs',  function($resource){
-        return $resource('/api/0.1/user/tribs', {}, {
+        return $resource('/api/0.1/user/tribs/:id',
+            { id: '@id' }, {
             save: {
                 method: 'POST',
                 headers: {
