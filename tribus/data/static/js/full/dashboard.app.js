@@ -26,33 +26,51 @@ function TribController($scope, $timeout, Tribs, Timeline){
     $scope.tribs = [];
 
     $scope.createNewTrib = function(){
-
-        var newtrib = {
+        Tribs.save({
             author_id: user_id,
             author_username: user_username,
             author_first_name: user_first_name,
             author_last_name: user_last_name,
             author_email: user_email,
             trib_content: $scope.trib_content,
-            trib_pub_date: new Date().toISOString(),
-        };
-
-        Tribs.save(newtrib, function(){
+            trib_pub_date: new Date().toISOString()
+        }, function(e){
             $scope.trib_content = '';
             $timeout(function(){$scope.addNewTribs();});
             $timeout(function(){$('textarea.action_textarea').trigger('keyup');});
+            $timeout(function(){
+                $.bootstrapGrowl(trib_save_success, {
+                    ele: 'body',
+                    type: 'success',
+                    offset: {from: 'top', amount: 50},
+                    align: 'right',
+                    width: 400,
+                    delay: 10000,
+                    allow_dismiss: true,
+                    stackup_spacing: 5
+                });
+            }, 100);
+        }, function(e){
+            $timeout(function(){
+                $.bootstrapGrowl(trib_save_error, {
+                    ele: 'body',
+                    type: 'error',
+                    offset: {from: 'top', amount: 50},
+                    align: 'right',
+                    width: 400,
+                    delay: 10000,
+                    allow_dismiss: true,
+                    stackup_spacing: 5
+                });
+            }, 100);
         });
     };
 
-    $scope.pollNewTribs = function() {
+    $scope.pollNewTribs = function(){
         $timeout(function(){
             $timeout(function(){$scope.addNewTribs();});
             $timeout(function(){$scope.pollNewTribs();});
         }, 60000);
-    };
-
-    $scope.deleteTrib = function(){
-        Tribs.delete({id: $scope.tribs[this.$index].id});
     };
 
     $scope.toggleTrib = function(){
@@ -64,23 +82,48 @@ function TribController($scope, $timeout, Tribs, Timeline){
         }
     };
 
-    $scope.toggleDeleteModal = function(){
-        if($scope.tribs[this.$index].delete_modal_show === false ||
-           $scope.tribs[this.$index].delete_modal_show === undefined){
-            $scope.tribs[this.$index].delete_modal_show = true;
-            // $('#myModal').modal('toggle')
-        } else {
-            $scope.tribs[this.$index].delete_modal_show = false;
-            // $('#myModal').modal('toggle')
-        }
+    $scope.configDeleteTrib = function(){
+        $scope.delete_trib_id = $scope.tribs[this.$index].id;
+        $scope.delete_trib_index = this.$index;
+    };
+
+    $scope.deleteTrib = function(){
+        Tribs.delete({
+            id: $scope.delete_trib_id
+        }, function(e){
+            $scope.tribs.splice($scope.delete_trib_index, 1);
+            $timeout(function(){
+                $.bootstrapGrowl(trib_delete_success, {
+                    ele: 'body',
+                    type: 'success',
+                    offset: {from: 'top', amount: 50},
+                    align: 'right',
+                    width: 400,
+                    delay: 10000,
+                    allow_dismiss: true,
+                    stackup_spacing: 5
+                });
+            }, 100);
+        }, function(e){
+            $timeout(function(){
+                $.bootstrapGrowl(trib_delete_error, {
+                    ele: 'body',
+                    type: 'error',
+                    offset: {from: 'top', amount: 50},
+                    align: 'right',
+                    width: 400,
+                    delay: 10000,
+                    allow_dismiss: true,
+                    stackup_spacing: 5
+                });
+            }, 100);
+        });
     };
 
     $scope.addOldTribs = function(){
 
         if ($scope.tribs_end) return;
-
         if ($scope.controller_busy) return;
-
         $scope.controller_busy = true;
 
         var old_tribs = Timeline.query({
@@ -88,7 +131,6 @@ function TribController($scope, $timeout, Tribs, Timeline){
             limit: $scope.trib_limit,
             offset: $scope.trib_offset
         }, function(){
-
             for(var i = 0; i < old_tribs.length; i++){
                 var old_id_appears = false;
 
@@ -113,13 +155,25 @@ function TribController($scope, $timeout, Tribs, Timeline){
 
             $timeout(function(){$('.trib_list').trigger('reload_dom');});
             $scope.controller_busy = false;
+        }, function(e){
+            $timeout(function(){
+                $.bootstrapGrowl(trib_add_error, {
+                    ele: 'body',
+                    type: 'error',
+                    offset: {from: 'top', amount: 50},
+                    align: 'right',
+                    width: 400,
+                    delay: 10000,
+                    allow_dismiss: true,
+                    stackup_spacing: 5
+                });
+            }, 100);
         });
     };
 
     $scope.addNewTribs = function(){
 
         if ($scope.controller_busy) return;
-
         $scope.controller_busy = true;
         $scope.new_tribs_offset = trib_offset;
         $scope.temp_new_tribs = [];
@@ -134,7 +188,6 @@ function TribController($scope, $timeout, Tribs, Timeline){
             limit: $scope.trib_limit,
             offset: $scope.new_tribs_offset
         }, function(){
-
             for(var i = 0; i < fresh_tribs.length; i++){
                 if(fresh_tribs[i].id != $scope.first_trib_id){
                     var fresh_id_appears = false;
@@ -162,6 +215,19 @@ function TribController($scope, $timeout, Tribs, Timeline){
 
             $timeout(function(){$(".trib_list").trigger('reload_dom');});        
             $scope.controller_busy = false;
+        }, function(e){
+            $timeout(function(){
+                $.bootstrapGrowl(trib_add_error, {
+                    ele: 'body',
+                    type: 'error',
+                    offset: {from: 'top', amount: 50},
+                    align: 'right',
+                    width: 400,
+                    delay: 10000,
+                    allow_dismiss: true,
+                    stackup_spacing: 5
+                });
+            }, 100);
         });
     };
 }
@@ -194,9 +260,43 @@ function CommentController($scope, $timeout, Comments){
         });
     };
 
-    $scope.deleteComment = function(){
-        console.log(this);
-    }
+    $scope.configDeleteComment = function(){
+        $scope.delete_comment_id = $scope.comments[this.$index].id;
+        $scope.delete_comment_index = this.$index;
+    };
+
+    $scope.deleteTrib = function(){
+        Comments.delete({
+            id: $scope.delete_comment_id
+        }, function(e){
+            $scope.comments.splice($scope.delete_comment_index, 1);
+            $timeout(function(){
+                $.bootstrapGrowl(comment_delete_success, {
+                    ele: 'body',
+                    type: 'success',
+                    offset: {from: 'top', amount: 50},
+                    align: 'right',
+                    width: 400,
+                    delay: 10000,
+                    allow_dismiss: true,
+                    stackup_spacing: 5
+                });
+            }, 100);
+        }, function(e){
+            $timeout(function(){
+                $.bootstrapGrowl(comment_delete_error, {
+                    ele: 'body',
+                    type: 'error',
+                    offset: {from: 'top', amount: 50},
+                    align: 'right',
+                    width: 400,
+                    delay: 10000,
+                    allow_dismiss: true,
+                    stackup_spacing: 5
+                });
+            }, 100);
+        });
+    };
 
     $scope.addNewComments = function(){
 
@@ -267,7 +367,8 @@ angular.module('Timeline', ['ngResource'])
 
 angular.module('Comments', ['ngResource'])
     .factory('Comments',  function($resource){
-        return $resource('/api/0.1/tribs/comments', {}, {
+        return $resource('/api/0.1/tribs/comments/:id',
+            { id: '@id' }, {
             save: {
                 method: 'POST',
                 headers: {

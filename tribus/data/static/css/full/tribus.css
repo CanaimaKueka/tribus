@@ -290,10 +290,10 @@ blockquote,blockquote.pull-right {
 .modal-footer {
     padding-top: 12px;
     padding-bottom: 14px;
-    border-top-color: #e4e9ee;
+    border-top-color: rgb(230, 230, 218);
     -webkit-box-shadow: none;
     box-shadow: none;
-    background-color: #eff3f8;
+    background-color: rgb(242, 242, 232);
 }
 
 .modal-header .close {
@@ -314,7 +314,6 @@ blockquote,blockquote.pull-right {
 
 .alert {
     font-size: 14px;
-    border-radius: 0;
 }
 
 .alert .close {
@@ -14992,7 +14991,7 @@ th[aria-selected=true] .ui-jqgrid-sortable {
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
     border-right: 10px solid rgb(255, 255, 255);
-    z-index: 1000;
+    z-index: 100;
 }
 
 .trib_item > .arrow_left {
