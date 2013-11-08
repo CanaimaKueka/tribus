@@ -29,7 +29,7 @@
             <li id="{% verbatim %}{{ trib.id }}{% endverbatim %}" class="row-fluid trib_item" ng-repeat="trib in tribs | orderBy: trib_orderby | limitTo: trib_limit_to track by trib.id">
                 <span class="span2">
                     <span class="trib_avatar">
-                        <img gravatar-src="'{% verbatim %}{{trib.author_email}}{% endverbatim %}'" gravatar-size="100">
+                        <!-- <img gravatar-src="'{% verbatim %}{{trib.author_email}}{% endverbatim %}'" gravatar-size="100"> -->
                     </span>
                 </span>
                 <span class="arrow_left"></span>
@@ -91,7 +91,7 @@
                                             {% verbatim %}{{ comment.comment_content }}{% endverbatim %}
                                         </span>
                                         <span ng-if="comment.author_id == {{ user.id }}" class="close"
-                                        ng-click="configDeleteComment()" data-target="#delete_trib_modal"
+                                        ng-click="configDeleteComment()" data-target="#delete_comment_modal"
                                         data-toggle="modal" role="button">
                                             <span class="icon-remove"></span>
                                         </span>

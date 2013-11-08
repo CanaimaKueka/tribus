@@ -265,10 +265,12 @@ function CommentController($scope, $timeout, Comments){
         $scope.delete_comment_index = this.$index;
     };
 
-    $scope.deleteTrib = function(){
+    $scope.deleteComment = function(){
+            console.log($scope.delete_comment_id);
         Comments.delete({
             id: $scope.delete_comment_id
         }, function(e){
+            console.log($scope.delete_comment_id);
             $scope.comments.splice($scope.delete_comment_index, 1);
             $timeout(function(){
                 $.bootstrapGrowl(comment_delete_success, {
