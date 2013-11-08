@@ -242,8 +242,7 @@ function CommentController($scope, $timeout, Comments){
     $scope.comments = [];
 
     $scope.createNewComment = function(){
-
-        var newcomment = {
+        Comments.save({
             author_id: user_id,
             author_username: user_username,
             author_first_name: user_first_name,
@@ -252,11 +251,11 @@ function CommentController($scope, $timeout, Comments){
             comment_content: this.comment_content,
             comment_pub_date: new Date().toISOString(),
             trib_id: $scope.trib_id
-        };
-
-        Comments.save(newcomment, function(){
+        }, function(){
             $scope.comment_content = '';
             $scope.addNewComments();
+        }, function(){
+
         });
     };
 
@@ -266,7 +265,6 @@ function CommentController($scope, $timeout, Comments){
     };
 
     $scope.deleteComment = function(){
-            console.log($scope.delete_comment_id);
         Comments.delete({
             id: $scope.delete_comment_id
         }, function(e){
@@ -301,15 +299,6 @@ function CommentController($scope, $timeout, Comments){
     };
 
     $scope.addNewComments = function(){
-
-        // var test_comments_query = Comments.query({
-        //     trib_id: $scope.trib_id,
-        //     limit: 1,
-        //     offset: 0
-        // }, function(){
-        //     var total_comments_count = test_comments_query.meta.total_count
-        // });
-
         var fresh_comments = Comments.query({
             trib_id: $scope.trib_id,
             order_by: $scope.comment_orderby,
@@ -320,9 +309,10 @@ function CommentController($scope, $timeout, Comments){
             $scope.comment_limit_to = $scope.comments.length;
             $scope.comment_limit = $scope.comment_limit + comment_add;
             $timeout(function(){$('.trib_list').trigger('reload_dom');});
+        }, function(){
+
         });
     };
-
 }
 
 

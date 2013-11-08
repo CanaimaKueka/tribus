@@ -26,7 +26,8 @@
     </div>
     <div class="trib_list" infinite-scroll="addOldTribs()" infinite-scroll-disabled="controller_busy" infinite-scroll-distance="0">
         <ul>
-            <li id="{% verbatim %}{{ trib.id }}{% endverbatim %}" class="row-fluid trib_item" ng-repeat="trib in tribs | orderBy: trib_orderby | limitTo: trib_limit_to track by trib.id">
+            <li id="{% verbatim %}{{ trib.id }}{% endverbatim %}" class="row-fluid trib_item"
+                ng-repeat="trib in tribs | orderBy: trib_orderby | limitTo: trib_limit_to track by trib.id">
                 <span class="span2">
                     <span class="trib_avatar">
                         <!-- <img gravatar-src="'{% verbatim %}{{trib.author_email}}{% endverbatim %}'" gravatar-size="100"> -->
@@ -68,14 +69,16 @@
                         </span>
                     </span>
                     <span class="trib_reply">
-                        <span class="comment_list" ng-controller="CommentController" ng-if="trib.reply_show" ng-init="this.trib_id = trib.id;addNewComments();">
+                        <span class="comment_list" ng-controller="CommentController" ng-if="trib.reply_show"
+                            ng-init="this.trib_id = trib.id;addNewComments();">
                             <ul>
                                 <li class="row-fluid comment_item" >
-                                    <button class="btn btn-yellow more_comments_button" ng-click="addNewComments()">
+                                    <button class="btn btn-yellow btn-block" ng-click="addNewComments()">
                                         {% trans 'Load more comments' %}
                                     </button>
                                 </li>
-                                <li id="{% verbatim %}{{ comment.id }}{% endverbatim %}" class="row-fluid comment_item" ng-repeat="comment in comments | orderBy: comment_orderby | limitTo: comment_limit_to track by comment.id">
+                                <li id="{% verbatim %}{{ comment.id }}{% endverbatim %}" class="row-fluid comment_item"
+                                    ng-repeat="comment in comments | orderBy: comment_orderby | limitTo: comment_limit_to track by comment.id">
                                     <span class="span1">
                                         <span class="comment_avatar"></span>
                                     </span>
@@ -97,13 +100,13 @@
                                         </span>
                                         <span class="comment_date">
                                             <h4 class="timeago" title="{% verbatim %}{{ comment.comment_pub_date }}{% endverbatim %}"></h4>
-                                            <span class="comment_number pull-right smaller-80">
+<!--                                             <span class="comment_number pull-right smaller-80">
                                                 {% verbatim %}{{ $index+1 }}{% endverbatim %}
-                                            </span>
+                                            </span> -->
                                         </span>
                                     </span>
                                 </li>
-                                <li class="comment_box">                        
+                                <li class="comment_box">
                                     <form ng-submit="createNewComment()">
                                         <span class="span1">
                                             <span class="comment_avatar"></span>
