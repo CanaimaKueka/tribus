@@ -1,5 +1,7 @@
 $(document).ready(function(){
 
+    // $('.action_avatar').css('background-image', 'url("'+user_gravatar+'")');
+
     // Autoresize all textareas with "autosize" class when
     // writing on them. Uses "autogrow" jQuery plugin
     $('textarea.autosize').autogrow({ animate: false,
@@ -82,6 +84,6 @@ $(document).ready(function(){
             }
         });
 
-        });
+    });
 
 });

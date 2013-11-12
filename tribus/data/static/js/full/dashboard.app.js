@@ -5,7 +5,7 @@
 // Application -----------------------------------------------------------------
 
 var tribus = angular.module('tribus',
-	['Tribs', 'Timeline', 'Comments', 'Search', 'infinite-scroll', 'ui.gravatar']);
+	['Tribs', 'Timeline', 'Comments', 'Search', 'infinite-scroll']);
 
 
 // Controllers -----------------------------------------------------------------
@@ -18,6 +18,7 @@ tribus.controller('CommentController', ['$scope', '$timeout', 'Comments',
 
 function TribController($scope, $timeout, Tribs, Timeline){
 
+    $scope.user_gravatar = user_gravatar;
     $scope.controller_busy = controller_busy;
     $scope.trib_limit_to = trib_limit_to;
     $scope.trib_limit = trib_limit;
@@ -138,7 +139,11 @@ function TribController($scope, $timeout, Tribs, Timeline){
                     if(old_tribs[i].id == $scope.tribs[j].id) old_id_appears = true;
                 }
 
-                if(!old_id_appears) $scope.tribs.push(old_tribs[i]);
+                if(!old_id_appears){
+                    var gravatar = 'http://www.gravatar.com/avatar/'+md5(old_tribs[i].author_email)+'?d=mm&s=70&r=x';
+                    old_tribs[i].author_gravatar = gravatar;
+                    $scope.tribs.push(old_tribs[i]);
+                }
             }
 
             if($scope.tribs.length > $scope.trib_offset){
@@ -197,6 +202,8 @@ function TribController($scope, $timeout, Tribs, Timeline){
                     }
 
                     if(!fresh_id_appears){
+                        var gravatar = 'http://www.gravatar.com/avatar/'+md5(fresh_tribs[i].author_email)+'?d=mm&s=70&r=x';
+                        fresh_tribs[i].author_gravatar = gravatar;
                         $scope.tribs.unshift(fresh_tribs[i]);
 
                         if($scope.tribs.length > $scope.trib_limit_to){
@@ -268,7 +275,6 @@ function CommentController($scope, $timeout, Comments){
         Comments.delete({
             id: $scope.delete_comment_id
         }, function(e){
-            console.log($scope.delete_comment_id);
             $scope.comments.splice($scope.delete_comment_index, 1);
             $timeout(function(){
                 $.bootstrapGrowl(comment_delete_success, {
