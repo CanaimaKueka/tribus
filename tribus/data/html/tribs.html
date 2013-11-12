@@ -4,9 +4,7 @@
         <div class="row-fluid">
             <form autocomplete="off" name="action_form" ng-submit="createNewTrib()">
                 <span class="span1">
-                    <span class="action_avatar"> 
-                        <!-- <img gravatar-src="'{{user.email}}'" gravatar-size="100"> -->
-                    </span>
+                    <span class="action_avatar" ng-style="{'background-image': 'url(\''+user_gravatar+'\')'}"></span>
                 </span>
                 <span class="span9 action_body">
                     <span class="arrow_left"></span>
@@ -29,9 +27,7 @@
             <li id="{% verbatim %}{{ trib.id }}{% endverbatim %}" class="row-fluid trib_item"
                 ng-repeat="trib in tribs | orderBy: trib_orderby | limitTo: trib_limit_to track by trib.id">
                 <span class="span2">
-                    <span class="trib_avatar">
-                        <!-- <img gravatar-src="'{% verbatim %}{{trib.author_email}}{% endverbatim %}'" gravatar-size="100"> -->
-                    </span>
+                    <span class="trib_avatar" ng-style="{'background-image': 'url(\''+trib.author_gravatar+'\')'}"></span>
                 </span>
                 <span class="arrow_left"></span>
                 <span class="span10 trib_body">
@@ -72,7 +68,7 @@
                         <span class="comment_list" ng-controller="CommentController" ng-if="trib.reply_show"
                             ng-init="this.trib_id = trib.id;addNewComments();">
                             <ul>
-                                <li class="row-fluid comment_item" >
+                                <li class="row-fluid comment_item">
                                     <button class="btn btn-yellow btn-block" ng-click="addNewComments()">
                                         {% trans 'Load more comments' %}
                                     </button>
@@ -100,9 +96,6 @@
                                         </span>
                                         <span class="comment_date">
                                             <h4 class="timeago" title="{% verbatim %}{{ comment.comment_pub_date }}{% endverbatim %}"></h4>
-<!--                                             <span class="comment_number pull-right smaller-80">
-                                                {% verbatim %}{{ $index+1 }}{% endverbatim %}
-                                            </span> -->
                                         </span>
                                     </span>
                                 </li>
@@ -125,6 +118,22 @@
                                     </form>
                                 </li>
                             </ul>
+                            <div id="delete_comment_modal" class="modal hide fade" tabindex="-1" role="dialog">
+                                <div class="modal-body">
+                                    <button type="button" class="close" data-dismiss="modal">
+                                        <span class="icon-remove"></span>
+                                    </button>
+                                    <h4>{% trans 'Are you sure you want to delete this comment?' %}</h4>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn" data-dismiss="modal">
+                                        {% trans 'Cancel' %}
+                                    </button>
+                                    <button class="btn btn-success" data-dismiss="modal" ng-click="deleteComment(delete_comment_id)">
+                                        {% trans 'Delete comment' %}
+                                    </button>
+                                </div>
+                            </div>
                         </span>
                     </span>
                 </span>
@@ -144,22 +153,6 @@
             </button>
             <button class="btn btn-success" data-dismiss="modal" ng-click="deleteTrib(delete_trib_id)">
                 {% trans 'Delete message' %}
-            </button>
-        </div>
-    </div>
-    <div id="delete_comment_modal" class="modal hide fade" tabindex="-1" role="dialog">
-        <div class="modal-body">
-            <button type="button" class="close" data-dismiss="modal">
-                <span class="icon-remove"></span>
-            </button>
-            <p>{% trans 'Are you sure you want to delete this comment?' %}</p>
-        </div>
-        <div class="modal-footer">
-            <button class="btn" data-dismiss="modal">
-                {% trans 'Cancel' %}
-            </button>
-            <button class="btn btn-success" data-dismiss="modal" ng-click="deleteComment(delete_comment_id)">
-                {% trans 'Delete comment' %}
             </button>
         </div>
     </div>

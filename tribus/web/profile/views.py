@@ -22,35 +22,28 @@ def SearchProfile(request, nick):
     if request.user.username == nick:
         return HttpResponseRedirect('/profile')  
 
-    render_js = ['jquery', 'jquery.autogrow',  'jquery.timeago','bootstrap', 'angular',
-                'angular.resource', 'angular.infinite-scroll', 'profiles.app', 
-                'profiles_view.jquery', 'navbar.app', 'navbar.jquery', 'md5','angular-gravatar']
+    render_js = ['jquery', 'jquery.autogrow', 'jquery.timeago', 'jquery.bootstrap-growl', 'jquery.bootstrap',
+                    'angular', 'angular.resource', 'angular.infinite-scroll',
+                    'profiles.app', 'profiles.jquery',
+                    'navbar.app', 'navbar.jquery',
+                    'md5']
 
-    render_css = ['normalize', 'fonts', 'font-awesome', 'bootstrap',
-                    'bootstrap-responsive', 'tribus' ,'tribus-responsive']
-
-    context = {
-            'render_css': render_css,
+    return render(request,'profile/profiles_view.html', {
             'render_js': render_js,
             'user': user,
             'user_view': user_view,            
-            }
-
-    return render(request,'profile/profiles_view.html',context)
+            })
 
 
 
 def UserProfile(request):
 
-    render_js = ['jquery', 'jquery.autogrow',  'jquery.timeago','bootstrap', 'angular',
-                    'angular.resource', 'angular.infinite-scroll', 'profiles.app', 
-                    'profiles.jquery', 'navbar.app', 'navbar.jquery', 'md5','angular-gravatar']
+    render_js = ['jquery', 'jquery.autogrow', 'jquery.timeago', 'jquery.bootstrap-growl', 'jquery.bootstrap',
+                    'angular', 'angular.resource', 'angular.infinite-scroll',
+                    'profiles.app', 'profiles.jquery',
+                    'navbar.app', 'navbar.jquery',
+                    'md5']
 
-    render_css = ['normalize', 'fonts', 'font-awesome', 'bootstrap',
-                        'bootstrap-responsive', 'tribus', 'tribus-ie' ,'tribus-responsive']
-
-    context = {"render_css": render_css , "render_js":render_js , 'user_view':request.user}
-    
     if request.user.is_authenticated():
         if request.method == "POST":
             u = User.objects.get(username__exact = request.user.username)
@@ -58,10 +51,14 @@ def UserProfile(request):
             u.email = request.POST['email']
             u.save()
             edit_ldap_user(u)
-
             return HttpResponseRedirect('/profile')
+
         else:
             form = data_change()
-            context['editForm'] = form
-            return render(request,'profile/profiles.html', context)
+            return render(request,'profile/profiles.html', {
+                'render_js': render_js,
+                'user_view': request.user,
+                'editForm': form
+                })
+
     return HttpResponseRedirect('/')

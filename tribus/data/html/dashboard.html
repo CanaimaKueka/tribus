@@ -25,7 +25,8 @@
         var user_username = '{{ user.username }}';
         var user_first_name = '{{ user.first_name }}';
         var user_last_name = '{{ user.last_name }}';
-        var user_email = '{{user.email}}';
+        var user_email = '{{ user.email }}';
+        var user_gravatar = 'http://www.gravatar.com/avatar/'+md5(user_email)+'?d=mm&s=50&r=x';
         {% endif %}
 
         // Tribs data
@@ -48,5 +49,7 @@
         var trib_delete_success = '{% trans "Your message has been deleted." %}'
         var trib_delete_error = '{% trans "There has been an error deleting your message. Please try again later." %}'
         var trib_add_error = '{% trans "There has been an error consulting more messages. Please try again later." %}'
+        var comment_delete_success = '{% trans "Your comment has been deleted." %}'
+        var comment_delete_error = '{% trans "There has been an error deleting your comment. Please try again later." %}'
     </script>
 {% endblock %}

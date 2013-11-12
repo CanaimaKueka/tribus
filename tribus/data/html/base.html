@@ -18,7 +18,6 @@
     <body>
         {% include 'navbar.html' %}
         {% block content %}{% endblock %}
-        {% block scripts %}{% endblock %}
         {% include "footer.html" %}
         {% staticall %}
             {% for js in render_js %}
@@ -27,5 +26,6 @@
         {% endstaticall %}
         <!--[if lte IE 8]><script type="text/javascript" src="{% static 'js/full/excanvas.js' %}"></script><![endif]-->
         <!--[if lt IE 9]><script type="text/javascript" src="{% static 'js/full/html5shiv.js' %}"></script><![endif]-->
+        {% block scripts %}{% endblock %}
     </body>
 </html>
