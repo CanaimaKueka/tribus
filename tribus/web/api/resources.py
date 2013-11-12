@@ -6,7 +6,7 @@ from tastypie.authentication import SessionAuthentication
 from tastypie.authorization import Authorization
 from tastypie.constants import ALL_WITH_RELATIONS
 from tastypie.bundle import Bundle
-from tastypie import fields, paginator
+from tastypie import fields
 from tastypie_mongoengine.resources import MongoEngineResource
 
 from tastypie.resources import ModelResource, Resource
@@ -23,7 +23,7 @@ from tribus.web.cloud.models import Package
 
 from tribus.web.api.validation import DocumentFormValidation
 from tribus.web.forms import TribForm
-from tastypie.paginator import Paginator
+from django.core.paginator import Paginator
 from django.core.paginator import InvalidPage
 from django.http.response import Http404
 
@@ -118,7 +118,7 @@ class SearchUserResource(Resource):
         paginator = Paginator(filter(None, sqs), 5)
         
         try:
-            page = paginator.page(int(bundle.request.GET.get('page', 1)))
+            page = paginator.page(1)
         except InvalidPage:
             raise Http404("Sorry, no results on that page.")
         
@@ -143,7 +143,7 @@ class SearchPackageResource(Resource):
             sqs = EmptySearchQuerySet()
         
         paginator = Paginator(filter(None, sqs), 5)
-         
+        
         try:
             page = paginator.page(int(bundle.request.GET.get('page', 1)))
         except InvalidPage:

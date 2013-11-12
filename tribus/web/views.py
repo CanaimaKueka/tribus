@@ -45,7 +45,7 @@ def index(request):
         
 def tribus_search(request):
     context={}
-    render_js = ['jquery', 'jquery.autogrow', 'bootstrap', 'angular', 'angular.resource', 
+    render_js = ['jquery', 'jquery.autogrow', 'jquery.bootstrap', 'angular', 'angular.resource', 
                  'angular.infinite-scroll', 'dashboard.app', 'dashboard.jquery',
                  'navbar.app', 'navbar.jquery', 'md5', 'angular-gravatar']
     context ["render_js"]= render_js
