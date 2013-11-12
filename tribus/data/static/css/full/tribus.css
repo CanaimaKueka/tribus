@@ -2606,6 +2606,42 @@ button.btn:active {
     border-color: #abbac3;
 }
 
+.btn-beige,.btn-beige:focus {
+    color: #9B9B93 !important;
+    text-shadow: 0 -1px 0 rgba(255,255,255,0.6) !important;
+    background-color: #E5E5DA !important;
+    border-color: #E5E5DA;
+}
+
+.btn-beige:hover,.open .btn-beige.dropdown-toggle {
+    background-color: rgb(219, 219, 208) !important;
+    border-color: #E5E5DA;
+}
+
+.btn-beige.no-border:hover {
+    border-color: rgb(219, 219, 208);
+}
+
+.btn-beige.no-hover:hover {
+    background-color: #E5E5DA!important;
+}
+
+.btn-beige.active {
+    background-color: #5fa6d3!important;
+    border-color: #4396cb;
+}
+
+.btn-beige.no-border.active {
+    background-color: #539fd0!important;
+    border-color: #539fd0;
+}
+
+.btn-beige.disabled,.btn-beige[disabled],fieldset[disabled] .btn-beige,.btn-beige.disabled:hover,.btn-beige[disabled]:hover,fieldset[disabled] .btn-beige:hover,.btn-beige.disabled:focus,.btn-beige[disabled]:focus,fieldset[disabled] .btn-beige:focus,.btn-beige.disabled:active,.btn-beige[disabled]:active,fieldset[disabled] .btn-beige:active,.btn-beige.disabled.active,.btn-beige[disabled].active,fieldset[disabled] .btn-beige.active {
+    background-color: #E5E5DA!important;
+    border-color: #E5E5DA;
+}
+
+
 .btn-primary,.btn-primary:focus {
     background-color: #428bca!important;
     border-color: #428bca;
@@ -14999,8 +15035,7 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 }
 
 .action_body > .action_bubble {
-    padding: 2%;
-    padding-bottom: 0;
+    padding: 2% 1% 0 2%;
     margin: 2% 0;
     width: 92%;
     background: rgb(255, 255, 255);
@@ -15036,7 +15071,7 @@ th[aria-selected=true] .ui-jqgrid-sortable {
     margin: 0;
     margin-bottom: 1%;
     width: 100%;
-    color: rgb(133, 133, 133);
+    color: rgb(214, 214, 214);
     float: left;
     display: block;
     position: relative;
@@ -15062,7 +15097,8 @@ th[aria-selected=true] .ui-jqgrid-sortable {
     margin: 2% 0;
 }
 
-.action_avatar, .trib_avatar, .comment_avatar {
+.action_avatar, .trib_avatar,
+.comment_avatar, .profile_avatar {
     background-color: #fff;
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
@@ -15079,6 +15115,12 @@ th[aria-selected=true] .ui-jqgrid-sortable {
     margin: 10% 35%;
     width: 70px;
     height: 70px;
+}
+
+.profile_avatar {
+    margin: 0 5% 10% 5%;
+    width: 250px;
+    height: 250px;
 }
 
 .comment_list {

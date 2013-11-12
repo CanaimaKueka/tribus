@@ -22,6 +22,8 @@ tribus.controller('UserController',['$scope','UserProfile', 'User' ,
 
 
 function UserController($scope, UserProfile){
+    $scope.user_gravatar = user_gravatar;
+    
     $scope.follow = function(){
 
         var profile = UserProfile.query({id:user_id},
