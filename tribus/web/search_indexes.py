@@ -17,7 +17,6 @@ class PackageIndex(CelerySearchIndex, indexes.Indexable):
     
 class UserIndex(CelerySearchIndex, indexes.Indexable):
     text = indexes.CharField(document = True)
-    username = indexes.CharField(model_attr='username')
     autoname = indexes.EdgeNgramField(model_attr='get_full_name', use_template = True)
     description = indexes.CharField(model_attr='description', null = True)
     

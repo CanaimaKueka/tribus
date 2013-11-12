@@ -51,6 +51,24 @@ def tribus_search(request):
         query = request.GET.get('q', '')
         context['query'] = query
         sqs = SearchQuerySet().load_all().filter(autoname = query)
+        
+#         objects = []
+#         
+#         for obj in sqs:
+#             if obj.model_name == "package":
+#                 objects.append({"name": obj.get_stored_fields()['autoname'],
+#                                 "type":  obj.model_name,
+#                                 "description": obj.get_stored_fields()['description']})
+#             
+#             elif obj.model_name == "user":
+#                 data = obj.get_stored_fields()
+#                 names = data['autoname'].split("|")
+#                 objects.append({"fullname": names[0],
+#                                 "username": names[1],
+#                                 "type":  obj.model_name, 
+#                                 "description": data['description']})
+        
+        #paginator = Paginator(objects, 20)
         paginator = Paginator(sqs, 20)
         
         try:

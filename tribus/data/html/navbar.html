@@ -22,11 +22,11 @@
                                     <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
                                     	<h3 ng-if="hasPackages()">Packages</h3>
                                 		<li role="presentation" ng-repeat="result in package_results">
-                                			<a role="menuitem" tabindex="-1" href="{% verbatim %}{{ result.url }}{% endverbatim %}">{% verbatim %}{{ result.autoname }}{% endverbatim %}</a>
+                                			<a role="menuitem" tabindex="-1" href="{% verbatim %}{{ result.url }}{% endverbatim %}">{% verbatim %}{{ result.name }}{% endverbatim %}</a>
                                 		</li>
                                 		<h3 ng-if="hasUsers()">Users</h3>
                                 		<li role="presentation" ng-repeat="result in users_results">
-	                                		<a role="menuitem" tabindex="-1" href="{% verbatim %}{{ result.url }}{% endverbatim %}">{% verbatim %}{{ result.autoname }}{% endverbatim %}</a>
+	                                		<a role="menuitem" tabindex="-1" href="{% verbatim %}{{ result.url }}{% endverbatim %}">{% verbatim %}{{ result.fullname }}{% endverbatim %}</a>
 	                                	</li>
                                 		<h3 ng-if="noResults()">No matching results</h3>
                             		</ul>

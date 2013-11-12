@@ -6,9 +6,8 @@ from tastypie.authentication import SessionAuthentication
 from tastypie.authorization import Authorization
 from tastypie.constants import ALL_WITH_RELATIONS
 from tastypie.bundle import Bundle
-from tastypie import fields
+from tastypie import fields, paginator
 from tastypie_mongoengine.resources import MongoEngineResource
-
 
 from tastypie.resources import ModelResource, Resource
 from tastypie.fields import ManyToManyField, OneToOneField
@@ -18,12 +17,15 @@ from tribus.web.documents import Trib, Comment
 from django.contrib.auth.models import User
 from tribus.web.profile.models import UserProfile
 
-from haystack.query import SearchQuerySet
+from haystack.query import SearchQuerySet, EmptySearchQuerySet
 from tribus.web.cloud.models import Package
 
 
 from tribus.web.api.validation import DocumentFormValidation
 from tribus.web.forms import TribForm
+from tastypie.paginator import Paginator
+from django.core.paginator import InvalidPage
+from django.http.response import Http404
 
 
 class UserResource(ModelResource):
@@ -40,12 +42,12 @@ class UserResource(ModelResource):
         authentication = SessionAuthentication()
         cache = NoCache()
 
-
+  
 class UserProfileResource(ModelResource):
     user = OneToOneField(to='tribus.web.api.resources.UserResource', attribute='user', related_name='user_profile')
     follows = ManyToManyField(to='tribus.web.api.resources.UserResource', attribute='follows', related_name='user_profile', blank=True, null=True)
     followers = ManyToManyField(to='tribus.web.api.resources.UserResource', attribute='followers', related_name='user_profile', blank=True, null=True)
-
+ 
     class Meta:
         queryset = UserProfile.objects.all()
         resource_name = 'user/profile'
@@ -93,36 +95,84 @@ class CommentResource(MongoEngineResource):
         cache = NoCache()
 
 
-class SearchResource(Resource):
-    type = fields.CharField(attribute='model_name')
-    autoname = fields.CharField(attribute='autoname')
-    username = fields.CharField(attribute='username', null=True)
-    description = fields.CharField(attribute='description', null=True)
+class SearchUserResource(Resource):
+    name = fields.CharField(attribute='autoname')
+    description = fields.CharField(attribute='description')
     
     class Meta:
         resource_name = 'search'
-        object_class = SearchQuerySet
-        authorization = Authorization()
-        authentication = SessionAuthentication()
-        limit = 10
-                 
-    def detail_uri_kwargs(self, bundle_or_obj):
-        kwargs = {}
-        if isinstance(bundle_or_obj, Bundle):
-            kwargs['pk'] = bundle_or_obj.obj.pk
-        else:
-            kwargs['pk'] = bundle_or_obj.obj.pk
-  
-        return kwargs
- 
+
+        object_class = User
+    
     def obj_get_list(self, bundle, **kwargs):
         filters = {}
         if hasattr(bundle.request, 'GET'):
-            # Grab a mutable copy.
             filters = bundle.request.GET.copy()
         filters.update(kwargs)
         if filters.has_key('q'):
-            sqs = SearchQuerySet().models(Package, User).autocomplete(autoname = filters['q'])
+            sqs = SearchQuerySet().models(User).autocomplete(autoname = filters['q'])
         else:
-            sqs = SearchQuerySet().models(Package, User)
-        return sqs
+            sqs = EmptySearchQuerySet()
+        
+        print sqs
+        paginator = Paginator(filter(None, sqs), 5)
+        
+        try:
+            page = paginator.page(int(bundle.request.GET.get('page', 1)))
+        except InvalidPage:
+            raise Http404("Sorry, no results on that page.")
+        
+        return page
+    
+class SearchPackageResource(Resource):
+    name = fields.CharField(attribute='autoname')
+    description = fields.CharField(attribute='description')
+    
+    class Meta:
+        resource_name = 'search'
+        object_class = Package
+    
+    def obj_get_list(self, bundle, **kwargs):
+        filters = {}
+        if hasattr(bundle.request, 'GET'):
+            filters = bundle.request.GET.copy()
+        filters.update(kwargs)
+        if filters.has_key('q'):
+            sqs = SearchQuerySet().models(Package).autocomplete(autoname = filters['q'])
+        else:
+            sqs = EmptySearchQuerySet()
+        
+        paginator = Paginator(filter(None, sqs), 5)
+         
+        try:
+            page = paginator.page(int(bundle.request.GET.get('page', 1)))
+        except InvalidPage:
+            raise Http404("Sorry, no results on that page.")
+        
+        return page
+
+class SearchResource(Resource):
+    users = fields.ListField()
+    packages = fields.ListField()
+    
+    class Meta:
+        resource_name = 'search'
+        allowed_methods = ['get']
+        include_resource_uri = False
+        
+    def dehydrate_users(self, bundle):
+        results = []
+        for obj in bundle.obj['users']:
+            names = str.split(str(obj.autoname), "|")
+            results.append({'fullname':str(names[0]), 'username': str(names[1])})
+        return results
+    
+    def dehydrate_packages(self, bundle):
+        return [ {'name':str(obj.autoname)} for obj in bundle.obj['packages']]
+
+    def get_object_list(self, bundle):
+        return [{'users': SearchUserResource().obj_get_list(bundle),
+                 'packages': SearchPackageResource().obj_get_list(bundle),}]
+                
+    def obj_get_list(self, bundle, **kwargs):        
+        return self.get_object_list(bundle)    

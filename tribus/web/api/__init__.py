@@ -3,8 +3,7 @@
 
 from tastypie.api import Api
 
-from tribus.web.api.resources import TribResource, TimelineResource, CommentResource, UserResource,\
-UserProfileResource, SearchResource
+from tribus.web.api.resources import TribResource, TimelineResource, CommentResource, UserResource, UserProfileResource, SearchResource
 
 
 api_01 = Api(api_name='0.1')

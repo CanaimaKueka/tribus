@@ -45,5 +45,10 @@ LOGGING = {
             'propagate': True,
             'level': 'DEBUG',
         },
+        'haystack': {
+            'handlers': ['console'],
+            'propagate': True,
+            'level': 'DEBUG',
+        },
     },
 }
