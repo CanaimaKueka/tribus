@@ -69,7 +69,7 @@
                             ng-init="this.trib_id = trib.id;addNewComments();">
                             <ul>
                                 <li class="row-fluid comment_item">
-                                    <button class="btn btn-beige btn-block btn-mini" ng-click="addNewComments()">
+                                    <button class="btn btn-beige btn-block btn-mini" ng-click="addOldComments()">
                                         {% trans 'Load more comments' %}
                                     </button>
                                 </li>
@@ -102,7 +102,7 @@
                                 <li class="comment_box">
                                     <form ng-submit="createNewComment()">
                                         <span class="span1">
-                                            <span class="comment_avatar"></span>
+                                            <span class="comment_avatar" ng-style="{'background-image': 'url(\''+comment_gravatar+'\')'}"></span>
                                         </span>
                                         <span class="span9 comment_body">
                                             <span class="arrow_left"></span>
