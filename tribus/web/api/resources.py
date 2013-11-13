@@ -101,7 +101,6 @@ class SearchUserResource(Resource):
     
     class Meta:
         resource_name = 'search'
-
         object_class = User
     
     def obj_get_list(self, bundle, **kwargs):
@@ -110,11 +109,10 @@ class SearchUserResource(Resource):
             filters = bundle.request.GET.copy()
         filters.update(kwargs)
         if filters.has_key('q'):
-            sqs = SearchQuerySet().models(User).autocomplete(autoname = filters['q'])
+            sqs = SearchQuerySet().models(User).autocomplete(autoname = filters['q'])[:5]
         else:
             sqs = EmptySearchQuerySet()
-        
-        print sqs
+            
         paginator = Paginator(filter(None, sqs), 5)
         
         try:
@@ -138,7 +136,7 @@ class SearchPackageResource(Resource):
             filters = bundle.request.GET.copy()
         filters.update(kwargs)
         if filters.has_key('q'):
-            sqs = SearchQuerySet().models(Package).autocomplete(autoname = filters['q'])
+            sqs = SearchQuerySet().models(Package).autocomplete(autoname = filters['q'])[:5]
         else:
             sqs = EmptySearchQuerySet()
         
@@ -159,20 +157,16 @@ class SearchResource(Resource):
         resource_name = 'search'
         allowed_methods = ['get']
         include_resource_uri = False
-        
+
     def dehydrate_users(self, bundle):
-        results = []
-        for obj in bundle.obj['users']:
-            names = str.split(str(obj.autoname), "|")
-            results.append({'fullname':str(names[0]), 'username': str(names[1])})
-        return results
+        return [ {'fullname':str(obj.fullname), 'username': str(obj.username)} for obj in bundle.obj['users']]
     
     def dehydrate_packages(self, bundle):
-        return [ {'name':str(obj.autoname)} for obj in bundle.obj['packages']]
+        return [ {'name':str(obj.name)} for obj in bundle.obj['packages']]
 
     def get_object_list(self, bundle):
         return [{'users': SearchUserResource().obj_get_list(bundle),
                  'packages': SearchPackageResource().obj_get_list(bundle),}]
                 
-    def obj_get_list(self, bundle, **kwargs):        
+    def obj_get_list(self, bundle, **kwargs): 
         return self.get_object_list(bundle)    

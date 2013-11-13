@@ -2,12 +2,6 @@
 {% load i18n %}
 {% block title %}{% trans 'Tribus Search' %}{% endblock %}
 {% block content %}
-
-<script type="text/javascript">
-    var packages_url_placer = '/cloud/';
-    var user_url_placer = '/profile/';
-</script>
-
 <div class="jumbotron">
 	<div class="container-fluid">
 		<div class="row-fluid dashboard_container">
@@ -22,9 +16,9 @@
 				    		{% if result.description %} {{ result.description|truncatechars:200 }}
 				    		{% else %} <i>Virtual package</i> {% endif %}</li>
 				    {% elif result.model_name == "user" %}
-				   		<li>  <b> <a href="/profile/{{ result.username }}">{{ result.autoname }}</a></b>
+				   		<li> <b> <a href="/profile/{{ result.username }}">{{ result.fullname }}</a></b>
 				   			{% if result.description %} {{ result.description|truncatechars:100 }}
-				   			{% else %}  {% endif %}</li>
+				   			{% else %} {% endif %}</li>
 				    {% endif %}
 				    </ul>
 				{% empty %}
@@ -32,23 +26,35 @@
 				{% endfor %}
 				
 				<div class="pagination">
+					{% if page.paginator.num_pages > 1 %}
 				    <span class="step-links">
 				        {% if page.has_previous %}
-				            <a href="?q={{query}}&page={{ page.previous_page_number }}">previous</a>
+				            <a href="?q={{query}}&filter={{filter}}&page={{ page.previous_page_number }}">previous</a>
 				        {% endif %}
-				
+				        
 				        <span class="current">
 				            Page {{ page.number }} of {{ page.paginator.num_pages }}.
 				        </span>
-				
+						
 				        {% if page.has_next %}
-				            <a href="?q={{query}}&page={{ page.next_page_number }}">next</a>
+				            <a href="?q={{query}}&filter={{filter}}&page={{ page.next_page_number }}">next</a>
 				        {% endif %}
 				    </span>
+				    {% endif %}
 				</div>
+			</div>
+			<div>
+				{% if filter == "package" %}
+				Filtros:
+				    <b><p><a href="?q={{query}}&filter=package"> {% trans "Packages" %}</a></p></b>
+				    <p><a href="?q={{query}}&filter=user"> {% trans "Users" %}</a></p>
+				{% elif filter == "user" %}
+				Filtros:
+					<p><a href="?q={{query}}&filter=package"> {% trans "Packages" %}</a></p>
+				    <b><p><a href="?q={{query}}&filter=user"> {% trans "Users" %}</a></p></b>
+				{% endif %}
 			</div>
 		</div>
 	</div>
 </div>
-
 {% endblock %}

@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 
 class PackageIndex(CelerySearchIndex, indexes.Indexable):
     text = indexes.CharField(document = True)
+    name = indexes.EdgeNgramField(model_attr='Package')
     autoname = indexes.EdgeNgramField(model_attr='Package')
     description = indexes.CharField(model_attr='Description', null = True)
     
@@ -17,7 +18,9 @@ class PackageIndex(CelerySearchIndex, indexes.Indexable):
     
 class UserIndex(CelerySearchIndex, indexes.Indexable):
     text = indexes.CharField(document = True)
-    autoname = indexes.EdgeNgramField(model_attr='get_full_name', use_template = True)
+    fullname = indexes.EdgeNgramField(model_attr='get_full_name')
+    username = indexes.EdgeNgramField(model_attr='username')
+    autoname = indexes.EdgeNgramField(model_attr='username', use_template = True)
     description = indexes.CharField(model_attr='description', null = True)
     
     def get_model(self):

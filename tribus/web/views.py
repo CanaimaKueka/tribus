@@ -1,20 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render
 from tribus.web.user.forms import SignupForm
-
-from tribus.web.forms import TribForm
-
-from haystack.query import SearchQuerySet, EmptySearchQuerySet
-from haystack.views import SearchView
+from haystack.query import SearchQuerySet
 from django.core.paginator import Paginator, InvalidPage
-from django.http.response import Http404
-from django.conf import settings
-from haystack.forms import ModelSearchForm
-from django.template.context import RequestContext
-RESULTS_PER_PAGE = getattr(settings, 'HAYSTACK_SEARCH_RESULTS_PER_PAGE', 20)
-
+from django.contrib.contenttypes.models import ContentType
 
 def tour(request):
     return render('tour.html', {})
@@ -42,41 +33,36 @@ def index(request):
         return render(request, 'index.html', {
             'signupform': signupform
             })
-        
+
+
 def tribus_search(request):
     context={}
     render_js = ['jquery', 'jquery.autogrow', 'jquery.bootstrap', 'angular', 'angular.resource', 
                  'angular.infinite-scroll', 'dashboard.app', 'dashboard.jquery',
-                 'navbar.app', 'navbar.jquery', 'md5', 'angular-gravatar']
+                 'navbar.app', 'navbar.jquery', 'md5']
     context ["render_js"]= render_js
     if request.GET:
         query = request.GET.get('q', '')
-        context['query'] = query
-        sqs = SearchQuerySet().load_all().filter(autoname = query)
-        
-#         objects = []
-#         
-#         for obj in sqs:
-#             if obj.model_name == "package":
-#                 objects.append({"name": obj.get_stored_fields()['autoname'],
-#                                 "type":  obj.model_name,
-#                                 "description": obj.get_stored_fields()['description']})
-#             
-#             elif obj.model_name == "user":
-#                 data = obj.get_stored_fields()
-#                 names = data['autoname'].split("|")
-#                 objects.append({"fullname": names[0],
-#                                 "username": names[1],
-#                                 "type":  obj.model_name, 
-#                                 "description": data['description']})
-        
-        #paginator = Paginator(objects, 20)
-        paginator = Paginator(sqs, 20)
-        
-        try:
-            page = paginator.page(int(request.GET.get('page', 1)))
-        except InvalidPage:
-            raise Http404("Sorry, no results on that page.")
-        context["page"]= page
-        
+        objects = SearchQuerySet().filter(autoname = query)
+        if objects:
+            model_name = request.GET.get('filter', objects[0].model_name)
+            sqs = objects.models(ContentType.objects.get(model=model_name).model_class())
+            print sqs
+            #print len(sqs)
+            #paginator = Paginator(filter(None, sqs), 20) # Mas lento pero no hace falta print para que coloque bien los usuarios
+            paginator = Paginator(sqs, 5) # Mas rapido pero necesita imprimir para mostrar correctamente los usuarios
+            
+            try:
+                page = paginator.page(int(request.GET.get('page', 1)))
+            except InvalidPage:
+                return render(request, 'search/search.html', {})
+            
+            context["page"]= page
+            context['query'] = query
+            context['filter'] = model_name
+        else:
+            context["page"]= None
+            context['query'] = query
+            context['filter'] = None
+            
     return render(request, 'search/search.html', context)
