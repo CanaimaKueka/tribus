@@ -7,14 +7,10 @@
 	<div class="container">
 		<div class="row-fluid">
 			<div class="span3">
-				<div>
-                    <img gravatar-src="'{{user.email}}'" gravatar-size="280">					
-				</div>
-
-				<div class="space-36"></div>
-                <div>
-                {% block datos %}
-
+                <div ng-controller="UserController">
+					<span class="profile_avatar" ng-style="{'background-image': 'url(\''+user_gravatar+'\')'}"></span>
+					<div class="space-36"></div>
+	                {% block datos %}
 	    			<hr>
 	    			<ul>
 						<p>{{ user_view.first_name }} {{user_view.last_name}}
@@ -30,15 +26,14 @@
 							<p><a href="/profile/{{i.username}}">{{i.username}}</a>
 						{%endfor%}
 
-                {% endblock %}
-                	<hr>
+	                {% endblock %}
+            	<hr>
 				<legend></legend>
 				</div>
-
 			</div>
 			<div class="span9">
 				{% include 'profile/navbar.html' %}
-                <legend></legend>	
+                <legend></legend>
 
 				<div class = "row-fluid">
 
@@ -137,7 +132,7 @@
         var user_first_name = '{{ user.first_name }}';
         var user_last_name = '{{ user.last_name }}';
         var user_email = '{{ user.email }}';
-        var user_gravatar = 'http://www.gravatar.com/avatar/'+md5(user_email)+'?d=mm&s=50&r=x';
+        var user_gravatar = 'http://www.gravatar.com/avatar/'+md5(user_email)+'?d=mm&s=250&r=x';
 
 
         {% endif %}

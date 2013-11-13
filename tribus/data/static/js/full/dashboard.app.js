@@ -5,7 +5,7 @@
 // Application -----------------------------------------------------------------
 
 var tribus = angular.module('tribus',
-	['Tribs', 'Timeline', 'Comments', 'Search', 'infinite-scroll']);
+    ['Tribs', 'Timeline', 'Comments', 'Search', 'infinite-scroll']);
 
 
 // Controllers -----------------------------------------------------------------
@@ -39,11 +39,12 @@ function TribController($scope, $timeout, Tribs, Timeline){
             $scope.trib_content = '';
             $timeout(function(){$scope.addNewTribs();});
             $timeout(function(){$('textarea.action_textarea').trigger('keyup');});
+            $timeout(function(){$('textarea.action_textarea').trigger('focus');});
             $timeout(function(){
                 $.bootstrapGrowl(trib_save_success, {
                     ele: 'body',
                     type: 'success',
-                    offset: {from: 'top', amount: 50},
+                    offset: { from: 'top', amount: 50 },
                     align: 'right',
                     width: 400,
                     delay: 10000,
@@ -56,7 +57,7 @@ function TribController($scope, $timeout, Tribs, Timeline){
                 $.bootstrapGrowl(trib_save_error, {
                     ele: 'body',
                     type: 'error',
-                    offset: {from: 'top', amount: 50},
+                    offset: { from: 'top', amount: 50 },
                     align: 'right',
                     width: 400,
                     delay: 10000,
@@ -97,7 +98,7 @@ function TribController($scope, $timeout, Tribs, Timeline){
                 $.bootstrapGrowl(trib_delete_success, {
                     ele: 'body',
                     type: 'success',
-                    offset: {from: 'top', amount: 50},
+                    offset: { from: 'top', amount: 50 },
                     align: 'right',
                     width: 400,
                     delay: 10000,
@@ -110,7 +111,7 @@ function TribController($scope, $timeout, Tribs, Timeline){
                 $.bootstrapGrowl(trib_delete_error, {
                     ele: 'body',
                     type: 'error',
-                    offset: {from: 'top', amount: 50},
+                    offset: { from: 'top', amount: 50 },
                     align: 'right',
                     width: 400,
                     delay: 10000,
@@ -132,17 +133,17 @@ function TribController($scope, $timeout, Tribs, Timeline){
             limit: $scope.trib_limit,
             offset: $scope.trib_offset
         }, function(){
-            for(var i = 0; i < old_tribs.length; i++){
+            for(var i = 0; i < old_tribs.objects.length; i++){
                 var old_id_appears = false;
 
                 for(var j = 0; j < $scope.tribs.length; j++){
-                    if(old_tribs[i].id == $scope.tribs[j].id) old_id_appears = true;
+                    if(old_tribs.objects[i].id == $scope.tribs[j].id) old_id_appears = true;
                 }
 
                 if(!old_id_appears){
-                    var gravatar = 'http://www.gravatar.com/avatar/'+md5(old_tribs[i].author_email)+'?d=mm&s=70&r=x';
-                    old_tribs[i].author_gravatar = gravatar;
-                    $scope.tribs.push(old_tribs[i]);
+                    var gravatar = 'http://www.gravatar.com/avatar/'+md5(old_tribs.objects[i].author_email)+'?d=mm&s=70&r=x';
+                    old_tribs.objects[i].author_gravatar = gravatar;
+                    $scope.tribs.push(old_tribs.objects[i]);
                 }
             }
 
@@ -154,7 +155,7 @@ function TribController($scope, $timeout, Tribs, Timeline){
                 $scope.trib_limit_to = $scope.tribs.length;
             }
 
-            if(old_tribs.length === 0){
+            if(old_tribs.objects.length === 0){
                 $scope.tribs_end = true;
             }
 
@@ -165,7 +166,7 @@ function TribController($scope, $timeout, Tribs, Timeline){
                 $.bootstrapGrowl(trib_add_error, {
                     ele: 'body',
                     type: 'error',
-                    offset: {from: 'top', amount: 50},
+                    offset: { from: 'top', amount: 50 },
                     align: 'right',
                     width: 400,
                     delay: 10000,
@@ -193,25 +194,25 @@ function TribController($scope, $timeout, Tribs, Timeline){
             limit: $scope.trib_limit,
             offset: $scope.new_tribs_offset
         }, function(){
-            for(var i = 0; i < fresh_tribs.length; i++){
-                if(fresh_tribs[i].id != $scope.first_trib_id){
+            for(var i = 0; i < fresh_tribs.objects.length; i++){
+                if(fresh_tribs.objects[i].id != $scope.first_trib_id){
                     var fresh_id_appears = false;
 
                     for(var j = 0; j < $scope.tribs.length; j++){
-                        if(fresh_tribs[i].id == $scope.tribs[j].id) fresh_id_appears = true;
+                        if(fresh_tribs.objects[i].id == $scope.tribs[j].id) fresh_id_appears = true;
                     }
 
                     if(!fresh_id_appears){
-                        var gravatar = 'http://www.gravatar.com/avatar/'+md5(fresh_tribs[i].author_email)+'?d=mm&s=70&r=x';
-                        fresh_tribs[i].author_gravatar = gravatar;
-                        $scope.tribs.unshift(fresh_tribs[i]);
+                        var gravatar = 'http://www.gravatar.com/avatar/'+md5(fresh_tribs.objects[i].author_email)+'?d=mm&s=70&r=x';
+                        fresh_tribs.objects[i].author_gravatar = gravatar;
+                        $scope.tribs.unshift(fresh_tribs.objects[i]);
 
                         if($scope.tribs.length > $scope.trib_limit_to){
                             $scope.trib_limit_to = $scope.tribs.length;
                         }
                     }
 
-                    if(i == (fresh_tribs.length-1)){
+                    if(i == (fresh_tribs.objects.length-1)){
                         $scope.addNewTribs($scope, $timeout, Timeline, trib_offset+trib_add);
                     }
 
@@ -227,7 +228,7 @@ function TribController($scope, $timeout, Tribs, Timeline){
                 $.bootstrapGrowl(trib_add_error, {
                     ele: 'body',
                     type: 'error',
-                    offset: {from: 'top', amount: 50},
+                    offset: { from: 'top', amount: 50 },
                     align: 'right',
                     width: 400,
                     delay: 10000,
@@ -260,9 +261,32 @@ function CommentController($scope, $timeout, Comments){
             trib_id: $scope.trib_id
         }, function(){
             $scope.comment_content = '';
-            $scope.addNewComments();
+            $timeout(function(){$scope.addNewComments();});
+            $timeout(function(){
+                $.bootstrapGrowl(comment_save_success, {
+                    ele: 'body',
+                    type: 'success',
+                    offset: { from: 'top', amount: 50 },
+                    align: 'right',
+                    width: 400,
+                    delay: 10000,
+                    allow_dismiss: true,
+                    stackup_spacing: 5
+                });
+            }, 100);
         }, function(){
-
+            $timeout(function(){
+                $.bootstrapGrowl(comment_save_success, {
+                    ele: 'body',
+                    type: 'success',
+                    offset: { from: 'top', amount: 50 },
+                    align: 'right',
+                    width: 400,
+                    delay: 10000,
+                    allow_dismiss: true,
+                    stackup_spacing: 5
+                });
+            }, 100);
         });
     };
 
@@ -280,7 +304,7 @@ function CommentController($scope, $timeout, Comments){
                 $.bootstrapGrowl(comment_delete_success, {
                     ele: 'body',
                     type: 'success',
-                    offset: {from: 'top', amount: 50},
+                    offset: { from: 'top', amount: 50 },
                     align: 'right',
                     width: 400,
                     delay: 10000,
@@ -293,7 +317,7 @@ function CommentController($scope, $timeout, Comments){
                 $.bootstrapGrowl(comment_delete_error, {
                     ele: 'body',
                     type: 'error',
-                    offset: {from: 'top', amount: 50},
+                    offset: { from: 'top', amount: 50 },
                     align: 'right',
                     width: 400,
                     delay: 10000,
@@ -336,10 +360,7 @@ angular.module('Tribs', ['ngResource'])
             },
             query: {
                 method: 'GET',
-                isArray: true,
-                transformResponse: function(data){
-                    return angular.fromJson(data).objects;
-                }
+                isArray: false
             },
             delete: {
                 method: 'DELETE',
@@ -355,10 +376,7 @@ angular.module('Timeline', ['ngResource'])
         return $resource('/api/0.1/user/timeline', {}, {
             query: {
                 method: 'GET',
-                isArray: true,
-                transformResponse: function(data){
-                    return angular.fromJson(data).objects;
-                }
+                isArray: false
             }
         });
     });
