@@ -29,7 +29,7 @@ mongoengine
 mimeparse
 django-tastypie-mongoengine
 django-gravatar2
-whoosh==2.4.1
-django-haystack==2.0.0
+django-haystack==2.1.0
 celery-haystack==0.7.2
 mongodbforms
+-e git+https://github.com/notanumber/xapian-haystack.git#egg=xapian-haystack

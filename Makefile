@@ -55,9 +55,21 @@ resetdb:
 
 	@$(FAB) development resetdb
 	
-filldb: fabric
+filldb_from_local: fabric
 
-	@$(FAB) development filldb 
+	@$(FAB) development filldb_from_local 
+	
+filldb_from_remote: fabric
+
+	@$(FAB) development filldb_from_remote
+	
+rebuild_index: fabric
+
+	@$(FAB) development rebuild_index  
+	
+create_local_repo: fabric
+
+	@$(FAB) development create_local_repo  
 
 update_virtualenv: fabric
 
