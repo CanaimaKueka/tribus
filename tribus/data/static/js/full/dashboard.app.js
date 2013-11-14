@@ -28,6 +28,7 @@ function TribController($scope, $timeout, Tribs, Timeline){
     $scope.trib_orderby = trib_orderby;
     $scope.tribs = [];
     $scope.first_trib_id = '';
+    var new_tribs_passes = 0;
 
     $scope.createNewTrib = function(){
         Tribs.save({
@@ -72,7 +73,6 @@ function TribController($scope, $timeout, Tribs, Timeline){
     };
 
     $scope.pollNewTribs = function(){
-        $timeout(function(){$scope.initTribs();});
         $timeout(function(){
             $timeout(function(){$scope.addNewTribs();});
             $timeout(function(){$scope.pollNewTribs();});
@@ -181,59 +181,21 @@ function TribController($scope, $timeout, Tribs, Timeline){
         });
     };
 
-    $scope.initTribs = function(){
-
-        if ($scope.controller_busy) return;
-        $scope.controller_busy = true;
-
-        var init_tribs = Timeline.query({
-            order_by: trib_orderby,
-            limit: trib_limit,
-            offset: trib_offset
-        }, function(){
-            for(var i = 0; i < init_tribs.objects.length; i++){
-                var gravatar = 'http://www.gravatar.com/avatar/'+md5(init_tribs.objects[i].author_email)+'?d=mm&s=70&r=x';
-                init_tribs.objects[i].author_gravatar = gravatar;
-                $scope.tribs.push(init_tribs.objects[i]);
-
-                if($scope.tribs.length > $scope.trib_limit_to){
-                    $scope.trib_limit_to = $scope.tribs.length;
-                }
-            }
-
-            $timeout(function(){$(".trib_list").trigger('reload_dom');});        
-            $scope.controller_busy = false;
-
-        }, function(e){
-            $timeout(function(){
-                $.bootstrapGrowl(trib_add_error, {
-                    ele: 'body',
-                    type: 'error',
-                    offset: { from: 'top', amount: 50 },
-                    align: 'right',
-                    width: 400,
-                    delay: 10000,
-                    allow_dismiss: true,
-                    stackup_spacing: 5
-                });
-            }, 100);
-        });
-    };
-
     $scope.addNewTribs = function(){
 
         if ($scope.controller_busy) return;
         $scope.controller_busy = true;
-        $scope.first_trib_id = $scope.tribs[0].id;
 
+        if(new_tribs_passes === 0 && $scope.tribs.length > 0){
+            $scope.first_trib_id = $scope.tribs[0].id;
+        }
+        
         var fresh_tribs = Timeline.query({
             order_by: $scope.trib_orderby,
             limit: $scope.trib_limit,
             offset: $scope.new_tribs_offset
         }, function(){
-            console.log($scope.new_tribs_offset)
             for(var i = 0; i < fresh_tribs.objects.length; i++){
-                console.log(fresh_tribs.objects[i].id+'    '+$scope.first_trib_id);
                 if(fresh_tribs.objects[i].id != $scope.first_trib_id){
                     var fresh_id_appears = false;
 
@@ -253,16 +215,18 @@ function TribController($scope, $timeout, Tribs, Timeline){
 
                     if(i == (fresh_tribs.objects.length-1)){
                         $scope.new_tribs_offset = $scope.new_tribs_offset + trib_add;
+                        new_tribs_passes = new_tribs_passes + 1;
                         $timeout(function(){$scope.addNewTribs();});
                     }
                 } else {
-                    $scope.first_trib_id = $scope.tribs[0].id;
+                    new_tribs_passes = 0;
                     break;
                 }
             }
 
             $timeout(function(){$(".trib_list").trigger('reload_dom');});        
             $scope.controller_busy = false;
+
         }, function(e){
             $timeout(function(){
                 $.bootstrapGrowl(trib_add_error, {
@@ -368,124 +332,6 @@ function CommentController($scope, $timeout, Comments){
         });
     };
 
-    $scope.addOldComments = function(){
-
-        if ($scope.comments_end) return;
-        if ($scope.controller_busy) return;
-        $scope.controller_busy = true;
-
-        var old_comments = Comments.query({
-            trib_id: $scope.trib_id,
-            order_by: $scope.comment_orderby,
-            limit: $scope.comment_limit,
-            offset: $scope.comment_offset
-        }, function(){
-            for(var i = 0; i < old_comments.objects.length; i++){
-                var old_id_appears = false;
-
-                for(var j = 0; j < $scope.comments.length; j++){
-                    if(old_comments.objects[i].id == $scope.comments[j].id) old_id_appears = true;
-                }
-
-                if(!old_id_appears){
-                    var gravatar = 'http://www.gravatar.com/avatar/'+md5(old_comments.objects[i].author_email)+'?d=mm&s=30&r=x';
-                    old_comments.objects[i].author_gravatar = gravatar;
-                    $scope.comments.push(old_comments.objects[i]);
-                }
-            }
-
-            if($scope.comments.length > $scope.comment_offset){
-                $scope.comment_offset = $scope.comment_offset + comment_add;
-            }
-
-            if($scope.comments.length > $scope.comment_limit_to){
-                $scope.comment_limit_to = $scope.comments.length;
-            }
-
-            if(old_comments.objects.length === 0){
-                $scope.comments_end = true;
-            }
-
-            $timeout(function(){$('.comment_list').trigger('reload_dom');});
-            $scope.controller_busy = false;
-        }, function(e){
-            $timeout(function(){
-                $.bootstrapGrowl(comment_add_error, {
-                    ele: 'body',
-                    type: 'error',
-                    offset: { from: 'top', amount: 50 },
-                    align: 'right',
-                    width: 400,
-                    delay: 10000,
-                    allow_dismiss: true,
-                    stackup_spacing: 5
-                });
-            }, 100);
-        });
-    };
-
-    $scope.addNewComments = function(){
-
-        if ($scope.controller_busy) return;
-        $scope.controller_busy = true;
-        $scope.new_comments_offset = comment_offset;
-        $scope.temp_new_comments = [];
-        $scope.first_comment_id = '';
-
-        if($scope.comments.length > 0){
-            $scope.first_comment_id = $scope.comments[0].id;
-        }
-
-        var fresh_comments = Comments.query({
-            trib_id: $scope.trib_id,
-            order_by: $scope.comment_orderby,
-            limit: $scope.comment_limit,
-            offset: $scope.new_comments_offset
-        }, function(){
-            for(var i = 0; i < fresh_comments.objects.length; i++){
-                if(fresh_comments.objects[i].id != $scope.first_comment_id){
-                    var fresh_id_appears = false;
-
-                    for(var j = 0; j < $scope.comments.length; j++){
-                        if(fresh_comments.objects[i].id == $scope.comments[j].id) fresh_id_appears = true;
-                    }
-
-                    if(!fresh_id_appears){
-                        var gravatar = 'http://www.gravatar.com/avatar/'+md5(fresh_comments.objects[i].author_email)+'?d=mm&s=30&r=x';
-                        fresh_comments.objects[i].author_gravatar = gravatar;
-                        $scope.comments.unshift(fresh_comments.objects[i]);
-
-                        if($scope.comments.length > $scope.comment_limit_to){
-                            $scope.comment_limit_to = $scope.comments.length;
-                        }
-                    }
-
-                    if(i == (fresh_comments.objects.length-1)){
-                        $scope.addNewComments($scope, $timeout, Comments, comment_offset+comment_add);
-                    }
-
-                } else {
-                    break;
-                }
-            }
-
-            $timeout(function(){$(".comment_list").trigger('reload_dom');});        
-            $scope.controller_busy = false;
-        }, function(e){
-            $timeout(function(){
-                $.bootstrapGrowl(comment_add_error, {
-                    ele: 'body',
-                    type: 'error',
-                    offset: { from: 'top', amount: 50 },
-                    align: 'right',
-                    width: 400,
-                    delay: 10000,
-                    allow_dismiss: true,
-                    stackup_spacing: 5
-                });
-            }, 100);
-        });
-    };
 
 };
 
