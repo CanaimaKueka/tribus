@@ -36,7 +36,7 @@ from babel.messages.frontend import (extract_messages as base_extract_messages,
 									 update_catalog as base_update_catalog)
 
 from tribus.config.base import DOCDIR
-from tribus.common.utils import get_path, list_files
+from tribus.common.utils import get_path, list_files, list_dirs
 
 class extract_messages(base_extract_messages):
 
@@ -62,8 +62,34 @@ class extract_messages(base_extract_messages):
 
 
 class init_catalog(base_init_catalog):
+
+    def initialize_options(self):
+        base_init_catalog.initialize_options(self)
+        self.locale = 'en'
+
+    def get_sphinx_pot_list(self):
+        return filter(None, list_files(get_path([DOCDIR, 'rst', 'i18n', 'pot'])))
+
+    def get_locale_list(self):
+        locales = list_dirs(get_path([DOCDIR, 'rst', 'i18n']))
+        locales.remove('pot')
+        return filter(None, locales)
+
     def run(self):
-    	base_init_catalog.run(self)
+        for locale in self.get_locale_list():
+            self.locale = locale
+            self.output_file = None
+            base_init_catalog.finalize_options(self)
+            base_init_catalog.run(self)
+
+            for potfile in self.get_sphinx_pot_list():
+                self.locale = locale
+                self.domain = os.path.splitext(os.path.basename(potfile))[0]
+                self.output_dir = get_path([DOCDIR, 'rst', 'i18n'])
+                self.input_file = potfile
+                self.output_file = None
+                base_init_catalog.finalize_options(self)
+                base_init_catalog.run(self)
 
 
 class update_catalog(base_update_catalog):
@@ -75,8 +101,8 @@ class update_catalog(base_update_catalog):
         base_update_catalog.run(self)
 
         for potfile in self.get_sphinx_pot_list():
-            base_update_catalog.initialize_options(self)
             self.domain = os.path.splitext(os.path.basename(potfile))[0]
             self.input_file = potfile
             self.output_dir = get_path([DOCDIR, 'rst', 'i18n'])
+            base_update_catalog.finalize_options(self)
             base_update_catalog.run(self)

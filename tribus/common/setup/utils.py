@@ -305,23 +305,23 @@ def get_setup_data(basedir):
             },       
             'update_catalog': {
                 'domain': ('setup.py', 'tribus'),
-                'input_file': ('setup.py', 'tribus/i18n/pot/tribus.pot'),
-                'output_dir': ('setup.py', 'tribus/i18n'),
+                'input_file': ('setup.py', 'tribus/data/i18n/pot/tribus.pot'),
+                'output_dir': ('setup.py', 'tribus/data/i18n'),
             },
             'compile_catalog': {
                 'domain': ('setup.py', 'tribus'),
-                'directory': ('setup.py', 'tribus/i18n'),
+                'directory': ('setup.py', 'tribus/data/i18n'),
                 'use_fuzzy': ('setup.py', True),
             },
             'init_catalog': {
                 'domain': ('setup.py', 'tribus'),
-                'input_file': ('setup.py', 'tribus/i18n/pot/tribus.pot'),
-                'output_dir': ('setup.py', 'tribus/i18n'),
+                'input_file': ('setup.py', 'tribus/data/i18n/pot/tribus.pot'),
+                'output_dir': ('setup.py', 'tribus/data/i18n'),
             },
             'extract_messages': {
                 'copyright_holder': ('setup.py', 'Desarrolladores de Tribus'),
                 'msgid_bugs_address': ('setup.py', 'desarrolladores@canaima.softwarelibre.gob.ve'),
-                'output_file': ('setup.py', 'tribus/i18n/pot/tribus.pot'),
+                'output_file': ('setup.py', 'tribus/data/i18n/pot/tribus.pot'),
                 'charset': ('setup.py', 'utf-8'),
             },
             'build_sphinx': {
