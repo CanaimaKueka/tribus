@@ -31,3 +31,4 @@ celery-haystack==0.7.2
 django-tastypie-mongoengine==0.4.5
 mongoengine==0.8.4
 mongodbforms==0.3
+-e git+https://github.com/notanumber/xapian-haystack.git#egg=xapian-haystack
