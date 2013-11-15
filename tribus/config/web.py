@@ -34,7 +34,7 @@ MEDIA_URL = '/media/'
 STATIC_ROOT = ''
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [get_path([BASEDIR, 'tribus', 'data', 'static'])]
-TEMPLATE_DIRS = [get_path([BASEDIR, 'tribus', 'data', 'html'])]
+TEMPLATE_DIRS = [get_path([BASEDIR, 'tribus', 'data', 'templates'])]
 
 DJANGO_STATIC = not DEBUG
 DJANGO_STATIC_MEDIA_ROOTS = [get_path([BASEDIR, 'tribus', 'data'])]

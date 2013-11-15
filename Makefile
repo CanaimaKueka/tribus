@@ -1,4 +1,23 @@
-# Makefile
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2013 Desarrolladores de Tribus
+#
+# This file is part of Tribus.
+#
+# Tribus is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Tribus is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 
 SHELL = sh -e
 PATH = "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
@@ -63,13 +82,21 @@ update_virtualenv: fabric
 
 	@$(FAB) development update_virtualenv
 
-update_po: fabric 
+update_catalog: fabric 
 
-	@$(FAB) development update_po
+	@$(FAB) development update_catalog
 
-create_pot: fabric
+compile_catalog: fabric 
 
-	@$(FAB) development create_pot
+	@$(FAB) development compile_catalog
+
+init_catalog: fabric 
+
+	@$(FAB) development init_catalog
+
+extract_messages: fabric 
+
+	@$(FAB) development extract_messages
 
 # snapshot: check-maintdep prepare gen-html gen-wiki gen-po clean
 
@@ -106,10 +133,6 @@ build_mo: fabric
 
 	@$(FAB) development build_mo
 
-build_img: fabric
-
-	@$(FAB) development build_img
-
 build_css: fabric
 
 	@$(FAB) development build_css
@@ -136,10 +159,6 @@ clean_css: fabric
 clean_js: fabric
 
 	@$(FAB) development clean_js
-
-clean_img: fabric
-
-	@$(FAB) development clean_img
 
 clean_mo: fabric
 
