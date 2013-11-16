@@ -44,8 +44,9 @@ virtualenv
 # Packagecache
 packagecache
 
-# Whoosh index
+# Indices
 whoosh_index
+xapian_index
 
 # Vim
 .*.s[a-w][a-z]

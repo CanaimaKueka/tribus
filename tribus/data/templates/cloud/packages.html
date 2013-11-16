@@ -59,7 +59,24 @@
                             </span>
                         </div>
                         {% endif %}
-
+                        
+                        {% if paquete.Labels.all  %}
+	                        <div class="row-fluid">
+	                            <span class="span2"></span>
+	                            <span class="span10">
+	                                <h3 class="line-height-1">{% trans 'Tags' %}</h3>
+	                                <h4 class="line-height-1">
+	                                	{% for label in paquete.Labels.all %}
+			                        		{% if forloop.last %}
+			                        			<b> {{ label.Name }} </b> : {{ label.Tags.Value }} 
+			                        		{% else %}
+			                        			<b> {{ label.Name }} </b> : {{ label.Tags.Value }}, 
+			                        		{% endif %}
+			                        	{% endfor %}
+	                                </h4>
+	                            </span>
+	                        </div>
+                        {% endif %}
                                         <div class="tabbable tabs-left">
                                             <ul class="nav nav-tabs" id="myTab3">
                                                 <li class="active">

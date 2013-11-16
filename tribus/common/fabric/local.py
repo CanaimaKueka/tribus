@@ -33,6 +33,7 @@ from tribus.config.pkg import (debian_run_dependencies, debian_build_dependencie
                               f_python_dependencies)
 
 
+
 def development():
     env.user = pwd.getpwuid(os.getuid()).pw_name
     env.root = 'root'
@@ -45,6 +46,9 @@ def development():
     env.settings = 'tribus.config.web'
     env.sudo_prompt = 'Executed'
     env.f_python_dependencies = f_python_dependencies
+    env.xapian_destdir = os.path.join(env.virtualenv_dir, 'lib', 'python%s' % sys.version[:3], 'site-packages', 'xapian')
+    env.xapian_init = os.path.join(os.path.sep, 'usr', 'share', 'pyshared', 'xapian', '__init__.py')
+    env.xapian_so = os.path.join(os.path.sep, 'usr', 'lib', 'python%s' % sys.version[:3], 'dist-packages', 'xapian', '_xapian.so')
 
 
 def environment():
@@ -56,10 +60,22 @@ def environment():
     configure_postgres()
     populate_ldap()
     create_virtualenv()
+    include_xapian()
     update_virtualenv()
     configure_django()
     deconfigure_sudo()
-    
+
+
+def include_xapian():
+    with settings(command='mkdir -p %(xapian_destdir)s' % env):
+        local('%(command)s' % env)
+
+    with settings(command='ln -fs %(xapian_init)s %(xapian_destdir)s' % env):
+        local('%(command)s' % env)
+
+    with settings(command='ln -fs %(xapian_so)s %(xapian_destdir)s' % env):
+        local('%(command)s' % env)
+
     
 def resetdb():
     configure_sudo()
@@ -68,11 +84,28 @@ def resetdb():
     configure_django()
     deconfigure_sudo()
     
+def create_local_repo():
+    py_activate_virtualenv()
+    from tribus.common.recorder import create_local_repository
+    create_local_repository()
     
-def filldb():
+    
+def filldb_from_local():
     py_activate_virtualenv()
     from tribus.common.recorder import init_package_cache
     init_package_cache()
+    
+    
+def filldb_from_remote():
+    py_activate_virtualenv()
+    from tribus.common.recorder import init_package_cache_from_canaima
+    init_package_cache_from_canaima()
+
+    
+def rebuild_index():
+    with cd('%(basedir)s' % env):
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s python manage.py rebuild_index --noinput' % env)
 
 
 def configure_sudo():
