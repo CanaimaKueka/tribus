@@ -3,8 +3,14 @@
 
 
 def get_logger():
-    import logging
-    import logging.config
+
+    from logging import getLogger
     from tribus.config.logger import LOGGING
-    logging.config.dictConfig(LOGGING)
-    return logging.getLogger('tribus')
+
+    try:
+        from logging.config import dictConfig
+    except ImportError:
+        from tribus.common.dictconfig import dictConfig
+
+    dictConfig(LOGGING)
+    return getLogger('tribus')
