@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tribus 0.1.dev20131118020506\n"
 "Report-Msgid-Bugs-To: desarrolladores@canaima.softwarelibre.gob.ve\n"
-"POT-Creation-Date: 2013-11-18 00:47-0630\n"
-"PO-Revision-Date: 2013-11-18 00:52-0630\n"
+"POT-Creation-Date: 2013-11-18 16:22-0630\n"
+"PO-Revision-Date: 2013-11-18 00:52-0730\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: ko <LL@li.org>\n"
 "Plural-Forms: nplurals=1; plural=0\n"
@@ -35,6 +35,91 @@ msgstr ""
 
 #: tribus/config/brand.py:10
 msgid "Harvester"
+msgstr ""
+
+#: tribus/data/templates/cloud/404.html:4
+#: tribus/data/templates/cloud/packages.html:3
+#: tribus/data/templates/search/search.html:3
+msgid "Tribus Search"
+msgstr ""
+
+#: tribus/data/templates/cloud/404.html:6
+msgid "Package not found!"
+msgstr ""
+
+#: tribus/data/templates/cloud/architectures.html:4
+msgid "for all architectures"
+msgstr ""
+
+#: tribus/data/templates/cloud/architectures.html:6
+msgid "for the architecture:"
+msgstr ""
+
+#: tribus/data/templates/cloud/architectures.html:8
+msgid "Version:"
+msgstr ""
+
+#: tribus/data/templates/cloud/architectures.html:9
+msgid "Size:"
+msgstr ""
+
+#: tribus/data/templates/cloud/architectures.html:10
+msgid "Installed Size:"
+msgstr ""
+
+#: tribus/data/templates/cloud/architectures.html:11
+msgid "MD5sum:"
+msgstr ""
+
+#: tribus/data/templates/cloud/architectures.html:12
+msgid "Download"
+msgstr ""
+
+#: tribus/data/templates/cloud/frontpage.html:9
+msgid "Application Cloud"
+msgstr ""
+
+#: tribus/data/templates/cloud/frontpage.html:13
+#, python-format
+msgid ""
+"\n"
+"                            The application cloud is a storage, "
+"integration and distribution system designed for the software stored in "
+"%(tribus_distro)s. It allows %(tribus_role_1)s, %(tribus_role_2)s and "
+"%(tribus_role_3)s to empower their applications by using the cloud.\n"
+"                            "
+msgstr ""
+
+#: tribus/data/templates/cloud/packages.html:15
+msgid "This is not a real package."
+msgstr ""
+
+#: tribus/data/templates/cloud/packages.html:26
+msgid "Maintainer"
+msgstr ""
+
+#: tribus/data/templates/cloud/packages.html:35
+msgid "Section"
+msgstr ""
+
+#: tribus/data/templates/cloud/packages.html:44
+msgid "Priority"
+msgstr ""
+
+#: tribus/data/templates/cloud/packages.html:53
+msgid "Homepage"
+msgstr ""
+
+#: tribus/data/templates/cloud/packages.html:67
+msgid "Tags"
+msgstr ""
+
+#: tribus/data/templates/cloud/packages.html:124
+msgid "In Canaima"
+msgstr ""
+
+#: tribus/data/templates/cloud/relations.html:14
+msgid "or"
 msgstr ""
 
 #: tribus/data/templates/dashboard.html:49
@@ -200,6 +285,24 @@ msgstr ""
 msgid "Log in"
 msgstr ""
 
+#: tribus/data/templates/profile/profiles.html:149
+msgid "There has been an error publishng your message. Please try again later."
+msgstr ""
+
+#: tribus/data/templates/search/search.html:10
+msgid "Search results"
+msgstr ""
+
+#: tribus/data/templates/search/search.html:49
+#: tribus/data/templates/search/search.html:53
+msgid "Packages"
+msgstr ""
+
+#: tribus/data/templates/search/search.html:50
+#: tribus/data/templates/search/search.html:54
+msgid "Users"
+msgstr ""
+
 #: tribus/data/templates/tribs.html:12
 msgid "What are you doing?"
 msgstr ""
@@ -258,109 +361,6 @@ msgstr ""
 
 #: tribus/data/templates/tribs.html:155
 msgid "Delete message"
-msgstr ""
-
-#: tribus/data/templates/cloud/404.html:4
-#: tribus/data/templates/cloud/packages.html:3
-#: tribus/data/templates/search/search.html:3
-msgid "Tribus Search"
-msgstr ""
-
-#: tribus/data/templates/cloud/404.html:6
-msgid "Package not found!"
-msgstr ""
-
-#: tribus/data/templates/cloud/architectures.html:4
-msgid "for all architectures"
-msgstr ""
-
-#: tribus/data/templates/cloud/architectures.html:6
-msgid "for the architecture:"
-msgstr ""
-
-#: tribus/data/templates/cloud/architectures.html:8
-msgid "Version:"
-msgstr ""
-
-#: tribus/data/templates/cloud/architectures.html:9
-msgid "Size:"
-msgstr ""
-
-#: tribus/data/templates/cloud/architectures.html:10
-msgid "Installed Size:"
-msgstr ""
-
-#: tribus/data/templates/cloud/architectures.html:11
-msgid "MD5sum:"
-msgstr ""
-
-#: tribus/data/templates/cloud/architectures.html:12
-msgid "Download"
-msgstr ""
-
-#: tribus/data/templates/cloud/frontpage.html:9
-msgid "Application Cloud"
-msgstr ""
-
-#: tribus/data/templates/cloud/frontpage.html:13
-#, python-format
-msgid ""
-"\n"
-"                            The application cloud is a storage, "
-"integration and distribution system designed for the software stored in "
-"%(tribus_distro)s. It allows %(tribus_role_1)s, %(tribus_role_2)s and "
-"%(tribus_role_3)s to empower their applications by using the cloud.\n"
-"                            "
-msgstr ""
-
-#: tribus/data/templates/cloud/packages.html:15
-msgid "This is not a real package."
-msgstr ""
-
-#: tribus/data/templates/cloud/packages.html:26
-msgid "Maintainer"
-msgstr ""
-
-#: tribus/data/templates/cloud/packages.html:35
-msgid "Section"
-msgstr ""
-
-#: tribus/data/templates/cloud/packages.html:44
-msgid "Priority"
-msgstr ""
-
-#: tribus/data/templates/cloud/packages.html:53
-msgid "Homepage"
-msgstr ""
-
-#: tribus/data/templates/cloud/packages.html:67
-msgid "Tags"
-msgstr ""
-
-#: tribus/data/templates/cloud/packages.html:124
-msgid "In Canaima"
-msgstr ""
-
-#: tribus/data/templates/cloud/relations.html:14
-msgid "or"
-msgstr ""
-
-#: tribus/data/templates/profile/profiles.html:149
-msgid "There has been an error publishng your message. Please try again later."
-msgstr ""
-
-#: tribus/data/templates/search/search.html:10
-msgid "Search results"
-msgstr ""
-
-#: tribus/data/templates/search/search.html:49
-#: tribus/data/templates/search/search.html:53
-msgid "Packages"
-msgstr ""
-
-#: tribus/data/templates/search/search.html:50
-#: tribus/data/templates/search/search.html:54
-msgid "Users"
 msgstr ""
 
 #: tribus/data/templates/user/login_form.html:9

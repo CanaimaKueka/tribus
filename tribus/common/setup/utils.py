@@ -324,8 +324,6 @@ def get_setup_data(basedir):
                 'msgid_bugs_address': ('setup.py', 'desarrolladores@canaima.softwarelibre.gob.ve'),
                 'output_file': ('setup.py', 'tribus/data/i18n/pot/django.pot'),
                 'charset': ('setup.py', 'utf-8'),
-                'width': ('setup.py', 80),
-                'sort_output': ('setup.py', True),
                 'sort_by_file': ('setup.py', True),
                 'no_wrap': ('setup.py', True),
             },

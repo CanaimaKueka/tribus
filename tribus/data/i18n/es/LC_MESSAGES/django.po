@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tribus 0.1.dev20131114214204\n"
 "Report-Msgid-Bugs-To: desarrolladores@canaima.softwarelibre.gob.ve\n"
-"POT-Creation-Date: 2013-11-15 01:28-0630\n"
-"PO-Revision-Date: 2013-11-15 01:28-0730\n"
+"POT-Creation-Date: 2013-11-18 16:22-0630\n"
+"PO-Revision-Date: 2013-11-15 01:28-0830\n"
 "Last-Translator: Wuilmer Bolivar <el.wuilmer@gmail.com>\n"
 "Language-Team: Github.com: tribus/tree/traducir\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -37,6 +37,98 @@ msgstr "Guerrero"
 msgid "Harvester"
 msgstr "Cosechador"
 
+#: tribus/data/templates/cloud/404.html:4
+#: tribus/data/templates/cloud/packages.html:3
+#: tribus/data/templates/search/search.html:3
+msgid "Tribus Search"
+msgstr "Buscar en Tribus"
+
+#: tribus/data/templates/cloud/404.html:6
+msgid "Package not found!"
+msgstr "Paquete no encontrado!"
+
+#: tribus/data/templates/cloud/architectures.html:4
+msgid "for all architectures"
+msgstr "para todas las arquitecturas"
+
+#: tribus/data/templates/cloud/architectures.html:6
+msgid "for the architecture:"
+msgstr "para la arquitectura:"
+
+#: tribus/data/templates/cloud/architectures.html:8
+msgid "Version:"
+msgstr "Versión:"
+
+#: tribus/data/templates/cloud/architectures.html:9
+msgid "Size:"
+msgstr "Tamaño:"
+
+#: tribus/data/templates/cloud/architectures.html:10
+msgid "Installed Size:"
+msgstr "Tamaño instalado:"
+
+#: tribus/data/templates/cloud/architectures.html:11
+msgid "MD5sum:"
+msgstr "Suma MD5:"
+
+#: tribus/data/templates/cloud/architectures.html:12
+msgid "Download"
+msgstr "Descarga"
+
+#: tribus/data/templates/cloud/frontpage.html:9
+msgid "Application Cloud"
+msgstr "Nube de Aplicación"
+
+#: tribus/data/templates/cloud/frontpage.html:13
+#, python-format
+msgid ""
+"\n"
+"                            The application cloud is a storage, "
+"integration and distribution system designed for the software stored in "
+"%(tribus_distro)s. It allows %(tribus_role_1)s, %(tribus_role_2)s and "
+"%(tribus_role_3)s to empower their applications by using the cloud.\n"
+"                            "
+msgstr ""
+"\n"
+"                            La aplicación es una nube de almacenamiento, "
+"integración y sistema de distribución diseñado para el software "
+"almacenado en %(tribus_distro)s. Permite %(tribus_role_1)s, "
+"%(tribus_role_2)s y %(tribus_role_3)s capacitar a sus aplicaciones "
+"mediante el uso de la nube.\n"
+"                            "
+
+#: tribus/data/templates/cloud/packages.html:15
+msgid "This is not a real package."
+msgstr "Esto no es un paquete real."
+
+#: tribus/data/templates/cloud/packages.html:26
+msgid "Maintainer"
+msgstr "Mantenedor"
+
+#: tribus/data/templates/cloud/packages.html:35
+msgid "Section"
+msgstr "Sección"
+
+#: tribus/data/templates/cloud/packages.html:44
+msgid "Priority"
+msgstr "Prioridad"
+
+#: tribus/data/templates/cloud/packages.html:53
+msgid "Homepage"
+msgstr "Página Principal"
+
+#: tribus/data/templates/cloud/packages.html:67
+msgid "Tags"
+msgstr ""
+
+#: tribus/data/templates/cloud/packages.html:124
+msgid "In Canaima"
+msgstr "En Canaima"
+
+#: tribus/data/templates/cloud/relations.html:14
+msgid "or"
+msgstr "o"
+
 #: tribus/data/templates/dashboard.html:49
 #: tribus/data/templates/profile/profiles.html:148
 #: tribus/data/templates/profile/profiles_view.html:139
@@ -44,10 +136,11 @@ msgid "Your message has been published."
 msgstr "Su mensaje ha sido publicado."
 
 #: tribus/data/templates/dashboard.html:50
-#: tribus/data/templates/profile/profiles.html:149
 #: tribus/data/templates/profile/profiles_view.html:140
 msgid "There has been an error publishing your message. Please try again later."
-msgstr "Se ha producido un error en la publicación de su mensaje. Por favor inténtelo de nuevo más tarde."
+msgstr ""
+"Se ha producido un error en la publicación de su mensaje. Por favor "
+"inténtelo de nuevo más tarde."
 
 #: tribus/data/templates/dashboard.html:51
 #: tribus/data/templates/profile/profiles.html:150
@@ -59,21 +152,28 @@ msgstr "Tu mensaje ha sido borrado."
 #: tribus/data/templates/profile/profiles.html:151
 #: tribus/data/templates/profile/profiles_view.html:142
 msgid "There has been an error deleting your message. Please try again later."
-msgstr "Se ha producido un error al eliminar el mensaje. Por favor inténtelo de nuevo más tarde."
+msgstr ""
+"Se ha producido un error al eliminar el mensaje. Por favor inténtelo de "
+"nuevo más tarde."
 
 #: tribus/data/templates/dashboard.html:53
 #: tribus/data/templates/profile/profiles.html:152
 #: tribus/data/templates/profile/profiles_view.html:143
 msgid "There has been an error consulting more messages. Please try again later."
-msgstr "Se ha producido un error consultar más mensajes. Por favor inténtelo de nuevo más tarde."
+msgstr ""
+"Se ha producido un error consultar más mensajes. Por favor inténtelo de "
+"nuevo más tarde."
 
 #: tribus/data/templates/dashboard.html:54
 msgid "Your comment has been published."
 msgstr "Tu comentario ha sido publicado."
 
 #: tribus/data/templates/dashboard.html:55
-msgid "There has been an error publishing your comment. Please try again later."
-msgstr "Se ha producido un error en la publicación de su comentario. Por favor inténtelo de nuevo más tarde."
+#, fuzzy
+msgid "There has been an error publishng your comment. Please try again later."
+msgstr ""
+"Se ha producido un error en la publicación de su comentario. Por favor "
+"inténtelo de nuevo más tarde."
 
 #: tribus/data/templates/dashboard.html:56
 #: tribus/data/templates/profile/profiles.html:153
@@ -85,7 +185,9 @@ msgstr "Tu comentario ha sido borrado."
 #: tribus/data/templates/profile/profiles.html:154
 #: tribus/data/templates/profile/profiles_view.html:145
 msgid "There has been an error deleting your comment. Please try again later."
-msgstr "Se ha producido un error al eliminar tu comentario. Por favor inténtelo de nuevo más tarde."
+msgstr ""
+"Se ha producido un error al eliminar tu comentario. Por favor inténtelo "
+"de nuevo más tarde."
 
 #: tribus/data/templates/index.html:8
 msgid "Join the Tribe!"
@@ -101,10 +203,11 @@ msgid ""
 "                            "
 msgstr ""
 "\n"
-"                            Dé rienda suelta a la potencia de su creatividad"
-" para lograr increíbles piezas de arte en el mundo del software libre. Ofrecemos "
-"un completo conjunto de servicios comunitarios adecuados a su ordenador. "
-"<a href=\"/tour\">Tome el tour</a> para saber cómo.\n"
+"                            Dé rienda suelta a la potencia de su "
+"creatividad para lograr increíbles piezas de arte en el mundo del "
+"software libre. Ofrecemos un completo conjunto de servicios comunitarios "
+"adecuados a su ordenador. <a href=\"/tour\">Tome el tour</a> para saber "
+"cómo.\n"
 "                            "
 
 #: tribus/data/templates/index.html:17 tribus/data/templates/index.html:29
@@ -125,8 +228,8 @@ msgid ""
 "                                    "
 msgstr ""
 "\n"
-"                                    Al hacer clic en este botón usted está de acuerdo"
-" con los \n"
+"                                    Al hacer clic en este botón usted "
+"está de acuerdo con los \n"
 "                                    <a href=\"/about/terms\" "
 "target=\"_blank\">Términos de Servicio</a>, the\n"
 "                                    <a href=\"/about/privacy\" "
@@ -145,9 +248,10 @@ msgid ""
 "package cloud. You can distribute your applications through a personal "
 "cloud, or have it enter Canaima's development cycle."
 msgstr ""
-"Te damos el espacio para almacenar los archivos binarios de código fuente en nuestro "
-"nube de paquetes. Usted puede distribuir sus aplicaciones a través de una nube "
-"personal, o tiene que entrar en el ciclo de desarrollo de Canaima."
+"Te damos el espacio para almacenar los archivos binarios de código fuente"
+" en nuestro nube de paquetes. Usted puede distribuir sus aplicaciones a "
+"través de una nube personal, o tiene que entrar en el ciclo de desarrollo"
+" de Canaima."
 
 #: tribus/data/templates/index.html:51
 msgid "Source management"
@@ -167,14 +271,14 @@ msgid ""
 "                        "
 msgstr ""
 "\n"
-"                        Guarde su trabajo en un lugar público, donde todo el mundo"
-" puede revisar y contribuir a sus proyectos. Apoyamos los más populares "
-"sistemas de control de versiones: <a href=\"http://subversion.apache.org/\" "
-"target=\"_blank\">subversion</a>, <a "
-"href=\"a:http://bazaar.canonical.com/en/\" target=\"_blank\">bazaar</a>, "
-"<a href=\"http://mercurial.selenic.com/\" target=\"_blank\">mercurial</a>"
-" y <a href=\"http://git-scm.com/\" target=\"_blank\">git</a> (o en absoluto  "
-"ningún control de versiones).\n"
+"                        Guarde su trabajo en un lugar público, donde todo"
+" el mundo puede revisar y contribuir a sus proyectos. Apoyamos los más "
+"populares sistemas de control de versiones: <a "
+"href=\"http://subversion.apache.org/\" target=\"_blank\">subversion</a>, "
+"<a href=\"a:http://bazaar.canonical.com/en/\" "
+"target=\"_blank\">bazaar</a>, <a href=\"http://mercurial.selenic.com/\" "
+"target=\"_blank\">mercurial</a> y <a href=\"http://git-scm.com/\" "
+"target=\"_blank\">git</a> (o en absoluto  ningún control de versiones).\n"
 "                        "
 
 #: tribus/data/templates/index.html:59
@@ -191,10 +295,11 @@ msgid ""
 "                        "
 msgstr ""
 "\n"
-"                        Enfoquese a sí mismo en el proceso creativo de su "
-"trabajo, mientras que nosotros nos encargamos de la construcción y el empaquetado de sus aplicaciones. Nosotros"
-" tenemos una granja <a href=\"http://buildbot.net\" target=\"_blank\">buildbot</a> "
-"a la espera de recopilar tus cosas.\n"
+"                        Enfoquese a sí mismo en el proceso creativo de su"
+" trabajo, mientras que nosotros nos encargamos de la construcción y el "
+"empaquetado de sus aplicaciones. Nosotros tenemos una granja <a "
+"href=\"http://buildbot.net\" target=\"_blank\">buildbot</a> a la espera "
+"de recopilar tus cosas.\n"
 "                        "
 
 #: tribus/data/templates/index.html:69
@@ -221,9 +326,9 @@ msgid ""
 "achieving goals together. Measure your effectiveness and planify your "
 "objectives in a clean and intuitive interface."
 msgstr ""
-"Organice su trabajo en equipo mediante la asignación de hitos a sus compañeros de equipo y "
-"alcanzar las metas juntos. Mida su eficacia y Planificamos su "
-"objetivos en una interfaz limpia e intuitiva."
+"Organice su trabajo en equipo mediante la asignación de hitos a sus "
+"compañeros de equipo y alcanzar las metas juntos. Mida su eficacia y "
+"Planificamos su objetivos en una interfaz limpia e intuitiva."
 
 #: tribus/data/templates/index.html:77
 msgid "Easy documentation"
@@ -236,14 +341,35 @@ msgid ""
 " we will take care of the HTML for you."
 msgstr ""
 "Sabemos lo importante que es tener una buena y rápida de configurar "
-"documentación. Es por eso que lo único que tienes que hacer es escribir RST, y"
-" nosotros nos encargamos del HTML para usted."
+"documentación. Es por eso que lo único que tienes que hacer es escribir "
+"RST, y nosotros nos encargamos del HTML para usted."
 
 #: tribus/data/templates/navbar.html:60
 #: tribus/data/templates/user/login_form.html:3
 #: tribus/data/templates/user/login_form.html:47
 msgid "Log in"
 msgstr "Iniciar sesión"
+
+#: tribus/data/templates/profile/profiles.html:149
+#, fuzzy
+msgid "There has been an error publishng your message. Please try again later."
+msgstr ""
+"Se ha producido un error en la publicación de su mensaje. Por favor "
+"inténtelo de nuevo más tarde."
+
+#: tribus/data/templates/search/search.html:10
+msgid "Search results"
+msgstr "Resultados de la búsqueda"
+
+#: tribus/data/templates/search/search.html:49
+#: tribus/data/templates/search/search.html:53
+msgid "Packages"
+msgstr "Paquetes"
+
+#: tribus/data/templates/search/search.html:50
+#: tribus/data/templates/search/search.html:54
+msgid "Users"
+msgstr "Usuarios"
 
 #: tribus/data/templates/tribs.html:12
 msgid "What are you doing?"
@@ -304,108 +430,6 @@ msgstr "¿Seguro que quieres borrar este mensaje?"
 #: tribus/data/templates/tribs.html:155
 msgid "Delete message"
 msgstr "Borrar mensaje"
-
-#: tribus/data/templates/cloud/404.html:4
-#: tribus/data/templates/cloud/packages.html:3
-#: tribus/data/templates/search/search.html:3
-msgid "Tribus Search"
-msgstr "Buscar en Tribus"
-
-#: tribus/data/templates/cloud/404.html:6
-msgid "Package not found!"
-msgstr "Paquete no encontrado!"
-
-#: tribus/data/templates/cloud/architectures.html:4
-msgid "for all architectures"
-msgstr "para todas las arquitecturas"
-
-#: tribus/data/templates/cloud/architectures.html:6
-msgid "for the architecture:"
-msgstr "para la arquitectura:"
-
-#: tribus/data/templates/cloud/architectures.html:8
-msgid "Version:"
-msgstr "Versión:"
-
-#: tribus/data/templates/cloud/architectures.html:9
-msgid "Size:"
-msgstr "Tamaño:"
-
-#: tribus/data/templates/cloud/architectures.html:10
-msgid "Installed Size:"
-msgstr "Tamaño instalado:"
-
-#: tribus/data/templates/cloud/architectures.html:11
-msgid "MD5sum:"
-msgstr "Suma MD5:"
-
-#: tribus/data/templates/cloud/architectures.html:12
-msgid "Download"
-msgstr "Descarga"
-
-#: tribus/data/templates/cloud/frontpage.html:9
-msgid "Application Cloud"
-msgstr "Nube de Aplicación"
-
-#: tribus/data/templates/cloud/frontpage.html:13
-#: python-format
-
-msgid ""
-"\n"
-"                            The application cloud is a storage, "
-"integration and distribution system designed for the software stored in "
-"%(tribus_distro)s. It allows %(tribus_role_1)s, %(tribus_role_2)s and "
-"%(tribus_role_3)s to empower their applications by using the cloud.\n"
-"                            "
-msgstr ""
-"\n"
-"                            La aplicación es una nube de almacenamiento, "
-"integración y sistema de distribución diseñado para el software almacenado en "
-"%(tribus_distro)s. Permite %(tribus_role_1)s, %(tribus_role_2)s y "
-"%(tribus_role_3)s capacitar a sus aplicaciones mediante el uso de la nube.\n"
-"                            "
-
-#: tribus/data/templates/cloud/packages.html:15
-msgid "This is not a real package."
-msgstr "Esto no es un paquete real."
-
-#: tribus/data/templates/cloud/packages.html:26
-msgid "Maintainer"
-msgstr "Mantenedor"
-
-#: tribus/data/templates/cloud/packages.html:35
-msgid "Section"
-msgstr "Sección"
-
-#: tribus/data/templates/cloud/packages.html:44
-msgid "Priority"
-msgstr "Prioridad"
-
-#: tribus/data/templates/cloud/packages.html:53
-msgid "Homepage"
-msgstr "Página Principal"
-
-#: tribus/data/templates/cloud/packages.html:107
-msgid "In Canaima"
-msgstr "En Canaima"
-
-#: tribus/data/templates/cloud/relations.html:14
-msgid "or"
-msgstr "o"
-
-#: tribus/data/templates/search/search.html:10
-msgid "Search results"
-msgstr "Resultados de la búsqueda"
-
-#: tribus/data/templates/search/search.html:49
-#: tribus/data/templates/search/search.html:53
-msgid "Packages"
-msgstr "Paquetes"
-
-#: tribus/data/templates/search/search.html:50
-#: tribus/data/templates/search/search.html:54
-msgid "Users"
-msgstr "Usuarios"
 
 #: tribus/data/templates/user/login_form.html:9
 msgid "Log in with"
@@ -521,3 +545,4 @@ msgstr "perfil de registro"
 #: tribus/web/user/models.py:187
 msgid "registration profiles"
 msgstr "perfiles de registro"
+
