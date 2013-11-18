@@ -34,8 +34,7 @@ from setuptools import setup
 from tribus import BASEDIR
 from tribus.common.setup.utils import get_setup_data
 
-setup(**get_setup_data(BASEDIR))
-# try:
-#     setup(**get_setup_data(BASEDIR))
-# except Exception, e:
-#     print e
+try:
+    setup(**get_setup_data(BASEDIR))
+except Exception, e:
+    print e

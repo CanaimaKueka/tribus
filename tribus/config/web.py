@@ -183,7 +183,6 @@ INSTALLED_APPS = (
     'django_static',
     'tastypie',
     'tastypie_mongoengine',
-    'django_gravatar',
     'haystack',
     'celery_haystack'
 )
