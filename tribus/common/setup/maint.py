@@ -42,7 +42,7 @@ from babel.messages.frontend import (extract_messages as base_extract_messages,
 									 update_catalog as base_update_catalog)
 
 from tribus.config.base import BASEDIR, DOCDIR
-from tribus.common.utils import get_path, list_files, list_dirs
+from tribus.common.utils import get_path, list_files
 
 class extract_messages(base_extract_messages):
 

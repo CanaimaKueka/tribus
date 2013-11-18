@@ -2,20 +2,6 @@
 'use strict';
 
 
-// Application -----------------------------------------------------------------
-
-var tribus = angular.module('tribus',
-    ['Tribs', 'Timeline', 'Comments', 'Search', 'infinite-scroll']);
-
-
-// Controllers -----------------------------------------------------------------
-
-tribus.controller('TribController', ['$scope', '$timeout', 'Tribs', 'Timeline',
-    TribController]);
-tribus.controller('CommentController', ['$scope', '$timeout', 'Comments',
-    CommentController]);
-
-
 function TribController($scope, $timeout, Tribs, Timeline){
 
     $scope.user_gravatar = user_gravatar;
@@ -139,7 +125,9 @@ function TribController($scope, $timeout, Tribs, Timeline){
         }, function(){
             if(old_tribs.objects.length === 0){
                 $scope.tribs_end = true;
+                $scope.controller_busy = false;
             } else {
+                $scope.tribs_end = false;
                 for(var i = 0; i < old_tribs.objects.length; i++){
                     var old_id_appears = false;
 
@@ -212,7 +200,7 @@ function TribController($scope, $timeout, Tribs, Timeline){
                         fresh_tribs.objects[i].author_gravatar = 'http://www.gravatar.com/avatar/';
                         fresh_tribs.objects[i].author_gravatar += md5(fresh_tribs.objects[i].author_email);
                         fresh_tribs.objects[i].author_gravatar += '?d=mm&s=70&r=x';
-                        $scope.tribs.unshift(fresh_tribs.objects[i]);
+                        $scope.tribs.push(fresh_tribs.objects[i]);
                     }
 
                     if($scope.tribs.length > $scope.trib_limit_to){
@@ -273,6 +261,8 @@ function CommentController($scope, $timeout, Comments){
         }, function(){
             $scope.comment_content = '';
             $timeout(function(){$scope.addNewComments();});
+            $timeout(function(){$('textarea.comment_textarea').trigger('keyup');});
+            $timeout(function(){$('textarea.comment_textarea').trigger('focus');});
             $timeout(function(){
                 $.bootstrapGrowl(comment_save_success, {
                     ele: 'body',
@@ -343,46 +333,49 @@ function CommentController($scope, $timeout, Comments){
 
         if ($scope.comments_end) return;
         if ($scope.controller_busy) return;
+        $scope.comments_end = false;
         $scope.controller_busy = true;
 
         var new_comments = Comments.query({
             trib_id: $scope.trib_id,
-            order_by: $scope.comment_orderby,
+            order_by: '-'+$scope.comment_orderby,
             limit: $scope.comment_limit,
             offset: $scope.new_comments_offset
         }, function(){
+            if(new_comments.objects.length === 0){
+                $scope.comments_end = true;
+                $scope.controller_busy = false;
+            } else {
 
-            for(var i = 0; i < new_comments.objects.length; i++){
-                var old_id_appears = false;
+                for(var i = 0; i < new_comments.objects.length; i++){
+                    var old_id_appears = false;
 
-                for(var j = 0; j < $scope.comments.length; j++){
-                    if(new_comments.objects[i].id == $scope.comments[j].id){
-                        old_id_appears = true;
+                    for(var j = 0; j < $scope.comments.length; j++){
+                        if(new_comments.objects[i].id == $scope.comments[j].id){
+                            old_id_appears = true;
+                        }
+                    }
+
+                    if(!old_id_appears){
+                        new_comments.objects[i].author_gravatar = 'http://www.gravatar.com/avatar/';
+                        new_comments.objects[i].author_gravatar += md5(new_comments.objects[i].author_email);
+                        new_comments.objects[i].author_gravatar += '?d=mm&s=70&r=x';
+                        $scope.comments.push(new_comments.objects[i]);
                     }
                 }
 
-                if(!old_id_appears){
-                    new_comments.objects[i].author_gravatar = 'http://www.gravatar.com/avatar/';
-                    new_comments.objects[i].author_gravatar += md5(new_comments.objects[i].author_email);
-                    new_comments.objects[i].author_gravatar += '?d=mm&s=70&r=x';
-                    $scope.comments.push(new_comments.objects[i]);
+                if($scope.comments.length > $scope.new_comments_offset){
+                    $scope.new_comments_offset = $scope.new_comments_offset + comment_add;
                 }
-            }
 
-            if($scope.comments.length > $scope.comment_offset){
-                $scope.comment_offset = $scope.comment_offset + comment_add;
-            }
+                if($scope.comments.length > $scope.comment_limit_to){
+                    $scope.comment_limit_to = $scope.comments.length;
+                }
 
-            if($scope.comments.length > $scope.comment_limit_to){
-                $scope.comment_limit_to = $scope.comments.length;
-            }
+                $timeout(function(){$('.trib_list').trigger('reload_dom');});
+                $scope.controller_busy = false;
 
-            if(new_comments.objects.length === 0){
-                $scope.comments_end = true;
             }
-
-            $timeout(function(){$('.trib_list').trigger('reload_dom');});
-            $scope.controller_busy = false;
 
         }, function(e){
             $timeout(function(){
@@ -400,63 +393,67 @@ function CommentController($scope, $timeout, Comments){
         });
     };
 
-};
+    $scope.addOldComments = function(){
 
+        if ($scope.comments_end) return;
+        if ($scope.controller_busy) return;
+        $scope.comments_end = false;
+        $scope.controller_busy = true;
 
-// Services --------------------------------------------------------------------
+        var old_comments = Comments.query({
+            trib_id: $scope.trib_id,
+            order_by: $scope.comment_orderby,
+            limit: $scope.comment_limit,
+            offset: $scope.comment_offset
+        }, function(){
+            if(old_comments.objects.length === 0){
+                $scope.comments_end = true;
+                $scope.controller_busy = false;
+            } else {
 
-angular.module('Tribs', ['ngResource'])
-    .factory('Tribs',  function($resource){
-        return $resource('/api/0.1/user/tribs/:id',
-            { id: '@id' }, {
-            save: {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
-                },
-            },
-            query: {
-                method: 'GET',
-                isArray: false
-            },
-            delete: {
-                method: 'DELETE',
-                headers: {
-                    'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
-                },
-            },
-        });
-    });
+                for(var i = 0; i < old_comments.objects.length; i++){
+                    var old_id_appears = false;
 
-angular.module('Timeline', ['ngResource'])
-    .factory('Timeline', function($resource){
-        return $resource('/api/0.1/user/timeline', {}, {
-            query: {
-                method: 'GET',
-                isArray: false
+                    for(var j = 0; j < $scope.comments.length; j++){
+                        if(old_comments.objects[i].id == $scope.comments[j].id){
+                            old_id_appears = true;
+                        }
+                    }
+
+                    if(!old_id_appears){
+                        old_comments.objects[i].author_gravatar = 'http://www.gravatar.com/avatar/';
+                        old_comments.objects[i].author_gravatar += md5(old_comments.objects[i].author_email);
+                        old_comments.objects[i].author_gravatar += '?d=mm&s=70&r=x';
+                        $scope.comments.push(old_comments.objects[i]);
+                    }
+                }
+
+                if($scope.comments.length > $scope.comment_offset){
+                    $scope.comment_offset = $scope.comment_offset + comment_add;
+                }
+
+                if($scope.comments.length > $scope.comment_limit_to){
+                    $scope.comment_limit_to = $scope.comments.length;
+                }
+
+                $timeout(function(){$('.trib_list').trigger('reload_dom');});
+                $scope.controller_busy = false;
+
             }
-        });
-    });
 
-angular.module('Comments', ['ngResource'])
-    .factory('Comments',  function($resource){
-        return $resource('/api/0.1/tribs/comments/:id',
-            { id: '@id' }, {
-            save: {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
-                },
-            },
-            query: {
-                method: 'GET',
-                isArray: false
-            },
-            delete: {
-                method: 'DELETE',
-                headers: {
-                    'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
-                },
-            },
+        }, function(e){
+            $timeout(function(){
+                $.bootstrapGrowl(comment_add_error, {
+                    ele: 'body',
+                    type: 'error',
+                    offset: { from: 'top', amount: 50 },
+                    align: 'right',
+                    width: 400,
+                    delay: 10000,
+                    allow_dismiss: true,
+                    stackup_spacing: 5
+                });
+            }, 100);
         });
-    });
+    };
+};

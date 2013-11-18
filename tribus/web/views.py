@@ -15,7 +15,7 @@ def index(request):
     if request.user.is_authenticated():
         render_js = ['jquery', 'jquery.autogrow', 'jquery.timeago', 'jquery.bootstrap-growl', 'jquery.bootstrap',
                         'angular', 'angular.resource', 'angular.infinite-scroll',
-                        'dashboard.app', 'dashboard.jquery',
+                        'dashboard.angular', 'controllers.angular', 'services.angular', 'dashboard.jquery',
                         'navbar.app', 'navbar.jquery',
                         'md5']
 
