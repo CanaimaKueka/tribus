@@ -30,8 +30,8 @@ from tribus import BASEDIR
 from tribus.config.ldap import (AUTH_LDAP_SERVER_URI, AUTH_LDAP_BASE, AUTH_LDAP_BIND_DN,
                                AUTH_LDAP_BIND_PASSWORD)
 from tribus.config.pkg import (debian_run_dependencies, debian_build_dependencies,
-                              f_workenv_preseed, f_sql_preseed, f_users_ldif,
-                              f_python_dependencies)
+                              debian_maint_dependencies, f_workenv_preseed, f_sql_preseed,
+                              f_users_ldif, f_python_dependencies)
 
 
 def development():
@@ -55,6 +55,7 @@ def environment():
     configure_sudo()
     preseed_packages()
     install_packages(debian_build_dependencies)
+    install_packages(debian_maint_dependencies)
     install_packages(debian_run_dependencies)
     drop_mongo()
     configure_postgres()
@@ -249,6 +250,18 @@ def init_catalog():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
             local('%(command)s python setup.py init_catalog' % env, capture=False)
+
+
+def tx_pull():
+    with cd('%(basedir)s' % env):
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s tx pull -a --skip' % env, capture=False)
+
+
+def tx_push():
+    with cd('%(basedir)s' % env):
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s tx push -s -t --skip --no-interactive' % env, capture=False)
 
 
 def build_sphinx():
