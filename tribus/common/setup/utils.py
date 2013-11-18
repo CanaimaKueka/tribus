@@ -306,7 +306,7 @@ def get_setup_data(basedir):
             },       
             'update_catalog': {
                 'domain': ('setup.py', 'tribus'),
-                'input_file': ('setup.py', 'tribus/data/i18n/pot/tribus.pot'),
+                'input_file': ('setup.py', 'tribus/data/i18n/pot/django.pot'),
                 'output_dir': ('setup.py', 'tribus/data/i18n'),
             },
             'compile_catalog': {
@@ -316,13 +316,13 @@ def get_setup_data(basedir):
             },
             'init_catalog': {
                 'domain': ('setup.py', 'tribus'),
-                'input_file': ('setup.py', 'tribus/data/i18n/pot/tribus.pot'),
+                'input_file': ('setup.py', 'tribus/data/i18n/pot/django.pot'),
                 'output_dir': ('setup.py', 'tribus/data/i18n'),
             },
             'extract_messages': {
                 'copyright_holder': ('setup.py', 'Desarrolladores de Tribus'),
                 'msgid_bugs_address': ('setup.py', 'desarrolladores@canaima.softwarelibre.gob.ve'),
-                'output_file': ('setup.py', 'tribus/data/i18n/pot/tribus.pot'),
+                'output_file': ('setup.py', 'tribus/data/i18n/pot/django.pot'),
                 'charset': ('setup.py', 'utf-8'),
             },
             'build_sphinx': {

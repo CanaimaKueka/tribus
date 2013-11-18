@@ -71,6 +71,10 @@ class init_catalog(base_init_catalog):
         return filter(None, list_files(get_path([DOCDIR, 'rst', 'i18n', 'pot'])))
 
     def get_locale_list(self):
+
+        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
+        from django.conf import settings
+        print settings.LANGUAGES
         locales = list_dirs(get_path([DOCDIR, 'rst', 'i18n']))
         locales.remove('pot')
         return filter(None, locales)

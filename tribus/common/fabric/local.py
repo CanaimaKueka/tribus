@@ -23,6 +23,7 @@ import os
 import pwd
 import sys
 import site
+import lsb_release
 from fabric.api import *
 
 from tribus import BASEDIR

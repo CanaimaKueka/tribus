@@ -24,12 +24,6 @@ def index(request):
             })
     else:
         signupform = SignupForm()
-        signupform.fields['username'].widget.attrs['class'] = 'input-large'
-        signupform.fields['first_name'].widget.attrs['class'] = 'input-small'
-        signupform.fields['last_name'].widget.attrs['class'] = 'input-small'
-        signupform.fields['email'].widget.attrs['class'] = 'input-large'
-        signupform.fields['password'].widget.attrs['class'] = 'input-large'
-
         return render(request, 'index.html', {
             'signupform': signupform
             })

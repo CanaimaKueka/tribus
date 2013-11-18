@@ -24,9 +24,10 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 TIME_ZONE = 'America/Caracas'
-LANGUAGE_CODE = 'es-ve'
+LANGUAGE_CODE = 'es'
 DATABASE_OPTIONS = { 'charset': 'utf8' }
 DEFAULT_CHARSET = 'utf-8'
+LOCALE_PATHS = [get_path([BASEDIR, 'tribus', 'data', 'i18n'])]
 
 SITE_ROOT = get_path([BASEDIR, 'tribus', 'web'])
 MEDIA_ROOT = ''
@@ -210,19 +211,21 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.debug',
     'django.core.context_processors.i18n',
     'django.core.context_processors.media',
     'django.core.context_processors.static',
-    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.tz',
     'django.contrib.messages.context_processors.messages',
     'tribus.web.processors.default_context',
     'social_auth.context_processors.social_auth_by_type_backends',
