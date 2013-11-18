@@ -305,17 +305,17 @@ def get_setup_data(basedir):
                 'install_layout': ('setup.py', 'deb'),
             },       
             'update_catalog': {
-                'domain': ('setup.py', 'tribus'),
+                'domain': ('setup.py', 'django'),
                 'input_file': ('setup.py', 'tribus/data/i18n/pot/django.pot'),
                 'output_dir': ('setup.py', 'tribus/data/i18n'),
             },
             'compile_catalog': {
-                'domain': ('setup.py', 'tribus'),
+                'domain': ('setup.py', 'django'),
                 'directory': ('setup.py', 'tribus/data/i18n'),
                 'use_fuzzy': ('setup.py', True),
             },
             'init_catalog': {
-                'domain': ('setup.py', 'tribus'),
+                'domain': ('setup.py', 'django'),
                 'input_file': ('setup.py', 'tribus/data/i18n/pot/django.pot'),
                 'output_dir': ('setup.py', 'tribus/data/i18n'),
             },

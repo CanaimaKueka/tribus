@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Tribus 0.1.dev20131114214204\n"
+"Project-Id-Version: Tribus 0.1.dev20131118020506\n"
 "Report-Msgid-Bugs-To: desarrolladores@canaima.softwarelibre.gob.ve\n"
-"POT-Creation-Date: 2013-11-15 01:28-0530\n"
+"POT-Creation-Date: 2013-11-18 00:47-0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -44,9 +44,8 @@ msgid "Your message has been published."
 msgstr ""
 
 #: tribus/data/templates/dashboard.html:50
-#: tribus/data/templates/profile/profiles.html:149
 #: tribus/data/templates/profile/profiles_view.html:140
-msgid "There has been an error publishng your message. Please try again later."
+msgid "There has been an error publishing your message. Please try again later."
 msgstr ""
 
 #: tribus/data/templates/dashboard.html:51
@@ -181,7 +180,7 @@ msgstr ""
 msgid ""
 "Organize your team work by assigning milestones to your teammates and "
 "achieving goals together. Measure your effectiveness and planify your "
-"objectives in a clean and intuive interface."
+"objectives in a clean and intuitive interface."
 msgstr ""
 
 #: tribus/data/templates/index.html:77
@@ -334,12 +333,20 @@ msgstr ""
 msgid "Homepage"
 msgstr ""
 
-#: tribus/data/templates/cloud/packages.html:107
+#: tribus/data/templates/cloud/packages.html:67
+msgid "Tags"
+msgstr ""
+
+#: tribus/data/templates/cloud/packages.html:124
 msgid "In Canaima"
 msgstr ""
 
 #: tribus/data/templates/cloud/relations.html:14
 msgid "or"
+msgstr ""
+
+#: tribus/data/templates/profile/profiles.html:149
+msgid "There has been an error publishng your message. Please try again later."
 msgstr ""
 
 #: tribus/data/templates/search/search.html:10
