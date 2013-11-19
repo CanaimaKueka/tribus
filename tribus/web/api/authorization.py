@@ -52,24 +52,44 @@ class UserAuthorization(Authorization):
 
 class UserProfileAuthorization(Authorization):
 
-    def read_list(self, object_list, bundle):
-        return object_list.filter(id=bundle.request.user.id)
+    def read_list(self, object_list, bundle):#filtrar todos los objetos pertenecientes a user
+        return object_list
 
     def read_detail(self, object_list, bundle):
-        if int(bundle.obj.id) == bundle.request.user.id:
-            return True
-        raise Unauthorized("You are not allowed to access that resource.")            
-
+        return True
 
 # HACER AUTORIZACION PARA PATCH
 
     def update_detail(self, object_list, bundle):
-        if int(bundle.obj.id) == bundle.request.user.id:
-            return True
-        raise Unauthorized("You are not allowed to access that resource.")
+        #if int(bundle.obj.id) == bundle.request.user.id:
+        return True
+        #raise Unauthorized("You are not allowed to access that resource.")
 
     def delete_list(self, object_list, bundle):
         return object_list
+
+
+class UserFollowersAuthorization(Authorization):
+    def get_followers(self, bundle):
+        search  = bundle.request.user.user_profile.followers.all()
+        followers =[int(f.id) for f in search]
+        print "<-----------------------",followers
+        return followers
+
+    def read_list(self, object_list, bundle):
+        return object_list.filter(id__in=self.get_followers(bundle=bundle))
+
+
+class UserFollowsAuthorization(Authorization):
+    def get_follows(self, bundle):
+        search  = bundle.request.user.user_profile.follows.all()
+        follows =[int(f.id) for f in search]
+        print "<-----------------------",follows
+        return follows
+
+    def read_list(self, object_list, bundle):
+        return object_list.filter(id__in=self.get_follows(bundle=bundle))
+
 
 
 class TimelineAuthorization(Authorization):
@@ -77,6 +97,7 @@ class TimelineAuthorization(Authorization):
         follows = bundle.request.user.user_profile.follows.all()
         timeline = [int(f.id) for f in follows]
         timeline.append(bundle.request.user.id)
+
         return timeline
 
     def read_list(self, object_list, bundle):

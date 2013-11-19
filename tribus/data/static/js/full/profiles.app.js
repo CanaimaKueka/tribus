@@ -1,14 +1,15 @@
 // Declare use of strict javascript
 'use strict';
 
-
 // Application -----------------------------------------------------------------
 
 // nombre de la app, cambiar para nuevas aplicaciones, cambiando el nombre de la variable y el modulo
 
-
 var tribus = angular.module('tribus',
-    ['Tribs' , 'Comments', 'Search', 'UserProfile', 'User', 'infinite-scroll']);
+    [ 'Tribs' , 'Comments', 'Search', 'UserProfile', 'User', 'infinite-scroll', 'UserFollows', 'UserFollowers']);
+
+
+// Events ----------------------------------------------------------------------
 
 
 // Controllers -----------------------------------------------------------------
@@ -19,41 +20,149 @@ tribus.controller('CommentController', ['$scope', '$timeout', 'Comments',
     CommentController]);
 tribus.controller('UserController',['$scope','UserProfile', 'User' ,
     UserController]);
+tribus.controller('FollowsController',['$scope','$filter','UserFollows',
+    FollowsController]);
+
+tribus.controller('FollowersController',['$scope','$filter','UserFollowers',
+    FollowersController]);
+
+tribus.filter('startFrom', function() {
+    return function(input, start) {
+        start = +start; //parse to int
+        return input.slice(start);
+    }
+});
 
 
 function UserController($scope, UserProfile){
     $scope.user_gravatar = user_gravatar;
-    
-    $scope.follow = function(){
+    $scope.userview_gravatar = userview_gravatar;
 
-        var profile = UserProfile.query({id:user_id},
-            function(){
-                var agregado = false;
+    
+    var user_follow = UserProfile.query({id:user_id},function(){
+        $scope.add = false;
+        for (var i = 0; i < user_follow[0].follows.length; i++ ){
+            if (user_follow[0].follows[i] ==  "/api/0.1/user/details/" + userview_id){
+                $scope.add = true;
+                break;
+                
+            }
+            
+        }     
+        console.log("iniciado add ", $scope.add);
+    });
+
+
+    $scope.follow = function(){
+        var agregado = false;
+
+        var profile = UserProfile.query({id:user_id},function(){
+            var profileview = UserProfile.query({id:userview_id},function(){
+                console.log(profile, profileview);
+
+                    
                 // console.log("/api/0.1/user/profile/"+userview_id); 
                 for (var ind = 0; ind<profile[0].follows.length; ind++){
-                    if (profile[0].follows[ind] == "/api/0.1/user/details/"+userview_id){
-                        console.log("----->  ELIMINADO.");
-                        console.log(profile[0].follows);
+                    if (profile[0].follows[ind] == "/api/0.1/user/details/" + userview_id){
+                        console.log("----->  ELIMINADO.", profile);
+
+                        profileview[0].followers.pop(ind);
+                        profileview[0].$modify({author_id: userview_id});
+
                         profile[0].follows.pop(ind);
                         profile[0].$modify({author_id: user_id});
                         agregado = true;
+                        $scope.add = false;
+                  
                         break;
                     }
                 }
-                if (agregado == false){
-                    console.log("----->  AGREGADO.");
+                if (agregado == false){                     
+
+                    $scope.add= true;
+                    profileview[0].followers.push("/api/0.1/user/details/"+user_id);
+                    profileview[0].$modify({author_id: userview_id});
+                    console.log("----->  AGREGADO.", profileview); 
                     profile[0].follows.push("/api/0.1/user/details/"+userview_id);
                     profile[0].$modify({author_id: user_id});
-                    }
-                });
-            };
-        }
 
-function FollowsController ($scope, $timeout, Tribs){
-    var follow ={
-        
-    }
-}
+                  
+                }
+                // if (agregado ==false){
+
+                // }
+                // else{
+                //     profileview[0].followers.pop(indidce);
+                //     profileview[0].$modify({author_id: userview_id});
+                // }
+                
+            });             
+        });
+        // $scope.$watch($scope.add,function(){
+        // console.log($scope.add, "-----");
+        // });  
+
+    };
+
+
+    // $scope.$watch($scope.add,function(){
+    // console.log($scope.add, "-----");
+    // });    
+ }
+
+function FollowsController($scope, $filter, UserFollows ){
+
+    $scope.currentPage = 0;
+    $scope.pageSize = 5;
+    $scope.follows = UserFollows.query({},function(){
+        $scope.$watch('query',function(){
+            console.log($scope.add);
+            $scope.currentPage = 0;
+            $scope.filtername = $filter('filter')($scope.follows, $scope.query);
+            $scope.numberOfPages=function(){
+                return Math.ceil($scope.filtername.length / $scope.pageSize);
+             $scope.follows = $scope.filtername;
+            
+            }
+            console.log($scope.filtername.length);
+
+        });
+    });
+    $scope.convertmd5 = function(email){
+        console.log(email);
+        var url = 'http://www.gravatar.com/avatar/'+md5(email)+'?d=mm&s=70&r=x';
+        return url
+    };
+
+};
+
+function FollowersController($scope, $filter, UserFollowers ){
+    $scope.currentPage = 0;
+    $scope.pageSize = 5;
+    $scope.followers = UserFollowers.query({},function(){
+        $scope.$watch('query2',function(){
+            console.log($scope.add);
+            $scope.currentPage = 0;
+            $scope.filtername = $filter('filter')($scope.followers, $scope.query);
+            $scope.numberOfPages=function(){
+                return Math.ceil($scope.filtername.length / $scope.pageSize);
+             $scope.followers = $scope.filtername;
+            
+            }
+            console.log($scope.filtername.length);
+
+        });
+    });
+    $scope.convertmd5 = function(email){
+        console.log(email);
+        var url = 'http://www.gravatar.com/avatar/'+md5(email)+'?d=mm&s=70&r=x';
+        return url
+    };
+
+
+
+};
+
 
 
 function TribController($scope, $timeout, Tribs, Timeline){
@@ -421,6 +530,34 @@ angular.module('User', ['ngResource'])
             },
         });
     });  
+
+
+angular.module('UserFollowers', ['ngResource'])
+    .factory('UserFollowers',  function($resource){
+        return $resource('/api/0.1/user/followers/',{},{       
+            query: {
+                method: 'GET',
+                isArray: true,
+                transformResponse: function(data){
+                    return angular.fromJson(data).objects;
+                },
+            },
+        });
+    });  
+
+angular.module('UserFollows', ['ngResource'])
+    .factory('UserFollows',  function($resource){
+        return $resource('/api/0.1/user/follows/',{},{       
+            query: {
+                method: 'GET',
+                isArray: true,
+                transformResponse: function(data){
+                    return angular.fromJson(data).objects;
+                },
+            },
+        });
+    });  
+
 
 angular.module('Tribs', ['ngResource'])
     .factory('Tribs',  function($resource){

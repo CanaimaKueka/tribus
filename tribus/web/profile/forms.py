@@ -23,7 +23,8 @@ class data_change(Form):
 	                                regex = r'^[\w.@+-]+$',
 	                                widget = forms.Textarea(
 	                                    attrs = {
-	                                        'class': 'input-largue'
+	                                        'class': 'input-large',
+	                                        'ng-maxlength': '20'
 	                                    }
 	                                ),
 	                                max_length = 254,
@@ -32,4 +33,11 @@ class data_change(Form):
 	                                }
 	                            )
 
-	email = forms.EmailField(label = _('email'), required = False)
+	email = forms.EmailField(label = _('email'), required = False,
+	                                widget = forms.TextInput(
+	                                    attrs = {
+	                                        'class': 'input-large',
+	                                        'type': 'email'
+	                                    }
+	                                )
+								)

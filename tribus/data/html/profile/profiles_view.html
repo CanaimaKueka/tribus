@@ -8,26 +8,26 @@
 		<div class="row-fluid">
 			<div class="span3">
                 <div ng-controller="UserController">
-					<span class="profile_avatar" ng-style="{'background-image': 'url(\''+user_gravatar+'\')'}"></span>
+					<span class="profile_avatar" ng-style="{'background-image': 'url(\''+userview_gravatar+'\')'}"></span>
 					<div class="space-36"></div>
 	                {% block datos %}
 	    				<hr>
-						<p>{{ user_view.first_name }} {{user_view.last_name}}
-						<p>{{ user_view.email }}
-						<p>descripcion: {{ user_view.description }}
+						<p>{{ user_view.first_name }} {{user_view.last_name}}</p>
+						<p>{{ user_view.email }}</p>
+						<p>descripcion: {{ user_view.description }}</p>
 						<hr>
-						<a ng-click="follow()" class="btn btn-sm btn-block btn-success">
-							<i class="icon-plus-sign bigger-120"></i>
-							<span class="bigger-110">{% verbatim %}{{mensaje}}{% endverbatim %}</span>
-						</a>			
+						<span ng-click="follow()">
+							<a  class="btn btn-sm btn-block btn-success" ng-if="add == false" >
+								<i class="icon-plus-sign bigger-120"></i>
+								<span class="bigger-110"> Seguir</span>
+							</a>
 
-						<p>sigues a:
-	<!-- 				 solo para depurar -->
-						{%for i in user_view.user_profile.follows.only%}
-	<!-- 					<p ng-repeat = > -->
-							<p><a href="/profile/{{i.username}}">{{i.username}}</a>
-						{%endfor%}
+							<a  class="btn btn-sm btn-block btn-danger" ng-if="add == true" >
+								<i class="icon-minus bigger-120"></i>
+								<span class="bigger-110"> Dejar de seguir </span>
+							</a>
 
+						</span>
 	                {% endblock %}
 					<legend></legend>
 					<!-- {% if user.is_authenticated %} -->
@@ -128,6 +128,7 @@
         var userview_first_name = '{{ user_view.first_name }}';
         var userview_last_name = '{{ user_view.last_name }}';
         var userview_email = '{{ user_view.email }}';  
+        var userview_gravatar = 'http://www.gravatar.com/avatar/'+md5(userview_email)+'?d=mm&s=250&r=x';        
 
         var trib_limit_to = 0;
         var trib_offset = 0;

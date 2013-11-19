@@ -17,15 +17,6 @@
 						<p>{{ user_view.email }}
 						<p>descripcion: {{ user_view.description }}
 						<hr>
-		
-
-						<p>sigues a:
-	<!-- 				 solo para depurar -->
-						{%for i in user_view.user_profile.follows.only%}
-	<!-- 					<p ng-repeat = > -->
-							<p><a href="/profile/{{i.username}}">{{i.username}}</a>
-						{%endfor%}
-
 	                {% endblock %}
             	<hr>
 				<legend></legend>
@@ -56,11 +47,18 @@
 							</li>
 
 							<li class="active">
-								<a data-toggle="tab" href="#dropdown13">
+								<a data-toggle="tab" href="#followsTag">
 									<i class="icon-rocket"></i>
 									Follows
 								</a>
 							</li>
+
+							<li class="">
+								<a data-toggle="tab" href="#followersTag">
+									<i class="icon-rocket"></i>
+									Followers
+								</a>
+							</li>							
 						</ul>
 
 						<div class="tab-content">
@@ -68,8 +66,8 @@
 					            	{% include 'tribs.html' %}
 							</div>
 
-							<div id="profile3" class="tab-pane">
-							    <form name = "Form" accept-charset="UTF-8" action="profile/done" autocomplete="off" method="post">
+							<div id="profile3" class="tab-pane ">
+							    <form name = "Form" accept-charset="UTF-8" action="profile/done" autocomplete="off" novalidate method="post">
 							        {% csrf_token %}
 							        <ul class="unstyled row-fluid">
 							            <li><label class ="span2 offset1">Email:</label>{{editForm.email}}</li>            
@@ -82,37 +80,116 @@
 							    </form>
 							</div>
 
-							<div id="dropdown13" class="tab-pane active">
-								<div class = "row-fluid">
-									<label class = "span2 offset6">Search:</label>
-									<input class = "span2" name = "filtro" method = "GET"></input>
+							<div id="followsTag" class="tab-pane active" >
+								<div class = "row-fluid">								
+									<input class = "span2 pull-right" name = "filtro" method = "GET" ng-model = 'query'></input>
+									<label class = "pull-right">Search:</label>
 								</div>
 
 
-								<div class = "container-fluid">
-									<div class = "span12">
-
-							        </div>
-
-									<div class = "span">
-										<div ng-repeat="follow in follows |limitTo:5">
+								<div class = "container-fluid" ng-controller= "FollowsController" >
+									<ul >
+										<div class = "span12"></div>
+							        
+										<li class = "span10 follows_list action_publisher " ng-repeat="follow in follows | filter: query | startFrom:currentPage*pageSize | limitTo:pageSize ">
 											<span class= "span2 offset">
-								                <span class="trib_avatar">
-								                    <img gravatar-src="'{% verbatim %}{{follow.email}}{% endverbatim %}'" gravatar-size="100">
-								                </span>
+								                <a href="/profile/{% verbatim %}{{follow.username}}{%endverbatim %}"><span class="trib_avatar" ng-style="{'background-image': 'url(\''+convertmd5(follow.email)+'\')'}"></span></a>
 								            </span>
 
-											<span class= "span4">
-												<h>esto es una prueba
+											<span class= "span9 offset1">		
+												<span class ="">
+													<p>{% verbatim %}{{follow.first_name}} {{follow.last_name}}{% endverbatim %}</p>
+								            	</span>	
+												<span class ="">
+													<p>{% verbatim %}@{{follow.username}}{% endverbatim %}</p>
+								            	</span>
+												<span class ="">
+													<p>{% verbatim %}{{follow.email}}{% endverbatim %}</p>									
+								            	</span>									            	
 								            </span>
-							        	</div>
-							        </div>
+								            <span class ="pull-right" ng-onclick= >
+													<p>dejar de seguir</p>									
+								            	</span>									            	
+								            </span>
+							        	</li>
 
+							        </ul>
+										<div ng-if= "filtername.length==0 && follows.length>0" >
+											<p> no tiene resultados </p>
+										</div>
 
+										<div ng-if= "filtername.length==0 && follows.length==0" >
+											<p> no tiene seguidores </p>
+										</div>											
 
-
+							        <span class= " pull-right"  ng-hide = "filtername.length<=1">
+							        	<hr noshade="noshade"/>
+									    <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+									        Previous
+									    </button >
+									    {% verbatim %}{{currentPage+1}}/{{numberOfPages()}}{% endverbatim %}
+									    <button ng-disabled="currentPage >= filtername.length/pageSize - 1" ng-click="currentPage= currentPage+1" >
+									        Next   
+									    </button>		     
+									</span>
 								</div>
 							</div>
+
+							<div id="followersTag" class="tab-pane" >
+								<div class = "row-fluid">								
+									<input class = "span2 pull-right" name = "filtro2" method = "GET" ng-model = 'query2'></input>
+									<label class = "pull-right">Search:</label>
+								</div>
+
+
+								<div class = "container-fluid" ng-controller= "FollowersController" >
+									<ul >
+										<div class = "span12"></div>
+							        
+										<li class = "span10 follows_list action_publisher " ng-repeat="follow in followers | filter: query2 | startFrom:currentPage*pageSize | limitTo:pageSize ">
+											<span class= "span2 offset">
+								                <a href="/profile/{% verbatim %}{{follow.username}}{%endverbatim %}"><span class="trib_avatar" ng-style="{'background-image': 'url(\''+convertmd5(follow.email)+'\')'}"></span></a>
+								            </span>
+
+											<span class= "span9 offset1">		
+												<span class ="">
+													<p>{% verbatim %}{{follow.first_name}} {{follow.last_name}}{% endverbatim %}</p>
+								            	</span>	
+												<span class ="">
+													<p>{% verbatim %}@{{follow.username}}{% endverbatim %}</p>
+								            	</span>
+												<span class ="">
+													<p>{% verbatim %}{{follow.email}}{% endverbatim %}</p>									
+								            	</span>									            	
+								            </span>
+								            <span class ="pull-right" ng-onclick= >
+													<p>dejar de seguir</p>									
+								            	</span>									            	
+								            </span>
+							        	</li>
+
+							        </ul>
+										<div ng-if= "filtername.length==0 && follows.length>0" >
+											<p> no tiene resultados </p>
+										</div>
+
+										<div ng-if= "filtername.length==0 && follows.length==0" >
+											<p> no tiene seguidores </p>
+										</div>											
+
+							        <span class= " pull-right"  ng-hide = "filtername.length<=1">
+							        	<hr noshade="noshade"/>
+									    <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+									        Previous
+									    </button >
+									    {% verbatim %}{{currentPage+1}}/{{numberOfPages()}}{% endverbatim %}
+									    <button ng-disabled="currentPage >= filtername.length/pageSize - 1" ng-click="currentPage= currentPage+1" >
+									        Next   
+									    </button>		     
+									</span>
+								</div>
+							</div>
+
 						</div>
 					</div>
 				</div>
@@ -133,7 +210,7 @@
         var user_last_name = '{{ user.last_name }}';
         var user_email = '{{ user.email }}';
         var user_gravatar = 'http://www.gravatar.com/avatar/'+md5(user_email)+'?d=mm&s=250&r=x';
-
+        var userview_gravatar = "none";
 
         {% endif %}
 		
@@ -145,6 +222,7 @@
         var trib_orderby = '-trib_pub_date';
         var controller_busy = false;
 
+
         var trib_save_success = '{% trans "Your message has been published." %}'
         var trib_save_error = '{% trans "There has been an error publishng your message. Please try again later." %}'
         var trib_delete_success = '{% trans "Your message has been deleted." %}'
@@ -152,5 +230,12 @@
         var trib_add_error = '{% trans "There has been an error consulting more messages. Please try again later." %}'
         var comment_delete_success = '{% trans "Your comment has been deleted." %}'
         var comment_delete_error = '{% trans "There has been an error deleting your comment. Please try again later." %}'
+
+
+        var follows_limit_to = 0;
+        var follows_offset = 0;
+        var follows_add = 10;
+        var follows_limit = 10;
+        var follows_orderby = 'username';   
     </script>
 {% endblock %}

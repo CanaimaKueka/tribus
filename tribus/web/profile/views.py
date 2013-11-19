@@ -23,10 +23,10 @@ def SearchProfile(request, nick):
         return HttpResponseRedirect('/profile')  
 
     render_js = ['jquery', 'jquery.autogrow', 'jquery.timeago', 'jquery.bootstrap-growl', 'jquery.bootstrap',
-                    'angular', 'angular.resource', 'angular.infinite-scroll',
+                    'md5','angular', 'angular.resource', 'angular.infinite-scroll',
                     'profiles.app', 'profiles.jquery',
                     'navbar.app', 'navbar.jquery',
-                    'md5']
+                    ]
 
     return render(request,'profile/profiles_view.html', {
             'render_js': render_js,
@@ -39,10 +39,10 @@ def SearchProfile(request, nick):
 def UserProfile(request):
 
     render_js = ['jquery', 'jquery.autogrow', 'jquery.timeago', 'jquery.bootstrap-growl', 'jquery.bootstrap',
-                    'angular', 'angular.resource', 'angular.infinite-scroll',
+                    'md5','angular', 'angular.resource', 'angular.infinite-scroll',
                     'profiles.app', 'profiles.jquery',
                     'navbar.app', 'navbar.jquery',
-                    'md5']
+                    ]
 
     if request.user.is_authenticated():
         if request.method == "POST":

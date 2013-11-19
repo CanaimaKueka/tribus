@@ -11,7 +11,7 @@ from tastypie_mongoengine.resources import MongoEngineResource
 
 from tastypie.resources import ModelResource, Resource
 from tastypie.fields import ManyToManyField, OneToOneField
-from tribus.web.api.authorization import (TimelineAuthorization, TribAuthorization, CommentAuthorization, UserAuthorization, UserProfileAuthorization)
+from tribus.web.api.authorization import (TimelineAuthorization, TribAuthorization, CommentAuthorization, UserAuthorization, UserProfileAuthorization, UserFollowsAuthorization,UserFollowersAuthorization)
 from tribus.web.documents import Trib, Comment
 
 from django.contrib.auth.models import User
@@ -55,6 +55,29 @@ class UserProfileResource(ModelResource):
         allowed_methods = ['get', 'patch']
         filtering = { 'id': ALL_WITH_RELATIONS }
         authorization = UserProfileAuthorization()
+        authentication = SessionAuthentication()
+        cache = NoCache()
+
+
+class UserFollowersResource(ModelResource):
+    class Meta:
+        queryset = User.objects.all()
+        resource_name = 'user/followers'
+        ordering = ['id']
+        allowed_methods = ['get']
+        filtering = { 'id': ALL_WITH_RELATIONS }
+        authorization = UserFollowersAuthorization()
+        authentication = SessionAuthentication()
+        cache = NoCache()
+
+class UserFollowsResource(ModelResource):
+    class Meta:
+        queryset = User.objects.all()
+        resource_name = 'user/follows'
+        ordering = ['id']
+        allowed_methods = ['get']
+        filtering = { 'id': ALL_WITH_RELATIONS }
+        authorization = UserFollowsAuthorization()
         authentication = SessionAuthentication()
         cache = NoCache()
 

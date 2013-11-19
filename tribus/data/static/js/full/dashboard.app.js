@@ -133,7 +133,9 @@ function TribController($scope, $timeout, Tribs, Timeline){
             limit: $scope.trib_limit,
             offset: $scope.trib_offset
         }, function(){
+            
             for(var i = 0; i < old_tribs.objects.length; i++){
+
                 var old_id_appears = false;
 
                 for(var j = 0; j < $scope.tribs.length; j++){
