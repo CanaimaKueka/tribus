@@ -27,16 +27,22 @@ tribus.common.setup.install
 
 '''
 
+import os
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
+
 import sys
 import shutil
-import os
+from django.conf import settings
 from sphinx.application import Sphinx
+from sphinx.builders.htmlhelp import chm_locales
+from babel import Locale
+from babel.localedata import locale_identifiers
 from babel.messages.frontend import (extract_messages as base_extract_messages,
 									 init_catalog as base_init_catalog,
 									 update_catalog as base_update_catalog)
 
-from tribus.config.base import DOCDIR
-from tribus.common.utils import get_path, list_files, list_dirs
+from tribus.config.base import BASEDIR, DOCDIR
+from tribus.common.utils import get_path, list_files
 
 class extract_messages(base_extract_messages):
 
@@ -71,13 +77,18 @@ class init_catalog(base_init_catalog):
         return filter(None, list_files(get_path([DOCDIR, 'rst', 'i18n', 'pot'])))
 
     def get_locale_list(self):
-        locales = list_dirs(get_path([DOCDIR, 'rst', 'i18n']))
-        locales.remove('pot')
+        django_locales = set([i[0].replace('_', '-').lower() for i in settings.LANGUAGES])
+        babel_locales = set([j.replace('_', '-').lower() for j in locale_identifiers()])
+        sphinx_locales = set([k.replace('_', '-').lower() for k in chm_locales.keys()])
+        locales = [str(Locale.parse(identifier=l, sep='-')) for l in django_locales & babel_locales & sphinx_locales]
         return filter(None, locales)
 
     def run(self):
         for locale in self.get_locale_list():
             self.locale = locale
+            self.domain = 'django'
+            self.output_dir = get_path([BASEDIR, 'tribus', 'data', 'i18n'])
+            self.input_file = get_path([BASEDIR, 'tribus', 'data', 'i18n', 'pot', 'django.pot'])
             self.output_file = None
             base_init_catalog.finalize_options(self)
             base_init_catalog.run(self)

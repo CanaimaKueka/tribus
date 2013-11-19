@@ -4693,6 +4693,7 @@ textarea,input[type="text"],input[type="password"],input[type="datetime"],input[
     font-family: inherit;
     -webkit-transition-duration: .1s;
     transition-duration: .1s;
+    padding: 4px 3%;
 }
 
 textarea:hover,input[type="text"]:hover,input[type="password"]:hover,input[type="datetime"]:hover,input[type="datetime-local"]:hover,input[type="date"]:hover,input[type="month"]:hover,input[type="time"]:hover,input[type="week"]:hover,input[type="number"]:hover,input[type="email"]:hover,input[type="url"]:hover,input[type="search"]:hover,input[type="tel"]:hover,input[type="color"]:hover {
@@ -4892,28 +4893,33 @@ span.input-icon {
 }
 
 .input-small {
-    width: 90px;
+    width: 113px;
     max-width: 100%;
 }
 
 .input-medium {
-    width: 150px;
+    width: 166px;
     max-width: 100%;
 }
 
 .input-large {
-    width: 210px;
+    width: 246px;
     max-width: 100%;
 }
 
 .input-xlarge {
-    width: 270px;
+    width: 356px;
     max-width: 100%;
 }
 
 .input-xxlarge {
     width: 530px;
     max-width: 100%;
+}
+
+.input-block {
+    display: block;
+    width: 94%;
 }
 
 input.input-lg {
@@ -14670,10 +14676,6 @@ th[aria-selected=true] .ui-jqgrid-sortable {
     float:left;
 }
 
-.navbar .nav .btn {
-    line-height: 10px;
-}
-
 .navbar .nav li.dropdown.open > .dropdown-toggle,
 .navbar .nav li.dropdown.active > .dropdown-toggle,
 .navbar .nav li.dropdown.open.active > .dropdown-toggle {
@@ -14699,31 +14701,6 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 
 .navbar .form-search {
   margin: 5px;
-}
-
-.input-block {
-    display: block;
-    width: 100%;
-}
-
-.input-medium {
-  display: block;
-  width: 166px;
-}
-
-.input-large {
-    display: block;
-    width: 246px;
-}
-
-.input-small {
-    display: block;
-    width: 113px;
-}
-
-.input-xlarge {
-    display: block;
-    width: 356px;
 }
 
 .hero-unit {
@@ -14847,12 +14824,7 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 }
 
 .dashboard_container {
-/*    background-color: #ebebdc;
-    padding: 10px;
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
-    -o-border-radius: 6px;
-    border-radius: 6px;*/
+
 }
 
 .dashboard_timeline {
@@ -14922,18 +14894,6 @@ th[aria-selected=true] .ui-jqgrid-sortable {
     display: block;
 }
 
-/*.trib_reply .action_avatar {
-    width: 40px;
-    height: 40px;
-    margin: 10px 0;
-}
-
-.trib_reply .action_textarea {
-    width: 40px;
-    height: 40px;
-    margin: 10px 0;
-}
-*/
 .trib_title {
     float: left;
     display:block;

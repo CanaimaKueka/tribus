@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Tribus 0.1.dev20131114214204\n"
+"Project-Id-Version: Tribus 0.1.dev20131118205138\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-15 01:28-0430\n"
+"POT-Creation-Date: 2013-11-18 16:22-0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../../faq.rst:3
-# 84209f28e7bb487ca3b3ff8a6125f58c
+# 7c5ec61d66c64d2e8f778a26e4f98feb
 msgid "Preguntas frecuentes"
 msgstr ""
 

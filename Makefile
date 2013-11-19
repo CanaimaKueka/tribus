@@ -1,5 +1,5 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+#!/usr/bin/make -f
+# -*- makefile -*-
 #
 # Copyright (C) 2013 Desarrolladores de Tribus
 #
@@ -110,26 +110,14 @@ extract_messages: fabric
 
 	@$(FAB) development extract_messages
 
-# snapshot: check-maintdep prepare gen-html gen-wiki gen-po clean
+tx_push: fabric 
 
-# 	@$(MAKE) clean
-# 	@$(BASH) tools/snapshot.sh
+	@$(FAB) development tx_push
 
-# release: check-maintdep
+tx_pull: fabric 
 
-# 	@$(BASH) tools/release.sh
+	@$(FAB) development tx_pull
 
-# deb-test-snapshot: check-maintdep
-
-# 	@$(BASH) tools/buildpackage.sh test-snapshot
-
-# deb-test-release: check-maintdep
-
-# 	@$(BASH) tools/buildpackage.sh test-release
-
-# deb-final-release: check-maintdep
-
-# 	@$(BASH) tools/buildpackage.sh final-release
 
 # BUILD TASKS ------------------------------------------------------------------------------
 

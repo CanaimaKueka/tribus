@@ -1,0 +1,52 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2013, Desarrolladores de Tribus
+# This file is distributed under the same license as the Tribus package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Tribus 0.1.dev20131118020506\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-11-18 16:22-0530\n"
+"PO-Revision-Date: 2013-11-18 00:52-0730\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: tr <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 1.3\n"
+
+# ac4d7783bc9f47018ee04d30cbd71145
+#: ../../authors.rst:1
+msgid ""
+"Si usted es un colaborador activo de este proyecto, agregue una entrada "
+"en el lugar correspondiente según el siguiente formato:"
+msgstr ""
+
+# b3b4f3f9a581483897d31c19960f8887
+#: ../../authors.rst:3
+msgid ""
+"[1er nombre] [2do nombre] [1er apellido] [2do apellido] [<CORREO>], "
+"Twitter: [@Cuenta]"
+msgstr ""
+
+# 4da6b26787374759b4a1c0d2a6fe7edd
+#: ../../authors.rst:6
+msgid ""
+"Las siguientes personas han trabajado en este proyecto (en orden "
+"alfabético):"
+msgstr ""
+
+# 930287a39ddc42ce8253ffb7ac046997
+#: ../../authors.rst:8
+msgid "José Francisco Guerrero Rangel <jsfrncscg@gmail.com>, Twitter: @jsfrncscg"
+msgstr ""
+
+# cd85b48600914d9ab99b787859e9f91d
+#: ../../authors.rst:9
+msgid ""
+"Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>, Twitter: "
+"@LuisAlejandro"
+msgstr ""
+

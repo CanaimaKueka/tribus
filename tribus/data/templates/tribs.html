@@ -68,8 +68,8 @@
                         <span class="comment_list" ng-controller="CommentController" ng-if="trib.reply_show"
                             ng-init="this.trib_id = trib.id;addNewComments();">
                             <ul>
-                                <li class="row-fluid comment_item">
-                                    <button class="btn btn-beige btn-block btn-mini" ng-click="addNewComments()">
+                                <li ng-if="comments.length > 0" class="row-fluid comment_item">
+                                    <button class="btn btn-beige btn-block btn-mini" ng-click="addOldComments()">
                                         {% trans 'Load more comments' %}
                                     </button>
                                 </li>
