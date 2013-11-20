@@ -10,11 +10,11 @@ function TribController($scope, $timeout, Tribs, Timeline){
     $scope.trib_limit_to = trib_limit_to;
     $scope.trib_limit = trib_limit;
     $scope.trib_offset = trib_offset;
-    $scope.new_tribs_offset = trib_offset;
     $scope.trib_orderby = trib_orderby;
     $scope.tribs = [];
     $scope.first_trib_id = '';
-    var new_tribs_passes = 0;
+    $scope.new_tribs_passes = 0;
+    $scope.new_tribs_offset = trib_offset;
 
     $scope.createNewTrib = function(){
         Tribs.save({
@@ -177,7 +177,7 @@ function TribController($scope, $timeout, Tribs, Timeline){
         if ($scope.controller_busy) return;
         $scope.controller_busy = true;
 
-        if(new_tribs_passes === 0 && $scope.tribs.length > 0){
+        if($scope.new_tribs_passes === 0 && $scope.tribs.length > 0){
             $scope.first_trib_id = $scope.tribs[0].id;
         }
         
@@ -209,11 +209,12 @@ function TribController($scope, $timeout, Tribs, Timeline){
 
                     if(i == (fresh_tribs.objects.length-1)){
                         $scope.new_tribs_offset = $scope.new_tribs_offset + trib_add;
-                        new_tribs_passes = new_tribs_passes + 1;
+                        $scope.new_tribs_passes = $scope.new_tribs_passes + 1;
                         $timeout(function(){$scope.addNewTribs();});
                     }
                 } else {
-                    new_tribs_passes = 0;
+                    $scope.new_tribs_offset = trib_offset;
+                    $scope.new_tribs_passes = 0;
                     break;
                 }
             }

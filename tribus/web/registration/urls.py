@@ -29,21 +29,21 @@ from django.conf import settings
 from django.conf.urls import patterns, url
 from django.views.generic.base import TemplateView
 
-from tribus.web.user.views import ActivationView, SignupView, LoginView
-from tribus.web.user.forms import LoginForm, PasswordResetForm, PasswordChangeForm, SetPasswordForm
+from tribus.web.registration.views import ActivationView, RegistrationView
+from tribus.web.registration.forms import LoginForm, PasswordResetForm, PasswordChangeForm, SetPasswordForm
 
 
 urlpatterns = patterns(
     '',
 
     url(regex=r'^login$',
-        view=LoginView,
+        view='tribus.web.registration.views.login',
         kwargs={
-            'template_name': 'user/login_form.html',
+            'template_name': 'registration/login_form.html',
             'redirect_field_name': settings.LOGIN_REDIRECT_URL,
             'authentication_form': LoginForm
         },
-        name='user_login',
+        name='registration_login',
     ),
 
     url(regex=r'^logout$',
@@ -51,83 +51,83 @@ urlpatterns = patterns(
         kwargs={
             'next_page': settings.LOGIN_REDIRECT_URL
         },
-        name='user_logout'
+        name='registration_logout'
     ),
 
     url(regex=r'^signup$',
-        view=SignupView.as_view(template_name='user/signup_form.html'),
-        name='user_signup',
+        view=RegistrationView.as_view(template_name='registration/signup_form.html'),
+        name='registration_signup',
     ),
 
     url(regex=r'^signup/complete$',
-        view=TemplateView.as_view(template_name='user/signup_complete.html'),
-        name='user_signup_complete',
+        view=TemplateView.as_view(template_name='registration/signup_complete.html'),
+        name='registration_signup_complete',
     ),
 
-    url(regex=r'^activate/key/(?P<activation_key>\w+)$',
-        view=ActivationView.as_view(template_name='user/activate_form.html'),
-        name='user_activate',
+    url(regex=r'^activation/key/(?P<activation_key>\w+)$',
+        view=ActivationView.as_view(template_name='registration/activation_form.html'),
+        name='registration_activation',
     ),
 
-    url(regex=r'^activate/complete$',
-        view=TemplateView.as_view(template_name='user/activate_complete.html'),
-        name='user_activate_complete',
+    url(regex=r'^activation/complete$',
+        view=TemplateView.as_view(template_name='registration/activation_complete.html'),
+        name='registration_activation_complete',
     ),
 
     url(regex=r'^password/change$',
         view='django.contrib.auth.views.password_change',
         kwargs={
-            'template_name': 'user/password_change_form.html',
+            'template_name': 'registration/password_change_form.html',
             'post_change_redirect': '/password/change/done',
             'password_change_form': PasswordChangeForm
         },
-        name='user_password_change',
+        name='registration_password_change',
     ),
 
     url(regex=r'^password/change/done$',
         view='django.contrib.auth.views.password_change_done',
         kwargs={
-            'template_name': 'user/password_change_done.html'
+            'template_name': 'registration/password_change_done.html'
         },
-        name='user_password_change_done',
+        name='registration_password_change_done',
     ),
 
     url(regex=r'^password/reset$',
         view='django.contrib.auth.views.password_reset',
         kwargs={
-            'template_name': 'user/password_reset_form.html',
-            'email_template_name': 'user/password_reset_email.txt',
-            'subject_template_name': 'user/password_reset_subject.txt',
+            'template_name': 'registration/password_reset_form.html',
+            'email_template_name': 'registration/password_reset_email.txt',
+            'subject_template_name': 'registration/password_reset_subject.txt',
             'password_reset_form': PasswordResetForm,
             'post_reset_redirect': '/password/reset/done'
         },
-        name='user_password_reset',
+        name='registration_password_reset',
     ),
 
     url(regex=r'^password/reset/done$',
         view='django.contrib.auth.views.password_reset_done',
         kwargs={
-            'template_name': 'user/password_reset_done.html'
+            'template_name': 'registration/password_reset_done.html'
         },
-        name='user_password_reset_done',
+        name='registration_password_reset_done',
     ),
 
     url(regex=r'^password/reset/confirm/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)$',
         view='django.contrib.auth.views.password_reset_confirm',
         kwargs={
-            'template_name': 'user/password_reset_confirm.html',
+            'template_name': 'registration/password_reset_confirm.html',
             'set_password_form': SetPasswordForm,
             'post_reset_redirect': '/password/reset/complete'
         },
-        name='user_password_reset_confirm',
+        name='registration_password_reset_confirm',
     ),
 
     url(regex=r'^password/reset/complete$',
         view='django.contrib.auth.views.password_reset_complete',
         kwargs={
-            'template_name': 'user/password_reset_complete.html'
+            'template_name': 'registration/password_reset_complete.html'
         },
-        name='user_password_reset_complete',
+        name='registration_password_reset_complete',
     ),
 
 )

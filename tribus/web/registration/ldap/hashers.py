@@ -15,7 +15,7 @@ class SSHAPasswordLDAPHasher(BasePasswordHasher):
     """
     algorithm = "sha1"
 
-    def encode(self, password, salt):
+    def encode(self, password, salt, iterations=None):
         s = hashlib.sha1()
         s.update(password)
         salt = ''.join([random.choice(string.letters) for i in range(8)])

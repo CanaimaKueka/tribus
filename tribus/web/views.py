@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from django.shortcuts import render
-from tribus.web.user.forms import SignupForm
+from tribus.web.registration.forms import SignupForm
 from haystack.query import SearchQuerySet
 from django.core.paginator import Paginator, InvalidPage
 from django.contrib.contenttypes.models import ContentType

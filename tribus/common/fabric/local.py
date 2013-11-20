@@ -81,6 +81,7 @@ def include_xapian():
 def resetdb():
     configure_sudo()
     drop_mongo()
+    populate_ldap()
     configure_postgres()
     configure_django()
     deconfigure_sudo()

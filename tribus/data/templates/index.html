@@ -15,7 +15,7 @@
                     <div class="span3">
                         <div class="home-signup">
                             <h3 class="lighter block">{% trans "Sign up" %}</h3>
-                            <form accept-charset="UTF-8" action="{% url 'user_signup' %}" autocomplete="off" method="post">
+                            <form accept-charset="UTF-8" action="{% url 'registration_signup' %}" autocomplete="off" method="post">
                                 {% csrf_token %}
                                 <ul class="unstyled">
                                     <li>{{ signupform.username }}</li>
@@ -24,7 +24,7 @@
                                         <span class="span6">{{ signupform.last_name }}</span>
                                     </li>
                                     <li>{{ signupform.email }}</li>
-                                    <li>{{ signupform.password }}</li>
+                                    <li>{{ signupform.password1 }}</li>
                                 </ul>
                                 <button class="btn btn-success btn-block" type="submit">{% trans "Sign up" %}</button>
                                 <p class="smaller-90">
