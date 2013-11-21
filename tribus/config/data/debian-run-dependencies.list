@@ -1,8 +1,6 @@
-make
-fabric
-python-virtualenv
 postgresql
 slapd
 ldap-utils
 redis-server
 mongodb-server
+python-xapian

@@ -1,4 +1,23 @@
-# Makefile
+#!/usr/bin/make -f
+# -*- makefile -*-
+#
+# Copyright (C) 2013 Desarrolladores de Tribus
+#
+# This file is part of Tribus.
+#
+# Tribus is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Tribus is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 
 SHELL = sh -e
 PATH = "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
@@ -50,47 +69,59 @@ syncdb: fabric
 environment: fabric
 
 	@$(FAB) development environment
+
+install_repo: fabric
+
+	@$(FAB) development install_repo
 	
 resetdb:
 
 	@$(FAB) development resetdb
 	
-filldb: fabric
+filldb_from_local: fabric
 
-	@$(FAB) development filldb 
+	@$(FAB) development filldb_from_local 
+	
+filldb_from_remote: fabric
+
+	@$(FAB) development filldb_from_remote
+	
+rebuild_index: fabric
+
+	@$(FAB) development rebuild_index  
+	
+create_local_repo: fabric
+
+	@$(FAB) development create_local_repo  
 
 update_virtualenv: fabric
 
 	@$(FAB) development update_virtualenv
 
-update_po: fabric 
+update_catalog: fabric 
 
-	@$(FAB) development update_po
+	@$(FAB) development update_catalog
 
-create_pot: fabric
+compile_catalog: fabric 
 
-	@$(FAB) development create_pot
+	@$(FAB) development compile_catalog
 
-# snapshot: check-maintdep prepare gen-html gen-wiki gen-po clean
+init_catalog: fabric 
 
-# 	@$(MAKE) clean
-# 	@$(BASH) tools/snapshot.sh
+	@$(FAB) development init_catalog
 
-# release: check-maintdep
+extract_messages: fabric 
 
-# 	@$(BASH) tools/release.sh
+	@$(FAB) development extract_messages
 
-# deb-test-snapshot: check-maintdep
+tx_push: fabric 
 
-# 	@$(BASH) tools/buildpackage.sh test-snapshot
+	@$(FAB) development tx_push
 
-# deb-test-release: check-maintdep
+tx_pull: fabric 
 
-# 	@$(BASH) tools/buildpackage.sh test-release
+	@$(FAB) development tx_pull
 
-# deb-final-release: check-maintdep
-
-# 	@$(BASH) tools/buildpackage.sh final-release
 
 # BUILD TASKS ------------------------------------------------------------------------------
 
@@ -105,10 +136,6 @@ build_sphinx: fabric
 build_mo: fabric
 
 	@$(FAB) development build_mo
-
-build_img: fabric
-
-	@$(FAB) development build_img
 
 build_css: fabric
 
@@ -136,10 +163,6 @@ clean_css: fabric
 clean_js: fabric
 
 	@$(FAB) development clean_js
-
-clean_img: fabric
-
-	@$(FAB) development clean_img
 
 clean_mo: fabric
 

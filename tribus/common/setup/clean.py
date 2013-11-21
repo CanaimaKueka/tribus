@@ -61,6 +61,28 @@ class clean_img(Command):
                     print e
 
 
+class clean_pyc(Command):
+    description = 'Remove compiled PNG files from source.'
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        for pyc_file in find_files(path=BASEDIR, pattern='*.pyc'):
+            if os.path.isfile(pyc_file):
+                try:
+                    os.remove(pyc_file)
+                    log.debug("[%s.%s] Removing \"%s\"." % (__name__,
+                                                            self.__class__.__name__,
+                                                            pyc_file))
+                except Exception, e:
+                    print e
+
+
 class clean_css(Command):
     description = 'Compile .po files into .mo files'
     user_options = []
@@ -75,11 +97,13 @@ class clean_css(Command):
 
         CSSMIN_DIR = get_path([BASEDIR, 'tribus', 'data', 'static', 'css', 'min'])
 
-        try:
-            shutil.rmtree(CSSMIN_DIR)
-            log.debug("[%s.%s] Removing \"%s\"." % (__name__, self.__class__.__name__, CSSMIN_DIR))
-        except Exception, e:
-            print e
+        if os.path.isdir(CSSMIN_DIR):
+            try:
+                shutil.rmtree(CSSMIN_DIR)
+                log.debug("[%s.%s] Removing \"%s\"." % (__name__, self.__class__.__name__, CSSMIN_DIR))
+            except Exception, e:
+                print e
+
 
 class clean_js(Command):
     description = 'Compile .po files into .mo files'
@@ -95,11 +119,13 @@ class clean_js(Command):
 
         JSMIN_DIR = get_path([BASEDIR, 'tribus', 'data', 'static', 'js', 'min'])
         
-        try:
-            shutil.rmtree(JSMIN_DIR)
-            log.debug("[%s.%s] Removing \"%s\"." % (__name__, self.__class__.__name__, JSMIN_DIR))
-        except Exception, e:
-            print e
+        if os.path.isdir(JSMIN_DIR):
+            try:
+                shutil.rmtree(JSMIN_DIR)
+                log.debug("[%s.%s] Removing \"%s\"." % (__name__, self.__class__.__name__, JSMIN_DIR))
+            except Exception, e:
+                print e
+
 
 class clean_sphinx(Command):
     description = 'Compile .po files into .mo files'
@@ -113,11 +139,12 @@ class clean_sphinx(Command):
 
     def run(self):
         for html_dir in reversed(find_dirs(path=get_path([DOCDIR, 'html']))+find_dirs(path=get_path([DOCDIR, 'doctrees']))):
-            try:
-                shutil.rmtree(html_dir)
-                log.debug("[%s.%s] Removing \"%s\"." % (__name__, self.__class__.__name__, html_dir))
-            except Exception, e:
-                print e
+            if os.path.isdir(html_dir):
+                try:
+                    shutil.rmtree(html_dir)
+                    log.debug("[%s.%s] Removing \"%s\"." % (__name__, self.__class__.__name__, html_dir))
+                except Exception, e:
+                    print e
 
 
 class clean_man(Command):
@@ -173,11 +200,12 @@ class clean_dist(Command):
     def run(self):
         for dist_dir in ['dist', 'build', 'Tribus.egg-info']:
             for dist_subdir in reversed(find_dirs(path=get_path([BASEDIR, dist_dir]))):
-                try:
-                    shutil.rmtree(dist_subdir)
-                    log.debug("[%s.%s] Removing \"%s\"." % (__name__, self.__class__.__name__, dist_subdir))
-                except Exception, e:
-                    print e
+                if os.path.isdir(dist_subdir):
+                    try:
+                        shutil.rmtree(dist_subdir)
+                        log.debug("[%s.%s] Removing \"%s\"." % (__name__, self.__class__.__name__, dist_subdir))
+                    except Exception, e:
+                        print e
 
 
 class clean(base_clean):
@@ -189,4 +217,5 @@ class clean(base_clean):
         self.run_command('clean_css')
         self.run_command('clean_sphinx')
         self.run_command('clean_man')
+        self.run_command('clean_pyc')
         base_clean.run(self)

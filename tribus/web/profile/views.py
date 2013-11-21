@@ -48,7 +48,7 @@ def UserProfile(request):
         if request.method == "POST":
             u = User.objects.get(username__exact = request.user.username)
             u.description = request.POST['descripcion']
-            u.email = request.POST['email']
+            # u.email = request.POST['email']
             u.save()
             edit_ldap_user(u)
             return HttpResponseRedirect('/profile')

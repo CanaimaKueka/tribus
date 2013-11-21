@@ -1,0 +1,58 @@
+[main]
+host = https://www.transifex.com
+type = PO
+
+[tribus.core]
+file_filter = tribus/data/i18n/<lang>/LC_MESSAGES/django.po
+source_file = tribus/data/i18n/pot/django.pot
+source_lang = en
+
+[tribus.authors-docs]
+file_filter = tribus/data/docs/rst/i18n/<lang>/LC_MESSAGES/authors.po
+source_file = tribus/data/docs/rst/i18n/pot/authors.pot
+source_lang = en
+
+[tribus.contributors-docs]
+file_filter = tribus/data/docs/rst/i18n/<lang>/LC_MESSAGES/contributors.po
+source_file = tribus/data/docs/rst/i18n/pot/contributors.pot
+source_lang = en
+
+[tribus.copying-docs]
+file_filter = tribus/data/docs/rst/i18n/<lang>/LC_MESSAGES/copying.po
+source_file = tribus/data/docs/rst/i18n/pot/copying.pot
+source_lang = en
+
+[tribus.development-docs]
+file_filter = tribus/data/docs/rst/i18n/<lang>/LC_MESSAGES/development.po
+source_file = tribus/data/docs/rst/i18n/pot/development.pot
+source_lang = en
+
+[tribus.faq-docs]
+file_filter = tribus/data/docs/rst/i18n/<lang>/LC_MESSAGES/faq.po
+source_file = tribus/data/docs/rst/i18n/pot/faq.pot
+source_lang = en
+
+[tribus.index-docs]
+file_filter = tribus/data/docs/rst/i18n/<lang>/LC_MESSAGES/index.po
+source_file = tribus/data/docs/rst/i18n/pot/index.pot
+source_lang = en
+
+[tribus.installation-docs]
+file_filter = tribus/data/docs/rst/i18n/<lang>/LC_MESSAGES/installation.po
+source_file = tribus/data/docs/rst/i18n/pot/installation.pot
+source_lang = en
+
+[tribus.license-docs]
+file_filter = tribus/data/docs/rst/i18n/<lang>/LC_MESSAGES/license.po
+source_file = tribus/data/docs/rst/i18n/pot/license.pot
+source_lang = en
+
+[tribus.readme-docs]
+file_filter = tribus/data/docs/rst/i18n/<lang>/LC_MESSAGES/readme.po
+source_file = tribus/data/docs/rst/i18n/pot/readme.pot
+source_lang = en
+
+[tribus.tutorial-docs]
+file_filter = tribus/data/docs/rst/i18n/<lang>/LC_MESSAGES/tutorial.po
+source_file = tribus/data/docs/rst/i18n/pot/tutorial.pot
+source_lang = en

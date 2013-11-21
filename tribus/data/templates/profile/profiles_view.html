@@ -1,0 +1,148 @@
+{% extends 'profile/base.html' %}
+{% load i18n %}
+{% block title %} Profile {% endblock %}
+{% block content%}
+
+<div class="jumbotron">
+	<div class="container">
+		<div class="row-fluid">
+			<div class="span3">
+                <div ng-controller="UserController">
+					<span class="profile_avatar" ng-style="{'background-image': 'url(\''+userview_gravatar+'\')'}"></span>
+					<div class="space-36"></div>
+	                {% block datos %}
+	    				<hr>
+						<p>{{ user_view.first_name }} {{user_view.last_name}}</p>
+						<p>{{ user_view.email }}</p>
+						<p>{% trans 'Description' %}: {{ user_view.description }}</p>
+						<hr>
+						<span ng-click="follow()">
+							<a  class="btn btn-sm btn-block btn-success" ng-if="add == false" >
+								<i class="icon-plus-sign bigger-120"></i>
+								<span class="bigger-110"> {% trans 'Follow' %}</span>
+							</a>
+
+							<a  class="btn btn-sm btn-block btn-danger" ng-if="add == true" >
+								<i class="icon-minus bigger-120"></i>
+								<span class="bigger-110"> {% trans 'Stop following' %} </span>
+							</a>
+
+						</span>
+	                {% endblock %}
+					<legend></legend>
+					<!-- {% if user.is_authenticated %} -->
+
+					<!-- {%endif%} -->
+				</div>
+
+			</div>
+			<div class="span9">
+				{% include 'profile/navbar_view.html' %}
+                <legend></legend>	
+
+				<div class = "row-fluid">
+						<div class="tabbable">
+
+							<ul class="nav nav-tabs" id="myTab">
+<!-- 								<li class="">
+									<a data-toggle="tab" href="#home">
+										<i class="green icon-home bigger-110"></i>
+										{% trans 'Home' %}
+									</a>
+								</li> -->
+
+								<li class="active">
+									<a data-toggle="tab" href="#profile">
+										{% trans 'Messages' %}
+										<span class="badge badge-danger">4</span>
+									</a>
+								</li>
+
+<!-- 								<li class="dropdown">
+									<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+										Dropdown &nbsp;
+										<i class="icon-caret-down bigger-110 width-auto"></i>
+									</a>
+
+									<ul class="dropdown-menu dropdown-info">
+										<li>
+											<a data-toggle="tab" href="#dropdown1">@fat</a>
+										</li>
+
+										<li>
+											<a data-toggle="tab" href="#dropdown2">@mdo</a>
+										</li>
+									</ul>
+								</li> -->
+							</ul>
+
+							<div class="tab-content">
+<!-- 								<div id="home" class="tab-pane">
+									<p>Raw denim you probably haven't heard of them jean shorts Austin.</p>
+								</div> -->
+
+								<div id="profile" class="tab-pane active">
+									{% include 'tribs.html' %}
+									
+								</div>
+<!-- 
+								<div id="dropdown1" class="tab-pane">
+									<p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade.</p>
+								</div>
+
+								<div id="dropdown2" class="tab-pane">
+									<p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin.</p>
+								</div> -->
+							</div>
+						</div>
+									
+
+
+
+   
+                    
+   
+				</div>
+			</div>
+		</div>
+</div>		
+
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        {% if user.is_authenticated %}
+
+        var user_id = '{{ user.id }}';
+        var user_username = '{{ user.username }}';
+        // NO SE USA POR AHORA
+        var user_first_name = '{{ user.first_name }}';
+        var user_last_name = '{{ user.last_name }}';
+        var user_email = '{{ user.email }}';      
+        var user_gravatar = 'http://www.gravatar.com/avatar/'+md5(user_email)+'?d=mm&s=250&r=x';
+
+        {% endif %}
+
+        var userview_id = '{{ user_view.id }}';
+        var userview_username = '{{ user_view.username }}';
+        var userview_first_name = '{{ user_view.first_name }}';
+        var userview_last_name = '{{ user_view.last_name }}';
+        var userview_email = '{{ user_view.email }}';  
+        var userview_gravatar = 'http://www.gravatar.com/avatar/'+md5(userview_email)+'?d=mm&s=250&r=x';        
+
+        var trib_limit_to = 0;
+        var trib_offset = 0;
+        var trib_add = 10;
+        var trib_limit = 10;
+        var trib_orderby = '-trib_pub_date';
+        var controller_busy = false;
+
+        var trib_save_success = '{% trans "Your message has been published." %}'
+        var trib_save_error = '{% trans "There has been an error publishing your message. Please try again later." %}'
+        var trib_delete_success = '{% trans "Your message has been deleted." %}'
+        var trib_delete_error = '{% trans "There has been an error deleting your message. Please try again later." %}'
+        var trib_add_error = '{% trans "There has been an error consulting more messages. Please try again later." %}'
+        var comment_delete_success = '{% trans "Your comment has been deleted." %}'
+        var comment_delete_error = '{% trans "There has been an error deleting your comment. Please try again later." %}'
+    </script>
+{% endblock %}

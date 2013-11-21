@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
+        <div class="jumbotron intro-background">
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span9 intro-slogan">
+                        <h1>{%trans "Join the Tribe!" %}</h1>
+                        <p>
+                            {% blocktrans %}
+                            Unleash the power of your creativity to bring amazing pieces of art to the free software world. We deliver a complete set of community services right to your computer. <a href="/tour">Take the tour</a> to know how.
+                            {% endblocktrans %}
+                        </p>
+                    </div>
+                    <div class="span3">
+                        <div class="home-signup">
+                            <h3 class="lighter block">{% trans "Sign up" %}</h3>
+                            <form accept-charset="UTF-8" action="{% url 'user_signup' %}" autocomplete="off" method="post">
+                                {% csrf_token %}
+                                <ul class="unstyled">
+                                    <li>{{ signupform.username }}</li>
+                                    <li class="row-fluid">
+                                        <span class="span6">{{ signupform.first_name }}</span>
+                                        <span class="span6">{{ signupform.last_name }}</span>
+                                    </li>
+                                    <li>{{ signupform.email }}</li>
+                                    <li>{{ signupform.password }}</li>
+                                </ul>
+                                <button class="btn btn-success btn-block" type="submit">{% trans "Sign up" %}</button>
+                                <p class="smaller-90">
+                                    {% blocktrans %}
+                                    By clicking on this button, you agree to the
+                                    <a href="/about/terms" target="_blank">Terms of Service</a>, the
+                                    <a href="/about/privacy" target="_blank">Privacy Policy</a> and the
+                                    <a href="/about/guidelines" target="_blank">Community Guidelines</a>.
+                                    {% endblocktrans %}
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid chiclets">
+            <ul class="row-fluid">
+                <li class="span4 ch-cloud">
+                    <h3>{% trans "Package cloud" %}</h3>
+                    <p>{% trans "We give you space to store the binaries of your source code in our package cloud. You can distribute your applications through a personal cloud, or have it enter Canaima's development cycle." %}</p>
+                </li>
+                <li class="span4 ch-source">
+                    <h3>{% trans "Source management" %}</h3>
+                    <p>
+                        {% blocktrans %}
+                        Store your work in a public place, where everyone can review and contribute to your projects. We support the most popular versioning systems: <a href="http://subversion.apache.org/" target="_blank">subversion</a>, <a href="a:http://bazaar.canonical.com/en/" target="_blank">bazaar</a>, <a href="http://mercurial.selenic.com/" target="_blank">mercurial</a> and <a href="http://git-scm.com/" target="_blank">git</a> (or no versioning at all).
+                        {% endblocktrans %}
+                    </p>
+                </li>
+                <li class="span4 ch-ci">
+                    <h3>{% trans "Continuous integration" %}</h3>
+                    <p>
+                        {% blocktrans %}
+                        Focus yourself in the creative process of your work, while we handle the building and packaging of your applications. We have a <a href="http://buildbot.net" target="_blank">buildbot</a> farm just waiting to compile your stuff.
+                        {% endblocktrans %}
+                    </p>
+                </li>
+            </ul>
+            <ul class="row-fluid">
+                <li class="span4 ch-social">
+                    <h3>{% trans "Social network" %}</h3>
+                    <p>{% trans "Share your activities in the platform with your friends and close contributors. Comment on your commits, patches, applications, translations, and more. Get everyone to know you and your work!" %}</p>
+                </li>
+                <li class="span4 ch-ticket">
+                    <h3>{% trans "Ticket system" %}</h3>
+                    <p>{% trans "Organize your team work by assigning milestones to your teammates and achieving goals together. Measure your effectiveness and planify your objectives in a clean and intuitive interface." %}</p>
+                </li>
+                <li class="span4 ch-docs">
+                    <h3>{% trans "Easy documentation" %}</h3>
+                    <p>{% trans "We know how important it is to have a good and quickly-to-set-up documentation. That's why the only thing you have to do is write RST, and we will take care of the HTML for you." %}</p>
+                </li>
+            </ul>
+        </div>
+{% endblock %}

@@ -24,9 +24,10 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 TIME_ZONE = 'America/Caracas'
-LANGUAGE_CODE = 'es-ve'
+LANGUAGE_CODE = 'es'
 DATABASE_OPTIONS = { 'charset': 'utf8' }
 DEFAULT_CHARSET = 'utf-8'
+LOCALE_PATHS = [get_path([BASEDIR, 'tribus', 'data', 'i18n'])]
 
 SITE_ROOT = get_path([BASEDIR, 'tribus', 'web'])
 MEDIA_ROOT = ''
@@ -34,7 +35,7 @@ MEDIA_URL = '/media/'
 STATIC_ROOT = ''
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [get_path([BASEDIR, 'tribus', 'data', 'static'])]
-TEMPLATE_DIRS = [get_path([BASEDIR, 'tribus', 'data', 'html'])]
+TEMPLATE_DIRS = [get_path([BASEDIR, 'tribus', 'data', 'templates'])]
 
 DJANGO_STATIC = not DEBUG
 DJANGO_STATIC_MEDIA_ROOTS = [get_path([BASEDIR, 'tribus', 'data'])]
@@ -135,16 +136,22 @@ CELERYBEAT_SCHEDULE = {
 # Configuracion de haystack y whoosh
 WHOOSH_INDEX = os.path.join(BASEDIR, 'whoosh_index/')
 XAPIAN_INDEX = os.path.join(BASEDIR, 'xapian_index/')
+SOLR_INDEX = os.path.join(BASEDIR, 'solr_index/')
 HAYSTACK_LOGGING = True
 HAYSTACK_CONNECTIONS = {
-    'default': {
-        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
-        'PATH': WHOOSH_INDEX,
-    },
     #'default': {
-    #    'ENGINE': 'xapian_backend.XapianEngine',
-    #    'PATH': XAPIAN_INDEX
+    #    'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+    #    'PATH': WHOOSH_INDEX,
     #},
+    #'default': {
+    #    'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
+    #    'URL': 'http://127.0.0.1:8983/solr'
+    #},                    
+    
+    'default': {
+        'ENGINE': 'xapian_backend.XapianEngine',
+        'PATH': XAPIAN_INDEX
+    },
 }
 
 HAYSTACK_SIGNAL_PROCESSOR = 'celery_haystack.signals.CelerySignalProcessor'
@@ -177,9 +184,7 @@ INSTALLED_APPS = (
     'django_static',
     'tastypie',
     'tastypie_mongoengine',
-    'django_gravatar',
     'haystack',
-    'whoosh',
     'celery_haystack'
 )
 
@@ -206,19 +211,23 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    'django.middleware.common.CommonMiddleware',
+    # 'django.middleware.cache.UpdateCacheMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    # 'django.middleware.cache.FetchFromCacheMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.debug',
     'django.core.context_processors.i18n',
     'django.core.context_processors.media',
     'django.core.context_processors.static',
-    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.tz',
     'django.contrib.messages.context_processors.messages',
     'tribus.web.processors.default_context',
     'social_auth.context_processors.social_auth_by_type_backends',

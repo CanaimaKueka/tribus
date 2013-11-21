@@ -1,0 +1,31 @@
+Origin: Canaima
+Label: Canaima
+Suite: antiguo
+Codename: aponwao
+Version: 2.1
+Pull: estable
+Architectures: i386 amd64 source
+Components: usuarios
+Description: Canaima GNU/Linux
+DebIndices: Packages Release . .gz .bz2
+
+Origin: Canaima
+Label: Canaima
+Suite: estable
+Codename: roraima
+Version: 3.0
+Pull: pruebas
+Architectures: i386 amd64 source
+Components: usuarios
+Description: Canaima GNU/Linux
+DebIndices: Packages Release . .gz .bz2
+
+Origin: Canaima
+Label: Canaima
+Suite: desarrollo
+Codename: auyantepui
+Version: 3.1
+Architectures: i386 amd64 source
+Components: usuarios
+Description: Canaima GNU/Linux
+DebIndices: Packages Release . .gz .bz2

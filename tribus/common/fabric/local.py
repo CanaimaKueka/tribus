@@ -1,18 +1,37 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+#
+# Copyright (C) 2013 Desarrolladores de Tribus
+#
+# This file is part of Tribus.
+#
+# Tribus is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Tribus is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 
 import os
 import pwd
 import sys
 import site
+import lsb_release
 from fabric.api import *
 
 from tribus import BASEDIR
 from tribus.config.ldap import (AUTH_LDAP_SERVER_URI, AUTH_LDAP_BASE, AUTH_LDAP_BIND_DN,
                                AUTH_LDAP_BIND_PASSWORD)
 from tribus.config.pkg import (debian_run_dependencies, debian_build_dependencies,
-                              f_workenv_preseed, f_sql_preseed, f_users_ldif,
-                              f_python_dependencies)
+                              debian_maint_dependencies, f_workenv_preseed, f_sql_preseed,
+                              f_users_ldif, f_python_dependencies)
 
 
 def development():
@@ -22,26 +41,60 @@ def development():
     env.hosts = ['localhost']
     env.basedir = BASEDIR
     env.virtualenv_dir = os.path.join(env.basedir, 'virtualenv')
-    env.virtualenv_args = ' '.join(['--clear', '--no-site-packages', '--distribute'])
+    env.virtualenv_args = ' '.join(['--clear', '--no-site-packages', '--setuptools'])
     env.virtualenv_activate = os.path.join(env.virtualenv_dir, 'bin', 'activate')
     env.settings = 'tribus.config.web'
     env.sudo_prompt = 'Executed'
     env.f_python_dependencies = f_python_dependencies
+    env.xapian_destdir = os.path.join(env.virtualenv_dir, 'lib', 'python%s' % sys.version[:3], 'site-packages', 'xapian')
+    env.xapian_init = os.path.join(os.path.sep, 'usr', 'share', 'pyshared', 'xapian', '__init__.py')
+    env.xapian_so = os.path.join(os.path.sep, 'usr', 'lib', 'python%s' % sys.version[:3], 'dist-packages', 'xapian', '_xapian.so')
+    env.reprepro_conf_dir = os.path.join(os.path.sep, 'var', 'www' ,'repositorio', 'conf')
+    env.distributions_dir = os.path.join(BASEDIR, 'tribus', 'config' ,'data')
+    env.reprepro_dir = os.path.join(os.path.sep,'var', 'www' ,'repositorio')
+
+
+def install_repo():
+    configure_sudo()
+    with settings(command='sudo /bin/bash -c  "mkdir -p %(reprepro_conf_dir)s"' % env):
+         local('%(command)s' % env, capture=False)
+    
+    with settings(command='sudo /bin/bash -c "cp   %(distributions_dir)s/distributions  %(reprepro_conf_dir)s"' % env):
+         local('%(command)s' % env, capture=False)
+    
+    with lcd('%(reprepro_dir)s' % env):
+        with settings(command='sudo /bin/bash -c "reprepro -VVV export"'):
+            local('%(command)s' % env, capture=False)
+    deconfigure_sudo()
+
 
 
 def environment():
     configure_sudo()
     preseed_packages()
     install_packages(debian_build_dependencies)
+    install_packages(debian_maint_dependencies)
     install_packages(debian_run_dependencies)
     drop_mongo()
     configure_postgres()
     populate_ldap()
     create_virtualenv()
+    include_xapian()
     update_virtualenv()
     configure_django()
     deconfigure_sudo()
-    
+
+
+def include_xapian():
+    with settings(command='mkdir -p %(xapian_destdir)s' % env):
+        local('%(command)s' % env, capture=False)
+
+    with settings(command='ln -fs %(xapian_init)s %(xapian_destdir)s' % env):
+        local('%(command)s' % env, capture=False)
+
+    with settings(command='ln -fs %(xapian_so)s %(xapian_destdir)s' % env):
+        local('%(command)s' % env, capture=False)
+
     
 def resetdb():
     configure_sudo()
@@ -50,26 +103,43 @@ def resetdb():
     configure_django()
     deconfigure_sudo()
     
+def create_local_repo():
+    py_activate_virtualenv()
+    from tribus.common.recorder import create_local_repository
+    create_local_repository()
     
-def filldb():
+    
+def filldb_from_local():
     py_activate_virtualenv()
     from tribus.common.recorder import init_package_cache
     init_package_cache()
+    
+    
+def filldb_from_remote():
+    py_activate_virtualenv()
+    from tribus.common.recorder import init_package_cache_from_canaima
+    init_package_cache_from_canaima()
+
+    
+def rebuild_index():
+    with cd('%(basedir)s' % env):
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s python manage.py rebuild_index --noinput --verbosity 3 --traceback' % env, capture=False)
 
 
 def configure_sudo():
-    with settings(command='su root -c "echo \'%(user)s ALL= NOPASSWD: ALL\' > /etc/sudoers.d/tribus"' % env):
-        local('%(command)s' % env)
+    with settings(command='su root -c "echo \'%(user)s ALL= NOPASSWD: ALL\' > /etc/sudoers.d/tribus; chmod 0440 /etc/sudoers.d/tribus"' % env):
+        local('%(command)s' % env, capture=False)
 
 
 def deconfigure_sudo():
     with settings(command='sudo /bin/bash -c "rm -rf /etc/sudoers.d/tribus"' % env):
-        local('%(command)s' % env)
+        local('%(command)s' % env, capture=False)
 
 
 def preseed_packages():
     with settings(command='sudo /bin/bash -c "debconf-set-selections %s"' % f_workenv_preseed):
-        local('%(command)s' % env)
+        local('%(command)s' % env, capture=False)
 
 
 def install_packages(dependencies):
@@ -79,18 +149,18 @@ aptitude install --assume-yes --allow-untrusted \
 -o DPkg::Options::=--force-confnew \
 -o DPkg::Options::=--force-overwrite \
 %s"' % ' '.join(dependencies)):
-        local('%(command)s' % env)
+        local('%(command)s' % env, capture=False)
 
 
 def configure_postgres():
     with settings(command='sudo /bin/bash -c "echo \'postgres:tribus\' | chpasswd"'):
-        local('%(command)s' % env)
+        local('%(command)s' % env, capture=False)
 
     with settings(command='cp %s /tmp/' % f_sql_preseed):
-        local('%(command)s' % env)
+        local('%(command)s' % env, capture=False)
 
     with settings(command='sudo /bin/bash -c "sudo -i -u postgres /bin/sh -c \'psql -f /tmp/preseed-db.sql\'"'):
-        local('%(command)s' % env)
+        local('%(command)s' % env, capture=False)
 
 
 def populate_ldap():
@@ -109,23 +179,23 @@ sed \'s/dn: //g\' | sed \'s/ /_@_/g\'' % env):
         env.ldap_entry = ldap_entry
         with settings(command='ldapdelete -x -w "%(ldap_passwd)s" \
 -D "%(ldap_writer)s" -H "%(ldap_server)s" "%(ldap_entry)s"' % env):
-            local('%(command)s' % env)
+            local('%(command)s' % env, capture=False)
 
     with settings(command='ldapadd -x -w "%(ldap_passwd)s" \
 -D "%(ldap_writer)s" -H "%(ldap_server)s" -f "%(users_ldif)s"' % env):
-        local('%(command)s' % env)
+        local('%(command)s' % env, capture=False)
 
 
 def create_virtualenv():
     with cd('%(basedir)s' % env):
         with settings(command='virtualenv %(virtualenv_args)s %(virtualenv_dir)s' % env):
-            local('%(command)s' % env)
+            local('%(command)s' % env, capture=False)
 
 
 def update_virtualenv():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s pip install -r %(f_python_dependencies)s' % env)
+            local('%(command)s pip install -r %(f_python_dependencies)s' % env, capture=False)
 
 
 def py_activate_virtualenv():
@@ -141,13 +211,13 @@ def configure_django():
 
 def drop_mongo():
     with settings(command='mongo tribus --eval \'db.dropDatabase()\'' % env):
-        local('%(command)s' % env)
+        local('%(command)s' % env, capture=False)
 
 
 def createsuperuser_django():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python manage.py createsuperuser --noinput --username admin --email admin@localhost.com' % env)
+            local('%(command)s python manage.py createsuperuser --noinput --username admin --email admin@localhost.com --verbosity 3 --traceback' % env, capture=False)
 
     py_activate_virtualenv()
 
@@ -162,403 +232,147 @@ def createsuperuser_django():
 def syncdb_django():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python manage.py syncdb --noinput' % env)
-            local('%(command)s python manage.py migrate' % env)
+            local('%(command)s python manage.py syncdb --noinput --verbosity 3 --traceback' % env, capture=False)
+            local('%(command)s python manage.py migrate --verbosity 3 --traceback' % env, capture=False)
 
 
 def runserver_django():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python manage.py runserver' % env)
+            local('%(command)s python manage.py runserver --verbosity 3 --traceback' % env, capture=False)
 
 def shell_django():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python manage.py shell' % env)
+            local('%(command)s python manage.py shell --verbosity 3 --traceback' % env, capture=False)
 
 def update_catalog():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py update_catalog' % env)
+            local('%(command)s python setup.py update_catalog' % env, capture=False)
 
 
 def extract_messages():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py extract_messages' % env)
-
-
-def build_sphinx():
-    with cd('%(basedir)s' % env):
-        with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py build_sphinx' % env)
-
-
-def build_img():
-    with cd('%(basedir)s' % env):
-        with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py build_img' % env)
-
-
-def build_css():
-    with cd('%(basedir)s' % env):
-        with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py build_css' % env)
-
-
-def build_js():
-    with cd('%(basedir)s' % env):
-        with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py build_js' % env)
-
-
-def build_man():
-    with cd('%(basedir)s' % env):
-        with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py build_man' % env)
+            local('%(command)s python setup.py extract_messages' % env, capture=False)
 
 
 def compile_catalog():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py compile_catalog' % env)
+            local('%(command)s python setup.py compile_catalog' % env, capture=False)
+
+
+def init_catalog():
+    with cd('%(basedir)s' % env):
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s python setup.py init_catalog' % env, capture=False)
+
+
+def tx_pull():
+    with cd('%(basedir)s' % env):
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s tx pull -a --skip' % env, capture=False)
+
+
+def tx_push():
+    with cd('%(basedir)s' % env):
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s tx push -s -t --skip --no-interactive' % env, capture=False)
+
+
+def build_sphinx():
+    with cd('%(basedir)s' % env):
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s python setup.py build_sphinx' % env, capture=False)
+
+
+def build_css():
+    with cd('%(basedir)s' % env):
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s python setup.py build_css' % env, capture=False)
+
+
+def build_js():
+    with cd('%(basedir)s' % env):
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s python setup.py build_js' % env, capture=False)
+
+
+def build_man():
+    with cd('%(basedir)s' % env):
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s python setup.py build_man' % env, capture=False)
 
 
 def build():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py build' % env)
+            local('%(command)s python setup.py build' % env, capture=False)
 
 
 def clean_css():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py clean_css' % env)
+            local('%(command)s python setup.py clean_css' % env, capture=False)
 
 
 def clean_js():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py clean_js' % env)
-
-
-def clean_img():
-    with cd('%(basedir)s' % env):
-        with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py clean_img' % env)
+            local('%(command)s python setup.py clean_js' % env, capture=False)
 
 
 def clean_sphinx():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py clean_sphinx' % env)
+            local('%(command)s python setup.py clean_sphinx' % env, capture=False)
 
 
 def clean_mo():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py clean_mo' % env)
+            local('%(command)s python setup.py clean_mo' % env, capture=False)
 
 
 def clean_man():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py clean_man' % env)
+            local('%(command)s python setup.py clean_man' % env, capture=False)
 
 
 def clean_dist():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py clean_dist' % env)
+            local('%(command)s python setup.py clean_dist' % env, capture=False)
 
 
 def clean_pyc():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py clean_pyc' % env)
+            local('%(command)s python setup.py clean_pyc' % env, capture=False)
 
 
 def clean():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py clean' % env)
+            local('%(command)s python setup.py clean' % env, capture=False)
 
 
 def sdist():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py sdist' % env)
+            local('%(command)s python setup.py sdist' % env, capture=False)
 
 
 def bdist():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py bdist' % env)
+            local('%(command)s python setup.py bdist' % env, capture=False)
 
 
 def install():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py install' % env)
-
-#         with settings(command='sed -i -e \'s/# Translations template for Tribus./# $(POTITLE)./\' \
-# -e \'s/# Copyright (C).*/# Copyright (C) $(YEAR) $(AUTHOR)/\' \
-# -e \'s/# This file is distributed under.*/same license as the $(PACKAGE) package./\' \
-# -e \'s/# FIRST AUTHOR <EMAIL@ADDRESS>/#\\n# Translators:\\n# $(AUTHOR) <$(EMAIL)>, $(YEAR)/\' \
-# -e \'s/"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\\n"/"PO-Revision-Date: $(PODATE)\\n"/\' \
-# -e \'s/"Last-Translator: FULL NAME <EMAIL@ADDRESS>\\n"/"Last-Translator: $(AUTHOR) <$(EMAIL)>\\n"/\' \
-# -e \'s/"Language-Team: LANGUAGE <LL@li.org>\\n"/"Language-Team: $(POTEAM) <$(MAILIST)>\\n"/\' \
-# -e \'s/"Language: \\n"/"Language: English\\n"/g\' $(POTFILE)' % env):
-#             local('%(command)s' % env)
-
-# import os
-
-# from fabric.api import *
-# from fabric.contrib.project import rsync_project
-# from fabric.contrib import files, console
-# from fabric import utils
-# from fabric.decorators import hosts
-
-
-# RSYNC_EXCLUDE = (
-#     '.DS_Store',
-#     '.hg',
-#     '*.pyc',
-#     '*.example',
-#     '*.db',
-#     'media/admin',
-#     'media/attachments',
-#     'local_settings.py',
-#     'fabfile.py',
-#     'bootstrap.py',
-# )
-
-# env.virtualenv = '/home/caktus/'
-# env.project = 'caktus_website'
-
-
-# def _setup_path():
-#     env.root = os.path.join(env.home, 'www', env.environment)
-#     env.code_root = os.path.join(env.root, env.project)
-#     env.virtualenv_root = os.path.join(env.root, 'env')
-#     env.settings = '%(project)s.settings_%(environment)s' % env
-
-
-# def staging():
-#     """ use staging environment on remote host"""
-#     env.user = 'caktus'
-#     env.environment = 'staging'
-#     env.hosts = ['173.203.208.254']
-#     _setup_path()
-
-
-# def production():
-#     """ use production environment on remote host"""
-#     utils.abort('Production deployment not yet implemented.')
-
-
-# def bootstrap():
-#     """ initialize remote host environment (virtualenv, deploy, update) """
-#     require('root', provided_by=('staging', 'production'))
-#     run('mkdir -p %(root)s' % env)
-#     run('mkdir -p %s' % os.path.join(env.home, 'www', 'log'))
-#     create_virtualenv()
-#     deploy()
-#     update_requirements()
-
-
-# def create_virtualenv():
-#     """ setup virtualenv on remote host """
-#     require('virtualenv_root', provided_by=('staging', 'production'))
-#     args = '--clear --distribute'
-#     run('virtualenv %s %s' % (args, env.virtualenv_root))
-
-
-# def deploy():
-#     """ rsync code to remote host """
-#     require('root', provided_by=('staging', 'production'))
-#     if env.environment == 'production':
-#         if not console.confirm('Are you sure you want to deploy production?',
-#                                default=False):
-#             utils.abort('Production deployment aborted.')
-#     # defaults rsync options:
-#     # -pthrvz
-#     # -p preserve permissions
-#     # -t preserve times
-#     # -h output numbers in a human-readable format
-#     # -r recurse into directories
-#     # -v increase verbosity
-#     # -z compress file data during the transfer
-#     extra_opts = '--omit-dir-times'
-#     rsync_project(
-#         env.root,
-#         exclude=RSYNC_EXCLUDE,
-#         delete=True,
-#         extra_opts=extra_opts,
-#     )
-#     touch()
-
-
-# def update_requirements():
-#     """ update external dependencies on remote host """
-#     require('code_root', provided_by=('staging', 'production'))
-#     requirements = os.path.join(env.code_root, 'requirements')
-#     with cd(requirements):
-#         cmd = ['pip install']
-#         cmd += ['-E %(virtualenv_root)s' % env]
-#         cmd += ['--requirement %s' % os.path.join(requirements, 'apps.txt')]
-#         run(' '.join(cmd))
-
-
-# def touch():
-#     """ touch wsgi file to trigger reload """
-#     require('code_root', provided_by=('staging', 'production'))
-#     apache_dir = os.path.join(env.code_root, 'apache')
-#     with cd(apache_dir):
-#         run('touch %s.wsgi' % env.environment)
-
-
-# def update_apache_conf():
-#     """ upload apache configuration to remote host """
-#     require('root', provided_by=('staging', 'production'))
-#     source = os.path.join('apache', '%(environment)s.conf' % env)
-#     dest = os.path.join(env.home, 'apache.conf.d')
-#     put(source, dest, mode=0755)
-#     apache_reload()
-
-
-# def configtest():    
-#     """ test Apache configuration """
-#     require('root', provided_by=('staging', 'production'))
-#     run('apache2ctl configtest')
-
-
-# def apache_reload():    
-#     """ reload Apache on remote host """
-#     require('root', provided_by=('staging', 'production'))
-#     run('sudo /etc/init.d/apache2 reload')
-
-
-# def apache_restart():    
-#     """ restart Apache on remote host """
-#     require('root', provided_by=('staging', 'production'))
-#     run('sudo /etc/init.d/apache2 restart')
-
-
-# def symlink_django():    
-#     """ create symbolic link so Apache can serve django admin media """
-#     require('root', provided_by=('staging', 'production'))
-#     admin_media = os.path.join(env.virtualenv_root,
-#                                'src/django/django/contrib/admin/media/')
-#     media = os.path.join(env.code_root, 'media/admin')
-#     if not files.exists(media):
-#         run('ln -s %s %s' % (admin_media, media))
-
-
-# def reset_local_media():
-#     """ Reset local media from remote host """
-#     require('root', provided_by=('staging', 'production'))
-#     media = os.path.join(env.code_root, 'media', 'upload')
-#     local('rsync -rvaz %s@%s:%s media/' % (env.user, env.hosts[0], media))
-
-
-# # -------------------
-
-# from fabric.api import *
-# # Default release is 'current'
-# env.release = 'current'
-
-# def production():
-#   """Production server settings"""
-#   env.settings = 'production'
-#   env.user = 'myproject'
-#   env.path = '/home/%(user)s/sites/myproject' % env
-#   env.hosts = ['mydomain.com']
-
-# def setup():
-#   """
-#   Setup a fresh virtualenv and install everything we need so it's ready to deploy to
-#   """
-#   run('mkdir -p %(path)s; cd %(path)s; virtualenv --no-site-packages .; mkdir releases; mkdir shared;' % env)
-#   clone_repo()
-#   checkout_latest()
-#   install_requirements()
-
-# def deploy():
-#   """Deploy the latest version of the site to the server and restart nginx"""
-#   checkout_latest()
-#   install_requirements()
-#   symlink_current_release()
-#   migrate()
-#   restart_server()
-
-# def clone_repo():
-#   """Do initial clone of the git repo"""
-#   run('cd %(path)s; git clone /home/%(user)s/git/repositories/myproject.git repository' % env)
-
-# def checkout_latest():
-#   """Pull the latest code into the git repo and copy to a timestamped release directory"""
-#   import time
-#   env.release = time.strftime('%Y%m%d%H%M%S')
-#   run("cd %(path)s/repository; git pull origin master" % env)
-#   run('cp -R %(path)s/repository %(path)s/releases/%(release)s; rm -rf %(path)s/releases/%(release)s/.git*' % env)
-
-# def install_requirements():
-#   """Install the required packages using pip"""
-#   run('cd %(path)s; %(path)s/bin/pip install -r ./releases/%(release)s/requirements.txt' % env)
-
-# def symlink_current_release():
-#   """Symlink our current release, uploads and settings file"""
-#   with settings(warn_only=True):
-#     run('cd %(path)s; rm releases/previous; mv releases/current releases/previous;' % env)
-#   run('cd %(path)s; ln -s %(release)s releases/current' % env)
-#   """ production settings"""
-#   run('cd %(path)s/releases/current/; cp settings_%(settings)s.py myproject/settings.py' % env)
-#   with settings(warn_only=True):
-#     run('rm %(path)s/shared/static' % env)
-#     run('cd %(path)s/releases/current/static/; ln -s %(path)s/releases/%(release)s/static %(path)s/shared/static ' %env)
-
-# def migrate():
-#   """Run our migrations"""
-#   run('cd %(path)s/releases/current; ../../bin/python manage.py syncdb --noinput --migrate' % env)
-
-# def rollback():
-#   """
-#   Limited rollback capability. Simple loads the previously current
-#   version of the code. Rolling back again will swap between the two.
-#   """
-#   run('cd %(path)s; mv releases/current releases/_previous;' % env)
-#   run('cd %(path)s; mv releases/previous releases/current;' % env)
-#   run('cd %(path)s; mv releases/_previous releases/previous;' %env)
-#   restart_server()
-
-# def restart_server():
-#   """Restart the web server"""
-#   with settings(warn_only=True):
-#     sudo('kill -9 `cat /tmp/project-master_helpmamme.pid`')
-#     sudo('rm /tmp/project-master_helpmamme.pid /tmp/uwsgi_helpmamme.sock')
-#   run('cd %(path)s/releases/current; %(path)s/bin/uwsgi --ini %(path)s/releases/current/uwsgi.ini' % env)
-#   sudo('/etc/init.d/nginx restart')
-
-# def pack():
-#     # create a new source distribution as tarball
-#     local('python setup.py sdist --formats=gztar', capture=False)
-
-# def deploy():
-#     # figure out the release name and version
-#     dist = local('python setup.py --fullname', capture=True).strip()
-#     # upload the source tarball to the temporary folder on the server
-#     put('dist/%s.tar.gz' % dist, '/tmp/yourapplication.tar.gz')
-#     # create a place where we can unzip the tarball, then enter
-#     # that directory and unzip it
-#     run('mkdir /tmp/yourapplication')
-#     with cd('/tmp/yourapplication'):
-#         run('tar xzf /tmp/yourapplication.tar.gz')
-#         # now setup the package with our virtual environment's
-#         # python interpreter
-#         run('/var/www/yourapplication/env/bin/python setup.py install')
-#     # now that all is set up, delete the folder again
-#     run('rm -rf /tmp/yourapplication /tmp/yourapplication.tar.gz')
-#     # and finally touch the .wsgi file so that mod_wsgi triggers
-#     # a reload of the application
-#     run('touch /var/www/yourapplication.wsgi')
+            local('%(command)s python setup.py install' % env, capture=False)
