@@ -24,7 +24,7 @@ def SearchProfile(request, nick):
 
     render_js = ['jquery', 'jquery.autogrow', 'jquery.timeago', 'jquery.bootstrap-growl', 'jquery.bootstrap',
                     'md5','angular', 'angular.resource', 'angular.infinite-scroll','services.angular' , 'controllers.angular', 
-                    'navbar.angular', 'navbar.jquery',
+                    'navbar.angular', 'navbar.jquery',#primero navbar sino EXPLOTA =O
                     'profiles.angular', 'dashboard.jquery'
                     
                     ]
@@ -41,7 +41,7 @@ def UserProfile(request):
 
     render_js = ['jquery', 'jquery.autogrow', 'jquery.timeago', 'jquery.bootstrap-growl', 'jquery.bootstrap',
                     'md5','angular', 'angular.resource', 'angular.infinite-scroll','services.angular' ,'controllers.angular', 
-                    'navbar.angular', 'navbar.jquery',
+                    'navbar.angular', 'navbar.jquery', #primero navbar sino EXPLOTA =O
                     'profiles.angular', 'dashboard.jquery',
                     ]
 

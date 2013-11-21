@@ -198,7 +198,7 @@ function SearchListController($scope, Search){
             );
         }
     };
-}
+};
 
 
 

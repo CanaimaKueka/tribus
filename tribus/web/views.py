@@ -15,8 +15,8 @@ def index(request):
     if request.user.is_authenticated():
         render_js = ['jquery', 'jquery.autogrow', 'jquery.timeago', 'jquery.bootstrap-growl', 'jquery.bootstrap',
                         'angular', 'angular.resource', 'angular.infinite-scroll',
-                        'dashboard.angular' ,'services.angular', 'controllers.angular',  'dashboard.jquery',
-                        'navbar.angular', 'navbar.jquery',
+                        'controllers.angular','services.angular', 'navbar.angular', 'navbar.jquery',#primero navbar sino EXPLOTA =O
+                        'dashboard.angular', 'dashboard.jquery',
                         'md5']
 
         return render(request, 'dashboard.html', {
