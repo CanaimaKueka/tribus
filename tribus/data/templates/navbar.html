@@ -14,7 +14,7 @@
 		{% if user.is_authenticated %}
             <ul class="nav">
                  <li class="dropdown" ng-controller="SearchListController">
-                 	<form class="form-search" action = "/search/" method = "GET">
+                 	<form name="form-search" class="form-search" action = "/search/" method = "GET">
                         {% csrf_token %}
                         <span class="input-icon">
                             <input type="text" class="nav-search-input input-large top_search_input" autocomplete="off" name="q"

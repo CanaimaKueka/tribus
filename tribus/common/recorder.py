@@ -35,7 +35,7 @@ This module contains common functions to record package data from a repository.
 #     se registraron. PENDIENTE
 #===============================================================================
 
-import urllib, re, email.Utils, os, sys, string
+import urllib, re, email.Utils, os, sys, string, random
 path = os.path.join(os.path.dirname(__file__), '..', '..')
 base = os.path.realpath(os.path.abspath(os.path.normpath(path)))
 os.environ['PATH'] = base + os.pathsep + os.environ['PATH']
@@ -44,11 +44,11 @@ sys.path.insert(0, base)
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
 from debian import deb822
 from tribus.web.cloud.models import *
-from tribus.config.pkgrecorder import package_fields, detail_fields, local_repo_root,\
-roraima, kerepakupai
-from tribus.common.utils import find_files, md5Checksum, find_dirs, list_dirs
+from tribus.config.pkgrecorder import package_fields, detail_fields, LOCAL_ROOT_DISTS,\
+CANAIMA_ROOT, SAMPLES_LISTS, SAMPLES_PACKAGES
+from tribus.common.utils import find_files, md5Checksum, find_dirs, list_dirs,\
+    list_files
 from tribus.config.base import PACKAGECACHE
-
 
 def record_maintainer(maintainer_data):
     """
@@ -388,10 +388,13 @@ def record_section(section, dist):
     """
     
     #print "Registrando seccion -->", section['Package'], "-", section['Architecture']
-    p = record_package(section)
-    d = record_details(section, p, dist)
-    record_relations(d, section.relations.items())
-
+    try:
+        p = record_package(section)
+        d = record_details(section, p, dist)
+        record_relations(d, section.relations.items())
+    except:
+        print "Could not record %s" % section['Package']
+        
 
 def update_package(section):
     """
@@ -497,37 +500,24 @@ def update_package_list(file_path, dist):
         else:
             record_section(section, dist)
             print "Se estan agregando nuevos detalles"
-
-
-def create_package_cache(repo_root, dist):
+            
+def scan_repository(repo_root):
     '''
-    Creates the necessary directories for all the existent
-    debian control files (Packages) in a repository.
-    
-    :param repo_root: is the repository url where the original debian control files
-                      are stored.
-    :param dist: codename of the Canaima's version that will be used to create the directories.
-    
-    .. versionadded:: 0.1
+    Este metodo lee el archivo distributions ubicado en la raiz de un 
+    repositorio y genera un diccionario con las distribuciones y 
+    componentes presentes en dicho repositorio.
     '''
     
-    base = PACKAGECACHE + "/" + dist
-    try:
-        datasource = urllib.urlopen(repo_root + dist + "Release")
-    except:
-        datasource = None
-    if datasource:
-        rel = deb822.Release(datasource)
-        if rel.has_key('MD5sum'):
-            for l in rel['MD5sum']:
-                if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages$", l['name']):
-                    archivo = base + l['name']
-                    ruta = archivo.strip('Packages')
-                    exists = find_dirs(ruta)
-                    if not exists:
-                        os.makedirs(ruta)
-                    else:
-                        os.remove(archivo)
+    dist_releases = {}
+    dists = urllib.urlopen(os.path.join(repo_root, "distributions"))
+    linea = dists.readline().strip("\n")
+    
+    while linea:
+        l = linea.split(" ")
+        dist_releases[l[0]] = l[1]
+        linea = dists.readline().strip("\n")
+        
+    return dist_releases            
 
 
 def clean_package_cache(dist):
@@ -542,38 +532,6 @@ def clean_package_cache(dist):
     files = find_files(base, "Packages")
     for f in files:
         os.remove(f)
-
-
-def populate_package_cache(repo_root, dist):
-    '''
-    Gets all existent debian control files (Packages) in a repository and
-    puts them in their respective place.
-    
-    :param repo_root: is the repository url where the original debian control files
-                      are stored.
-    :param dist: codename of the Canaima's version which debian control files are 
-                 required.
-                      
-    .. versionadded:: 0.1
-    '''
-    
-    base = PACKAGECACHE + "/" + dist
-    remote = repo_root + dist
-    try:
-        datasource = urllib.urlopen(remote + "Release")
-    except:
-        datasource = None
-    if datasource:
-        rel = deb822.Release(datasource)
-        if rel.has_key('MD5sum'):
-            for l in rel['MD5sum']:
-                if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages$", l['name']):
-                    remote_path = remote + l['name']
-                    local_path = base + l['name']
-                    try:
-                        urllib.urlretrieve(remote_path, local_path)
-                    except IOError:
-                        print 'archivo %s no encontrado.' % (remote_path)
 
 def update_package_cache():
     '''
@@ -595,7 +553,7 @@ def update_dist_paragraphs(dist):
     
     .. versionadded:: 0.1
     '''
-    remote = local_repo_root + dist 
+    remote = LOCAL_ROOT_DISTS + dist 
     base = PACKAGECACHE + "/" + dist + "/"
     
     try:
@@ -619,26 +577,142 @@ def update_dist_paragraphs(dist):
                     print "No hay cambios en el repositorio -->", local_file
     else:
         print "No se ha podido llevar a cabo la actualizacion"
+        
+###############################################################################
 
-
-def init_package_cache():
+def create_cache_dirs(repository_root):
     '''
     Creates the packagecache directory, gets all the
     debian control files (Packages) from the repository
     and records the data from each Package in the database.
     
+    Creates the necessary directories for all the existent
+    debian control files (Packages) in a repository.
+    
+    :param repo_root: is the repository url where the original debian control files
+                      are stored.
+    :param dist: codename of the Canaima's version that will be used to create the directories.
+    
+    Gets all existent debian control files (Packages) in a repository and
+    puts them in their respective place.
+    
+    :param repo_root: is the repository url where the original debian control files
+                      are stored.
+    :param dist: codename of the Canaima's version which debian control files are 
+                 required.
+                      
     .. versionadded:: 0.1
     '''
+    
+    local_dists =  scan_repository(repository_root)
+    for dist in local_dists.items():
+        try:
+            datasource = urllib.urlopen(os.path.join(repository_root, dist[1]))
+        except:
+            datasource = None
+        if datasource:
+            rel = deb822.Release(datasource)
+            if rel.has_key('MD5sum'):
+                for l in rel['MD5sum']:
+                    if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages$", l['name']):                        
+                        comp = l['name'].split("/")
+                        comp.pop()
+                        partial_path = string.join(comp, "/")
+                        
+                        path_to_package_dir = os.path.join(PACKAGECACHE, dist[0], partial_path)
+                        packages_file_path = os.path.join(PACKAGECACHE, dist[0], l['name']) 
+                        remote_path = os.path.join(repository_root, "dists", dist[0], l['name'])
+                        
+                        if not find_dirs(path_to_package_dir):
+                            os.makedirs(path_to_package_dir)
+                        else:
+                            os.remove(packages_file_path)
+                        try:
+                            urllib.urlretrieve(remote_path, packages_file_path)
+                        except IOError:
+                            print 'archivo %s no encontrado.' % (remote_path)
+         
+def fill_db_from_cache(repository_root):
+    local_dists =  scan_repository(repository_root)
+    for dist in local_dists.items():
+        dist_sub_paths = filter(lambda p: "binary" in p, find_dirs(os.path.join(PACKAGECACHE, dist[0]))) 
+        
+        for path in dist_sub_paths:
+            for p in find_files(path, "Packages"): 
+                for section in deb822.Packages.iter_paragraphs(file(p)):
+                    record_section(section, dist[0])
+                    
+###############################################################################
 
-    create_package_cache(local_repo_root, roraima)
-    populate_package_cache(local_repo_root, roraima)
-    create_package_cache(local_repo_root, kerepakupai)
-    populate_package_cache(local_repo_root, kerepakupai)
-
-    for p in find_files(PACKAGECACHE + "/" + roraima, 'Packages'):
-        for section in deb822.Packages.iter_paragraphs(file(p)):
-            record_section(section, "roraima")
-
-    for p in find_files(PACKAGECACHE + "/" + kerepakupai, 'Packages'):
-        for section in deb822.Packages.iter_paragraphs(file(p)):
-            record_section(section, "kerepakupai")
+def init_sample_packages():
+    os.makedirs(SAMPLES_LISTS)
+    dist_releases = scan_repository(CANAIMA_ROOT)
+    for release in dist_releases.items():
+        try:
+            datasource = urllib.urlopen(os.path.join(CANAIMA_ROOT, release[1]))
+        except:
+            datasource = None
+        if datasource:
+            rel = deb822.Release(datasource)
+            if rel.has_key('MD5sum'):
+                for l in rel['MD5sum']:
+                    if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages$", l['name']):
+                        print "Seleccionando paquetes en -->", l['name']
+                        list_name = string.join( l['name'].split("/"), "_")
+                        list_file = os.path.join(SAMPLES_LISTS, string.join([release[0], list_name], "_"))
+                        package_url = os.path.join(CANAIMA_ROOT, "dists", release[0], l['name'])
+                        select_sample_packages(package_url, list_file, False)
+                        
+def select_sample_packages(package_url, package_list, include_relations = False):
+    inicial = {}
+    relaciones = []
+    final = {}
+    archivo = open(package_list, 'w')
+    remote_packages = urllib.urlopen(package_url)
+    for section in deb822.Packages.iter_paragraphs(remote_packages):
+        rnd = random.randint(0, 500)
+        if section.has_key('Installed-Size'):
+            if rnd == 500 and int(section['Installed-Size']) < 500:
+                inicial[section['Package']] = section['Filename']
+                archivo.write(section['filename']+"\n")
+                for relations in section.relations.items():
+                    if relations[1]:
+                        for relation in relations[1]:
+                            for r in relation:
+                                relaciones.append(r['name'])
+    
+    if include_relations:
+        remote_packages = urllib.urlopen(package_url)
+                   
+        for section in deb822.Packages.iter_paragraphs(remote_packages):
+            if section['Package'] in relaciones and int(section['Installed-Size']) < 500:
+                final[section['Package']] = section['Filename']
+                archivo.write(section['filename']+"\n")
+    
+    archivo.close()
+    print "Paquetes seleccionados -->", len(inicial)
+    
+def download_sample_packages():
+    files_list = list_files(SAMPLES_LISTS)
+    for f in files_list:
+        pre_dist_path = f.split("/")[-1]
+        dist_path = pre_dist_path.split("_")
+        dist_path.pop()
+        final_path = string.join(dist_path, "/")
+        download_package_list(f, os.path.join(SAMPLES_PACKAGES, final_path))   
+    
+def download_package_list(file_with_package_list, download_dir):
+    print "Descargando paquetes seleccionados, espere un poco..."
+    os.makedirs(download_dir)
+    archivo = open(file_with_package_list, 'r')
+    remote_root = "http://paquetes.canaima.softwarelibre.gob.ve"
+    linea = archivo.readline().strip("\n")
+    
+    while linea:
+        l = linea.split("/")
+        print "Descargando ---->", l[-1]
+        urllib.urlretrieve(os.path.join(remote_root, linea), os.path.join(download_dir, l[-1]))
+        linea = archivo.readline().strip("\n")
+        
+    archivo.close()
+    

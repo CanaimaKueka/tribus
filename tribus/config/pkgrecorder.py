@@ -2,15 +2,15 @@
 # CONSTANTES UTILIZADAS POR EL MODULO DE REGISTRO DE PAQUETES
 #===============================================================================
 
-raiz = "http://localhost/repositorio/"
-local = "http://localhost/repositorio/dists/"
-
-local_repo_root = "http://localhost/repositorio/dists/"
-roraima =  "roraima/"
-kerepakupai = "kerepakupai/"
-
-canaimai386 = "http://paquetes.canaima.softwarelibre.gob.ve/dists/kerepakupai/main/binary-i386/Packages"
-canaimaamd64 = "http://paquetes.canaima.softwarelibre.gob.ve/dists/kerepakupai/main/binary-amd64/Packages"
+import os
+from tribus.config.base import BASEDIR
+# Modificar ubicacion del repositorio y agregar a gitignore
+LOCAL_ROOT = "http://localhost/repositorio"
+LOCAL_ROOT_DISTS = os.path.join(LOCAL_ROOT, 'dists')
+CANAIMA_ROOT = "http://paquetes.canaima.softwarelibre.gob.ve"
+SAMPLES = os.path.join(BASEDIR, 'package_samples')
+SAMPLES_LISTS = os.path.join(SAMPLES, 'lists')
+SAMPLES_PACKAGES = os.path.join(SAMPLES, 'packages')
 
 package_fields = ["Package", "Description", "Homepage", "Section", 
                   "Priority", "Essential", "Bugs", "Multi-Arch"] 

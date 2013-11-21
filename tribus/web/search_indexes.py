@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 class PackageIndex(CelerySearchIndex, indexes.Indexable):
     text = indexes.CharField(document = True)
-    name = indexes.EdgeNgramField(model_attr='Package')
+    name = indexes.CharField(model_attr='Package')
     autoname = indexes.EdgeNgramField(model_attr='Package')
     description = indexes.CharField(model_attr='Description', null = True)
     

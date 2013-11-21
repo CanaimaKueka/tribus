@@ -44,7 +44,7 @@ def tribus_search(request):
             print sqs
             #print len(sqs)
             #paginator = Paginator(filter(None, sqs), 20) # Mas lento pero no hace falta print para que coloque bien los usuarios
-            paginator = Paginator(sqs, 5) # Mas rapido pero necesita imprimir para mostrar correctamente los usuarios
+            paginator = Paginator(sqs, 15) # Mas rapido pero necesita imprimir para mostrar correctamente los usuarios
             
             try:
                 page = paginator.page(int(request.GET.get('page', 1)))

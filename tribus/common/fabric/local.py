@@ -49,8 +49,12 @@ def development():
     env.xapian_destdir = os.path.join(env.virtualenv_dir, 'lib', 'python%s' % sys.version[:3], 'site-packages', 'xapian')
     env.xapian_init = os.path.join(os.path.sep, 'usr', 'share', 'pyshared', 'xapian', '__init__.py')
     env.xapian_so = os.path.join(os.path.sep, 'usr', 'lib', 'python%s' % sys.version[:3], 'dist-packages', 'xapian', '_xapian.so')
-
-
+    env.reprepro_dir = os.path.join(os.path.sep,'var', 'www' ,'repositorio')
+    env.reprepro_conf_dir = os.path.join(os.path.sep, 'var', 'www' ,'repositorio', 'conf')
+    env.distributions_dir = os.path.join(BASEDIR, 'tribus', 'config' ,'data')
+    env.sample_packages_dir = os.path.join(BASEDIR, 'package_samples', 'packages')
+    
+        
 def environment():
     configure_sudo()
     preseed_packages()
@@ -65,7 +69,93 @@ def environment():
     update_virtualenv()
     configure_django()
     deconfigure_sudo()
+    
+# REPOSITORY TASKS ------------------------------------------------------------
 
+# 1) Crear repositorio e inicializarlo
+
+def install_repository():
+    configure_sudo()
+    
+    with settings(command='sudo /bin/bash -c  "rm -rf %(reprepro_dir)s"' % env):
+        local('%(command)s' % env, capture=False)
+    
+    with settings(command='sudo /bin/bash -c  "mkdir -p %(reprepro_conf_dir)s"' % env):
+        local('%(command)s' % env, capture=False)
+    
+    with settings(command='sudo /bin/bash -c "cp   %(distributions_dir)s/dists-template  %(reprepro_conf_dir)s/distributions"' % env):
+        local('%(command)s' % env, capture=False)
+    
+    with lcd('%(reprepro_dir)s' % env):
+        with settings(command='sudo /bin/bash -c "reprepro -VVV export"'):
+            local('%(command)s' % env, capture=False)
+    deconfigure_sudo()
+    
+# 2) Seleccionar muestra de paquetes
+
+def select_sample_packages():
+    py_activate_virtualenv()
+    from tribus.common.recorder import init_sample_packages
+    init_sample_packages() 
+    
+# 3) Descargar muestra de paquetes
+
+def get_sample_packages():
+    py_activate_virtualenv()
+    from tribus.common.recorder import download_sample_packages
+    download_sample_packages()
+    
+# 4) Indexar los paquetes descargados en el repositorio
+    
+def index_sample_packages():
+    from tribus.common.utils import find_dirs
+    dirs = filter(lambda dir: "binary" in dir, find_dirs(env.sample_packages_dir))
+    with lcd('%(reprepro_dir)s' % env):
+        for d in dirs:
+            print d
+            dist = d.split("/")[7]
+            try:
+                with settings(command='sudo /bin/bash -c "reprepro includedeb %s %s/*.deb "' % (dist, d)):
+                    local('%(command)s' % env, capture=False)
+            except:
+                print "No hay paquetes en el directorio %s" % d
+    
+    with settings(command='sudo /bin/bash -c "cp   %(distributions_dir)s/distributions %(reprepro_dir)s"' % env):
+        local('%(command)s' % env, capture=False)
+                
+# -----------------------------------------------------------------------------
+
+# TRIBUS DATABASE TASKS -------------------------------------------------------
+
+def filldb_from_local():
+    py_activate_virtualenv()
+    from tribus.common.recorder import create_cache_dirs, fill_db_from_cache
+    from tribus.config.pkgrecorder import LOCAL_ROOT
+    create_cache_dirs(LOCAL_ROOT)
+    fill_db_from_cache(LOCAL_ROOT)
+    rebuild_index()
+    
+def filldb_from_remote():
+    py_activate_virtualenv()
+    from tribus.common.recorder import create_cache_dirs, fill_db_from_cache
+    from tribus.config.pkgrecorder import CANAIMA_ROOT
+    create_cache_dirs(CANAIMA_ROOT)
+    fill_db_from_cache(CANAIMA_ROOT)
+    rebuild_index()
+    
+def resetdb():
+    configure_sudo()
+    drop_mongo()
+    configure_postgres()
+    configure_django()
+    deconfigure_sudo()
+
+# -----------------------------------------------------------------------------
+
+def rebuild_index():
+    with cd('%(basedir)s' % env):
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s python manage.py rebuild_index --noinput --verbosity 3 --traceback' % env, capture=False)
 
 def include_xapian():
     with settings(command='mkdir -p %(xapian_destdir)s' % env):
@@ -76,38 +166,6 @@ def include_xapian():
 
     with settings(command='ln -fs %(xapian_so)s %(xapian_destdir)s' % env):
         local('%(command)s' % env, capture=False)
-
-    
-def resetdb():
-    configure_sudo()
-    drop_mongo()
-    configure_postgres()
-    configure_django()
-    deconfigure_sudo()
-    
-def create_local_repo():
-    py_activate_virtualenv()
-    from tribus.common.recorder import create_local_repository
-    create_local_repository()
-    
-    
-def filldb_from_local():
-    py_activate_virtualenv()
-    from tribus.common.recorder import init_package_cache
-    init_package_cache()
-    
-    
-def filldb_from_remote():
-    py_activate_virtualenv()
-    from tribus.common.recorder import init_package_cache_from_canaima
-    init_package_cache_from_canaima()
-
-    
-def rebuild_index():
-    with cd('%(basedir)s' % env):
-        with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python manage.py rebuild_index --noinput --verbosity 3 --traceback' % env, capture=False)
-
 
 def configure_sudo():
     with settings(command='su root -c "echo \'%(user)s ALL= NOPASSWD: ALL\' > /etc/sudoers.d/tribus; chmod 0440 /etc/sudoers.d/tribus"' % env):
