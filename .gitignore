@@ -51,6 +51,9 @@ xapian_index
 # Package Samples
 package_samples
 
+# Test repository
+test_repo
+
 # Vim
 .*.s[a-w][a-z]
 *.un~
@@ -108,3 +111,4 @@ tribus/data/static/js/min/
 
 # CSS minificado
 tribus/data/static/css/min/
+
