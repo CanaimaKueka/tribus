@@ -48,6 +48,9 @@ packagecache
 whoosh_index
 xapian_index
 
+# Package Samples
+package_samples
+
 # Vim
 .*.s[a-w][a-z]
 *.un~

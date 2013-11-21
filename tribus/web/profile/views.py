@@ -23,9 +23,10 @@ def SearchProfile(request, nick):
         return HttpResponseRedirect('/profile')  
 
     render_js = ['jquery', 'jquery.autogrow', 'jquery.timeago', 'jquery.bootstrap-growl', 'jquery.bootstrap',
-                    'md5','angular', 'angular.resource', 'angular.infinite-scroll',
-                    'profiles.app', 'profiles.jquery',
-                    'navbar.app', 'navbar.jquery',
+                    'md5','angular', 'angular.resource', 'angular.infinite-scroll','services.angular' , 'controllers.angular', 
+                    'navbar.angular', 'navbar.jquery',
+                    'profiles.angular', 'dashboard.jquery'
+                    
                     ]
 
     return render(request,'profile/profiles_view.html', {
@@ -39,9 +40,9 @@ def SearchProfile(request, nick):
 def UserProfile(request):
 
     render_js = ['jquery', 'jquery.autogrow', 'jquery.timeago', 'jquery.bootstrap-growl', 'jquery.bootstrap',
-                    'md5','angular', 'angular.resource', 'angular.infinite-scroll',
-                    'profiles.app', 'profiles.jquery',
-                    'navbar.app', 'navbar.jquery',
+                    'md5','angular', 'angular.resource', 'angular.infinite-scroll','services.angular' ,'controllers.angular', 
+                    'navbar.angular', 'navbar.jquery',
+                    'profiles.angular', 'dashboard.jquery',
                     ]
 
     if request.user.is_authenticated():

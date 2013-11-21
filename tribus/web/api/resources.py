@@ -198,7 +198,7 @@ class SearchResource(Resource):
         include_resource_uri = False
 
     def dehydrate_users(self, bundle):
-        return [ {'fullname':str(obj.fullname), 'username': str(obj.username)} for obj in bundle.obj['users']]
+        return [ {'fullname':unicode(obj.fullname), 'username': unicode(obj.username)} for obj in bundle.obj['users']]
     
     def dehydrate_packages(self, bundle):
         return [ {'name':str(obj.name)} for obj in bundle.obj['packages']]

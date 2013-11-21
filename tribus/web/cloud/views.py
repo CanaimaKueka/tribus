@@ -3,7 +3,7 @@
 
 from django.shortcuts import render, get_object_or_404
 from tribus.web.cloud.models import *
-from tribus.config.pkgrecorder import raiz, relation_types
+from tribus.config.pkgrecorder import LOCAL_ROOT, relation_types
 
 
 def frontpage(request):
@@ -38,7 +38,7 @@ def profile(request, name):
     
     return render(request, 'cloud/packages.html', {
         'paquete': package_info,
-        'raiz': raiz,
+        'raiz': LOCAL_ROOT,
         'detalles': dict_details,
         'render_js': render_js,
         })

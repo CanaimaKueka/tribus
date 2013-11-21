@@ -15,8 +15,8 @@ def index(request):
     if request.user.is_authenticated():
         render_js = ['jquery', 'jquery.autogrow', 'jquery.timeago', 'jquery.bootstrap-growl', 'jquery.bootstrap',
                         'angular', 'angular.resource', 'angular.infinite-scroll',
-                        'dashboard.angular', 'controllers.angular', 'services.angular', 'dashboard.jquery',
-                        'navbar.app', 'navbar.jquery',
+                        'dashboard.angular' ,'services.angular', 'controllers.angular',  'dashboard.jquery',
+                        'navbar.angular', 'navbar.jquery',
                         'md5']
 
         return render(request, 'dashboard.html', {
@@ -31,9 +31,8 @@ def index(request):
 
 def tribus_search(request):
     context={}
-    render_js = ['jquery', 'jquery.autogrow', 'jquery.bootstrap', 'angular', 'angular.resource', 
-                 'angular.infinite-scroll', 'dashboard.app', 'dashboard.jquery',
-                 'navbar.app', 'navbar.jquery', 'md5']
+    render_js = ['jquery', 'jquery.autogrow', 'jquery.bootstrap', 'angular', 'angular.resource','services.angular' ,'controllers.angular', 
+                 'navbar.angular',  'navbar.jquery', 'md5']
     context ["render_js"]= render_js
     if request.GET:
         query = request.GET.get('q', '')
@@ -44,7 +43,7 @@ def tribus_search(request):
             print sqs
             #print len(sqs)
             #paginator = Paginator(filter(None, sqs), 20) # Mas lento pero no hace falta print para que coloque bien los usuarios
-            paginator = Paginator(sqs, 5) # Mas rapido pero necesita imprimir para mostrar correctamente los usuarios
+            paginator = Paginator(sqs, 15) # Mas rapido pero necesita imprimir para mostrar correctamente los usuarios
             
             try:
                 page = paginator.page(int(request.GET.get('page', 1)))

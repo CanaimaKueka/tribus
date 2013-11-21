@@ -60,7 +60,7 @@ prepare: fabric
 
 	@$(FAB) development build_js
 	@$(FAB) development build_css
-	@$(FAB) development build_img
+	
 
 syncdb: fabric
 
@@ -70,14 +70,34 @@ environment: fabric
 
 	@$(FAB) development environment
 
-install_repo: fabric
 
-	@$(FAB) development install_repo
-	
-resetdb:
+# REPOSITORY TASKS ------------------------------------------------------
 
-	@$(FAB) development resetdb
+create_test_repository: fabric
+	@$(FAB) development install_repository
+	@$(FAB) development select_sample_packages
+	@$(FAB) development get_sample_packages
+	@$(FAB) development index_sample_packages
+
+# 1
+install_repository: fabric
+
+	@$(FAB) development install_repository
+# 2
+select_samples: fabric
+
+	@$(FAB) development select_sample_packages
+# 3
+get_samples: fabric
+
+	@$(FAB) development get_sample_packages
+# 4
+index_samples: fabric
+
+	@$(FAB) development index_sample_packages
 	
+# -----------------------------------------------------------------------------
+
 filldb_from_local: fabric
 
 	@$(FAB) development filldb_from_local 
@@ -86,14 +106,19 @@ filldb_from_remote: fabric
 
 	@$(FAB) development filldb_from_remote
 	
+
+# INDEX TASKS -----------------------------------------------------------------
+
 rebuild_index: fabric
 
-	@$(FAB) development rebuild_index  
+	@$(FAB) development rebuild_index
 	
-create_local_repo: fabric
+# -----------------------------------------------------------------------------
+	
+resetdb:
 
-	@$(FAB) development create_local_repo  
-
+	@$(FAB) development resetdb
+	
 update_virtualenv: fabric
 
 	@$(FAB) development update_virtualenv

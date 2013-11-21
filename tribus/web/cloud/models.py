@@ -31,7 +31,7 @@ class Package(models.Model):
         return self.Package
         
 class Tag(models.Model):
-    Value = models.CharField("valor etiqueta", max_length = 100)
+    Value = models.CharField("valor etiqueta", max_length = 200)
      
     def __unicode__(self):
         return self.Value
