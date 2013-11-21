@@ -16,11 +16,13 @@ import string
 from django import forms
 from django.forms import Form
 from django.utils.datastructures import SortedDict
-from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm as BasePasswordResetForm, SetPasswordForm as BaseSetPasswordForm
+from django.contrib.auth.forms import (AuthenticationForm,
+                                        PasswordResetForm as BasePasswordResetForm,
+                                        SetPasswordForm as BaseSetPasswordForm)
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 
-from tribus.web.user.models import LdapUser
+from tribus.web.registration.ldap.models import LdapUser
 
 class LoginForm(AuthenticationForm):
     """
@@ -130,7 +132,7 @@ class SignupForm(Form):
                                 max_length=254
                             )
 
-    password = forms.CharField(
+    password1 = forms.CharField(
                                     label = _('Password'), required = True,
                                     widget = forms.PasswordInput(
                                         attrs = {
@@ -147,14 +149,16 @@ class SignupForm(Form):
         in use.
         
         """
-        existingldap = LdapUser.objects.filter(username=self.cleaned_data['username'])
-        if existingldap.exists():
-            raise forms.ValidationError(_("A user with that username already exists."))
-        else:
+        try:
+            existingldap = LdapUser.objects.get(username=self.cleaned_data['username'])
+        except LdapUser.DoesNotExist:
             existingdb = User.objects.filter(username__iexact=self.cleaned_data['username'])
             if existingdb.exists():
                 existingdb.delete()
             return self.cleaned_data['username']
+        else:
+            if existingldap.exists():
+                raise forms.ValidationError(_("A user with that username already exists."))
 
 
 class PasswordResetForm(BasePasswordResetForm):
@@ -194,23 +198,6 @@ class SetPasswordForm(BaseSetPasswordForm):
                                         }
                                     )
                                 )
-
-
-#    def create_ldap_password(self, password, algorithm='SSHA', salt=None):
-#        """
-#        Encrypts a password as used for an ldap userPassword attribute.
-#        """
-#        s = hashlib.sha1()
-#        s.update(password)
-
-#        if algorithm == 'SSHA':
-#            if salt is None:
-#                salt = ''.join([random.choice(string.letters) for i in range(8)])
-
-#            s.update(salt)
-#            return '{SSHA}%s' % base64.encodestring(s.digest() + salt).rstrip()
-#        else:
-#            raise NotImplementedError
 
 
     def save(self, commit=True):

@@ -1,4 +1,4 @@
-{% extends "user/base.html" %}
+{% extends "registration/base.html" %}
 {% block title %}Sign up for an account{% endblock %}
 {% block content %}
 <div class="well jumbotron">
@@ -8,7 +8,7 @@
 		        <h3 class="lighter block blue">Sign up to Tribus</h3>
 		        <hr />
 		        <p>Después de introducir sus datos de usuario, usted podrá editar su información de perfil.</p>
-		        <form method="post" action="{% url 'user_signup' %}">
+		        <form method="post" action="{% url 'registration_signup' %}">
                     {% csrf_token %}
                     <ul class="unstyled">
                         <li>{{ form.username }}</li>
@@ -17,7 +17,7 @@
                             <span class="span6">{{ form.last_name }}</span>
                         </li>
                         <li>{{ form.email }}</li>
-                        <li>{{ form.password }}</li>
+                        <li>{{ form.password1 }}</li>
                     </ul>
 			        <button class="btn btn-yellow btn-block" type="submit">Sign up</button>
 			        <input type="hidden" name="next" value="{{ next }}" />
@@ -25,7 +25,7 @@
 	        </div>
 		    <div class="span1"></div>
 		    <div class="span7">
-                {% include 'user/form_errors.html' %}
+                {% include 'registration/form_errors.html' %}
 		    </div>
 	    </div>
 	</div>

@@ -30,4 +30,5 @@ django-tastypie-mongoengine==0.4.5
 mongoengine==0.8.4
 mongodbforms==0.3
 transifex-client==0.9.1
+django-registration
 -e git+https://github.com/notanumber/xapian-haystack.git#egg=xapian-haystack

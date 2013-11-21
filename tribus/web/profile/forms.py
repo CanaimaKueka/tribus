@@ -13,7 +13,7 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm as B
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 
-from tribus.web.user.models import LdapUser
+from tribus.web.registration.ldap.models import LdapUser
 
 
 class data_change(Form):

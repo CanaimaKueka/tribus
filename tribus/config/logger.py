@@ -25,6 +25,11 @@ LOGGING = {
             'propagate': True,
             'level': 'DEBUG',
         },
+        'django.request': {
+            'handlers': ['console'],
+            'propagate': True,
+            'level': 'DEBUG',
+        },
         'tribus': {
             'handlers': ['console'],
             'propagate': True,

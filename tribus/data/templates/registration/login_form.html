@@ -1,4 +1,4 @@
-{% extends 'user/base.html' %}
+{% extends 'registration/base.html' %}
 {% load i18n %}
 {% block title %}{% trans "Log in" %}{% endblock %}
 {% block content %}
@@ -30,7 +30,7 @@
 	                </a>
 	            </div>
 		        <h3 class="lighter block ">{% trans "- or -" %}</h3>
-		        <form id="login-form" method="post" action="{% url 'user_login' %}">
+		        <form id="login-form" method="post" action="{% url 'registration_login' %}">
                     {% csrf_token %}
                     <ul class="unstyled">
                         <li>{{ form.username }}</li>
@@ -48,12 +48,12 @@
 			        <input type="hidden" name="next" value="{{ next }}" />
 		        </form>
 		        <ul class="unstyled">
-			        <li><a href="{% url 'user_password_reset' %}">{% trans "forgot your password?" %}</a></li>
-			        <li><a href="{% url 'user_signup' %}">{% trans "are you new to Tribus?" %}</a></li>
+			        <li><a href="{% url 'registration_password_reset' %}">{% trans "forgot your password?" %}</a></li>
+			        <li><a href="{% url 'registration_signup' %}">{% trans "are you new to Tribus?" %}</a></li>
 		        </ul>
 		    </div>
 		    <div class="span7 offset1">
-                {% include 'user/form_errors.html' %}
+                {% include 'registration/form_errors.html' %}
 		    </div>
 		</div>
 	</div>

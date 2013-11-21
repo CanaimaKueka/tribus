@@ -77,15 +77,15 @@ SOCIAL_AUTH_NONCE_SERVER_URL_LENGTH = 32
 SOCIAL_AUTH_ASSOCIATION_SERVER_URL_LENGTH = 32
 SOCIAL_AUTH_ASSOCIATION_HANDLE_LENGTH = 32
 
-TWITTER_CONSUMER_KEY = '1uxQKRiKzHYUl3QbQSQ'
-TWITTER_CONSUMER_SECRET = 'gLLJf5DIuJ4wvrVJI6cL553AIGdLjxnsUlwJbOKhw'
-GOOGLE_OAUTH2_CLIENT_ID = '241742098100.apps.googleusercontent.com'
-GOOGLE_OAUTH2_CLIENT_SECRET = 'AeJo0x0mS4SAtQF_TuAHsfGC'
+TWITTER_CONSUMER_KEY = 'A2jx982HVh8KuFQ9q2iN8A'
+TWITTER_CONSUMER_SECRET = 'wU3T7KPgvNqj3mBH7Pyn81T10lSw2NN4LLuZCLYk5U'
+GOOGLE_OAUTH2_CLIENT_ID = '827167166748-7h5k1crt9fsr8jjqindi1c8hfl48eahj.apps.googleusercontent.com'
+GOOGLE_OAUTH2_CLIENT_SECRET = 'VvoYXzfheMInzrcTq8v3Tdhf'
 FACEBOOK_APP_ID='172639862908723'
-FACEBOOK_API_SECRET='ef4e623c629e9e5ca5632bdd703c80a4'
+FACEBOOK_API_SECRET='60735113b51809707ed3771b248fb37e'
 FACEBOOK_EXTENDED_PERMISSIONS = ['email']
 GITHUB_APP_ID = 'c3d70354858107387ef8'
-GITHUB_API_SECRET = 'b9defd6193c11c8fb27c9f65ddaba0747524afcc'
+GITHUB_API_SECRET = '55adbc6ecf54d295b391c8a6a1037e71165728d6'
 
 #
 # DATABASE CONFIGURATION -------------------------------------------------------
@@ -111,8 +111,8 @@ DATABASES = {
 DATABASE_ROUTERS = ['ldapdb.router.Router']
 
 PASSWORD_HASHERS = (
-    'tribus.web.user.hashers.SSHAPasswordLDAPHasher',
-    #'tribus.web.user.hashers.DummyPasswordHasher',
+    'tribus.web.registration.ldap.hashers.SSHAPasswordLDAPHasher',
+    #'tribus.web.registration.hashers.DummyPasswordHasher',
 )
 
 APPEND_SLASH = False
@@ -156,13 +156,6 @@ HAYSTACK_CONNECTIONS = {
 HAYSTACK_SIGNAL_PROCESSOR = 'celery_haystack.signals.CelerySignalProcessor'
 
 
-# GRAVATAR_URL # Gravatar base url. Defaults to 'http://www.gravatar.com/'
-# GRAVATAR_SECURE_URL # Gravatar base secure https url. Defaults to 'https://secure.gravatar.com/'
-# GRAVATAR_DEFAULT_SIZE # Gravatar size in pixels. Defaults to '80'
-# GRAVATAR_DEFAULT_IMAGE # An image url or one of the following: 'mm', 'identicon', 'monsterid', 'wavatar', 'retro'. Defaults to 'mm'
-# GRAVATAR_DEFAULT_RATING # One of the following: 'g', 'pg', 'r', 'x'. Defaults to 'g'
-# GRAVATAR_DEFAULT_SECURE # True to use https by default, False for plain http. Defaults to True
-
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -172,7 +165,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tribus.web',
-    'tribus.web.user',
+    'tribus.web.registration',
     'tribus.web.cloud',
     'tribus.web.profile',
     'ldapdb',
@@ -185,7 +178,9 @@ INSTALLED_APPS = (
     'tastypie_mongoengine',
     'haystack',
     'whoosh',
-    'celery_haystack'
+    'celery_haystack',
+    'registration',
+
 )
 
 # EMAIL_USE_TLS = True
@@ -237,9 +232,10 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 SOCIAL_AUTH_PIPELINE = (
     'social_auth.backends.pipeline.social.social_auth_user',
     'social_auth.backends.pipeline.user.get_username',
-    'tribus.web.user.pipeline.create_user',
+    'tribus.web.registration.social.pipeline.create_user',
     'social_auth.backends.pipeline.social.associate_user',
     'social_auth.backends.pipeline.social.load_extra_data',
+    'social_auth.backends.pipeline.user.update_user_details'
 )
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
