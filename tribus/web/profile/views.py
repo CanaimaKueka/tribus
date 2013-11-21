@@ -7,7 +7,7 @@ from django.shortcuts import render, get_object_or_404
 from django.template import RequestContext
 from django.contrib.auth.models import User
 from tribus.web.profile.forms import data_change
-from tribus.web.user.pipeline import edit_ldap_user
+from tribus.web.registration.ldap.utils import edit_ldap_user
 
 def SearchProfile(request, nick):
     try:
