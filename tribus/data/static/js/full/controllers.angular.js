@@ -319,11 +319,37 @@ function TribController($scope, $timeout, Tribs, Timeline){
         if ($scope.controller_busy) return;
         $scope.controller_busy = true;
 
-        var old_tribs = Timeline.query({
-            order_by: $scope.trib_orderby,
-            limit: $scope.trib_limit,
-            offset: $scope.trib_offset
-        }, function(){
+        if (type =='profile'){
+            console.log ("profile");
+            var servicio = Tribs;
+            var dic = {
+                        author_id : user_id,
+                        order_by: $scope.trib_orderby,
+                        limit: $scope.trib_limit,
+                        offset: $scope.trib_offset
+                        };
+
+        } else if(type =='profileView'){
+            console.log ("profileView");
+            var servicio = Tribs;
+            var dic = {
+                        author_id : userview_id,
+                        order_by: $scope.trib_orderby,
+                        limit: $scope.trib_limit,
+                        offset: $scope.trib_offset
+                        };           
+
+        }else if (type == 'dasboard'){
+            console.log ("dasboard");
+            var servicio = Timeline;
+            var dic = {
+                        order_by: $scope.trib_orderby,
+                        limit: $scope.trib_limit,
+                        offset: $scope.trib_offset
+                        };
+        };
+
+        var old_tribs = servicio.query( dic, function(){
 
             if(old_tribs.objects.length === 0){
                 $scope.tribs_end = true;
@@ -374,7 +400,7 @@ function TribController($scope, $timeout, Tribs, Timeline){
         });
     };
 
-    $scope.addNewTribs = function(){
+    $scope.addNewTribs = function(selector){
 
         if ($scope.controller_busy) return;
         $scope.controller_busy = true;
@@ -382,12 +408,39 @@ function TribController($scope, $timeout, Tribs, Timeline){
         if($scope.new_tribs_passes === 0 && $scope.tribs.length > 0){
             $scope.first_trib_id = $scope.tribs[0].id;
         }
+
+        if (type =='profile'){
+            console.log ("profile");
+            var servicio = Tribs;
+            var dic = {
+                        author_id : user_id,
+                        order_by: $scope.trib_orderby,
+                        limit: $scope.trib_limit,
+                        offset: $scope.trib_offset
+                        };
+
+        } else if(type =='profileView'){
+            console.log ("profileView");
+            var servicio = Tribs;
+            var dic = {
+                        author_id : userview_id,
+                        order_by: $scope.trib_orderby,
+                        limit: $scope.trib_limit,
+                        offset: $scope.trib_offset
+                        };           
+
+        }else if (type == 'dasboard'){
+            console.log ("dasboard");
+            var servicio = Timeline;
+            var dic = {
+                        order_by: $scope.trib_orderby,
+                        limit: $scope.trib_limit,
+                        offset: $scope.trib_offset
+                        };
+        };
+
         
-        var fresh_tribs = Timeline.query({
-            order_by: $scope.trib_orderby,
-            limit: $scope.trib_limit,
-            offset: $scope.new_tribs_offset
-        }, function(){
+        var fresh_tribs = servicio.query(dic,function(){
             for(var i = 0; i < fresh_tribs.objects.length; i++){
                 if(fresh_tribs.objects[i].id != $scope.first_trib_id){
                     var fresh_id_appears = false;

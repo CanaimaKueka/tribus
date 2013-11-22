@@ -12,7 +12,7 @@
 					<div class="space-36"></div>
 	                {% block datos %}
 	    				<hr>
-						<p>{{ user_view.first_name }} {{user_view.last_name}}</p>
+						<p><h3>{{ user_view.first_name }} {{user_view.last_name}}</h3></p>
 						<p>{{ user_view.email }}</p>
 						<p>{% trans 'Description' %}: {{ user_view.description }}</p>
 						<hr>
@@ -120,9 +120,11 @@
         var user_last_name = '{{ user.last_name }}';
         var user_email = '{{ user.email }}';      
         var user_gravatar = 'http://www.gravatar.com/avatar/'+md5(user_email)+'?d=mm&s=250&r=x';
+        var comment_gravatar = 'http://www.gravatar.com/avatar/'+md5(user_email)+'?d=mm&s=30&r=x';
 
         {% endif %}
 
+		var type = "profileView";
         var userview_id = '{{ user_view.id }}';
         var userview_username = '{{ user_view.username }}';
         var userview_first_name = '{{ user_view.first_name }}';
@@ -143,7 +145,7 @@
         var comment_add = 10;
         var comment_limit = 10;
         var comment_orderby = 'comment_pub_date';
-        var comment_gravatar = 'http://www.gravatar.com/avatar/'+md5(user_email)+'?d=mm&s=30&r=x';
+        
 
         // Messages
         var trib_save_success = '{% trans "Your message has been published." %}';

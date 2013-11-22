@@ -27,9 +27,13 @@
         var user_last_name = '{{ user.last_name }}';
         var user_email = '{{ user.email }}';
         var user_gravatar = 'http://www.gravatar.com/avatar/'+md5(user_email)+'?d=mm&s=50&r=x';
+        var comment_gravatar = 'http://www.gravatar.com/avatar/'+md5(user_email)+'?d=mm&s=30&r=x';
+        
+
         {% endif %}
 
         // Tribs data
+        var type = "dasboard";
         var trib_limit_to = 0;
         var trib_offset = 0;
         var trib_add = 10;
@@ -43,7 +47,6 @@
         var comment_add = 10;
         var comment_limit = 10;
         var comment_orderby = 'comment_pub_date';
-        var comment_gravatar = 'http://www.gravatar.com/avatar/'+md5(user_email)+'?d=mm&s=30&r=x';
 
         // Messages
         var trib_save_success = '{% trans "Your message has been published." %}';

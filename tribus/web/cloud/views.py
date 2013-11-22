@@ -33,7 +33,7 @@ def profile(request, name):
                 dict_details[det.Distribution][det.Architecture]['relations'][n.relation_type].append(n)
                 
     render_js = ['jquery', 'jquery.autogrow', 'bootstrap', 'angular', 'angular.resource', 
-                 'angular.infinite-scroll', 'dashboard.app', 'dashboard.jquery',
+                 'angular.infinite-scroll', 'controllers.angular', 'services.angular',
                  'navbar.app', 'navbar.jquery', 'md5', 'angular-gravatar']
     
     return render(request, 'cloud/packages.html', {
