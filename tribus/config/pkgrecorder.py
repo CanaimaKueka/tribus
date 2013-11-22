@@ -4,8 +4,7 @@
 
 import os
 from tribus.config.base import BASEDIR
-# Modificar ubicacion del repositorio y agregar a gitignore
-LOCAL_ROOT = "http://localhost/repositorio"
+LOCAL_ROOT = os.path.join("file://", BASEDIR, "test_repo")
 LOCAL_ROOT_DISTS = os.path.join(LOCAL_ROOT, 'dists')
 CANAIMA_ROOT = "http://paquetes.canaima.softwarelibre.gob.ve"
 SAMPLES = os.path.join(BASEDIR, 'package_samples')

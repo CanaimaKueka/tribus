@@ -47,8 +47,8 @@ def development():
     env.xapian_destdir = os.path.join(env.virtualenv_dir, 'lib', 'python%s' % sys.version[:3], 'site-packages', 'xapian')
     env.xapian_init = os.path.join(os.path.sep, 'usr', 'share', 'pyshared', 'xapian', '__init__.py')
     env.xapian_so = os.path.join(os.path.sep, 'usr', 'lib', 'python%s' % sys.version[:3], 'dist-packages', 'xapian', '_xapian.so')
-    env.reprepro_dir = os.path.join(os.path.sep,'var', 'www' ,'repositorio')
-    env.reprepro_conf_dir = os.path.join(os.path.sep, 'var', 'www' ,'repositorio', 'conf')
+    env.reprepro_dir = os.path.join(BASEDIR, 'test_repo')
+    env.reprepro_conf_dir = os.path.join(BASEDIR, 'test_repo', 'conf')
     env.distributions_dir = os.path.join(BASEDIR, 'tribus', 'config' ,'data')
     env.sample_packages_dir = os.path.join(BASEDIR, 'package_samples', 'packages')
     
@@ -73,8 +73,7 @@ def environment():
 # 1) Crear repositorio e inicializarlo
 
 def install_repository():
-    configure_sudo()
-    
+    #configure_sudo()
     with settings(command='sudo /bin/bash -c  "rm -rf %(reprepro_dir)s"' % env):
         local('%(command)s' % env, capture=False)
     
@@ -87,7 +86,7 @@ def install_repository():
     with lcd('%(reprepro_dir)s' % env):
         with settings(command='sudo /bin/bash -c "reprepro -VVV export"'):
             local('%(command)s' % env, capture=False)
-    deconfigure_sudo()
+    #deconfigure_sudo()
     
 # 2) Seleccionar muestra de paquetes
 
@@ -106,13 +105,14 @@ def get_sample_packages():
 # 4) Indexar los paquetes descargados en el repositorio
     
 def index_sample_packages():
-    configure_sudo()
-    from tribus.common.utils import find_dirs
+    #configure_sudo()
+    from tribus.common.utils import find_dirs, list_dirs
     dirs = filter(lambda dir: "binary" in dir, find_dirs(env.sample_packages_dir))
+    dists = filter(None, list_dirs(env.sample_packages_dir))
     with lcd('%(reprepro_dir)s' % env):
-        for d in dirs:
-            print d
-            dist = d.split("/")[7]
+        for d in dirs:      
+            # No se me ocurre una mejor forma (dinamica) de hacer esto      
+            dist = [dist_name for dist_name in dists if dist_name in d][0]
             try:
                 with settings(command='sudo /bin/bash -c "reprepro includedeb %s %s/*.deb "' % (dist, d)):
                     local('%(command)s' % env, capture=False)
@@ -121,7 +121,7 @@ def index_sample_packages():
     
     with settings(command='sudo /bin/bash -c "cp   %(distributions_dir)s/distributions %(reprepro_dir)s"' % env):
         local('%(command)s' % env, capture=False)
-    deconfigure_sudo()
+    #deconfigure_sudo()
     
 # -----------------------------------------------------------------------------
 
