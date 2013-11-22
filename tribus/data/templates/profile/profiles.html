@@ -15,9 +15,9 @@
 					{% block datos %}
 					<hr>
 					<ul>
-						<p>{{ user_view.first_name }} {{user_view.last_name}}
-							<p>{{ user_view.email }}
-								<p>{% trans 'Description' %}: {{ user_view.description }}
+						<p><h3>{{ user_view.first_name }} {{user_view.last_name}}</h3></p>
+							<p>{{ user_view.email }}</p>
+								<p>{% trans 'Description' %}: {{ user_view.description }}</p>
 									<hr>
 									{% endblock %}
 									<div id=""></div>
@@ -221,9 +221,13 @@
 		var user_email = '{{ user.email }}';
 		var user_gravatar = 'http://www.gravatar.com/avatar/'+md5(user_email);
 		var userview_gravatar = "none";
+        var comment_gravatar = 'http://www.gravatar.com/avatar/'+md5(user_email)+'?d=mm&s=30&r=x';
+		
 
 		{% endif %}
-		
+
+
+		var type = "profile";
 		var userview_id = '{{ user_view.id }}';    
 		var trib_limit_to = 0;
 		var trib_offset = 0;
@@ -238,7 +242,6 @@
         var comment_add = 10;
         var comment_limit = 10;
         var comment_orderby = 'comment_pub_date';
-        var comment_gravatar = 'http://www.gravatar.com/avatar/'+md5(user_email)+'?d=mm&s=30&r=x';
 
         // Messages
         var trib_save_success = '{% trans "Your message has been published." %}';
@@ -250,7 +253,7 @@
         var comment_save_error = '{% trans "There has been an error publishng your comment. Please try again later." %}';
         var comment_delete_success = '{% trans "Your comment has been deleted." %}'
         var comment_delete_error = '{% trans "There has been an error deleting your comment. Please try again later." %}'
-		
+
 
 
 		var follows_limit_to = 0;
