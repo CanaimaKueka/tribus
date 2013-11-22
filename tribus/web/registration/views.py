@@ -23,9 +23,9 @@ class RegistrationView(BaseRegistrationView):
 class ActivationView(BaseActivationView):
     def activate(self, request, activation_key):
         activated_user = RegistrationProfile.objects.activate_user(activation_key)
+        ldap_user = create_ldap_user(activated_user)
 
-        if activated_user:
-            ldapuser = create_ldap_user(activated_user)
+        if activated_user and ldap_user:
             signals.user_activated.send(sender=self.__class__,
                                         user=activated_user,
                                         request=request)

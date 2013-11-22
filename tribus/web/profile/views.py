@@ -21,29 +21,40 @@ def SearchProfile(request, nick):
 
     if request.user.username == nick:
         return HttpResponseRedirect('/profile')  
+        
+    # Cargamos la librería AngujarJS junto con sus plugins
+    render_js = ['angular', 'angular.resource', 'angular.infinite-scroll',
+        'angular.growl', 'angular.bootstrap', 'angular.moment',
+        'angular.autogrow']
 
-    render_js = ['jquery', 'jquery.autogrow', 'jquery.timeago', 'jquery.bootstrap-growl', 'jquery.bootstrap',
-                    'md5','angular', 'angular.resource', 'angular.infinite-scroll','services.angular' , 'controllers.angular', 
-                    'navbar.angular', 'navbar.jquery',#primero navbar sino EXPLOTA =O
-                    'profiles.angular', 'dashboard.jquery'
-                    
-                    ]
+    # Cargamos las funciones de Tribus para AngularJS
+    render_js += ['controllers.angular', 'services.angular',
+        'elements.angular', 'profiles.angular', 'navbar.angular']
+
+    # Cargamos otras funciones adicionales
+    render_js += ['moment', 'md5']
 
     return render(request,'profile/profiles_view.html', {
             'render_js': render_js,
             'user': user,
-            'user_view': user_view,            
+            'user_view': user_view,
             })
 
 
 
 def UserProfile(request):
+        
+    # Cargamos la librería AngujarJS junto con sus plugins
+    render_js = ['angular', 'angular.resource', 'angular.infinite-scroll',
+        'angular.growl', 'angular.bootstrap', 'angular.moment',
+        'angular.autogrow']
 
-    render_js = ['jquery', 'jquery.autogrow', 'jquery.timeago', 'jquery.bootstrap-growl', 'jquery.bootstrap',
-                    'md5','angular', 'angular.resource', 'angular.infinite-scroll','services.angular' ,'controllers.angular', 
-                    'navbar.angular', 'navbar.jquery', #primero navbar sino EXPLOTA =O
-                    'profiles.angular', 'dashboard.jquery',
-                    ]
+    # Cargamos las funciones de Tribus para AngularJS
+    render_js += ['controllers.angular', 'services.angular',
+        'elements.angular', 'profiles.angular', 'navbar.angular']
+
+    # Cargamos otras funciones adicionales
+    render_js += ['moment', 'md5']
 
     if request.user.is_authenticated():
         if request.method == "POST":

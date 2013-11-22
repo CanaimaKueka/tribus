@@ -13,11 +13,18 @@ def tour(request):
 
 def index(request):
     if request.user.is_authenticated():
-        render_js = ['jquery', 'jquery.autogrow', 'jquery.timeago', 'jquery.bootstrap-growl', 'jquery.bootstrap',
-                        'angular', 'angular.resource', 'angular.infinite-scroll',
-                        'controllers.angular','services.angular', 'navbar.angular', 'navbar.jquery',#primero navbar sino EXPLOTA =O
-                        'dashboard.angular', 'dashboard.jquery',
-                        'md5']
+        
+        # Cargamos la librería AngujarJS junto con sus plugins
+        render_js = ['angular', 'angular.resource', 'angular.infinite-scroll',
+            'angular.growl', 'angular.bootstrap', 'angular.moment',
+            'angular.autogrow']
+
+        # Cargamos las funciones de Tribus para AngularJS
+        render_js += ['controllers.angular', 'services.angular',
+            'elements.angular', 'dashboard.angular', 'navbar.angular']
+
+        # Cargamos otras funciones adicionales
+        render_js += ['moment', 'md5']
 
         return render(request, 'dashboard.html', {
             'render_js': render_js,
@@ -31,8 +38,14 @@ def index(request):
 
 def tribus_search(request):
     context={}
-    render_js = ['jquery', 'jquery.autogrow', 'jquery.bootstrap', 'angular', 'angular.resource','services.angular' ,'controllers.angular', 
-                 'navbar.angular',  'navbar.jquery', 'md5']
+        
+    # Cargamos la librería AngujarJS junto con sus plugins
+    render_js = ['angular', 'angular.resource', 'angular.bootstrap']
+
+    # Cargamos las funciones de Tribus para AngularJS
+    render_js += ['controllers.angular', 'services.angular',
+        'elements.angular', 'navbar.angular']
+
     context ["render_js"]= render_js
     if request.GET:
         query = request.GET.get('q', '')

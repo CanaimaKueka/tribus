@@ -1,15 +1,15 @@
 {% load i18n %}
-<div ng-controller="TribController" ng-init="pollNewTribs()">
+<div data-ng-controller="TribController" data-ng-init="addOldTribs();pollNewTribs()">
     <div class="action_publisher">
         <div class="row-fluid">
-            <form autocomplete="off" name="action_form" ng-submit="createNewTrib()">
+            <form autocomplete="off" name="action_form" data-ng-submit="createNewTrib()">
                 <span class="span1">
-                    <span class="action_avatar" ng-style="{'background-image': 'url(\''+user_gravatar+'?d=mm&s=50&r=x\')'}"></span>
+                    <span class="action_avatar" data-ng-style="{'background-image': 'url(\''+user_gravatar+'?d=mm&s=50&r=x\')'}"></span>
                 </span>
                 <span class="span9 action_body">
                     <span class="arrow_left"></span>
                     <span class="action_bubble">
-                        <textarea id="id_trib_content" class="action_textarea autosize expand" cols="40" rows="10" name="trib_content" ng-model="trib_content" placeholder="{% blocktrans %}What are you doing?{% endblocktrans %}"></textarea>
+                        <textarea id="id_trib_content" class="action_textarea autosize expand" cols="40" rows="10" name="trib_content" data-ng-model="trib_content" placeholder="{% blocktrans %}What are you doing?{% endblocktrans %}"></textarea>
                         <span class="action_validation">200</span>
                     </span>
                 </span>
@@ -22,12 +22,13 @@
             </form>
         </div>
     </div>
+    <div growl></div>
     <div class="trib_list" infinite-scroll="addOldTribs()" infinite-scroll-disabled="controller_busy" infinite-scroll-distance="0">
         <ul>
             <li id="{% verbatim %}{{ trib.id }}{% endverbatim %}" class="row-fluid trib_item"
-                ng-repeat="trib in tribs | orderBy: trib_orderby | limitTo: trib_limit_to track by trib.id">
+                data-ng-repeat="trib in tribs | orderBy: trib_orderby | limitTo: trib_limit_to track by trib.id">
                 <span class="span2">
-                    <span class="trib_avatar" ng-style="{'background-image': 'url(\''+trib.author_gravatar+'\')'}"></span>
+                    <span class="trib_avatar" data-ng-style="{'background-image': 'url(\''+trib.author_gravatar+'\')'}"></span>
                 </span>
                 <span class="arrow_left"></span>
                 <span class="span10 trib_body">
@@ -44,37 +45,37 @@
                     </span>
                     <span class="trib_content">{% verbatim %}{{ trib.trib_content }}{% endverbatim %}</span>
                     <span class="trib_interact">
-                        <span class="pull-right" ng-click="toggleTrib()">
+                        <span class="pull-right" data-ng-click="toggleTrib()">
                             <a href=""><span class="icon-chevron-down"></span>{% trans 'Comment' %}</a>
                         </span>
-                        <span ng-if="trib.author_id != {{ user.id }}" ng-click="shareTrib()" class="pull-right">
+                        <span data-ng-if="trib.author_id != {{ user.id }}" data-ng-click="shareTrib()" class="pull-right">
                             <a href=""><span class="icon-bullhorn"></span>{% trans 'Share' %}</a>
                         </span>
-                        <span ng-if="trib.author_id != {{ user.id }}" ng-click="favTrib()" class="pull-right">
+                        <span data-ng-if="trib.author_id != {{ user.id }}" data-ng-click="favTrib()" class="pull-right">
                             <a href=""><span class="icon-star-empty"></span>{% trans 'Favorite' %}</a>
                         </span>
-                        <span ng-if="trib.author_id != {{ user.id }}" ng-click="dislikeTrib()" class="pull-right">
+                        <span data-ng-if="trib.author_id != {{ user.id }}" data-ng-click="dislikeTrib()" class="pull-right">
                             <a href=""><span class="icon-thumbs-down-alt"></span>{% trans 'Dislike' %}</a>
                         </span>
-                        <span ng-if="trib.author_id != {{ user.id }}" ng-click="likeTrib()" class="pull-right">
+                        <span data-ng-if="trib.author_id != {{ user.id }}" data-ng-click="likeTrib()" class="pull-right">
                             <a href=""><span class="icon-thumbs-up-alt"></span>{% trans 'Like' %}</a>
                         </span>
-                        <span ng-if="trib.author_id == {{ user.id }}" ng-click="configDeleteTrib()"
+                        <span data-ng-if="trib.author_id == {{ user.id }}" data-ng-click="configDeleteTrib()"
                             data-target="#delete_trib_modal" data-toggle="modal" role="button">
                             <a href=""><span class="icon-trash"></span>{% trans 'Delete' %}</a>
                         </span>
                     </span>
                     <span class="trib_reply">
-                        <span class="comment_list" ng-controller="CommentController" ng-if="trib.reply_show"
-                            ng-init="this.trib_id = trib.id;addNewComments();">
+                        <span class="comment_list" data-ng-controller="CommentController" data-ng-if="trib.reply_show"
+                            data-ng-init="this.trib_id = trib.id;addNewComments();">
                             <ul>
-                                <li ng-if="comments.length > 0" class="row-fluid comment_item">
-                                    <button class="btn btn-beige btn-block btn-mini" ng-click="addOldComments()">
+                                <li data-ng-if="comments.length > 0" class="row-fluid comment_item">
+                                    <button class="btn btn-beige btn-block btn-mini" data-ng-click="addOldComments()">
                                         {% trans 'Load more comments' %}
                                     </button>
                                 </li>
                                 <li id="{% verbatim %}{{ comment.id }}{% endverbatim %}" class="row-fluid comment_item"
-                                    ng-repeat="comment in comments | orderBy: comment_orderby | limitTo: comment_limit_to track by comment.id">
+                                    data-ng-repeat="comment in comments | orderBy: comment_orderby | limitTo: comment_limit_to track by comment.id">
                                     <span class="span1">
                                         <span class="comment_avatar"></span>
                                     </span>
@@ -89,8 +90,8 @@
                                             </h3>
                                             {% verbatim %}{{ comment.comment_content }}{% endverbatim %}
                                         </span>
-                                        <span ng-if="comment.author_id == {{ user.id }}" class="close"
-                                        ng-click="configDeleteComment()" data-target="#delete_comment_modal"
+                                        <span data-ng-if="comment.author_id == {{ user.id }}" class="close"
+                                        data-ng-click="configDeleteComment()" data-target="#delete_comment_modal"
                                         data-toggle="modal" role="button">
                                             <span class="icon-remove"></span>
                                         </span>
@@ -100,14 +101,14 @@
                                     </span>
                                 </li>
                                 <li class="comment_box">
-                                    <form ng-submit="createNewComment()">
+                                    <form data-ng-submit="createNewComment()">
                                         <span class="span1">
-                                            <span class="comment_avatar" ng-style="{'background-image': 'url(\''+comment_gravatar+'\')'}"></span>
+                                            <span class="comment_avatar" data-ng-style="{'background-image': 'url(\''+comment_gravatar+'\')'}"></span>
                                         </span>
                                         <span class="span9 comment_body">
                                             <span class="arrow_left"></span>
                                             <span class="comment_bubble">
-                                                <textarea ng-model="comment_content" rows="1" class="comment_textarea autosize expand" placeholder="{% blocktrans %}What do you want to say?{% endblocktrans %}"></textarea>
+                                                <textarea data-ng-model="comment_content" rows="1" class="comment_textarea autosize expand" placeholder="{% blocktrans %}What do you want to say?{% endblocktrans %}"></textarea>
                                             </span>
                                         </span>
                                         <span class="span2">
@@ -129,7 +130,7 @@
                                     <button class="btn" data-dismiss="modal">
                                         {% trans 'Cancel' %}
                                     </button>
-                                    <button class="btn btn-success" data-dismiss="modal" ng-click="deleteComment(delete_comment_id)">
+                                    <button class="btn btn-success" data-dismiss="modal" data-ng-click="deleteComment(delete_comment_id)">
                                         {% trans 'Delete comment' %}
                                     </button>
                                 </div>
@@ -151,7 +152,7 @@
             <button class="btn" data-dismiss="modal">
                 {% trans 'Cancel' %}
             </button>
-            <button class="btn btn-success" data-dismiss="modal" ng-click="deleteTrib(delete_trib_id)">
+            <button class="btn btn-success" data-dismiss="modal" data-ng-click="deleteTrib(delete_trib_id)">
                 {% trans 'Delete message' %}
             </button>
         </div>

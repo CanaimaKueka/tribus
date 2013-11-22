@@ -203,7 +203,7 @@ function SearchListController($scope, Search){
 
 
 
-function TribController($scope, $timeout, Tribs, Timeline){
+function TribController($scope, $timeout, Tribs, Timeline, growl){
 
     $scope.user_gravatar = user_gravatar;
     $scope.comment_gravatar = comment_gravatar;
@@ -228,33 +228,21 @@ function TribController($scope, $timeout, Tribs, Timeline){
             trib_pub_date: new Date().toISOString()
         }, function(e){
             $scope.trib_content = '';
-            $timeout(function(){$scope.addNewTribs();});
-            $timeout(function(){$('textarea.action_textarea').trigger('keyup');});
-            $timeout(function(){$('textarea.action_textarea').trigger('focus');});
             $timeout(function(){
-                $.bootstrapGrowl(trib_save_success, {
-                    ele: 'body',
-                    type: 'success',
-                    offset: { from: 'top', amount: 50 },
-                    align: 'right',
-                    width: 400,
-                    delay: 10000,
-                    allow_dismiss: true,
-                    stackup_spacing: 5
-                });
+                $scope.addNewTribs();
+            });
+            $timeout(function(){
+                angular.element(document.querySelector('textarea.action_textarea'))
+                    .triggerHandler('keyup');
+                angular.element(document.querySelector('textarea.action_textarea'))
+                    .triggerHandler('focus');
+            });
+            $timeout(function(){
+                growl.addSuccessMessage(trib_save_success, {ttl: 10000});
             }, 100);
         }, function(e){
             $timeout(function(){
-                $.bootstrapGrowl(trib_save_error, {
-                    ele: 'body',
-                    type: 'error',
-                    offset: { from: 'top', amount: 50 },
-                    align: 'right',
-                    width: 400,
-                    delay: 10000,
-                    allow_dismiss: true,
-                    stackup_spacing: 5
-                });
+                growl.addErrorMessage(trib_save_error, {ttl: 10000});
             }, 100);
         });
     };
@@ -286,29 +274,11 @@ function TribController($scope, $timeout, Tribs, Timeline){
         }, function(e){
             $scope.tribs.splice($scope.delete_trib_index, 1);
             $timeout(function(){
-                $.bootstrapGrowl(trib_delete_success, {
-                    ele: 'body',
-                    type: 'success',
-                    offset: { from: 'top', amount: 50 },
-                    align: 'right',
-                    width: 400,
-                    delay: 10000,
-                    allow_dismiss: true,
-                    stackup_spacing: 5
-                });
+                growl.addSuccessMessage(trib_delete_success, {ttl: 10000});
             }, 100);
         }, function(e){
             $timeout(function(){
-                $.bootstrapGrowl(trib_delete_error, {
-                    ele: 'body',
-                    type: 'error',
-                    offset: { from: 'top', amount: 50 },
-                    align: 'right',
-                    width: 400,
-                    delay: 10000,
-                    allow_dismiss: true,
-                    stackup_spacing: 5
-                });
+                growl.addErrorMessage(trib_delete_error, {ttl: 10000});
             }, 100);
         });
     };
@@ -355,21 +325,16 @@ function TribController($scope, $timeout, Tribs, Timeline){
                     $scope.trib_limit_to = $scope.tribs.length;
                 }
 
-                $timeout(function(){$('.trib_list').trigger('reload_dom');});
+                $timeout(function(){
+                    angular.element(document.querySelector('.trib_list'))
+                        .triggerHandler('reload_dom');
+                });
+
                 $scope.controller_busy = false;
             }
         }, function(e){
             $timeout(function(){
-                $.bootstrapGrowl(trib_add_error, {
-                    ele: 'body',
-                    type: 'error',
-                    offset: { from: 'top', amount: 50 },
-                    align: 'right',
-                    width: 400,
-                    delay: 10000,
-                    allow_dismiss: true,
-                    stackup_spacing: 5
-                });
+                growl.addErrorMessage(trib_add_error, {ttl: 10000});
             }, 100);
         });
     };
@@ -402,7 +367,7 @@ function TribController($scope, $timeout, Tribs, Timeline){
                         fresh_tribs.objects[i].author_gravatar = 'http://www.gravatar.com/avatar/';
                         fresh_tribs.objects[i].author_gravatar += md5(fresh_tribs.objects[i].author_email);
                         fresh_tribs.objects[i].author_gravatar += '?d=mm&s=70&r=x';
-                        $scope.tribs.push(fresh_tribs.objects[i]);
+                        $scope.tribs.unshift(fresh_tribs.objects[i]);
                     }
 
                     if($scope.tribs.length > $scope.trib_limit_to){
@@ -421,28 +386,23 @@ function TribController($scope, $timeout, Tribs, Timeline){
                 }
             }
 
-            $timeout(function(){$(".trib_list").trigger('reload_dom');});        
+            $timeout(function(){
+                angular.element(document.querySelector('.trib_list'))
+                    .triggerHandler('reload_dom');
+            });
+
             $scope.controller_busy = false;
 
         }, function(e){
             $timeout(function(){
-                $.bootstrapGrowl(trib_add_error, {
-                    ele: 'body',
-                    type: 'error',
-                    offset: { from: 'top', amount: 50 },
-                    align: 'right',
-                    width: 400,
-                    delay: 10000,
-                    allow_dismiss: true,
-                    stackup_spacing: 5
-                });
+                growl.addErrorMessage(trib_add_error, {ttl: 10000});
             }, 100);
         });
     };
 }
 
 
-function CommentController($scope, $timeout, Comments){
+function CommentController($scope, $timeout, Comments, growl){
 
     $scope.comment_limit_to = comment_limit_to;
     $scope.comment_limit = comment_limit;
@@ -463,33 +423,21 @@ function CommentController($scope, $timeout, Comments){
             trib_id: $scope.trib_id
         }, function(){
             $scope.comment_content = '';
-            $timeout(function(){$scope.addNewComments();});
-            $timeout(function(){$('textarea.comment_textarea').trigger('keyup');});
-            $timeout(function(){$('textarea.comment_textarea').trigger('focus');});
             $timeout(function(){
-                $.bootstrapGrowl(comment_save_success, {
-                    ele: 'body',
-                    type: 'success',
-                    offset: { from: 'top', amount: 50 },
-                    align: 'right',
-                    width: 400,
-                    delay: 10000,
-                    allow_dismiss: true,
-                    stackup_spacing: 5
-                });
+                $scope.addNewComments();
+            });
+            $timeout(function(){
+                angular.element(document.querySelector('textarea.comment_textarea'))
+                    .triggerHandler('keyup');
+                angular.element(document.querySelector('textarea.comment_textarea'))
+                    .triggerHandler('focus');
+            });
+            $timeout(function(){
+                growl.addSuccessMessage(comment_save_success, {ttl: 10000});
             }, 100);
         }, function(){
             $timeout(function(){
-                $.bootstrapGrowl(comment_save_success, {
-                    ele: 'body',
-                    type: 'success',
-                    offset: { from: 'top', amount: 50 },
-                    align: 'right',
-                    width: 400,
-                    delay: 10000,
-                    allow_dismiss: true,
-                    stackup_spacing: 5
-                });
+                growl.addErrorMessage(comment_save_error, {ttl: 10000});
             }, 100);
         });
     };
@@ -505,29 +453,11 @@ function CommentController($scope, $timeout, Comments){
         }, function(e){
             $scope.comments.splice($scope.delete_comment_index, 1);
             $timeout(function(){
-                $.bootstrapGrowl(comment_delete_success, {
-                    ele: 'body',
-                    type: 'success',
-                    offset: { from: 'top', amount: 50 },
-                    align: 'right',
-                    width: 400,
-                    delay: 10000,
-                    allow_dismiss: true,
-                    stackup_spacing: 5
-                });
+                growl.addSuccessMessage(comment_delete_success, {ttl: 10000});
             }, 100);
         }, function(e){
             $timeout(function(){
-                $.bootstrapGrowl(comment_delete_error, {
-                    ele: 'body',
-                    type: 'error',
-                    offset: { from: 'top', amount: 50 },
-                    align: 'right',
-                    width: 400,
-                    delay: 10000,
-                    allow_dismiss: true,
-                    stackup_spacing: 5
-                });
+                growl.addErrorMessage(comment_delete_error, {ttl: 10000});
             }, 100);
         });
     };
@@ -575,23 +505,18 @@ function CommentController($scope, $timeout, Comments){
                     $scope.comment_limit_to = $scope.comments.length;
                 }
 
-                $timeout(function(){$('.trib_list').trigger('reload_dom');});
+                $timeout(function(){
+                    angular.element(document.querySelector('.trib_list'))
+                        .triggerHandler('reload_dom');
+                });
+
                 $scope.controller_busy = false;
 
             }
 
         }, function(e){
             $timeout(function(){
-                $.bootstrapGrowl(comment_add_error, {
-                    ele: 'body',
-                    type: 'error',
-                    offset: { from: 'top', amount: 50 },
-                    align: 'right',
-                    width: 400,
-                    delay: 10000,
-                    allow_dismiss: true,
-                    stackup_spacing: 5
-                });
+                growl.addErrorMessage(comment_add_error, {ttl: 10000});
             }, 100);
         });
     };
@@ -639,23 +564,18 @@ function CommentController($scope, $timeout, Comments){
                     $scope.comment_limit_to = $scope.comments.length;
                 }
 
-                $timeout(function(){$('.trib_list').trigger('reload_dom');});
+                $timeout(function(){
+                    angular.element(document.querySelector('.trib_list'))
+                        .triggerHandler('reload_dom');
+                });
+
                 $scope.controller_busy = false;
 
             }
 
         }, function(e){
             $timeout(function(){
-                $.bootstrapGrowl(comment_add_error, {
-                    ele: 'body',
-                    type: 'error',
-                    offset: { from: 'top', amount: 50 },
-                    align: 'right',
-                    width: 400,
-                    delay: 10000,
-                    allow_dismiss: true,
-                    stackup_spacing: 5
-                });
+                growl.addErrorMessage(comment_add_error, {ttl: 10000});
             }, 100);
         });
     };

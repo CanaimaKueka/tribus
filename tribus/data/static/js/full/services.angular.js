@@ -12,14 +12,14 @@ angular.module('User', ['ngResource'])
             save: {
                 method: 'POST',
                 headers: {
-                    'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
+                    'X-CSRFToken': angular.element(document.querySelector('input[name=csrfmiddlewaretoken]')).val()
                 },
             },
 
             modify: {
                 method: 'PATCH',
                 headers: {
-                    'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
+                    'X-CSRFToken': angular.element(document.querySelector('input[name=csrfmiddlewaretoken]')).val()
                 },
             },            
             query: {
@@ -66,14 +66,14 @@ angular.module('UserProfile', ['ngResource'])
             save: {
                 method: 'POST',
                 headers: {
-                    'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
+                    'X-CSRFToken': angular.element(document.querySelector('input[name=csrfmiddlewaretoken]')).val()
                 },
             },
 
             modify: {
                 method: 'PATCH',
                 headers: {
-                    'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
+                    'X-CSRFToken': angular.element(document.querySelector('input[name=csrfmiddlewaretoken]')).val()
                 },
             },            
             query: {
@@ -94,7 +94,7 @@ angular.module('Tribs', ['ngResource'])
             save: {
                 method: 'POST',
                 headers: {
-                    'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
+                    'X-CSRFToken': angular.element(document.querySelector('input[name=csrfmiddlewaretoken]')).val()
                 },
             },
             query: {
@@ -104,7 +104,7 @@ angular.module('Tribs', ['ngResource'])
             delete: {
                 method: 'DELETE',
                 headers: {
-                    'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
+                    'X-CSRFToken': angular.element(document.querySelector('input[name=csrfmiddlewaretoken]')).val()
                 },
             },
         });
@@ -127,7 +127,7 @@ angular.module('Comments', ['ngResource'])
             save: {
                 method: 'POST',
                 headers: {
-                    'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
+                    'X-CSRFToken': angular.element(document.querySelector('input[name=csrfmiddlewaretoken]')).val()
                 },
             },
             query: {
@@ -137,7 +137,7 @@ angular.module('Comments', ['ngResource'])
             delete: {
                 method: 'DELETE',
                 headers: {
-                    'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
+                    'X-CSRFToken': angular.element(document.querySelector('input[name=csrfmiddlewaretoken]')).val()
                 },
             },
         });
