@@ -533,16 +533,21 @@ def clean_package_cache(dist):
     for f in files:
         os.remove(f)
 
-def update_package_cache():
+def update_package_cache(repository_root):
     '''
     Scans the packagecache directory to get the existent 
     distributions and update them.
     It is assumed that the packagecache directory was created previously.
     '''
-    for dist in filter(None, list_dirs(PACKAGECACHE)):
-        update_dist_paragraphs(dist)
     
-def update_dist_paragraphs(dist):
+    dists =  scan_repository(repository_root)
+    
+    for dist in dists.keys():
+        update_dist_paragraphs(repository_root, dist)
+    
+    #for dist in filter(None, list_dirs(PACKAGECACHE)):   
+    
+def update_dist_paragraphs(repository_root, dist):
     '''
     Updates a debian control file (Packages),
     comparing the the one in the repository with its local copy.
@@ -553,19 +558,20 @@ def update_dist_paragraphs(dist):
     
     .. versionadded:: 0.1
     '''
-    remote = LOCAL_ROOT_DISTS + dist 
-    base = PACKAGECACHE + "/" + dist + "/"
+    
+    source = os.path.join(repository_root, dist) 
+    base = os.path.join(PACKAGECACHE, dist)
     
     try:
-        datasource = urllib.urlopen(remote + "/" + "Release")
+        datasource = urllib.urlopen(os.path.join(source, "Release"))
     except:
         datasource = None
     if datasource:
         rel = deb822.Release(datasource)
         for l in rel['MD5sum']:
             if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages$", l['name']):
-                remote_file = remote + "/" + l['name']
-                local_file = base + l['name']
+                remote_file = os.path.join(source, l['name'])
+                local_file = os.path.join(base,  l['name'])
                 print remote_file
                 print local_file
                 if not l['md5sum'] == md5Checksum(local_file):
@@ -578,29 +584,11 @@ def update_dist_paragraphs(dist):
     else:
         print "No se ha podido llevar a cabo la actualizacion"
         
-###############################################################################
-
 def create_cache_dirs(repository_root):
     '''
-    Creates the packagecache directory, gets all the
-    debian control files (Packages) from the repository
-    and records the data from each Package in the database.
+    Creates the packagecache and all other necessary directories, to organize the
+    debian control files (Packages) from the repository.
     
-    Creates the necessary directories for all the existent
-    debian control files (Packages) in a repository.
-    
-    :param repo_root: is the repository url where the original debian control files
-                      are stored.
-    :param dist: codename of the Canaima's version that will be used to create the directories.
-    
-    Gets all existent debian control files (Packages) in a repository and
-    puts them in their respective place.
-    
-    :param repo_root: is the repository url where the original debian control files
-                      are stored.
-    :param dist: codename of the Canaima's version which debian control files are 
-                 required.
-                      
     .. versionadded:: 0.1
     '''
     
@@ -633,6 +621,12 @@ def create_cache_dirs(repository_root):
                             print 'archivo %s no encontrado.' % (remote_path)
          
 def fill_db_from_cache(repository_root):
+    '''
+    Records the data from each Package in the packagecache dir into the database.
+    
+    .. versionadded:: 0.1
+    '''
+    
     local_dists =  scan_repository(repository_root)
     for dist in local_dists.items():
         dist_sub_paths = filter(lambda p: "binary" in p, find_dirs(os.path.join(PACKAGECACHE, dist[0]))) 
@@ -641,8 +635,6 @@ def fill_db_from_cache(repository_root):
             for p in find_files(path, "Packages"): 
                 for section in deb822.Packages.iter_paragraphs(file(p)):
                     record_section(section, dist[0])
-                    
-###############################################################################
 
 def init_sample_packages():
     os.makedirs(SAMPLES_LISTS)
@@ -702,7 +694,6 @@ def download_sample_packages():
         download_package_list(f, os.path.join(SAMPLES_PACKAGES, final_path))   
     
 def download_package_list(file_with_package_list, download_dir):
-    print "Descargando paquetes seleccionados, espere un poco..."
     os.makedirs(download_dir)
     archivo = open(file_with_package_list, 'r')
     remote_root = "http://paquetes.canaima.softwarelibre.gob.ve"
@@ -715,4 +706,3 @@ def download_package_list(file_with_package_list, download_dir):
         linea = archivo.readline().strip("\n")
         
     archivo.close()
-    

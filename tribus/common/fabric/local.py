@@ -73,20 +73,19 @@ def environment():
 # 1) Crear repositorio e inicializarlo
 
 def install_repository():
-    #configure_sudo()
-    with settings(command='sudo /bin/bash -c  "rm -rf %(reprepro_dir)s"' % env):
+    with settings(command='rm -rf %(reprepro_dir)s' % env):
         local('%(command)s' % env, capture=False)
     
-    with settings(command='sudo /bin/bash -c  "mkdir -p %(reprepro_conf_dir)s"' % env):
+    with settings(command='mkdir -p %(reprepro_conf_dir)s' % env):
         local('%(command)s' % env, capture=False)
     
-    with settings(command='sudo /bin/bash -c "cp   %(distributions_dir)s/dists-template  %(reprepro_conf_dir)s/distributions"' % env):
+    with settings(command='cp %(distributions_dir)s/dists-template  %(reprepro_conf_dir)s/distributions' % env):
         local('%(command)s' % env, capture=False)
     
     with lcd('%(reprepro_dir)s' % env):
-        with settings(command='sudo /bin/bash -c "reprepro -VVV export"'):
+        with settings(command='reprepro -VVV export'):
             local('%(command)s' % env, capture=False)
-    #deconfigure_sudo()
+    
     
 # 2) Seleccionar muestra de paquetes
 
@@ -105,7 +104,6 @@ def get_sample_packages():
 # 4) Indexar los paquetes descargados en el repositorio
     
 def index_sample_packages():
-    #configure_sudo()
     from tribus.common.utils import find_dirs, list_dirs
     dirs = filter(lambda dir: "binary" in dir, find_dirs(env.sample_packages_dir))
     dists = filter(None, list_dirs(env.sample_packages_dir))
@@ -114,14 +112,13 @@ def index_sample_packages():
             # No se me ocurre una mejor forma (dinamica) de hacer esto      
             dist = [dist_name for dist_name in dists if dist_name in d][0]
             try:
-                with settings(command='sudo /bin/bash -c "reprepro includedeb %s %s/*.deb "' % (dist, d)):
+                with settings(command='reprepro includedeb %s %s/*.deb' % (dist, d)):
                     local('%(command)s' % env, capture=False)
             except:
                 print "No hay paquetes en el directorio %s" % d
     
-    with settings(command='sudo /bin/bash -c "cp   %(distributions_dir)s/distributions %(reprepro_dir)s"' % env):
+    with settings(command='cp %(distributions_dir)s/distributions %(reprepro_dir)s' % env):
         local('%(command)s' % env, capture=False)
-    #deconfigure_sudo()
     
 # -----------------------------------------------------------------------------
 
@@ -280,11 +277,25 @@ def runserver_django():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
             local('%(command)s python manage.py runserver --verbosity 3 --traceback' % env, capture=False)
-
+            
+            
+def runcelery_daemon():
+    with cd('%(basedir)s' % env):
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s python manage.py celeryd -l INFO' % env, capture=False)
+            
+            
+def runcelery_worker():
+    with cd('%(basedir)s' % env):
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s python manage.py celery beat -s celerybeat-schedule ' % env, capture=False)
+            
+            
 def shell_django():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
             local('%(command)s python manage.py shell --verbosity 3 --traceback' % env, capture=False)
+
 
 def update_catalog():
     with cd('%(basedir)s' % env):
