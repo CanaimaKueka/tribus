@@ -51,6 +51,14 @@ fabric:
 runserver: fabric
 
 	@$(FAB) development runserver_django
+	
+runceleryworker: fabric
+
+	@$(FAB) development runcelery_worker
+	
+runcelerydaemon: fabric
+
+	@$(FAB) development runcelery_daemon
 
 shell: fabric
 
@@ -79,19 +87,19 @@ create_test_repository: fabric
 	@$(FAB) development get_sample_packages
 	@$(FAB) development index_sample_packages
 
-# 1
+
 install_repository: fabric
 
 	@$(FAB) development install_repository
-# 2
+
 select_samples: fabric
 
 	@$(FAB) development select_sample_packages
-# 3
+
 get_samples: fabric
 
 	@$(FAB) development get_sample_packages
-# 4
+
 index_samples: fabric
 
 	@$(FAB) development index_sample_packages

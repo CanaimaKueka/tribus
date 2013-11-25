@@ -44,11 +44,12 @@ sys.path.insert(0, base)
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
 from debian import deb822
 from tribus.web.cloud.models import *
-from tribus.config.pkgrecorder import package_fields, detail_fields, LOCAL_ROOT_DISTS,\
+from tribus.config.pkgrecorder import package_fields, detail_fields, LOCAL_ROOT, LOCAL_ROOT_DISTS,\
 CANAIMA_ROOT, SAMPLES_LISTS, SAMPLES_PACKAGES
 from tribus.common.utils import find_files, md5Checksum, find_dirs, list_dirs,\
     list_files
 from tribus.config.base import PACKAGECACHE
+from tribus.config.web import DEBUG
 
 def record_maintainer(maintainer_data):
     """
@@ -533,20 +534,23 @@ def clean_package_cache(dist):
     for f in files:
         os.remove(f)
 
-def update_package_cache(repository_root):
+def update_package_cache():
     '''
     Scans the packagecache directory to get the existent 
     distributions and update them.
     It is assumed that the packagecache directory was created previously.
     '''
     
+    if DEBUG:
+        repository_root = LOCAL_ROOT
+    else: 
+        repository_root = CANAIMA_ROOT
+    
     dists =  scan_repository(repository_root)
     
     for dist in dists.keys():
         update_dist_paragraphs(repository_root, dist)
-    
-    #for dist in filter(None, list_dirs(PACKAGECACHE)):   
-    
+        
 def update_dist_paragraphs(repository_root, dist):
     '''
     Updates a debian control file (Packages),
@@ -559,7 +563,7 @@ def update_dist_paragraphs(repository_root, dist):
     .. versionadded:: 0.1
     '''
     
-    source = os.path.join(repository_root, dist) 
+    source = os.path.join(repository_root, "dists", dist) 
     base = os.path.join(PACKAGECACHE, dist)
     
     try:
@@ -572,8 +576,6 @@ def update_dist_paragraphs(repository_root, dist):
             if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages$", l['name']):
                 remote_file = os.path.join(source, l['name'])
                 local_file = os.path.join(base,  l['name'])
-                print remote_file
-                print local_file
                 if not l['md5sum'] == md5Checksum(local_file):
                     os.remove(local_file)
                     urllib.urlretrieve(remote_file, local_file)
