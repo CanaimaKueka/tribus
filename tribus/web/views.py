@@ -29,16 +29,16 @@ def tour(request):
 
 
 def index(request):
+    
+    # Cargamos la librería AngujarJS junto con sus plugins
+    render_js = ['angular', 'angular.resource', 'angular.infinite-scroll',
+                 'angular.bootstrap', 'angular.moment']
+
+    # Cargamos las funciones de Tribus para AngularJS
+    render_js += ['controllers.angular', 'services.angular',
+                  'elements.angular', 'dashboard.angular', 'navbar.angular']
+    
     if request.user.is_authenticated():
-        
-        # Cargamos la librería AngujarJS junto con sus plugins
-        render_js = ['angular', 'angular.resource', 'angular.infinite-scroll',
-            'angular.bootstrap', 'angular.moment']
-
-        # Cargamos las funciones de Tribus para AngularJS
-        render_js += ['controllers.angular', 'services.angular',
-            'elements.angular', 'dashboard.angular', 'navbar.angular']
-
         # Cargamos otras funciones adicionales
         render_js += ['moment', 'md5']
 
@@ -48,7 +48,8 @@ def index(request):
     else:
         signupform = SignupForm()
         return render(request, 'index.html', {
-            'signupform': signupform
+            'signupform': signupform,
+            'render_js': render_js,
             })
 
 
@@ -70,7 +71,6 @@ def tribus_search(request):
             model_name = request.GET.get('filter', objects[0].model_name)
             sqs = objects.models(ContentType.objects.get(model=model_name).model_class())
             print sqs
-            #print len(sqs)
             #paginator = Paginator(filter(None, sqs), 20) # Mas lento pero no hace falta print para que coloque bien los usuarios
             paginator = Paginator(sqs, 15) # Mas rapido pero necesita imprimir para mostrar correctamente los usuarios
             
