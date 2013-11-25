@@ -91,24 +91,24 @@ def install_repository():
 
 def select_sample_packages():
     py_activate_virtualenv()
-    from tribus.common.recorder import init_sample_packages
+    from tribus.common.repository import init_sample_packages
     init_sample_packages() 
     
 # 3) Descargar muestra de paquetes
 
 def get_sample_packages():
     py_activate_virtualenv()
-    from tribus.common.recorder import download_sample_packages
+    from tribus.common.repository import download_sample_packages
     download_sample_packages()
     
 # 4) Indexar los paquetes descargados en el repositorio
     
 def index_sample_packages():
     from tribus.common.utils import find_dirs, list_dirs
-    dirs = filter(lambda dir: "binary" in dir, find_dirs(env.sample_packages_dir))
+    dirs = filter(lambda p: "binary" in p, find_dirs(env.sample_packages_dir))
     dists = filter(None, list_dirs(env.sample_packages_dir))
     with lcd('%(reprepro_dir)s' % env):
-        for d in dirs:      
+        for d in dirs:
             # No se me ocurre una mejor forma (dinamica) de hacer esto      
             dist = [dist_name for dist_name in dists if dist_name in d][0]
             try:
@@ -116,9 +116,6 @@ def index_sample_packages():
                     local('%(command)s' % env, capture=False)
             except:
                 print "No hay paquetes en el directorio %s" % d
-    
-    with settings(command='cp %(distributions_dir)s/distributions %(reprepro_dir)s' % env):
-        local('%(command)s' % env, capture=False)
     
 # -----------------------------------------------------------------------------
 
@@ -128,6 +125,7 @@ def filldb_from_local():
     py_activate_virtualenv()
     from tribus.common.recorder import create_cache_dirs, fill_db_from_cache
     from tribus.config.pkgrecorder import LOCAL_ROOT
+    resetdb()
     create_cache_dirs(LOCAL_ROOT)
     fill_db_from_cache(LOCAL_ROOT)
     rebuild_index()
@@ -136,6 +134,7 @@ def filldb_from_remote():
     py_activate_virtualenv()
     from tribus.common.recorder import create_cache_dirs, fill_db_from_cache
     from tribus.config.pkgrecorder import CANAIMA_ROOT
+    resetdb()
     create_cache_dirs(CANAIMA_ROOT)
     fill_db_from_cache(CANAIMA_ROOT)
     rebuild_index()

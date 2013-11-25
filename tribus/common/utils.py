@@ -27,8 +27,7 @@ This module contains common and low level functions to all modules in Tribus.
 
 '''
 
-import os
-import fnmatch, hashlib
+import os, fnmatch, hashlib, urllib
 
 from tribus.common.logger import get_logger
 
@@ -158,3 +157,22 @@ def md5Checksum(filePath):
                 break
             m.update(data)
         return m.hexdigest()
+    
+    
+def scan_repository(repo_root):
+    '''
+    Este metodo lee el archivo distributions ubicado en la raiz de un 
+    repositorio y genera un diccionario con las distribuciones y 
+    componentes presentes en dicho repositorio.
+    '''
+    
+    dist_releases = {}
+    dists = urllib.urlopen(os.path.join(repo_root, "distributions"))
+    linea = dists.readline().strip("\n")
+    
+    while linea:
+        l = linea.split(" ")
+        dist_releases[l[0]] = l[1]
+        linea = dists.readline().strip("\n")
+        
+    return dist_releases     
