@@ -201,9 +201,13 @@ function SearchListController($scope, Search){
 };
 
 
+function ModalController($scope, $modalInstance){
+    $scope.ok = function(){$modalInstance.close();};
+    $scope.cancel = function(){$modalInstance.dismiss();};
+};
 
 
-function TribController($scope, $timeout, Tribs, Timeline, growl){
+function TribController($scope, $timeout, $modal, Tribs, Timeline){
 
     $scope.user_gravatar = user_gravatar;
     $scope.comment_gravatar = comment_gravatar;
@@ -216,6 +220,22 @@ function TribController($scope, $timeout, Tribs, Timeline, growl){
     $scope.first_trib_id = '';
     $scope.new_tribs_passes = 0;
     $scope.new_tribs_offset = trib_offset;
+    $scope.alerts = [];
+
+    $scope.addAlert = function(alert_msg, alert_type) {
+        var alert = {
+            type: alert_type,
+            msg: alert_msg
+        }
+        $scope.alerts.push(alert);
+        $timeout(function(){
+            $scope.closeAlert($scope.alerts.indexOf(alert));
+        }, 5000);
+    };
+
+    $scope.closeAlert = function(index){
+        $scope.alerts.splice(index, 1);
+    };
 
     $scope.createNewTrib = function(){
         Tribs.save({
@@ -238,11 +258,11 @@ function TribController($scope, $timeout, Tribs, Timeline, growl){
                     .triggerHandler('focus');
             });
             $timeout(function(){
-                growl.addSuccessMessage(trib_save_success, {ttl: 10000});
+                $scope.addAlert(trib_save_success, 'success');
             }, 100);
         }, function(e){
             $timeout(function(){
-                growl.addErrorMessage(trib_save_error, {ttl: 10000});
+                $scope.addAlert(trib_save_error, 'error');
             }, 100);
         });
     };
@@ -254,72 +274,71 @@ function TribController($scope, $timeout, Tribs, Timeline, growl){
         }, 60000);
     };
 
-    $scope.toggleTrib = function(){
-        if($scope.tribs[this.$index].reply_show === false ||
-           $scope.tribs[this.$index].reply_show === undefined){
-            $scope.tribs[this.$index].reply_show = true;
+    $scope.toggleComments = function(){
+        if($scope.tribs[this.$index].coments_show === false ||
+           $scope.tribs[this.$index].coments_show === undefined){
+            $scope.tribs[this.$index].coments_show = true;
         } else {
-            $scope.tribs[this.$index].reply_show = false;
+            $scope.tribs[this.$index].coments_show = false;
         }
     };
 
-    $scope.configDeleteTrib = function(){
+    $scope.showDeleteModal = function(){
         $scope.delete_trib_id = $scope.tribs[this.$index].id;
         $scope.delete_trib_index = this.$index;
-    };
 
-    $scope.deleteTrib = function(){
-        Tribs.delete({
-            id: $scope.delete_trib_id
-        }, function(e){
-            $scope.tribs.splice($scope.delete_trib_index, 1);
-            $timeout(function(){
-                growl.addSuccessMessage(trib_delete_success, {ttl: 10000});
-            }, 100);
-        }, function(e){
-            $timeout(function(){
-                growl.addErrorMessage(trib_delete_error, {ttl: 10000});
-            }, 100);
+        var modal = $modal.open({
+            templateUrl: 'delete_modal_template.html',
+            controller: ModalController,
+        });
+
+        modal.result.then(function(){
+            Tribs.delete({
+                id: $scope.delete_trib_id
+            }, function(e){
+                $scope.tribs.splice($scope.delete_trib_index, 1);
+                $timeout(function(){
+                    $scope.addAlert(trib_delete_success, 'success');
+                }, 100);
+            }, function(e){
+                $timeout(function(){
+                    $scope.addAlert(trib_delete_error, 'error');
+                }, 100);
+            });
         });
     };
 
     $scope.addOldTribs = function(){
-
         if ($scope.tribs_end) return;
         if ($scope.controller_busy) return;
         $scope.controller_busy = true;
 
-        if (type =='profile'){
-            console.log ("profile");
-            var servicio = Tribs;
-            var dic = {
-                        author_id : user_id,
-                        order_by: $scope.trib_orderby,
-                        limit: $scope.trib_limit,
-                        offset: $scope.trib_offset
-                        };
-
-        } else if(type =='profileView'){
-            console.log ("profileView");
-            var servicio = Tribs;
-            var dic = {
-                        author_id : userview_id,
-                        order_by: $scope.trib_orderby,
-                        limit: $scope.trib_limit,
-                        offset: $scope.trib_offset
-                        };           
-
-        }else if (type == 'dasboard'){
-            console.log ("dasboard");
-            var servicio = Timeline;
-            var dic = {
-                        order_by: $scope.trib_orderby,
-                        limit: $scope.trib_limit,
-                        offset: $scope.trib_offset
-                        };
+        if (template_name === 'profile'){
+            var service = Tribs;
+            var querydict = {
+                author_id : user_id,
+                order_by: $scope.trib_orderby,
+                limit: $scope.trib_limit,
+                offset: $scope.trib_offset
+            };
+        } else if(template_name === 'profileView'){
+            var service = Tribs;
+            var querydict = {
+                author_id : userview_id,
+                order_by: $scope.trib_orderby,
+                limit: $scope.trib_limit,
+                offset: $scope.trib_offset
+            };
+        }else if (template_name === 'dashboard'){
+            var service = Timeline;
+            var querydict = {
+                order_by: $scope.trib_orderby,
+                limit: $scope.trib_limit,
+                offset: $scope.trib_offset
+            };
         };
 
-        var old_tribs = servicio.query( dic, function(){
+        var old_tribs = service.query(querydict, function(){
 
             if(old_tribs.objects.length === 0){
                 $scope.tribs_end = true;
@@ -360,7 +379,7 @@ function TribController($scope, $timeout, Tribs, Timeline, growl){
             }
         }, function(e){
             $timeout(function(){
-                growl.addErrorMessage(trib_add_error, {ttl: 10000});
+                $scope.addAlert(trib_add_error, 'error');
             }, 100);
         });
     };
@@ -374,38 +393,32 @@ function TribController($scope, $timeout, Tribs, Timeline, growl){
             $scope.first_trib_id = $scope.tribs[0].id;
         }
 
-        if (type =='profile'){
-            console.log ("profile");
-            var servicio = Tribs;
-            var dic = {
-                        author_id : user_id,
-                        order_by: $scope.trib_orderby,
-                        limit: $scope.trib_limit,
-                        offset: $scope.trib_offset
-                        };
-
-        } else if(type =='profileView'){
-            console.log ("profileView");
-            var servicio = Tribs;
-            var dic = {
-                        author_id : userview_id,
-                        order_by: $scope.trib_orderby,
-                        limit: $scope.trib_limit,
-                        offset: $scope.trib_offset
-                        };           
-
-        }else if (type == 'dasboard'){
-            console.log ("dasboard");
-            var servicio = Timeline;
-            var dic = {
-                        order_by: $scope.trib_orderby,
-                        limit: $scope.trib_limit,
-                        offset: $scope.trib_offset
-                        };
+        if (template_name === 'profile'){
+            var service = Tribs;
+            var querydict = {
+                author_id : user_id,
+                order_by: $scope.trib_orderby,
+                limit: $scope.trib_limit,
+                offset: $scope.new_tribs_offset
+            };
+        } else if(template_name === 'profileView'){
+            var service = Tribs;
+            var querydict = {
+                author_id : userview_id,
+                order_by: $scope.trib_orderby,
+                limit: $scope.trib_limit,
+                offset: $scope.new_tribs_offset
+            };
+        }else if (template_name === 'dashboard'){
+            var service = Timeline;
+            var querydict = {
+                order_by: $scope.trib_orderby,
+                limit: $scope.trib_limit,
+                offset: $scope.new_tribs_offset
+            };
         };
-
         
-        var fresh_tribs = servicio.query(dic,function(){
+        var fresh_tribs = service.query(querydict,function(){
             for(var i = 0; i < fresh_tribs.objects.length; i++){
                 if(fresh_tribs.objects[i].id != $scope.first_trib_id){
                     var fresh_id_appears = false;
@@ -448,14 +461,14 @@ function TribController($scope, $timeout, Tribs, Timeline, growl){
 
         }, function(e){
             $timeout(function(){
-                growl.addErrorMessage(trib_add_error, {ttl: 10000});
+                $scope.addAlert(trib_add_error, 'error');
             }, 100);
         });
     };
 }
 
 
-function CommentController($scope, $timeout, Comments, growl){
+function CommentController($scope, $timeout, $modal, Comments){
 
     $scope.comment_limit_to = comment_limit_to;
     $scope.comment_limit = comment_limit;
@@ -476,6 +489,7 @@ function CommentController($scope, $timeout, Comments, growl){
             trib_id: $scope.trib_id
         }, function(){
             $scope.comment_content = '';
+            $scope.comments_end = false;
             $timeout(function(){
                 $scope.addNewComments();
             });
@@ -486,36 +500,43 @@ function CommentController($scope, $timeout, Comments, growl){
                     .triggerHandler('focus');
             });
             $timeout(function(){
-                growl.addSuccessMessage(comment_save_success, {ttl: 10000});
+                $scope.addAlert(comment_save_success, 'success');
             }, 100);
         }, function(){
             $timeout(function(){
-                growl.addErrorMessage(comment_save_error, {ttl: 10000});
+                $scope.addAlert(comment_save_error, 'error');
             }, 100);
         });
     };
 
-    $scope.configDeleteComment = function(){
+    $scope.showDeleteModal = function(){
         $scope.delete_comment_id = $scope.comments[this.$index].id;
         $scope.delete_comment_index = this.$index;
-    };
 
-    $scope.deleteComment = function(){
-        Comments.delete({
-            id: $scope.delete_comment_id
-        }, function(e){
-            $scope.comments.splice($scope.delete_comment_index, 1);
-            $timeout(function(){
-                growl.addSuccessMessage(comment_delete_success, {ttl: 10000});
-            }, 100);
-        }, function(e){
-            $timeout(function(){
-                growl.addErrorMessage(comment_delete_error, {ttl: 10000});
-            }, 100);
+        var deleteCommentModal = $modal.open({
+            templateUrl: 'delete_modal_template.html',
+            controller: ModalController,
+        });
+
+        deleteCommentModal.result.then(function(){
+            Comments.delete({
+                id: $scope.delete_comment_id
+            }, function(e){
+                $scope.comments.splice($scope.delete_comment_index, 1);
+                $timeout(function(){
+                    $scope.addAlert(comment_delete_success, 'success');
+                }, 100);
+            }, function(e){
+                $timeout(function(){
+                    $scope.addAlert(comment_delete_error, 'error');
+                }, 100);
+            });
         });
     };
 
     $scope.addNewComments = function(){
+        console.log($scope.comments_end);
+        console.log($scope.controller_busy);
 
         if ($scope.comments_end) return;
         if ($scope.controller_busy) return;
@@ -524,58 +545,62 @@ function CommentController($scope, $timeout, Comments, growl){
 
         var new_comments = Comments.query({
             trib_id: $scope.trib_id,
-            order_by: '-'+$scope.comment_orderby,
+            order_by: $scope.comment_orderby,
             limit: $scope.comment_limit,
             offset: $scope.new_comments_offset
         }, function(){
+            console.log(new_comments);
             if(new_comments.objects.length === 0){
                 $scope.comments_end = true;
-                $scope.controller_busy = false;
             } else {
 
                 for(var i = 0; i < new_comments.objects.length; i++){
-                    var old_id_appears = false;
+                    var new_id_appears = false;
 
                     for(var j = 0; j < $scope.comments.length; j++){
                         if(new_comments.objects[i].id == $scope.comments[j].id){
-                            old_id_appears = true;
+                            new_id_appears = true;
+                        }else{
+
+                            console.log(new_comments.objects[i].id);
+                            console.log($scope.comments[j].id);
+                            
                         }
                     }
 
-                    if(!old_id_appears){
+                    if(!new_id_appears){
                         new_comments.objects[i].author_gravatar = 'http://www.gravatar.com/avatar/';
                         new_comments.objects[i].author_gravatar += md5(new_comments.objects[i].author_email);
                         new_comments.objects[i].author_gravatar += '?d=mm&s=70&r=x';
+                        console.log('hola');
                         $scope.comments.push(new_comments.objects[i]);
                     }
                 }
 
-                if($scope.comments.length > $scope.new_comments_offset){
+                console.log($scope.comments.length);
+                console.log($scope.new_comments_offset);
+                if($scope.comments.length > $scope.new_comments_offset + comment_add){
                     $scope.new_comments_offset = $scope.new_comments_offset + comment_add;
                 }
 
-                if($scope.comments.length > $scope.comment_limit_to){
-                    $scope.comment_limit_to = $scope.comments.length;
-                }
-
-                $timeout(function(){
-                    angular.element(document.querySelector('.trib_list'))
-                        .triggerHandler('reload_dom');
-                });
-
-                $scope.controller_busy = false;
-
+                $scope.comment_limit_to = $scope.comments.length;
             }
+
+            $timeout(function(){
+                angular.element(document.querySelector('.trib_list'))
+                    .triggerHandler('reload_dom');
+            });
+
+            $scope.controller_busy = false;
 
         }, function(e){
             $timeout(function(){
-                growl.addErrorMessage(comment_add_error, {ttl: 10000});
+                $scope.addAlert(comment_add_error, 'error');
             }, 100);
         });
     };
 
     $scope.addOldComments = function(){
-
         if ($scope.comments_end) return;
         if ($scope.controller_busy) return;
         $scope.comments_end = false;
@@ -589,7 +614,6 @@ function CommentController($scope, $timeout, Comments, growl){
         }, function(){
             if(old_comments.objects.length === 0){
                 $scope.comments_end = true;
-                $scope.controller_busy = false;
             } else {
 
                 for(var i = 0; i < old_comments.objects.length; i++){
@@ -616,19 +640,18 @@ function CommentController($scope, $timeout, Comments, growl){
                 if($scope.comments.length > $scope.comment_limit_to){
                     $scope.comment_limit_to = $scope.comments.length;
                 }
-
-                $timeout(function(){
-                    angular.element(document.querySelector('.trib_list'))
-                        .triggerHandler('reload_dom');
-                });
-
-                $scope.controller_busy = false;
-
             }
+
+            $timeout(function(){
+                angular.element(document.querySelector('.trib_list'))
+                    .triggerHandler('reload_dom');
+            });
+
+            $scope.controller_busy = false;
 
         }, function(e){
             $timeout(function(){
-                growl.addErrorMessage(comment_add_error, {ttl: 10000});
+                $scope.addAlert(comment_add_error, 'error');
             }, 100);
         });
     };

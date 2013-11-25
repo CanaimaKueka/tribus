@@ -56,7 +56,7 @@ class LoginForm(AuthenticationForm):
                                     widget = forms.TextInput(
                                         attrs= {
                                             'placeholder': _('Enter your username'),
-                                            'class': 'input-block'
+                                            'class': 'input-block padding-2p'
                                         }
                                     ),
                                     max_length = 30,
@@ -70,7 +70,7 @@ class LoginForm(AuthenticationForm):
                                     widget = forms.PasswordInput(
                                         attrs = {
                                             'placeholder': _('Enter your password'),
-                                            'class': 'input-block'
+                                            'class': 'input-block padding-2p'
                                         }
                                     )
                                 )
@@ -102,7 +102,7 @@ class SignupForm(Form):
                                     widget = forms.TextInput(
                                         attrs = {
                                             'placeholder': _('Pick a username'),
-                                            'class': 'input-block'
+                                            'class': 'input-block padding-2p'
                                         }
                                     ),
                                     max_length = 30,
@@ -117,7 +117,7 @@ class SignupForm(Form):
                                     widget = forms.TextInput(
                                         attrs = {
                                             'placeholder': _('First name'),
-                                            'class': 'input-block'
+                                            'class': 'input-block padding-4p'
                                         }
                                     ),
                                     max_length = 30,
@@ -132,7 +132,7 @@ class SignupForm(Form):
                                     widget = forms.TextInput(
                                         attrs = {
                                             'placeholder': _('Last name'),
-                                            'class': 'input-block'
+                                            'class': 'input-block padding-4p'
                                         }
                                     ),
                                     max_length = 30,
@@ -146,7 +146,7 @@ class SignupForm(Form):
                                 widget = forms.TextInput(
                                     attrs = {
                                         'placeholder': _('Enter a valid email'),
-                                        'class': 'input-block'
+                                        'class': 'input-block padding-2p'
                                     }
                                 ),
                                 max_length=254
@@ -157,7 +157,7 @@ class SignupForm(Form):
                                     widget = forms.PasswordInput(
                                         attrs = {
                                             'placeholder': _('Create a password'),
-                                            'class': 'input-block'
+                                            'class': 'input-block padding-2p'
                                         }
                                     )
                                 )
@@ -187,7 +187,7 @@ class PasswordResetForm(BasePasswordResetForm):
                                 widget = forms.TextInput(
                                     attrs = {
                                         'placeholder': _('Enter a valid email'),
-                                        'class': 'input-block'
+                                        'class': 'input-block padding-2p'
                                     }
                                 ),
                                 max_length = 254
@@ -204,7 +204,7 @@ class SetPasswordForm(BaseSetPasswordForm):
                                     widget = forms.PasswordInput(
                                         attrs = {
                                             'placeholder': _('Create a new password'),
-                                            'class': 'input-block'
+                                            'class': 'input-block padding-2p'
                                         }
                                     )
                                 )
@@ -214,7 +214,7 @@ class SetPasswordForm(BaseSetPasswordForm):
                                     widget = forms.PasswordInput(
                                         attrs = {
                                             'placeholder': _('Repeat your new password'),
-                                            'class': 'input-block'
+                                            'class': 'input-block padding-2p'
                                         }
                                     )
                                 )
@@ -249,7 +249,7 @@ class PasswordChangeForm(SetPasswordForm):
                                     widget = forms.PasswordInput(
                                         attrs = {
                                             'placeholder': _('Enter your old password'),
-                                            'class': 'input-block'
+                                            'class': 'input-block padding-2p'
                                         }
                                     )
                                 )

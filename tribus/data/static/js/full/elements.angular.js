@@ -1,115 +1,118 @@
 angular.element(document).ready(function(){
 
-    angular.element(document.querySelector('textarea.action_textarea'))
-        .bind('keyup', function(){
+    var topSearchInput, tribButton, tribCharCounter, commentButton,
+        actionTextarea, tribList;
+
+    actionTextarea = angular.element(
+        document.querySelector('textarea.action_textarea'));
+    tribList = angular.element(
+        document.querySelector('div.trib_list'));
+    topSearchInput = angular.element(
+        document.querySelector('input.top_search_input'));
+
+    topSearchInput.bind('keyup', function(){
+
+        if(this.value.length > 1){
+            angular.element(this).next()
+                .css('display', 'block');
+        }
 
         if(this.value.length === 0){
-            angular.element(document.querySelector('button.action_button'))
-                .attr('disabled', 'disabled');
+            angular.element(this).next()
+                .css('display', 'none');
+        }
+    });
+
+    topSearchInput.bind('blur', function(){
+        angular.element(this).next()
+            .css('display', 'none');
+    });
+
+    actionTextarea.bind('keyup', function(){
+
+        tribCharCounter = angular.element(this.parentNode.children[1]);
+        tribButton = angular.element(this.parentNode
+                                        .parentNode
+                                        .parentNode
+                                        .children[2]
+                                        .children[0]);
+        this.style.height = '30px';
+        this.style.height = this.scrollHeight + 12 + 'px';
+
+        if(this.value.length === 0){
+            angular.element(this).css('height', '1.5em');
+            tribButton.attr('disabled', 'disabled');
         }
 
         if(this.value.length > 0){
-            angular.element(document.querySelector('button.action_button'))
-                .removeAttr('disabled');
+            tribButton.removeAttr('disabled');
         }
 
         if(this.value.length >= 190){
-            angular.element(this)
-                .parent()
-                .find('.action_validation')
-                .css('color', 'rgb(237, 110, 40)');
+            tribCharCounter.css('color', 'rgb(237, 110, 40)');
         } else {
-            angular.element(this)
-                .parent()
-                .find('.action_validation')
-                .css('color', 'rgb(214, 214, 214)');
+            tribCharCounter.css('color', 'rgb(214, 214, 214)');
         }
 
-        angular.element(this)
-            .parent()
-            .find('.action_validation')
-            .text(200-this.value.length);
+        tribCharCounter.text(200-this.value.length);
     });
 
-    angular.element(document.querySelector('textarea.action_textarea'))
-        .bind('keypress', function(e){
+    actionTextarea.bind('keypress', function(e){
 
         if (e.which < 0x20) {
             return;
         }
 
-        if (this.value.length == 200) {
+        if(this.value.length == 200){
             e.preventDefault();
         } else if (this.value.length > 200) {
             this.value = this.value.substring(0, 200);
         }
     });
 
-    angular.element(document.querySelector('textarea.action_textarea'))
-        .bind('focus', function(){
+    actionTextarea.bind('focus', function(){
         if(this.value.length === 0){
             angular.element(this).css('height', '3em');
         }
     });
 
-    angular.element(document.querySelector('textarea.action_textarea'))
-        .bind('blur', function(){
+    actionTextarea.bind('blur', function(){
         if(this.value.length === 0){
-            angular.element(this).css('height', '1em');
+            angular.element(this).css('height', '1.5em');
         }
     });
 
-    angular.element(document.querySelector('.trib_list'))
-        .bind('reload_dom', function(event){
+    tribList.bind('reload_dom', function(event){
 
-        angular.element(document.querySelector('textarea.comment_textarea'))
-            .bind('keyup', function(){
+        commentTextarea = angular.element(
+            document.querySelector('textarea.comment_textarea'));
 
+        commentTextarea.bind('keyup', function(){
+
+            commentButton = angular.element(this.parentNode
+                                                .parentNode
+                                                .parentNode
+                                                .children[2]
+                                                .children[0]);
             if(this.value.length > 0){
-                angular.element(this)
-                    .parent().parent().parent()
-                    .contents()
-                    .find('button.comment_button')
-                    .removeAttr('disabled');
+                commentButton.removeAttr('disabled');
             }
 
             if(this.value.length === 0){
-                angular.element(this)
-                    .parent().parent().parent()
-                    .contents()
-                    .find('button.comment_button')
-                    .attr('disabled', 'disabled');
+                commentButton.attr('disabled', 'disabled');
             }
         });
 
-        angular.element(document.querySelector('textarea.comment_textarea'))
-            .bind('focus', function(){
+        commentTextarea.bind('focus', function(){
             if(this.value.length === 0){
                 angular.element(this).css('height', '2em');
             }
         });
 
-        angular.element(document.querySelector('textarea.comment_textarea'))
-            .bind('blur', function(){
+        commentTextarea.bind('blur', function(){
             if(this.value.length === 0){
-                angular.element(this).css('height', '1em');
+                angular.element(this).css('height', '1.5em');
             }
         });
-    });
-});
-
-$(document).ready(function(){
-    $('input.top_search_input').keyup(function(){
-        if($(this).val().length > 1){
-            $(this).next().css('display', 'block');
-        }
-
-        if($(this).val().length === 0){
-            $(this).next().css('display', 'none');
-        }
-    });
-
-    $('input.top_search_input').blur(function(){
-        $(this).next().css('display', 'none');
     });
 });

@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.views.generic.simple import direct_to_template
+# from django.views.generic.simple import direct_to_template
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from tribus.web.api import api_01
@@ -34,10 +34,10 @@ urlpatterns = patterns(
     url(r'', include('tribus.web.cloud.urls')),
     url(r'', include('tribus.web.profile.urls')),
     url(r'', include('social_auth.urls')),
-    url(r'^opensearch.xml$', direct_to_template, {
-        'template': 'opensearch.xml',
-        'mimetype': 'application/opensearchdescription+xml'
-        }, name="opensearch"),
+    # url(r'^opensearch.xml$', direct_to_template, {
+    #     'template': 'opensearch.xml',
+    #     'mimetype': 'application/opensearchdescription+xml'
+    #     }, name="opensearch"),
     url(r'^api/', include(api_01.urls)),
     url(r'^admin/', include(admin.site.urls)),
 )
