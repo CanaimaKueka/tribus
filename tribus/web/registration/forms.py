@@ -1,3 +1,23 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2013 Desarrolladores de Tribus
+#
+# This file is part of Tribus.
+#
+# Tribus is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Tribus is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 """
 Forms and validation code for user registration.
 
@@ -36,7 +56,7 @@ class LoginForm(AuthenticationForm):
                                     widget = forms.TextInput(
                                         attrs= {
                                             'placeholder': _('Enter your username'),
-                                            'class': 'input-block'
+                                            'class': 'input-block padding-2p'
                                         }
                                     ),
                                     max_length = 30,
@@ -50,7 +70,7 @@ class LoginForm(AuthenticationForm):
                                     widget = forms.PasswordInput(
                                         attrs = {
                                             'placeholder': _('Enter your password'),
-                                            'class': 'input-block'
+                                            'class': 'input-block padding-2p'
                                         }
                                     )
                                 )
@@ -82,7 +102,7 @@ class SignupForm(Form):
                                     widget = forms.TextInput(
                                         attrs = {
                                             'placeholder': _('Pick a username'),
-                                            'class': 'input-block'
+                                            'class': 'input-block padding-2p'
                                         }
                                     ),
                                     max_length = 30,
@@ -97,7 +117,7 @@ class SignupForm(Form):
                                     widget = forms.TextInput(
                                         attrs = {
                                             'placeholder': _('First name'),
-                                            'class': 'input-block'
+                                            'class': 'input-block padding-4p'
                                         }
                                     ),
                                     max_length = 30,
@@ -112,7 +132,7 @@ class SignupForm(Form):
                                     widget = forms.TextInput(
                                         attrs = {
                                             'placeholder': _('Last name'),
-                                            'class': 'input-block'
+                                            'class': 'input-block padding-4p'
                                         }
                                     ),
                                     max_length = 30,
@@ -126,7 +146,7 @@ class SignupForm(Form):
                                 widget = forms.TextInput(
                                     attrs = {
                                         'placeholder': _('Enter a valid email'),
-                                        'class': 'input-block'
+                                        'class': 'input-block padding-2p'
                                     }
                                 ),
                                 max_length=254
@@ -137,7 +157,7 @@ class SignupForm(Form):
                                     widget = forms.PasswordInput(
                                         attrs = {
                                             'placeholder': _('Create a password'),
-                                            'class': 'input-block'
+                                            'class': 'input-block padding-2p'
                                         }
                                     )
                                 )
@@ -182,7 +202,7 @@ class PasswordResetForm(BasePasswordResetForm):
                                 widget = forms.TextInput(
                                     attrs = {
                                         'placeholder': _('Enter a valid email'),
-                                        'class': 'input-block'
+                                        'class': 'input-block padding-2p'
                                     }
                                 ),
                                 max_length = 254
@@ -199,7 +219,7 @@ class SetPasswordForm(BaseSetPasswordForm):
                                     widget = forms.PasswordInput(
                                         attrs = {
                                             'placeholder': _('Create a new password'),
-                                            'class': 'input-block'
+                                            'class': 'input-block padding-2p'
                                         }
                                     )
                                 )
@@ -209,7 +229,7 @@ class SetPasswordForm(BaseSetPasswordForm):
                                     widget = forms.PasswordInput(
                                         attrs = {
                                             'placeholder': _('Repeat your new password'),
-                                            'class': 'input-block'
+                                            'class': 'input-block padding-2p'
                                         }
                                     )
                                 )
@@ -244,7 +264,7 @@ class PasswordChangeForm(SetPasswordForm):
                                     widget = forms.PasswordInput(
                                         attrs = {
                                             'placeholder': _('Enter your old password'),
-                                            'class': 'input-block'
+                                            'class': 'input-block padding-2p'
                                         }
                                     )
                                 )

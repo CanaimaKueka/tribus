@@ -20,6 +20,7 @@
 {% block scripts %}
     <script type="text/javascript">
         {% if user.is_authenticated %}
+
         // User data
         var user_id = '{{ user.id }}';
         var user_username = '{{ user.username }}';
@@ -28,12 +29,10 @@
         var user_email = '{{ user.email }}';
         var user_gravatar = 'http://www.gravatar.com/avatar/'+md5(user_email)+'?d=mm&s=50&r=x';
         var comment_gravatar = 'http://www.gravatar.com/avatar/'+md5(user_email)+'?d=mm&s=30&r=x';
-        
 
         {% endif %}
 
         // Tribs data
-        var type = "dasboard";
         var trib_limit_to = 0;
         var trib_offset = 0;
         var trib_add = 10;
@@ -48,7 +47,8 @@
         var comment_limit = 10;
         var comment_orderby = 'comment_pub_date';
 
-        // Messages
+        // Template data
+        var template_name = "dashboard";
         var trib_save_success = '{% trans "Your message has been published." %}';
         var trib_save_error = '{% trans "There has been an error publishing your message. Please try again later." %}';
         var trib_delete_success = '{% trans "Your message has been deleted." %}';

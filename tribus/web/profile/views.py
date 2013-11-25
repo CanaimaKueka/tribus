@@ -24,8 +24,7 @@ def SearchProfile(request, nick):
         
     # Cargamos la librería AngujarJS junto con sus plugins
     render_js = ['angular', 'angular.resource', 'angular.infinite-scroll',
-        'angular.growl', 'angular.bootstrap', 'angular.moment',
-        'angular.autogrow']
+        'angular.bootstrap', 'angular.moment']
 
     # Cargamos las funciones de Tribus para AngularJS
     render_js += ['controllers.angular', 'services.angular',
@@ -46,8 +45,7 @@ def UserProfile(request):
         
     # Cargamos la librería AngujarJS junto con sus plugins
     render_js = ['angular', 'angular.resource', 'angular.infinite-scroll',
-        'angular.growl', 'angular.bootstrap', 'angular.moment',
-        'angular.autogrow']
+        'angular.bootstrap', 'angular.moment']
 
     # Cargamos las funciones de Tribus para AngularJS
     render_js += ['controllers.angular', 'services.angular',
