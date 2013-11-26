@@ -4,15 +4,15 @@
 // Application -----------------------------------------------------------------
 
 var tribus = angular.module('tribus',
-    [ 'Tribs' , 'Timeline', 'Comments', 'Search', 'UserProfile', 'User',
-    'infinite-scroll', 'UserFollows', 'UserFollowers']);
+    ['Tribs' , 'Timeline', 'Comments', 'Search', 'UserProfile', 'User',
+    'UserFollows', 'UserFollowers', 'infinite-scroll', 'angularMoment', 'ui.bootstrap']);
 
 
 // Controllers -----------------------------------------------------------------
 
-tribus.controller('TribController', ['$scope', '$timeout', 'Tribs', 'Timeline',
+tribus.controller('TribController', ['$scope', '$timeout', '$modal', 'Tribs', 'Timeline',
     TribController]);
-tribus.controller('CommentController', ['$scope', '$timeout', 'Comments',
+tribus.controller('CommentController', ['$scope', '$timeout', '$modal', 'Comments',
     CommentController]);
 tribus.controller('UserController',['$scope','UserProfile', 'User',
     UserController]);

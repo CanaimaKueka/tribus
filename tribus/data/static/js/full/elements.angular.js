@@ -85,7 +85,7 @@ angular.element(document).ready(function(){
     tribList.bind('reload_dom', function(event){
 
         commentTextarea = angular.element(
-            document.querySelector('textarea.comment_textarea'));
+            document.querySelectorAll('textarea.comment_textarea'));
 
         commentTextarea.bind('keyup', function(){
 

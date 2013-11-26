@@ -209,6 +209,7 @@ function ModalController($scope, $modalInstance){
 
 function TribController($scope, $timeout, $modal, Tribs, Timeline){
 
+    $scope.template_name = template_name;
     $scope.user_gravatar = user_gravatar;
     $scope.comment_gravatar = comment_gravatar;
     $scope.controller_busy = controller_busy;
@@ -253,9 +254,7 @@ function TribController($scope, $timeout, $modal, Tribs, Timeline){
             });
             $timeout(function(){
                 angular.element(document.querySelector('textarea.action_textarea'))
-                    .triggerHandler('keyup');
-                angular.element(document.querySelector('textarea.action_textarea'))
-                    .triggerHandler('focus');
+                    .triggerHandler('blur');
             });
             $timeout(function(){
                 $scope.addAlert(trib_save_success, 'success');
@@ -314,6 +313,7 @@ function TribController($scope, $timeout, $modal, Tribs, Timeline){
         $scope.controller_busy = true;
 
         if (template_name === 'profile'){
+            console.log('Tribs');
             var service = Tribs;
             var querydict = {
                 author_id : user_id,
@@ -322,6 +322,7 @@ function TribController($scope, $timeout, $modal, Tribs, Timeline){
                 offset: $scope.trib_offset
             };
         } else if(template_name === 'profileView'){
+            console.log('Tribs');
             var service = Tribs;
             var querydict = {
                 author_id : userview_id,
@@ -329,7 +330,8 @@ function TribController($scope, $timeout, $modal, Tribs, Timeline){
                 limit: $scope.trib_limit,
                 offset: $scope.trib_offset
             };
-        }else if (template_name === 'dashboard'){
+        } else if (template_name === 'dashboard'){
+            console.log('Timeline');
             var service = Timeline;
             var querydict = {
                 order_by: $scope.trib_orderby,
@@ -338,8 +340,9 @@ function TribController($scope, $timeout, $modal, Tribs, Timeline){
             };
         };
 
-        var old_tribs = service.query(querydict, function(){
+        console.log(service.toString());
 
+        var old_tribs = service.query(querydict, function(){
             if(old_tribs.objects.length === 0){
                 $scope.tribs_end = true;
                 $scope.controller_busy = false;
@@ -371,13 +374,14 @@ function TribController($scope, $timeout, $modal, Tribs, Timeline){
                 }
 
                 $timeout(function(){
-                    angular.element(document.querySelector('.trib_list'))
+                    angular.element(document.querySelector('div.trib_list'))
                         .triggerHandler('reload_dom');
                 });
 
                 $scope.controller_busy = false;
             }
         }, function(e){
+            console.log(e);
             $timeout(function(){
                 $scope.addAlert(trib_add_error, 'error');
             }, 100);
@@ -409,7 +413,7 @@ function TribController($scope, $timeout, $modal, Tribs, Timeline){
                 limit: $scope.trib_limit,
                 offset: $scope.new_tribs_offset
             };
-        }else if (template_name === 'dashboard'){
+        } else if (template_name === 'dashboard'){
             var service = Timeline;
             var querydict = {
                 order_by: $scope.trib_orderby,
@@ -417,6 +421,9 @@ function TribController($scope, $timeout, $modal, Tribs, Timeline){
                 offset: $scope.new_tribs_offset
             };
         };
+
+        console.log(template_name);
+        console.log(service);
         
         var fresh_tribs = service.query(querydict,function(){
             for(var i = 0; i < fresh_tribs.objects.length; i++){
@@ -453,7 +460,7 @@ function TribController($scope, $timeout, $modal, Tribs, Timeline){
             }
 
             $timeout(function(){
-                angular.element(document.querySelector('.trib_list'))
+                angular.element(document.querySelector('div.trib_list'))
                     .triggerHandler('reload_dom');
             });
 
@@ -473,9 +480,10 @@ function CommentController($scope, $timeout, $modal, Comments){
     $scope.comment_limit_to = comment_limit_to;
     $scope.comment_limit = comment_limit;
     $scope.comment_offset = comment_offset;
-    $scope.new_comments_offset = comment_offset;
     $scope.comment_orderby = comment_orderby;
     $scope.comments = [];
+    $scope.new_comments_offset = comment_offset;
+    $scope.new_comments_passes = 0;
 
     $scope.createNewComment = function(){
         Comments.save({
@@ -489,7 +497,6 @@ function CommentController($scope, $timeout, $modal, Comments){
             trib_id: $scope.trib_id
         }, function(){
             $scope.comment_content = '';
-            $scope.comments_end = false;
             $timeout(function(){
                 $scope.addNewComments();
             });
@@ -510,8 +517,8 @@ function CommentController($scope, $timeout, $modal, Comments){
     };
 
     $scope.showDeleteModal = function(){
-        $scope.delete_comment_id = $scope.comments[this.$index].id;
-        $scope.delete_comment_index = this.$index;
+        $scope.delete_comment_id = this.comment.id;
+        $scope.delete_comment_index = $scope.comments.length - this.$index - 1;
 
         var deleteCommentModal = $modal.open({
             templateUrl: 'delete_modal_template.html',
@@ -534,66 +541,64 @@ function CommentController($scope, $timeout, $modal, Comments){
         });
     };
 
-    $scope.addNewComments = function(){
-        console.log($scope.comments_end);
-        console.log($scope.controller_busy);
+    function itemInArray(item, a){
+        for (var i = 0; i < a.length; i++){
+            if (a[i].id === item.id){
+                return true;
+            }
+        }
+        return false;
+    }
 
-        if ($scope.comments_end) return;
-        if ($scope.controller_busy) return;
-        $scope.comments_end = false;
+    $scope.addNewComments = function(){
+        if($scope.controller_busy) return;
         $scope.controller_busy = true;
 
-        var new_comments = Comments.query({
+        if($scope.new_comments_passes === 0 && $scope.comments.length > 0){
+            $scope.first_comment_id = $scope.comments[0].id;
+        }
+
+        Comments.query({
             trib_id: $scope.trib_id,
-            order_by: $scope.comment_orderby,
+            order_by: '-'+$scope.comment_orderby,
             limit: $scope.comment_limit,
             offset: $scope.new_comments_offset
-        }, function(){
-            console.log(new_comments);
-            if(new_comments.objects.length === 0){
-                $scope.comments_end = true;
-            } else {
-
-                for(var i = 0; i < new_comments.objects.length; i++){
-                    var new_id_appears = false;
-
-                    for(var j = 0; j < $scope.comments.length; j++){
-                        if(new_comments.objects[i].id == $scope.comments[j].id){
-                            new_id_appears = true;
-                        }else{
-
-                            console.log(new_comments.objects[i].id);
-                            console.log($scope.comments[j].id);
-                            
+        }, function(results){
+            if(results.objects.length != 0){
+                for(var i = 0; i < results.objects.length; i++){
+                    if(results.objects[i].id != $scope.first_comment_id){
+                        if(!itemInArray(results.objects[i], $scope.comments)){
+                            results.objects[i].author_gravatar = 'http://www.gravatar.com/avatar/';
+                            results.objects[i].author_gravatar += md5(results.objects[i].author_email);
+                            results.objects[i].author_gravatar += '?d=mm&s=30&r=x';
+                            $scope.comments.unshift(results.objects[i]);
                         }
-                    }
 
-                    if(!new_id_appears){
-                        new_comments.objects[i].author_gravatar = 'http://www.gravatar.com/avatar/';
-                        new_comments.objects[i].author_gravatar += md5(new_comments.objects[i].author_email);
-                        new_comments.objects[i].author_gravatar += '?d=mm&s=70&r=x';
-                        console.log('hola');
-                        $scope.comments.push(new_comments.objects[i]);
+                        if($scope.comments.length > $scope.comment_limit_to){
+                            $scope.comment_limit_to = $scope.comments.length;
+                        }
+
+                        if(i == (results.objects.length-1)){
+                            $scope.new_comments_offset = $scope.new_comments_offset + comment_add;
+                            $scope.new_comments_passes = $scope.new_comments_passes + 1;
+                            $timeout(function(){$scope.addNewComments();});
+                        }
+                    } else {
+                        $scope.new_comments_offset = comment_offset;
+                        $scope.new_comments_passes = 0;
+                        break;
                     }
                 }
-
-                console.log($scope.comments.length);
-                console.log($scope.new_comments_offset);
-                if($scope.comments.length > $scope.new_comments_offset + comment_add){
-                    $scope.new_comments_offset = $scope.new_comments_offset + comment_add;
-                }
-
-                $scope.comment_limit_to = $scope.comments.length;
             }
 
             $timeout(function(){
-                angular.element(document.querySelector('.trib_list'))
+                angular.element(document.querySelector('div.trib_list'))
                     .triggerHandler('reload_dom');
             });
 
             $scope.controller_busy = false;
 
-        }, function(e){
+        }, function(error){
             $timeout(function(){
                 $scope.addAlert(comment_add_error, 'error');
             }, 100);
@@ -602,54 +607,50 @@ function CommentController($scope, $timeout, $modal, Comments){
 
     $scope.addOldComments = function(){
         if ($scope.comments_end) return;
-        if ($scope.controller_busy) return;
-        $scope.comments_end = false;
+        if($scope.controller_busy) return;
         $scope.controller_busy = true;
 
-        var old_comments = Comments.query({
+        Comments.query({
             trib_id: $scope.trib_id,
-            order_by: $scope.comment_orderby,
+            order_by: '-'+$scope.comment_orderby,
             limit: $scope.comment_limit,
             offset: $scope.comment_offset
-        }, function(){
-            if(old_comments.objects.length === 0){
-                $scope.comments_end = true;
-            } else {
-
-                for(var i = 0; i < old_comments.objects.length; i++){
-                    var old_id_appears = false;
-
-                    for(var j = 0; j < $scope.comments.length; j++){
-                        if(old_comments.objects[i].id == $scope.comments[j].id){
-                            old_id_appears = true;
+        }, function(results){
+            if(results.objects.length != 0){
+                for(var i = 0; i < results.objects.length; i++){
+                    if(results.objects[i].id != $scope.first_comment_id){
+                        if(!itemInArray(results.objects[i], $scope.comments)){
+                            results.objects[i].author_gravatar = 'http://www.gravatar.com/avatar/';
+                            results.objects[i].author_gravatar += md5(results.objects[i].author_email);
+                            results.objects[i].author_gravatar += '?d=mm&s=30&r=x';
+                            $scope.comments.push(results.objects[i]);
                         }
+
+                        if($scope.comments.length > $scope.comment_limit_to){
+                            $scope.comment_limit_to = $scope.comments.length;
+                        }
+
+                        if($scope.comments.length > $scope.comment_offset){
+                            $scope.comment_offset = $scope.comment_offset + comment_add;
+                        }
+                    } else {
+                        $scope.comment_offset = comment_offset;
+                        $scope.new_comments_passes = 0;
+                        break;
                     }
-
-                    if(!old_id_appears){
-                        old_comments.objects[i].author_gravatar = 'http://www.gravatar.com/avatar/';
-                        old_comments.objects[i].author_gravatar += md5(old_comments.objects[i].author_email);
-                        old_comments.objects[i].author_gravatar += '?d=mm&s=70&r=x';
-                        $scope.comments.push(old_comments.objects[i]);
-                    }
                 }
-
-                if($scope.comments.length > $scope.comment_offset){
-                    $scope.comment_offset = $scope.comment_offset + comment_add;
-                }
-
-                if($scope.comments.length > $scope.comment_limit_to){
-                    $scope.comment_limit_to = $scope.comments.length;
-                }
+            } else {
+                $scope.comments_end = true;
             }
 
             $timeout(function(){
-                angular.element(document.querySelector('.trib_list'))
+                angular.element(document.querySelector('div.trib_list'))
                     .triggerHandler('reload_dom');
             });
 
             $scope.controller_busy = false;
 
-        }, function(e){
+        }, function(error){
             $timeout(function(){
                 $scope.addAlert(comment_add_error, 'error');
             }, 100);

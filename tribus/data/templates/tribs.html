@@ -27,8 +27,42 @@
             </form>
         </div>
     </div>
+    <div>
+    </div>
     <div class="trib_list" infinite-scroll="addOldTribs()" infinite-scroll-disabled="controller_busy" infinite-scroll-distance="0">
         <ul>
+            <li data-ng-if="tribs.length == 0 && template_name == 'dashboard'" class="trib_intro">
+                <span class="trib_body">
+                    <span class="trib_title">
+                        <h2>
+                            {% trans 'Welcome to Tribus!' %}
+                        </h2>
+                    </span>
+                    <span class="trib_content">
+                        {% blocktrans %}
+                        <p>This is the dashboard, where you can follow the updates of your favorite projects and partners.</p>
+                        <p>Start by looking for your friends in the search bar on the top of the screen. Then, click on the Follow button in your friend's profile to start following their updates in your dashboard.</p>
+                        <p>You can always come back here by clicking on the Tribus logo.</p>
+                        {% endblocktrans %}
+                    </span>
+                </span>
+            </li>
+            <li data-ng-if="tribs.length == 0 && template_name == 'profile'" class="trib_intro">
+                <span class="trib_body">
+                    <span class="trib_title">
+                        <h2>
+                            {% trans 'Welcome to Tribus!' %}
+                        </h2>
+                    </span>
+                    <span class="trib_content">
+                        {% blocktrans %}
+                        <p>This is the ewtwrwerwe, where you can follow the updates of your favorite projects and partners.</p>
+                        <p>Start by looking for your friends in the search bar on the top of the screen. Then, click on the Follow button in your friend's profile to start following their updates in your dashboard.</p>
+                        <p>You can always come back here by clicking on the Tribus logo.</p>
+                        {% endblocktrans %}
+                    </span>
+                </span>
+            </li>
             <li id="{% verbatim %}{{ trib.id }}{% endverbatim %}" class="row-fluid trib_item"
                 data-ng-repeat="trib in tribs | orderBy: trib_orderby | limitTo: trib_limit_to track by trib.id">
                 <span class="span2">
@@ -57,18 +91,16 @@
                         </span>
                     </span>
                     <span class="trib_reply">
-                        <span class="comment_list" data-ng-controller="CommentController" data-ng-if="trib.coments_show"
-                            data-ng-init="this.trib_id = trib.id;addNewComments();">
+                        <span class="comment_list" data-ng-controller="CommentController" data-ng-if="trib.coments_show" data-ng-init="this.trib_id = trib.id;addOldComments();">
                             <ul>
-                                <li data-ng-if="comments.length > 0" class="row-fluid comment_item">
+                                <li data-ng-if="comments.length > 0 && !comments_end" class="row-fluid comment_item">
                                     <button class="btn btn-beige btn-block btn-mini" data-ng-click="addOldComments()">
                                         {% trans 'Load more comments' %}
                                     </button>
                                 </li>
-                                <li id="{% verbatim %}{{ comment.id }}{% endverbatim %}" class="row-fluid comment_item"
-                                    data-ng-repeat="comment in comments | orderBy: comment_orderby | limitTo: comment_limit_to track by comment.id">
+                                <li id="{% verbatim %}{{ comment.id }}{% endverbatim %}" class="row-fluid comment_item" data-ng-repeat="comment in comments | orderBy: comment_orderby | limitTo: comment_limit_to track by comment.id">
                                     <span class="span1">
-                                        <span class="comment_avatar"></span>
+                                        <span class="comment_avatar" data-ng-style="{'background-image': 'url(\''+comment.author_gravatar+'\')'}"></span>
                                     </span>
                                     <span class="span11 comment_body">
                                         <span class="comment_text">
@@ -80,8 +112,6 @@
                                                 </a>
                                             </h3>
                                             {% verbatim %}{{ comment.comment_content }}{% endverbatim %}
-                                            <br />
-                                            {% verbatim %}{{ comment.id }}{% endverbatim %}
                                         </span>
                                         <span data-ng-if="comment.author_id == {{ user.id }}" class="close"
                                         data-ng-click="showDeleteModal()">

@@ -24,8 +24,10 @@
 * [] Terminar Estilo visual de Application cloud.
 * [] Hacer about/
 * [] Mejorar ciclo de renderizado de css y js.
-* [] Revisar sistema de comentarios.
+* [HECHO] Revisar sistema de comentarios.
 * [] Agregar "sponsors".
 * [] Agregar botón de application cloud en el dashboard.
 * [] Hacer que se reutilice el virtualenv en vez de regenerarlo.
-* [] Migrar de jQuery a AngularJS.
+* [HECHO] Migrar de jQuery a AngularJS.
+* [] Revisar API.
+* [] Revisar CSS responsive.
