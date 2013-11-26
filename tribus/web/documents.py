@@ -19,7 +19,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from mongoengine import Document
-from mongoengine import (IntField, EmailField, StringField, ObjectIdField)
+from mongoengine import (IntField, EmailField, StringField,
+                            ObjectIdField, DateTimeField)
 
 
 class Trib(Document):

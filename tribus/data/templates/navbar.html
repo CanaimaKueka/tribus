@@ -17,8 +17,7 @@
                  	<form name="form-search" class="form-search" action = "/search/" method = "GET">
                         {% csrf_token %}
                         <span class="input-icon">
-                            <input type="text" class="nav-search-input input-large top_search_input" autocomplete="off" name="q"
-                            placeholder="Search or type a command" ng-model="top_search" ng-keyup="refreshResults()" required/>
+                            <input type="text" class="nav-search-input input-large top_search_input" autocomplete="off" name="q" placeholder="{% trans 'Search in Tribus' %}" ng-model="top_search" ng-keyup="refreshResults()" />
                             <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
                             	<h3 ng-if="hasPackages()">Packages</h3>
                         		<li role="presentation" ng-repeat="result in package_results">

@@ -112,7 +112,6 @@
 {% block scripts %}
     <script type="text/javascript">
         {% if user.is_authenticated %}
-
         var user_id = '{{ user.id }}';
         var user_username = '{{ user.username }}';
         // NO SE USA POR AHORA
@@ -121,7 +120,6 @@
         var user_email = '{{ user.email }}';      
         var user_gravatar = 'http://www.gravatar.com/avatar/'+md5(user_email)+'?d=mm&s=250&r=x';
         var comment_gravatar = 'http://www.gravatar.com/avatar/'+md5(user_email)+'?d=mm&s=30&r=x';
-
         {% endif %}
 
 		var template_name = "profileView";

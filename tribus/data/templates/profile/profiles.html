@@ -1,240 +1,190 @@
 {% extends 'profile/base.html' %}
 {% load i18n %}
-{% block title %} Profile {% endblock %}
+{% block title %}{% trans 'Profile' %}{% endblock %}
 {% block content%}
-
 <div class="jumbotron">
-	<div class="container">
-		<div class="row-fluid">
-			<div class="span3">
-				<div ng-controller="UserController">
-					<a href = "https://es.gravatar.com/gravatars/new/" >
-						<span class="profile_avatar" ng-style="{'background-image': 'url(\''+user_gravatar+'?d=mm&s=250&r=x\')'}"></span>
-					</a>
-					<div class="space-36"></div>
-					{% block datos %}
-					<hr>
-					<ul>
-						<p><h3>{{ user_view.first_name }} {{user_view.last_name}}</h3></p>
-							<p>{{ user_view.email }}</p>
-								<p>{% trans 'Description' %}: {{ user_view.description }}</p>
-									<hr>
-									{% endblock %}
-									<div id=""></div>
-									<hr>
-									<legend></legend>
-								</div>
-							</div>
-							<div class="span9">
-								{% include 'profile/navbar.html' %}
-								<legend></legend>
+    <div class="container">
+        <div class="row-fluid">
+            <div class="span3">
+                <div ng-controller="UserController">
+                    <a href="https://es.gravatar.com/gravatars/new/" >
+                        <span class="profile_avatar" ng-style="{'background-image': 'url(\''+user_gravatar+'?d=mm&s=250&r=x\')'}"></span>
+                    </a>
+                    <div class="space-36"></div>
+                    {% block datos %}
+                    <hr>
+                    <p><h3>{{ user_view.first_name }} {{user_view.last_name}}</h3></p>
+                    <p>{{ user_view.email }}</p>
+                    <p>{% trans 'Description' %}: {{ user_view.description }}</p>
+                    <hr>
+                    {% endblock %}
+                </div>
+            </div>
+            <div class="span9">
+                {% include 'profile/navbar.html' %}
+                <div class="row-fluid">
+                    <tabset>
+                        <tab heading="{% trans 'Walk' %}">
+                            {% include 'tribs.html' %}
+                        </tab>
+                        <tab heading="{% trans 'Edit Profile' %}">
+                            <form name="Form" accept-charset="UTF-8" action="profile/done" autocomplete="off" novalidate method="post">
+                                {% csrf_token %}
+                                <ul class="unstyled row-fluid">
+                                    <!-- <li><label class ="span2 offset1">Email:</label>{{editForm.email}}</li>   -->          
+                                    <li><label class ="span2 offset1">{% trans 'Description'%}:</label>{{editForm.descripcion}}</li>
 
-								<div class = "row-fluid">
+                                </ul>
+                                <div class="span2 offset3" >
+                                    <button class="btn btn-success btn-block" type="submit">{% trans 'Confirm'%} </button>
+                                </div>
+                            </form>
+                        </tab>
+                        <tab heading="{% trans 'Follows' %}">
+                                <div class = "row-fluid">                               
+                                    <input class = "span2 pull-right" name = "filtro" method = "GET" ng-model = 'query'></input>
+                                    <label class = "pull-right">{% trans 'Search'%}:</label>
+                                </div>
+                                <div class = "container-fluid" ng-controller= "FollowsController" >
+                                    <ul class = "follows_list">
+                                        <div class = "span12"></div>
 
-									<div class="tabbable tabs">
-										<ul class="nav nav-tabs" id="myTab3">
+                                        <li class = "span10  action_publisher " ng-repeat="follow in follows | filter: query | startFrom:currentPage*pageSize | limitTo:pageSize ">
+                                            <span class= "span2 offset">
+                                                <a href="/profile/{% verbatim %}{{follow.username}}{%endverbatim %}"><span class="trib_avatar" ng-style="{'background-image': 'url(\''+convertmd5(follow.email)+'\')'}"></span></a>
+                                            </span>
 
-											<li class="active">
-												<a data-toggle="tab" href="#home3">
-													<i class="pink icon-dashboard bigger-110"></i>
-													{% trans 'Walk' %} 
-													<span class="badge badge-danger"></span>
-												</a>
-											</li>
+                                            <span class= "span9 offset1">       
+                                                <span class ="">
+                                                    <span class= "pull-right">
+                                                        <i class="icon-minus-sign bigger-120" ng-click="eliminar(follow.id)"></i>
+                                                    </span>
+                                                    <span>
+                                                        <h4>{% verbatim %}{{follow.first_name}} {{follow.last_name}}{% endverbatim %}</h3>
+                                                    </span>
+                                                <span class ="">
+                                                    <p>{% verbatim %}@{{follow.username}}{% endverbatim %}</p>
+                                                </span>
+                                                <span class ="">
+                                                    <p>{% verbatim %}{{follow.email}}{% endverbatim %}</p>                                  
+                                                </span>                                                 
+                                            </span>                                         
+                                        </span>
+                                    </li>
 
-											<li class="">
-												<a data-toggle="tab" href="#profile3">
-													<i class="blue icon-user bigger-110"></i>
-													{% trans 'Edit Profile' %} 
-												</a>
-											</li>
+                                </ul>
+                                <div ng-if= "filtername.length==0 && follows.length>0" >
+                                    <p align = "center"> {% trans 'No matches found' %} </p>
 
-											<li class="">
-												<a data-toggle="tab" href="#followsTag">
-													<i class="icon-rocket"></i>
-													{% trans 'Follows' %}
-												</a>
-											</li>
+                                </div>
 
-											<li class="">
-												<a data-toggle="tab" href="#followersTag">
-													<i class="icon-rocket"></i>
-													{% trans 'Followers' %}
-												</a>
-											</li>							
-										</ul>
+                                <div ng-if= "filtername.length==0 && follows.length==0" >
+                                    <p align = "center"> {% trans 'Is not following anyone' %} </p>
+                                    <image src = "http://www.nocturnar.com/imagenes/fotos/forever-alone-cara-forever-alone-cara.jpg" />
+                                </div>                                          
 
-										<div class="tab-content">
-											<div id="home3" class="tab-pane active">
-												{% include 'tribs.html' %}
-											</div>
-
-											<div id="profile3" class="tab-pane ">
-												<form name = "Form" accept-charset="UTF-8" action="profile/done" autocomplete="off" novalidate method="post">
-													{% csrf_token %}
-													<ul class="unstyled row-fluid">
-														<!-- <li><label class ="span2 offset1">Email:</label>{{editForm.email}}</li>   -->          
-														<li><label class ="span2 offset1">{% trans 'Description'%}:</label>{{editForm.descripcion}}</li>
-
-													</ul>
-													<div class="span2 offset3" >
-														<button class="btn btn-success btn-block" type="submit">{% trans 'Confirm'%} </button>
-													</div>
-												</form>
-											</div>
-
-											<div id="followsTag" class="tab-pane" >
-												<div class = "row-fluid">								
-													<input class = "span2 pull-right" name = "filtro" method = "GET" ng-model = 'query'></input>
-													<label class = "pull-right">{% trans 'Search'%}:</label>
-												</div>
-
-
-												<div class = "container-fluid" ng-controller= "FollowsController" >
-													<ul class = "follows_list">
-														<div class = "span12"></div>
-
-														<li class = "span10  action_publisher " ng-repeat="follow in follows | filter: query | startFrom:currentPage*pageSize | limitTo:pageSize ">
-															<span class= "span2 offset">
-																<a href="/profile/{% verbatim %}{{follow.username}}{%endverbatim %}"><span class="trib_avatar" ng-style="{'background-image': 'url(\''+convertmd5(follow.email)+'\')'}"></span></a>
-															</span>
-
-															<span class= "span9 offset1">		
-																<span class ="">
-																	<span class= "pull-right">
-																		<i class="icon-minus-sign bigger-120" ng-click="eliminar(follow.id)"></i>
-																	</span>
-																	<span>
-																		<h4>{% verbatim %}{{follow.first_name}} {{follow.last_name}}{% endverbatim %}</h3>
-																	</span>
-																<span class ="">
-																	<p>{% verbatim %}@{{follow.username}}{% endverbatim %}</p>
-																</span>
-																<span class ="">
-																	<p>{% verbatim %}{{follow.email}}{% endverbatim %}</p>									
-																</span>									            	
-															</span>							            	
-														</span>
-													</li>
-
-												</ul>
-												<div ng-if= "filtername.length==0 && follows.length>0" >
-													<p align = "center"> {% trans 'No matches found' %} </p>
-
-												</div>
-
-												<div ng-if= "filtername.length==0 && follows.length==0" >
-													<p align = "center"> {% trans 'Is not following anyone' %} </p>
-													<image src = "http://www.nocturnar.com/imagenes/fotos/forever-alone-cara-forever-alone-cara.jpg" />
-												</div>											
-
-												<span class= " pull-right"  ng-hide = "filtername.length<=pageSize">
-													<hr noshade="noshade"/>
-													<button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
-														{% trans 'Previous' %}
-													</button >
-													{% verbatim %}{{currentPage+1}}/{{numberOfPages()}} {{filtername.length}} {% endverbatim %}
-													<button ng-disabled="currentPage >= filtername.length/pageSize - 1" ng-click="currentPage= currentPage+1" >
-														{% trans 'Next' %}
-													</button>		     
-												</span>
-											</div>
-										</div>
-
-										<div id="followersTag" class="tab-pane" >
-											<div class = "row-fluid">								
-												<input class = "span2 pull-right" name = "filtro2" method = "GET" ng-model = 'query2'></input>
-												<label class = "pull-right">{% trans 'Search'%}:</label>
-											</div>
+                                <span class= " pull-right"  ng-hide = "filtername.length<=pageSize">
+                                    <hr noshade="noshade"/>
+                                    <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+                                        {% trans 'Previous' %}
+                                    </button >
+                                    {% verbatim %}{{currentPage+1}}/{{numberOfPages()}} {{filtername.length}} {% endverbatim %}
+                                    <button ng-disabled="currentPage >= filtername.length/pageSize - 1" ng-click="currentPage= currentPage+1" >
+                                        {% trans 'Next' %}
+                                    </button>            
+                                </span>
+                            </div>
+                        </tab>
+                        <tab heading="{% trans 'Followers' %}">
+                            <div class = "row-fluid">                               
+                                <input class = "span2 pull-right" name = "filtro2" method = "GET" ng-model = 'query2'></input>
+                                <label class = "pull-right">{% trans 'Search'%}:</label>
+                            </div>
 
 
-											<div class = "container-fluid" ng-controller= "FollowersController" >
-												<ul class = "follows_list">
-													<div class = "span12"></div>
+                            <div class = "container-fluid" ng-controller= "FollowersController" >
+                                <ul class = "follows_list">
+                                    <div class = "span12"></div>
 
-													<li class = "span10 action_publisher " ng-repeat="follow in followers | filter: query2 | startFrom:currentPage*pageSize | limitTo:pageSize ">
-														<span class= "span2 offset">
-															<a href="/profile/{% verbatim %}{{follow.username}}{%endverbatim %}"><span class="trib_avatar" ng-style="{'background-image': 'url(\''+convertmd5(follow.email)+'\')'}"></span></a>
-														</span>
+                                    <li class = "span10 action_publisher " ng-repeat="follow in followers | filter: query2 | startFrom:currentPage*pageSize | limitTo:pageSize ">
+                                        <span class= "span2 offset">
+                                            <a href="/profile/{% verbatim %}{{follow.username}}{%endverbatim %}"><span class="trib_avatar" ng-style="{'background-image': 'url(\''+convertmd5(follow.email)+'\')'}"></span></a>
+                                        </span>
 
-														<span class= "span9 offset1">		
-															<span class ="">
-																<span>
-																	<h4>{% verbatim %}{{follow.first_name}} {{follow.last_name}}{% endverbatim %}</h3>
-																</span>
+                                        <span class= "span9 offset1">       
+                                            <span class ="">
+                                                <span>
+                                                    <h4>{% verbatim %}{{follow.first_name}} {{follow.last_name}}{% endverbatim %}</h3>
+                                                </span>
 
-																
-															</span>	
-															<span class ="">
-																<p>{% verbatim %}@{{follow.username}}{% endverbatim %}</p>
-															</span>
-															<span class ="">
-																<p>{% verbatim %}{{follow.email}}{% endverbatim %}</p>									
-															</span>									            	
-														</span>
-												<!-- 		<span class ="pull-right" ng-onclick= >
-															<p>dejar de seguir</p>									
-														</span>		 -->							            	
-													</span>
-												</li>
-											</ul>
-											<div ng-if= "filtername.length==0 && followers.length>0" >
-												<p align = "center">{% trans 'No matches found' %}  </p>
-											</div>
+                                                
+                                            </span> 
+                                            <span class ="">
+                                                <p>{% verbatim %}@{{follow.username}}{% endverbatim %}</p>
+                                            </span>
+                                            <span class ="">
+                                                <p>{% verbatim %}{{follow.email}}{% endverbatim %}</p>                                  
+                                            </span>                                                 
+                                        </span>
+                                <!--        <span class ="pull-right" ng-onclick= >
+                                            <p>dejar de seguir</p>                                  
+                                        </span>      -->                                            
+                                    </span>
+                                    </li>
+                                </ul>
+                                <div ng-if= "filtername.length==0 && followers.length>0" >
+                                    <p align = "center">{% trans 'No matches found' %}  </p>
+                                </div>
 
-											<div ng-if= "filtername.length==0 && followers.length==0" >
-												<p align = "center"> {% trans 'no followers' %} </p>
-												<image src = "http://www.nocturnar.com/imagenes/fotos/forever-alone-cara-forever-alone-cara.jpg" />
-											</div>											
+                                <div ng-if= "filtername.length==0 && followers.length==0" >
+                                    <p align = "center"> {% trans 'no followers' %} </p>
+                                    <image src = "http://www.nocturnar.com/imagenes/fotos/forever-alone-cara-forever-alone-cara.jpg" />
+                                </div>                                          
 
-											<span class= " pull-right"  ng-hide = "filtername.length<=pageSize">
-												<hr noshade="noshade"/>
-												<button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
-													{% trans 'Previous' %}
-												</button >
-												{% verbatim %}{{currentPage+1}}/{{numberOfPages()}}{% endverbatim %}
-												<button ng-disabled="currentPage >= filtername.length/pageSize - 1" ng-click="currentPage= currentPage+1" >
-													{% trans 'Next' %} 
-												</button>		     
-											</span>
-										</div>
-									</div>
-
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>			
-
-		{% endblock %}
+                                <span class= " pull-right"  ng-hide = "filtername.length<=pageSize">
+                                    <hr noshade="noshade"/>
+                                    <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+                                        {% trans 'Previous' %}
+                                    </button >
+                                    {% verbatim %}{{currentPage+1}}/{{numberOfPages()}}{% endverbatim %}
+                                    <button ng-disabled="currentPage >= filtername.length/pageSize - 1" ng-click="currentPage= currentPage+1" >
+                                        {% trans 'Next' %} 
+                                    </button>            
+                                </span>
+                            </div>
+                        </tab>
+                    </tabset>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>          
+        {% endblock %}
 
 
-		{% block scripts %}
-		<script type="text/javascript">
-		{% if user.is_authenticated %}
-		var user_id = '{{ user.id }}';
-		var user_username = '{{ user.username }}';
-		var user_first_name = '{{ user.first_name }}';
-		var user_last_name = '{{ user.last_name }}';
-		var user_email = '{{ user.email }}';
-		var user_gravatar = 'http://www.gravatar.com/avatar/'+md5(user_email);
-		var userview_gravatar = "none";
+        {% block scripts %}
+        <script type="text/javascript">
+        {% if user.is_authenticated %}
+        var user_id = '{{ user.id }}';
+        var user_username = '{{ user.username }}';
+        var user_first_name = '{{ user.first_name }}';
+        var user_last_name = '{{ user.last_name }}';
+        var user_email = '{{ user.email }}';
+        var user_gravatar = 'http://www.gravatar.com/avatar/'+md5(user_email);
+        var userview_gravatar = "none";
         var comment_gravatar = 'http://www.gravatar.com/avatar/'+md5(user_email)+'?d=mm&s=30&r=x';
-		
-
-		{% endif %}
+        {% endif %}
 
 
-		var template_name = "profile";
-		var userview_id = '{{ user_view.id }}';    
-		var trib_limit_to = 0;
-		var trib_offset = 0;
-		var trib_add = 10;
-		var trib_limit = 10;
-		var trib_orderby = '-trib_pub_date';
-		var controller_busy = false;
+        var template_name = "profile";
+        var userview_id = '{{ user_view.id }}';    
+        var trib_limit_to = 0;
+        var trib_offset = 0;
+        var trib_add = 10;
+        var trib_limit = 10;
+        var trib_orderby = '-trib_pub_date';
+        var controller_busy = false;
 
 
         var comment_limit_to = 0;
@@ -256,10 +206,10 @@
 
 
 
-		var follows_limit_to = 0;
-		var follows_offset = 0;
-		var follows_add = 10;
-		var follows_limit = 10;
-		var follows_orderby = 'username';   
-		</script>
-		{% endblock %}
+        var follows_limit_to = 0;
+        var follows_offset = 0;
+        var follows_add = 10;
+        var follows_limit = 10;
+        var follows_orderby = 'username';   
+        </script>
+        {% endblock %}
