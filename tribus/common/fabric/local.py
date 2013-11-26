@@ -127,7 +127,7 @@ def filldb_from_local():
     from tribus.config.pkgrecorder import LOCAL_ROOT
     resetdb()
     create_cache_dirs(LOCAL_ROOT)
-    fill_db_from_cache(LOCAL_ROOT)
+    fill_db_from_cache()
     rebuild_index()
     
 def filldb_from_remote():
@@ -136,7 +136,7 @@ def filldb_from_remote():
     from tribus.config.pkgrecorder import CANAIMA_ROOT
     resetdb()
     create_cache_dirs(CANAIMA_ROOT)
-    fill_db_from_cache(CANAIMA_ROOT)
+    fill_db_from_cache()
     rebuild_index()
     
 def resetdb():
@@ -144,6 +144,7 @@ def resetdb():
     drop_mongo()
     configure_postgres()
     configure_django()
+    rebuild_index()
     deconfigure_sudo()
 
 # -----------------------------------------------------------------------------

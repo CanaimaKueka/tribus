@@ -45,7 +45,8 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
 from debian import deb822
 from tribus.web.cloud.models import *
 from tribus.config.pkgrecorder import package_fields, detail_fields, LOCAL_ROOT, CANAIMA_ROOT
-from tribus.common.utils import find_files, md5Checksum, find_dirs, scan_repository
+from tribus.common.utils import find_files, md5Checksum, find_dirs, scan_repository,\
+    list_dirs
 from tribus.config.base import PACKAGECACHE
 from tribus.config.web import DEBUG
 from django.db.models import Q
@@ -467,7 +468,6 @@ def update_section(section, dist):
         exists = Details.objects.filter(Relations = r)
         if not exists:
             r.delete()
-    #d.Relations.all().delete()
     record_relations(d, section.relations.items())
     print "Actualizacion finalizada"
 
@@ -509,25 +509,28 @@ def update_package_list(file_path, dist):
     bd_packages = Package.objects.filter(Details__Distribution = dist).filter(Q(Details__Architecture = 'all') | 
                                                                               Q(Details__Architecture = actual_arch))
     for package in bd_packages:
+        # En alguna parte debo eliminar relaciones o enlaces huerfanos
+        
         # Si el paquete no esta en la lista, busca los detalles y borra aquellos obsoletos
         if package.Package not in existent_packages:
             for detail in package.Details.all():
                 if detail.Distribution == dist and detail.Architecture == actual_arch:
                     print "Eliminando detalles de -->", package.Package
                     detail.delete()
-            # Si el paquete no tiene mas detalles procede a convertirlo en un paquete virtual
+            # Si el paquete no tiene mas detalles procede a eliminarlo
             if not package.Details.all():
-                name = package.Package 
+                print "Eliminando -->", package.Package
                 package.delete()
-                find_package(name)
-            
                 
+
 def update_dist_paragraphs(repository_root, dist):
     '''
     Updates a debian control file (Packages),
     comparing the the one in the repository with its local copy.
     If there are differences in the MD5sum field then the local
     copy is deleted and copied again from the repository.
+    
+    :param repository_root: url of the repository from which the Packages files will be updated.
     
     :param dist: codename of the Canaima's version that will be updated.
     
@@ -577,8 +580,10 @@ def update_package_cache():
         
 def create_cache_dirs(repository_root):
     '''
-    Creates the packagecache and all other necessary directories, to organize the
-    debian control files (Packages) from the repository.
+    Creates the packagecache and all other necessary directories to organize the
+    debian control files (Packages) pulled from the repository.
+    
+    :param repository_root: url of the repository from which the Packages files will be pulled.
     
     .. versionadded:: 0.1
     '''
@@ -611,15 +616,15 @@ def create_cache_dirs(repository_root):
                         except IOError:
                             print 'archivo %s no encontrado.' % (remote_path)
          
-def fill_db_from_cache(repository_root):
+def fill_db_from_cache():
     '''
-    Records the data from each Package in the packagecache dir into the database.
+    Records the data from each Package file inside the packagecache folder into the database.
     
     .. versionadded:: 0.1
     '''
     
-    local_dists =  scan_repository(repository_root)
-    for dist in local_dists.items():
+    local_dists = list_dirs(filter(None, PACKAGECACHE))
+    for dist in local_dists:
         dist_sub_paths = filter(lambda p: "binary" in p, find_dirs(os.path.join(PACKAGECACHE, dist[0]))) 
         
         for path in dist_sub_paths:
