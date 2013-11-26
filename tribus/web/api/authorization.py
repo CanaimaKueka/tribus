@@ -33,12 +33,12 @@ class Authorization(BaseAuthorization):
 
 
 class UserAuthorization(Authorization):
-
+    # NO SE USA (hasta ahora)
     def read_list(self, object_list, bundle):
         return object_list.filter(id=bundle.request.user.id)
 
 
-# SE DEBE PERMITIR LEER 
+    # SE DEBE PERMITIR LEER 
     def read_detail(self, object_list, bundle):
         #if int(bundle.obj.id) == bundle.request.user.id:
         return True
@@ -46,8 +46,9 @@ class UserAuthorization(Authorization):
      
 
     def update_detail(self, object_list, bundle):
-        #if int(bundle.obj.id) == bundle.request.user.id:
-        return True
+        if int(bundle.obj.id) == bundle.request.user.id:
+            return True
+        raise Unauthorized("You are not allowed to access that resource.")   
 
 
 class UserProfileAuthorization(Authorization):
@@ -55,18 +56,18 @@ class UserProfileAuthorization(Authorization):
     def read_list(self, object_list, bundle):#filtrar todos los objetos pertenecientes a user
         return object_list
 
-    def read_detail(self, object_list, bundle):
+    def read_detail(self, object_list, bundle):#aqui se debe hacer una val
         return True
 
 # HACER AUTORIZACION PARA PATCH
+    
 
     def update_detail(self, object_list, bundle):
+        print( "------------------->" , dir (bundle.request.PATCH), bundle.request.PATCH.items)
         #if int(bundle.obj.id) == bundle.request.user.id:
         return True
         #raise Unauthorized("You are not allowed to access that resource.")
 
-    def delete_list(self, object_list, bundle):
-        return object_list
 
 
 class UserFollowersAuthorization(Authorization):
@@ -89,7 +90,6 @@ class UserFollowsAuthorization(Authorization):
 
     def read_list(self, object_list, bundle):
         return object_list.filter(id__in=self.get_follows(bundle=bundle))
-
 
 
 class TimelineAuthorization(Authorization):
