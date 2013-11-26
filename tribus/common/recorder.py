@@ -44,12 +44,13 @@ sys.path.insert(0, base)
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
 from debian import deb822
 from tribus.web.cloud.models import *
-from tribus.config.pkgrecorder import package_fields, detail_fields, LOCAL_ROOT, LOCAL_ROOT_DISTS,\
-CANAIMA_ROOT, SAMPLES_LISTS, SAMPLES_PACKAGES
-from tribus.common.utils import find_files, md5Checksum, find_dirs, list_dirs,\
-    list_files
+from tribus.config.pkgrecorder import package_fields, detail_fields, LOCAL_ROOT, CANAIMA_ROOT
+from tribus.common.utils import find_files, md5Checksum, find_dirs, scan_repository,\
+    list_dirs
 from tribus.config.base import PACKAGECACHE
 from tribus.config.web import DEBUG
+from django.db.models import Q
+
 
 def record_maintainer(maintainer_data):
     """
@@ -157,9 +158,6 @@ def create_relationship(fields):
         obj = Relation(**fields)
         obj.save()
         return obj
-#     obj = Relation(**fields)
-#     obj.save()
-#     return obj
 
 
 def create_tag(val):
@@ -409,6 +407,7 @@ def update_package(section):
     
     .. versionadded:: 0.1
     """
+    
     exists = Package.objects.filter(Package = section['Package'])
     exists.update(**select_paragraph_fields(section, package_fields))
     # Necesito encontrar una mejor forma de hacer esto: 
@@ -469,7 +468,6 @@ def update_section(section, dist):
         exists = Details.objects.filter(Relations = r)
         if not exists:
             r.delete()
-    #d.Relations.all().delete()
     record_relations(d, section.relations.items())
     print "Actualizacion finalizada"
 
@@ -487,76 +485,52 @@ def update_package_list(file_path, dist):
     
     .. versionadded:: 0.1
     """
+    existent_packages = []
+    actual_arch = None
     
-    archivo = deb822.Packages.iter_paragraphs(file(file_path))
+    package_file = deb822.Packages.iter_paragraphs(file(file_path))
     print "Actualizando lista de paquetes"
-    for section in archivo:
-        existe = Details.objects.filter(package__Package = section['Package'], Architecture = section['Architecture'],
+    for section in package_file:
+        existent_packages.append(section['Package'])
+        if not actual_arch and section['Architecture'] != 'all':
+            actual_arch = section['Architecture']
+        exists = Details.objects.filter(package__Package = section['Package'], Architecture = section['Architecture'],
                                         Distribution = dist)
-        if existe:
-            if section['md5sum'] != existe[0].MD5sum:
+        if exists:
+            if section['md5sum'] != exists[0].MD5sum:
                 print "Se encontraron diferencias en la seccion -->", section['Package']
-                print section['md5sum'], existe[0].MD5sum
+                print section['md5sum'], exists[0].MD5sum
                 update_section(section, dist)
         else:
             record_section(section, dist)
             print "Se estan agregando nuevos detalles"
             
-def scan_repository(repo_root):
-    '''
-    Este metodo lee el archivo distributions ubicado en la raiz de un 
-    repositorio y genera un diccionario con las distribuciones y 
-    componentes presentes en dicho repositorio.
-    '''
-    
-    dist_releases = {}
-    dists = urllib.urlopen(os.path.join(repo_root, "distributions"))
-    linea = dists.readline().strip("\n")
-    
-    while linea:
-        l = linea.split(" ")
-        dist_releases[l[0]] = l[1]
-        linea = dists.readline().strip("\n")
+    # Selecciona los paquetes que coincidan con la arquitectura del packages actual            
+    bd_packages = Package.objects.filter(Details__Distribution = dist).filter(Q(Details__Architecture = 'all') | 
+                                                                              Q(Details__Architecture = actual_arch))
+    for package in bd_packages:
+        # En alguna parte debo eliminar relaciones o enlaces huerfanos
         
-    return dist_releases            
+        # Si el paquete no esta en la lista, busca los detalles y borra aquellos obsoletos
+        if package.Package not in existent_packages:
+            for detail in package.Details.all():
+                if detail.Distribution == dist and detail.Architecture == actual_arch:
+                    print "Eliminando detalles de -->", package.Package
+                    detail.delete()
+            # Si el paquete no tiene mas detalles procede a eliminarlo
+            if not package.Details.all():
+                print "Eliminando -->", package.Package
+                package.delete()
+                
 
-
-def clean_package_cache(dist):
-    '''
-    Deletes all debian control files (Packages) in the packagecache directory.
-    
-    :param dist: codename of the Canaima's version that will be cleaned.
-    
-    .. versionadded:: 0.1
-    '''
-    base = PACKAGECACHE + dist
-    files = find_files(base, "Packages")
-    for f in files:
-        os.remove(f)
-
-def update_package_cache():
-    '''
-    Scans the packagecache directory to get the existent 
-    distributions and update them.
-    It is assumed that the packagecache directory was created previously.
-    '''
-    
-    if DEBUG:
-        repository_root = LOCAL_ROOT
-    else: 
-        repository_root = CANAIMA_ROOT
-    
-    dists =  scan_repository(repository_root)
-    
-    for dist in dists.keys():
-        update_dist_paragraphs(repository_root, dist)
-        
 def update_dist_paragraphs(repository_root, dist):
     '''
     Updates a debian control file (Packages),
     comparing the the one in the repository with its local copy.
     If there are differences in the MD5sum field then the local
     copy is deleted and copied again from the repository.
+    
+    :param repository_root: url of the repository from which the Packages files will be updated.
     
     :param dist: codename of the Canaima's version that will be updated.
     
@@ -579,17 +553,37 @@ def update_dist_paragraphs(repository_root, dist):
                 if not l['md5sum'] == md5Checksum(local_file):
                     os.remove(local_file)
                     urllib.urlretrieve(remote_file, local_file)
-                    print "Actualizando -->", local_file
                     update_package_list(local_file, dist)
                 else:
-                    print "No hay cambios en el repositorio -->", local_file
+                    print "No hay cambios en -->", local_file
     else:
         print "No se ha podido llevar a cabo la actualizacion"
+
+
+def update_package_cache():
+    '''
+    Scans the packagecache directory to get the existent 
+    distributions and update them.
+    It is assumed that the packagecache directory was created previously.
+    '''
+    
+    if DEBUG:
+        repository_root = LOCAL_ROOT
+    else: 
+        repository_root = CANAIMA_ROOT
+    
+    dists = scan_repository(repository_root)
+    
+    for dist in dists.keys():
+        update_dist_paragraphs(repository_root, dist)
+        
         
 def create_cache_dirs(repository_root):
     '''
-    Creates the packagecache and all other necessary directories, to organize the
-    debian control files (Packages) from the repository.
+    Creates the packagecache and all other necessary directories to organize the
+    debian control files (Packages) pulled from the repository.
+    
+    :param repository_root: url of the repository from which the Packages files will be pulled.
     
     .. versionadded:: 0.1
     '''
@@ -622,89 +616,19 @@ def create_cache_dirs(repository_root):
                         except IOError:
                             print 'archivo %s no encontrado.' % (remote_path)
          
-def fill_db_from_cache(repository_root):
+def fill_db_from_cache():
     '''
-    Records the data from each Package in the packagecache dir into the database.
+    Records the data from each Package file inside the packagecache folder into the database.
     
     .. versionadded:: 0.1
     '''
     
-    local_dists =  scan_repository(repository_root)
-    for dist in local_dists.items():
+    local_dists = list_dirs(filter(None, PACKAGECACHE))
+    for dist in local_dists:
         dist_sub_paths = filter(lambda p: "binary" in p, find_dirs(os.path.join(PACKAGECACHE, dist[0]))) 
         
         for path in dist_sub_paths:
             for p in find_files(path, "Packages"): 
                 for section in deb822.Packages.iter_paragraphs(file(p)):
                     record_section(section, dist[0])
-
-def init_sample_packages():
-    os.makedirs(SAMPLES_LISTS)
-    dist_releases = scan_repository(CANAIMA_ROOT)
-    for release in dist_releases.items():
-        try:
-            datasource = urllib.urlopen(os.path.join(CANAIMA_ROOT, release[1]))
-        except:
-            datasource = None
-        if datasource:
-            rel = deb822.Release(datasource)
-            if rel.has_key('MD5sum'):
-                for l in rel['MD5sum']:
-                    if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages$", l['name']):
-                        print "Seleccionando paquetes en -->", l['name']
-                        list_name = string.join( l['name'].split("/"), "_")
-                        list_file = os.path.join(SAMPLES_LISTS, string.join([release[0], list_name], "_"))
-                        package_url = os.path.join(CANAIMA_ROOT, "dists", release[0], l['name'])
-                        select_sample_packages(package_url, list_file, False)
-                        
-def select_sample_packages(package_url, package_list, include_relations = False):
-    inicial = {}
-    relaciones = []
-    final = {}
-    archivo = open(package_list, 'w')
-    remote_packages = urllib.urlopen(package_url)
-    for section in deb822.Packages.iter_paragraphs(remote_packages):
-        rnd = random.randint(0, 500)
-        if section.has_key('Installed-Size'):
-            if rnd == 500 and int(section['Installed-Size']) < 500:
-                inicial[section['Package']] = section['Filename']
-                archivo.write(section['filename']+"\n")
-                for relations in section.relations.items():
-                    if relations[1]:
-                        for relation in relations[1]:
-                            for r in relation:
-                                relaciones.append(r['name'])
-    
-    if include_relations:
-        remote_packages = urllib.urlopen(package_url)
-                   
-        for section in deb822.Packages.iter_paragraphs(remote_packages):
-            if section['Package'] in relaciones and int(section['Installed-Size']) < 500:
-                final[section['Package']] = section['Filename']
-                archivo.write(section['filename']+"\n")
-    
-    archivo.close()
-    print "Paquetes seleccionados -->", len(inicial)
-    
-def download_sample_packages():
-    files_list = list_files(SAMPLES_LISTS)
-    for f in files_list:
-        pre_dist_path = f.split("/")[-1]
-        dist_path = pre_dist_path.split("_")
-        dist_path.pop()
-        final_path = string.join(dist_path, "/")
-        download_package_list(f, os.path.join(SAMPLES_PACKAGES, final_path))   
-    
-def download_package_list(file_with_package_list, download_dir):
-    os.makedirs(download_dir)
-    archivo = open(file_with_package_list, 'r')
-    remote_root = "http://paquetes.canaima.softwarelibre.gob.ve"
-    linea = archivo.readline().strip("\n")
-    
-    while linea:
-        l = linea.split("/")
-        print "Descargando ---->", l[-1]
-        urllib.urlretrieve(os.path.join(remote_root, linea), os.path.join(download_dir, l[-1]))
-        linea = archivo.readline().strip("\n")
-        
-    archivo.close()
+                    
