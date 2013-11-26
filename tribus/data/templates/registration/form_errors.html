@@ -1,8 +1,9 @@
+{% load i18n %}		    
 		    {% if form.errors %}
 		        <div class="alert alert-error">
-				    <h1><span class="bigger-150"><i class="icon-remove"></i> Oh, snap!</span></h1>
-					<p>The operation could not be performed because one or more error(s) occurred.</p>
-					<p>Please resubmit the form after making the following changes:</p>
+				    <h1><span class="bigger-150"><i class="icon-remove"></i>{% trans 'Oh, snap!' %}</span></h1>
+					<p>{% trans 'The operation could not be performed because one or more error(s) occurred.' %}</p>
+					<p>{% trans 'Please resubmit the form after making the following changes:' %}</p>
 					<ul>
 			        {% if form.non_field_errors %}
                 		{% for non_field_error in form.non_field_errors %}
@@ -15,10 +16,11 @@
                 		{% endif %}
 		            {% endfor %}
 					</ul>
+					{{render_js}}
 		        </div>
 		    {% else %}
 		        <div class="hero-unit">
-		            algo aquí
+		            algo aquí {{render_js}}
 		            <br />
 		            <br />
 		            <br />

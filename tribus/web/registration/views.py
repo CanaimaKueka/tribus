@@ -36,9 +36,9 @@ from tribus.web.registration.forms import SignupForm
 class RegistrationView(BaseRegistrationView):
 
     form_class = SignupForm
-
+    context = {'render_js' : 'default.angular'}
     def get_success_url(self, request, user):
-        return ('registration_signup_complete', (), {})
+        return ('registration_signup_complete', (), context)
 
 
 class ActivationView(BaseActivationView):

@@ -1,13 +1,14 @@
 {% extends "registration/base.html" %}
+{% load i18n %}
 {% block title %}Sign up for an account{% endblock %}
 {% block content %}
 <div class="well jumbotron">
 	<div class="container">
         <div class="row-fluid">
 	        <div class="span4">
-		        <h3 class="lighter block blue">Sign up to Tribus</h3>
+		        <h3 class="lighter block blue">{% trans 'Sign up to Tribus' %}</h3>
 		        <hr />
-		        <p>Después de introducir sus datos de usuario, usted podrá editar su información de perfil.</p>
+		        <p>{% trans 'After entering your user data, you can edit your profile information.' %}</p>
 		        <form method="post" action="{% url 'registration_signup' %}">
                     {% csrf_token %}
                     <ul class="unstyled">
@@ -19,7 +20,7 @@
                         <li>{{ form.email }}</li>
                         <li>{{ form.password1 }}</li>
                     </ul>
-			        <button class="btn btn-yellow btn-block" type="submit">Sign up</button>
+			        <button class="btn btn-yellow btn-block" type="submit">{%trans 'Sign up' %}</button>
 			        <input type="hidden" name="next" value="{{ next }}" />
 		        </form>
 	        </div>
@@ -31,3 +32,4 @@
 	</div>
 </div>
 {% endblock %}
+

@@ -10,9 +10,9 @@ var tribus = angular.module('tribus',
 
 // Controllers -----------------------------------------------------------------
 
-tribus.controller('TribController', ['$scope', '$timeout', 'Tribs', 'Timeline',
+tribus.controller('TribController', ['$scope', '$timeout', '$modal', 'Tribs', 'Timeline',
     TribController]);
-tribus.controller('CommentController', ['$scope', '$timeout', 'Comments',
+tribus.controller('CommentController', ['$scope', '$timeout', '$modal', 'Comments',
     CommentController]);
 tribus.controller('UserController',['$scope','UserProfile', 'User',
     UserController]);
