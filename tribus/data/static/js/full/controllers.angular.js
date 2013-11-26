@@ -206,6 +206,21 @@ function ModalController($scope, $modalInstance){
     $scope.cancel = function(){$modalInstance.dismiss();};
 };
 
+function idInArray(item, a){
+    for (var i = 0; i < a.length; i++){
+        if (a[i].id === item.id){
+            return true;
+        }
+    }
+    return false;
+}
+
+// from http://stackoverflow.com/a/37687
+function replaceLinks(text){
+    var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+    return text.replace(exp, "<a href='$1'>$1</a>");
+}
+
 
 function TribController($scope, $timeout, $modal, Tribs, Timeline){
 
@@ -286,12 +301,12 @@ function TribController($scope, $timeout, $modal, Tribs, Timeline){
         $scope.delete_trib_id = $scope.tribs[this.$index].id;
         $scope.delete_trib_index = this.$index;
 
-        var modal = $modal.open({
+        var deleteTribModal = $modal.open({
             templateUrl: 'delete_modal_template.html',
             controller: ModalController,
         });
 
-        modal.result.then(function(){
+        deleteTribModal.result.then(function(){
             Tribs.delete({
                 id: $scope.delete_trib_id
             }, function(e){
@@ -310,10 +325,10 @@ function TribController($scope, $timeout, $modal, Tribs, Timeline){
     $scope.addOldTribs = function(){
         if ($scope.tribs_end) return;
         if ($scope.controller_busy) return;
+        $scope.tribs_end = false;
         $scope.controller_busy = true;
 
         if (template_name === 'profile'){
-            console.log('Tribs');
             var service = Tribs;
             var querydict = {
                 author_id : user_id,
@@ -322,7 +337,6 @@ function TribController($scope, $timeout, $modal, Tribs, Timeline){
                 offset: $scope.trib_offset
             };
         } else if(template_name === 'profileView'){
-            console.log('Tribs');
             var service = Tribs;
             var querydict = {
                 author_id : userview_id,
@@ -331,7 +345,6 @@ function TribController($scope, $timeout, $modal, Tribs, Timeline){
                 offset: $scope.trib_offset
             };
         } else if (template_name === 'dashboard'){
-            console.log('Timeline');
             var service = Timeline;
             var querydict = {
                 order_by: $scope.trib_orderby,
@@ -340,28 +353,15 @@ function TribController($scope, $timeout, $modal, Tribs, Timeline){
             };
         };
 
-        console.log(service.toString());
-
-        var old_tribs = service.query(querydict, function(){
-            if(old_tribs.objects.length === 0){
-                $scope.tribs_end = true;
-                $scope.controller_busy = false;
-            } else {
-                $scope.tribs_end = false;
-                for(var i = 0; i < old_tribs.objects.length; i++){
-                    var old_id_appears = false;
-
-                    for(var j = 0; j < $scope.tribs.length; j++){
-                        if(old_tribs.objects[i].id == $scope.tribs[j].id){
-                            old_id_appears = true;
-                        }
-                    }
-
-                    if(!old_id_appears){
-                        old_tribs.objects[i].author_gravatar = 'http://www.gravatar.com/avatar/';
-                        old_tribs.objects[i].author_gravatar += md5(old_tribs.objects[i].author_email);
-                        old_tribs.objects[i].author_gravatar += '?d=mm&s=70&r=x';
-                        $scope.tribs.push(old_tribs.objects[i]);
+        service.query(querydict, function(results){
+            if(results.objects.length != 0){
+                for(var i = 0; i < results.objects.length; i++){
+                    if(!idInArray(results.objects[i], $scope.tribs)){
+                        results.objects[i].trib_content = replaceLinks(results.objects[i].trib_content);
+                        results.objects[i].author_gravatar = 'http://www.gravatar.com/avatar/';
+                        results.objects[i].author_gravatar += md5(results.objects[i].author_email);
+                        results.objects[i].author_gravatar += '?d=mm&s=70&r=x';
+                        $scope.tribs.push(results.objects[i]);
                     }
                 }
 
@@ -379,17 +379,18 @@ function TribController($scope, $timeout, $modal, Tribs, Timeline){
                 });
 
                 $scope.controller_busy = false;
+            } else {
+                $scope.tribs_end = true;
+                $scope.controller_busy = false;
             }
-        }, function(e){
-            console.log(e);
+        }, function(error){
             $timeout(function(){
                 $scope.addAlert(trib_add_error, 'error');
             }, 100);
         });
     };
 
-    $scope.addNewTribs = function(selector){
-
+    $scope.addNewTribs = function(){
         if ($scope.controller_busy) return;
         $scope.controller_busy = true;
 
@@ -422,40 +423,32 @@ function TribController($scope, $timeout, $modal, Tribs, Timeline){
             };
         };
 
-        console.log(template_name);
-        console.log(service);
-        
-        var fresh_tribs = service.query(querydict,function(){
-            for(var i = 0; i < fresh_tribs.objects.length; i++){
-                if(fresh_tribs.objects[i].id != $scope.first_trib_id){
-                    var fresh_id_appears = false;
-
-                    for(var j = 0; j < $scope.tribs.length; j++){
-                        if(fresh_tribs.objects[i].id == $scope.tribs[j].id){
-                            fresh_id_appears = true;
+        service.query(querydict, function(results){
+            if(results.objects.length != 0){
+                for(var i = 0; i < results.objects.length; i++){
+                    if(results.objects[i].id != $scope.first_trib_id){
+                        if(!idInArray(results.objects[i], $scope.tribs)){
+                            results.objects[i].trib_content = replaceLinks(results.objects[i].trib_content);
+                            results.objects[i].author_gravatar = 'http://www.gravatar.com/avatar/';
+                            results.objects[i].author_gravatar += md5(results.objects[i].author_email);
+                            results.objects[i].author_gravatar += '?d=mm&s=70&r=x';
+                            $scope.tribs.unshift(results.objects[i]);
                         }
-                    }
 
-                    if(!fresh_id_appears){
-                        fresh_tribs.objects[i].author_gravatar = 'http://www.gravatar.com/avatar/';
-                        fresh_tribs.objects[i].author_gravatar += md5(fresh_tribs.objects[i].author_email);
-                        fresh_tribs.objects[i].author_gravatar += '?d=mm&s=70&r=x';
-                        $scope.tribs.unshift(fresh_tribs.objects[i]);
-                    }
+                        if($scope.tribs.length > $scope.trib_limit_to){
+                            $scope.trib_limit_to = $scope.tribs.length;
+                        }
 
-                    if($scope.tribs.length > $scope.trib_limit_to){
-                        $scope.trib_limit_to = $scope.tribs.length;
+                        if(i == (results.objects.length-1) && $scope.first_trib_id != ''){
+                            $scope.new_tribs_offset = $scope.new_tribs_offset + trib_add;
+                            $scope.new_tribs_passes = $scope.new_tribs_passes + 1;
+                            $timeout(function(){$scope.addNewTribs();});
+                        }
+                    } else {
+                        $scope.new_tribs_offset = trib_offset;
+                        $scope.new_tribs_passes = 0;
+                        break;
                     }
-
-                    if(i == (fresh_tribs.objects.length-1)){
-                        $scope.new_tribs_offset = $scope.new_tribs_offset + trib_add;
-                        $scope.new_tribs_passes = $scope.new_tribs_passes + 1;
-                        $timeout(function(){$scope.addNewTribs();});
-                    }
-                } else {
-                    $scope.new_tribs_offset = trib_offset;
-                    $scope.new_tribs_passes = 0;
-                    break;
                 }
             }
 
@@ -466,7 +459,7 @@ function TribController($scope, $timeout, $modal, Tribs, Timeline){
 
             $scope.controller_busy = false;
 
-        }, function(e){
+        }, function(error){
             $timeout(function(){
                 $scope.addAlert(trib_add_error, 'error');
             }, 100);
@@ -482,8 +475,18 @@ function CommentController($scope, $timeout, $modal, Comments){
     $scope.comment_offset = comment_offset;
     $scope.comment_orderby = comment_orderby;
     $scope.comments = [];
+    $scope.first_comment_id = '';
     $scope.new_comments_offset = comment_offset;
     $scope.new_comments_passes = 0;
+
+    function idInArray(item, a){
+        for (var i = 0; i < a.length; i++){
+            if (a[i].id === item.id){
+                return true;
+            }
+        }
+        return false;
+    }
 
     $scope.createNewComment = function(){
         Comments.save({
@@ -501,10 +504,8 @@ function CommentController($scope, $timeout, $modal, Comments){
                 $scope.addNewComments();
             });
             $timeout(function(){
-                angular.element(document.querySelector('textarea.comment_textarea'))
-                    .triggerHandler('keyup');
-                angular.element(document.querySelector('textarea.comment_textarea'))
-                    .triggerHandler('focus');
+                angular.element(document.querySelector('textarea.action_textarea'))
+                    .triggerHandler('blur');
             });
             $timeout(function(){
                 $scope.addAlert(comment_save_success, 'success');
@@ -541,15 +542,6 @@ function CommentController($scope, $timeout, $modal, Comments){
         });
     };
 
-    function itemInArray(item, a){
-        for (var i = 0; i < a.length; i++){
-            if (a[i].id === item.id){
-                return true;
-            }
-        }
-        return false;
-    }
-
     $scope.addNewComments = function(){
         if($scope.controller_busy) return;
         $scope.controller_busy = true;
@@ -567,7 +559,8 @@ function CommentController($scope, $timeout, $modal, Comments){
             if(results.objects.length != 0){
                 for(var i = 0; i < results.objects.length; i++){
                     if(results.objects[i].id != $scope.first_comment_id){
-                        if(!itemInArray(results.objects[i], $scope.comments)){
+                        if(!idInArray(results.objects[i], $scope.comments)){
+                            results.objects[i].comment_content = replaceLinks(results.objects[i].comment_content);
                             results.objects[i].author_gravatar = 'http://www.gravatar.com/avatar/';
                             results.objects[i].author_gravatar += md5(results.objects[i].author_email);
                             results.objects[i].author_gravatar += '?d=mm&s=30&r=x';
@@ -578,7 +571,7 @@ function CommentController($scope, $timeout, $modal, Comments){
                             $scope.comment_limit_to = $scope.comments.length;
                         }
 
-                        if(i == (results.objects.length-1)){
+                        if(i == (results.objects.length-1) && $scope.first_comment_id != ''){
                             $scope.new_comments_offset = $scope.new_comments_offset + comment_add;
                             $scope.new_comments_passes = $scope.new_comments_passes + 1;
                             $timeout(function(){$scope.addNewComments();});
@@ -608,6 +601,7 @@ function CommentController($scope, $timeout, $modal, Comments){
     $scope.addOldComments = function(){
         if ($scope.comments_end) return;
         if($scope.controller_busy) return;
+        $scope.comments_end = false;
         $scope.controller_busy = true;
 
         Comments.query({
@@ -618,25 +612,20 @@ function CommentController($scope, $timeout, $modal, Comments){
         }, function(results){
             if(results.objects.length != 0){
                 for(var i = 0; i < results.objects.length; i++){
-                    if(results.objects[i].id != $scope.first_comment_id){
-                        if(!itemInArray(results.objects[i], $scope.comments)){
-                            results.objects[i].author_gravatar = 'http://www.gravatar.com/avatar/';
-                            results.objects[i].author_gravatar += md5(results.objects[i].author_email);
-                            results.objects[i].author_gravatar += '?d=mm&s=30&r=x';
-                            $scope.comments.push(results.objects[i]);
-                        }
+                    if(!idInArray(results.objects[i], $scope.comments)){
+                        results.objects[i].comment_content = replaceLinks(results.objects[i].comment_content);
+                        results.objects[i].author_gravatar = 'http://www.gravatar.com/avatar/';
+                        results.objects[i].author_gravatar += md5(results.objects[i].author_email);
+                        results.objects[i].author_gravatar += '?d=mm&s=30&r=x';
+                        $scope.comments.push(results.objects[i]);
+                    }
 
-                        if($scope.comments.length > $scope.comment_limit_to){
-                            $scope.comment_limit_to = $scope.comments.length;
-                        }
+                    if($scope.comments.length > $scope.comment_limit_to){
+                        $scope.comment_limit_to = $scope.comments.length;
+                    }
 
-                        if($scope.comments.length > $scope.comment_offset){
-                            $scope.comment_offset = $scope.comment_offset + comment_add;
-                        }
-                    } else {
-                        $scope.comment_offset = comment_offset;
-                        $scope.new_comments_passes = 0;
-                        break;
+                    if($scope.comments.length > $scope.comment_offset){
+                        $scope.comment_offset = $scope.comment_offset + comment_add;
                     }
                 }
             } else {

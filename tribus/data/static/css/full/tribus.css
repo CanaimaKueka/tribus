@@ -24,6 +24,10 @@ input, button, select, textarea {
     font-family: "Open Sans", Helvetica, sans-serif;
 }
 
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display:none;
+}
+
 .main-container {
     position: static;
     padding: 0;
@@ -327,8 +331,10 @@ blockquote,blockquote.pull-right {
 .alert-placeholder {
     z-index: 2000;
     position: fixed;
-    left: 6%;
-    right: 36%;
+/*    left: 6%;
+    right: 36%;*/
+    left: 66.2%;
+    right: 5.8%;
     top: 50px;
 }
 
@@ -14847,11 +14853,11 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 }
 
 .dashboard_panel {
-    background-color: rgb(228,228,214);
+/*    background-color: rgb(228,228,214);
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
     -o-border-radius: 6px;
-    border-radius: 6px;
+    border-radius: 6px;*/
 }
 
 .action_publisher {
@@ -14882,6 +14888,10 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 .trib_item {
     float: left;
     display: block;
+}
+
+.trib_intro {
+    /*display: none;*/
 }
 
 .trib_intro > .trib_body,
