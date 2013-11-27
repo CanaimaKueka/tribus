@@ -313,7 +313,7 @@ function TribController($scope, $timeout, $modal, Tribs, Timeline){
         $scope.controller_busy = true;
 
         if (template_name === 'profile'){
-            console.log('Tribs');
+            
             var service = Tribs;
             var querydict = {
                 author_id : user_id,
@@ -322,7 +322,7 @@ function TribController($scope, $timeout, $modal, Tribs, Timeline){
                 offset: $scope.trib_offset
             };
         } else if(template_name === 'profileView'){
-            console.log('Tribs');
+            
             var service = Tribs;
             var querydict = {
                 author_id : userview_id,
@@ -331,7 +331,7 @@ function TribController($scope, $timeout, $modal, Tribs, Timeline){
                 offset: $scope.trib_offset
             };
         } else if (template_name === 'dashboard'){
-            console.log('Timeline');
+            
             var service = Timeline;
             var querydict = {
                 order_by: $scope.trib_orderby,
@@ -340,7 +340,6 @@ function TribController($scope, $timeout, $modal, Tribs, Timeline){
             };
         };
 
-        console.log(service.toString());
 
         var old_tribs = service.query(querydict, function(){
             if(old_tribs.objects.length === 0){

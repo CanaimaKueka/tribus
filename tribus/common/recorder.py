@@ -625,10 +625,9 @@ def fill_db_from_cache():
     
     local_dists = list_dirs(filter(None, PACKAGECACHE))
     for dist in local_dists:
-        dist_sub_paths = filter(lambda p: "binary" in p, find_dirs(os.path.join(PACKAGECACHE, dist[0]))) 
+        dist_sub_paths = filter(lambda p: "binary" in p, find_dirs(os.path.join(PACKAGECACHE, dist)))
         
         for path in dist_sub_paths:
             for p in find_files(path, "Packages"): 
                 for section in deb822.Packages.iter_paragraphs(file(p)):
-                    record_section(section, dist[0])
-                    
+                    record_section(section, dist)

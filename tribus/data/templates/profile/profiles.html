@@ -15,7 +15,10 @@
                     <hr>
                     <p><h3>{{ user_view.first_name }} {{user_view.last_name}}</h3></p>
                     <p>{{ user_view.email }}</p>
-                    <p>{% trans 'Description' %}: {{ user_view.description }}</p>
+
+                    	{%if not user_view.description == none %}
+							<p>{% trans 'Description' %}: {{ user_view.description }}</p>
+						{% endif %}
                     <hr>
                     {% endblock %}
                 </div>
