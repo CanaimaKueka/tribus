@@ -4217,6 +4217,7 @@ button.btn:active {
 
 .dropdown-menu {
     margin: 8px 0;
+    width: 100%;
 }
 
 .dropdown-menu>li>a {
@@ -14657,10 +14658,14 @@ th[aria-selected=true] .ui-jqgrid-sortable {
     margin: 0;
 }
 
+.navbar .nav > li {
+    height: 40px;
+}
+
 .navbar .divider-vertical {
     margin: 0;
     padding: 0;
-    width: 1%;
+    width: 0;
     border-right: 0px;
 }
 
@@ -14670,34 +14675,45 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 
 .navbar .nav > li > a {
     padding: 0;
-    margin: 3%;
+    margin: 5px 3%;
+    height: 30px;
     line-height: 1;
     float:left;
     width: 94%;
 }
 
-.navbar .nav > li.profile {
-
+.nav-spacer {
+    margin: 0;
+    padding: 0;
+    width: 46.80852%;
+    display: block;
+    float: left;
+    min-height: 30px;
+    margin-left: 2.12766%;
+    -moz-box-sizing: border-box;
 }
-
 
 .navbar .nav > li.home {
     margin: 0;
     padding: 0;
-    width: 24%;
+    width: 18%;
 }
 
+.navbar .nav > li.settings,
+.navbar .nav > li.profile {
+    margin: 0;
+    padding: 0;
+    width: 48%;
+}
 
-.navbar .nav > li.home > a > span {
-    margin: 5%;
-    padding: 10%;
+.navbar .nav > li.home > a > span,
+.navbar .nav > li.profile > a > span,
+.navbar .nav > li.settings > a > span {
+    margin: 0px 5%;
+    display: inline-block;
     width: 70%;
-    display: block;
-}
-
-
-.navbar .nav > li.settings {
-
+    padding: 5px 10%;
+    height: 20px;
 }
 
 .navbar .nav > li.search,
@@ -14713,7 +14729,7 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 .navbar .nav > li.brand {
     padding: 0;
     margin: 0;
-    width: 70%;
+    width: 76%;
 }
 
 .navbar .nav > li.brand > a {
@@ -14723,35 +14739,36 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 .navbar .nav > li.brand > a > span.logo {
     background: url('../../img/logo-min.svg') no-repeat;
     background-size: contain;
-    width: 25%;
-    height: 20px;
+    width: 28%;
+    height: 30px;
     display: block;
     float: left;
     padding: 0;
-    margin: 3% 0;
+    margin: 0;
 }
 
 .navbar .nav > li.brand > a > span.logo_title {
     font-family: 'League Gothic';
-    font-size: 1.5em;
-    font-size: 2.3vw;
+    font-size: 1.8em;
     font-weight: 400;
+    line-height: 30px;
     margin: 0 1%;
-    width: 45%;
+    width: 46%;
     padding: 0;
-    line-height: 1;
     text-transform: uppercase;
     display: block;
     float: left;
+    height: 30px;
+    position: relative;
+    top: 2px;
 }
 
 .navbar .nav > li.brand > a > span.logo_subtitle {
     font-size: 0.6em;
-    font-size: 0.8vw;
     line-height: 0.8em;
     margin: 10% 1% 0 1%;
-    padding: 2%;
-    width: 22%;
+    padding: 2% 1%;
+    width: 20%;
     display: block;
     float: left;
     border-radius: 4px;
@@ -14788,7 +14805,7 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 }
 
 .jumbotron {
-    padding: 100px 5% 70px 5%;
+    padding: 100px 5% 80px 5%;
     background-color: #f2f2e8;
     border-bottom: 1px solid #d7d7b8;
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
@@ -15147,21 +15164,22 @@ th[aria-selected=true] .ui-jqgrid-sortable {
     -moz-border-radius: 6px;
     -o-border-radius: 6px;
     border-radius: 6px;
-    margin: 10px;
+    margin: 10% 0 0 20%;
     float:left;
     display: block;
     width: 50px;
     height: 50px;
+    border: 5px solid rgb(255, 255, 255);
 }
 
 .trib_avatar {
-    margin: 10% 35%;
+    margin: 10% 0% 0 30%;
     width: 70px;
     height: 70px;
 }
 
 .profile_avatar {
-    margin: 0 5% 10% 5%;
+    margin: 0;
     width: 250px;
     height: 250px;
 }

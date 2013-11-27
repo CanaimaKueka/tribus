@@ -27,8 +27,6 @@
             </form>
         </div>
     </div>
-    <div>
-    </div>
     <div class="trib_list" infinite-scroll="addOldTribs()" infinite-scroll-disabled="controller_busy" infinite-scroll-distance="0">
         <ul>
             <li style="display: none;" data-ng-show="tribs.length == 0 && template_name == 'dashboard'" class="trib_intro">
@@ -39,11 +37,9 @@
                         </h2>
                     </span>
                     <span class="trib_content">
-                        {% blocktrans %}
-                        <p>This is the dashboard, a place where you can follow the updates of your favorite projects and partners.</p>
-                        <p>Start by looking for your friends in the search bar on the top of the screen. Then, click on the Follow button in your friend's profile to start following their updates in your dashboard.</p>
-                        <p>You can always come back here by clicking on the Tribus logo.</p>
-                        {% endblocktrans %}
+                        <p>{% trans 'This is the dashboard, a place where you can follow the updates of your favorite projects and partners.' %}</p>
+                        <p>{% blocktrans %}Start by looking for your friends in the search bar on the top of the screen. Then, click on the Follow button in your friend's profile to start following their updates in your dashboard.{% endblocktrans %}</p>
+                        <p>{% trans 'You can always come back here by clicking on the Tribus logo.' %}</p>
                     </span>
                 </span>
             </li>
@@ -55,11 +51,9 @@
                         </h2>
                     </span>
                     <span class="trib_content">
-                        {% blocktrans %}
-                        <p>Hi, </p>
+                        <p>Hi {{ user_view.first_name }}, this is your profile.</p>
                         <p>Start by looking for your friends in the search bar on the top of the screen. Then, click on the Follow button in your friend's profile to start following their updates in your dashboard.</p>
                         <p>You can always come back here by clicking on the Tribus logo.</p>
-                        {% endblocktrans %}
                     </span>
                 </span>
             </li>

@@ -1,0 +1,33 @@
+{% load i18n %}
+{% if form.errors %}
+    <div class="alert alert-error">
+        <h1><span class="bigger-150"><i class="icon-remove"></i>{% trans 'Oh, snap!' %}</span></h1>
+        <p>{% trans 'The operation could not be performed because one or more error(s) occurred.' %}</p>
+        <p>{% trans 'Please resubmit the form after making the following changes:' %}</p>
+        <ul>
+        {% if form.non_field_errors %}
+            {% for non_field_error in form.non_field_errors %}
+                <li>{{ non_field_error|striptags }}</li>
+            {% endfor %}
+        {% endif %}
+        {% for field in form %}
+            {% if field.errors %}
+                <li><strong>{{ field.label }}:</strong> {{ field.errors|striptags }}</li>
+            {% endif %}
+        {% endfor %}
+        </ul>
+    </div>
+{% else %}
+    <div class="hero-unit">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+    </div>
+{% endif %}
