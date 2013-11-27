@@ -11,16 +11,11 @@
                         <span class="profile_avatar" ng-style="{'background-image': 'url(\''+user_gravatar+'?d=mm&s=250&r=x\')'}"></span>
                     </a>
                     <div class="space-36"></div>
-                    {% block datos %}
-                    <hr>
                     <p><h3>{{ user_view.first_name }} {{user_view.last_name}}</h3></p>
                     <p>{{ user_view.email }}</p>
-
-                    	{%if not user_view.description == none %}
-							<p>{% trans 'Description' %}: {{ user_view.description }}</p>
-						{% endif %}
-                    <hr>
-                    {% endblock %}
+                	{%if not user_view.description == none %}
+					<p>{% trans 'Description' %}: {{ user_view.description }}</p>
+					{% endif %}
                 </div>
             </div>
             <div class="span9">
