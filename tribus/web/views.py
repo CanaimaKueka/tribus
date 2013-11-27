@@ -44,7 +44,7 @@ def tribus_search(request):
 
     # Cargamos las funciones de Tribus para AngularJS
     render_js += ['controllers.angular', 'services.angular',
-        'elements.angular', 'navbar.angular']
+        'elements.angular', 'search.angular', 'navbar.angular']
 
     context ["render_js"] = render_js
     if request.GET:

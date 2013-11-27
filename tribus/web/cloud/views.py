@@ -31,7 +31,7 @@ def profile(request, name):
                 if not dict_details[det.Distribution][det.Architecture]['relations'].has_key(n.relation_type):
                     dict_details[det.Distribution][det.Architecture]['relations'][n.relation_type] = []
                 dict_details[det.Distribution][det.Architecture]['relations'][n.relation_type].append(n)
-                
+
     return render(request, 'cloud/packages.html', {
         'paquete': package_info,
         'raiz': LOCAL_ROOT,
