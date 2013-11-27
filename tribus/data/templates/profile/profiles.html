@@ -25,9 +25,10 @@
             </div>
             <div class="span9">
                 {% include 'profile/navbar.html' %}
+                <legend></legend>   
                 <div class="row-fluid">
-                    <tabset>
-                        <tab heading="{% trans 'Walk' %}">
+                    <tabset >
+                        <tab heading="{% trans 'Wall' %}">
                             {% include 'tribs.html' %}
                         </tab>
                         <tab heading="{% trans 'Edit Profile' %}">
@@ -43,7 +44,7 @@
                                 </div>
                             </form>
                         </tab>
-                        <tab heading="{% trans 'Follows' %}">
+                        <tab  heading="{% trans 'Follows' %}">
                                 <div class = "row-fluid">                               
                                     <input class = "span2 pull-right" name = "filtro" method = "GET" ng-model = 'query'></input>
                                     <label class = "pull-right">{% trans 'Search'%}:</label>
@@ -83,7 +84,7 @@
 
                                 <div ng-if= "filtername.length==0 && follows.length==0" >
                                     <p align = "center"> {% trans 'Is not following anyone' %} </p>
-                                    <image src = "http://www.nocturnar.com/imagenes/fotos/forever-alone-cara-forever-alone-cara.jpg" />
+                                    <!-- <image src = "http://www.nocturnar.com/imagenes/fotos/forever-alone-cara-forever-alone-cara.jpg" /> -->
                                 </div>                                          
 
                                 <span class= " pull-right"  ng-hide = "filtername.length<=pageSize">
@@ -141,7 +142,7 @@
 
                                 <div ng-if= "filtername.length==0 && followers.length==0" >
                                     <p align = "center"> {% trans 'no followers' %} </p>
-                                    <image src = "http://www.nocturnar.com/imagenes/fotos/forever-alone-cara-forever-alone-cara.jpg" />
+                                    <!-- <image src = "http://www.nocturnar.com/imagenes/fotos/forever-alone-cara-forever-alone-cara.jpg" /> -->
                                 </div>                                          
 
                                 <span class= " pull-right"  ng-hide = "filtername.length<=pageSize">

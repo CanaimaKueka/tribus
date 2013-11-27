@@ -24,6 +24,10 @@ input, button, select, textarea {
     font-family: "Open Sans", Helvetica, sans-serif;
 }
 
+.nav-tabs > li > a {
+    cursor: pointer;
+}
+
 .main-container {
     position: static;
     padding: 0;
