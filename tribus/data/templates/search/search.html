@@ -22,22 +22,22 @@
 				    {% endif %}
 				    </ul>
 				{% empty %}
-				   <p>No results found.</p>
+				   <p>{% trans 'No results found' %}</p>
 				{% endfor %}
 				
 				<div class="pagination">
 					{% if page.paginator.num_pages > 1 %}
 				    <span class="step-links">
 				        {% if page.has_previous %}
-				            <a href="?q={{query}}&filter={{filter}}&page={{ page.previous_page_number }}">previous</a>
+				            <a href="?q={{query}}&filter={{filter}}&page={{ page.previous_page_number }}">{% trans 'previous' %} </a>
 				        {% endif %}
 				        
 				        <span class="current">
-				            Page {{ page.number }} of {{ page.paginator.num_pages }}.
+				            {% trans 'Page' %} {{ page.number }} {% trans 'of' %} {{ page.paginator.num_pages }}.
 				        </span>
 						
 				        {% if page.has_next %}
-				            <a href="?q={{query}}&filter={{filter}}&page={{ page.next_page_number }}">next</a>
+				            <a href="?q={{query}}&filter={{filter}}&page={{ page.next_page_number }}">{% trans 'next' %} </a>
 				        {% endif %}
 				    </span>
 				    {% endif %}
@@ -45,13 +45,13 @@
 			</div>
 			<div>
 				{% if filter == "package" %}
-				Filtros:
-				    <b><p><a href="?q={{query}}&filter=package"> {% trans "Packages" %}</a></p></b>
-				    <p><a href="?q={{query}}&filter=user"> {% trans "Users" %}</a></p>
+				<h2> {% trans 'Filters:' %} </h2>
+				    <p> <b><a href="?q={{query}}&filter=package"> {% trans "Packages" %}</a></b> </p>
+				    <p> <a href="?q={{query}}&filter=user"> {% trans "Users" %}</a> </p>
 				{% elif filter == "user" %}
-				Filtros:
+				<h2> {% trans 'Filters:' %} </h2> 
 					<p><a href="?q={{query}}&filter=package"> {% trans "Packages" %}</a></p>
-				    <b><p><a href="?q={{query}}&filter=user"> {% trans "Users" %}</a></p></b>
+				    <p><b><a href="?q={{query}}&filter=user"> {% trans "Users" %}</a></b></p>
 				{% endif %}
 			</div>
 		</div>

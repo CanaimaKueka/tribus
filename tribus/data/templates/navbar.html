@@ -19,15 +19,15 @@
                         <span class="input-icon">
                             <input type="text" class="nav-search-input input-large top_search_input" autocomplete="off" name="q" placeholder="{% trans 'Search in Tribus' %}" ng-model="top_search" ng-keyup="refreshResults()" />
                             <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
-                            	<h3 ng-if="hasPackages()">Packages</h3>
+                            	<h3 ng-if="hasPackages()">{% trans 'Packages' %}</h3>
                         		<li role="presentation" ng-repeat="result in package_results">
                         			<a role="menuitem" tabindex="-1" href="{% verbatim %}{{ result.url }}{% endverbatim %}">{% verbatim %}{{ result.name }}{% endverbatim %}</a>
                         		</li>
-                        		<h3 ng-if="hasUsers()">Users</h3>
+                        		<h3 ng-if="hasUsers()">{% trans 'Users' %}</h3>
                         		<li role="presentation" ng-repeat="result in users_results">
                             		<a role="menuitem" tabindex="-1" href="{% verbatim %}{{ result.url }}{% endverbatim %}">{% verbatim %}{{ result.fullname }}{% endverbatim %}</a>
                             	</li>
-                        		<h3 ng-if="noResults()">No matching results</h3>
+                        		<h3 ng-if="noResults()">{% trans 'No matching results' %} </h3>
                     		</ul>
                             <i class="icon-search nav-search-icon"></i>
                         </span>
@@ -48,7 +48,7 @@
                         <i class="bigger-150 icon-cog"></i>
                     </a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="/logout">Logout</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="/logout">{% trans 'Logout' %}</a></li>
                     </ul>
                 </li>
             </ul>
