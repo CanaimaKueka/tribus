@@ -262,7 +262,7 @@ def record_details(section, pq, dist):
     
     .. versionadded:: 0.1
     """
-    
+        
     exists = Details.objects.filter(package = pq,
                                     Architecture = section['Architecture'],
                                     Distribution = dist)
@@ -623,11 +623,15 @@ def fill_db_from_cache():
     .. versionadded:: 0.1
     '''
     
-    local_dists = list_dirs(filter(None, PACKAGECACHE))
+    local_dists = filter(None,list_dirs(PACKAGECACHE))
+    
     for dist in local_dists:
-        dist_sub_paths = filter(lambda p: "binary" in p, find_dirs(os.path.join(PACKAGECACHE, dist)))
+
+        dist_sub_paths = filter(lambda p: "binary" in p, find_dirs(os.path.join(PACKAGECACHE, dist))) 
         
         for path in dist_sub_paths:
             for p in find_files(path, "Packages"): 
                 for section in deb822.Packages.iter_paragraphs(file(p)):
+
                     record_section(section, dist)
+                    

@@ -62,7 +62,7 @@ class Relation(models.Model):
 class Details(models.Model):
     Version = models.CharField("version del paquete", max_length = 50, null = True)
     Architecture = models.CharField("arquitectura", max_length = 75, null = True)
-    Distribution = models.CharField("distribucion", max_length = 75, null = True)
+    Distribution = models.CharField("distribucion", max_length = 75)
     Size = models.IntegerField("tamaño del paquete en esta arquitectura", null = True)
     InstalledSize = models.IntegerField("tamaño una vez instalado en esta arquitectura", null = True)
     MD5sum = models.CharField("llave md5 del paquete en esta arquitectura", max_length = 75, null = True)

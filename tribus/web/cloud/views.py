@@ -33,7 +33,7 @@ def profile(request, name):
                     dict_details[det.Distribution][det.Architecture]['relations'][n.relation_type] = []
                 dict_details[det.Distribution][det.Architecture]['relations'][n.relation_type].append(n)
                 
-    render_js = ['angular', 'angular.autogrow', 'angular.bootstrap', 'angular.resource', 
+    render_js = ['angular', 'angular.bootstrap', 'angular.resource', 
                  'angular.infinite-scroll', 'controllers.angular', 'services.angular',
                  'elements.angular', 'cloud.angular', 'navbar.angular', 'md5']
     

@@ -112,7 +112,6 @@ angular.module('Tribs', ['ngResource'])
 
 angular.module('Timeline', ['ngResource'])
     .factory('Timeline', function($resource){
-        console.log('dentro del timeline');
         return $resource('/api/0.1/user/timeline', {}, {
             query: {
                 method: 'GET',

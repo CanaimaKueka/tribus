@@ -58,7 +58,6 @@ angular.element(document).ready(function(){
     });
 
     actionTextarea.bind('keypress', function(e){
-
         if (e.which < 0x20) {
             return;
         }
@@ -89,17 +88,43 @@ angular.element(document).ready(function(){
 
         commentTextarea.bind('keyup', function(){
 
+            commentCharCounter = angular.element(this.parentNode
+                                                    .children[1]);
             commentButton = angular.element(this.parentNode
                                                 .parentNode
                                                 .parentNode
                                                 .children[2]
                                                 .children[0]);
+            this.style.height = '30px';
+            this.style.height = this.scrollHeight + 12 + 'px';
+
+            if(this.value.length === 0){
+                angular.element(this).css('height', '1.5em');
+                commentButton.attr('disabled', 'disabled');
+            }
+
             if(this.value.length > 0){
                 commentButton.removeAttr('disabled');
             }
 
-            if(this.value.length === 0){
-                commentButton.attr('disabled', 'disabled');
+            if(this.value.length >= 190){
+                commentCharCounter.css('color', 'rgb(237, 110, 40)');
+            } else {
+                commentCharCounter.css('color', 'rgb(214, 214, 214)');
+            }
+
+            commentCharCounter.text(200-this.value.length);
+        });
+
+        commentTextarea.bind('keypress', function(e){
+            if (e.which < 0x20) {
+                return;
+            }
+
+            if(this.value.length == 200){
+                e.preventDefault();
+            } else if (this.value.length > 200) {
+                this.value = this.value.substring(0, 200);
             }
         });
 
