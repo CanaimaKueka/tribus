@@ -42,10 +42,12 @@ angular.element(document).ready(function(){
         if(this.value.length === 0){
             angular.element(this).css('height', '1.5em');
             tribButton.attr('disabled', 'disabled');
+            tribCharCounter.text(' ');
         }
 
         if(this.value.length > 0){
             tribButton.removeAttr('disabled');
+            tribCharCounter.text(200-this.value.length);
         }
 
         if(this.value.length >= 190){
@@ -54,7 +56,6 @@ angular.element(document).ready(function(){
             tribCharCounter.css('color', 'rgb(214, 214, 214)');
         }
 
-        tribCharCounter.text(200-this.value.length);
     });
 
     actionTextarea.bind('keypress', function(e){
@@ -101,10 +102,12 @@ angular.element(document).ready(function(){
             if(this.value.length === 0){
                 angular.element(this).css('height', '1.5em');
                 commentButton.attr('disabled', 'disabled');
+                commentCharCounter.text(' ');
             }
 
             if(this.value.length > 0){
                 commentButton.removeAttr('disabled');
+                commentCharCounter.text(200-this.value.length);
             }
 
             if(this.value.length >= 190){
@@ -113,7 +116,6 @@ angular.element(document).ready(function(){
                 commentCharCounter.css('color', 'rgb(214, 214, 214)');
             }
 
-            commentCharCounter.text(200-this.value.length);
         });
 
         commentTextarea.bind('keypress', function(e){

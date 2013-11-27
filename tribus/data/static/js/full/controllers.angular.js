@@ -206,6 +206,7 @@ function ModalController($scope, $modalInstance){
     $scope.cancel = function(){$modalInstance.dismiss();};
 };
 
+
 function idInArray(item, a){
     for (var i = 0; i < a.length; i++){
         if (a[i].id === item.id){
@@ -214,6 +215,7 @@ function idInArray(item, a){
     }
     return false;
 }
+
 
 // from http://stackoverflow.com/a/37687
 function replaceLinks(text){
@@ -268,6 +270,8 @@ function TribController($scope, $timeout, $modal, Tribs, Timeline){
                 $scope.addNewTribs();
             });
             $timeout(function(){
+                angular.element(document.querySelector('textarea.action_textarea'))
+                    .triggerHandler('keyup');
                 angular.element(document.querySelector('textarea.action_textarea'))
                     .triggerHandler('blur');
             });
@@ -504,7 +508,9 @@ function CommentController($scope, $timeout, $modal, Comments){
                 $scope.addNewComments();
             });
             $timeout(function(){
-                angular.element(document.querySelector('textarea.action_textarea'))
+                angular.element(document.querySelectorAll('textarea.comment_textarea'))
+                    .triggerHandler('keyup');
+                angular.element(document.querySelectorAll('textarea.comment_textarea'))
                     .triggerHandler('blur');
             });
             $timeout(function(){

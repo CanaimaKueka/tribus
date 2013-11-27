@@ -4,4 +4,4 @@
 
 // Application -----------------------------------------------------------------
 
-var tribus = angular.module('tribus', ['Search']);
+var tribus = angular.module('tribus', ['Search', 'ui.bootstrap']);

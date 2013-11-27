@@ -24,10 +24,6 @@ input, button, select, textarea {
     font-family: "Open Sans", Helvetica, sans-serif;
 }
 
-[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-    display:none;
-}
-
 .main-container {
     position: static;
     padding: 0;
@@ -632,6 +628,14 @@ blockquote,blockquote.pull-right {
 
 .smaller-75 {
     font-size: 75%;
+}
+
+.width-10 {
+    width: 10%!important;
+}
+
+.width-15 {
+    width: 15%!important;
 }
 
 .width-20 {
@@ -4844,13 +4848,13 @@ span.input-icon {
 }
 
 .input-icon>input {
-    padding-left: 24px;
-    padding-right: 6px;
+    padding-left: 6%;
+    padding-right: 2%;
 }
 
 .input-icon.input-icon-right>input {
-    padding-left: 6px;
-    padding-right: 24px;
+    padding-left: 2%;
+    padding-right: 6%;
 }
 
 .input-icon>[class*="icon-"] {
@@ -14645,30 +14649,91 @@ th[aria-selected=true] .ui-jqgrid-sortable {
     font-size: 10px;
 }
 
-.navbar .nav > li.brand {
-    padding: 0 10px 0 20px;
+.navbar .nav {
+    margin: 0;
 }
 
-.navbar .nav > li.brand > a{
+.navbar .divider-vertical {
+    margin: 0;
+    padding: 0;
+    width: 1%;
+    border-right: 0px;
+}
+
+.navbar .form-search {
+    margin: 5px 0;
+}
+
+.navbar .nav > li > a {
+    padding: 0;
+    margin: 3%;
+    line-height: 1;
+    float:left;
+    width: 94%;
+}
+
+.navbar .nav > li.profile {
+
+}
+
+
+.navbar .nav > li.home {
+    margin: 0;
+    padding: 0;
+    width: 24%;
+}
+
+
+.navbar .nav > li.home > a > span {
+    margin: 5%;
+    padding: 10%;
+    width: 70%;
+    display: block;
+}
+
+
+.navbar .nav > li.settings {
+
+}
+
+.navbar .nav > li.search,
+.navbar .nav > li.search .input-icon {
+    width: 100%;
+}
+
+.navbar .nav > li.search input {
+    width: 92%;
+}
+
+
+.navbar .nav > li.brand {
+    padding: 0;
+    margin: 0;
+    width: 70%;
+}
+
+.navbar .nav > li.brand > a {
     padding: 0;
 }
 
 .navbar .nav > li.brand > a > span.logo {
     background: url('../../img/logo-min.svg') no-repeat;
-    width: 30px;
+    background-size: contain;
+    width: 25%;
     height: 20px;
     display: block;
     float: left;
-    padding: 0px;
-    margin: 0;
-    margin-top: 4px;
+    padding: 0;
+    margin: 3% 0;
 }
 
 .navbar .nav > li.brand > a > span.logo_title {
     font-family: 'League Gothic';
-    margin-left: 5px;
     font-size: 1.5em;
+    font-size: 2.3vw;
     font-weight: 400;
+    margin: 0 1%;
+    width: 45%;
     padding: 0;
     line-height: 1;
     text-transform: uppercase;
@@ -14677,22 +14742,15 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 }
 
 .navbar .nav > li.brand > a > span.logo_subtitle {
-    margin: 0;
-    padding: 2px;
-    margin-left: 3px;
-    margin-top: 12px;
     font-size: 0.6em;
+    font-size: 0.8vw;
     line-height: 0.8em;
+    margin: 10% 1% 0 1%;
+    padding: 2%;
+    width: 22%;
     display: block;
     float: left;
     border-radius: 4px;
-}
-
-.navbar .nav > li > a {
-    padding: 3px 6px;
-    margin: 5px;
-    line-height: 1;
-    float:left;
 }
 
 .navbar .nav li.dropdown.open > .dropdown-toggle,
@@ -14712,10 +14770,6 @@ th[aria-selected=true] .ui-jqgrid-sortable {
     background: url('../../img/package-slogan-background.svg') no-repeat center top;
     background-color: rgba(236, 247, 249, 0.7) !important;
     background-size: contain;
-}
-
-.navbar .form-search {
-  margin: 5px;
 }
 
 .hero-unit {

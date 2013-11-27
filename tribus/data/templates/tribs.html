@@ -1,7 +1,7 @@
 {% load i18n %}
 <div data-ng-controller="TribController" data-ng-init="addOldTribs();pollNewTribs()">
     <div class="alert-placeholder">
-        <span data-alert data-ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)" data-ng-cloak>
+        <span data-alert data-ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)" style="display: none;">
             {% verbatim %}{{ alert.msg }}{% endverbatim %}
         </span>
     </div>
@@ -15,7 +15,7 @@
                     <span class="arrow_left"></span>
                     <span class="action_bubble">
                         <textarea data-ng-model="trib_content" id="id_trib_content" name="trib_content" class="action_textarea" cols="40" rows="2" placeholder="{% blocktrans %}What are you doing?{% endblocktrans %}"></textarea>
-                        <span class="action_validation">200</span>
+                        <span class="action_validation"></span>
                     </span>
                 </span>
                 <span class="span2">
@@ -31,7 +31,7 @@
     </div>
     <div class="trib_list" infinite-scroll="addOldTribs()" infinite-scroll-disabled="controller_busy" infinite-scroll-distance="0">
         <ul>
-            <li data-ng-cloak data-ng-show="tribs.length == 0 && template_name == 'dashboard'" class="trib_intro">
+            <li style="display: none;" data-ng-show="tribs.length == 0 && template_name == 'dashboard'" class="trib_intro">
                 <span class="trib_body">
                     <span class="trib_title">
                         <h2>
@@ -40,14 +40,30 @@
                     </span>
                     <span class="trib_content">
                         {% blocktrans %}
-                        <p>This is the dashboard, where you can follow the updates of your favorite projects and partners.</p>
+                        <p>This is the dashboard, a place where you can follow the updates of your favorite projects and partners.</p>
                         <p>Start by looking for your friends in the search bar on the top of the screen. Then, click on the Follow button in your friend's profile to start following their updates in your dashboard.</p>
                         <p>You can always come back here by clicking on the Tribus logo.</p>
                         {% endblocktrans %}
                     </span>
                 </span>
             </li>
-            <li data-ng-cloak data-ng-show="tribs.length == 0 && template_name == 'profile'" class="trib_intro">
+            <li style="display: none;" data-ng-show="tribs.length == 0 && template_name == 'profile'" class="trib_intro">
+                <span class="trib_body">
+                    <span class="trib_title">
+                        <h2>
+                            {% trans 'This is your Profile' %}
+                        </h2>
+                    </span>
+                    <span class="trib_content">
+                        {% blocktrans %}
+                        <p>Hi, </p>
+                        <p>Start by looking for your friends in the search bar on the top of the screen. Then, click on the Follow button in your friend's profile to start following their updates in your dashboard.</p>
+                        <p>You can always come back here by clicking on the Tribus logo.</p>
+                        {% endblocktrans %}
+                    </span>
+                </span>
+            </li>
+            <li style="display: none;" data-ng-show="tribs.length == 0 && template_name == 'profileView'" class="trib_intro">
                 <span class="trib_body">
                     <span class="trib_title">
                         <h2>
@@ -63,24 +79,7 @@
                     </span>
                 </span>
             </li>
-            <li data-ng-cloak data-ng-show="tribs.length == 0 && template_name == 'profile'" class="trib_intro">
-                <span class="trib_body">
-                    <span class="trib_title">
-                        <h2>
-                            {% trans 'Welcome to Tribus!' %}
-                        </h2>
-                    </span>
-                    <span class="trib_content">
-                        {% blocktrans %}
-                        <p>This is the ewtwrwerwe, where you can follow the updates of your favorite projects and partners.</p>
-                        <p>Start by looking for your friends in the search bar on the top of the screen. Then, click on the Follow button in your friend's profile to start following their updates in your dashboard.</p>
-                        <p>You can always come back here by clicking on the Tribus logo.</p>
-                        {% endblocktrans %}
-                    </span>
-                </span>
-            </li>
-            <li data-ng-cloak id="{% verbatim %}{{ trib.id }}{% endverbatim %}" class="row-fluid trib_item"
-                data-ng-repeat="trib in tribs | orderBy: trib_orderby | limitTo: trib_limit_to track by trib.id">
+            <li style="display: none;" data-ng-show="tribs.length != 0" id="{% verbatim %}{{ trib.id }}{% endverbatim %}" class="row-fluid trib_item" data-ng-repeat="trib in tribs | orderBy: trib_orderby | limitTo: trib_limit_to track by trib.id">
                 <span class="span2">
                     <span class="trib_avatar" data-ng-style="{'background-image': 'url(\''+trib.author_gravatar+'\')'}"></span>
                 </span>
@@ -147,7 +146,7 @@
                                             <span class="arrow_left"></span>
                                             <span class="comment_bubble">
                                                 <textarea data-ng-model="comment_content" id="id_comment_content" name="comment_content" class="comment_textarea" cols="40" rows="1" placeholder="{% blocktrans %}What do you want to say?{% endblocktrans %}"></textarea>
-                                                <span class="comment_validation">200</span>
+                                                <span class="comment_validation"></span>
                                             </span>
                                         </span>
                                         <span class="span2">
@@ -175,7 +174,7 @@
             <button class="btn" data-ng-click="cancel()">
                 {% trans 'Cancel' %}
             </button>
-            <button class="btn btn-success" data-ng-click="ok(delete_trib_id)">
+            <button class="btn btn-success" data-ng-click="ok()">
                 {% trans 'Delete message' %}
             </button>
         </div>

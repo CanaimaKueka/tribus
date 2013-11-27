@@ -22,9 +22,9 @@ from tribus.config.brand import *
 
 def default_context(request):
     return {
-        'render_css': ['normalize', 'bootstrap', 'bootstrap-responsive',
-            'fonts', 'font-awesome', 'tribus', 'tribus-responsive'],
-        'render_js': ['angular', 'angular.bootstrap','default.angular'],
+        'render_css': ['normalize', 'bootstrap',
+            'fonts', 'font-awesome', 'tribus'],
+        'render_js': ['angular', 'angular.bootstrap', 'default.angular'],
         'tribus_distro': TRIBUS_DISTRO,
         'tribus_role_1': TRIBUS_ROLE_1,
         'tribus_role_2': TRIBUS_ROLE_2,
