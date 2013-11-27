@@ -868,25 +868,25 @@
 }
 
 @media only screen and (max-width:480px) {
-[    class*="vspace-xs"] {
+    [class*="vspace-xs"] {
         display: block;
     }
 }
 
 @media only screen and (max-width:767px) {
-[    class*="vspace-sm"] {
+    [class*="vspace-sm"] {
         display: block;
     }
 }
 
 @media only screen and (max-width:991px) {
-[    class*="vspace-md"] {
+    [class*="vspace-md"] {
         display: block;
     }
 }
 
 @media only screen and (max-width:1199px) {
-[    class*="vspace-lg"] {
+    [class*="vspace-lg"] {
         display: block;
     }
 }

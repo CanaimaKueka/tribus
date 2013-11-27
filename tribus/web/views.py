@@ -46,7 +46,7 @@ def tribus_search(request):
     render_js += ['controllers.angular', 'services.angular',
         'elements.angular', 'search.angular', 'navbar.angular']
 
-    context ["render_js"]= render_js
+    context ["render_js"] = render_js
     if request.GET:
         query = request.GET.get('q', '')
         objects = SearchQuerySet().filter(autoname = query)

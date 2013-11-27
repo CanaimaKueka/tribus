@@ -16,7 +16,7 @@
 * [] Corregir autenticación con servicios.
 * [HECHO] Usar Django-registration.
 * [] Hacer banners publicitarios.
-* [] Hacer bienvenida para los usuarios nuevos.
+* [HECHO] Hacer bienvenida para los usuarios nuevos.
 * [] Hace pipeline para pedir información adicional para usuarios que se conectan a través de redes sociales.
 * [] implementar caché.
 * [] hacer funciones para producción.
@@ -26,7 +26,7 @@
 * [] Mejorar ciclo de renderizado de css y js.
 * [HECHO] Revisar sistema de comentarios.
 * [] Agregar "sponsors".
-* [] Agregar botón de application cloud en el dashboard.
+* [HECHO] Agregar botón de application cloud en el dashboard.
 * [] Hacer que se reutilice el virtualenv en vez de regenerarlo.
 * [HECHO] Migrar de jQuery a AngularJS.
 * [] Revisar API.

@@ -8,10 +8,9 @@ from tribus.config.pkgrecorder import LOCAL_ROOT, relation_types
 
 def frontpage(request):
     return render(request, 'cloud/frontpage.html', {
-        'render_js': ['angular', 'angular.bootstrap',  'angular.resource',
+        'render_js': ['angular', 'angular.bootstrap', 'angular.resource',
                         'controllers.angular', 'services.angular', 'elements.angular',
-                        'cloud.angular',
-                        'navbar.angular'],
+                        'cloud.angular', 'navbar.angular'],
         })
 
 
@@ -32,16 +31,14 @@ def profile(request, name):
                 if not dict_details[det.Distribution][det.Architecture]['relations'].has_key(n.relation_type):
                     dict_details[det.Distribution][det.Architecture]['relations'][n.relation_type] = []
                 dict_details[det.Distribution][det.Architecture]['relations'][n.relation_type].append(n)
-                
-    render_js = ['angular', 'angular.bootstrap', 'angular.resource', 
-                 'angular.infinite-scroll', 'controllers.angular', 'services.angular',
-                 'elements.angular', 'cloud.angular', 'navbar.angular', 'md5']
-    
+
     return render(request, 'cloud/packages.html', {
         'paquete': package_info,
         'raiz': LOCAL_ROOT,
         'detalles': dict_details,
-        'render_js': render_js,
+        'render_js': ['angular', 'angular.autogrow', 'angular.bootstrap', 'angular.resource', 
+                 'angular.infinite-scroll', 'controllers.angular', 'services.angular',
+                 'elements.angular', 'cloud.angular', 'navbar.angular', 'md5'],
         })
 
 
