@@ -188,7 +188,7 @@ function SearchListController($scope, Search){
                     if (q.objects[0].users.length > 0) {
                         var users = q.objects[0].users;
                         for(var i = 0; i < users.length; i++){
-                            users[i].url = user_url_placer.replace('%PACKAGE%', users[i].username);
+                            users[i].url = user_url_placer.replace('%USER%', users[i].username);
                             $scope.users_results.push(users[i]);
                         }
                     }

@@ -1,19 +1,18 @@
 {% load i18n %}
 <div id="footer">
     <div class="container-fluid">
-        <hr />
         <div class="row-fluid">
             <span class="span5">
                 <div class="row-fluid">
                     <a href="/about/terms" target="_blank">{% trans 'Terms of Service' %}</a>
-                    <span class="divider-vertical"></span>
+                    &sim;
                     <a href="/about/privacy" target="_blank">{% trans 'Privacy Policy' %}</a>
-                    <span class="divider-vertical"></span>
-                    <a href="/about/guidelines" target="">{% trans 'Community Guidelines' %}</a>
                 </div>
             </span>
             <span class="span7">
-                <p class="pull-right">{% trans 'Tribus is Free Software' %}</p>
+                <p class="pull-right">
+                    <a href="/about" target="_blank">{% trans 'Tribus is Free Software' %}</a>
+                </p>
             </span>
         </div>
     </div>

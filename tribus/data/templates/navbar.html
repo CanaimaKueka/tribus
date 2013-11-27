@@ -22,51 +22,60 @@
                     <form name="form-search" class="form-search" action="/search/" method="POST">
                         {% csrf_token %}
                         <span class="input-icon">
-                            <input type="text" class="nav-search-input input-large top_search_input" autocomplete="off" name="q" placeholder="{% trans 'What are you looking for?' %}" data-ng-model="top_search" data-ng-keyup="refreshResults()" />
-                            <ul class="dropdown-menu">
-                                <li data-ng-if="hasPackages()">Packages</li>
-                                <li data-ng-repeat="result in package_results">
-                                    <a href="{% verbatim %}{{ result.url }}{% endverbatim %}">
+                            <input id="drop-search" type="text" class="nav-search-input input-large top_search_input" autocomplete="off" name="q" placeholder="{% trans 'What are you looking for?' %}" data-ng-model="top_search" data-ng-keyup="refreshResults()" />
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="drop-search">
+                                <li role="presentation" class="dropdown-subtitles" data-ng-if="hasPackages()">
+                                    {% trans "Packages" %}
+                                </li>
+                                <li role="presentation" class="divider" data-ng-if="hasPackages()"></li>
+                                <li role="presentation" data-ng-repeat="result in package_results">
+                                    <a role="menuitem" tabindex="-1" href="{% verbatim %}{{ result.url }}{% endverbatim %}">
                                         {% verbatim %}{{ result.name }}{% endverbatim %}
                                     </a>
                                 </li>
-                                <li class="dropdown-subtitles" data-ng-if="hasUsers()">Users</li>
-                                <li data-ng-repeat="result in users_results">
-                                    <a href="{% verbatim %}{{ result.url }}{% endverbatim %}">
+                                <li role="presentation" class="dropdown-subtitles" data-ng-if="hasUsers()">
+                                    {% trans "Users" %}
+                                </li>
+                                <li role="presentation" class="divider" data-ng-if="hasUsers()"></li>
+                                <li role="presentation" data-ng-repeat="result in users_results">
+                                    <a role="menuitem" tabindex="-1" href="{% verbatim %}{{ result.url }}{% endverbatim %}">
                                         {% verbatim %}{{ result.fullname }}{% endverbatim %}
                                     </a>
                                 </li>
-                                <li data-ng-if="noResults()">No matching results</li>
+                                <li role="presentation" class="dropdown-subtitles" data-ng-if="noResults()">
+                                    {% trans "No matching results." %}
+                                </li>
                             </ul>
-                            <i class="icon-search nav-search-icon"></i>
+                            <span class="icon-search nav-search-icon"></span>
                         </span>
                     </form>     
                 </li>                       
             </ul>
-            <ul class="nav span4">
-                <li></li>
+            <ul class="nav nav-spacer">
+                <li class="width-100"></li>
             </ul>
-            <ul class="nav span2">
-                <li>
-                    <a href="/"><span class="bigger-150 icon-home"></span></a>
+            <ul class="nav span1 pull-right">
+                <li class="profile">
+                    <a href="/profile/"><span class="bigger-150 icon-user"></span></a>
                 </li>
                 <li class="divider-vertical"></li>
-                <li>
-                    <a href="/profile/"><i class="bigger-150 icon-user"></i></a>
-                </li>
-                <li class="divider-vertical"></li>
-                <li class="dropdown">
-                    <a id="drop-cog" href="#" class="dropdown-toggle">
-                        <i class="bigger-150 icon-cog"></i>
+                <li class="dropdown settings">
+                    <a id="drop-settings" href="#" class="dropdown-toggle" role="button">
+                        <span class="bigger-150 icon-cog"></span>
                     </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/logout">Logout</a></li>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="drop-settings">
+                        <li role="presentation">
+                            <a role="menuitem" tabindex="-1" href="/logout">{% trans "Logout" %}</a>
+                        </li>
                     </ul>
                 </li>
             </ul>
             {% else %}
-            <ul class="nav pull-right">
-                <li>
+            <ul class="nav span8">
+                <li class="width-100"></li>
+            </ul>
+            <ul class="nav span2">
+                <li class="width-100">
                     <a class="btn btn-yellow btn-block" href="{% url 'registration_login' %}">
                         {% trans "Log in" %}
                     </a>
@@ -78,5 +87,5 @@
 </div>
 <script type="text/javascript">
     var packages_url_placer = '/cloud/%PACKAGE%';
-    var user_url_placer = '/profile/%PACKAGE%';
+    var user_url_placer = '/profile/%USER%';
 </script>
