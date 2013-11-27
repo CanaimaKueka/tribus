@@ -121,7 +121,6 @@
 
                     {% if detalles %}
                         {% for dists in detalles.items %}
-                        {{dists}}
                         <h2 align="center"><b> {% trans 'In Canaima' %} {{dists.0}}</b></h2>                
                             {%for arch in dists.1.values %}
                                 {% include 'cloud/architectures.html' %}
