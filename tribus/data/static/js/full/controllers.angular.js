@@ -3,7 +3,7 @@
 
 function UserController($scope, UserProfile){
     $scope.user_gravatar = user_gravatar;
-    $scope.userview_gravatar = userview_gravatar;
+    $scope.profile_gravatar = profile_gravatar;
 
     
     var user_follow = UserProfile.query({id:user_id},function(){

@@ -8,7 +8,7 @@
             <div class="span2">
                 <div ng-controller="UserController">
                     <a href="https://es.gravatar.com/gravatars/new/" >
-                        <span class="profile_avatar" ng-style="{'background-image': 'url(\''+user_gravatar+'?d=mm&s=250&r=x\')'}"></span>
+                        <span class="profile_avatar" ng-style="{'background-image': 'url(\''+profile_gravatar+'\')'}"></span>
                     </a>
                     <div class="space-36"></div>
                     <p><h3>{{ user_view.first_name }} {{user_view.last_name}}</h3></p>
@@ -24,7 +24,7 @@
                 <div class="row-fluid">
                     <tabset >
                         <tab heading="{% trans 'Wall' %}">
-                            {% include 'tribs.html' %}
+                            {% include 'tribs.html' with user_from_template=user_view.first_name %}
                         </tab>
                         <tab heading="{% trans 'Edit Profile' %}">
                             <form name="Form" accept-charset="UTF-8" action="profile/done" autocomplete="off" novalidate method="post">
@@ -170,11 +170,12 @@
         var user_first_name = '{{ user.first_name }}';
         var user_last_name = '{{ user.last_name }}';
         var user_email = '{{ user.email }}';
+
+        var profile_gravatar = 'http://www.gravatar.com/avatar/'+md5(user_email)+'?d=mm&s=250&r=x';
         var user_gravatar = 'http://www.gravatar.com/avatar/'+md5(user_email)+'?d=mm&s=40&r=x';
-        var userview_gravatar = "none";
+
         var comment_gravatar = 'http://www.gravatar.com/avatar/'+md5(user_email)+'?d=mm&s=30&r=x';
         {% endif %}
-
 
         var template_name = "profile";
         var userview_id = '{{ user_view.id }}';    
@@ -184,7 +185,6 @@
         var trib_limit = 10;
         var trib_orderby = '-trib_pub_date';
         var controller_busy = false;
-
 
         var comment_limit_to = 0;
         var comment_offset = 0;
@@ -202,8 +202,6 @@
         var comment_save_error = '{% trans "There has been an error publishng your comment. Please try again later." %}';
         var comment_delete_success = '{% trans "Your comment has been deleted." %}'
         var comment_delete_error = '{% trans "There has been an error deleting your comment. Please try again later." %}'
-
-
 
         var follows_limit_to = 0;
         var follows_offset = 0;

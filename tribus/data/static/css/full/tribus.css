@@ -4228,6 +4228,14 @@ button.btn:active {
     margin-top: 1px;
 }
 
+.dropdown-menu > li.dropdown-subtitles {
+    margin: 0px;
+    font-size: 1.2em;
+    padding: 2px 2%;
+    width: 96%;
+    background-color: #EBEBDC;
+}
+
 .dropdown-menu.dropdown-only-icon {
     min-width: 50px;
 }
@@ -15224,7 +15232,7 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 }
 
 .comment_item > span > .comment_avatar {
-    margin: 10px 30%;
+    margin: 5px 30%;
 }
 
 .comment_avatar {

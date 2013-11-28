@@ -16,12 +16,14 @@ def index(request):
     if request.user.is_authenticated():
 
         # Cargamos la librería AngujarJS junto con sus plugins
-        render_js = [ 'angular','angular.bootstrap','angular.resource',
-                        'angular.infinite-scroll','angular.moment']
+        render_js = ['angular', 'angular.sanitize', 'angular.resource',
+                        'angular.bootstrap', 'angular.infinite-scroll',
+                        'angular.moment']
 
         # Cargamos las funciones de Tribus para AngularJS
         render_js += ['controllers.angular', 'services.angular',
-                      'elements.angular', 'dashboard.angular', 'navbar.angular']
+                      'elements.angular', 'dashboard.angular',
+                      'navbar.angular']
 
         # Cargamos otras funciones adicionales
         render_js += ['moment', 'md5']
@@ -40,17 +42,26 @@ def tribus_search(request):
     context={}
         
     # Cargamos la librería AngujarJS junto con sus plugins
-    render_js = ['angular', 'angular.resource', 'angular.bootstrap']
+    render_js = ['angular', 'angular.sanitize', 'angular.resource',
+                    'angular.bootstrap']
 
     # Cargamos las funciones de Tribus para AngularJS
     render_js += ['controllers.angular', 'services.angular',
-        'elements.angular', 'search.angular', 'navbar.angular']
+                    'elements.angular', 'search.angular',
+                    'navbar.angular']
 
     context ["render_js"] = render_js
-    if request.GET:
+    
+    if request.POST:
+        query = request.POST.get('q', '') 
+    elif request.GET:
         query = request.GET.get('q', '')
+        
+    if query:
         objects = SearchQuerySet().filter(autoname = query)
         if objects:
+            # conducta extraña: dependiendo del modelo del primer elemento el resultado mostrado
+            # por defecto puede ser un usuario o un paquete
             model_name = request.GET.get('filter', objects[0].model_name)
             sqs = objects.models(ContentType.objects.get(model=model_name).model_class())
             print sqs

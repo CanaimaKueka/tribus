@@ -8,15 +8,19 @@ urlpatterns = patterns('',
         'tribus.web.cloud.views.frontpage',
         name='cloud_frontpage'),
 
-    url(r'^cloud/(?P<name>(\w*\W*)*)',
+    url(r'^cloud/p/(?P<name>(\w*\W*)*)',
         'tribus.web.cloud.views.profile',
         name='cloud_profile'),
+                       
+    url(r'^cloud/l/index$',
+        'tribus.web.cloud.views.package_list',
+        name='cloud_list'),
 
-    url(r'^cloud/tag/(?P<tag>(\w*\W*)*)',
+    url(r'^cloud/l/tag/(?P<tag>(\w*\W*)*)',
         'tribus.web.cloud.views.by_tag',
         name='cloud_by_tag'),
 
-    url(r'^cloud/category/(?P<category>(\w*\W*)*)',
+    url(r'^cloud/l/category/(?P<category>(\w*\W*)*)',
         'tribus.web.cloud.views.by_category',
         name='cloud_by_category'),
     )

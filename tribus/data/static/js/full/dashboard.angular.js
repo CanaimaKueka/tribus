@@ -3,7 +3,7 @@
 
 // Application -----------------------------------------------------------------
 
-var tribus = angular.module('tribus', ['Tribs', 'Timeline', 'Comments',
+var tribus = angular.module('tribus', ['ngSanitize', 'Tribs', 'Timeline', 'Comments',
 	'Search', 'infinite-scroll', 'angularMoment', 'ui.bootstrap']);
 
 // Controllers -----------------------------------------------------------------
