@@ -4,7 +4,7 @@
 // Application -----------------------------------------------------------------
 
 var tribus = angular.module('tribus',
-    ['Tribs' , 'Timeline', 'Comments', 'Search', 'UserProfile', 'User',
+    ['ngSanitize', 'Tribs' , 'Timeline', 'Comments', 'Search', 'UserProfile', 'User',
     'UserFollows', 'UserFollowers', 'infinite-scroll', 'angularMoment', 'ui.bootstrap']);
 
 
