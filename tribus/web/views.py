@@ -51,10 +51,17 @@ def tribus_search(request):
                     'navbar.angular']
 
     context ["render_js"] = render_js
-    if request.GET:
+    
+    if request.POST:
+        query = request.POST.get('q', '') 
+    elif request.GET:
         query = request.GET.get('q', '')
+        
+    if query:
         objects = SearchQuerySet().filter(autoname = query)
         if objects:
+            # conducta extraña: dependiendo del modelo del primer elemento el resultado mostrado
+            # por defecto puede ser un usuario o un paquete
             model_name = request.GET.get('filter', objects[0].model_name)
             sqs = objects.models(ContentType.objects.get(model=model_name).model_class())
             print sqs

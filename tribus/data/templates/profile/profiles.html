@@ -5,7 +5,7 @@
 <div class="jumbotron">
     <div class="container-fluid">
         <div class="row-fluid">
-            <div class="span3">
+            <div class="span2">
                 <div ng-controller="UserController">
                     <a href="https://es.gravatar.com/gravatars/new/" >
                         <span class="profile_avatar" ng-style="{'background-image': 'url(\''+profile_gravatar+'\')'}"></span>
@@ -18,7 +18,7 @@
 					{% endif %}
                 </div>
             </div>
-            <div class="span9">
+            <div class="span10">
                 {% include 'profile/navbar.html' %}
                 <legend></legend>   
                 <div class="row-fluid">
@@ -170,8 +170,10 @@
         var user_first_name = '{{ user.first_name }}';
         var user_last_name = '{{ user.last_name }}';
         var user_email = '{{ user.email }}';
+
         var profile_gravatar = 'http://www.gravatar.com/avatar/'+md5(user_email)+'?d=mm&s=250&r=x';
         var user_gravatar = 'http://www.gravatar.com/avatar/'+md5(user_email)+'?d=mm&s=40&r=x';
+
         var comment_gravatar = 'http://www.gravatar.com/avatar/'+md5(user_email)+'?d=mm&s=30&r=x';
         {% endif %}
 

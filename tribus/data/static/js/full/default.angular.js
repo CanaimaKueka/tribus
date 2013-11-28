@@ -3,4 +3,4 @@
 
 // Application -----------------------------------------------------------------
 
-var tribus = angular.module('tribus',[]);
+var tribus = angular.module('tribus', []);
