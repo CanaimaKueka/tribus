@@ -23,12 +23,14 @@ def SearchProfile(request, nick):
         return HttpResponseRedirect('/profile')  
         
     # Cargamos la librería AngujarJS junto con sus plugins
-    render_js = ['angular', 'angular.resource', 'angular.infinite-scroll',
-        'angular.bootstrap', 'angular.moment']
+    render_js = ['angular', 'angular.resource', 'angular.resource',
+                    'angular.infinite-scroll', 'angular.bootstrap',
+                    'angular.moment']
 
     # Cargamos las funciones de Tribus para AngularJS
     render_js += ['controllers.angular', 'services.angular',
-        'elements.angular', 'profiles.angular', 'navbar.angular']
+                    'elements.angular', 'profiles.angular',
+                    'navbar.angular']
 
     # Cargamos otras funciones adicionales
     render_js += ['moment', 'md5']
@@ -44,12 +46,14 @@ def SearchProfile(request, nick):
 def UserProfile(request):
         
     # Cargamos la librería AngujarJS junto con sus plugins
-    render_js = ['angular', 'angular.resource', 'angular.infinite-scroll',
-        'angular.bootstrap', 'angular.moment']
+    render_js = ['angular', 'angular.sanitize', 'angular.resource',
+                    'angular.infinite-scroll', 'angular.bootstrap',
+                    'angular.moment']
 
     # Cargamos las funciones de Tribus para AngularJS
     render_js += ['controllers.angular', 'services.angular',
-        'elements.angular', 'profiles.angular', 'navbar.angular']
+                    'elements.angular', 'profiles.angular',
+                    'navbar.angular']
 
     # Cargamos otras funciones adicionales
     render_js += ['moment', 'md5']

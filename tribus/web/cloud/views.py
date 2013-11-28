@@ -10,7 +10,7 @@ from django.core.paginator import Paginator, InvalidPage
 
 def frontpage(request):
     return render(request, 'cloud/frontpage.html', {
-        'render_js': ['angular', 'angular.bootstrap', 'angular.resource',
+        'render_js': ['angular', 'angular.sanitize', 'angular.resource', 'angular.bootstrap',
                         'controllers.angular', 'services.angular', 'elements.angular',
                         'cloud.angular', 'navbar.angular'],
         })
@@ -19,7 +19,7 @@ def package_list(request):
     context = {}
     
     # Cargamos la librería AngujarJS junto con sus plugins
-    render_js = ['angular', 'angular.resource', 'angular.bootstrap']
+    render_js = ['angular', 'angular.sanitize', 'angular.resource', 'angular.bootstrap']
 
     # Cargamos las funciones de Tribus para AngularJS
     render_js += ['controllers.angular', 'services.angular',
@@ -62,7 +62,7 @@ def profile(request, name):
         'paquete': package_info,
         'raiz': LOCAL_ROOT,
         'detalles': dict_details,
-        'render_js': ['angular', 'angular.bootstrap', 'angular.resource', 
+        'render_js': ['angular', 'angular.sanitize', 'angular.resource', 'angular.bootstrap', 
                  'angular.infinite-scroll', 'controllers.angular', 'services.angular',
                  'elements.angular', 'cloud.angular', 'navbar.angular', 'md5'],
         })

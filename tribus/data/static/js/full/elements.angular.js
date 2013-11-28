@@ -23,11 +23,6 @@ angular.element(document).ready(function(){
         }
     });
 
-    topSearchInput.bind('blur', function(){
-        angular.element(this).next()
-            .css('display', 'none');
-    });
-
     actionTextarea.bind('keyup', function(){
 
         tribCharCounter = angular.element(this.parentNode.children[1]);

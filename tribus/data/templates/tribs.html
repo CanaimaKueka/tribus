@@ -5,7 +5,7 @@
             {% verbatim %}{{ alert.msg }}{% endverbatim %}
         </span>
     </div>
-    <div style="display: none;" data-ng-show="template_name == 'dashboard' || template_name == 'profile'" class="action_publisher">
+    <div data-ng-show="template_name == 'dashboard' || template_name == 'profile'" class="action_publisher">
         <form autocomplete="off" name="action_form" data-ng-submit="createNewTrib()">
             <div class="row-fluid">
                 <span class="span1">
@@ -29,12 +29,10 @@
     </div>
     <div class="trib_list" infinite-scroll="addOldTribs()" infinite-scroll-disabled="controller_busy" infinite-scroll-distance="0">
         <ul>
-            <li style="display: none;" data-ng-show="tribs.length == 0 && template_name == 'dashboard'" class="trib_intro">
+            <li data-ng-show="tribs.length == 0 && template_name == 'dashboard'" class="trib_intro">
                 <span class="trib_body">
                     <span class="trib_title">
-                        <h2>
-                            {% trans 'Welcome to Tribus!' %}
-                        </h2>
+                        <h2>{% trans 'Welcome to Tribus!' %}</h2>
                     </span>
                     <span class="trib_content">
                         <p>{% trans 'This is the dashboard, a place where you can follow the updates of your favorite projects and partners.' %}</p>
@@ -43,35 +41,23 @@
                     </span>
                 </span>
             </li>
-            <li style="display: none;" data-ng-show="tribs.length == 0 && template_name == 'profile'" class="trib_intro">
+            <li data-ng-show="tribs.length == 0 && template_name == 'profile'" class="trib_intro">
                 <span class="trib_body">
-                    <span class="trib_title">
-                        <h2>
-                            {% trans 'This is your Profile' %}
-                        </h2>
-                    </span>
                     <span class="trib_content">
-                        <p>Hi {{ user_view.first_name }}, this is your profile.</p>
-                        <p>Start by looking for your friends in the search bar on the top of the screen. Then, click on the Follow button in your friend's profile to start following their updates in your dashboard.</p>
-                        <p>You can always come back here by clicking on the Tribus logo.</p>
+                        <p>{% blocktrans %}Hi {{ user_from_template }}, this is your profile.{% endblocktrans %}</p>
+                        <p>{% blocktrans %}Start by writing something on your wall.{% endblocktrans %}</p>
                     </span>
                 </span>
             </li>
-            <li style="display: none;" data-ng-show="tribs.length == 0 && template_name == 'profileView'" class="trib_intro">
+            <li data-ng-show="tribs.length == 0 && template_name == 'profileView'" class="trib_intro">
                 <span class="trib_body">
-                    <span class="trib_title">
-                        <h2>
-                            {% trans 'This is your Profile' %}
-                        </h2>
-                    </span>
                     <span class="trib_content">
-                        <p>Hi {{ user_view.first_name }}, this is your profile.</p>
-                        <p>Start by looking for your friends in the search bar on the top of the screen. Then, click on the Follow button in your friend's profile to start following their updates in your dashboard.</p>
-                        <p>You can always come back here by clicking on the Tribus logo.</p>
+                        <p>{% blocktrans %}This is the profile of {{ user_from_template }}.{% endblocktrans %}</p>
+                        <p>{% blocktrans %}{{ user_from_template }} has not written anything yet.{% endblocktrans %}</p>
                     </span>
                 </span>
             </li>
-            <li style="display: none;" data-ng-show="tribs.length > 0" id="{% verbatim %}{{ trib.id }}{% endverbatim %}" class="row-fluid trib_item" data-ng-repeat="trib in tribs | orderBy: trib_orderby | limitTo: trib_limit_to track by trib.id">
+            <li data-ng-show="tribs.length > 0" id="{% verbatim %}{{ trib.id }}{% endverbatim %}" class="row-fluid trib_item" data-ng-repeat="trib in tribs | orderBy: trib_orderby | limitTo: trib_limit_to track by trib.id">
                 <span class="span2">
                     <span class="trib_avatar" data-ng-style="{'background-image': 'url(\''+trib.author_gravatar+'\')'}"></span>
                 </span>
@@ -88,7 +74,7 @@
                         <h4>{% verbatim %}@{{ trib.author_username }}{% endverbatim %}</h4>
                         <h4 class="pull-right" data-am-time-ago="trib.trib_pub_date"></h4>
                     </span>
-                    <span class="trib_content" data-ng-bind-html-unsafe="trib.trib_content"></span>
+                    <span class="trib_content" ng-bind-html="trib.trib_content"></span>
                     <span class="trib_interact">
                         <span class="pull-right" data-ng-click="toggleComments()">
                             <a href=""><span class="icon-chevron-down"></span>{% trans 'Comment' %}</a>
@@ -118,7 +104,7 @@
                                                     {% endverbatim %}
                                                 </a>
                                             </h3>
-                                            <span data-ng-bind-html-unsafe="comment.comment_content"></span>
+                                            <span data-ng-bind-html="comment.comment_content"></span>
                                         </span>
                                         <span data-ng-if="comment.author_id == {{ user.id }}" class="close"
                                         data-ng-click="showDeleteModal()">

@@ -16,12 +16,14 @@ def index(request):
     if request.user.is_authenticated():
 
         # Cargamos la librería AngujarJS junto con sus plugins
-        render_js = [ 'angular','angular.bootstrap','angular.resource',
-                        'angular.infinite-scroll','angular.moment']
+        render_js = ['angular', 'angular.sanitize', 'angular.resource',
+                        'angular.bootstrap', 'angular.infinite-scroll',
+                        'angular.moment']
 
         # Cargamos las funciones de Tribus para AngularJS
         render_js += ['controllers.angular', 'services.angular',
-                      'elements.angular', 'dashboard.angular', 'navbar.angular']
+                      'elements.angular', 'dashboard.angular',
+                      'navbar.angular']
 
         # Cargamos otras funciones adicionales
         render_js += ['moment', 'md5']
@@ -40,11 +42,13 @@ def tribus_search(request):
     context={}
         
     # Cargamos la librería AngujarJS junto con sus plugins
-    render_js = ['angular', 'angular.resource', 'angular.bootstrap']
+    render_js = ['angular', 'angular.sanitize', 'angular.resource',
+                    'angular.bootstrap']
 
     # Cargamos las funciones de Tribus para AngularJS
     render_js += ['controllers.angular', 'services.angular',
-        'elements.angular', 'search.angular', 'navbar.angular']
+                    'elements.angular', 'search.angular',
+                    'navbar.angular']
 
     context ["render_js"] = render_js
     
