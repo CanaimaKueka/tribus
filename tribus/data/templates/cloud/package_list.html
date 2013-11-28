@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans 'Package List' %}{% endblock %}
+{% block content %}
+<div class="jumbotron">
+	<div class="container-fluid">
+		<div class="row-fluid dashboard_container">
+			<div class="span8 dashboard_timeline">
+				<div class="page-header">
+					<h1> {% trans 'Package List' %} </h1>
+				</div>
+				{% for result in page.object_list %}
+					<ul>
+					{% if result.model_name == "package" %}
+				    	<li> <b> <a href="/cloud/p/{{ result.autoname }}">{{ result.autoname }}</a> </b> 
+				    		{% if result.description %} {{ result.description|truncatechars:200 }}
+				    		{% else %} <i>Virtual package</i> {% endif %}</li>
+				    {%endif%}
+				    </ul>
+				{% empty %}
+				   <p>{% trans 'No results found' %}</p>
+				{% endfor %}
+				
+				<div class="pagination">
+					{% if page.paginator.num_pages > 1 %}
+				    <span class="step-links">
+				        {% if page.has_previous %}
+				            <a href="?&filter={{filter}}&page={{ page.previous_page_number }}">{% trans 'previous' %} </a>
+				        {% endif %}
+				        
+				        <span class="current">
+				            {% trans 'Page' %} {{ page.number }} {% trans 'of' %} {{ page.paginator.num_pages }}.
+				        </span>
+						
+				        {% if page.has_next %}
+				            <a href="?&filter={{filter}}&page={{ page.next_page_number }}">{% trans 'next' %} </a>
+				        {% endif %}
+				    </span>
+				    {% endif %}
+				</div>
+			</div>
+			<div>
+				
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

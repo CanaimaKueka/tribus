@@ -147,10 +147,10 @@ HAYSTACK_CONNECTIONS = {
     #    'URL': 'http://127.0.0.1:8983/solr'
     #},                    
     
-    #'xapian': {
-    #    'ENGINE': 'xapian_backend.XapianEngine',
-    #    'PATH': XAPIAN_INDEX
-    #},
+    'xapian': {
+        'ENGINE': 'xapian_backend.XapianEngine',
+        'PATH': XAPIAN_INDEX
+    },
 }
 
 HAYSTACK_SIGNAL_PROCESSOR = 'celery_haystack.signals.CelerySignalProcessor'

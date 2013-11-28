@@ -4,6 +4,8 @@
 from django.shortcuts import render, get_object_or_404
 from tribus.web.cloud.models import *
 from tribus.config.pkgrecorder import LOCAL_ROOT, relation_types
+from haystack.query import SearchQuerySet
+from django.core.paginator import Paginator, InvalidPage
 
 
 def frontpage(request):
@@ -12,8 +14,32 @@ def frontpage(request):
                         'controllers.angular', 'services.angular', 'elements.angular',
                         'cloud.angular', 'navbar.angular'],
         })
+    
+def package_list(request):
+    context = {}
+    
+    # Cargamos la librería AngujarJS junto con sus plugins
+    render_js = ['angular', 'angular.resource', 'angular.bootstrap']
 
-
+    # Cargamos las funciones de Tribus para AngularJS
+    render_js += ['controllers.angular', 'services.angular',
+        'elements.angular', 'search.angular', 'navbar.angular']
+    
+    context ["render_js"] = render_js
+    
+    sqs = SearchQuerySet().using('xapian').models(Package).order_by('autoname')
+    paginator = Paginator(sqs, 30)
+    
+    try:
+        page = paginator.page(int(request.GET.get('page', 1)))
+    except InvalidPage:
+        return render(request, 'cloud/package_list.html', {})
+    
+    context["page"]= page
+    
+    return render(request, 'cloud/package_list.html', context)
+    
+    
 def profile(request, name):
     dict_details = {}
     package_info = get_object_or_404(Package, Package=name)
@@ -36,7 +62,7 @@ def profile(request, name):
         'paquete': package_info,
         'raiz': LOCAL_ROOT,
         'detalles': dict_details,
-        'render_js': ['angular', 'angular.autogrow', 'angular.bootstrap', 'angular.resource', 
+        'render_js': ['angular', 'angular.bootstrap', 'angular.resource', 
                  'angular.infinite-scroll', 'controllers.angular', 'services.angular',
                  'elements.angular', 'cloud.angular', 'navbar.angular', 'md5'],
         })
