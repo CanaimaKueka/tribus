@@ -1,15 +1,15 @@
 {% load i18n %}
 <div data-ng-controller="TribController" data-ng-init="addOldTribs();pollNewTribs()">
     <div class="alert-placeholder">
-        <span data-alert data-ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)" style="display: none;">
+        <span data-alert data-ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">
             {% verbatim %}{{ alert.msg }}{% endverbatim %}
         </span>
     </div>
-    <div class="action_publisher">
-        <div class="row-fluid">
-            <form autocomplete="off" name="action_form" data-ng-submit="createNewTrib()">
+    <div style="display: none;" data-ng-show="template_name == 'dashboard' || template_name == 'profile'" class="action_publisher">
+        <form autocomplete="off" name="action_form" data-ng-submit="createNewTrib()">
+            <div class="row-fluid">
                 <span class="span1">
-                    <span class="action_avatar" data-ng-style="{'background-image': 'url(\''+user_gravatar+'?d=mm&s=50&r=x\')'}"></span>
+                    <span class="action_avatar" data-ng-style="{'background-image': 'url(\''+user_gravatar+'\')'}"></span>
                 </span>
                 <span class="span9 action_body">
                     <span class="arrow_left"></span>
@@ -20,12 +20,12 @@
                 </span>
                 <span class="span2">
                     <button class="btn btn-success action_button" disabled="disabled">
-                        <i class="icon-pencil"></i>
+                        <span class="icon-pencil"></span>
                         {% trans 'Publish' %}
                     </button>
                 </span>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
     <div class="trib_list" infinite-scroll="addOldTribs()" infinite-scroll-disabled="controller_busy" infinite-scroll-distance="0">
         <ul>
@@ -57,10 +57,21 @@
                     </span>
                 </span>
             </li>
-
-
-            <li data-ng-cloak id="{% verbatim %}{{ trib.id }}{% endverbatim %}" class="row-fluid trib_item"
-                data-ng-repeat="trib in tribs | orderBy: trib_orderby | limitTo: trib_limit_to track by trib.id">
+            <li style="display: none;" data-ng-show="tribs.length == 0 && template_name == 'profileView'" class="trib_intro">
+                <span class="trib_body">
+                    <span class="trib_title">
+                        <h2>
+                            {% trans 'This is your Profile' %}
+                        </h2>
+                    </span>
+                    <span class="trib_content">
+                        <p>Hi {{ user_view.first_name }}, this is your profile.</p>
+                        <p>Start by looking for your friends in the search bar on the top of the screen. Then, click on the Follow button in your friend's profile to start following their updates in your dashboard.</p>
+                        <p>You can always come back here by clicking on the Tribus logo.</p>
+                    </span>
+                </span>
+            </li>
+            <li style="display: none;" data-ng-show="tribs.length > 0" id="{% verbatim %}{{ trib.id }}{% endverbatim %}" class="row-fluid trib_item" data-ng-repeat="trib in tribs | orderBy: trib_orderby | limitTo: trib_limit_to track by trib.id">
                 <span class="span2">
                     <span class="trib_avatar" data-ng-style="{'background-image': 'url(\''+trib.author_gravatar+'\')'}"></span>
                 </span>
@@ -120,21 +131,23 @@
                                 </li>
                                 <li class="comment_box">
                                     <form data-ng-submit="createNewComment()">
-                                        <span class="span1">
-                                            <span class="comment_avatar" data-ng-style="{'background-image': 'url(\''+comment_gravatar+'\')'}"></span>
-                                        </span>
-                                        <span class="span9 comment_body">
-                                            <span class="arrow_left"></span>
-                                            <span class="comment_bubble">
-                                                <textarea data-ng-model="comment_content" id="id_comment_content" name="comment_content" class="comment_textarea" cols="40" rows="1" placeholder="{% blocktrans %}What do you want to say?{% endblocktrans %}"></textarea>
-                                                <span class="comment_validation"></span>
+                                        <div class="row-fluid">
+                                            <span class="span1">
+                                                <span class="comment_avatar" data-ng-style="{'background-image': 'url(\''+comment_gravatar+'\')'}"></span>
                                             </span>
-                                        </span>
-                                        <span class="span2">
-                                            <button class="btn btn-success btn-xs comment_button" disabled="disabled">
-                                                {% trans 'Comment' %}
-                                            </button>
-                                        </span>
+                                            <span class="span9 comment_body">
+                                                <span class="arrow_left"></span>
+                                                <span class="comment_bubble">
+                                                    <textarea data-ng-model="comment_content" id="id_comment_content" name="comment_content" class="comment_textarea" cols="40" rows="1" placeholder="{% blocktrans %}What do you want to say?{% endblocktrans %}"></textarea>
+                                                    <span class="comment_validation"></span>
+                                                </span>
+                                            </span>
+                                            <span class="span2">
+                                                <button class="btn btn-success btn-xs comment_button" disabled="disabled">
+                                                    {% trans 'Comment' %}
+                                                </button>
+                                            </span>
+                                        </div>
                                     </form>
                                 </li>
                             </ul>
