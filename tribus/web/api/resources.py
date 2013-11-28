@@ -38,7 +38,7 @@ from tribus.web.cloud.models import Package
 
 
 from tribus.web.api.validation import DocumentFormValidation
-from tribus.web.forms import TribForm
+from tribus.web.forms import TribForm, CommentForm
 from django.core.paginator import Paginator
 from django.core.paginator import InvalidPage
 from django.http.response import Http404
@@ -131,6 +131,7 @@ class CommentResource(MongoEngineResource):
         filtering = { 'trib_id': ALL_WITH_RELATIONS }
         authorization = CommentAuthorization()
         authentication = SessionAuthentication()
+        validation = DocumentFormValidation(form_class=CommentForm)
         cache = NoCache()
 
 

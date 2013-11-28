@@ -1,94 +1,94 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% block content %}
-        <div class="jumbotron">
-            <div class="container-fluid">
-                <div class="row-fluid dashboard_container">
-                    <div class="span8 dashboard_timeline">
-                    {% include 'tribs.html' %}
-                    </div>
-                    <div class="span4 dashboard_panel">
-                        <a href="/cloud/" class="btn btn-block btn-warning btn-large">
-                            <span class="bigger-140 width-100 block">
-                                {% trans 'Application Cloud' %}
-                            </span>
-                        </a>
-                        <a href="/" class="btn btn-block btn-warning btn-large disabled">
-                            <span class="bigger-140 width-100 block">
-                                {% trans 'Continuous Integration' %}
-                            </span>
-                            <span class="width-100 block">
-                                {% trans 'We are working on this feature' %}
-                            </span>
-                        </a>
-                        <a href="/" class="btn btn-block btn-warning btn-large disabled">
-                            <span class="bigger-140 width-100 block">
-                                {% trans 'Project Management' %}
-                            </span>
-                            <span class="width-100 block">
-                                {% trans 'We are working on this feature' %}
-                            </span>
-                        </a>
-                        <a href="/" class="btn btn-block btn-warning btn-large disabled">
-                            <span class="bigger-140 width-100 block">
-                                {% trans 'Documentation Management' %}
-                            </span>
-                            <span class="width-100 block">
-                                {% trans 'We are working on this feature' %}
-                            </span>
-                        </a>
-                        <a href="/" class="btn btn-block btn-warning btn-large disabled">
-                            <span class="bigger-140 width-100 block">
-                                {% trans 'Translation Services' %}
-                            </span>
-                            <span class="width-100 block">
-                                {% trans 'We are working on this feature' %}
-                            </span>
-                        </a>
+<div class="jumbotron">
+    <div class="container-fluid">
+        <div class="row-fluid dashboard_container">
+            <div class="span8 dashboard_timeline">
+            {% include 'tribs.html' %}
+            </div>
+            <div class="span4 dashboard_panel">
+                <a href="/cloud/" class="btn btn-block btn-warning btn-large">
+                    <span class="bigger-140 width-100 block">
+                        {% trans 'Application Cloud' %}
+                    </span>
+                </a>
+                <a href="/" class="btn btn-block btn-warning btn-large disabled">
+                    <span class="bigger-140 width-100 block">
+                        {% trans 'Continuous Integration' %}
+                    </span>
+                    <span class="width-100 block">
+                        {% trans 'We are working on this feature' %}
+                    </span>
+                </a>
+                <a href="/" class="btn btn-block btn-warning btn-large disabled">
+                    <span class="bigger-140 width-100 block">
+                        {% trans 'Project Management' %}
+                    </span>
+                    <span class="width-100 block">
+                        {% trans 'We are working on this feature' %}
+                    </span>
+                </a>
+                <a href="/" class="btn btn-block btn-warning btn-large disabled">
+                    <span class="bigger-140 width-100 block">
+                        {% trans 'Documentation Management' %}
+                    </span>
+                    <span class="width-100 block">
+                        {% trans 'We are working on this feature' %}
+                    </span>
+                </a>
+                <a href="/" class="btn btn-block btn-warning btn-large disabled">
+                    <span class="bigger-140 width-100 block">
+                        {% trans 'Translation Services' %}
+                    </span>
+                    <span class="width-100 block">
+                        {% trans 'We are working on this feature' %}
+                    </span>
+                </a>
 
-                    </div>
-                </div>
             </div>
         </div>
+    </div>
+</div>
 {% endblock %}
 {% block scripts %}
-    <script type="text/javascript">
-        {% if user.is_authenticated %}
-        // User data
-        var user_id = '{{ user.id }}';
-        var user_username = '{{ user.username }}';
-        var user_first_name = '{{ user.first_name }}';
-        var user_last_name = '{{ user.last_name }}';
-        var user_email = '{{ user.email }}';
-        var user_gravatar = 'http://www.gravatar.com/avatar/'+md5(user_email)+'?d=mm&s=50&r=x';
-        var comment_gravatar = 'http://www.gravatar.com/avatar/'+md5(user_email)+'?d=mm&s=30&r=x';
-        {% endif %}
+<script type="text/javascript">
+    {% if user.is_authenticated %}
+    // User data
+    var user_id = '{{ user.id }}';
+    var user_username = '{{ user.username }}';
+    var user_first_name = '{{ user.first_name }}';
+    var user_last_name = '{{ user.last_name }}';
+    var user_email = '{{ user.email }}';
+    var user_gravatar = 'http://www.gravatar.com/avatar/'+md5(user_email)+'?d=mm&s=40&r=x';
+    var comment_gravatar = 'http://www.gravatar.com/avatar/'+md5(user_email)+'?d=mm&s=30&r=x';
+    {% endif %}
 
-        // Tribs data
-        var trib_limit_to = 0;
-        var trib_offset = 0;
-        var trib_add = 10;
-        var trib_limit = 10;
-        var trib_orderby = '-trib_pub_date';
-        var controller_busy = false;
+    // Tribs data
+    var trib_limit_to = 0;
+    var trib_offset = 0;
+    var trib_add = 10;
+    var trib_limit = 10;
+    var trib_orderby = '-trib_pub_date';
+    var controller_busy = false;
 
-        // Comments data
-        var comment_limit_to = 0;
-        var comment_offset = 0;
-        var comment_add = 10;
-        var comment_limit = 10;
-        var comment_orderby = 'comment_pub_date';
+    // Comments data
+    var comment_limit_to = 0;
+    var comment_offset = 0;
+    var comment_add = 10;
+    var comment_limit = 10;
+    var comment_orderby = 'comment_pub_date';
 
-        // Template data
-        var template_name = 'dashboard';
-        var trib_save_success = '{% trans "Your message has been published." %}';
-        var trib_save_error = '{% trans "There has been an error publishing your message. Please try again later." %}';
-        var trib_delete_success = '{% trans "Your message has been deleted." %}';
-        var trib_delete_error = '{% trans "There has been an error deleting your message. Please try again later." %}'
-        var trib_add_error = '{% trans "There has been an error consulting more messages. Please try again later." %}'
-        var comment_save_success = '{% trans "Your comment has been published." %}';
-        var comment_save_error = '{% trans "There has been an error publishng your comment. Please try again later." %}';
-        var comment_delete_success = '{% trans "Your comment has been deleted." %}'
-        var comment_delete_error = '{% trans "There has been an error deleting your comment. Please try again later." %}'
-    </script>
+    // Template data
+    var template_name = 'dashboard';
+    var trib_save_success = '{% trans "Your message has been published." %}';
+    var trib_save_error = '{% trans "There has been an error publishing your message. Please try again later." %}';
+    var trib_delete_success = '{% trans "Your message has been deleted." %}';
+    var trib_delete_error = '{% trans "There has been an error deleting your message. Please try again later." %}'
+    var trib_add_error = '{% trans "There has been an error consulting more messages. Please try again later." %}'
+    var comment_save_success = '{% trans "Your comment has been published." %}';
+    var comment_save_error = '{% trans "There has been an error publishng your comment. Please try again later." %}';
+    var comment_delete_success = '{% trans "Your comment has been deleted." %}'
+    var comment_delete_error = '{% trans "There has been an error deleting your comment. Please try again later." %}'
+</script>
 {% endblock %}

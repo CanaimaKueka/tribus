@@ -14687,7 +14687,7 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 .nav-spacer {
     margin: 0;
     padding: 0;
-    width: 46.80852%;
+    width: 38.2979%;
     display: block;
     float: left;
     min-height: 30px;
@@ -14695,17 +14695,12 @@ th[aria-selected=true] .ui-jqgrid-sortable {
     -moz-box-sizing: border-box;
 }
 
-.navbar .nav > li.home {
-    margin: 0;
-    padding: 0;
-    width: 18%;
-}
-
 .navbar .nav > li.settings,
-.navbar .nav > li.profile {
-    margin: 0;
+.navbar .nav > li.profile,
+.navbar .nav > li.home {
+    margin: 0 2%;
     padding: 0;
-    width: 48%;
+    width: 20%;
 }
 
 .navbar .nav > li.home > a > span,
@@ -14731,7 +14726,7 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 .navbar .nav > li.brand {
     padding: 0;
     margin: 0;
-    width: 76%;
+    width: 90%;
 }
 
 .navbar .nav > li.brand > a {
@@ -14739,7 +14734,7 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 }
 
 .navbar .nav > li.brand > a > span.logo {
-    background: url('../../img/logo-min.svg') no-repeat;
+    background: url('../../img/logo-min.svg') center center no-repeat;
     background-size: contain;
     width: 28%;
     height: 30px;
@@ -14751,29 +14746,30 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 
 .navbar .nav > li.brand > a > span.logo_title {
     font-family: 'League Gothic';
-    font-size: 1.8em;
+    font-size: 2em;
     font-weight: 400;
-    line-height: 30px;
-    margin: 0 1%;
-    width: 46%;
+    line-height: 33px;
+    margin: 0;
+    width: 48%;
     padding: 0;
     text-transform: uppercase;
     display: block;
     float: left;
     height: 30px;
-    position: relative;
-    top: 2px;
+    text-align: center;
 }
 
 .navbar .nav > li.brand > a > span.logo_subtitle {
     font-size: 0.6em;
     line-height: 0.8em;
-    margin: 10% 1% 0 1%;
-    padding: 2% 1%;
+    margin: 16px 0 0 2%;
+    padding: 2px 1%;
+    height: 10px;
     width: 20%;
     display: block;
     float: left;
     border-radius: 4px;
+    text-align: center;
 }
 
 .navbar .nav li.dropdown.open > .dropdown-toggle,
@@ -15079,6 +15075,7 @@ th[aria-selected=true] .ui-jqgrid-sortable {
     font-weight: 300;
     font-size: 1.5em;
     line-height: 1.4em;
+    word-wrap: break-word;
 }
 
 .action_body > .arrow_left,
@@ -15110,8 +15107,8 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 
 .comment_body > .comment_bubble,
 .action_body > .action_bubble {
-    padding: 1% 2% 4% 2%;
-    margin: 2% 0;
+    padding: 0 2%;
+    margin: 10px 0;
     width: 92%;
     background: rgb(255, 255, 255);
     border-left: 1px solid #aaa;
@@ -15125,7 +15122,7 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 }
 
 .comment_body > .comment_bubble {
-    padding: 1% 2%;
+    padding: 0 2%;
 }
 
 .comment_bubble > .comment_validation,
@@ -15149,7 +15146,7 @@ th[aria-selected=true] .ui-jqgrid-sortable {
     height: 1.5em;
     min-height: 1.5em;
     line-height: 1.5em;
-    padding: 0;
+    padding: 5px 0 15px 0;
     margin: 0;
     resize:none;
     vertical-align: top;
@@ -15159,6 +15156,10 @@ th[aria-selected=true] .ui-jqgrid-sortable {
     border: none;
 }
 
+.comment_bubble > .comment_textarea {
+    padding: 5px 0 5px 0;
+}
+
 .action_avatar, .trib_avatar,
 .comment_avatar, .profile_avatar {
     background-color: #fff;
@@ -15166,24 +15167,26 @@ th[aria-selected=true] .ui-jqgrid-sortable {
     -moz-border-radius: 6px;
     -o-border-radius: 6px;
     border-radius: 6px;
-    margin: 10% 0 0 20%;
+    margin: 10px 0 0 40%;
     float:left;
     display: block;
-    width: 50px;
-    height: 50px;
-    border: 5px solid rgb(255, 255, 255);
+    width: 40px;
+    height: 40px;
 }
 
 .trib_avatar {
-    margin: 10% 0% 0 30%;
+    margin: 10px 0 0 25%;
     width: 70px;
     height: 70px;
+    border: 6px solid rgb(255, 255, 255);
 }
 
 .profile_avatar {
     margin: 0;
+    padding: 0;
     width: 250px;
     height: 250px;
+    border: 6px solid rgb(255, 255, 255);
 }
 
 .comment_list {
@@ -15221,14 +15224,14 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 }
 
 .comment_item > span > .comment_avatar {
-    margin: 15% 30%;
+    margin: 10px 30%;
 }
 
 .comment_avatar {
     width: 30px;
     height: 30px;
     border: 0px;
-    margin: 25% 50%;
+    margin: 10px 50%;
 }
 
 .comment_body > .comment_text {
@@ -15237,11 +15240,12 @@ th[aria-selected=true] .ui-jqgrid-sortable {
     float: left;
     font-size: 1em;
     line-height: 1.2em;
+    word-wrap: break-word;
 }
 
 .action_button,
 .comment_button {
-    margin: 10% 0px;
+    margin: 10px 0;
     padding: 5%;
 }
 
@@ -15285,17 +15289,28 @@ th[aria-selected=true] .ui-jqgrid-sortable {
     color: #94947b;
 }
 
-.row-fluid > form > .span1 {
+.comment_box > form,
+.action_publisher > form {
+    padding: 0;
+    margin: 0;
+}
+
+.comment_box > form > .row-fluid > .span1,
+.action_publisher > form > .row-fluid > .span1 {
     width: 10%;
     padding: 0;
     margin: 0;
 }
-.row-fluid > form > .span9 {
+
+.comment_box > form > .row-fluid > .span9,
+.action_publisher > form > .row-fluid > .span9 {
     width: 75%;
     padding: 0;
     margin: 0;
 }
-.row-fluid > form > .span2 {
+
+.comment_box > form > .row-fluid > .span2,
+.action_publisher > form > .row-fluid > .span2 {
     width: 15%;
     padding: 0;
     margin: 0;

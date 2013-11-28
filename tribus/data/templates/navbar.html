@@ -11,10 +11,6 @@
                     </a>
                 </li>
                 <li class="divider-vertical"></li>
-                <li class="home">
-                    <a href="/"><span class="bigger-150 icon-home"></span></a>
-                </li>
-                <li class="divider-vertical"></li>
             </ul>
             {% if user.is_authenticated %}
             <ul class="nav span4">
@@ -54,7 +50,11 @@
             <ul class="nav nav-spacer">
                 <li class="width-100"></li>
             </ul>
-            <ul class="nav span1 pull-right">
+            <ul class="nav span2 pull-right">
+                <li class="home">
+                    <a href="/"><span class="bigger-150 icon-home"></span></a>
+                </li>
+                <li class="divider-vertical"></li>
                 <li class="profile">
                     <a href="/profile/"><span class="bigger-150 icon-user"></span></a>
                 </li>
