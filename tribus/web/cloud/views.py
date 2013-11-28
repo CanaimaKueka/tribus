@@ -8,7 +8,7 @@ from tribus.config.pkgrecorder import LOCAL_ROOT, relation_types
 
 def frontpage(request):
     return render(request, 'cloud/frontpage.html', {
-        'render_js': ['angular', 'angular.bootstrap', 'angular.resource',
+        'render_js': ['angular', 'angular.sanitize', 'angular.resource', 'angular.bootstrap',
                         'controllers.angular', 'services.angular', 'elements.angular',
                         'cloud.angular', 'navbar.angular'],
         })
@@ -36,7 +36,7 @@ def profile(request, name):
         'paquete': package_info,
         'raiz': LOCAL_ROOT,
         'detalles': dict_details,
-        'render_js': ['angular', 'angular.autogrow', 'angular.bootstrap', 'angular.resource', 
+        'render_js': ['angular', 'angular.sanitize', 'angular.resourse', 'angular.bootstrap', 
                  'angular.infinite-scroll', 'controllers.angular', 'services.angular',
                  'elements.angular', 'cloud.angular', 'navbar.angular', 'md5'],
         })

@@ -23,7 +23,6 @@
                                 <li role="presentation" class="dropdown-subtitles" data-ng-if="hasPackages()">
                                     {% trans "Packages" %}
                                 </li>
-                                <li role="presentation" class="divider" data-ng-if="hasPackages()"></li>
                                 <li role="presentation" data-ng-repeat="result in package_results">
                                     <a role="menuitem" tabindex="-1" href="{% verbatim %}{{ result.url }}{% endverbatim %}">
                                         {% verbatim %}{{ result.name }}{% endverbatim %}
@@ -32,14 +31,13 @@
                                 <li role="presentation" class="dropdown-subtitles" data-ng-if="hasUsers()">
                                     {% trans "Users" %}
                                 </li>
-                                <li role="presentation" class="divider" data-ng-if="hasUsers()"></li>
                                 <li role="presentation" data-ng-repeat="result in users_results">
                                     <a role="menuitem" tabindex="-1" href="{% verbatim %}{{ result.url }}{% endverbatim %}">
                                         {% verbatim %}{{ result.fullname }}{% endverbatim %}
                                     </a>
                                 </li>
                                 <li role="presentation" class="dropdown-subtitles" data-ng-if="noResults()">
-                                    {% trans "No matching results." %}
+                                    {% trans "There are no results matching this query." %}
                                 </li>
                             </ul>
                             <span class="icon-search nav-search-icon"></span>
@@ -51,6 +49,7 @@
                 <li class="width-100"></li>
             </ul>
             <ul class="nav span2 pull-right">
+                <li class="home"></li>
                 <li class="home">
                     <a href="/"><span class="bigger-150 icon-home"></span></a>
                 </li>
