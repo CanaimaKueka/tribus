@@ -12,7 +12,7 @@
 				{% for result in page.object_list %}
 					<ul>
 					{% if result.model_name == "package" %}
-				    	<li> <b> <a href="/cloud/{{ result.autoname }}">{{ result.autoname }}</a> </b> 
+				    	<li> <b> <a href="/cloud/p/{{ result.autoname }}">{{ result.autoname }}</a> </b> 
 				    		{% if result.description %} {{ result.description|truncatechars:200 }}
 				    		{% else %} <i>Virtual package</i> {% endif %}</li>
 				    {% elif result.model_name == "user" %}

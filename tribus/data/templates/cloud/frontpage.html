@@ -10,29 +10,40 @@
                         <p>{% blocktrans %}The application cloud is a storage, integration and distribution system designed for the software stored in {{ tribus_distro }}. It allows {{ tribus_role_1 }}, {{ tribus_role_2 }} and {{ tribus_role_3 }} to empower their applications by using the cloud.{% endblocktrans %}</p>
                         <p>
                             <span class="hr32 block"></span>
-                            <a href="/cloud/upload" class="btn btn-app btn-success disabled">
+                            <a href="/cloud/" class="btn btn-app btn-success disabled">
                                 <i class="icon-cloud-upload bigger-230"></i>
-                                Upload a new application
+                        			{% trans 'Upload a new application' %}
+                                <span class="smaller-75 block">
+                        			{% trans 'We are working on this feature' %}
+                    			</span>
                             </a>
                             <span class="hr32 block"></span>
                             <a href="/cloud/l/index" class="btn btn-app btn-light">
                                 <i class="icon-reorder bigger-230"></i>
-                                List alphabetically
+                                {% trans 'List alphabetically' %}
                             </a>
-
-                            <a href="/cloud/l/tag" class="btn btn-app btn-light disabled">
+                            <a href="/cloud/" class="btn btn-app btn-light disabled">
                                 <i class="icon-reorder bigger-230"></i>
-                                List by tag
+                                {% trans 'List by tag' %}
+                                <span class="smaller-75 block">
+                        			{% trans 'We are working on this feature' %}
+                    			</span>
                             </a>
-                            <a href="/cloud/l/category" class="btn btn-app btn-light disabled">
+                            <a href="/cloud/" class="btn btn-app btn-light disabled">
                                 <i class="icon-reorder bigger-230"></i>
-                                List by category
+                                {% trans 'List by category' %}
+                                <span class="smaller-75 block">
+                        			{% trans 'We are working on this feature' %}
+                    			</span>
                             </a>
                             <span class="hr32 block"></span>
 
-                            <a href="/cloud/l/stats" class="btn btn-app btn-yellow disabled">
+                            <a href="/cloud/" class="btn btn-app btn-yellow disabled">
                                 <i class="icon-signal bigger-230"></i>
-                                Show statistics
+                                {% trans 'Show statistics' %}
+                                <span class="smaller-75 block">
+                        			{% trans 'We are working on this feature' %}
+                    			</span>
                             </a>
                         </p>
 

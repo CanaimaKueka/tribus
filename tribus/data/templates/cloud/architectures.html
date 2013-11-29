@@ -9,7 +9,9 @@
 <p>- <b>{% trans 'Size:' %} </b> {{arch.data.Size}}</p>
 <p>- <b>{% trans 'Installed Size:' %} </b> {{arch.data.InstalledSize}}</p>
 <p>- <b>{% trans 'MD5sum:' %} </b> {{arch.data.MD5sum}}</p>
-<p>- <b><a href= "{{raiz}}{{arch.data.Filename}}">{% trans 'Download' %}</a></b></p>
+<!-- ARREGLAR URL DE DESCARGA: DEBE FUNCIONAR CON EL REPO EN PRODUCCION
+	PERO EN DESARROLLO NO REDIRIGE A LOS ARCHIVOS DEL REPOSITORIO -->
+<p>- <b><a href= "{{raiz}}/{{arch.data.Filename}}">{% trans 'Download' %}</a></b></p>
 <legend> </legend>
 {%for tipo in arch.relations.items %}
 	{% include 'cloud/relations.html' %}
