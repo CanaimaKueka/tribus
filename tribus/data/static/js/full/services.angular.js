@@ -143,12 +143,13 @@ angular.module('Comments', ['ngResource'])
         });
     });
 
-angular.module('Search', ['ngResource']).factory('Search',  function($resource){
-    return $resource('/api/0.1/search/', {}, {
-        query: {
-            method: 'GET',
-            isArray: false
-        },
+angular.module('Search', ['ngResource'])
+    .factory('Search', function($resource){
+        return $resource('/api/0.1/search/', {}, {
+            query: {
+                method: 'GET',
+                isArray: false
+            },
+        });
     });
-});
 

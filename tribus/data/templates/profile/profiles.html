@@ -1,28 +1,26 @@
 {% extends 'profile/base.html' %}
 {% load i18n %}
 {% block title %}{% trans 'Profile' %}{% endblock %}
-{% block content%}
+{% block content %}
 <div class="jumbotron">
     <div class="container-fluid">
         <div class="row-fluid">
-            <div class="span2">
-                <div ng-controller="UserController">
-                    <a href="https://es.gravatar.com/gravatars/new/" >
-                        <span class="profile_avatar" ng-style="{'background-image': 'url(\''+profile_gravatar+'\')'}"></span>
-                    </a>
-                    <div class="space-36"></div>
-                    <p><h3>{{ user_view.first_name }} {{user_view.last_name}}</h3></p>
-                    <p>{{ user_view.email }}</p>
-                	{%if not user_view.description == none %}
-					<p>{% trans 'Description' %}: {{ user_view.description }}</p>
-					{% endif %}
-                </div>
+            <div class="span3" data-ng-controller="UserController">
+                <span class="profile_avatar" data-ng-style="{'background-image': 'url(\''+profile_gravatar+'\')'}"></span>
+                <p><h3>{{ user_view.first_name }}</h3></p>
+                <p><h3>{{user_view.last_name}}</h3></p>
+                <p>{{ user_view.email }}</p>
+                {% if not user_view.description == none %}
+                <p>{{ user_view.description }}</p>
+                {% endif %}
+                <a class="btn btn-sm btn-block btn-success" href="http://gravatar.com/gravatars/">
+                    <i class="icon-plus-sign bigger-120"></i>
+                    <span class="bigger-110">{% trans 'Change avatar' %}</span>
+                </a>
             </div>
-            <div class="span10">
-                {% include 'profile/navbar.html' %}
-                <legend></legend>   
+            <div class="span9">
                 <div class="row-fluid">
-                    <tabset >
+                    <tabset>
                         <tab heading="{% trans 'Wall' %}">
                             {% include 'tribs.html' with user_from_template=user_view.first_name %}
                         </tab>
@@ -39,24 +37,24 @@
                                 </div>
                             </form>
                         </tab>
-                        <tab  heading="{% trans 'Follows' %}">
+                        <tab heading="{% trans 'Follows' %}">
                                 <div class = "row-fluid">                               
-                                    <input class = "span2 pull-right" name = "filtro" method = "GET" ng-model = 'query'></input>
+                                    <input class = "span2 pull-right" name = "filtro" method = "GET" data-ng-model = 'query'></input>
                                     <label class = "pull-right">{% trans 'Search'%}:</label>
                                 </div>
-                                <div class = "container-fluid" ng-controller= "FollowsController" >
+                                <div class = "container-fluid" data-ng-controller= "FollowsController" >
                                     <ul class = "follows_list">
                                         <div class = "span12"></div>
 
-                                        <li class = "span10  action_publisher " ng-repeat="follow in follows | filter: query | startFrom:currentPage*pageSize | limitTo:pageSize ">
+                                        <li class = "span10  action_publisher " data-ng-repeat="follow in follows | filter: query | startFrom:currentPage*pageSize | limitTo:pageSize ">
                                             <span class= "span2 offset">
-                                                <a href="/profile/{% verbatim %}{{follow.username}}{%endverbatim %}"><span class="trib_avatar" ng-style="{'background-image': 'url(\''+convertmd5(follow.email)+'\')'}"></span></a>
+                                                <a href="/profile/{% verbatim %}{{follow.username}}{%endverbatim %}"><span class="trib_avatar" data-ng-style="{'background-image': 'url(\''+convertmd5(follow.email)+'\')'}"></span></a>
                                             </span>
 
                                             <span class= "span9 offset1">       
                                                 <span class ="">
                                                     <span class= "pull-right">
-                                                        <i class="icon-minus-sign bigger-120" ng-click="eliminar(follow.id)"></i>
+                                                        <i class="icon-minus-sign bigger-120" data-ng-click="eliminar(follow.id)"></i>
                                                     </span>
                                                     <span>
                                                         <h4>{% verbatim %}{{follow.first_name}} {{follow.last_name}}{% endverbatim %}</h3>
@@ -84,11 +82,11 @@
 
                                 <span class= " pull-right"  ng-hide = "filtername.length<=pageSize">
                                     <hr noshade="noshade"/>
-                                    <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+                                    <button ng-disabled="currentPage == 0" data-ng-click="currentPage=currentPage-1">
                                         {% trans 'Previous' %}
                                     </button >
                                     {% verbatim %}{{currentPage+1}}/{{numberOfPages()}} {{filtername.length}} {% endverbatim %}
-                                    <button ng-disabled="currentPage >= filtername.length/pageSize - 1" ng-click="currentPage= currentPage+1" >
+                                    <button ng-disabled="currentPage >= filtername.length/pageSize - 1" data-ng-click="currentPage= currentPage+1" >
                                         {% trans 'Next' %}
                                     </button>            
                                 </span>
@@ -96,18 +94,18 @@
                         </tab>
                         <tab heading="{% trans 'Followers' %}">
                             <div class = "row-fluid">                               
-                                <input class = "span2 pull-right" name = "filtro2" method = "GET" ng-model = 'query2'></input>
+                                <input class = "span2 pull-right" name = "filtro2" method = "GET" data-ng-model = 'query2'></input>
                                 <label class = "pull-right">{% trans 'Search'%}:</label>
                             </div>
 
 
-                            <div class = "container-fluid" ng-controller= "FollowersController" >
+                            <div class = "container-fluid" data-ng-controller= "FollowersController" >
                                 <ul class = "follows_list">
                                     <div class = "span12"></div>
 
-                                    <li class = "span10 action_publisher " ng-repeat="follow in followers | filter: query2 | startFrom:currentPage*pageSize | limitTo:pageSize ">
+                                    <li class = "span10 action_publisher " data-ng-repeat="follow in followers | filter: query2 | startFrom:currentPage*pageSize | limitTo:pageSize ">
                                         <span class= "span2 offset">
-                                            <a href="/profile/{% verbatim %}{{follow.username}}{%endverbatim %}"><span class="trib_avatar" ng-style="{'background-image': 'url(\''+convertmd5(follow.email)+'\')'}"></span></a>
+                                            <a href="/profile/{% verbatim %}{{follow.username}}{%endverbatim %}"><span class="trib_avatar" data-ng-style="{'background-image': 'url(\''+convertmd5(follow.email)+'\')'}"></span></a>
                                         </span>
 
                                         <span class= "span9 offset1">       
@@ -125,7 +123,7 @@
                                                 <p>{% verbatim %}{{follow.email}}{% endverbatim %}</p>                                  
                                             </span>                                                 
                                         </span>
-                                <!--        <span class ="pull-right" ng-onclick= >
+                                <!--        <span class ="pull-right" data-ng-onclick= >
                                             <p>dejar de seguir</p>                                  
                                         </span>      -->                                            
                                     </span>
@@ -142,11 +140,11 @@
 
                                 <span class= " pull-right"  ng-hide = "filtername.length<=pageSize">
                                     <hr noshade="noshade"/>
-                                    <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+                                    <button ng-disabled="currentPage == 0" data-ng-click="currentPage=currentPage-1">
                                         {% trans 'Previous' %}
                                     </button >
                                     {% verbatim %}{{currentPage+1}}/{{numberOfPages()}}{% endverbatim %}
-                                    <button ng-disabled="currentPage >= filtername.length/pageSize - 1" ng-click="currentPage= currentPage+1" >
+                                    <button ng-disabled="currentPage >= filtername.length/pageSize - 1" data-ng-click="currentPage= currentPage+1" >
                                         {% trans 'Next' %} 
                                     </button>            
                                 </span>
