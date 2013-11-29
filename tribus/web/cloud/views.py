@@ -3,9 +3,10 @@
 
 from django.shortcuts import render, get_object_or_404
 from tribus.web.cloud.models import *
-from tribus.config.pkgrecorder import LOCAL_ROOT, relation_types
+from tribus.config.pkgrecorder import LOCAL_ROOT, relation_types, CANAIMA_ROOT
 from haystack.query import SearchQuerySet
 from django.core.paginator import Paginator, InvalidPage
+from tribus.config.web import DEBUG
 
 
 def frontpage(request):
@@ -44,9 +45,9 @@ def profile(request, name):
     dict_details = {}
     package_info = get_object_or_404(Package, Package=name)
     details_list = Details.objects.filter(package=package_info)
-
     for det in details_list:
-        dict_details[det.Distribution] = {}
+        if not dict_details.has_key(det.Distribution):
+            dict_details[det.Distribution] = {}
         dict_details[det.Distribution][det.Architecture] = {}
         dict_details[det.Distribution][det.Architecture]['data'] = det
         dict_details[det.Distribution][det.Architecture]['relations'] = {}
@@ -57,10 +58,15 @@ def profile(request, name):
                 if not dict_details[det.Distribution][det.Architecture]['relations'].has_key(n.relation_type):
                     dict_details[det.Distribution][det.Architecture]['relations'][n.relation_type] = []
                 dict_details[det.Distribution][det.Architecture]['relations'][n.relation_type].append(n)
-
+                
+    if DEBUG:
+        file_root = LOCAL_ROOT
+    else:
+        file_root = CANAIMA_ROOT
+        
     return render(request, 'cloud/packages.html', {
         'paquete': package_info,
-        'raiz': LOCAL_ROOT,
+        'raiz': file_root,
         'detalles': dict_details,
         'render_js': ['angular', 'angular.sanitize', 'angular.resource', 'angular.bootstrap', 
                  'angular.infinite-scroll', 'controllers.angular', 'services.angular',
