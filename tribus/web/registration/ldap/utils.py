@@ -23,8 +23,8 @@ from tribus.web.registration.ldap.models import LdapUser
 
 def create_ldap_user(u):
     l = LdapUser()
-    l.first_name = u.first_name
-    l.last_name = u.last_name
+    l.first_name = u.first_name or 'unknown'
+    l.last_name = u.last_name or 'unknown'
     l.full_name = u.first_name+' '+u.last_name
     l.email = u.email
     l.username = u.username

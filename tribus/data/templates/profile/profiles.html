@@ -6,17 +6,30 @@
     <div class="container-fluid">
         <div class="row-fluid">
             <div class="span3" data-ng-controller="UserController">
-                <span class="profile_avatar" data-ng-style="{'background-image': 'url(\''+profile_gravatar+'\')'}"></span>
-                <p><h3>{{ user_view.first_name }}</h3></p>
-                <p><h3>{{user_view.last_name}}</h3></p>
-                <p>{{ user_view.email }}</p>
-                {% if not user_view.description == none %}
-                <p>{{ user_view.description }}</p>
-                {% endif %}
-                <a class="btn btn-sm btn-block btn-success" href="http://gravatar.com/gravatars/">
-                    <i class="icon-plus-sign bigger-120"></i>
-                    <span class="bigger-110">{% trans 'Change avatar' %}</span>
-                </a>
+            	<span class="profile_buttons">
+	                <a class="btn btn-sm btn-block btn-success" href="https://es.gravatar.com/gravatars/new/">
+	                    <i class="icon-picture bigger-120"></i>
+	                    <span class="bigger-110">{% trans 'Change avatar' %}</span>
+	                </a>
+            	</span>
+            	<span class="profile_avatar_container">
+            		<span class="profile_avatar" data-ng-style="{'background-image': 'url(\''+profile_gravatar+'\')'}"></span>
+            	</span>
+            	<span class="profile_info">
+            		<h3>{{ user_view.first_name }}</h3>
+            		<h3>{{user_view.last_name}}</h3>
+            		<span>
+            			<i class="icon-leaf"></i>
+            			{{ user_view.username }}
+            		</span>
+            		<span>
+            			<i class="icon-envelope-alt"></i>
+            			{{ user_view.email }}
+            		</span>
+	                {% if not user_view.description == none %}
+	                <span>{{ user_view.description }}</span>
+	                {% endif %}
+            	</span>
             </div>
             <div class="span9">
                 <div class="row-fluid">

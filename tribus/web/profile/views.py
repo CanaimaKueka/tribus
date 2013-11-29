@@ -21,9 +21,9 @@ def SearchProfile(request, nick):
 
     if request.user.username == nick:
         return HttpResponseRedirect('/profile')  
-        
+
     # Cargamos la librería AngujarJS junto con sus plugins
-    render_js = ['angular', 'angular.resource', 'angular.resource',
+    render_js = ['angular', 'angular.sanitize', 'angular.resource',
                     'angular.infinite-scroll', 'angular.bootstrap',
                     'angular.moment']
 

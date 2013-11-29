@@ -14,118 +14,94 @@
                     {% if paquete.Maintainer == None %}
                         <p align="center">{% trans 'This is not a real package.' %}  </p>
                     {% else %}
-                    {% if paquete.Description %}
-                    <div class="row-fluid">
-                        {{ paquete.Description }}
-                    </div>
-                    {% endif %}
-                    {% if paquete.Maintainer %}
-                    <div class="row-fluid">
-                        <span class="span2"></span>
-                        <span class="span10">
-                            <h3 class="line-height-1">{% trans 'Maintainer' %}</h3>
-                            <h4 class="line-height-1">{{ paquete.Maintainer }}</h4>
-                        </span>
-                    </div>
-                    {% endif %}
-                    {% if paquete.Section %}
-                    <div class="row-fluid">
-                        <span class="span2"></span>
-                        <span class="span10">
-                            <h3 class="line-height-1">{% trans 'Section' %}</h3>
-                            <h4 class="line-height-1">{{ paquete.Section }}</h4>
-                        </span>
-                    </div>
-                    {% endif %}
-                    {% if paquete.Priority %}
-                    <div class="row-fluid">
-                        <span class="span2"></span>
-                        <span class="span10">
-                            <h3 class="line-height-1">{% trans 'Priority' %}</h3>
-                            <h4 class="line-height-1">{{ paquete.Priority }}</h4>
-                        </span>
-                    </div>
-                    {% endif %}
-                    {% if paquete.Homepage %}
-                    <div class="row-fluid">
-                        <span class="span2"></span>
-                        <span class="span10">
-                            <h3 class="line-height-1">{% trans 'Homepage' %}</h3>
-                            <h4 class="line-height-1">
-                                <a href="{{ paquete.Homepage }}" target="_blank">
-                                    {{ paquete.Homepage }}
-                                </a>
-                            </h4>
-                        </span>
-                    </div>
-                    {% endif %}
-                        
-                    {% if paquete.Labels.all  %}
-                        <div class="row-fluid">
-                            <span class="span2"></span>
-                            <span class="span10">
-                                <h3 class="line-height-1">{% trans 'Tags' %}</h3>
-                                <h4 class="line-height-1">
-                                	{% for label in paquete.Labels.all %}
-		                        		{% if forloop.last %}
-		                        			<b> {{ label.Name }} </b> : {{ label.Tags.Value }} 
-		                        		{% else %}
-		                        			<b> {{ label.Name }} </b> : {{ label.Tags.Value }}, 
-		                        		{% endif %}
-		                        	{% endfor %}
-                                </h4>
-                            </span>
-                        </div>
-                    {% endif %}
-                    <div class="tabbable tabs-left">
-                        <ul class="nav nav-tabs" id="myTab3">
-                            <li class="active">
-                                <a data-toggle="tab" href="#home3">
-                                    <i class="pink icon-dashboard bigger-110"></i>
-                                    Home
-                                </a>
-                            </li>
+	                    {% if paquete.Description %}
+	                    <div class="row-fluid">
+	                        {{ paquete.Description }}
+	                    </div>
+	                    {% endif %}
+	                    {% if paquete.Maintainer %}
+	                    <div class="row-fluid">
+	                        <span class="span2"></span>
+	                        <span class="span10">
+	                            <h3 class="line-height-1">{% trans 'Maintainer' %}</h3>
+	                            <h4 class="line-height-1">{{ paquete.Maintainer }}</h4>
+	                        </span>
+	                    </div>
+	                    {% endif %}
+	                    {% if paquete.Section %}
+	                    <div class="row-fluid">
+	                        <span class="span2"></span>
+	                        <span class="span10">
+	                            <h3 class="line-height-1">{% trans 'Section' %}</h3>
+	                            <h4 class="line-height-1">{{ paquete.Section }}</h4>
+	                        </span>
+	                    </div>
+	                    {% endif %}
+	                    {% if paquete.Priority %}
+	                    <div class="row-fluid">
+	                        <span class="span2"></span>
+	                        <span class="span10">
+	                            <h3 class="line-height-1">{% trans 'Priority' %}</h3>
+	                            <h4 class="line-height-1">{{ paquete.Priority }}</h4>
+	                        </span>
+	                    </div>
+	                    {% endif %}
+	                    {% if paquete.Homepage %}
+	                    <div class="row-fluid">
+	                        <span class="span2"></span>
+	                        <span class="span10">
+	                            <h3 class="line-height-1">{% trans 'Homepage' %}</h3>
+	                            <h4 class="line-height-1">
+	                                <a href="{{ paquete.Homepage }}" target="_blank">
+	                                    {{ paquete.Homepage }}
+	                                </a>
+	                            </h4>
+	                        </span>
+	                    </div>
+	                    {% endif %}
+	                        
+	                    {% if paquete.Labels.all  %}
+	                        <div class="row-fluid">
+	                            <span class="span2"></span>
+	                            <span class="span10">
+	                                <h3 class="line-height-1">{% trans 'Tags' %}</h3>
+	                                <h4 class="line-height-1">
+	                                	{% for label in paquete.Labels.all %}
+			                        		{% if forloop.last %}
+			                        			<b> {{ label.Name }} </b> : {{ label.Tags.Value }} 
+			                        		{% else %}
+			                        			<b> {{ label.Name }} </b> : {{ label.Tags.Value }}, 
+			                        		{% endif %}
+			                        	{% endfor %}
+	                                </h4>
+	                            </span>
+	                        </div>
+	                    {% endif %}
+	                    
+	                    <!-- ---------------------- -->	                    
 
-                            <li class="">
-                                <a data-toggle="tab" href="#profile3">
-                                    <i class="blue icon-user bigger-110"></i>
-                                    Profile
-                                </a>
-                            </li>
 
-                            <li class="">
-                                <a data-toggle="tab" href="#dropdown13">
-                                    <i class="icon-rocket"></i>
-                                    More
-                                </a>
-                            </li>
-                        </ul>
-
-                        <div class="tab-content">
-                            <div id="home3" class="tab-pane active">
-                                <p>Raw denim you probably haven't heard of them jean shorts Austin.</p>
-                                <p>Raw denim you probably haven't heard of them jean shorts Austin.</p>
-                            </div>
-
-                            <div id="profile3" class="tab-pane">
-                                <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.</p>
-                                <p>Raw denim you probably haven't heard of them jean shorts Austin.</p>
-                            </div>
-
-                            <div id="dropdown13" class="tab-pane">
-                                <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade.</p>
-                                <p>Raw denim you probably haven't heard of them jean shorts Austin.</p>
-                            </div>
-                        </div>
-                    </div>
-                    {% if detalles %}
-                        {% for dists in detalles.items %}
-                        <h2 align="center"><b> {% trans 'In Canaima' %} {{dists.0}}</b></h2>                
-                            {%for arch in dists.1.values %}
-                                {% include 'cloud/architectures.html' %}
-                            {% endfor %}
-                        {% endfor %}
-                    {% endif %}
+	                    	                    
+				  
+		               {% if detalles %}
+		                    <accordion close-others="oneAtATime">
+		                        {% for dists in detalles.items %}
+			               		<accordion-group heading="{{dists.0}}" is-open="false">
+			               			<tabset >
+						      			{%for arch in dists.1.values %}
+			                        		
+			                  					<tab heading="{{arch.data.Architecture}}">
+				                               		 {% include 'cloud/architectures.html' %}
+				                               	</tab>
+			                            
+		                            	{% endfor %}
+			                       </tabset>
+                    			</accordion-group>
+                        	{% endfor %}
+		                   </accordion>
+		             {% endif %}	                    	
+	                    	
+	              
 
                     {% endif %}
                     </div>

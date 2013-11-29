@@ -7,47 +7,49 @@
 		<div class="row-fluid">
 			<div class="span3">
                 <div ng-controller="UserController">
-					<span class="profile_avatar" ng-style="{'background-image': 'url(\''+profile_gravatar+'\')'}"></span>
-					<div class="space-36"></div>
-						<p><h3>{{ user_view.first_name }} {{user_view.last_name}}</h3></p>
-						<p>{{ user_view.email }}</p>
-						{%if not user_view.description == none %}
-						<p>{% trans 'Description' %}: {{ user_view.description }}</p>
-						{% endif %}
+	            	<span class="profile_avatar_container">
+	            		<span class="profile_avatar" data-ng-style="{'background-image': 'url(\''+profile_gravatar+'\')'}"></span>
+	            	</span>
+	            	<span class="profile_info">
+	            		<h3>{{ user_view.first_name }}</h3>
+	            		<h3>{{user_view.last_name}}</h3>
+	            		<span>
+	            			<i class="icon-leaf"></i>
+	            			{{ user_view.username }}
+	            		</span>
+	            		<span>
+	            			<i class="icon-envelope-alt"></i>
+	            			{{ user_view.email }}
+	            		</span>
+		                {% if not user_view.description == none %}
+		                <span>{{ user_view.description }}</span>
+		                {% endif %}
+	            	</span>
+	            	<span class="profile_buttons">
 						<span ng-click="follow()">
-							<a  class="btn btn-sm btn-block btn-success" ng-if="add == false" >
+							<a class="btn btn-sm btn-block btn-success" ng-if="add == false" >
 								<i class="icon-plus-sign bigger-120"></i>
 								<span class="bigger-110"> {% trans 'Follow' %}</span>
 							</a>
-
-							<a  class="btn btn-sm btn-block btn-danger" ng-if="add == true" >
+							<a class="btn btn-sm btn-block btn-danger" ng-if="add == true" >
 								<i class="icon-minus bigger-120"></i>
 								<span class="bigger-110"> {% trans 'Stop following' %} </span>
 							</a>
-
 						</span>
-					<legend></legend>
-					<!-- {% if user.is_authenticated %} -->
-
-					<!-- {%endif%} -->
+	            	</span>
 				</div>
-
 			</div>
 			<div class="span9">
-				{% include 'profile/navbar_view.html' %}
-                <legend></legend>	
-
 				<div class = "row-fluid">
                    <tabset>
                         <tab href = "" heading="{% trans 'Wall' %}">
                             {% include 'tribs.html' with user_from_template=user_view.first_name %}
                         </tab>
-							<ul class="nav nav-tabs" id="myTab">
-
-						</div>
+					</tabset>
 				</div>
 			</div>
 		</div>
+	</div>
 </div>		
 
 {% endblock %}
