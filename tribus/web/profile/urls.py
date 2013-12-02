@@ -1,6 +1,5 @@
 from django.conf.urls import patterns, url
 from django.contrib.auth.views import *
-#from tribus.web.profile import views
 
 urlpatterns = patterns('',
 

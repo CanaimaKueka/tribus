@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
+<div class="jumbotron">
+    <div class="container-fluid">
+        <div class="row-fluid dashboard_container">
+            <div class="span8 dashboard_timeline">
+            </div>
+            <div class="span4 dashboard_panel">
+                <a href="/" class="btn btn-block btn-success btn-large">
+                    <span class="bigger-140 width-100 block">
+                        <i class="icon-chevron-left"></i>
+                        {% trans 'Go back' %}
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
+<div class="jumbotron">
+    <div class="container-fluid">
+        <div class="row-fluid dashboard_container">
+            <div class="span8 dashboard_timeline">
+                <div class="trib_list">
+                    <ul>
+                        <li class="trib_intro">
+                            <span class="trib_body">
+                                <span class="trib_title">
+                                    <h2>{% trans 'Condiciones de Servicio' %}</h2>
+                                </span>
+                                <span class="trib_content">
+                                  <h2>Política de Protección de Datos de Tribus</h2>
+
+                                  <p>Esta Política de Protección de Datos describe cómo y cuándo Tribus recoge, utiliza y comparte su información cuando Ud. utiliza nuestros Servicios. Tribus recibe su información a través de nuestros distintos servicios web, APIs y notificaciones por email (los "<strong>Servicios</strong>" o "<strong>Tribus</strong>"). Al utilizar cualquiera de nuestros Servicios Ud. consiente la recogida, cesión, tratamiento, almacenamiento, revelación y otros usos de su información según lo descrito en esta Política de Protección de Datos.</p>
+                                </span>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="span4 dashboard_panel">
+                <a href="/" class="btn btn-block btn-success btn-large">
+                    <span class="bigger-140 width-100 block">
+                        <i class="icon-chevron-left"></i>
+                        {% trans 'Go back' %}
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

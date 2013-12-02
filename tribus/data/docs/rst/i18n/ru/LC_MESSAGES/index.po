@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tribus 0.1.dev20131118020506\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-18 16:22-0530\n"
-"PO-Revision-Date: 2013-11-18 00:52-0730\n"
+"POT-Creation-Date: 2013-12-02 02:20-0530\n"
+"PO-Revision-Date: 2013-11-18 00:52-0830\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: ru <LL@li.org>\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
@@ -18,17 +18,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-# 5aa9373355504f9ead7c545aab52d8bd
+# cb8eeef8173045cbac6d4df11379f29a
 #: ../../index.rst:3
 msgid "Tribus"
 msgstr ""
 
-# b118d8187b604075b0a725af5ffc1dbb
+# 0eeccd72ff414d9393d4b3c37693ba43
 #: ../../readme.rst:2
 msgid "Acerca"
 msgstr ""
 
-# 4283321608c244f8819f87c2fca26def
+# d4e8ebe632524c8c8431157919d1a516
 #: ../../readme.rst:4
 msgid ""
 "*Tribus* es una **red social** para la gestión de comunidades de software"
@@ -38,7 +38,7 @@ msgid ""
 "**desarrollar el máximo potencial de sus capacidades**."
 msgstr ""
 
-# ec8125b604f54682a73c5e22d8f3d586
+# 4924a54110ba44b9968abece71cebda8
 #: ../../readme.rst:6
 msgid ""
 "*Tribus* promueve la **autogestión** y la **corresponsabilidad** en las "
@@ -47,12 +47,12 @@ msgid ""
 "natural** de los roles."
 msgstr ""
 
-# 3ac48e9fd0464bdca4f715977eac405a
+# 40361681b279475595bf606d5bc55d40
 #: ../../readme.rst:9
 msgid "¿Cómo funciona?"
 msgstr ""
 
-# 2b29104604a64a9ebea91ee9e1f2453b
+# 9d87984347de44ad9594eec6f16ed946
 #: ../../readme.rst:11
 msgid ""
 "*Tribus* permite una gestión descentralizada a través del reconocimiento "
@@ -60,7 +60,7 @@ msgid ""
 "responsabilidades según el nivel de experiencia alcanzado."
 msgstr ""
 
-# 69e3c5e5df464d778854164584cc7ec1
+# 5d3c82a163c448ae957c768112dcb544
 #: ../../readme.rst:13
 msgid ""
 "El reconocimiento (o valoración) se realiza según un patrón establecido "
@@ -71,7 +71,7 @@ msgid ""
 " que él y todos los demás miembros serán valorados."
 msgstr ""
 
-# 2e3afd4fcb87440e9f3e78c8f28cb104
+# 647630699c97405ba735a5e91eb7a786
 #: ../../readme.rst:15
 msgid ""
 "El reconocimiento sirve para establecer una metrica relativa de la "
@@ -82,7 +82,7 @@ msgid ""
 " de un *sistema de rangos o privilegios*."
 msgstr ""
 
-# a344df85e82f4dc08b1030abef7a16d8
+# ea78a2081f9d4237a1f434c7c0fbc839
 #: ../../readme.rst:17
 msgid ""
 "La plataforma permite realizar diferentes actividades para facilitar el "
@@ -95,7 +95,7 @@ msgid ""
 "estrictamente necesarios."
 msgstr ""
 
-# afb22edc728d4748b59740543ca90188
+# 3fe4cb985e0d430098d078397b42a405
 #: ../../readme.rst:19
 msgid ""
 "Para mayor información, consulte la documentación en "
@@ -103,43 +103,43 @@ msgid ""
 "construirla)."
 msgstr ""
 
-# 58476dbb8b794c7b93eba5da91fc4eef
+# 9767fc21270d4c10b53ad9c43da49fd3
 #: ../../index.rst:13
 msgid "Documentación para usuarios"
 msgstr ""
 
-# 04e34daa4eb54e2dad246ef930069e21
-# 6694bd242a9140b5b33bf424f2525af1
-# 08b5c4ccb337442690b9cb0e0a0a9daf
-# 1890d9ada2da450db04ac07c62865fd1
-# 8f6c4ca21638481ba151c0ab7bae451b
-# 630d40870c7d4a6c9ac6f0a1f319eab5
+# 514d9294009a430d9b095c4688fc1fc1
+# c922030767d94f4385608b134df55e37
+# 2f9bf41046184a539a220c7d95f2fff7
+# 53598ccf1cff4b8f88defab7fc282667
+# 9ab04dcfb51a4ee08d7a90b7d6c0ca5b
+# d77f1ea9ac0f43059eb49e5a69277dd4
 #: ../../index.rst:15 ../../index.rst:22 ../../index.rst:34 ../../index.rst:47
 #: ../../index.rst:78 ../../index.rst:113
 msgid "TODO"
 msgstr ""
 
-# 3cc07a0bb2404ae6abf09e6ec3990876
+# 51c2ca2aa7b64d12b33ec83b1185ecfe
 #: ../../index.rst:20
 msgid "Tutorial"
 msgstr ""
 
-# b7b9149c6e944b99a956c66699e6ae66
+# 77ba86746993485ebcfb3355a89bc2f6
 #: ../../index.rst:32
 msgid "Documentación de uso"
 msgstr ""
 
-# ed2a469d5d874e189d6fe791f727b229
+# 137416c783ce481cbfa8c95405e21748
 #: ../../index.rst:45
 msgid "Preguntas más frecuentes"
 msgstr ""
 
-# f785c105e81241ac84a7bbd47a65dd4b
+# 0daef654803b49b9bf34314d7d092e09
 #: ../../index.rst:55
 msgid "Documentación para administradores de plataforma"
 msgstr ""
 
-# e2b5e9e65f55484ead95f99fe521a63a
+# d77fea973cc24d4aa743bd5c76f2e180
 #: ../../index.rst:57
 msgid ""
 "Esta sección describe todos los procedimientos necesarios para entender "
@@ -150,12 +150,12 @@ msgid ""
 "básicos de consola bajo ambiente GNU/Linux."
 msgstr ""
 
-# 87e3650a78e2465e99154d43e1491a74
+# d99f8ae5943f4986a103ff3e649ac87e
 #: ../../index.rst:62
 msgid "Instalación"
 msgstr ""
 
-# 7a80104bb68f494da001b4827160146c
+# 7a384a42579d4b5c9b5cd8538d99eb2c
 #: ../../index.rst:64
 msgid ""
 "La forma más fácil de instalar Tribus es a través de los paquetes de "
@@ -167,7 +167,7 @@ msgid ""
 ":doc:`instalación <installation>`."
 msgstr ""
 
-# 34ce9e30581f414c895eec656df582ba
+# 2604cd83fd3e4d6391bc2cb6c620ddb3
 #: ../../index.rst:66
 msgid ""
 "Aunque recomendamos el uso de los paquetes para tu distribución, existen "
@@ -179,31 +179,31 @@ msgid ""
 "repositorio git o descargando un archivo comprimido."
 msgstr ""
 
-# 333469789e644d1188863c206548f137
+# 53d6ab45514346409d929b37c2d2b80a
 #: ../../index.rst:68
 msgid ""
 "Para mayor información, consulte las :doc:`instrucciones detalladas de "
 "instalación <installation>`."
 msgstr ""
 
-# 28db801c434d446b9eceeb176eb48645
+# 5780a8b843954e3ab2bc05d84fa0e034
 #: ../../index.rst:76
 msgid "Configuración"
 msgstr ""
 
-# c2395acca189423caf8f1eba89f87017
+# f89b778f48be43b98ee593ea53ab574b
 #: ../../index.rst:88
 msgid "Documentación para desarrolladores"
 msgstr ""
 
-# df3beb6c366e4ee1ad1e8ba5ae8713c0
+# 5c6f9a067ae24fdd902bfaf66eae127b
 #: ../../index.rst:90
 msgid ""
 "Esta sección describe cuales son las herramientas y normas para colaborar"
 " con el desarrollo de Tribus."
 msgstr ""
 
-# 99ef8c1e10e7446291e3f5be11fa0219
+# 8d11374f76814b94a80929b75923210a
 #: ../../index.rst:92
 msgid ""
 "Generalmente se recomienda empezar leyendo sobre la :doc:`estructura del "
@@ -219,7 +219,7 @@ msgid ""
 "sugeridos."
 msgstr ""
 
-# ed3b8e0932704acc9a5a5428436e2918
+# f9aab8c139ef440b9e6888e105164b09
 #: ../../index.rst:94
 msgid ""
 "Para pasar directamente a una tarea, lee las :doc:`hojas de ruta "
@@ -229,53 +229,53 @@ msgid ""
 "<development/changelog>` para versiones pasadas."
 msgstr ""
 
-# 3af9c5522d424a2c8a88b09713609874
+# 291009289f5a43eaa545dc85f0120721
 #: ../../index.rst:111
 msgid "Documentación de la API"
 msgstr ""
 
-# f67c9d1940c247529f2330e9d7ae2999
+# aa1643b8e3064b078340a00f76ab3a6a
 #: ../../index.rst:124
 msgid "Hojas de ruta"
 msgstr ""
 
-# 87c6f7aaba2f4089b7ece8728cfcc9a6
+# 9283700741214d3f9acb790e6c110d7e
 #: ../../index.rst:126
 msgid ""
 "Las hojas de ruta contienen la planificación establecida para las "
 "próximas versiones Tribus."
 msgstr ""
 
-# f11bb7c691204ed6bffc6814119e8bc0
+# 22511779e9934b53a90df1f5017a75fd
 #: ../../index.rst:128
 msgid "Para mayor información, consulte :doc:`el Roadmap <development/roadmap>`."
 msgstr ""
 
-# 4381aef2ccee4074a272c56fe72dcf5e
+# e6059fa255cd4133bccd65ff821cddc0
 #: ../../index.rst:133
 msgid "Lista de cambios"
 msgstr ""
 
-# d7c93305aad9493abb0c7f24b45b7175
+# 13a860326fa64f6caec09ce4f6cb5eee
 #: ../../index.rst:135
 msgid ""
 "La lista de cambios contiene información acerca de la lista de cambios "
 "que han sido introducidos para las diferentes versiones de Tribus."
 msgstr ""
 
-# 4ecfb6b06b3443eab3851267206930bf
+# e5b61669f207458e873f7290afea4a0a
 #: ../../index.rst:137
 msgid ""
 "Para mayor información, consulte :doc:`el Changelog "
 "<development/changelog>`."
 msgstr ""
 
-# 15030f144f054aa99295343b2cd03bc4
+# 62d87f12c8864eb196db6c49497f1b78
 #: ../../index.rst:142
 msgid "Licencia de distribución"
 msgstr ""
 
-# d1a54342a6534839aeb048f3f6b1f87b
+# fbfe030c91d64a72835da382aeb15316
 #: ../../index.rst:144
 msgid ""
 "Tribus está licenciado bajo **GPL-3**. Todas las contribuciones hechas "
@@ -286,12 +286,12 @@ msgid ""
 "incorporados a Tribus, serán objeto de rechazo."
 msgstr ""
 
-# d349ea63ac70444dacdbc07775f1969d
+# 9873ea2034a24dd594f28174fe78d9f1
 #: ../../index.rst:156
 msgid "Obtener ayuda"
 msgstr ""
 
-# a4860d5b41f041079aeb89ca4982af29
+# 1953dedb6d944e619ad720ed931380e1
 #: ../../index.rst:158
 msgid ""
 "Si ya has leído el :ref:`tutorial`, la :ref:`usage_docs`, las :ref:`faq` "
@@ -302,12 +302,12 @@ msgid ""
 " o enviar un correo a la lista."
 msgstr ""
 
-# 9eee947af7f348a2878c5f35d98583ee
+# 4390a253209d4f93b11a524b19cb5c01
 #: ../../index.rst:163
 msgid "Foro"
 msgstr ""
 
-# 5fa4b114047841e98293ff12e3476e86
+# faf8a2b0add441a1b59453869bec792e
 #: ../../index.rst:165
 msgid ""
 "La manera más expedita de conseguir ayuda con Tribus es a través del "
@@ -316,12 +316,12 @@ msgid ""
 "rápidamente, ten un poco de paciencia si no te responden inmediatamente."
 msgstr ""
 
-# fd7231c37db741768cfaa72fe9c10af7
+# 2179f2f67ad8493b997a1f8e0ca6c5c9
 #: ../../index.rst:168
 msgid "Bugs/ticket tracker"
 msgstr ""
 
-# c74c8cd8e43149ca9fbbca81996fc805
+# 9bb9c89a8734419aa995fe183cd4816d
 #: ../../index.rst:170
 msgid ""
 "Puedes revisar si ya se ha reportado un error relacionado con el problema"
@@ -329,12 +329,12 @@ msgid ""
 "<https://github.com/CanaimaGNULinux/tribus/issues>`_."
 msgstr ""
 
-# 3729326306e14018bf9c0010daada547
+# cfab50ff637944548d5a4a45e7ba467e
 #: ../../index.rst:173
 msgid "Twitter"
 msgstr ""
 
-# 3611459efa9a4383b92a6501f68e534c
+# f8f755fa9322434da45354cc147748bb
 #: ../../index.rst:175
 msgid ""
 "Tribus tiene una cuenta de twitter `@tribusdev "
@@ -342,24 +342,24 @@ msgid ""
 "información acerca del desarrollo, soporte e información relacionada."
 msgstr ""
 
-# 8b841e21c22d4f4795f6f708f1c75b47
+# 362ab9fb9e5b45e094f37d86606e9aaf
 #: ../../index.rst:178
 msgid "Grupo en Facebook"
 msgstr ""
 
-# 19aa520ca46f4224968f86fcad3de34b
+# d045533081074f59aba462b75e350c05
 #: ../../index.rst:180
 msgid ""
 "Diversas cosas pueden compartirse en el `Grupo de Facebook "
 "<https://www.facebook.com/groups/tribusdev>`_."
 msgstr ""
 
-# 51b6b6be0dc34e2a868994fdcb9c36a7
+# c5d983bc87b84651814095f3a9a24a0a
 #: ../../index.rst:183
 msgid "IRC"
 msgstr ""
 
-# 885eed8a8d2b4d6fa476ab7e29ec5792
+# fc77469990354533ac40fe0cc25c26a3
 #: ../../index.rst:185
 msgid ""
 "Existe un canal IRC, en donde los desarrolladores comúnmente se reúnen: "

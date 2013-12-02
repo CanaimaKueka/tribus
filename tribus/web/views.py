@@ -38,8 +38,9 @@ def index(request):
             })
 
 
-def tribus_search(request):
-    context={}
+def search(request):
+    context = {}
+    query = {}
         
     # Cargamos la librería AngujarJS junto con sus plugins
     render_js = ['angular', 'angular.sanitize', 'angular.resource',

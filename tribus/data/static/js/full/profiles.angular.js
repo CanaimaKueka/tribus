@@ -3,9 +3,9 @@
 
 // Application -----------------------------------------------------------------
 
-var tribus = angular.module('tribus',
-    ['ngSanitize', 'Tribs' , 'Timeline', 'Comments', 'Search', 'UserProfile', 'User',
-    'UserFollows', 'UserFollowers', 'infinite-scroll', 'angularMoment', 'ui.bootstrap']);
+var tribus = angular.module('tribus', ['ngSanitize', 'Tribs' , 'Timeline',
+    'Comments', 'Search', 'UserProfile', 'User', 'UserFollows', 'UserFollowers',
+    'infinite-scroll', 'angularMoment', 'ui.bootstrap']);
 
 
 // Controllers -----------------------------------------------------------------
@@ -16,12 +16,12 @@ tribus.controller('CommentController', ['$scope', '$timeout', '$modal', 'Comment
     CommentController]);
 tribus.controller('UserController',['$scope','UserProfile', 'User',
     UserController]);
-tribus.controller('FollowsController', ['$scope','$filter','UserFollows','UserProfile','$timeout',
+tribus.controller('FollowsController', ['$scope', '$filter', 'UserFollows', 'UserProfile', '$timeout',
     FollowsController]);
-tribus.controller('FollowersController', ['$scope','$filter','UserFollowers','UserProfile', '$timeout',
+tribus.controller('FollowersController', ['$scope', '$filter', 'UserFollowers', 'UserProfile', '$timeout',
     FollowersController]);
 
-tribus.filter('startFrom', function() {
+tribus.filter('startFrom', function(){
     return function(input, start) {
         start = +start; //parse to int
         return input.slice(start);

@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
+<div class="jumbotron">
+    <div class="container-fluid">
+        <div class="row-fluid dashboard_container">
+            <div class="span8 dashboard_timeline">
+                <div class="trib_list">
+                    <ul>
+                        <li class="trib_intro">
+                            <span class="trib_body">
+                                <span class="trib_title">
+                                    <h2>{% trans 'Condiciones de Servicio' %}</h2>
+                                </span>
+                                <span class="trib_content">
+                                    <p>Estas Condiciones de Servicio (en adelante, las "<strong>Condiciones</strong>") gobiernan el acceso y uso de los servicios, incluyendo nuestras distintas páginas web, APIs, notificaciones por correo electrónico, aplicaciones e iconos (en adelante, los "<strong>Servicios</strong>" o "<strong>Tribus</strong>"), así como el acceso y uso de cualquier información, texto, gráficos, fotos u otro material cargado, descargado o que se reproduzca a través de los Servicios (en adelante, de forma conjunta, el "<strong>Contenido</strong>"). El acceso y uso de los Servicios queda condicionado a la aceptación y cumplimiento de estas Condiciones. Al acceder o usar los Servicios, usted consiente la aplicación de estas Condiciones.</p>
+
+                                    <h3>1.  Condiciones Básicas</h3>
+
+                                    <p>Usted es el único responsable por el uso que pueda dar a los servicios, por todo Contenido que usted reproduzca a través de los Servicios y por cualquier consecuencia que de ello se derive. El Contenido que usted envíe, muestre o reproduzca podrá ser visto por otros usuarios de los Servicios. Tenga en cuenta que tan solo debe proporcionar el Contenido que usted considere oportuno compartir con terceros de conformidad con lo dispuesto en estas Condiciones.</p>
+
+                                    <p>Los Servicios que Tribus presta evolucionan continuamente y, por ello, la forma o naturaleza de tales Servicios pueden cambiar de un momento a otro sin que se le haya notificado con antelación tal cambio. Asimismo, Tribus puede interrumpir (de forma temporal o permanente) la prestación de los Servicios (o cualquiera de las características de los Servicios) a usted o a todos los usuarios en general y, en estas circunstancias, es posible que Tribus no pueda notificarle este hecho con antelación. Tribus también se reserva el derecho a poner límites al uso y almacenamiento a total discreción de Tribus, en cualquier momento y sin previo aviso.</p>
+
+
+                                    <h3>2.  Privacidad</h3>
+
+                                    <p>Cualquier información que usted facilite a Tribus está sujeta a nuestra <a href="/about/privacy" target="_blank">Política de Privacidad</a> que rige la recogida y el uso de su información por parte de Tribus. Por la presente se le informa de que el uso de los Servicios comporta su consentimiento implícito a la recogida y el uso de esta información (conforme a lo dispuesto en la Política de Privacidad).</p>
+
+
+                                    <h3>3.  Contraseñas</h3>
+
+                                    <p>Usted es el responsable de la custodia de la contraseña que emplea para acceder a los Servicios y de cualquier actividad o acto que se lleve a cabo con su contraseña. Recomendamos que proteja su cuenta con una contraseña difícil de descifrar (una contraseña que contenga combinaciones de letras mayúsculas y minúsculas, números y símbolos). Tribus no será responsable de ningún perjuicio o daño que resulte del incumplimiento de lo mencionado con anterioridad.</p>
+                                </span>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="span4 dashboard_panel">
+                <a href="/" class="btn btn-block btn-success btn-large">
+                    <span class="bigger-140 width-100 block">
+                        <i class="icon-chevron-left"></i>
+                        {% trans 'Go back' %}
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

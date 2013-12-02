@@ -3,8 +3,6 @@
 
 // Services --------------------------------------------------------------------
 
-
-
 angular.module('User', ['ngResource'])
 .factory('User',  function($resource){
     return $resource('/api/0.1/user/details/:author_id',
@@ -47,8 +45,8 @@ angular.module('UserFollowers', ['ngResource'])
 });  
 
 angular.module('UserFollows', ['ngResource'])
-.factory('UserFollows',  function($resource){
-    return $resource('/api/0.1/user/follows/',{},{       
+    .factory('UserFollows', function($resource){
+    return $resource('/api/0.1/user/follows/', {}, {       
         query: {
             method: 'GET',
             isArray: true,

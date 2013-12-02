@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tribus 0.1.dev20131118020506\n"
 "Report-Msgid-Bugs-To: desarrolladores@canaima.softwarelibre.gob.ve\n"
-"POT-Creation-Date: 2013-11-18 16:22-0630\n"
-"PO-Revision-Date: 2013-11-18 00:52-0730\n"
+"POT-Creation-Date: 2013-12-02 02:20-0630\n"
+"PO-Revision-Date: 2013-11-18 00:52-0830\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: ru <LL@li.org>\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
@@ -38,6 +38,103 @@ msgstr ""
 msgid "Harvester"
 msgstr ""
 
+#: tribus/data/templates/about.html:8 tribus/data/templates/index.html:8
+msgid "Join the Tribe!"
+msgstr ""
+
+#: tribus/data/templates/about.html:9 tribus/data/templates/index.html:9
+msgid ""
+"Unleash the power of your creativity to bring amazing pieces of art to "
+"the free software world. We deliver a complete set of community services "
+"right to your computer."
+msgstr ""
+
+#: tribus/data/templates/about.html:13 tribus/data/templates/about.html:25
+#: tribus/data/templates/index.html:13 tribus/data/templates/index.html:25
+#: tribus/data/templates/registration/signup_form.html:23
+msgid "Sign up"
+msgstr ""
+
+#: tribus/data/templates/about.html:26 tribus/data/templates/index.html:26
+msgid ""
+"By clicking on this button, you agree to the <a href=\"/about/terms\" "
+"target=\"_blank\">Terms of Service</a>, and the <a "
+"href=\"/about/privacy\" target=\"_blank\">Privacy Policy</a>."
+msgstr ""
+
+#: tribus/data/templates/about.html:36 tribus/data/templates/index.html:36
+#: tribus/data/templates/cloud/packages.html:111
+msgid "Package cloud"
+msgstr ""
+
+#: tribus/data/templates/about.html:37 tribus/data/templates/index.html:37
+msgid ""
+"We give you space to store the binaries of your source code in our "
+"package cloud. You can distribute your applications through a personal "
+"cloud, or have it enter Canaima's development cycle."
+msgstr ""
+
+#: tribus/data/templates/about.html:40 tribus/data/templates/index.html:40
+msgid "Source management"
+msgstr ""
+
+#: tribus/data/templates/about.html:41 tribus/data/templates/index.html:41
+msgid ""
+"Store your work in a public place, where everyone can review and "
+"contribute to your projects. We support the most popular versioning "
+"systems: <a href=\"http://subversion.apache.org/\" "
+"target=\"_blank\">subversion</a>, <a "
+"href=\"a:http://bazaar.canonical.com/en/\" target=\"_blank\">bazaar</a>, "
+"<a href=\"http://mercurial.selenic.com/\" target=\"_blank\">mercurial</a>"
+" and <a href=\"http://git-scm.com/\" target=\"_blank\">git</a> (or no "
+"versioning at all)."
+msgstr ""
+
+#: tribus/data/templates/about.html:44 tribus/data/templates/index.html:44
+msgid "Continuous integration"
+msgstr ""
+
+#: tribus/data/templates/about.html:45 tribus/data/templates/index.html:45
+msgid ""
+"Focus yourself in the creative process of your work, while we handle the "
+"building and packaging of your applications. We have a <a "
+"href=\"http://buildbot.net\" target=\"_blank\">buildbot</a> farm just "
+"waiting to compile your stuff."
+msgstr ""
+
+#: tribus/data/templates/about.html:50 tribus/data/templates/index.html:50
+msgid "Social network"
+msgstr ""
+
+#: tribus/data/templates/about.html:51 tribus/data/templates/index.html:51
+msgid ""
+"Share your activities in the platform with your friends and close "
+"contributors. Comment on your commits, patches, applications, "
+"translations, and more. Get everyone to know you and your work!"
+msgstr ""
+
+#: tribus/data/templates/about.html:54 tribus/data/templates/index.html:54
+msgid "Ticket system"
+msgstr ""
+
+#: tribus/data/templates/about.html:55 tribus/data/templates/index.html:55
+msgid ""
+"Organize your team work by assigning milestones to your teammates and "
+"achieving goals together. Measure your effectiveness and planify your "
+"objectives in a clean and intuitive interface."
+msgstr ""
+
+#: tribus/data/templates/about.html:58 tribus/data/templates/index.html:58
+msgid "Easy documentation"
+msgstr ""
+
+#: tribus/data/templates/about.html:59 tribus/data/templates/index.html:59
+msgid ""
+"We know how important it is to have a good and quickly-to-set-up "
+"documentation. That's why the only thing you have to do is write RST, and"
+" we will take care of the HTML for you."
+msgstr ""
+
 #: tribus/data/templates/cloud/404.html:4
 #: tribus/data/templates/cloud/packages.html:3
 #: tribus/data/templates/search/search.html:3
@@ -48,47 +145,91 @@ msgstr ""
 msgid "Package not found!"
 msgstr ""
 
-#: tribus/data/templates/cloud/architectures.html:4
-msgid "for all architectures"
-msgstr ""
-
-#: tribus/data/templates/cloud/architectures.html:6
-msgid "for the architecture:"
-msgstr ""
-
-#: tribus/data/templates/cloud/architectures.html:8
+#: tribus/data/templates/cloud/architectures.html:3
 msgid "Version:"
 msgstr ""
 
-#: tribus/data/templates/cloud/architectures.html:9
+#: tribus/data/templates/cloud/architectures.html:4
 msgid "Size:"
 msgstr ""
 
-#: tribus/data/templates/cloud/architectures.html:10
+#: tribus/data/templates/cloud/architectures.html:5
 msgid "Installed Size:"
 msgstr ""
 
-#: tribus/data/templates/cloud/architectures.html:11
+#: tribus/data/templates/cloud/architectures.html:6
 msgid "MD5sum:"
 msgstr ""
 
-#: tribus/data/templates/cloud/architectures.html:12
+#: tribus/data/templates/cloud/architectures.html:9
 msgid "Download"
 msgstr ""
 
-#: tribus/data/templates/cloud/frontpage.html:9
-msgid "Application Cloud"
+#: tribus/data/templates/cloud/categories.html:2
+msgid "Categories"
 msgstr ""
 
-#: tribus/data/templates/cloud/frontpage.html:13
+#: tribus/data/templates/cloud/categories.html:3
+msgid "Search"
+msgstr ""
+
+#: tribus/data/templates/cloud/frontpage.html:10
 #, python-format
 msgid ""
-"\n"
-"                            The application cloud is a storage, "
-"integration and distribution system designed for the software stored in "
-"%(tribus_distro)s. It allows %(tribus_role_1)s, %(tribus_role_2)s and "
-"%(tribus_role_3)s to empower their applications by using the cloud.\n"
-"                            "
+"The application cloud is a storage, integration and distribution system "
+"designed for the software stored in %(tribus_distro)s. It allows "
+"%(tribus_role_1)s, %(tribus_role_2)s and %(tribus_role_3)s to empower "
+"their applications by using the cloud."
+msgstr ""
+
+#: tribus/data/templates/cloud/frontpage.html:15
+msgid "Upload a new application"
+msgstr ""
+
+#: tribus/data/templates/cloud/frontpage.html:23
+msgid "List alphabetically"
+msgstr ""
+
+#: tribus/data/templates/cloud/frontpage.html:27
+msgid "List by tag"
+msgstr ""
+
+#: tribus/data/templates/cloud/frontpage.html:34
+msgid "List by category"
+msgstr ""
+
+#: tribus/data/templates/cloud/frontpage.html:43
+msgid "Show statistics"
+msgstr ""
+
+#: tribus/data/templates/cloud/package_list.html:3
+#: tribus/data/templates/cloud/package_list.html:10
+msgid "Package List"
+msgstr ""
+
+#: tribus/data/templates/cloud/package_list.html:21
+#: tribus/data/templates/search/search.html:25
+msgid "No results found"
+msgstr ""
+
+#: tribus/data/templates/cloud/package_list.html:28
+#: tribus/data/templates/search/search.html:32
+msgid "previous"
+msgstr ""
+
+#: tribus/data/templates/cloud/package_list.html:32
+#: tribus/data/templates/search/search.html:36
+msgid "Page"
+msgstr ""
+
+#: tribus/data/templates/cloud/package_list.html:32
+#: tribus/data/templates/search/search.html:36
+msgid "of"
+msgstr ""
+
+#: tribus/data/templates/cloud/package_list.html:36
+#: tribus/data/templates/search/search.html:40
+msgid "next"
 msgstr ""
 
 #: tribus/data/templates/cloud/packages.html:15
@@ -115,367 +256,568 @@ msgstr ""
 msgid "Tags"
 msgstr ""
 
-#: tribus/data/templates/cloud/packages.html:124
-msgid "In Canaima"
-msgstr ""
-
 #: tribus/data/templates/cloud/relations.html:14
 msgid "or"
 msgstr ""
 
-#: tribus/data/templates/dashboard.html:49
-#: tribus/data/templates/profile/profiles.html:148
-#: tribus/data/templates/profile/profiles_view.html:139
+#: tribus/data/templates/dashboard.html:13
+#: tribus/data/templates/cloud/frontpage.html:9
+msgid "Application Cloud"
+msgstr ""
+
+#: tribus/data/templates/dashboard.html:18
+msgid "Continuous Integration"
+msgstr ""
+
+#: tribus/data/templates/dashboard.html:21
+#: tribus/data/templates/dashboard.html:29
+#: tribus/data/templates/dashboard.html:37
+#: tribus/data/templates/dashboard.html:45
+#: tribus/data/templates/cloud/frontpage.html:17
+#: tribus/data/templates/cloud/frontpage.html:29
+#: tribus/data/templates/cloud/frontpage.html:36
+#: tribus/data/templates/cloud/frontpage.html:45
+msgid "We are working on this feature"
+msgstr ""
+
+#: tribus/data/templates/dashboard.html:26
+msgid "Project Management"
+msgstr ""
+
+#: tribus/data/templates/dashboard.html:34
+msgid "Documentation Management"
+msgstr ""
+
+#: tribus/data/templates/dashboard.html:42
+msgid "Translation Services"
+msgstr ""
+
+#: tribus/data/templates/dashboard.html:84
+#: tribus/data/templates/profile/profiles.html:253
+#: tribus/data/templates/profile/profiles_view.html:96
 msgid "Your message has been published."
 msgstr ""
 
-#: tribus/data/templates/dashboard.html:50
-#: tribus/data/templates/profile/profiles_view.html:140
+#: tribus/data/templates/dashboard.html:85
+#: tribus/data/templates/profile/profiles.html:254
+#: tribus/data/templates/profile/profiles_view.html:97
 msgid "There has been an error publishing your message. Please try again later."
 msgstr ""
 
-#: tribus/data/templates/dashboard.html:51
-#: tribus/data/templates/profile/profiles.html:150
-#: tribus/data/templates/profile/profiles_view.html:141
+#: tribus/data/templates/dashboard.html:86
+#: tribus/data/templates/profile/profiles.html:255
+#: tribus/data/templates/profile/profiles_view.html:98
 msgid "Your message has been deleted."
 msgstr ""
 
-#: tribus/data/templates/dashboard.html:52
-#: tribus/data/templates/profile/profiles.html:151
-#: tribus/data/templates/profile/profiles_view.html:142
+#: tribus/data/templates/dashboard.html:87
+#: tribus/data/templates/profile/profiles.html:256
+#: tribus/data/templates/profile/profiles_view.html:99
 msgid "There has been an error deleting your message. Please try again later."
 msgstr ""
 
-#: tribus/data/templates/dashboard.html:53
-#: tribus/data/templates/profile/profiles.html:152
-#: tribus/data/templates/profile/profiles_view.html:143
+#: tribus/data/templates/dashboard.html:88
+#: tribus/data/templates/profile/profiles.html:257
+#: tribus/data/templates/profile/profiles_view.html:100
 msgid "There has been an error consulting more messages. Please try again later."
 msgstr ""
 
-#: tribus/data/templates/dashboard.html:54
+#: tribus/data/templates/dashboard.html:89
+#: tribus/data/templates/profile/profiles.html:258
+#: tribus/data/templates/profile/profiles_view.html:101
 msgid "Your comment has been published."
 msgstr ""
 
-#: tribus/data/templates/dashboard.html:55
+#: tribus/data/templates/dashboard.html:90
+#: tribus/data/templates/profile/profiles.html:259
+#: tribus/data/templates/profile/profiles_view.html:102
 msgid "There has been an error publishng your comment. Please try again later."
 msgstr ""
 
-#: tribus/data/templates/dashboard.html:56
-#: tribus/data/templates/profile/profiles.html:153
-#: tribus/data/templates/profile/profiles_view.html:144
+#: tribus/data/templates/dashboard.html:91
+#: tribus/data/templates/profile/profiles.html:260
+#: tribus/data/templates/profile/profiles_view.html:103
 msgid "Your comment has been deleted."
 msgstr ""
 
-#: tribus/data/templates/dashboard.html:57
-#: tribus/data/templates/profile/profiles.html:154
-#: tribus/data/templates/profile/profiles_view.html:145
+#: tribus/data/templates/dashboard.html:92
+#: tribus/data/templates/profile/profiles.html:261
+#: tribus/data/templates/profile/profiles_view.html:104
 msgid "There has been an error deleting your comment. Please try again later."
 msgstr ""
 
-#: tribus/data/templates/index.html:8
-msgid "Join the Tribe!"
+#: tribus/data/templates/footer.html:7
+msgid "Terms of Service"
 msgstr ""
 
-#: tribus/data/templates/index.html:12
-msgid ""
-"\n"
-"                            Unleash the power of your creativity to bring"
-" amazing pieces of art to the free software world. We deliver a complete "
-"set of community services right to your computer. <a href=\"/tour\">Take "
-"the tour</a> to know how.\n"
-"                            "
+#: tribus/data/templates/footer.html:9
+msgid "Privacy Policy"
 msgstr ""
 
-#: tribus/data/templates/index.html:17 tribus/data/templates/index.html:29
-msgid "Sign up"
+#: tribus/data/templates/footer.html:14
+msgid "Tribus is Free Software"
 msgstr ""
 
-#: tribus/data/templates/index.html:36
-msgid ""
-"\n"
-"                                    By clicking on this button, you agree"
-" to the\n"
-"                                    <a href=\"/about/terms\" "
-"target=\"_blank\">Terms of Service</a>, the\n"
-"                                    <a href=\"/about/privacy\" "
-"target=\"_blank\">Privacy Policy</a> and the\n"
-"                                    <a href=\"/about/guidelines\" "
-"target=\"_blank\">Community Guidelines</a>.\n"
-"                                    "
+#: tribus/data/templates/navbar.html:21
+msgid "What are you looking for?"
 msgstr ""
 
-#: tribus/data/templates/index.html:47
-msgid "Package cloud"
+#: tribus/data/templates/navbar.html:24
+#: tribus/data/templates/search/search.html:49
+#: tribus/data/templates/search/search.html:53
+msgid "Packages"
 msgstr ""
 
-#: tribus/data/templates/index.html:48
-msgid ""
-"We give you space to store the binaries of your source code in our "
-"package cloud. You can distribute your applications through a personal "
-"cloud, or have it enter Canaima's development cycle."
+#: tribus/data/templates/navbar.html:32
+#: tribus/data/templates/search/search.html:50
+#: tribus/data/templates/search/search.html:54
+msgid "Users"
 msgstr ""
 
-#: tribus/data/templates/index.html:51
-msgid "Source management"
+#: tribus/data/templates/navbar.html:40
+msgid "There are no results matching this query."
 msgstr ""
 
-#: tribus/data/templates/index.html:55
-msgid ""
-"\n"
-"                        Store your work in a public place, where everyone"
-" can review and contribute to your projects. We support the most popular "
-"versioning systems: <a href=\"http://subversion.apache.org/\" "
-"target=\"_blank\">subversion</a>, <a "
-"href=\"a:http://bazaar.canonical.com/en/\" target=\"_blank\">bazaar</a>, "
-"<a href=\"http://mercurial.selenic.com/\" target=\"_blank\">mercurial</a>"
-" and <a href=\"http://git-scm.com/\" target=\"_blank\">git</a> (or no "
-"versioning at all).\n"
-"                        "
+#: tribus/data/templates/navbar.html:67
+#: tribus/data/templates/registration/password_change_form.html:9
+#: tribus/data/templates/registration/password_change_form.html:19
+msgid "Change password"
 msgstr ""
 
-#: tribus/data/templates/index.html:59
-msgid "Continuous integration"
+#: tribus/data/templates/navbar.html:70
+msgid "Logout"
 msgstr ""
 
-#: tribus/data/templates/index.html:63
-msgid ""
-"\n"
-"                        Focus yourself in the creative process of your "
-"work, while we handle the building and packaging of your applications. We"
-" have a <a href=\"http://buildbot.net\" target=\"_blank\">buildbot</a> "
-"farm just waiting to compile your stuff.\n"
-"                        "
-msgstr ""
-
-#: tribus/data/templates/index.html:69
-msgid "Social network"
-msgstr ""
-
-#: tribus/data/templates/index.html:70
-msgid ""
-"Share your activities in the platform with your friends and close "
-"contributors. Comment on your commits, patches, applications, "
-"translations, and more. Get everyone to know you and your work!"
-msgstr ""
-
-#: tribus/data/templates/index.html:73
-msgid "Ticket system"
-msgstr ""
-
-#: tribus/data/templates/index.html:74
-msgid ""
-"Organize your team work by assigning milestones to your teammates and "
-"achieving goals together. Measure your effectiveness and planify your "
-"objectives in a clean and intuitive interface."
-msgstr ""
-
-#: tribus/data/templates/index.html:77
-msgid "Easy documentation"
-msgstr ""
-
-#: tribus/data/templates/index.html:78
-msgid ""
-"We know how important it is to have a good and quickly-to-set-up "
-"documentation. That's why the only thing you have to do is write RST, and"
-" we will take care of the HTML for you."
-msgstr ""
-
-#: tribus/data/templates/navbar.html:60
-#: tribus/data/templates/user/login_form.html:3
-#: tribus/data/templates/user/login_form.html:47
+#: tribus/data/templates/navbar.html:82
+#: tribus/data/templates/registration/login_form.html:3
+#: tribus/data/templates/registration/login_form.html:9
+#: tribus/data/templates/registration/login_form.html:47
 msgid "Log in"
 msgstr ""
 
-#: tribus/data/templates/profile/profiles.html:149
-msgid "There has been an error publishng your message. Please try again later."
+#: tribus/data/templates/profile/profiles.html:3
+#: tribus/data/templates/profile/profiles_view.html:3
+msgid "Profile"
+msgstr ""
+
+#: tribus/data/templates/profile/profiles.html:15
+msgid "Change avatar"
+msgstr ""
+
+#: tribus/data/templates/profile/profiles.html:43
+#: tribus/data/templates/profile/profiles_view.html:51
+msgid "Wall"
+msgstr ""
+
+#: tribus/data/templates/profile/profiles.html:50
+msgid "Edit Profile"
+msgstr ""
+
+#: tribus/data/templates/profile/profiles.html:55
+msgid "Description"
+msgstr ""
+
+#: tribus/data/templates/profile/profiles.html:58
+msgid "Confirm"
+msgstr ""
+
+#: tribus/data/templates/profile/profiles.html:65
+msgid "Follows"
+msgstr ""
+
+#: tribus/data/templates/profile/profiles.html:74
+#: tribus/data/templates/profile/profiles.html:154
+msgid "Are you looking for someone?"
+msgstr ""
+
+#: tribus/data/templates/profile/profiles.html:109
+#: tribus/data/templates/profile/profiles.html:184
+msgid "No matches found!"
+msgstr ""
+
+#: tribus/data/templates/profile/profiles.html:112
+#: tribus/data/templates/profile/profiles.html:187
+msgid "We were unable to find a user that matches your query."
+msgstr ""
+
+#: tribus/data/templates/profile/profiles.html:119
+msgid "You are not following anyone"
+msgstr ""
+
+#: tribus/data/templates/profile/profiles.html:122
+msgid ""
+"You are not following any user in Tribus. See if your friends are in "
+"Tribus by entering their names in the search bar on the top of the page."
+msgstr ""
+
+#: tribus/data/templates/profile/profiles.html:129
+#: tribus/data/templates/profile/profiles.html:204
+msgid "Previous"
+msgstr ""
+
+#: tribus/data/templates/profile/profiles.html:136
+#: tribus/data/templates/profile/profiles.html:211
+msgid "Next"
+msgstr ""
+
+#: tribus/data/templates/profile/profiles.html:145
+msgid "Followers"
+msgstr ""
+
+#: tribus/data/templates/profile/profiles.html:194
+msgid "You have no followers!"
+msgstr ""
+
+#: tribus/data/templates/profile/profiles.html:197
+msgid ""
+"You have no followers (yet). Start following people and write about you "
+"so that other people take interest in what you write."
+msgstr ""
+
+#: tribus/data/templates/profile/profiles_view.html:17
+msgid "Follow"
+msgstr ""
+
+#: tribus/data/templates/profile/profiles_view.html:21
+msgid "Stop following"
+msgstr ""
+
+#: tribus/data/templates/registration/activation_complete.html:8
+msgid "Thanks, activation complete! You may now"
+msgstr ""
+
+#: tribus/data/templates/registration/activation_complete.html:8
+msgid "login"
+msgstr ""
+
+#: tribus/data/templates/registration/activation_complete.html:8
+msgid "using the username and password you set at registration."
+msgstr ""
+
+#: tribus/data/templates/registration/form_errors.html:4
+msgid "Oh, snap!"
+msgstr ""
+
+#: tribus/data/templates/registration/form_errors.html:5
+msgid ""
+"The operation could not be performed because one or more error(s) "
+"occurred."
+msgstr ""
+
+#: tribus/data/templates/registration/form_errors.html:6
+msgid "Please resubmit the form after making the following changes:"
+msgstr ""
+
+#: tribus/data/templates/registration/login_form.html:32
+msgid "- or -"
+msgstr ""
+
+#: tribus/data/templates/registration/login_form.html:51
+msgid "forgot your password?"
+msgstr ""
+
+#: tribus/data/templates/registration/login_form.html:52
+msgid "are you new to Tribus?"
+msgstr ""
+
+#: tribus/data/templates/registration/password_change_done.html:8
+msgid "Password successfully changed!"
+msgstr ""
+
+#: tribus/data/templates/registration/password_change_form.html:11
+msgid ""
+"Después de introducir sus datos de usuario, usted podrá editar su "
+"información de perfil."
+msgstr ""
+
+#: tribus/data/templates/registration/signup_form.html:9
+msgid "Sign up to Tribus"
+msgstr ""
+
+#: tribus/data/templates/registration/signup_form.html:11
+msgid "After entering your user data, you can edit your profile information."
 msgstr ""
 
 #: tribus/data/templates/search/search.html:10
 msgid "Search results"
 msgstr ""
 
-#: tribus/data/templates/search/search.html:49
-#: tribus/data/templates/search/search.html:53
-msgid "Packages"
+#: tribus/data/templates/search/search.html:48
+#: tribus/data/templates/search/search.html:52
+msgid "Filters:"
 msgstr ""
 
-#: tribus/data/templates/search/search.html:50
-#: tribus/data/templates/search/search.html:54
-msgid "Users"
-msgstr ""
-
-#: tribus/data/templates/tribs.html:12
+#: tribus/data/templates/tribs.html:17
 msgid "What are you doing?"
 msgstr ""
 
-#: tribus/data/templates/tribs.html:19
+#: tribus/data/templates/tribs.html:24
 msgid "Publish"
 msgstr ""
 
-#: tribus/data/templates/tribs.html:48 tribus/data/templates/tribs.html:115
+#: tribus/data/templates/tribs.html:35
+msgid "Welcome to Tribus!"
+msgstr ""
+
+#: tribus/data/templates/tribs.html:38
+msgid ""
+"This is the dashboard, a place where you can follow the updates of your "
+"favorite projects and partners."
+msgstr ""
+
+#: tribus/data/templates/tribs.html:39
+msgid ""
+"Start by looking for your friends in the search bar on the top of the "
+"screen. Then, click on the Follow button in your friend's profile to "
+"start following their updates in your dashboard."
+msgstr ""
+
+#: tribus/data/templates/tribs.html:40
+msgid "You can always come back here by clicking on the Tribus logo."
+msgstr ""
+
+#: tribus/data/templates/tribs.html:47
+#, python-format
+msgid "Hi %(user_from_template)s, this is your profile."
+msgstr ""
+
+#: tribus/data/templates/tribs.html:48
+msgid "Start by writing something on your wall."
+msgstr ""
+
+#: tribus/data/templates/tribs.html:55
+#, python-format
+msgid "This is the profile of %(user_from_template)s."
+msgstr ""
+
+#: tribus/data/templates/tribs.html:56
+#, python-format
+msgid "%(user_from_template)s has not written anything yet."
+msgstr ""
+
+#: tribus/data/templates/tribs.html:80 tribus/data/templates/tribs.html:133
 msgid "Comment"
 msgstr ""
 
-#: tribus/data/templates/tribs.html:51
-msgid "Share"
-msgstr ""
-
-#: tribus/data/templates/tribs.html:54
-msgid "Favorite"
-msgstr ""
-
-#: tribus/data/templates/tribs.html:57
-msgid "Dislike"
-msgstr ""
-
-#: tribus/data/templates/tribs.html:60
-msgid "Like"
-msgstr ""
-
-#: tribus/data/templates/tribs.html:64
+#: tribus/data/templates/tribs.html:83
 msgid "Delete"
 msgstr ""
 
-#: tribus/data/templates/tribs.html:73
+#: tribus/data/templates/tribs.html:91
 msgid "Load more comments"
 msgstr ""
 
-#: tribus/data/templates/tribs.html:110
+#: tribus/data/templates/tribs.html:127
 msgid "What do you want to say?"
 msgstr ""
 
-#: tribus/data/templates/tribs.html:126
-msgid "Are you sure you want to delete this comment?"
-msgstr ""
-
-#: tribus/data/templates/tribs.html:130 tribus/data/templates/tribs.html:152
-msgid "Cancel"
-msgstr ""
-
-#: tribus/data/templates/tribs.html:133
-msgid "Delete comment"
-msgstr ""
-
-#: tribus/data/templates/tribs.html:148
+#: tribus/data/templates/tribs.html:151
 msgid "Are you sure you want to delete this message?"
 msgstr ""
 
 #: tribus/data/templates/tribs.html:155
+msgid "Cancel"
+msgstr ""
+
+#: tribus/data/templates/tribs.html:158
 msgid "Delete message"
 msgstr ""
 
-#: tribus/data/templates/user/login_form.html:9
-msgid "Log in with"
-msgstr ""
-
-#: tribus/data/templates/user/login_form.html:32
-msgid "- or -"
-msgstr ""
-
-#: tribus/data/templates/user/login_form.html:51
-msgid "forgot your password?"
-msgstr ""
-
-#: tribus/data/templates/user/login_form.html:52
-msgid "are you new to Tribus?"
-msgstr ""
-
-#: tribus/web/profile/forms.py:22
+#: tribus/web/profile/forms.py:23
 msgid "Descripcion"
 msgstr ""
 
-#: tribus/web/profile/forms.py:31 tribus/web/user/forms.py:42
-#: tribus/web/user/forms.py:88 tribus/web/user/forms.py:103
-#: tribus/web/user/forms.py:118
+#: tribus/web/profile/forms.py:33 tribus/web/registration/forms.py:64
+#: tribus/web/registration/forms.py:110 tribus/web/registration/forms.py:125
+#: tribus/web/registration/forms.py:140
 msgid "This value may contain only letters, numbers and @/./+/-/_ characters."
 msgstr ""
 
-#: tribus/web/profile/forms.py:35
-msgid "email"
-msgstr ""
-
-#: tribus/web/user/forms.py:32 tribus/web/user/forms.py:78
+#: tribus/web/registration/forms.py:54 tribus/web/registration/forms.py:100
 msgid "Username"
 msgstr ""
 
-#: tribus/web/user/forms.py:36
+#: tribus/web/registration/forms.py:58
 msgid "Enter your username"
 msgstr ""
 
-#: tribus/web/user/forms.py:47 tribus/web/user/forms.py:134
-#: tribus/web/user/forms.py:179
+#: tribus/web/registration/forms.py:69 tribus/web/registration/forms.py:156
+#: tribus/web/registration/forms.py:218
 msgid "Password"
 msgstr ""
 
-#: tribus/web/user/forms.py:50
+#: tribus/web/registration/forms.py:72
 msgid "Enter your password"
 msgstr ""
 
-#: tribus/web/user/forms.py:57
+#: tribus/web/registration/forms.py:79
 msgid "Remember my session"
 msgstr ""
 
-#: tribus/web/user/forms.py:82
+#: tribus/web/registration/forms.py:104
 msgid "Pick a username"
 msgstr ""
 
-#: tribus/web/user/forms.py:93 tribus/web/user/forms.py:97
+#: tribus/web/registration/forms.py:115 tribus/web/registration/forms.py:119
 msgid "First name"
 msgstr ""
 
-#: tribus/web/user/forms.py:108 tribus/web/user/forms.py:112
+#: tribus/web/registration/forms.py:130 tribus/web/registration/forms.py:134
 msgid "Last name"
 msgstr ""
 
-#: tribus/web/user/forms.py:123 tribus/web/user/forms.py:162
+#: tribus/web/registration/forms.py:145 tribus/web/registration/forms.py:201
 msgid "Email"
 msgstr ""
 
-#: tribus/web/user/forms.py:126 tribus/web/user/forms.py:165
+#: tribus/web/registration/forms.py:148 tribus/web/registration/forms.py:204
 msgid "Enter a valid email"
 msgstr ""
 
-#: tribus/web/user/forms.py:137
+#: tribus/web/registration/forms.py:159
 msgid "Create a password"
 msgstr ""
 
-#: tribus/web/user/forms.py:152 tribus/web/user/forms.py:221
+#: tribus/web/registration/forms.py:191 tribus/web/registration/forms.py:243
 msgid "A user with that username already exists."
 msgstr ""
 
-#: tribus/web/user/forms.py:182
+#: tribus/web/registration/forms.py:221
 msgid "Create a new password"
 msgstr ""
 
-#: tribus/web/user/forms.py:189
+#: tribus/web/registration/forms.py:228
 msgid "Password (repeat)"
 msgstr ""
 
-#: tribus/web/user/forms.py:192
+#: tribus/web/registration/forms.py:231
 msgid "Repeat your new password"
 msgstr ""
 
-#: tribus/web/user/forms.py:241
+#: tribus/web/registration/forms.py:263
 msgid "Old password"
 msgstr ""
 
-#: tribus/web/user/forms.py:244
+#: tribus/web/registration/forms.py:266
 msgid "Enter your old password"
 msgstr ""
 
-#: tribus/web/user/models.py:180
-msgid "user"
-msgstr ""
+#~ msgid "for all architectures"
+#~ msgstr ""
 
-#: tribus/web/user/models.py:181
-msgid "activation key"
-msgstr ""
+#~ msgid "for the architecture:"
+#~ msgstr ""
 
-#: tribus/web/user/models.py:186
-msgid "registration profile"
-msgstr ""
+#~ msgid ""
+#~ "\n"
+#~ "                            The application cloud"
+#~ " is a storage, integration and "
+#~ "distribution system designed for the "
+#~ "software stored in %(tribus_distro)s. It "
+#~ "allows %(tribus_role_1)s, %(tribus_role_2)s and "
+#~ "%(tribus_role_3)s to empower their "
+#~ "applications by using the cloud.\n"
+#~ "                            "
+#~ msgstr ""
 
-#: tribus/web/user/models.py:187
-msgid "registration profiles"
-msgstr ""
+#~ msgid "In Canaima"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "\n"
+#~ "                            Unleash the power "
+#~ "of your creativity to bring amazing "
+#~ "pieces of art to the free software"
+#~ " world. We deliver a complete set "
+#~ "of community services right to your "
+#~ "computer. <a href=\"/tour\">Take the tour</a>"
+#~ " to know how.\n"
+#~ "                            "
+#~ msgstr ""
+
+#~ msgid ""
+#~ "\n"
+#~ "                                    By clicking on"
+#~ " this button, you agree to the\n"
+#~ ""
+#~ "                                    <a "
+#~ "href=\"/about/terms\" target=\"_blank\">Terms of "
+#~ "Service</a>, the\n"
+#~ "                                    <a "
+#~ "href=\"/about/privacy\" target=\"_blank\">Privacy "
+#~ "Policy</a> and the\n"
+#~ "                                    <a "
+#~ "href=\"/about/guidelines\" target=\"_blank\">Community "
+#~ "Guidelines</a>.\n"
+#~ "                                    "
+#~ msgstr ""
+
+#~ msgid ""
+#~ "\n"
+#~ "                        Store your work in "
+#~ "a public place, where everyone can "
+#~ "review and contribute to your projects."
+#~ " We support the most popular "
+#~ "versioning systems: <a "
+#~ "href=\"http://subversion.apache.org/\" "
+#~ "target=\"_blank\">subversion</a>, <a "
+#~ "href=\"a:http://bazaar.canonical.com/en/\" "
+#~ "target=\"_blank\">bazaar</a>, <a "
+#~ "href=\"http://mercurial.selenic.com/\" "
+#~ "target=\"_blank\">mercurial</a> and <a href=\"http"
+#~ "://git-scm.com/\" target=\"_blank\">git</a> (or "
+#~ "no versioning at all).\n"
+#~ "                        "
+#~ msgstr ""
+
+#~ msgid ""
+#~ "\n"
+#~ "                        Focus yourself in the"
+#~ " creative process of your work, while"
+#~ " we handle the building and packaging"
+#~ " of your applications. We have a "
+#~ "<a href=\"http://buildbot.net\" "
+#~ "target=\"_blank\">buildbot</a> farm just waiting "
+#~ "to compile your stuff.\n"
+#~ "                        "
+#~ msgstr ""
+
+#~ msgid "There has been an error publishng your message. Please try again later."
+#~ msgstr ""
+
+#~ msgid "Share"
+#~ msgstr ""
+
+#~ msgid "Favorite"
+#~ msgstr ""
+
+#~ msgid "Dislike"
+#~ msgstr ""
+
+#~ msgid "Like"
+#~ msgstr ""
+
+#~ msgid "Are you sure you want to delete this comment?"
+#~ msgstr ""
+
+#~ msgid "Delete comment"
+#~ msgstr ""
+
+#~ msgid "Log in with"
+#~ msgstr ""
+
+#~ msgid "email"
+#~ msgstr ""
+
+#~ msgid "user"
+#~ msgstr ""
+
+#~ msgid "activation key"
+#~ msgstr ""
+
+#~ msgid "registration profile"
+#~ msgstr ""
+
+#~ msgid "registration profiles"
+#~ msgstr ""
 

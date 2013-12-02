@@ -3,100 +3,104 @@
 {% block title %}{% trans 'Profile' %}{% endblock %}
 {% block content%}
 <div class="jumbotron">
-	<div class="container-fluid">
-		<div class="row-fluid">
-			<div class="span3">
-                <div ng-controller="UserController">
-	            	<span class="profile_avatar_container">
-	            		<span class="profile_avatar" data-ng-style="{'background-image': 'url(\''+profile_gravatar+'\')'}"></span>
-	            	</span>
-	            	<span class="profile_info">
-	            		<h3>{{ user_view.first_name }}</h3>
-	            		<h3>{{user_view.last_name}}</h3>
-	            		<span>
-	            			<i class="icon-leaf"></i>
-	            			{{ user_view.username }}
-	            		</span>
-	            		<span>
-	            			<i class="icon-envelope-alt"></i>
-	            			{{ user_view.email }}
-	            		</span>
-		                {% if not user_view.description == none %}
-		                <span>{{ user_view.description }}</span>
-		                {% endif %}
-	            	</span>
-	            	<span class="profile_buttons">
-						<span ng-click="follow()">
-							<a class="btn btn-sm btn-block btn-success" ng-if="add == false" >
-								<i class="icon-plus-sign bigger-120"></i>
-								<span class="bigger-110"> {% trans 'Follow' %}</span>
-							</a>
-							<a class="btn btn-sm btn-block btn-danger" ng-if="add == true" >
-								<i class="icon-minus bigger-120"></i>
-								<span class="bigger-110"> {% trans 'Stop following' %} </span>
-							</a>
-						</span>
-	            	</span>
-				</div>
-			</div>
-			<div class="span9">
-				<div class = "row-fluid">
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span3">
+                <div data-ng-controller="UserController">
+                    <span class="profile_avatar_container">
+                        <span class="profile_avatar" data-ng-style="{'background-image': 'url(\''+profile_gravatar+'\')'}"></span>
+                    </span>
+                    <span class="profile_buttons">
+                        <span data-ng-click="follow()">
+                            <a class="btn btn-sm btn-block btn-success" data-ng-if="add == false" >
+                                <i class="icon-plus-sign bigger-120"></i>
+                                <span class="bigger-110"> {% trans 'Follow' %}</span>
+                            </a>
+                            <a class="btn btn-sm btn-block btn-danger" data-ng-if="add == true" >
+                                <i class="icon-minus bigger-120"></i>
+                                <span class="bigger-110"> {% trans 'Stop following' %} </span>
+                            </a>
+                        </span>
+                    </span>
+                    <span class="profile_info">
+                        <h3>{{ user_view.first_name }}</h3>
+                        <h3>{{user_view.last_name}}</h3>
+                        <span>
+                            <i class="icon-leaf"></i>
+                            {{ user_view.username }}
+                        </span>
+                        <span>
+                            <i class="icon-envelope-alt"></i>
+                            {{ user_view.email }}
+                        </span>
+                        {% if not user_view.description == none %}
+                        <span>
+                            <i class="icon-book"></i>
+                            {{ user_view.description }}
+                        </span>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+            <div class="span9">
+                <div class="row-fluid">
                    <tabset>
-                        <tab href = "" heading="{% trans 'Wall' %}">
+                        <tab href="#">
+                            <tab-heading>
+                                <i class="icon-list"></i>
+                                {% trans 'Wall' %}
+                            </tab-heading>
                             {% include 'tribs.html' with user_from_template=user_view.first_name %}
                         </tab>
-					</tabset>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>		
-
+                    </tabset>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
-
 {% block scripts %}
-    <script type="text/javascript">
-        {% if user.is_authenticated %}
-        var user_id = '{{ user.id }}';
-        var user_username = '{{ user.username }}';
-        // NO SE USA POR AHORA
-        var user_first_name = '{{ user.first_name }}';
-        var user_last_name = '{{ user.last_name }}';
-        var user_email = '{{ user.email }}';      
-        var user_gravatar = 'http://www.gravatar.com/avatar/'+md5(user_email)+'?d=mm&s=40&r=x';
-        var comment_gravatar = 'http://www.gravatar.com/avatar/'+md5(user_email)+'?d=mm&s=30&r=x';
-        {% endif %}
+<script type="text/javascript">
+    {% if user.is_authenticated %}
+    var user_id = '{{ user.id }}';
+    var user_username = '{{ user.username }}';
+    var user_first_name = '{{ user.first_name }}';
+    var user_last_name = '{{ user.last_name }}';
+    var user_email = '{{ user.email }}';      
+    var user_gravatar = 'http://www.gravatar.com/avatar/'+md5(user_email)+'?d=mm&s=40&r=x';
+    var comment_gravatar = 'http://www.gravatar.com/avatar/'+md5(user_email)+'?d=mm&s=30&r=x';
+    {% endif %}
 
-        var template_name = "profileView";
-        var userview_id = '{{ user_view.id }}';
-        var userview_username = '{{ user_view.username }}';
-        var userview_first_name = '{{ user_view.first_name }}';
-        var userview_last_name = '{{ user_view.last_name }}';
-        var userview_email = '{{ user_view.email }}';  
-        var profile_gravatar = 'http://www.gravatar.com/avatar/'+md5(userview_email)+'?d=mm&s=250&r=x';
+    var template_name = "profileView";
+    var userview_id = '{{ user_view.id }}';
+    var userview_username = '{{ user_view.username }}';
+    var userview_first_name = '{{ user_view.first_name }}';
+    var userview_last_name = '{{ user_view.last_name }}';
+    var userview_email = '{{ user_view.email }}';  
+    var profile_gravatar = 'http://www.gravatar.com/avatar/'+md5(userview_email)+'?d=mm&s=250&r=x';
 
-        var trib_limit_to = 0;
-        var trib_offset = 0;
-        var trib_add = 10;
-        var trib_limit = 10;
-        var trib_orderby = '-trib_pub_date';
-        var controller_busy = false;
+    var trib_limit_to = 0;
+    var trib_offset = 0;
+    var trib_add = 10;
+    var trib_limit = 10;
+    var trib_orderby = '-trib_pub_date';
+    var controller_busy = false;
 
-        var comment_limit_to = 0;
-        var comment_offset = 0;
-        var comment_add = 10;
-        var comment_limit = 10;
-        var comment_orderby = 'comment_pub_date';
-        
-        // Messages
-        var trib_save_success = '{% trans "Your message has been published." %}';
-        var trib_save_error = '{% trans "There has been an error publishing your message. Please try again later." %}';
-        var trib_delete_success = '{% trans "Your message has been deleted." %}';
-        var trib_delete_error = '{% trans "There has been an error deleting your message. Please try again later." %}'
-        var trib_add_error = '{% trans "There has been an error consulting more messages. Please try again later." %}'
-        var comment_save_success = '{% trans "Your comment has been published." %}';
-        var comment_save_error = '{% trans "There has been an error publishng your comment. Please try again later." %}';
-        var comment_delete_success = '{% trans "Your comment has been deleted." %}'
-        var comment_delete_error = '{% trans "There has been an error deleting your comment. Please try again later." %}'
-    </script>
+    var comment_limit_to = 0;
+    var comment_offset = 0;
+    var comment_add = 10;
+    var comment_limit = 10;
+    var comment_orderby = 'comment_pub_date';
+    
+    // Messages
+    var trib_save_success = '{% trans "Your message has been published." %}';
+    var trib_save_error = '{% trans "There has been an error publishing your message. Please try again later." %}';
+    var trib_delete_success = '{% trans "Your message has been deleted." %}';
+    var trib_delete_error = '{% trans "There has been an error deleting your message. Please try again later." %}'
+    var trib_add_error = '{% trans "There has been an error consulting more messages. Please try again later." %}'
+    var comment_save_success = '{% trans "Your comment has been published." %}';
+    var comment_save_error = '{% trans "There has been an error publishng your comment. Please try again later." %}';
+    var comment_delete_success = '{% trans "Your comment has been deleted." %}'
+    var comment_delete_error = '{% trans "There has been an error deleting your comment. Please try again later." %}'
+</script>
 {% endblock %}

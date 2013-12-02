@@ -15,7 +15,7 @@
             {% if user.is_authenticated %}
             <ul class="nav span4">
                  <li class="dropdown search" data-ng-controller="SearchListController">
-                    <form name="form-search" class="form-search" action="/search/" method="POST">
+                    <form name="form-search" class="form-search" action="/search" method="POST">
                         {% csrf_token %}
                         <span class="input-icon">
                             <input id="drop-search" type="text" class="nav-search-input input-large top_search_input" autocomplete="off" name="q" placeholder="{% trans 'What are you looking for?' %}" data-ng-model="top_search" data-ng-keyup="refreshResults()" />
