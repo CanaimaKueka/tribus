@@ -1,42 +1,44 @@
-# Spanish translations for Tribus.
+# Translations template for Tribus.
 # Copyright (C) 2013 Desarrolladores de Tribus
 # This file is distributed under the same license as the Tribus project.
-#
+# 
 # Translators:
 # Nitrio <hsh283@gmail.com>, 2013
 # jsfrncscg <jsfrncscg@gmail.com>, 2013
+# jsfrncscg <jsfrncscg@gmail.com>, 2013
 # Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>, 2013
+# Nitrio <hsh283@gmail.com>, 2013
 # Wuilmer Bolivar <el.wuilmer@gmail.com>, 2013
 msgid ""
 msgstr ""
-"Project-Id-Version:  tribus\n"
+"Project-Id-Version: tribus\n"
 "Report-Msgid-Bugs-To: desarrolladores@canaima.softwarelibre.gob.ve\n"
-"POT-Creation-Date: 2013-12-02 16:39-0630\n"
-"PO-Revision-Date: 2013-12-02 20:12+0000\n"
+"POT-Creation-Date: 2013-12-02 16:39-0530\n"
+"PO-Revision-Date: 2013-12-02 21:26+0000\n"
 "Last-Translator: jsfrncscg <jsfrncscg@gmail.com>\n"
-"Language-Team: Spanish "
-"(http://www.transifex.com/projects/p/tribus/language/es/)\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Language-Team: Spanish (http://www.transifex.com/projects/p/tribus/language/es/)\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: tribus/config/brand.py:6
 msgid "Canaima GNU/Linux"
-msgstr ""
+msgstr "Canaima GNU/Linux"
 
 #: tribus/config/brand.py:7
 msgid "Shaman"
-msgstr ""
+msgstr "Chamán"
 
 #: tribus/config/brand.py:8
 msgid "Chieftain"
-msgstr ""
+msgstr "Cacique"
 
 #: tribus/config/brand.py:9
 msgid "Warrior"
-msgstr ""
+msgstr "Guerrero"
 
 #: tribus/config/brand.py:10
 msgid "Harvester"
@@ -50,7 +52,7 @@ msgstr "Regresar"
 #: tribus/data/templates/cloud/404.html:4
 #: tribus/data/templates/search/search.html:3
 msgid "Tribus Search"
-msgstr ""
+msgstr "Buscar en Tribus"
 
 #: tribus/data/templates/cloud/404.html:6
 msgid "Package not found!"
@@ -58,19 +60,19 @@ msgstr "¡Paquete no encontrado!"
 
 #: tribus/data/templates/cloud/architectures.html:3
 msgid "Version:"
-msgstr ""
+msgstr "Versión:"
 
 #: tribus/data/templates/cloud/architectures.html:4
 msgid "Size:"
-msgstr ""
+msgstr "Tamaño:"
 
 #: tribus/data/templates/cloud/architectures.html:5
 msgid "Installed Size:"
-msgstr ""
+msgstr "Tamaño instalado:"
 
 #: tribus/data/templates/cloud/architectures.html:6
 msgid "MD5sum:"
-msgstr ""
+msgstr "Suma MD5:"
 
 #: tribus/data/templates/cloud/architectures.html:9
 msgid "Download"
@@ -89,13 +91,9 @@ msgstr "Búsqueda"
 msgid ""
 "The application cloud is a storage, integration and distribution system "
 "designed for the software stored in %(tribus_distro)s. It allows "
-"%(tribus_role_1)s, %(tribus_role_2)s and %(tribus_role_3)s to empower "
-"their applications by using the cloud."
-msgstr ""
-"La nube de aplicaciones es un sistema de almacenamiento, integración y "
-"distribución, diseñado para los proyectos de software alojados en "
-"%(tribus_distro)s. Permite al %(tribus_role_1)s, %(tribus_role_2)s y "
-"%(tribus_role_3)s empoderar sus aplicaciones al usar el sistema."
+"%(tribus_role_1)s, %(tribus_role_2)s and %(tribus_role_3)s to empower their "
+"applications by using the cloud."
+msgstr "La nube de aplicaciones es un sistema de almacenamiento, integración y distribución, diseñado para los proyectos de software alojados en %(tribus_distro)s. Permite al %(tribus_role_1)s, %(tribus_role_2)s y %(tribus_role_3)s empoderar sus aplicaciones al usar el sistema."
 
 #: tribus/data/templates/cloud/frontpage.html:15
 msgid "Upload a new application"
@@ -153,27 +151,27 @@ msgstr "siguiente"
 
 #: tribus/data/templates/cloud/packages.html:15
 msgid "This is not a real package."
-msgstr ""
+msgstr "Esto no es un paquete real."
 
 #: tribus/data/templates/cloud/packages.html:49
 msgid "Package information"
-msgstr ""
+msgstr "Información del paquete"
 
 #: tribus/data/templates/cloud/packages.html:58
 msgid "Maintainer"
-msgstr ""
+msgstr "Mantenedor"
 
 #: tribus/data/templates/cloud/packages.html:67
 msgid "Section"
-msgstr ""
+msgstr "Sección"
 
 #: tribus/data/templates/cloud/packages.html:76
 msgid "Priority"
-msgstr ""
+msgstr "Prioridad"
 
 #: tribus/data/templates/cloud/packages.html:85
 msgid "Homepage"
-msgstr ""
+msgstr "Página Principal"
 
 #: tribus/data/templates/cloud/packages.html:98
 msgid "Tags"
@@ -193,7 +191,7 @@ msgstr "Sistema de seguimiento de paquetes"
 
 #: tribus/data/templates/cloud/relations.html:14
 msgid "or"
-msgstr ""
+msgstr "o"
 
 #: tribus/data/templates/dashboard.html:13
 #: tribus/data/templates/cloud/frontpage.html:9
@@ -231,15 +229,14 @@ msgstr "Servicios de Traducción"
 #: tribus/data/templates/profile/profiles.html:253
 #: tribus/data/templates/profile/profiles_view.html:96
 msgid "Your message has been published."
-msgstr ""
+msgstr "Su mensaje ha sido publicado."
 
 #: tribus/data/templates/dashboard.html:85
 #: tribus/data/templates/profile/profiles.html:254
 #: tribus/data/templates/profile/profiles_view.html:97
-msgid "There has been an error publishing your message. Please try again later."
-msgstr ""
-"Se ha producido un error en la publicación de su mensaje. Por favor "
-"inténtelo de nuevo más tarde."
+msgid ""
+"There has been an error publishing your message. Please try again later."
+msgstr "Se ha producido un error en la publicación de su mensaje. Por favor inténtelo de nuevo más tarde."
 
 #: tribus/data/templates/dashboard.html:86
 #: tribus/data/templates/profile/profiles.html:255
@@ -251,17 +248,14 @@ msgstr "Su mensaje ha sido borrado."
 #: tribus/data/templates/profile/profiles.html:256
 #: tribus/data/templates/profile/profiles_view.html:99
 msgid "There has been an error deleting your message. Please try again later."
-msgstr ""
-"Se ha producido un error al eliminar el mensaje. Por favor inténtelo de "
-"nuevo más tarde."
+msgstr "Se ha producido un error al eliminar el mensaje. Por favor inténtelo de nuevo más tarde."
 
 #: tribus/data/templates/dashboard.html:88
 #: tribus/data/templates/profile/profiles.html:257
 #: tribus/data/templates/profile/profiles_view.html:100
-msgid "There has been an error consulting more messages. Please try again later."
-msgstr ""
-"Se ha producido un error al consultar más mensajes. Por favor inténtelo "
-"de nuevo más tarde."
+msgid ""
+"There has been an error consulting more messages. Please try again later."
+msgstr "Se ha producido un error al consultar más mensajes. Por favor inténtelo de nuevo más tarde."
 
 #: tribus/data/templates/dashboard.html:89
 #: tribus/data/templates/profile/profiles.html:258
@@ -272,10 +266,9 @@ msgstr "Su comentario ha sido publicado."
 #: tribus/data/templates/dashboard.html:90
 #: tribus/data/templates/profile/profiles.html:259
 #: tribus/data/templates/profile/profiles_view.html:102
-msgid "There has been an error publishng your comment. Please try again later."
-msgstr ""
-"Ocurrió un error al intentar publicar su mensaje. Intente de nuevo mas "
-"tarde."
+msgid ""
+"There has been an error publishng your comment. Please try again later."
+msgstr "Ocurrió un error al intentar publicar su mensaje. Intente de nuevo mas tarde."
 
 #: tribus/data/templates/dashboard.html:91
 #: tribus/data/templates/profile/profiles.html:260
@@ -287,9 +280,7 @@ msgstr "Su comentario ha sido borrado."
 #: tribus/data/templates/profile/profiles.html:261
 #: tribus/data/templates/profile/profiles_view.html:104
 msgid "There has been an error deleting your comment. Please try again later."
-msgstr ""
-"Se ha producido un error al eliminar su comentario. Por favor inténtelo "
-"de nuevo más tarde."
+msgstr "Se ha producido un error al eliminar su comentario. Por favor inténtelo de nuevo más tarde."
 
 #: tribus/data/templates/footer.html:7 tribus/data/templates/privacy.html:13
 #: tribus/data/templates/terms.html:13
@@ -310,15 +301,10 @@ msgstr "Únete a la Tribu!"
 
 #: tribus/data/templates/index.html:9
 msgid ""
-"Unleash the power of your creativity to bring amazing pieces of art to "
-"the free software world. We deliver a complete set of community services "
-"right to your computer."
-msgstr ""
-"Dé rienda suelta a su potencial creativo para producir increíbles piezas "
-"de arte en el mundo del software libre. Ofrecemos un completo conjunto de"
-" servicios comunitarios de fácil acceso desde su computador. <a "
-"href=\"/tour\">Tome el tour</a> para saber cómo.\n"
-"                            "
+"Unleash the power of your creativity to bring amazing pieces of art to the "
+"free software world. We deliver a complete set of community services right "
+"to your computer."
+msgstr "Dé rienda suelta a su potencial creativo para producir increíbles piezas de arte en el mundo del software libre. Ofrecemos un completo conjunto de servicios comunitarios de fácil acceso desde su computador. <a href=\"/tour\">Tome el tour</a> para saber cómo.\n                            "
 
 #: tribus/data/templates/index.html:13 tribus/data/templates/index.html:25
 #: tribus/data/templates/registration/signup_form.html:23
@@ -328,21 +314,17 @@ msgstr "Regístrese"
 #: tribus/data/templates/index.html:26
 msgid ""
 "By clicking on this button, you agree to the <a href=\"/about/terms\" "
-"target=\"_blank\">Terms of Service</a>, and the <a "
-"href=\"/about/privacy\" target=\"_blank\">Privacy Policy</a>."
-msgstr ""
-"Al hacer clic sobre este botón, estas aceptando las <a "
-"href=\"/about/terms\" target=\"_blank\">Condiciones de Servicio</a> y las"
-" <a href=\"/about/privacy\" target=\"_blank\">Políticas de "
-"Privacidad</a>."
+"target=\"_blank\">Terms of Service</a>, and the <a href=\"/about/privacy\" "
+"target=\"_blank\">Privacy Policy</a>."
+msgstr "Al hacer clic sobre este botón, estas aceptando las <a href=\"/about/terms\" target=\"_blank\">Condiciones de Servicio</a> y las <a href=\"/about/privacy\" target=\"_blank\">Políticas de Privacidad</a>."
 
 #: tribus/data/templates/index.html:33
 msgid "Tribus is brought to you thanks to the efforts of "
-msgstr ""
+msgstr "Tribus es traído a ustedes gracias a los esfuerzos de"
 
 #: tribus/data/templates/index.html:46
 msgid "What is Tribus?"
-msgstr ""
+msgstr "¿Qué es Tribus?"
 
 #: tribus/data/templates/index.html:50
 msgid "Package cloud"
@@ -350,39 +332,25 @@ msgstr "Nube de paquetes"
 
 #: tribus/data/templates/index.html:51
 msgid ""
-"We give you space to store the binaries of your source code in our "
-"package cloud. You can distribute your applications through a personal "
-"cloud, or have it enter Canaima's development cycle."
-msgstr ""
-"Le damos el espacio para almacenar los archivos binarios de su código "
-"fuente en nuestra nube de paquetes. Usted puede distribuir sus "
-"aplicaciones a través de una nube personal o integrándolos en el ciclo de"
-" desarrollo de Canaima."
+"We give you space to store the binaries of your source code in our package "
+"cloud. You can distribute your applications through a personal cloud, or "
+"have it enter Canaima's development cycle."
+msgstr "Le damos el espacio para almacenar los archivos binarios de su código fuente en nuestra nube de paquetes. Usted puede distribuir sus aplicaciones a través de una nube personal o integrándolos en el ciclo de desarrollo de Canaima."
 
 #: tribus/data/templates/index.html:54
 msgid "Source management"
 msgstr "Gestión de Código Fuente"
 
 #: tribus/data/templates/index.html:55
-#, fuzzy
 msgid ""
-"Store your work in a public place, where everyone can review and "
-"contribute to your projects. We support the most popular versioning "
-"systems: <a href=\"http://subversion.apache.org/\" "
-"target=\"_blank\">subversion</a>, <a "
-"href=\"http://bazaar.canonical.com/en/\" target=\"_blank\">bazaar</a>, <a"
-" href=\"http://mercurial.selenic.com/\" target=\"_blank\">mercurial</a> "
-"and <a href=\"http://git-scm.com/\" target=\"_blank\">git</a> (or no "
-"versioning at all)."
-msgstr ""
-"Guarde sus trabajos en un espacio público, donde otros podrán ver sus "
-"proyectos y contribuir con ellos. Tenemos soporte para los sistemas de "
-"versionamiento mas populares: <a href=\"http://subversion.apache.org/\" "
-"target=\"_blank\">subversion</a>, <a "
-"href=\"http://bazaar.canonical.com/en/\" target=\"_blank\">bazaar</a>, <a"
-" href=\"http://mercurial.selenic.com/\" target=\"_blank\">mercurial</a> "
-"y<a href=\"http://git-scm.com/\" target=\"_blank\">git</a> (o incluso sin"
-" versionamiento alguno)."
+"Store your work in a public place, where everyone can review and contribute "
+"to your projects. We support the most popular versioning systems: <a "
+"href=\"http://subversion.apache.org/\" target=\"_blank\">subversion</a>, <a "
+"href=\"http://bazaar.canonical.com/en/\" target=\"_blank\">bazaar</a>, <a "
+"href=\"http://mercurial.selenic.com/\" target=\"_blank\">mercurial</a> and "
+"<a href=\"http://git-scm.com/\" target=\"_blank\">git</a> (or no versioning "
+"at all)."
+msgstr "Guarde sus trabajos en un espacio público, donde otros podrán ver sus proyectos y contribuir con ellos. Tenemos soporte para los sistemas de versionamiento mas populares: <a href=\"http://subversion.apache.org/\" target=\"_blank\">subversion</a>, <a href=\"http://bazaar.canonical.com/en/\" target=\"_blank\">bazaar</a>, <a href=\"http://mercurial.selenic.com/\" target=\"_blank\">mercurial</a> y<a href=\"http://git-scm.com/\" target=\"_blank\">git</a> (o incluso sin versionamiento alguno)."
 
 #: tribus/data/templates/index.html:58
 msgid "Continuous integration"
@@ -394,11 +362,7 @@ msgid ""
 "building and packaging of your applications. We have a <a "
 "href=\"http://buildbot.net\" target=\"_blank\">buildbot</a> farm just "
 "waiting to compile your stuff."
-msgstr ""
-"Enfoquese en los procesos creativos de su trabajo, mientras nosotros "
-"manejamos la construcción y empaquetamiento de sus aplicaciones. Tenemos "
-"nuestro <a href=\"http://buildbot.net\" target=\"_blank\">buildbot</a> "
-"listo para compilar sus trabajos."
+msgstr "Enfoquese en los procesos creativos de su trabajo, mientras nosotros manejamos la construcción y empaquetamiento de sus aplicaciones. Tenemos nuestro <a href=\"http://buildbot.net\" target=\"_blank\">buildbot</a> listo para compilar sus trabajos."
 
 #: tribus/data/templates/index.html:64
 msgid "Social network"
@@ -407,12 +371,9 @@ msgstr "Red social"
 #: tribus/data/templates/index.html:65
 msgid ""
 "Share your activities in the platform with your friends and close "
-"contributors. Comment on your commits, patches, applications, "
-"translations, and more. Get everyone to know you and your work!"
-msgstr ""
-"Comparta sus actividades en la plataforma con sus amigos y contribuyentes"
-" cercanos. Opine sobre sus commits, parches, aplicaciones, traducciones, "
-"y más. Que todo el mundo sepa de usted y su trabajo!"
+"contributors. Comment on your commits, patches, applications, translations, "
+"and more. Get everyone to know you and your work!"
+msgstr "Comparta sus actividades en la plataforma con sus amigos y contribuyentes cercanos. Opine sobre sus commits, parches, aplicaciones, traducciones, y más. Que todo el mundo sepa de usted y su trabajo!"
 
 #: tribus/data/templates/index.html:68
 msgid "Ticket system"
@@ -423,26 +384,19 @@ msgid ""
 "Organize your team work by assigning milestones to your teammates and "
 "achieving goals together. Measure your effectiveness and planify your "
 "objectives in a clean and intuitive interface."
-msgstr ""
-"Organice su trabajo en equipo mediante la asignación de hitos y "
-"alcanzando sus metas juntos. Mida su eficacia y planifique sus objetivos "
-"en una interfaz clara e intuitiva."
+msgstr "Organice su trabajo en equipo mediante la asignación de hitos y alcanzando sus metas juntos. Mida su eficacia y planifique sus objetivos en una interfaz clara e intuitiva."
 
 #: tribus/data/templates/index.html:72
 msgid "Easy documentation"
 msgstr "Documentación sencilla"
 
 #: tribus/data/templates/index.html:73
-#, fuzzy
 msgid ""
 "We know how important it is to have a good and quickly-to-set-up "
 "documentation. That's why the only thing you have to do is write <a "
-"href='http://docutils.sourceforge.net/rst.html'> RST </a>, and we will "
-"take care of the HTML for you."
-msgstr ""
-"Sabemos lo importante que es tener una documentación de calidad, fácil y "
-"rápida de configurar . Es por eso que lo único que tienes que hacer es "
-"escribir <a href="
+"href='http://docutils.sourceforge.net/rst.html'> RST </a>, and we will take "
+"care of the HTML for you."
+msgstr "Sabemos lo importante que es tener una documentación de calidad, fácil y rápida de configurar. Es por eso que lo único que tienes que hacer es escribir<a href='http://docutils.sourceforge.net/rst.html'> RST </a> y nosotros nos encargamos del HTML."
 
 #: tribus/data/templates/navbar.html:21
 msgid "What are you looking for?"
@@ -452,13 +406,13 @@ msgstr "¿Qué estás buscando?"
 #: tribus/data/templates/search/search.html:49
 #: tribus/data/templates/search/search.html:53
 msgid "Packages"
-msgstr ""
+msgstr "Paquetes"
 
 #: tribus/data/templates/navbar.html:32
 #: tribus/data/templates/search/search.html:50
 #: tribus/data/templates/search/search.html:54
 msgid "Users"
-msgstr ""
+msgstr "Usuarios"
 
 #: tribus/data/templates/navbar.html:40
 msgid "There are no results matching this query."
@@ -481,22 +435,22 @@ msgstr "Cerrar sesión"
 #: tribus/data/templates/registration/login_form.html:9
 #: tribus/data/templates/registration/login_form.html:47
 msgid "Log in"
-msgstr ""
+msgstr "Iniciar sesión"
 
 #: tribus/data/templates/privacy.html:16
 msgid "Policy Privacy Tribes"
-msgstr ""
+msgstr "Políticas de Privacidad de Tribus"
 
 #: tribus/data/templates/privacy.html:17
 msgid ""
 "This Privacy Policy describes how and when Tribus collect, use and share "
-"your information when you use our Services. Tribus receive your "
-"information through our various web services, APIs and email "
-"notifications (the \"<strong>Services</strong>\" or "
-"\"<strong>Tribus</strong>\"). By using any of our Services you consent to"
-" the collection, transfer, treatment, storage, disclosure and other uses "
-"of your information as described in this Privacy Policy."
-msgstr ""
+"your information when you use our Services. Tribus receive your information "
+"through our various web services, APIs and email notifications (the "
+"\"<strong>Services</strong>\" or \"<strong>Tribus</strong>\"). By using any "
+"of our Services you consent to the collection, transfer, treatment, storage,"
+" disclosure and other uses of your information as described in this Privacy "
+"Policy."
+msgstr "Estas Políticas de Privacidad indican como y cuando Tribus recolecta, usa y comparte su información cuando usted usa nuestros servicios. Tribus recibe su información a través de nuestros Servicios Web, APIs y notificaciones por correo (los \"<strong>Servicios</strong>\" o \"<strong>Tribus</strong>\"). Al usar cualquiera de nuestros servicios, usted acepta la recolección, transferencia, tratamiento, almacenamiento, confidencialidad y otros usos de su información tal como lo describen estas Políticas de Privacidad. "
 
 #: tribus/data/templates/profile/profiles.html:3
 msgid "Profile"
@@ -517,7 +471,7 @@ msgstr "Editar perfil"
 
 #: tribus/data/templates/profile/profiles.html:55
 msgid "Description"
-msgstr ""
+msgstr "Descripción"
 
 #: tribus/data/templates/profile/profiles.html:58
 msgid "Confirm"
@@ -548,12 +502,9 @@ msgstr "No estas siguiendo a nadie"
 
 #: tribus/data/templates/profile/profiles.html:122
 msgid ""
-"You are not following any user in Tribus. See if your friends are in "
-"Tribus by entering their names in the search bar on the top of the page."
-msgstr ""
-"Usted no esta siguiendo a nadie en Tribus. Verifique si sus amigos están "
-"en Tribus colocando su nombre en la barra de búsqueda ubicada en el "
-"encabezado de esta pagina."
+"You are not following any user in Tribus. See if your friends are in Tribus "
+"by entering their names in the search bar on the top of the page."
+msgstr "Usted no esta siguiendo a nadie en Tribus. Verifique si sus amigos están en Tribus colocando su nombre en la barra de búsqueda ubicada en el encabezado de esta pagina."
 
 #: tribus/data/templates/profile/profiles.html:129
 #: tribus/data/templates/profile/profiles.html:204
@@ -575,11 +526,9 @@ msgstr "¡Usted no tiene seguidores!"
 
 #: tribus/data/templates/profile/profiles.html:197
 msgid ""
-"You have no followers (yet). Start following people and write about you "
-"so that other people take interest in what you write."
-msgstr ""
-"No tiene seguidores (aún). Siga a otros usuarios y escriba sobre usted "
-"para que otros se interesen en sus publicaciones."
+"You have no followers (yet). Start following people and write about you so "
+"that other people take interest in what you write."
+msgstr "No tiene seguidores (aún). Siga a otros usuarios y escriba sobre usted para que otros se interesen en sus publicaciones."
 
 #: tribus/data/templates/profile/profiles_view.html:3
 msgid "{{ user_view.first_name }}{{user_view.last_name}} Profile"
@@ -611,8 +560,7 @@ msgstr "¡Oh, no!"
 
 #: tribus/data/templates/registration/form_errors.html:5
 msgid ""
-"The operation could not be performed because one or more error(s) "
-"occurred."
+"The operation could not be performed because one or more error(s) occurred."
 msgstr "La operación no pudo completarse debido a algún error(es)."
 
 #: tribus/data/templates/registration/form_errors.html:6
@@ -621,19 +569,19 @@ msgstr "Por favor, reenvié el formulario después de hacer los siguientes cambi
 
 #: tribus/data/templates/registration/login_form.html:32
 msgid "- or -"
-msgstr ""
+msgstr "- o -"
 
 #: tribus/data/templates/registration/login_form.html:51
 msgid "forgot your password?"
-msgstr ""
+msgstr "¿Olvidó su contraseña?"
 
 #: tribus/data/templates/registration/login_form.html:52
 msgid "are you new to Tribus?"
-msgstr ""
+msgstr "¿Eres nuevo en Tribus?"
 
 #: tribus/data/templates/registration/password_change_done.html:3
 msgid "Password changed"
-msgstr ""
+msgstr "Contraseña modificada"
 
 #: tribus/data/templates/registration/password_change_done.html:8
 msgid "Password successfully changed!"
@@ -653,9 +601,7 @@ msgstr "Restablecimiento de contraseña completado"
 msgid ""
 " Your password has been reset! You may now <a href=\"%(the_url)s\">log "
 "in</a>."
-msgstr ""
-"¡Su contraseña ha sido restablecida! Ahora puede <a "
-"href=\"%(the_url)s\">iniciar sesión</a>."
+msgstr "¡Su contraseña ha sido restablecida! Ahora puede <a href=\"%(the_url)s\">iniciar sesión</a>."
 
 #: tribus/data/templates/registration/password_reset_done.html:3
 msgid "Password reset"
@@ -663,11 +609,9 @@ msgstr "Restablecimiento de contraseña"
 
 #: tribus/data/templates/registration/password_reset_done.html:8
 msgid ""
-"We have sent you an email with a link to reset your password. Please "
-"check your email and click the link to continue."
-msgstr ""
-"Le hemos enviado un correo con un enlace para recuperar su contraseña. "
-"Por favor revise su correo y haga clic en el enlace para continuar."
+"We have sent you an email with a link to reset your password. Please check "
+"your email and click the link to continue."
+msgstr "Le hemos enviado un correo con un enlace para recuperar su contraseña. Por favor revise su correo y haga clic en el enlace para continuar."
 
 #: tribus/data/templates/registration/password_reset_form.html:3
 #: tribus/data/templates/registration/password_reset_form.html:19
@@ -688,11 +632,9 @@ msgstr "Correo de activación enviado"
 
 #: tribus/data/templates/registration/signup_complete.html:8
 msgid ""
-"An activation email has been sent. Please check your email and click on "
-"the link to activate your account."
-msgstr ""
-"Se le ha enviado un correo de activación. Por favor revise su correo y "
-"haga clic en el enlace para activar su cuenta."
+"An activation email has been sent. Please check your email and click on the "
+"link to activate your account."
+msgstr "Se le ha enviado un correo de activación. Por favor revise su correo y haga clic en el enlace para activar su cuenta."
 
 #: tribus/data/templates/registration/signup_form.html:9
 msgid "Sign up to Tribus"
@@ -700,7 +642,7 @@ msgstr "Registrese en Tribus"
 
 #: tribus/data/templates/search/search.html:10
 msgid "Search results"
-msgstr ""
+msgstr "Resultados de la búsqueda"
 
 #: tribus/data/templates/search/search.html:48
 #: tribus/data/templates/search/search.html:52
@@ -709,16 +651,16 @@ msgstr "Filtros:"
 
 #: tribus/data/templates/terms.html:16
 msgid ""
-"These Terms of Service (hereinafter the \"<strong> Conditions "
-"</strong>\") govern your access and use of services, including our "
-"various web sites, APIs, email notifications, applications and icons "
-"(hereinafter the \"<strong> Services </strong>\" or \"<strong> Tribus "
-"</strong>\"), as well as access to and use of any information, text, "
-"graphics, photos or other materials uploaded, downloaded, or play through"
-" Services (hereinafter, collectively, the \" <strong>Content</strong>\")."
-" Access to and use of the Services is conditioned on your acceptance and "
-"compliance with these Terms. By accessing or using the Services, you "
-"consent to the application of these Conditions."
+"These Terms of Service (hereinafter the \"<strong> Conditions </strong>\") "
+"govern your access and use of services, including our various web sites, "
+"APIs, email notifications, applications and icons (hereinafter the "
+"\"<strong> Services </strong>\" or \"<strong> Tribus </strong>\"), as well "
+"as access to and use of any information, text, graphics, photos or other "
+"materials uploaded, downloaded, or play through Services (hereinafter, "
+"collectively, the \" <strong>Content</strong>\"). Access to and use of the "
+"Services is conditioned on your acceptance and compliance with these Terms. "
+"By accessing or using the Services, you consent to the application of these "
+"Conditions."
 msgstr ""
 
 #: tribus/data/templates/terms.html:20
@@ -727,40 +669,25 @@ msgstr "Condiciones Básicas"
 
 #: tribus/data/templates/terms.html:22
 msgid ""
-"You are solely responsible for the use that may be made of the services, "
-"for all Content that you play through the Services and for any "
-"consequences resulting therefrom. The Content you submit, show or play "
-"may be viewed by other users of the Services. Note that you only need to "
-"provide Content that you see fit to share with third parties in "
-"accordance with the provisions of these Terms."
-msgstr ""
-"Usted es el único responsable del uso de los servicios, de todo el "
-"contenido reproducido a través de los mismos y de las consecuencias "
-"resultantes. Los contenidos que usted envía, muestra y reproduce pueden "
-"ser vistos por otros usuarios de los servicios. Tenga en cuenta que usted"
-" puede proveer solamente el contenido que considere adecuado para "
-"compartir con terceros en concordancia con estas condiciones."
+"You are solely responsible for the use that may be made of the services, for"
+" all Content that you play through the Services and for any consequences "
+"resulting therefrom. The Content you submit, show or play may be viewed by "
+"other users of the Services. Note that you only need to provide Content that"
+" you see fit to share with third parties in accordance with the provisions "
+"of these Terms."
+msgstr "Usted es el único responsable del uso de los servicios, de todo el contenido reproducido a través de los mismos y de las consecuencias resultantes. Los contenidos que usted envía, muestra y reproduce pueden ser vistos por otros usuarios de los servicios. Tenga en cuenta que usted puede proveer solamente el contenido que considere adecuado para compartir con terceros en concordancia con estas condiciones."
 
 #: tribus/data/templates/terms.html:24
 msgid ""
-"Tribus Services provides continually evolving and, therefore, the form or"
-" nature of such services may change from time to time without being "
-"notified in advance of such change. Also, Tribus may stop (permanently or"
-" temporarily) providing the Services (or any features within the "
-"Services) to you or all users in general and, in these circumstances, it "
-"is possible that Tribes can not notify this fact advance. Tribes also "
-"reserves the right to place limits on use and storage at our sole "
-"discretion Tribus, at any time and without notice."
-msgstr ""
-"Los servicios de Tribus están en constante evolución y, por lo tanto, la "
-"forma o naturaleza de dichos servicios puede cambiar de un momento a otro"
-" sin que se le notifiquen dichos cambios. Igualmente, Tribus puede dejar "
-"(permanentemente o temporalmente) de proveer los servicios (o alguna "
-"funcionalidad inherente a los servicios) a usted o a todos sus usuarios "
-"en general y, en estas circunstancias, es posible que Tribus no pueda "
-"notificar estos hechos. Tribus también se reserva el derecho a establecer"
-" limites en el uso y almacenamiento, en cualquier momento y sin "
-"notificación."
+"Tribus Services provides continually evolving and, therefore, the form or "
+"nature of such services may change from time to time without being notified "
+"in advance of such change. Also, Tribus may stop (permanently or "
+"temporarily) providing the Services (or any features within the Services) to"
+" you or all users in general and, in these circumstances, it is possible "
+"that Tribes can not notify this fact advance. Tribes also reserves the right"
+" to place limits on use and storage at our sole discretion Tribus, at any "
+"time and without notice."
+msgstr "Los servicios de Tribus están en constante evolución y, por lo tanto, la forma o naturaleza de dichos servicios puede cambiar de un momento a otro sin que se le notifiquen dichos cambios. Igualmente, Tribus puede dejar (permanentemente o temporalmente) de proveer los servicios (o alguna funcionalidad inherente a los servicios) a usted o a todos sus usuarios en general y, en estas circunstancias, es posible que Tribus no pueda notificar estos hechos. Tribus también se reserva el derecho a establecer limites en el uso y almacenamiento, en cualquier momento y sin notificación."
 
 #: tribus/data/templates/terms.html:26
 msgid "Privacity"
@@ -769,12 +696,11 @@ msgstr "Privacidad"
 #: tribus/data/templates/terms.html:28
 msgid ""
 "Any information you provide to Tribes is subject to our <a "
-"href=\"/about/privacy\" target=\"_blank\"> Privacy Policy </a> that "
-"governs the collection and use of your information by tribus. Hereby "
-"informing you that the use of the Services involves its implied consent "
-"to the collection and use of this information (as provided in the Privacy"
-" Policy)."
-msgstr ""
+"href=\"/about/privacy\" target=\"_blank\"> Privacy Policy </a> that governs "
+"the collection and use of your information by tribus. Hereby informing you "
+"that the use of the Services involves its implied consent to the collection "
+"and use of this information (as provided in the Privacy Policy)."
+msgstr "Cualquier información que usted provea a Tribus esta sujeta a nuestras <a href=\"/about/privacy\" target=\"_blank\"> Políticas de Privacidad </a> que rigen la recolección y uso de su información por parte de Tribus. Por este medio se le informa que el uso de los servicios involucra consentimiento implícito para la recolección y uso de esta información (tal cual lo establece las Políticas de Privacidad)."
 
 #: tribus/data/templates/terms.html:30
 msgid "Passwords"
@@ -784,19 +710,19 @@ msgstr "Contraseñas"
 msgid ""
 "You are responsible for the custody of the password used to access the "
 "Services and for any activity or action which is carried out with your "
-"password. We recommend you protect your account with a strong password (a"
-" password containing combinations of uppercase and lowercase letters, "
-"numbers and symbols). Tribus is not liable for any loss or damage "
-"resulting from breach of the aforementioned."
+"password. We recommend you protect your account with a strong password (a "
+"password containing combinations of uppercase and lowercase letters, numbers"
+" and symbols). Tribus is not liable for any loss or damage resulting from "
+"breach of the aforementioned."
 msgstr ""
 
 #: tribus/data/templates/tribs.html:17
 msgid "What are you doing?"
-msgstr ""
+msgstr "¿Qué estás haciendo?"
 
 #: tribus/data/templates/tribs.html:24
 msgid "Publish"
-msgstr ""
+msgstr "Publicar"
 
 #: tribus/data/templates/tribs.html:35
 msgid "Welcome to Tribus!"
@@ -806,20 +732,14 @@ msgstr "¡Bienvenido a Tribus!"
 msgid ""
 "This is the dashboard, a place where you can follow the updates of your "
 "favorite projects and partners."
-msgstr ""
-"Este es el panel de control, un lugar donde podrá seguir las "
-"actualizaciones de sus proyectos y socios favoritos."
+msgstr "Este es el panel de control, un lugar donde podrá seguir las actualizaciones de sus proyectos y socios favoritos."
 
 #: tribus/data/templates/tribs.html:39
 msgid ""
 "Start by looking for your friends in the search bar on the top of the "
-"screen. Then, click on the Follow button in your friend's profile to "
-"start following their updates in your dashboard."
-msgstr ""
-"Empiece por buscar a sus amigos en la barra de búsqueda en la parte "
-"superior de la pantalla. A continuación presione el botón seguir en el "
-"perfil de su amigo y empezará a recibir sus actualizaciones en el panel "
-"de control."
+"screen. Then, click on the Follow button in your friend's profile to start "
+"following their updates in your dashboard."
+msgstr "Empiece por buscar a sus amigos en la barra de búsqueda en la parte superior de la pantalla. A continuación presione el botón seguir en el perfil de su amigo y empezará a recibir sus actualizaciones en el panel de control."
 
 #: tribus/data/templates/tribs.html:40
 msgid "You can always come back here by clicking on the Tribus logo."
@@ -850,15 +770,15 @@ msgstr "Comentar"
 
 #: tribus/data/templates/tribs.html:83
 msgid "Delete"
-msgstr ""
+msgstr "Borrar"
 
 #: tribus/data/templates/tribs.html:91
 msgid "Load more comments"
-msgstr ""
+msgstr "Cargar más comentarios"
 
 #: tribus/data/templates/tribs.html:127
 msgid "What do you want to say?"
-msgstr ""
+msgstr "¿Qué quieres decir?"
 
 #: tribus/data/templates/tribs.html:151
 msgid "Are you sure you want to delete this message?"
@@ -866,44 +786,42 @@ msgstr "¿Seguro que quiere borrar este mensaje?"
 
 #: tribus/data/templates/tribs.html:155
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #: tribus/data/templates/tribs.html:158
 msgid "Delete message"
-msgstr ""
+msgstr "Borrar mensaje"
 
 #: tribus/web/profile/forms.py:23
 msgid "Descripcion"
-msgstr ""
+msgstr "Descripción"
 
 #: tribus/web/profile/forms.py:33 tribus/web/registration/forms.py:64
 #: tribus/web/registration/forms.py:110 tribus/web/registration/forms.py:125
 #: tribus/web/registration/forms.py:140
 msgid "This value may contain only letters, numbers and @/./+/-/_ characters."
-msgstr ""
-"Este campo sólo puede contener letras, números y los siguientes "
-"caracteres: @/./+/-/_"
+msgstr "Este campo sólo puede contener letras, números y los siguientes caracteres: @/./+/-/_"
 
 #: tribus/web/registration/forms.py:54 tribus/web/registration/forms.py:100
 msgid "Username"
-msgstr ""
+msgstr "Nombre de usuario"
 
 #: tribus/web/registration/forms.py:58
 msgid "Enter your username"
-msgstr ""
+msgstr "Introduzca su nombre de usuario"
 
 #: tribus/web/registration/forms.py:69 tribus/web/registration/forms.py:156
 #: tribus/web/registration/forms.py:218
 msgid "Password"
-msgstr ""
+msgstr "Contraseña"
 
 #: tribus/web/registration/forms.py:72
 msgid "Enter your password"
-msgstr ""
+msgstr "Introduzca su contraseña"
 
 #: tribus/web/registration/forms.py:79
 msgid "Remember my session"
-msgstr ""
+msgstr "Recordar mi sesión"
 
 #: tribus/web/registration/forms.py:104
 msgid "Pick a username"
@@ -911,23 +829,23 @@ msgstr "Elija un nombre de usuario"
 
 #: tribus/web/registration/forms.py:115 tribus/web/registration/forms.py:119
 msgid "First name"
-msgstr ""
+msgstr "Primer nombre"
 
 #: tribus/web/registration/forms.py:130 tribus/web/registration/forms.py:134
 msgid "Last name"
-msgstr ""
+msgstr "Segundo nombre"
 
 #: tribus/web/registration/forms.py:145 tribus/web/registration/forms.py:201
 msgid "Email"
-msgstr ""
+msgstr "Correo"
 
 #: tribus/web/registration/forms.py:148 tribus/web/registration/forms.py:204
 msgid "Enter a valid email"
-msgstr ""
+msgstr "Introduzca una dirección de correo electrónico válida"
 
 #: tribus/web/registration/forms.py:159
 msgid "Create a password"
-msgstr ""
+msgstr "Crear una contraseña"
 
 #: tribus/web/registration/forms.py:191 tribus/web/registration/forms.py:243
 msgid "A user with that username already exists."
@@ -939,7 +857,7 @@ msgstr "Ingrese su nueva contraseña"
 
 #: tribus/web/registration/forms.py:228
 msgid "Password (repeat)"
-msgstr ""
+msgstr "Contraseña (repetir)"
 
 #: tribus/web/registration/forms.py:231
 msgid "Repeat your new password"
@@ -952,4 +870,3 @@ msgstr "Contraseña anterior"
 #: tribus/web/registration/forms.py:266
 msgid "Enter your old password"
 msgstr "Introduzca su contraseña anterior"
-
