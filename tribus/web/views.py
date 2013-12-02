@@ -1,18 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from tribus.config.brand import TRIBUS_SPONSORS
 from django.shortcuts import render
 from tribus.web.registration.forms import SignupForm
 from haystack.query import SearchQuerySet
 from django.core.paginator import Paginator, InvalidPage
 from django.contrib.contenttypes.models import ContentType
 
-def tour(request):
-    return render('tour.html', {})
-
 
 def index(request):
-    
     if request.user.is_authenticated():
 
         # Cargamos la librería AngujarJS junto con sus plugins
@@ -30,11 +27,13 @@ def index(request):
 
         return render(request, 'dashboard.html', {
             'render_js': render_js,
+            'sponsors': TRIBUS_SPONSORS,
             })
     else:
         signupform = SignupForm()
         return render(request, 'index.html', {
-            'signupform': signupform
+            'signupform': signupform,
+            'sponsors': TRIBUS_SPONSORS,
             })
 
 
