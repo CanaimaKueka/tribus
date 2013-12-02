@@ -30,6 +30,20 @@
         </div>
     </div>
 </div>
+<h2 class="ch-subtitle">{% trans "Tribus is brought to you thanks to the efforts of " %}</h1>
+<ul class="row-fluid unstyled">
+    <li class="ch-sponsors">
+        {% for sponsor in sponsors %}
+        <span style="width:{% widthratio 100 sponsors|length 1 %}%;height:170px;background:url('{{ sponsor.image }}') center bottom no-repeat;background-size:contain;"></span>
+        {% endfor %}
+        {% for sponsor in sponsors %}
+        <span style="width:{% widthratio 100 sponsors|length 1 %}%;height: 20px;">
+            <a href="{{ sponsor.url }}" target="_blank">{{ sponsor.name }}</a>
+        </span>
+        {% endfor %}
+    </li>
+</ul>
+<h1 class="ch-title">{% trans "What is Tribus?" %}</h1>
 <div class="container-fluid chiclets">
     <ul class="row-fluid">
         <li class="span4 ch-cloud">
@@ -38,7 +52,7 @@
         </li>
         <li class="span4 ch-source">
             <h3>{% trans "Source management" %}</h3>
-            <p>{% blocktrans %}Store your work in a public place, where everyone can review and contribute to your projects. We support the most popular versioning systems: <a href="http://subversion.apache.org/" target="_blank">subversion</a>, <a href="a:http://bazaar.canonical.com/en/" target="_blank">bazaar</a>, <a href="http://mercurial.selenic.com/" target="_blank">mercurial</a> and <a href="http://git-scm.com/" target="_blank">git</a> (or no versioning at all).{% endblocktrans %}</p>
+            <p>{% blocktrans %}Store your work in a public place, where everyone can review and contribute to your projects. We support the most popular versioning systems: <a href="http://subversion.apache.org/" target="_blank">subversion</a>, <a href="http://bazaar.canonical.com/en/" target="_blank">bazaar</a>, <a href="http://mercurial.selenic.com/" target="_blank">mercurial</a> and <a href="http://git-scm.com/" target="_blank">git</a> (or no versioning at all).{% endblocktrans %}</p>
         </li>
         <li class="span4 ch-ci">
             <h3>{% trans "Continuous integration" %}</h3>

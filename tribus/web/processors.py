@@ -21,27 +21,15 @@
 from tribus.config.brand import *
 
 def default_context(request):
-    if request.user.is_authenticated():
-        return {
-            'render_css': ['normalize', 'bootstrap', 'fonts', 'font-awesome',
-                            'tribus', 'tribus-responsive'],
-            'render_js': ['angular', 'angular.bootstrap', 'angular.bootstrap',
-                            'angular.resource', 'elements.angular',
-                            'controllers.angular', 'services.angular',
-                            'search.angular'],
-            'tribus_distro': TRIBUS_DISTRO,
-            'tribus_role_1': TRIBUS_ROLE_1,
-            'tribus_role_2': TRIBUS_ROLE_2,
-            'tribus_role_3': TRIBUS_ROLE_3,
-        }
-    else:
-        return {
-            'render_css': ['normalize', 'bootstrap', 'fonts', 'font-awesome',
-                            'tribus', 'tribus-responsive'],   
-            'render_js': ['angular', 'angular.bootstrap', 'default.angular'],
-            'tribus_distro': TRIBUS_DISTRO,
-            'tribus_role_1': TRIBUS_ROLE_1,
-            'tribus_role_2': TRIBUS_ROLE_2,
-            'tribus_role_3': TRIBUS_ROLE_3,                         
-        }
-
+    return {
+        'render_css': ['normalize', 'bootstrap', 'fonts', 'font-awesome',
+                        'tribus', 'tribus-responsive'],
+        'render_js': ['angular', 'angular.bootstrap', 'angular.bootstrap',
+                        'angular.resource', 'elements.angular',
+                        'controllers.angular', 'services.angular',
+                        'search.angular'],
+        'tribus_distro': TRIBUS_DISTRO,
+        'tribus_role_1': TRIBUS_ROLE_1,
+        'tribus_role_2': TRIBUS_ROLE_2,
+        'tribus_role_3': TRIBUS_ROLE_3,
+    }

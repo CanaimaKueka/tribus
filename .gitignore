@@ -7,6 +7,9 @@
 # C extensions
 *.so
 
+# Celery process id
+celerybeat.pid
+
 # Packages
 *.egg
 *.egg-info
