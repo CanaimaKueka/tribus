@@ -308,6 +308,8 @@ def get_setup_data(basedir):
                 'domain': ('setup.py', 'django'),
                 'input_file': ('setup.py', 'tribus/data/i18n/pot/django.pot'),
                 'output_dir': ('setup.py', 'tribus/data/i18n'),
+                'ignore_obsolete': ('setup.py', True),
+                'previous': ('setup.py', False),
             },
             'compile_catalog': {
                 'domain': ('setup.py', 'django'),

@@ -14,7 +14,7 @@
 					{% if result.model_name == "package" %}
 				    	<li> <b> <a href="/cloud/p/{{ result.autoname }}">{{ result.autoname }}</a> </b> 
 				    		{% if result.description %} {{ result.description|truncatechars:200 }}
-				    		{% else %} <i>Virtual package</i> {% endif %}</li>
+				    		{% else %} <i>{%trans 'Virtual package'%}</i> {% endif %}</li>
 				    {%endif%}
 				    </ul>
 				{% empty %}

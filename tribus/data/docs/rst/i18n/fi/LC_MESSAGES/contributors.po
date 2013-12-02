@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tribus 0.1.dev20131118020506\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-02 02:20-0530\n"
-"PO-Revision-Date: 2013-11-18 00:52-0830\n"
+"POT-Creation-Date: 2013-12-02 15:19-0530\n"
+"PO-Revision-Date: 2013-11-18 00:52-1430\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: fi <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -17,12 +17,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-# db3f4e35c04f492c94d3c1c7e5e817aa
+# 261198c4b908434fb15f1bdcae786b57
 #: ../../contributors.rst:3
 msgid "Autores"
 msgstr ""
 
-# 9c65dddf235143129976c918541660cd
+# ae3f8464b0934c109300117aef558296
 #: ../../contributors.rst:5
 msgid ""
 "Si usted es un colaborador activo de este proyecto, agregue una entrada "
@@ -30,7 +30,7 @@ msgid ""
 "proyecto), siguiendo el formato::"
 msgstr ""
 
-# 9976eb7d9aeb418990ac36ed1f7e0c0a
+# f92315f7c3924fb58aa4fa5e340845a7
 #: ../../contributors.rst:9
 msgid ""
 "Las siguientes personas han trabajado en este proyecto y son titulares de"

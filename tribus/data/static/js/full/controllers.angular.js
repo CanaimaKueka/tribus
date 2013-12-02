@@ -75,7 +75,9 @@ function FollowsController($scope, $filter, UserFollows, UserProfile, $timeout){
     };
 
     $scope.eliminar = function(Uid){
+        console.log (Uid);
         var profile = UserProfile.query({id:user_id},function(){
+
             var profileview = UserProfile.query({id:Uid},function(){
 
                 for (var i =0; i < profile[0].follows.length; i++){
