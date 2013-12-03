@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: tribus\n"
 "Report-Msgid-Bugs-To: desarrolladores@canaima.softwarelibre.gob.ve\n"
 "POT-Creation-Date: 2013-12-02 16:39-0530\n"
-"PO-Revision-Date: 2013-12-02 21:26+0000\n"
+"PO-Revision-Date: 2013-12-03 14:20+0000\n"
 "Last-Translator: jsfrncscg <jsfrncscg@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/projects/p/tribus/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -297,7 +297,7 @@ msgstr "Tribus es Software Libre"
 
 #: tribus/data/templates/index.html:8
 msgid "Join the Tribe!"
-msgstr "Únete a la Tribu!"
+msgstr "¡Únete a la Tribu!"
 
 #: tribus/data/templates/index.html:9
 msgid ""
@@ -350,7 +350,7 @@ msgid ""
 "href=\"http://mercurial.selenic.com/\" target=\"_blank\">mercurial</a> and "
 "<a href=\"http://git-scm.com/\" target=\"_blank\">git</a> (or no versioning "
 "at all)."
-msgstr "Guarde sus trabajos en un espacio público, donde otros podrán ver sus proyectos y contribuir con ellos. Tenemos soporte para los sistemas de versionamiento mas populares: <a href=\"http://subversion.apache.org/\" target=\"_blank\">subversion</a>, <a href=\"http://bazaar.canonical.com/en/\" target=\"_blank\">bazaar</a>, <a href=\"http://mercurial.selenic.com/\" target=\"_blank\">mercurial</a> y<a href=\"http://git-scm.com/\" target=\"_blank\">git</a> (o incluso sin versionamiento alguno)."
+msgstr "Guarde sus trabajos en un espacio público, donde otros podrán ver sus proyectos y contribuir con ellos. Tenemos soporte para los sistemas de versionamiento mas populares: <a href=\"http://subversion.apache.org/\" target=\"_blank\">subversion</a>, <a href=\"http://bazaar.canonical.com/en/\" target=\"_blank\">bazaar</a>, <a href=\"http://mercurial.selenic.com/\" target=\"_blank\">mercurial</a> y <a href=\"http://git-scm.com/\" target=\"_blank\">git</a> (o incluso sin versionamiento alguno)."
 
 #: tribus/data/templates/index.html:58
 msgid "Continuous integration"
@@ -373,7 +373,7 @@ msgid ""
 "Share your activities in the platform with your friends and close "
 "contributors. Comment on your commits, patches, applications, translations, "
 "and more. Get everyone to know you and your work!"
-msgstr "Comparta sus actividades en la plataforma con sus amigos y contribuyentes cercanos. Opine sobre sus commits, parches, aplicaciones, traducciones, y más. Que todo el mundo sepa de usted y su trabajo!"
+msgstr "Comparta sus actividades en la plataforma con sus amigos y contribuyentes cercanos. Opine sobre sus contribuciones, parches, aplicaciones, traducciones, y más. ¡Que todo el mundo sepa de usted y su trabajo!"
 
 #: tribus/data/templates/index.html:68
 msgid "Ticket system"
@@ -396,7 +396,7 @@ msgid ""
 "documentation. That's why the only thing you have to do is write <a "
 "href='http://docutils.sourceforge.net/rst.html'> RST </a>, and we will take "
 "care of the HTML for you."
-msgstr "Sabemos lo importante que es tener una documentación de calidad, fácil y rápida de configurar. Es por eso que lo único que tienes que hacer es escribir<a href='http://docutils.sourceforge.net/rst.html'> RST </a> y nosotros nos encargamos del HTML."
+msgstr "Sabemos lo importante que es tener una documentación de calidad, fácil y rápida de configurar. Es por eso que lo único que usted necesita hacer es escribir<a href='http://docutils.sourceforge.net/rst.html'> RST </a> y nosotros nos encargamos del HTML."
 
 #: tribus/data/templates/navbar.html:21
 msgid "What are you looking for?"
@@ -661,7 +661,7 @@ msgid ""
 "Services is conditioned on your acceptance and compliance with these Terms. "
 "By accessing or using the Services, you consent to the application of these "
 "Conditions."
-msgstr ""
+msgstr "Estas Condiciones de Servicio (en lo sucesivo las \"<strong>Condiciones</strong>\") rigen su acceso y uso de los servicios, incluyendo nuestras distintas paginas web, APIs, notificaciones por correo electrónico, aplicaciones e iconos  (en lo sucesivo los \"<strong>Servicios</strong>\" o \"<strong>Tribus</strong>\"), así como el acceso y uso de cualquier información, texto, gráficos, fotos o otros materiales cargados, descargados o reproducidos a través de los Servicios (en lo sucesivo, colectivamente llamado, el \" <strong>Contenido</strong>\"). El acceso y uso de los Servicios esta sujeto a su aprobación y cumplimiento con estas Condiciones. Al acceder o usar los Servicios, usted consiente la aplicación de estas Condiciones."
 
 #: tribus/data/templates/terms.html:20
 msgid "Basic Conditions"
@@ -714,7 +714,7 @@ msgid ""
 "password containing combinations of uppercase and lowercase letters, numbers"
 " and symbols). Tribus is not liable for any loss or damage resulting from "
 "breach of the aforementioned."
-msgstr ""
+msgstr "Usted es responsable del resguardo de la contraseña utilizada para acceder a los Servicios y de cualquier actividad o acción que se lleve a cabo con su contraseña. Le recomendamos proteger su cuenta con una contraseña robusta (una contraseña que contenga combinaciones de letras mayúsculas y minúsculas, números y símbolos). Tribus no se hace responsable de las pérdidas o daños que resulten del incumplimiento de lo anteriormente mencionado."
 
 #: tribus/data/templates/tribs.html:17
 msgid "What are you doing?"
@@ -845,7 +845,7 @@ msgstr "Introduzca una dirección de correo electrónico válida"
 
 #: tribus/web/registration/forms.py:159
 msgid "Create a password"
-msgstr "Crear una contraseña"
+msgstr "Establezca una contraseña"
 
 #: tribus/web/registration/forms.py:191 tribus/web/registration/forms.py:243
 msgid "A user with that username already exists."
