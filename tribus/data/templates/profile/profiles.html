@@ -80,13 +80,15 @@
                                 <div class="follows_list">
                                     <ul>
                                         <li class="row-fluid follows_item" data-ng-repeat="follow in follows | filter: follows_filter | startFrom: currentPage*pageSize | limitTo: pageSize">
+
                                             <span class="span1">
+
                                                 <a href="/profile/{% verbatim %}{{ follow.username }}{%endverbatim %}">
                                                     <span class="follows_avatar" data-ng-style="{'background-image': 'url(\''+convertmd5(follow.email)+'\')'}"></span>
                                                 </a>
                                             </span>
                                             <span class="span11 follows_body">
-                                                <span class="follows_title">
+                                                <span class="follows_title" >
                                                     <h3>
                                                         <a href="/profile/{% verbatim %}{{ follow.username }}{% endverbatim %}">
                                                             {% verbatim %}
@@ -96,7 +98,7 @@
                                                     </h3>
                                                     <h4>{% verbatim %}@{{ follow.username }}{% endverbatim %}</h4>
                                                     <span class="pull-right">
-                                                        <button class="btn btn-danger btn-xs" data-ng-click="eliminar(follow.id)">
+                                                        <button  class="btn btn-danger btn-xs"  data-ng-click="eliminar(this.follow.id)">
                                                             <i class="icon-remove icon-only"></i>
                                                         </button>
                                                     </span>
