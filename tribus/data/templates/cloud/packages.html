@@ -22,16 +22,16 @@
                     {% if detalles %}
                     <h3 class="smaller">{% blocktrans %}This package appears in the following distributions of {{ tribus_distro }}:{% endblocktrans %}</h3>
                     <accordion close-others="oneAtATime">
-                        {% for dists in detalles.items %}
+                        {% for dists in detalles|dictsort:'version' %}
                         <accordion-group is-open="false">
                             <accordion-heading>
-                                <i class="icon-chevron-right"></i> {% trans 'Distribution:' %} {{ dists.0 }}
+                                <i class="icon-chevron-right"></i> {{ tribus_distro }} {{dists.version}} ({{ dists.codename }})
                             </accordion-heading>
                             <tabset vertical="true" direction="'left'">
-                                {% for arch in dists.1.values %}
+                                {% for arch in dists.Architectures.items %}
                                 <tab heading="{{ arch.data.Architecture }}">
                                     <tab-heading>
-                                    <i class="icon-asterisk"></i> {{ arch.data.Architecture }}
+                                    <i class="icon-asterisk"></i> {{ arch.0 }}
                                     </tab-heading>
                                     {% include 'cloud/architectures.html' %}
                                 </tab>

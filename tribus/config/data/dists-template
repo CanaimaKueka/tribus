@@ -1,16 +1,6 @@
 Origin: Canaima
 Label: Canaima
 Suite: antiguo
-Codename: kukenan
-Version: 1.0
-Architectures: i386 amd64 source
-Components: main aportes no-libres
-Description: Canaima GNU/Linux
-DebIndices: Packages Release . 
-
-Origin: Canaima
-Label: Canaima
-Suite: antiguo
 Codename: aponwao
 Version: 2.1
 Architectures: i386 amd64 source
@@ -30,7 +20,7 @@ DebIndices: Packages Release .
 
 Origin: Canaima
 Label: Canaima
-Suite: desarrollo
+Suite: estable
 Codename: auyantepui
 Version: 3.1
 Architectures: i386 amd64 source
@@ -47,3 +37,13 @@ Architectures: i386 amd64 source
 Components: main aportes no-libres
 Description: Canaima GNU/Linux
 DebIndices: Packages Release . 
+
+Origin: Canaima
+Label: Canaima
+Suite: nuevo
+Codename: kukenan
+Version: 4.1
+Architectures: i386 amd64 source
+Components: main aportes no-libres
+Description: Canaima GNU/Linux
+DebIndices: Packages Release .

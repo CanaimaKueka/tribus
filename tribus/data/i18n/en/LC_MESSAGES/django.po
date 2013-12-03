@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tribus 0.1.dev20131118020506\n"
 "Report-Msgid-Bugs-To: desarrolladores@canaima.softwarelibre.gob.ve\n"
-"POT-Creation-Date: 2013-12-02 16:39-0630\n"
-"PO-Revision-Date: 2013-11-18 00:52-1530\n"
+"POT-Creation-Date: 2013-12-03 14:16-0630\n"
+"PO-Revision-Date: 2013-11-18 00:52-1630\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -51,23 +51,23 @@ msgstr ""
 msgid "Package not found!"
 msgstr ""
 
-#: tribus/data/templates/cloud/architectures.html:3
+#: tribus/data/templates/cloud/architectures.html:2
 msgid "Version:"
 msgstr ""
 
-#: tribus/data/templates/cloud/architectures.html:4
+#: tribus/data/templates/cloud/architectures.html:3
 msgid "Size:"
 msgstr ""
 
-#: tribus/data/templates/cloud/architectures.html:5
+#: tribus/data/templates/cloud/architectures.html:4
 msgid "Installed Size:"
 msgstr ""
 
-#: tribus/data/templates/cloud/architectures.html:6
+#: tribus/data/templates/cloud/architectures.html:5
 msgid "MD5sum:"
 msgstr ""
 
-#: tribus/data/templates/cloud/architectures.html:9
+#: tribus/data/templates/cloud/architectures.html:8
 msgid "Download"
 msgstr ""
 
@@ -182,7 +182,43 @@ msgstr ""
 msgid "Package Tracking System"
 msgstr ""
 
-#: tribus/data/templates/cloud/relations.html:14
+#: tribus/data/templates/cloud/relations.html:5
+msgid "pre-depends"
+msgstr ""
+
+#: tribus/data/templates/cloud/relations.html:7
+msgid "depends"
+msgstr ""
+
+#: tribus/data/templates/cloud/relations.html:9
+msgid "recommends"
+msgstr ""
+
+#: tribus/data/templates/cloud/relations.html:11
+msgid "suggests"
+msgstr ""
+
+#: tribus/data/templates/cloud/relations.html:13
+msgid "provides"
+msgstr ""
+
+#: tribus/data/templates/cloud/relations.html:15
+msgid "enhances"
+msgstr ""
+
+#: tribus/data/templates/cloud/relations.html:17
+msgid "breaks"
+msgstr ""
+
+#: tribus/data/templates/cloud/relations.html:19
+msgid "replaces"
+msgstr ""
+
+#: tribus/data/templates/cloud/relations.html:21
+msgid "conflicts"
+msgstr ""
+
+#: tribus/data/templates/cloud/relations.html:34
 msgid "or"
 msgstr ""
 

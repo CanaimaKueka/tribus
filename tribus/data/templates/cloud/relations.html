@@ -2,7 +2,27 @@
 <span class="row-fluid">
 	<span class="span12">
 		<dl class="dl-horizontal">
-		    <dt class="bigger-150">{% trans tipo.0 %}</dt>
+		    <dt class="bigger-150">
+				{% if tipo.0 == "pre-depends" %}
+					{% trans 'pre-depends' %}
+				{% elif tipo.0 == "depends" %}
+					{% trans 'depends' %}
+				{% elif tipo.0 == "recommends" %}
+					{% trans 'recommends' %}
+				{% elif tipo.0 == "suggests" %}
+					{% trans 'suggests' %}
+				{% elif tipo.0 == "provides" %}
+					{% trans 'provides' %}
+				{% elif tipo.0 == "enhances" %}
+					{% trans 'enhances' %}
+				{% elif tipo.0 == "breaks" %}
+					{% trans 'breaks' %}
+				{% elif tipo.0 == "replaces" %}
+					{% trans 'replaces' %}
+				{% elif tipo.0 == "conflicts" %}
+					{% trans 'conflicts' %}
+				{% endif %}
+		    </dt>
 		    <dd class="bigger-150 lighter">
 		    	
 
@@ -12,7 +32,6 @@
 		</dl>
 	</span>
 </span>
-
 
 {% for relacion in tipo.1 %}
 	{% if relacion.alt_id %}

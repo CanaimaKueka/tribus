@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tribus\n"
 "Report-Msgid-Bugs-To: desarrolladores@canaima.softwarelibre.gob.ve\n"
-"POT-Creation-Date: 2013-12-02 16:39-0530\n"
-"PO-Revision-Date: 2013-12-03 14:20+0000\n"
+"POT-Creation-Date: 2013-12-03 14:16-0530\n"
+"PO-Revision-Date: 2013-12-03 19:00+0000\n"
 "Last-Translator: jsfrncscg <jsfrncscg@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/projects/p/tribus/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -58,23 +58,23 @@ msgstr "Buscar en Tribus"
 msgid "Package not found!"
 msgstr "¡Paquete no encontrado!"
 
-#: tribus/data/templates/cloud/architectures.html:3
+#: tribus/data/templates/cloud/architectures.html:2
 msgid "Version:"
 msgstr "Versión:"
 
-#: tribus/data/templates/cloud/architectures.html:4
+#: tribus/data/templates/cloud/architectures.html:3
 msgid "Size:"
 msgstr "Tamaño:"
 
-#: tribus/data/templates/cloud/architectures.html:5
+#: tribus/data/templates/cloud/architectures.html:4
 msgid "Installed Size:"
 msgstr "Tamaño instalado:"
 
-#: tribus/data/templates/cloud/architectures.html:6
+#: tribus/data/templates/cloud/architectures.html:5
 msgid "MD5sum:"
 msgstr "Suma MD5:"
 
-#: tribus/data/templates/cloud/architectures.html:9
+#: tribus/data/templates/cloud/architectures.html:8
 msgid "Download"
 msgstr "Descargar"
 
@@ -189,7 +189,43 @@ msgstr "Sistema de seguimiento de errores"
 msgid "Package Tracking System"
 msgstr "Sistema de seguimiento de paquetes"
 
-#: tribus/data/templates/cloud/relations.html:14
+#: tribus/data/templates/cloud/relations.html:5
+msgid "pre-depends"
+msgstr "pre-dependencias"
+
+#: tribus/data/templates/cloud/relations.html:7
+msgid "depends"
+msgstr "dependencias"
+
+#: tribus/data/templates/cloud/relations.html:9
+msgid "recommends"
+msgstr "recomendaciones"
+
+#: tribus/data/templates/cloud/relations.html:11
+msgid "suggests"
+msgstr "sugerencias"
+
+#: tribus/data/templates/cloud/relations.html:13
+msgid "provides"
+msgstr "provee"
+
+#: tribus/data/templates/cloud/relations.html:15
+msgid "enhances"
+msgstr "mejora"
+
+#: tribus/data/templates/cloud/relations.html:17
+msgid "breaks"
+msgstr "rompe"
+
+#: tribus/data/templates/cloud/relations.html:19
+msgid "replaces"
+msgstr "reemplaza"
+
+#: tribus/data/templates/cloud/relations.html:21
+msgid "conflicts"
+msgstr "conflictos"
+
+#: tribus/data/templates/cloud/relations.html:34
 msgid "or"
 msgstr "o"
 

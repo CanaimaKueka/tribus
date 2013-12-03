@@ -31,8 +31,6 @@ This module contains common functions to record package data from a repository.
 # TODO: 
 # 1. Actualizacion de tags. PENDIENTE
 # 2. Parece necesario y correcto sustituir el None de las relacione simples por 0. PENDIENTE
-# 3. Eliminar paquetes obsoletos durante las actualizaciones. Actualmente no elimina los paquetes que ya
-#     se registraron. PENDIENTE
 #===============================================================================
 
 import urllib, re, email.Utils, os, sys, string, random
