@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Tribus 0.1.dev20131129214940\n"
+"Project-Id-Version: Tribus 0.1.dev20131202210051\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-02 02:20-0430\n"
+"POT-Creation-Date: 2013-12-02 16:39-0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,277 +17,277 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder:2
-# e80f49865cbe4db7b9fd62edde66d042
+# 6769da6a37e84de2b12d8a54bc6f1398
 msgid "tribus.common.recorder"
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder:4
-# c4e6901a26be40c19dae38623aadcdb3
+# b5733e0194f4481a8fb0d3c290b8ebfe
 msgid "This module contains common functions to record package data from a repository."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.create_cache_dirs:1
-# 79850531a0f34878b436b296c24dbd05
+# 9057ba211501496c843f7fa9f9913513
 msgid "Creates the packagecache and all other necessary directories to organize the debian control files (Packages) pulled from the repository."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.create_cache_dirs:4
-# 88a9ff2e20e54cb1ac63ba8714f2428d
+# c92dfdf4fffb499381207b65ec030318
 msgid "url of the repository from which the Packages files will be pulled."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.create_label:1
-# 1b7cd63ec1394a14bcdb769808e31e26
+# df64500fe1a54714b6330b90b407c16e
 msgid "Queries the database for an existent label. If it does not exists, it creates a new label."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.create_label:4
-# ef4adb8b5553452aa27bd72b450f263c
+# 6df3d2e30e4e4dd6a7589a6fbf721941
 msgid "a string with the name of the label."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.create_label:6
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.create_tag:6
-# fae0e20b43a14ee6b2830a748a953d53
-# 7920210fe0694fbd8cd99f5e4b62b580
+# 210ef41cc152459c91ab1069c25cdb5c
+# f74d1def470d49a58060f8df6eb8cb53
 msgid "a `Tag` object."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.create_label:8
-# d1372930ae9e420ea45f486efb079484
+# c5dd16167f244896b59c6ac032e719ad
 msgid "a `Label` object."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.create_label:10
-# 92bee529b2d74efbb9c91ec94f492a1e
+# 222bc6391b70436588c62044eff17846
 msgid "``Label``"
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.create_relationship:1
-# 35e984c3bc064b2c82750678a9e390df
+# b772e6c2069a45c6b882d137cfb1efff
 msgid "Queries the database for an existent relation. If it does not exists, it creates a new relation."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.create_relationship:4
-# 5b412c3e82e241e58d13cad695f23012
+# 04f5f79cca664cd2a13043c730459b55
 msgid "is a dictionary which contains the relation data. Its structure is similar to::                        {\"related_package\": \"0ad-data\", \"relation_type\": \"depends\",      \"relation\": \">=\", \"version\": \"0~r11863\", \"alt_id\": None} ."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.create_relationship:4
-# b1c44902bafe4304a7e844b4ddf629ab
+# a7fb9fa74a95414aad1405d440ac07fd
 msgid "is a dictionary which contains the relation data. Its structure is similar to::"
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.create_relationship:8
-# ad4f770ab74843a68d109d8761fc2a4c
+# 408ed4931a64469fab84406f624d7f0e
 msgid "."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.create_relationship:10
-# 0b1f77f74f8f4cbfb7167777bde2cc4d
+# 7173b048114242bd96d5fb41f23eccc4
 msgid "a `Relation` object."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.create_relationship:12
-# 007d55993de4451b870f8a7a4fbbd80b
+# 4b82e98c5b954c97a727fc88fac3c7e7
 msgid "``Relation``"
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.create_tag:1
-# 93b775319f94448eb0deca11a4aea606
+# b131338ab0e74c2d876f190fe4adbe23
 msgid "Queries the database for an existent tag. If it does not exists, it creates a new tag."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.create_tag:4
-# e8c005fcd7e14e34b2ff5a02c58a7d6b
+# 5ab8712efc044721a9c7dfe0f7b2718e
 msgid "string with the value of the tag."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.create_tag:8
-# 518deba6a41b4317a32ccd55de010b89
+# 66cdbc1057ae4dbb888e04365c84b4cd
 msgid "``Tag``"
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.fill_db_from_cache:1
-# b0968573410b4cdfae2e554895d2bf80
+# dd37342a393946daacd1ee8f80d49d71
 msgid "Records the data from each Package file inside the packagecache folder into the database."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.find_package:1
-# 3d7fd86149f1441d8cae99432c9245d1
+# 4996b85d6ee7410b9c711b0d60a28347
 msgid "Queries the database for an existent package. If it does not exists, it creates a new package only with its name."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.find_package:4
-# 5a6eead4e7af4b879ab6f3ffaa53c3d8
+# 836e95a58d414aa6b89ad9caf2c1e8d1
 msgid "the package name."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.find_package:6
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_package:9
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.update_package:5
-# 925277acf1134338b514ec718ffaddff
-# 6728ddeb7dfb4cc0a59840fa30aa050f
-# b418ca8f5fa14130943164e47ddc399e
+# 3ff5af01e4b54d8a94e6b6d4ef509ac0
+# 051110ebfe6d4e619f00d7fb4152a9cb
+# 6dffa7122c1842d89bcafdf43cb261b8
 msgid "a `Package` object."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.find_package:8
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_package:11
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.update_package:7
-# 35f6289e280e449d8fafd1a3910ab3de
-# e95336d6d5f54a298da22b03c26bf7aa
-# 3c5fc2e948c94777a108824660d8be36
+# 89a77038dbbf4bcea6395e67a114579d
+# 8e93e63b9c2c45f3b18890bac0748ab5
+# 6bc3c5642b804a52ae0bc749605531f7
 msgid "``Package``"
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_details:1
-# 03cf0f43645e41419e173a50d8009e6a
+# c27a9d866c0245c3889dfc7edd9fec7d
 msgid "Queries the database for the details of a given package. If there are no details then they are recorded."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_details:4
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_package:7
-# 95cd8497a7fe46549ff8a30b775ec9bf
-# 14fd6f20ecaf4bcc95717cae1745d887
+# 522534de19db48c2bb8ef1d52d2b68b7
+# 9c142b53ae2140449869b6387ea4d556
 msgid "paragraph which contains the package data."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_details:6
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.update_details:3
-# fd2693c954414a899f8bf74439a49e4f
-# 5b755a6190f34882a43ebb2c60cbdb87
+# 07dfe46e811745b08dc4157df0a03837
+# 5c7dc9afb989473e9d0b0c3b56aec956
 msgid "a `Package` object to which the details are related."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_details:8
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_section:5
-# d2a1c382699a457787c780227cb0abbe
-# c97dead7d5c24716a0f7277dda56c7ae
+# 66d868e9a8724253998dad48dd0eec4f
+# be7060849dcd4156924ec79f1c029fee
 msgid "codename of the Canaima's version that will be recorded."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_details:10
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.update_details:9
-# 0666d6f1536b428bb6961ad368ca7439
-# 6ae1d83c6cb34739a932af4d59fe5b2b
+# 7dced1bcac08442eb5c6931077b2ea0c
+# 7161e0d770b844f9a1aa8c1976d1c5dd
 msgid "a `Details` object."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_details:12
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.update_details:11
-# d4b15eabd14149519e01e15940da6985
-# 8d6506505e68427abb7b57ea727c50ad
+# 06d4452145ae4f2bb93f5ae9cab3d2f8
+# 80c18d8f626c4852b8d7a076be919461
 msgid "``Details``"
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_maintainer:1
-# 31acf1cc0a6f4cfca6b9b7665295c3d1
+# d0f43435e6e647519e84b63ee6be1132
 msgid "Queries the database for an existent maintainer. If it does not exists, it creates a new maintainer."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_maintainer:4
-# ed25d48c685e41359576cab67c97c528
+# bf3825fa7fe04dee95db36bd29fa679b
 msgid "a string which contains maintainer's name and email."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_maintainer:6
-# e662379916454ad1ba03ecf5edd7e780
+# 2be14c2c326544c39129ac70c23c4f22
 msgid "a `Maintainer` object."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_maintainer:8
-# 702ffd33874449f9aba8e7e828248c44
+# 2970090230704792b1cd2633215351e4
 msgid "``Maintainer``"
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_package:1
-# bbe1e31be1f04c98acac7c702d92f541
+# 617700c1134e44428066fd6624c9c1b9
 msgid "Queries the database for an existent package. If the package does exists but it doesn't have a maintainer, then the package data will be  updated acording to the fields of the section provided. If the package doesn't exists then it's created."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relations:1
-# 0eec6f8174334ed1852fdc38633f311d
+# 7a17f2a98fe540279f4969069c2420a7
 msgid "Records a set of relations associated to a `Details` object."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relations:3
-# 3ca8de93369645c08e0c10adb67c3e4b
+# a92d63d537ca45f1afc0f9a0ae152441
 msgid "a `Details` object to which each relationship is related."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relations:5
-# 8baa24b6af3440c8bae424a11d40d072
+# 1835733d122c4f16af86883021c1352c
 msgid "a list of tuples containing package relations to another pacakges.   Its structure is similar to::      [('depends', [[{'arch': None, 'name': u'libgl1-mesa-glx', 'version': None},     {'arch': None, 'name': u'libgl1', 'version': None}]],     [{'arch': None, 'name': u'0ad-data', 'version': (u'>=', u'0~r11863')}]), ('suggests', [])]"
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relations:5
-# 4c7f313bf1ca4d1e8d79a6dab0ec476b
+# c56a39bbb73a47aaa4f3ace76dbd40d0
 msgid "a list of tuples containing package relations to another pacakges.   Its structure is similar to::"
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relationship:1
-# 3d39d89977c74968b6d639523d315bc1
+# 20d714b7c6b440a4b6742be22efd7069
 msgid "Records a new relation in the database and then associates it to a `Details` object."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relationship:3
-# 3bc17ad97eee412a82d84bb33a1fd2c7
+# fe58db63d1dc45d3b3ebd53e724c1d3e
 msgid "a `Details` object to which the relationship is related."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relationship:5
-# 98853eae1a4d417e90040ef10ce029e2
+# 3126ac894523415ba0c8ec3f9b05535f
 msgid "a string indicating the relationship type."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relationship:7
-# fc8ca857ed5a4f46ae736a5ce45806e1
+# 246eb065e56041b5859730d899de46de
 msgid "a dictionary which contains the relation data. Its structure is similar to::  {\"name\": \"0ad-data\", \"version\": (\">=\", \"0~r11863\"), \"arch\": None}"
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relationship:7
-# 4448cdf336ce48108185fa98a5d2f2cb
+# 7c44779065a544269626762632d56c83
 msgid "a dictionary which contains the relation data. Its structure is similar to::"
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relationship:11
-# d26499923f7149989444f5a9ff8b9089
+# 9c2fec781d714a5ca7e7b31079658d9f
 msgid "an integer used to relate a relation with its alternatives, e.g:     +----+-----------------+---------------+-----------+---------+--------+     | id | related_package | relation_type | relation  | version | alt_id |     +====+=================+===============+===========+=========+========+     |  1 |       23        |     depends   |    <=     |  0.98   |        |    +----+-----------------+---------------+-----------+---------+--------+    |  2 |       24        |     depends   |    >=     |  0.64   |    1   |    +----+-----------------+---------------+-----------+---------+--------+     |  3 |       25        |     depends   |    >=     |  2.76   |    1   |    +----+-----------------+---------------+-----------+---------+--------+    |  4 |       26        |     depends   |           |         |    1   |    +----+-----------------+---------------+-----------+---------+--------+    |  5 |       27        |     depends   |    <<     |  2.14   |        |    +----+-----------------+---------------+-----------+---------+--------+  in the above table, the relations with id 2, 3 and 4 are alternatives between  themselves because they have the same value in the field `alt_id`."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relationship:11
-# d81e8a9a78b74125a1767f1df09b4eb5
+# 30b4ac3afbd640b2bea26aa2f752dd36
 msgid "an integer used to relate a relation with its alternatives, e.g:"
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relationship:14
-# 9d40e94bcc91440a8858524b694c11a3
+# d65381641dc54d95a762c2c964b72bd4
 msgid "id"
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relationship:14
-# a9ebee2999734c43b0510eb3463c8d20
+# c9fad502bec446bca906f365aa7b583b
 msgid "related_package"
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relationship:14
-# d756f763816142c49fe9447c073c5baf
+# 0d4ce88aa219494ca87c7643682d69f6
 msgid "relation_type"
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relationship:14
-# e2243cd41ce84840bf74ef4e218de036
+# 6fbabff70d3f47ccb25defd30ff893f5
 msgid "relation"
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relationship:14
-# 2cbe654a8c254e34858833a443042dd2
+# a3c0e87b4ba044a5a979c09f4fc1b312
 msgid "version"
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relationship:14
-# e96748d414a9405bae1e153b9b038f48
+# e9c2357a28f5460b98332daff005d948
 msgid "alt_id"
 msgstr ""
 
@@ -295,15 +295,15 @@ msgstr ""
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relationship:18
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relationship:20
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relationship:22
-# 7df1893daafc4949926f538c592c869a
-# fed195f3e83941058fbcd57c38a5936d
-# cb73c88174e842439b50ea5bef627af7
-# 74c333ff4a044c7d968a3024baa735f5
+# e273cfb9d90840219ad577b627d4b16a
+# d6cf6de850f54be98f5f4872c7d5e078
+# 3dac6817c4b24906bd46fb891f192c4d
+# 048ca70acf364677a804dac078713550
 msgid "1"
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relationship:16
-# 1a90c81ee49743f79d9077452e3b229d
+# d2abf7b3e41b4bac87a80000d9be58ec
 msgid "23"
 msgstr ""
 
@@ -312,98 +312,98 @@ msgstr ""
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relationship:20
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relationship:22
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relationship:24
-# de72645ea4c2423db41ea3571a3edd40
-# 67ebe9cb04e449afa608b0431e941e74
-# 58e1432031bb4e66829b4730e5b84400
-# a739d27e8ddd4588b382c46328fa85d7
-# 0629628cf9824411adc83cdbfbb53456
+# 78c11b6aa96f405994ce1e13d24df42f
+# 28a317942d6b4148acb42329dab1068f
+# 7d9f59e374da472b8b17cc82f42a29e7
+# 5f65444786f5478bb94aec14ee98aa43
+# e185f280e2124ff7a85a859236800f01
 msgid "depends"
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relationship:16
-# 8af5330fd29a450bbe1c64e092b8c35c
+# 49d2f2e99bfd4c2bb4c37945cfc27e8a
 msgid "<="
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relationship:16
-# fe27abdebf3543cdb8079efb39d2ac43
+# 77847a6126e34d659a5b2d6ec8668ec2
 msgid "0.98"
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relationship:18
-# 1314aaab069f4c5f972693cb19a3aa82
+# 485de872aa8b40f683064ac396a4de7a
 msgid "2"
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relationship:18
-# 55326b263de04691ac4d7abfd7c51c83
+# 91120c100e154cc18d97b66fd09c4239
 msgid "24"
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relationship:18
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relationship:20
-# ea1e04dd78ba454f8127f42b6d683f13
-# 7e8aababc5a14c0aa10c2eceee1bc99c
+# cc018bc786a64cffb7d439b63e7783b1
+# 698158e4c9e54360a06519e4fdea7689
 msgid ">="
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relationship:18
-# 8b1eec415a3b4b6b9ca063abaf57ac0e
+# 4722d9af25e74ce3b86e4251a4d95663
 msgid "0.64"
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relationship:20
-# d261103d58e74cfabf14455a5f8e5c11
+# 06cef5585f8948ff8e105b3b91b59d7d
 msgid "3"
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relationship:20
-# a47159b5937e4744ab0ec327d332795c
+# d9e4601c7d94423e9be5b0100d39a8cb
 msgid "25"
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relationship:20
-# 977079d4f0ab44f0848d6031b6592871
+# 46c01bb125904de48ea273aef39077c0
 msgid "2.76"
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relationship:22
-# 53a053c6c77a4bf0b184a7d85e45a066
+# 89585e0062d747808b1546cd76a40aea
 msgid "4"
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relationship:22
-# 8472413f361e4b2eaec5499e23a49998
+# 1964210b11fb46c785d4aea8d6495f54
 msgid "26"
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relationship:24
-# 58b6e9d3d9d84fb7979e39c5661214d4
+# d7dc690668884cb9ad6647869b77856e
 msgid "5"
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relationship:24
-# 96aa785d8f604d09854454c38bf20ddd
+# 9851d500e9bd4f8e9ab23aa5af6a6de7
 msgid "27"
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relationship:24
-# 01ba0555f2f84399894579b97d584d57
+# 2d81d6a767ca4185853d131c17a74f10
 msgid "<<"
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relationship:24
-# 625dccaa4c3d45cf9756a577e6d5e387
+# 438171aef9e74142899044e3cd613e90
 msgid "2.14"
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_relationship:27
-# 01b9d8092cc147b98343a64ced64547a
+# 6b44154e858f40c7882dbc6de282cb51
 msgid "in the above table, the relations with id 2, 3 and 4 are alternatives between  themselves because they have the same value in the field `alt_id`."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_section:1
-# 7275406aa4f3419381cf183e05afe3d0
+# 538a80623c1f446fbb2fda6a8306e4dc
 msgid "Records the content of a paragraph in the database."
 msgstr ""
 
@@ -412,61 +412,61 @@ msgstr ""
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.update_details:5
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.update_package:3
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.update_section:4
-# 9f87045bd1454317b7c1ea2d53facca1
-# 955a9b2bdb16437cabe870f73df1bf1e
-# 4372063af4a8411b8dd47e887367a3dc
-# 8ccde0a00847471aa63b6efeba624150
-# 9cca11289b064bbf97dd485386fadd6c
+# 18450cbcf0de4372b62d40536d3b8721
+# a36b878a5710475fa6eae2f909d581cd
+# 588aaaccc8344187bdd04c7fd6184991
+# 7067ad40147d4b91804f129f0d279449
+# ad23d43e5b0649159c4d80dd8248c03c
 msgid "a paragraph which contains the package data."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_tags:1
-# 65d58bc17c814e9382bbe9c21db7402c
+# 72481431fca44dc2b7f6479f6759e8cf
 msgid "Processes the contents of the 'Tag' field in the provided paragraph, records the labels into the database and relates them to a package."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.record_tags:6
-# 48a8301310644cbea066a5a5e8db4bed
+# 589aaaddd11d4db49a7e3bd874919698
 msgid "a `Package` object to which the labels are related."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.select_paragraph_fields:1
-# cf77f3c6a84f4fe6bf239445b564f9d3
+# bd36cc8a7365405780253ecea831c155
 msgid "Selects the necessary fields to record a debian control file paragraph in the database. Hyphens in field's names are suppressed, e.g:   \"Multi-Arch\" is replaced by \"MultiArch\"."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.select_paragraph_fields:5
-# fbb9e3c315d24882bb49a7f23611a06e
+# e8db4c034b3d4667947d8d644818f41a
 msgid "is a paragraph which contains data from a binary package."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.select_paragraph_fields:7
-# 608aebaa21a440f383cc46a178fb7478
+# bf6fef7cbde642c6a80cb962c52b18fa
 msgid "is a list of the necessary fields to record a Package or a Details object in the  database. For a `Package` object, the necessary fields are::       [\"Package\", \"Description\", \"Homepage\", \"Section\",       \"Priority\", \"Essential\", \"Bugs\", \"Multi-Arch\"]        and for a `Details` object::       [\"Version\", \"Architecture\", \"Size\", \"MD5sum\", \"Filename\",       \"Installed-Size\"]"
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.select_paragraph_fields:7
-# 49348faba1014afa882aaf6d1a2b6ac6
+# ed68061720dc42aa947ca1e1cf6239bf
 msgid "is a list of the necessary fields to record a Package or a Details object in the  database. For a `Package` object, the necessary fields are::"
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.select_paragraph_fields:13
-# dcfe4a58b1784565b4c7cfbd323ad48d
+# 938052956b7841a8a63a6009c5c3c958
 msgid "and for a `Details` object::"
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.select_paragraph_fields:18
-# 292aa11ac47a464bbe4c23d63a279a85
+# d4283c427e194847bc3609bf78611109
 msgid "a dictionary with the selected fields."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.select_paragraph_fields:20
-# d9a2a48c77a14e89b754ea609bd5da24
+# a6646684edb34ca4bfbd48e1f2d64d61
 msgid "``dict``"
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.update_details:1
-# 58d82d3467ff4486bcae4605f4c2ded5
+# 47efea1c80f24f449beb803fb38ddcd4
 msgid "Updates the details of a Package in the database."
 msgstr ""
 
@@ -474,115 +474,115 @@ msgstr ""
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.update_dist_paragraphs:8
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.update_package_list:8
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.update_section:6
-# 7a2b6a4486d141eebba2c8a418f09809
-# 6b78df66e14446c8bb2c2bffa41a1c3c
-# 3cc240e470454eee9a034112e36b502c
-# 1255641ddd4e4f89a0fef364aea073b2
+# af387581bd464ec38d217f8a5a53a48a
+# 11d3ec9eb3014a389df546556b59f1d5
+# ebf8bc318ef547ac8ad2d77a74c4fac6
+# f0acb2c10be7427398b67d5477a01ddc
 msgid "codename of the Canaima's version that will be updated."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.update_dist_paragraphs:1
-# bbe236e98b3e4b17a0841593cf34a402
+# ef3403331e2e41f589beb21183c42b5e
 msgid "Updates a debian control file (Packages), comparing the the one in the repository with its local copy. If there are differences in the MD5sum field then the local copy is deleted and copied again from the repository."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.update_dist_paragraphs:6
-# b725bd34d6c64db6999e09d4bcde78e1
+# 33b0eb8498be4ff190834a205cf39f30
 msgid "url of the repository from which the Packages files will be updated."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.update_package:1
-# 4b41a8b42066455d84fd69271b18852f
+# 1715287771a34390ba42d7d755f2593d
 msgid "Updates the basic data of a package in the database."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.update_package_cache:1
-# fd23491b7526404daa82328d5460ffeb
+# 4127190345f744609b4d7597c6af9cc5
 msgid "Scans the packagecache directory to get the existent  distributions and update them. It is assumed that the packagecache directory was created previously."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.update_package_list:1
-# b1bfea392841484295e2322d38bb2146
+# cbcc305616b44404b89dadd0c99a66f4
 msgid "Updates all packages from a debian control file. If a package exists but the MD5sum field is different from the one stored in the database then it updates the package data fields. If the package doesn't exists then its created."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.update_package_list:6
-# ea3f80a765c041aaa5884d4dbabbb142
+# 28e93c7aa8ce46e1b342928ee48230b1
 msgid "path to the debian control file."
 msgstr ""
 
 #: ../../../../../common/recorder.py:docstring of tribus.common.recorder.update_section:1
-# eac44473dbc147469cf17bd7131bdf2c
+# cb68c43042e14c9490814492acbe7336
 msgid "Updates basic data and details of a package in the database. It also updates the package's relations."
 msgstr ""
 
 #: ../../../../../common/setup/message_extractors.py:docstring of tribus.common.setup.message_extractors:2
-# 326f582bfae146c3be65f38ce1cb666c
+# 6904f2b33f2b4eac8d2614e69f20c720
 msgid "tribus.common.setup.message_extractors"
 msgstr ""
 
 #: ../../../../../common/setup/message_extractors.py:docstring of tribus.common.setup.message_extractors:4
-# 56b45191238b4c28864e1c4398483f69
+# 8cb9d425ab6c4ee3bbc06eab9616602e
 msgid "This module contains message extractors that work with babel."
 msgstr ""
 
 #: ../../../../../common/setup/message_extractors.py:docstring of tribus.common.setup.message_extractors.django:1
-# cff4e59635714081b52c8208ad242dad
+# 183a5e9dcfad4054976fe981349eeb30
 msgid "Extract messages from Django template files."
 msgstr ""
 
 #: ../../../../../common/setup/message_extractors.py:docstring of tribus.common.setup.message_extractors.django:3
-# 3644f90b3cad405b8d808efa4bd2b6d5
+# 580c3e562a3c4daa8f17791264d308c5
 msgid "the file-like object the messages should be extracted from."
 msgstr ""
 
 #: ../../../../../common/setup/message_extractors.py:docstring of tribus.common.setup.message_extractors.django:4
-# c7ffdc9fc090444798f18bb3471b6587
+# ddfa58d44d3144c683a6c6344721e1ae
 msgid "a list of keywords (i.e. function names) that should be recognized as translation functions."
 msgstr ""
 
 #: ../../../../../common/setup/message_extractors.py:docstring of tribus.common.setup.message_extractors.django:6
-# a37b64e4493b4234a5d92f111118f5dd
+# e11b143cdb4c4a2ba0833c4b0dde66da
 msgid "a list of translator tags to search for and include in the results."
 msgstr ""
 
 #: ../../../../../common/setup/message_extractors.py:docstring of tribus.common.setup.message_extractors.django:8
-# 60044ecc4f13465d92d7b11eeefb09c8
+# 75e71ad463b24cfa9f3dca8f47a42249
 msgid "a dictionary of additional options (optional)"
 msgstr ""
 
 #: ../../../../../common/setup/message_extractors.py:docstring of tribus.common.setup.message_extractors.django:9
-# f559a87e2d2e492db315b567234e2db8
+# eebd0306d0b24aa0b3570d2a237890e6
 msgid "an iterator over ``(lineno, funcname, message, comments)`` tuples"
 msgstr ""
 
 #: ../../../../../common/setup/message_extractors.py:docstring of tribus.common.setup.message_extractors.django:11
-# 41218820c2ec47c8a404dabb56a2cfb6
+# 78ad83789eb64fddadd27cc28a4b2fbb
 msgid "``iterator``"
 msgstr ""
 
 #: ../../../../../common/setup/utils.py:docstring of tribus.common.setup.utils:2
-# 51ac0bf407fe4ac78e832dcd99299c3a
+# b495c2743d514b9aa7b6eb771a64500c
 msgid "tribus.common.setup.utils"
 msgstr ""
 
 #: ../../../../../common/setup/utils.py:docstring of tribus.common.setup.utils:4
-# 14821655d5654c5a97180e9c878a0a50
+# 12285c8f976047a199caf0cad87589e2
 msgid "This module contains common functions to process the information needed by Setuptools/Distutils setup script."
 msgstr ""
 
 #: ../../../../../common/setup/utils.py:docstring of tribus.common.setup.utils.get_classifiers:1
-# d3d0966857ae415ea480f790f0c0affe
+# c9cd7a929967468499dbe30b8a34e8de
 msgid "Reads python classifiers from a file."
 msgstr ""
 
 #: ../../../../../common/setup/utils.py:docstring of tribus.common.setup.utils.get_classifiers:3
-# 7629bfd163b142c9aee68dbb2378c77f
+# 16f61b04b02f4fd8bd4eea519408583a
 msgid "a filename containing python classifiers (one classifier per line)."
 msgstr ""
 
 #: ../../../../../common/setup/utils.py:docstring of tribus.common.setup.utils.get_classifiers:5
-# 897ecfc5f0184de99d11cbbd099f6247
+# d56c466ae51c484c989ce3797bf83da7
 msgid "a list with each classifier."
 msgstr ""
 
@@ -591,1414 +591,1414 @@ msgstr ""
 #: ../../../../../common/setup/utils.py:docstring of tribus.common.setup.utils.get_dependency_links:7
 #: ../../../../../common/setup/utils.py:docstring of tribus.common.setup.utils.get_packages:12
 #: ../../../../../common/setup/utils.py:docstring of tribus.common.setup.utils.get_requirements:7
-# 14f0ae3722144163aed02f55584455ae
-# a5c7e8ae90c04f24a350084818705505
-# 01e14692ab044be787281c1a2871a54c
-# 493c10b0c0cb46a5b58fbe107f80246e
-# 9333d4864c79456abef611b2e4f8581b
+# 5c8de08990b14ee1a8f6549452953431
+# 7360964916b149a8b668a6957aaa1e57
+# 0dd88010416c4f9a97fc04b054c97ea8
+# 419349796ee54509b3f13a32c412e621
+# 29795f0e28834236b26df76d29e7081d
 msgid "``list``"
 msgstr ""
 
 #: ../../../../../common/setup/utils.py:docstring of tribus.common.setup.utils.get_data_files:1
-# a67d4794dc4b4d02876a85563ac18def
+# ebab73b4da1e4e39864f029ed89da366
 msgid "Procesess a list of patterns to get a list of files that should be put in a directory. This function helps the Tribus Maintainer to define a list of files to be installed in a certain system directory."
 msgstr ""
 
 #: ../../../../../common/setup/utils.py:docstring of tribus.common.setup.utils.get_data_files:5
-# 55cb89b37a4048cd86ddf357d1fff341
+# b81037d3b0db46c091936f496e99ebb9
 msgid "For example, generated documentation (everything under ``tribus/data/docs/html`` after executing ``make build_sphinx``) should be put in ``/usr/share/doc/tribus/``. The maintainer should add a pattern like the following so that everything from ``tribus/data/docs/html`` gets copied to ``/usr/share/doc/tribus/`` when the package is installed (``python setup.py install``) or a binary distribution is created (``python setup.py bdist``)."
 msgstr ""
 
 #: ../../../../../common/setup/utils.py:docstring of tribus.common.setup.utils.get_data_files:12
-# 527191d0764448e198c0b6f963f3dda8
+# 3c24da6791d843568165c1b2a223f860
 msgid "the path where the files reside. Generally the top level directory of the project. Patterns will be expanded in this directory."
 msgstr ""
 
 #: ../../../../../common/setup/utils.py:docstring of tribus.common.setup.utils.get_data_files:15
-# b6307705b7ce4cf2ab39bd5597d13525
+# ce7dd5f3c7ae472e96dd37a868ffe789
 msgid "this is a list of strings in the form of::      ['relative/path/inside/project *.some.*regex* /dest',      'another/path/inside/project *.foo.*regex* /dest2',      'path/ *.* dest/']  which means, *Put every file from this folder matching the regex inside this other folder*."
 msgstr ""
 
 #: ../../../../../common/setup/utils.py:docstring of tribus.common.setup.utils.get_data_files:15
-# 7ed1e490a16f493eb7e892fa720baa86
+# fc26e9968a39449ea6cb939b4e1f62ac
 msgid "this is a list of strings in the form of::"
 msgstr ""
 
 #: ../../../../../common/setup/utils.py:docstring of tribus.common.setup.utils.get_data_files:21
-# 91b04abe51634fa8a36c978876c2af97
+# 88e83da50d2e475ea4a0ee5666c8fde4
 msgid "which means, *Put every file from this folder matching the regex inside this other folder*."
 msgstr ""
 
 #: ../../../../../common/setup/utils.py:docstring of tribus.common.setup.utils.get_data_files:24
-# 566b211f5fbf410196c36bb464daa744
+# e202dad9818b485da303d5941e976bd2
 msgid "this is a list of file patterns to exclude from the results."
 msgstr ""
 
 #: ../../../../../common/setup/utils.py:docstring of tribus.common.setup.utils.get_data_files:25
-# f8af1cfd87554351bb58ece869eb7b27
+# 18d45bc3857a4dd3be4dc0c56c7eba04
 msgid "a list of pairs ``('directory', [file-list])`` ready for use in ``setup(data_files=...)`` from Setuptools/Distutils."
 msgstr ""
 
 #: ../../../../../common/setup/utils.py:docstring of tribus.common.setup.utils.get_dependency_links:1
-# 48b05a2c0ccd4b1ba3157b9f66404049
+# 6b2d533305bc4900a0a8e513f783d0c4
 msgid "Procesess dependency links from a requirements file or a simple pip dependency file."
 msgstr ""
 
 #: ../../../../../common/setup/utils.py:docstring of tribus.common.setup.utils.get_dependency_links:4
 #: ../../../../../common/setup/utils.py:docstring of tribus.common.setup.utils.get_requirements:4
-# f3160a6c670341959805ad835b2e09d9
-# e277e79fafb14eecaf20d46a8e48df4a
+# 706b60e43666494b8f269716950dae2b
+# 0e2aa7627d86401ab52b048956ed752e
 msgid "a filename containing python packages in a format expected by pip (one per line)."
 msgstr ""
 
 #: ../../../../../common/setup/utils.py:docstring of tribus.common.setup.utils.get_dependency_links:6
-# 447da1ad7d2c4e158cd02e3735b44cc0
+# 0d0174445c3a49559eb847735f78960b
 msgid "a list of dependency links."
 msgstr ""
 
 #: ../../../../../common/setup/utils.py:docstring of tribus.common.setup.utils.get_package_data:1
-# 26e6708adc1740fba26407ab7329c9dc
+# 9f62e89733cb4b8caa1d4f8a128313a8
 msgid "For a list of packages, find the package_data"
 msgstr ""
 
 #: ../../../../../common/setup/utils.py:docstring of tribus.common.setup.utils.get_package_data:3
-# cc0280b7a63f40298cb91075ee616559
+# e8919946b4344228b3f1c4c47a4f476e
 msgid "This function scans the subdirectories of a package and considers all non-submodule subdirectories as resources, including them in the package_data"
 msgstr ""
 
 #: ../../../../../common/setup/utils.py:docstring of tribus.common.setup.utils.get_package_data:7
-# 88ac2db290764987a41c86a1d0b90140
+# 6d05728118974508b181fdfb400dabd7
 msgid "Returns a dictionary suitable for setup(package_data=<result>)"
 msgstr ""
 
 #: ../../../../../common/setup/utils.py:docstring of tribus.common.setup.utils.get_packages:1
-# e3eed22dd23149a29b92caf41accf84b
+# b724b63aff194a0da1c02bc596f8f5ec
 msgid "Returns a list of all python packages found within directory ``path``, with ``exclude_packages`` packages excluded."
 msgstr ""
 
 #: ../../../../../common/setup/utils.py:docstring of tribus.common.setup.utils.get_packages:4
-# 2f7dd4a84b364aa2b3dcdc7e4dda5fe5
+# a8782804fcf74b2393bd26ae6614ea39
 msgid "the path where the packages will be searched. It should be supplied as a \"cross-platform\" (i.e. URL-style) path; it will be converted to the appropriate local path syntax."
 msgstr ""
 
 #: ../../../../../common/setup/utils.py:docstring of tribus.common.setup.utils.get_packages:7
-# 6fc95ae7b0b14a8181ca6e0ddfdf70bf
+# 3213caf633974663b2cc6b19cc599590
 msgid "is a sequence of package names to exclude; ``*`` can be used as a wildcard in the names, such that ``foo.*`` will exclude all subpackages of ``foo`` (but not ``foo`` itself)."
 msgstr ""
 
 #: ../../../../../common/setup/utils.py:docstring of tribus.common.setup.utils.get_packages:11
-# 6f9d1602cb554716ad06cd56d13512a2
+# 0a98d4e5d159436fbeca5ada8543e1fe
 msgid "a list of packages."
 msgstr ""
 
 #: ../../../../../common/setup/utils.py:docstring of tribus.common.setup.utils.get_requirements:1
-# 33289572d9854c25b353d7855c431201
+# d60266af8ab84ce78d8b94c1852d2c0c
 msgid "Procesess dependencies from a requirements file or a simple pip dependency file."
 msgstr ""
 
 #: ../../../../../common/setup/utils.py:docstring of tribus.common.setup.utils.get_requirements:6
-# c67259aa517544448160e5502d771c4e
+# 7a7e490e28fe4e0bbbf120ae33f71f5c
 msgid "a list of dependencies (python packages)."
 msgstr ""
 
 #: ../../../../../common/setup/utils.py:docstring of tribus.common.setup.utils.get_setup_data:1
-# 475a94bc35394e09990d58c7f3d1df95
+# e6ac0d834f6e4ca7815fcfbcc53c7b96
 msgid "Prepares a dictionary of values to configure python Distutils."
 msgstr ""
 
 #: ../../../../../common/setup/utils.py:docstring of tribus.common.setup.utils.get_setup_data:3
-# 85b76ef915f94af2bb0fa16c935f45fd
+# 963ebadeaf7b4aa0aeea2f2b2a14bd43
 msgid "the path where the files reside. Generally the top level directory of the project."
 msgstr ""
 
 #: ../../../../../common/setup/utils.py:docstring of tribus.common.setup.utils.get_setup_data:5
-# d32955a8e5554bfab4a3ff4ec9e714ce
+# 2b6568d1bd06437b93052ba8022ffb67
 msgid "a dic"
 msgstr ""
 
 #: ../../../../../common/setup/utils.py:docstring of tribus.common.setup.utils.get_setup_data:6
-# 268f728c4210414b9caa4c87b4abb9c3
+# 072506984bd04a558dba494ca8b25e5e
 msgid "``dictionary``"
 msgstr ""
 
 #: ../../../../../common/utils.py:docstring of tribus.common.utils:2
-# f9f2fb8599a74f56acfe13184448dc4a
+# a07c379826084e088ff2a86c686ba276
 msgid "tribus.common.utils"
 msgstr ""
 
 #: ../../../../../common/utils.py:docstring of tribus.common.utils:4
-# ffc0529894fc41439c9a7254e2be6714
+# 0ce1d89131cf4cc9935b656e091d7f42
 msgid "This module contains common and low level functions to all modules in Tribus."
 msgstr ""
 
 #: ../../../../../common/utils.py:docstring of tribus.common.utils.find_dirs:1
 #: ../../../../../common/utils.py:docstring of tribus.common.utils.list_dirs:1
-# d6e0863b78154c84b1198e30f4e47600
-# a23cd2bcb2cc4f9195ae6ea48e289cde
+# 8979617a59b24789ac9dc3722ba7fed3
+# 5ab5fe16d0914366a5ddd54fbec34f12
 msgid "Get the subdirectories within a package This will include resources (non-submodules) and submodules"
 msgstr ""
 
 #: ../../../../../common/utils.py:docstring of tribus.common.utils.find_files:1
-# 551da0eac11e46ac970978d53a5395ad
+# 4d360fd9e338456bac82d6827ccd9e33
 msgid "Locate all files matching supplied filename pattern in and below supplied root directory."
 msgstr ""
 
 #: ../../../../../common/utils.py:docstring of tribus.common.utils.list_files:1
-# e744ad239258424b8971091468caa08c
+# 50e90995eb05487b84769ad2d891049a
 msgid "Returns a list of all files and folders in a directory (non-recursive)"
 msgstr ""
 
 #: ../../../../../common/utils.py:docstring of tribus.common.utils.package_to_path:1
-# d2888469ccf34e3596fea850042c4c12
+# 54820d9ec06641bfa1f62abe6614ed02
 msgid "Convert a package (as found by setuptools.find_packages) e.g. \"foo.bar\" to usable path e.g. \"foo/bar\""
 msgstr ""
 
 #: ../../../../../common/utils.py:docstring of tribus.common.utils.package_to_path:5
-# e65e0d403a184291a68824dd6c9a30f5
+# 92013dd6f86543d88d7c5522932a23ed
 msgid "No idea if this works on windows"
 msgstr ""
 
 #: ../../../../../common/utils.py:docstring of tribus.common.utils.scan_repository:1
-# becc9cd6a75b4571b09ca3893e90948a
+# 5a2ef0f8f48246ebada198fa1b1404b2
 msgid "Este metodo lee el archivo distributions ubicado en la raiz de un  repositorio y genera un diccionario con las distribuciones y  componentes presentes en dicho repositorio."
 msgstr ""
 
 #: ../../development/changelog.rst:3
-# 5de828dab6aa40a0a3c3967e698dcefc
+# aab66e4aa83f4434b5c9f5b667cc112c
 msgid "Lista de cambios en versiones previas"
 msgstr ""
 
 #: ../../development/concepts.rst:3
-# 142938551a2a45ceb603618b610c3282
+# df1f09fb2825462d85f4faa55deca4d2
 msgid "Documentación conceptual"
 msgstr ""
 
 #: ../../development/concepts.rst:5
-# 7f947f832d1842af892d7350241263d1
+# 4a2f0f04c29b485db40c30112cfa9c7f
 msgid "Tribus está desarrollado en Python, entre otras tecnologías modernas. Desde el punto de vista técnico, es un gestor de tareas de alta capacidad que ejecuta acciones según diversos criterios (por eventos, sincronización, etc). Las tareas son programadas por los usuarios de una instancia maestra a través de una interfaz web (Django). La instancia maestra puede tener instancias esclavas en diferentes dispositivos físicos de internet, las cuales pueden ejecutar las tareas de la instancia maestra según su disponibilidad. Por ejemplo, un usuario en casa puede levantar una instancia web y configurarla como esclava de la instancia mestra de Tribus, permititendo utilizar sus recursos en las diferentes tareas."
 msgstr ""
 
 #: ../../development/concepts.rst:12
-# ad7b9e57d91b4c5fba8a1c8128e3b80a
+# 2c88dfc263cf4211839de111e437092a
 msgid "Existen otras interfaces además de la interfaz web: la interfaz por consola (cli -- command line interface) y la interfaz gráfica (gui -- graphical user interface) contienen una serie de funciones que permiten interactuar con la instancia maestra o ejecutar tareas localmente."
 msgstr ""
 
 #: ../../development/concepts.rst:14
-# 7e99fda06d3e458199676f0c6b45e8f4
+# 995a181298b04f5089cae1627f46d8d6
 msgid "Las diferentes tareas dentro de Tribus son registradas según área de conocimiento (o \"Tribu\"), hasta ahora se han identificado las siguientes:"
 msgstr ""
 
 #: ../../development/concepts.rst:16
-# 154f3f505bfa4af4953bfbf96ad68e1b
+# c1b8e6f681a849b2b899436c84ae4a66
 msgid "Desarrollo"
 msgstr ""
 
 #: ../../development/concepts.rst:17
-# 17675b9009004eba8d115bc91edc91e6
+# 623be2f9e95645afb850451bed404c1c
 msgid "Documentación"
 msgstr ""
 
 #: ../../development/concepts.rst:18
-# 0b5984f2112a4c2e8bbb7dbb9b64b8f3
+# b4e37ed9e982437d876cea2a06fde1aa
 msgid "Traducción"
 msgstr ""
 
 #: ../../development/concepts.rst:19
-# f32f642e73974a0dbaa2ad3bba7e9393
+# 706635dc216d48e2800f4d3e82a38331
 msgid "Diseño gráfico"
 msgstr ""
 
 #: ../../development/concepts.rst:20
-# fb0a9c37f0664e9b90fbe1c5234fcf32
+# 4e478e12091547fea7252237362cd46a
 msgid "Activismo social"
 msgstr ""
 
 #: ../../development/concepts.rst:22
-# 7f324c8039fc4e0c8ba0106629261832
+# 8f9885d8cb8242d4a2ee51779a08925f
 msgid "Más abajo tenemos un mapa mental que resume el diseño conceptual de la aplicación."
 msgstr ""
 
 #: ../../development/concepts.rst:29
-# 86838ce9a37049dda9d5ef247838dba7
+# b9821557871c47888e0b6bdc77500588
 msgid "Luego un mapa mental que describe las funcionalidades de Tribus que son parte del diseño final de la aplicación."
 msgstr ""
 
 #: ../../development/concepts.rst:37
-# 72fb143ba5ae4288b5f210df83a1654d
+# 27295977ed4047079fa26f293c01bc6c
 msgid "A continuación se lista el diseño de los diferentes comandos y funcionalidades de Tribus. Si eres desarrollador de Tribus, deberías agregar un documento rst en la carpeta development/drafts que describa la nueva funcionalidad que estás agregando, si aplica."
 msgstr ""
 
 #: ../../development/contributing.rst:3
-# 1790e47077f342549e240900d06e5ca0
+# 32f722604ef64cf28258cf3a287dc8b7
 msgid "Protocolo para la incorporación de contribuciones"
 msgstr ""
 
 #: ../../development/contributing.rst:6
-# 992781e75ad745019806d965a9c84995
+# 81243900c11a45c19991c30b7b0fab96
 msgid "El equipo de desarrolladores de Tribus está conformado por :doc:`varias personas <../contributors>` que dedican sus destrezas a mejorar Tribus. Sin embargo, cualquier otra persona es bienvenida a colaborar a través del sistema de tickets y pull-requests, el IRC o las listas de correo."
 msgstr ""
 
 #: ../../development/contributing.rst:10
-# bb94dbeb9002474baa42c81507e4ebe3
+# 1d1f9f5d81b34ae19a020ed78490393c
 msgid "Primeros Pasos"
 msgstr ""
 
 #: ../../development/contributing.rst:12
-# cbfe01124d7c476cac2a5c3e92a29ef2
+# a888d89258704c5993820b27522e03d1
 msgid "Tribus tiene un documento llamado :doc:`hojas de ruta <roadmap>` (roadmap), el cual define cuales son las tareas que se deben ejecutar para terminar con el desarrollo de una determinada versión de Tribus. Si quisieras contribuir al desarrollo de Tribus, la recomendación sería empezar a buscar una tarea disponible en la hoja de ruta activa para momento. Generalmente la primera hoja de ruta que se lista en el documento es la hoja de ruta activa."
 msgstr ""
 
 #: ../../development/contributing.rst:14
-# 1082e091569644e9a6e5a8ecf1b30320
+# 00c9b62b2c964402a7a9d4e3eafc7a38
 msgid "Probablemente existan otras cosas que necesitan mejorarse dentro de Tribus y que no están listadas dentro de la hoja de ruta activa. Cualquier otra contribución que esté fuera de la hoja de ruta será recibida y considerada igualmente, aunque dependiendo de la magnitud de los cambios realizados, es posible que la contribución sea incorporada en una próxima versión. Échale un ojo a la estructura del proyecto y examina en qué otras cosas deseas ayudarnos."
 msgstr ""
 
 #: ../../development/contributing.rst:17
-# 91dfe635a51c4e9480a4f02fefdd36ca
+# 200c88c592dc4426a20b8f2cc194294c
 msgid "Obteniendo el código"
 msgstr ""
 
 #: ../../development/contributing.rst:19
-# bb00e601df9a4c7c82ee1accf2f49222
+# 21815aaca5dc4f759fbc1b9fa1a41643
 msgid "Los desarrolladores de Tribus gestionan el código fuente del proyecto a través de `Git <http://git-scm.com>`_. Para seguir de cerca el desarrollo de Tribus a través de Git, en vez de estar descargando archivos comprimidos, tienes las siguientes opciones:"
 msgstr ""
 
 #: ../../development/contributing.rst:21
-# 75c355ac885746138432ff5824ff5c25
+# 5257a1ef5b1b4e58adda50e6b749a811
 msgid "Clonar el repositorio principal directamente desde la `cuenta oficial de los desarrolladores de Tribus en GitHub <https://github.com/CanaimaGNULinux/tribus>`_, ``git://github.com/CanaimaGNULinux/tribus.git``"
 msgstr ""
 
 #: ../../development/contributing.rst:23
-# 2733e38b7cad4982872624317d84505c
+# a9df8fdfbd494b3bacf79ada19338328
 msgid "Hacer tu propia derivación del repositorio de Tribus en GitHub, visitando `la página del repositorio <https://github.com/CanaimaGNULinux/tribus>`_ y haciendo click en el botón \"fork\" (necesitas una cuenta activa en GitHub)."
 msgstr ""
 
 #: ../../development/contributing.rst:26
-# ceb6941e505941cf8e090dc4562d4443
+# ad3f5c1382a040a9bcdf7fd82d133d52
 msgid "Reproduciendo el entorno de desarrollo"
 msgstr ""
 
 #: ../../development/contributing.rst:28
-# 06e5ffbea2814ed88c9a07a3d0c7e811
+# f3ca67230a3f4112905fc2db40d59f82
 msgid "Por favor consultar :ref:`make_environment`."
 msgstr ""
 
 #: ../../development/contributing.rst:31
-# 2e474f54cc2e4e49ace5939a6f664762
+# 558f176ae23841ccb718e0b7bfd595c7
 msgid "Ramas y flujo de trabajo en el repositorio"
 msgstr ""
 
 #: ../../development/contributing.rst:33
-# cb3c0c7119514eaf9b5917e1173458d6
+# b23ef4f663294461a1e8f59849613a14
 msgid "Si bien la metodología de desarrollo de Tribus aún no está escrita en piedra, esta sección describe la manera actual de organizar las ramas y el flujo de desarrollo dentro del repositorio. Esta información **debe ser tomada en cuenta** a la hora de enviar nuevas contribuciones."
 msgstr ""
 
 #: ../../development/contributing.rst:35
-# 3f1b6f7fa64d4b2ba291f56af28a8a08
+# 37f464e7e8444c8c992791f1a39e94ba
 msgid "Las nuevas funcionalidades pueden provenir de la hoja de ruta activa, en donde se listan los tickets asignados correspondientes a cada nueva funcionalidad. También puede proponer nuevas funcionalidades realizando un pull-request."
 msgstr ""
 
 #: ../../development/contributing.rst:37
-# ce487f23c94e43eab029364a85ce01a3
+# 7df91a0fedbc462884f29dbfbd1db6a2
 msgid "Las nuevas funcionalidades se realizan en ramas temporales, que por convención se deben llamar ``<número de ticket>-<descripción-corta>``. Por ejemplo, si usted es un colaborador que desea atender el ticket #23 que se trata acerca indexar los paquetes en la base de datos, ustede debe hacer una nueva rama a partir de la rama ``development`` y nombrarla ``23-indexar-paquetes-bd`` (o algo parecido) -- esto puede hacerse con el comando ``git branch 23-indexar-paquetes-bd development``."
 msgstr ""
 
 #: ../../development/contributing.rst:39
-# acb864bbe2af4bfb84e6a8c456dfed60
+# 490a9497b33d4f36b2f13ccd3d1caf1c
 msgid "Estas ramas no deben ser utilizadas por el público. Además, por su carácter temporal pueden aparecer y desaparecer conforme va avanzando el proceso de desarrollo."
 msgstr ""
 
 #: ../../development/contributing.rst:41
-# 6500962c35a849ecb1cd608c0e96f86c
+# 0c12f305688d4479bde8e6458b6a5ba1
 msgid "Las nuevas funcionalidades son incorporadas en la rama de desarrollo ``development`` cuando se acerca la fecha del lanzamiento de versiones alpha o *snapshots*. Para este momento debe publicarse el archivo comprimido de la versión alpha y marcar el último commit del snapshot con la etiqueta correspondiente a la versión (``git tag X.Y.Zdev1234567890``). Este trabajo es realizado por alguno de los mantenedores de Tribus."
 msgstr ""
 
 #: ../../development/contributing.rst:43
-# af6e961ed9e34d0abead504a7aab7785
+# dfa2cc98b2d04eadb53846cbc38e579d
 msgid "Los desarrolladores que están trabajando en ramas de funcionalidades, deberían hacer *merge* de la rama ``development`` periódicamente para que obtengan los últimos cambios de los otros desarrolladores. Hacer esto evitará problemas de conflictos en Git. También es recomendable hacer push a sus copias del repositorio de forma periódica para que los que están siguiendo el desarrollo de una funcionalidad en particular puedan estar actualizados."
 msgstr ""
 
 #: ../../development/contributing.rst:45
-# 14151d3313104576807c06f4fef90f80
+# c299674bb04d4b718851371fb66d7039
 msgid "El lanzamiento de una versión estable ocurre cuando todas las funcionalidades de la hoja de ruta activa han sido completadas."
 msgstr ""
 
 #: ../../development/contributing.rst:47
-# 412b89bd7e714b8abdc63a970bf678eb
+# 07cd0b4ceeff4af3b3a954fa467ab255
 msgid "Si bien intentamos no hacer commit de código roto en la rama ``development``, como en cualquier otro proyecto de código abierto sólo garantizamos que habrá código estable en la rama ``master`` o ``release``. Sólo sigue la rama ``development`` si eres un nuevo desarrollador, quieres seguir de cerca las nuevas funcionalidades y/o estás dispuesto a soportar una que otra sorpresa desagradable."
 msgstr ""
 
 #: ../../development/drafts/package_helper.rst:2
-# 0f8341c94c7649c1b5ee3619a61643be
+# 9be0aac17e864e179f4ab5f9b4534a31
 msgid "tbs package create"
 msgstr ""
 
 #: ../../development/drafts/package_helper.rst:5
-# 23d193fe724c4798ae5b998e0218b939
+# 293b4f59124c47d58811066d74742e65
 msgid "Comportamiento automático"
 msgstr ""
 
 #: ../../development/drafts/package_helper.rst:7
-# 2dfbf8bc07c7440b905e5dffc68e2dde
+# 66b258488bdc4410abae374744242c3f
 msgid "Identificar el tipo de sistema de versionamiento (git, subversion, bazaar, mercurial, ninguno)."
 msgstr ""
 
 #: ../../development/drafts/package_helper.rst:8
-# 78508dc7d17242578835c0116e90d99c
+# 5521dfcb53114155986bbdf2af05fa3e
 msgid "Identificar el tipo de paquete fuente (nativo, quilt, etc)."
 msgstr ""
 
 #: ../../development/drafts/package_helper.rst:9
-# 5bf4e8a8b7b148b2a6831fd82ce65ddc
+# 8706542dea3f4bbeb6d14625c7ba73a0
 msgid "Desaplicar todos los parches."
 msgstr ""
 
 #: ../../development/drafts/package_helper.rst:10
-# 0510ff44eb9746d4a0760673b3163dc1
+# e10a8e2294ca4334ba0dd6b7db74d594
 msgid "Verificar si existen nuevos cambios no versionados."
 msgstr ""
 
 #: ../../development/drafts/package_helper.rst:12
-# 54a0eb16979441f598f368dabc93ec03
+# 961b790d98fe44a580ab24d5764a46c9
 msgid "Si existen cambios sólamente dentro de la carpeta debian/, entonces tenemos una revisión nueva."
 msgstr ""
 
 #: ../../development/drafts/package_helper.rst:13
-# 181761ba3fd549ef9b898b2cdbe7f8ff
+# 98d43fa217df444ba80a99e42d423c11
 msgid "Si existen cambios sólamente fuera de la carpeta debian/, entonces:"
 msgstr ""
 
 #: ../../development/drafts/package_helper.rst:15
-# 319b4023b59140049b0284d7e340c89f
+# f74e4cc30fe34f60aee1780d717caa89
 msgid "Tenemos un nuevo import desde upstream, por lo tanto tenemos una versión nueva."
 msgstr ""
 
 #: ../../development/drafts/package_helper.rst:17
-# f34b1d7338a247c4bf93ae52fba5e517
+# 4e070a4a266c457d91609edda10ba96a
 msgid "Debe existir una etiqueta para el import desde upstream."
 msgstr ""
 
 #: ../../development/drafts/package_helper.rst:19
-# df7273c4f9574f4cb395e4947478e8a6
+# 10afdc325d7e4c0987f5016ce59c2a4e
 msgid "El mantenedor se equivocó e hizo cambios directamente sobre el código fuente del software."
 msgstr ""
 
 #: ../../development/drafts/package_helper.rst:21
-# b3accbc581b4434caa2abeca48fcac13
+# cd769800f4c24d0aa9487ab60e1eb173
 msgid "Si existen cambios en la carpeta debian/ y fuera de ella, entonces:"
 msgstr ""
 
 #: ../../development/drafts/package_helper.rst:23
-# 228a1f221a854c65a9832e289ea696d7
+# 07673d2c86f54cc6bcff649be0e7a22d
 msgid "El mantenedor se equivocó e hizo cambios directamente sobre el código fuente del software y además hizo cambios en la carpeta debian/."
 msgstr ""
 
 #: ../../development/drafts/package_helper.rst:24
-# e5d0efee25e14cda922eb05570f5cc80
+# b99f0b82b482483e808ec40bee868b9a
 msgid "El mantenedor importó una nueva versión desde upstream pero olvidó hacer commit e hizo cambios en la carpeta debian seguidamente."
 msgstr ""
 
 #: ../../development/drafts/package_helper.rst:26
-# 190c0a39d1af4d6c80c3b7dd4f5b7d7c
+# be0bcbe8ba804915ad6d77db143fca3f
 msgid "Si no existen cambios, estamos haciendo un reempaquetamiento de una versión previa."
 msgstr ""
 
 #: ../../development/drafts/package_helper.rst:28
-# 520aaf390011472db3bd38cd5717b7ac
+# 0b324475f2d94bf8b30eb2cf05f9e1f0
 msgid "Debe existir una etiqueta para la versión empaquetada."
 msgstr ""
 
 #: ../../development/drafts/package_helper.rst:29
-# 8392debad6a349918a1030f912ff5501
+# 6fe81b09ec834924b40148f15c7b0069
 msgid "La versión es la misma, no debe haber ningún cambio en el paquete (empaquetamiento no-intrusivo)."
 msgstr ""
 
 #: ../../development/drafts/package_helper.rst:31
-# 64970334a9574dbf832ad711056d2685
+# 816d4eb81317478ebf30f661b224a13e
 msgid "Identificar el tipo de empaquetado (--test, --final)."
 msgstr ""
 
 #: ../../development/drafts/package_helper.rst:32
-# 7198e98fc0de4e049c7fb8fb4f40fa00
+# 0dfe2fb3cd534092a64d792974cb01a3
 msgid "Relacionar la versión anterior con un commit (a través de la etiqueta)."
 msgstr ""
 
 #: ../../development/drafts/package_helper.rst:33
-# 3ab617fa06b647ba8df9bfa87903dc14
+# e7570d07e603433dbd88b22a9073276c
 msgid "Recolectar todos los commits realizados hasta la fecha."
 msgstr ""
 
 #: ../../development/drafts/package_helper.rst:34
-# 63f42f450e1b4984bc9f23d0233d57e9
+# 32d0a527054e42359dd789e0668df068
 msgid "Crear la nueva entrada de Changelog."
 msgstr ""
 
 #: ../../development/drafts/package_helper.rst:36
-# e847368cb210451eab38618d5473b244
+# dd584066eaae49e38878da0421ddfd5f
 msgid "Insertar todos los mensajes de commit desde la última versión."
 msgstr ""
 
 #: ../../development/drafts/package_helper.rst:38
-# 5af11f57067745c09590519f225c634c
+# af8281855445424ab16060feb43a3a26
 msgid "Si no tenemos sistema de versionamiento, dejar el editor abierto para introducir manualmente los mensajes de changelog."
 msgstr ""
 
 #: ../../development/drafts/package_helper.rst:40
-# bcf505c095584a77ba272ead0138def6
+# 00407514eb8d426d814684f4d9079942
 msgid "Determinar la nueva versión, prioridad y distribución destino."
 msgstr ""
 
 #: ../../development/drafts/package_helper.rst:41
-# 46b5849d1df84c398b3c93723c002991
+# 7fdd2f72c24a430aafc75e4c73099abb
 msgid "Determinar autor y correo correctos del paquete."
 msgstr ""
 
 #: ../../development/drafts/package_helper.rst:43
-# cf9bd30970444350927cc5304229c88a
+# 7a725338166d41c999fb68c0f0fb5f2a
 msgid "Recrear el paquete fuente en el formato correcto."
 msgstr ""
 
 #: ../../development/drafts/package_helper.rst:44
-# 74295b1433a0478f8c3192c3012b3b7a
+# ac194056c1d04d159cb2d770d3b4230c
 msgid "Empaquetar."
 msgstr ""
 
 #: ../../development/drafts/package_helper.rst:45
-# 15f27ed7924647fe9ef60b0751313f5e
+# 33cfbad9a57849a3813e32503b0cc007
 msgid "Firmar fuentes si tenemos llave gpg."
 msgstr ""
 
 #: ../../development/drafts/package_helper.rst:46
-# 400ef8a1f3a949d783843bd9c0c44e97
+# e9a77bfcf436478baffebef56d8a3a2f
 msgid "Hacer etiqueta si era un empaquetado --final."
 msgstr ""
 
 #: ../../development/maintaining.rst:3
-# 561f037ed3434d8db78fc6c0a3c2554d
+# 00bd6ae677ff4b4a8f502fa3cfdb2bc9
 msgid "Herramientas de mantenimiento y desarrollo"
 msgstr ""
 
 #: ../../development/maintaining.rst:5
-# 263f1b639d964a17962483bad1e860dc
+# 7cd26a3386fe495fbcd8d43a9a6ba116
 msgid "Tribus necesita de una serie de herramientas, servicios y configuraciones iniciales para poder ejecutar las tareas rutinarias de desarrollo (p. ej. iniciar el servidor de desarrollo de *Django*, autenticar usuarios de prueba contra *OpenLDAP*, et. al.). Conforme el proceso de desarrollo va avanzando, las dependencias que necesita Tribus para funcionar van cambiando y necesitan ser corregidas de la forma más sencilla posible."
 msgstr ""
 
 #: ../../development/maintaining.rst:7
-# 1084ffeaa78d47459e0dee895a43d2a0
+# b48845f950194335912547a2373ad82c
 msgid "Para facilitar esto, Tribus contiene una serie de comandos que asisten en las tareas de mantenimiento y desarrollo. Para ello, se utilizan una serie de scripts escritos en `Make <http://make.org/>`_ y `Fabric <http://fabfile.org>`_."
 msgstr ""
 
 #: ../../development/maintaining.rst:9
-# ff447511ce4a405ba19e02dc92d415e7
+# 97786a4a7195460c81c4351649f9111d
 msgid "Se recomienda trabajar en un sistema Debian Sid, Debian Testing o en su defecto, Canaima 4.0 o Ubuntu 13.04."
 msgstr ""
 
 #: ../../development/maintaining.rst:14
-# 43ae32b5e2944929b50b2f0d1286a613
+# 3b1f8ac11a12486fb5852b63c9406d7d
 msgid "Recreando el ambiente de desarrollo"
 msgstr ""
 
 #: ../../development/maintaining.rst:20
-# cfd2e90a085f4b06b452c2de7ffca4f2
+# 5ca31277e01d41c2ac8313963b70979f
 msgid "Tribus utiliza `Virtualenv <http://virtualenv.org/>`_ para crear un entorno aislado de ejecución en Python. Esto permite que los accidentes e inestabilidades propias del proceso de desarrollo no afecten directamente el entorno de trabajo del desarrollador, mientras que a su vez, permite instalar las últimas versiones de paquetes python sin preocuparse de los problemas de dependencias del sistema huésped."
 msgstr ""
 
 #: ../../development/maintaining.rst:22
-# de6f02a9acaa41f1a899b6e636917343
+# 4f40b7394b4e44fcbf22858eb27d09b6
 msgid "Este comando además instalará los paquetes indispensables para el funcionamiento de los servicios (OpenLDAP, PostgreSQL, Redis, Celery, et. al.), entre otras tareas:"
 msgstr ""
 
 #: ../../development/maintaining.rst:24
-# 4daeadb16bf849e991947936eb8831a2
+# 06ccac5c5ac84427bce23746906ea767
 msgid "Instalar las dependencias de construcción listadas en ``tribus/config/data/debian-dependencies.list``."
 msgstr ""
 
 #: ../../development/maintaining.rst:25
-# ead0d75aa1ee42c28e99d203c9840990
+# 85b532d7b4e14331824ae1ccdd939bfe
 msgid "Configurar el Servidor OpenLDAP con las siguientes características:"
 msgstr ""
 
 #: ../../development/maintaining.rst:27
-# 21bad8d5c30f4b6dabdcded401cd5deb
+# 62ac5c7fda2f46e5b3bd9115374b3f97
 msgid "Domain: ``tribus.org``"
 msgstr ""
 
 #: ../../development/maintaining.rst:28
-# bd0c1e8f7eab471eabec05cc3de17e52
+# 115de6380d904640b50a45b7c4f7752f
 msgid "Base: ``dc=tribus,dc=org``"
 msgstr ""
 
 #: ../../development/maintaining.rst:29
-# 8ffc3eb465ad46d0b9c23de3764e7834
+# 0106b43b6d9241e7877506e9950ac7a9
 msgid "Admin DN: ``cn=admin,dc=tribus,dc=org``"
 msgstr ""
 
 #: ../../development/maintaining.rst:30
-# 6b50ead4502542d6a7186e4c9696d8e8
+# df41ddf2da5a4223940f5f12fcb912f1
 msgid "Admin Password: ``tribus``"
 msgstr ""
 
 #: ../../development/maintaining.rst:32
-# 4d4721e8ac3342a9a6667289ed339b45
+# 7e4c10ce781642beb2da61415c0e8167
 msgid "Borrar todas las entradas de usuario del OpenLDAP."
 msgstr ""
 
 #: ../../development/maintaining.rst:33
-# 8da4619640ce4ebeb9389169996d7fec
+# f37c34a3a91a4d8695d83a76c92de75a
 msgid "Agregar un usuario de pruebas ``uid=maria,dc=tribus,dc=org`` al OpenLDAP con contraseña ``123456`` (más detalles ``tribus/config/data/users.ldif``)"
 msgstr ""
 
 #: ../../development/maintaining.rst:34
-# 0d9379010b8a449bb0f365cdf45aed6c
+# 904a69ff96a14187aea8a867a1f41bad
 msgid "Agregar un usuario de pruebas ``uid=luis,dc=tribus,dc=org`` al OpenLDAP con contraseña ``654321`` (más detalles ``tribus/config/data/users.ldif``)"
 msgstr ""
 
 #: ../../development/maintaining.rst:35
-# 07075984f085404dbadf8e4053e22a11
+# c5ef3889cb164970aafd183758eb7715
 msgid "Cambiar la contraseña del servidor PostgreSQL a ``tribus``."
 msgstr ""
 
 #: ../../development/maintaining.rst:36
-# dac4fe1ac18d427cbc479a9b08b22f13
+# 7291a08945e44991afcac243b879582a
 msgid "Crea una base de datos con nombre ``tribus`` (si ya existe una, la borra primero)."
 msgstr ""
 
 #: ../../development/maintaining.rst:37
-# bdde0869a7a1487985a9dd7cfca7a66b
+# 459200157434432fac747cc9021b2f7c
 msgid "Crea un usuario de nombre ``tribus`` con contraseña ``tribus`` y le concede todos los privilegios sobre la base de datos ``tribus`` (si ya existe uno, lo borra primero)."
 msgstr ""
 
 #: ../../development/maintaining.rst:38
-# 73ce862449ce4805a7dd9186d37c9c80
+# 73fd0e23a3c84464a6a2d5b5e3684698
 msgid "Crea un virtualenv en una carpeta ``virtualenv/`` en el directorio raíz (no preocuparse por el versionamiento de esta carpeta porque ya está ignorada en el ``.gitignore``)."
 msgstr ""
 
 #: ../../development/maintaining.rst:39
-# 7c70db8acb794c63ab1f6971d243cf9a
+# d2c51541fd7d4936a8a668bf0e70b828
 msgid "Activa el virtualenv y ejecuta las siguientes acciones:"
 msgstr ""
 
 #: ../../development/maintaining.rst:41
-# f469bc457cd74ea1aae64193f1554403
+# 48926c55a1074366bf8e4c500ac791a4
 msgid "Instala las dependencias python listadas en ``tribus/config/data/python-dependencies.list`` con ``pip install -r``."
 msgstr ""
 
 #: ../../development/maintaining.rst:42
-# 4452f34128b3431eb58339b9c9a5c7a6
+# bbb138dcf6454fd8bf8027dfe4be4279
 msgid "Sincroniza la base de datos de Django (``python manage.py syncdb``)."
 msgstr ""
 
 #: ../../development/maintaining.rst:43
-# 27efe7c0b9944634b628cfda9ba0ff96
+# 57ab57dabafb41be8522a10e77deb06f
 msgid "Hace la migración inicial de las tablas con South (``python manage.py migrate``)."
 msgstr ""
 
 #: ../../development/maintaining.rst:47
-# 904c612ffe1f4e5bbec682b0985f3512
+# d1a54c841a364b289abd8632e258d1ad
 msgid "Iniciando el servidor de desarrollo"
 msgstr ""
 
 #: ../../development/maintaining.rst:53
-# 2b5ab4e2e4b048c69ad8b985a6f3594e
+# c47b5aa9ef6840d5bb9cc30a6eadef0a
 msgid "Este comando es un atajo para hacer ``python manage.py runserver`` dentro del virtualenv."
 msgstr ""
 
 #: ../../development/maintaining.rst:57
-# 355263ef1ffe49959f1d1bc15d4df8fb
+# 8c9880b30b924ed987f3ec778e99a6fa
 msgid "Sincronizando la base de datos"
 msgstr ""
 
 #: ../../development/maintaining.rst:63
-# 48035eaa722042bbbd61a7b05a89ecc6
+# 2f5eb63a861e489685d68737a9c3bf0b
 msgid "Este comando es un atajo para hacer ``python manage.py runserver`` y ``python manage.py migrate`` dentro del virtualenv."
 msgstr ""
 
 #: ../../development/maintaining.rst:67
-# 9e1ea031127c48d6b8cb5bda200ac8e8
+# b341384d4a474c5d9d4d9a3b71ef64ac
 msgid "Compilando las fuentes"
 msgstr ""
 
 #: ../../development/maintaining.rst:74
-# b5d27a67a76342e8a1e88e14fd0d7e8b
+# 327209e8abf942a4878bc2d581615c5f
 msgid "Tribus está almacenado en el repositorio de código fuente en forma de código fuente. Es decir, procuramos que no existan archivos compilados sino los archivos fuentes. Por ejemplo, para las imágenes no almacenamos archivos PNG o JPG sino SVG, para la documentación no almacenamos archivos PDF o HTML sino RST o para las traducciones no almacenamos archivos MO sino PO. Pero Tribus no utiliza los archivos fuentes sino sus archivos compilados. Es por eso que para poder utilizar tribus en un ambiente de producción, o incluso para algunas pruebas, es necesario compilar las fuentes."
 msgstr ""
 
 #: ../../development/maintaining.rst:76
 #: ../../development/maintaining.rst:113
-# 7d3bdf6f49804ad58b4f435f6cdf1e6e
-# fe0f607d424d41f8a1b96566485404fd
+# 601c309634b543b5a3d2401ff77726f9
+# 6576cba82f374f6cbed88cbaf5ac98a5
 msgid "Este comando es un comando que agrupa otro conjunto de comandos para cada tipo de archivo fuente."
 msgstr ""
 
 #: ../../development/maintaining.rst:82
-# fcace05e9f11495f9f216b0674cb019b
+# 4a12d702bcff4df3afde9d71139443dc
 msgid "Compila la documentación desde ReStructuredText a HTML utilizando `Sphinx <http://sphinx.pocoo.org>`_."
 msgstr ""
 
 #: ../../development/maintaining.rst:88
-# c1eb417e80744723a4924e782434e53f
+# 8f9e6f1534d3445c99bdc58aee746a01
 msgid "Compila los archivos de traducción desde .po a .mo utilizando `Babel <http://babel.org>`_."
 msgstr ""
 
 #: ../../development/maintaining.rst:94
-# 32fcafacb34b4b4485643706a83c0bfb
+# 470f79d19fdc438d9cbaef0822a81277
 msgid "Compila archivos de ReStructuredText a archivos de manual leíbles con ``man`` utilizando `Docutils <http://docutils.org>`_."
 msgstr ""
 
 #: ../../development/maintaining.rst:100
-# b8139d6b8d69473bad9f043040bfcc4f
+# e777f76b685f46e59bd54acb41ef56b8
 msgid "Compila archivos SVG a PNG utilizando `CairoSVG <http://cairosvg.org>`_."
 msgstr ""
 
 #: ../../development/maintaining.rst:104
-# e8b41a48a6e64cf09a9afb5c90ccb3fa
+# e48822eb240848718ef9c5748ad5dadb
 msgid "Limpiando las fuentes"
 msgstr ""
 
 #: ../../development/maintaining.rst:111
-# 4fd1beb19d504f888dbc457a18f93f3e
+# 304d1c5e7f9e4572ad9be4d13d75dd32
 msgid "Si deseamos limpiar las fuentes del producto de la compilación, por ejemplo, borrar todos los archivos PNG, MO, etc, entonces utilizamos ``make clean``."
 msgstr ""
 
 #: ../../development/maintaining.rst:119
-# dc8ddff3654a4e8c885cba46e0be027c
+# 5d409fff8feb4c06b2c42121f413dfdd
 msgid "Borra la documentación generada con ``make build_html``."
 msgstr ""
 
 #: ../../development/maintaining.rst:125
-# 2eba49ad3fd0422fb6e9f7260049177d
+# b415a6028c944c7a964557fe87ad64f4
 msgid "Borra los archivos MO generados con ``make build_mo``."
 msgstr ""
 
 #: ../../development/maintaining.rst:131
-# 60149f4b83424025bf5a1f688ca82523
+# 8cc4ac30b7584d3a82d83a5d44022936
 msgid "Borra los archivos PNG generados con ``make build_png``."
 msgstr ""
 
 #: ../../development/maintaining.rst:137
-# 50fbe002634a46a1be850652f71944c1
+# 4be1eaa0f552499e99b202cffefd6d4b
 msgid "Borra los archivos de manual generados con ``make build_man``."
 msgstr ""
 
 #: ../../development/maintaining.rst:143
-# 2b4ec52d1915420091802b7d10427e09
+# 63b27f2549684facbf6223d1650c4a74
 msgid "Borra los archivos precompilados de ejecución de python."
 msgstr ""
 
 #: ../../development/maintaining.rst:149
-# 23ef77d43af94220ba558f69f1255dc2
+# 9bba0f8b473b47429efd2b09432ca275
 msgid "Borra los archivos generados por el proceso de empaquetado de python."
 msgstr ""
 
 #: ../../development/maintaining.rst:153
-# bacbd1dbeda94f0c912eafdb6079f46e
+# ee5ed07b7bed4e95999ae0fddc522c75
 msgid "Generando paquetes python"
 msgstr ""
 
 #: ../../development/maintaining.rst:159
-# 6d0e81956fb344258ce404d134b1a40c
+# 2c45b10b7d6e4b1eb14529e1827c464b
 msgid "Crea un paquete fuente python."
 msgstr ""
 
 #: ../../development/maintaining.rst:166
-# c4ebc343d766476f9345968173d8c705
+# 5bbec70d4adf46f3992fe6d352e2954d
 msgid "Crea un paquete python instalable."
 msgstr ""
 
 #: ../../development/maintaining.rst:170
-# ff5d951af1e04853bee6cc583c4fa881
+# acc8c15533234f23b191a6613a6283d3
 msgid "Instalando en el sistema huésped desde el código fuente"
 msgstr ""
 
 #: ../../development/maintaining.rst:176
-# e69a8b2178a6468f91036f9dfaf5e64b
+# 02308f571e34422093595e8aeb549933
 msgid "Instala la aplicación en modo de producción, al estilo python."
 msgstr ""
 
 #: ../../development/reusable.rst:3
-# 6659b23d480d4263956024f74a78f297
+# a154519496c143529d24f47b36f29ef2
 msgid "Proyectos que han servido o servirán de inspiración"
 msgstr ""
 
 #: ../../development/reusable.rst:6
-# 514f89c331ee4c7a98d5f2daaf92bcd3
+# c396e5b3c9b24ed588ac1250d797a744
 msgid "canaima-desarrollador"
 msgstr ""
 
 #: ../../development/reusable.rst:7
-# 2de778a7344f40118e4de89e08403276
+# e16d5efa3b3b488ea11acbafa4e12dce
 msgid "canaima-semilla"
 msgstr ""
 
 #: ../../development/reusable.rst:8
-# 0d24de3f26a24ea89e31636fe3d2cc50
+# c21f000f47334480b5aa5a613c05c468
 msgid "apt-portal"
 msgstr ""
 
 #: ../../development/reusable.rst:9
-# 0ccb4f1adc714e83a6351f1c784a728e
+# c8b9c69adc0047d0b520ff778840fc0d
 msgid "askbot-devel"
 msgstr ""
 
 #: ../../development/reusable.rst:10
-# ea2b2643cd894b9c9f5b38fb88daa2a4
+# 00ac09cd72bf404287b867cbe36bf370
 msgid "clon-de-twitter-django-3.0"
 msgstr ""
 
 #: ../../development/reusable.rst:11
-# 3a0a3decd44d4465bcf2b1b2a0e8d39c
+# fb6bf5ca6f13412cb39c8524c0347e84
 msgid "debfactory"
 msgstr ""
 
 #: ../../development/reusable.rst:12
-# c181fddb7f4c49fdb4169d0b0ad25894
+# e16f2f21b184437a9750a4a70a90813f
 msgid "django-achievements"
 msgstr ""
 
 #: ../../development/reusable.rst:13
-# f11fb634db704feaa57f383a3a978c84
+# 845c90c89d1d49cda9f966178d80a809
 msgid "django-activity-stream"
 msgstr ""
 
 #: ../../development/reusable.rst:14
-# 5aadd0f5f1f845a5b4e54c23fadfbbc1
+# d6a3c2570400450f96a004f9c638db11
 msgid "django-filer"
 msgstr ""
 
 #: ../../development/reusable.rst:15
-# 2f2972adbded43889c725a8a240548c3
+# 9d49022d149a4166b70d6cbe846a61ac
 msgid "django-photologue"
 msgstr ""
 
 #: ../../development/reusable.rst:16
-# 86351f02706241a486cada1d9c337c15
+# dfd2cae5af48462c8061a9a148dac15b
 msgid "django-wiki"
 msgstr ""
 
 #: ../../development/reusable.rst:17
-# 1eb765bb7e3b48378608e1c640c531dd
+# c05d8df05a884f53aae4083606adc08d
 msgid "django-postman"
 msgstr ""
 
 #: ../../development/reusable.rst:18
-# 9c0722c43d8743d585eb95740354a339
+# 968c2346aa0c4b57987b86118448ef33
 msgid "profiles"
 msgstr ""
 
 #: ../../development/reusable.rst:19
-# ba38401d68e64b2fa10ae4058b953f48
+# 6c2a786bcecd4a119e10fbfcf778b269
 msgid "transifex"
 msgstr ""
 
 #: ../../development/reusable.rst:20
-# ce76710d685f480eb1ef19ad96253afd
+# 9b09b1e755f24f1fb8869cbfc81a5ccd
 msgid "django-inotifier"
 msgstr ""
 
 #: ../../development/reusable.rst:21
-# c734f3f45a6f4aca8686625e96473763
+# f0c48953587a4df6aaeeae92dbce38d7
 msgid "gnotty"
 msgstr ""
 
 #: ../../development/reusable.rst:22
-# ba998840ac9e46129f2af0a8985beaf3
+# 7aec97e0819544b296c611938e026bfb
 msgid "django-projector"
 msgstr ""
 
 #: ../../development/reusable.rst:23
-# a2e90329b61f48f9aed586c3fb63a7df
+# 93c01f765dfa4f87bc21657f206b953d
 msgid "django-static"
 msgstr ""
 
 #: ../../development/reusable.rst:24
-# 0ca9b197ac2e4182a21a2e7b38d7e7ec
+# 73106c733dca4d8a9e06f97f10751571
 msgid "django-brainstorm"
 msgstr ""
 
 #: ../../development/reusable.rst:25
-# faf7afdf05a847a1971215427d171b17
+# 8cb1a54e593846e1ab742d05c1a813cf
 msgid "django-ideas"
 msgstr ""
 
 #: ../../development/reusable.rst:26
-# 3310ab3b9a234fdfae40e41d6eefa23c
+# c8838b9d694f4f5badaf20ad9b9789f9
 msgid "ribbit"
 msgstr ""
 
 #: ../../development/reusable.rst:28
-# 71fbfdf164594eb7b968c67384d04ea0
+# 58b70b03e73f4cd58e518dac217d0803
 msgid "http://net.tutsplus.com/tutorials/python-tutorials/building-ribbit-with-django/"
 msgstr ""
 
 #: ../../development/reusable.rst:30
-# 2a9a4f4f269448599d8bde245aef2b7d
+# 46c6d80b0b1446b4b26f8639b927ff79
 msgid "etherpad"
 msgstr ""
 
 #: ../../development/reusable.rst:31
-# b46c4fd0bb8446f295d275d2f0289ee6
+# ca7d1507d5fa444f8a1ed352eb6d5454
 msgid "django-mailman"
 msgstr ""
 
 #: ../../development/reusable.rst:32
-# 9e12cd8332454658bf18389c97c55822
+# 0d7a3cc2c484472db0ad907bdd012411
 msgid "Revisar vcs_support en readthedocs"
 msgstr ""
 
 #: ../../development/reusable.rst:34
-# b683e0d7c2844940925f67e4090c937a
+# fa96972998834bdb8e979b208c019562
 msgid "https://github.com/rtfd/readthedocs.org/tree/master/readthedocs/vcs_support"
 msgstr ""
 
 #: ../../development/reusable.rst:36
-# d6f352471fae43edb715d001cb042c41
+# 9ec2265d9f1f4a11b39d9d58342a2bb8
 msgid "Revisar anyvc"
 msgstr ""
 
 #: ../../development/reusable.rst:38
-# 0d4b40a55f72449d86f625103cf3d870
+# f30929afd3954d3299e676f03aea03c7
 msgid "https://bitbucket.org/RonnyPfannschmidt/anyvc"
 msgstr ""
 
 #: ../../development/reusable.rst:40
-# c0c4b7359a224c4aac9a4fa4d4f0bba9
+# 5fbc5ac3454848389ec073077beadb49
 msgid "Revisar ohcount"
 msgstr ""
 
 #: ../../development/reusable.rst:42
-# cae940ddd7ec4d4590c69e2bb29fcbf0
+# 4447c9d2603c49049bc396710d3f012e
 msgid "https://github.com/blackducksw/ohcount"
 msgstr ""
 
 #: ../../development/reusable.rst:44
-# dbba88dc953f49f7aee01a3e7def475d
+# 3e1362af52554deaac5c04570c7d85d0
 msgid "Revisar pitweb para extenderlo a los otros vcs"
 msgstr ""
 
 #: ../../development/reusable.rst:46
-# 9a40405ed687423ab9be3972c6a921c3
+# 24ce8d8c35a449fdbfe3018a342663bf
 msgid "http://gitview.danfis.cz/pitweb.git?a=tree;id=HEAD;"
 msgstr ""
 
 #: ../../development/reusable.rst:48
-# 6203ed5d24d24dc1a9483b863a1536f9
+# d1af6cd6296e466c9a22c05ef63ca35f
 msgid "Revisar adhocracy"
 msgstr ""
 
 #: ../../development/reusable.rst:50
-# 9f67c0ac16f24d1f8c77e422dc4ee01e
+# 5c5dd488fc1446bfbcb66f3c62352fc0
 msgid "https://github.com/liqd/adhocracy"
 msgstr ""
 
 #: ../../development/reusable.rst:52
-# 7222450088d24163b3388c5ef928123e
+# e2435159619047a28fab99cb0888ad8c
 msgid "Revisar Launchpad"
 msgstr ""
 
 #: ../../development/reusable.rst:54
-# 1fa080af28d742ecaf2294dffdc86d6e
+# 571c9e7e33244d4782fb5cbc233f9351
 msgid "https://dev.launchpad.net/"
 msgstr ""
 
 #: ../../development/reusable.rst:55
-# 64807462292b48b286aabfb933b8c3ed
+# 3421ad451a17434e9b864a8fbe458551
 msgid "https://dev.launchpad.net/Getting"
 msgstr ""
 
 #: ../../development/reusable.rst:56
-# 3840855078ba4537a758f9372ef32bb0
+# 3eebe96fd9564599b2d97221831e0e2d
 msgid "https://dev.launchpad.net/Running"
 msgstr ""
 
 #: ../../development/reusable.rst:58
-# b8d71ad420a34f30aaedc10721a31c83
+# 4f34489be29c47a4919494453b59b15c
 msgid "Revisar Rhodecode"
 msgstr ""
 
 #: ../../development/reusable.rst:60
-# bb1d9ceba9bd458496d80787ebd31700
+# 7269343114a545e3ba39e7823dd667c1
 msgid "http://pythonhosted.org/RhodeCode/"
 msgstr ""
 
 #: ../../development/reusable.rst:62
-# 51d9be4bdbe04a269870fb19b3805527
+# dd3e53a268a4479789cab6984e407082
 msgid "Revisar Allura"
 msgstr ""
 
 #: ../../development/reusable.rst:64
-# f57b75f8b2644d07b7692bc9581a75fc
+# cf8ce306a6044714bb15ed346f80baae
 msgid "http://sourceforge.net/p/allura/git/ci/master/tree/Allura/"
 msgstr ""
 
 #: ../../development/reusable.rst:65
-# 233cd59eff464b1eb480963ec133b796
+# 11065890ade1457a87e2c6c99a4d9887
 msgid "http://allura.sourceforge.net/platform.html"
 msgstr ""
 
 #: ../../development/reusable.rst:67
-# 1839e75da15746dda1a1c29bfeabef8e
+# f000de97b12d4156b3fd3d504e7cf974
 msgid "Revisar Klaus"
 msgstr ""
 
 #: ../../development/reusable.rst:69
-# 2ff397d95cfd4b2bb95dda827a87499f
+# b671fd6281b240fab2cf875b043bfeaa
 msgid "https://github.com/jonashaag/klaus"
 msgstr ""
 
 #: ../../development/reusable.rst:71
-# 26d907aa737e4b96940ee52db76acdb3
+# 5e83d321a2bd4df692fb4c75f0b66360
 msgid "Revisar ReadTheDocs"
 msgstr ""
 
 #: ../../development/reusable.rst:73
-# c873e0fb9f9642efaca5741962505971
+# 86d5d7d276044e488249030ecb59f28d
 msgid "https://github.com/rtfd/readthedocs.org"
 msgstr ""
 
 #: ../../development/reusable.rst:75
-# cfd8990a68cd4506bb2c708a5ecab18b
+# 1993e710d7a94345b615beec9c95071b
 msgid "Revisar Crate.io"
 msgstr ""
 
 #: ../../development/reusable.rst:77
-# 3ee82fb566074c7bba452057d503f5a1
+# 3994a20242e54fc59080192efdbc6160
 msgid "https://github.com/crateio/crate.io"
 msgstr ""
 
 #: ../../development/reusable.rst:78
-# b037e93fe2114579908ccfd779acf7ee
+# ea4788faa45042c5be0e87c87cca48c1
 msgid "https://github.com/crateio/crate.web"
 msgstr ""
 
 #: ../../development/reusable.rst:80
-# 58f6af9495eb424987f83a7d737c748b
+# f090379c75094e46987ca8e6aad21dff
 msgid "Revisar cache en django"
 msgstr ""
 
 #: ../../development/reusable.rst:82
-# 3554993fb676435a995600067202dbc6
+# 2201ae9793ee4785b18399d13d5f46c3
 msgid "https://docs.djangoproject.com/en/dev/topics/cache/"
 msgstr ""
 
 #: ../../development/reusable.rst:83
-# c3243c99973a48cc920c7149c71bb781
+# 65cc821eb2834e60988238bcda6dcc26
 msgid "http://www.jeffknupp.com/blog/2012/02/24/django-memcached-optimizing-django-through-caching/"
 msgstr ""
 
 #: ../../development/reusable.rst:85
-# abe03b8741b340afb71068f9e6ffc8e4
+# 2f5df554cfdd4f39817a88f4861b1e64
 msgid "Django+Ember.js+handlebars"
 msgstr ""
 
 #: ../../development/reusable.rst:87
 #: ../../development/reusable.rst:152
-# 42d9697d00bf4c2d8b62c8093957e208
-# 952377ea9ac04f58a3a643b56d68e0d7
+# 75dd82c0cded40b584fd6b23a8c2d1ca
+# f3b2cbafc1b945298ec33a25db806723
 msgid "http://www.rkblog.rk.edu.pl/w/p/creating-modern-web-applications-django-and-emberjs-javascript-framework/"
 msgstr ""
 
 #: ../../development/reusable.rst:88
-# 1bee17c5be0347d885d3b1843c40270d
+# 260d06ac04bc4999ab9a837fa92e4659
 msgid "http://discuss.emberjs.com/t/setting-up-a-django-api-to-use-with-ember-js/163/5"
 msgstr ""
 
 #: ../../development/reusable.rst:89
-# b4af5ec37b50427e9515c9406fc96d95
+# 5a86a986f8de48c8ac0a541c630ea435
 msgid "http://www.lostiemposcambian.com/blog/javascript/intro-framework-ember/"
 msgstr ""
 
 #: ../../development/reusable.rst:90
-# cb9b6e1aebfd48a9be5491fe13171dec
+# 8d369afb968c46bda355252b2d720c5d
 msgid "http://emberjs.com/guides/application/"
 msgstr ""
 
 #: ../../development/reusable.rst:91
-# f627c56d6a1147f985aaa85febdf2ae2
+# 2bbb1ec29d5341df8b79d9ce81fb01d3
 msgid "http://handlebarsjs.com/"
 msgstr ""
 
 #: ../../development/reusable.rst:93
-# f84058e1abc446918d76f0a03ce77e71
+# d868e35ddee645d4b649376dcdaf6593
 msgid "Django+Node.js"
 msgstr ""
 
 #: ../../development/reusable.rst:95
-# 55b859a7e9cb4ab4a68e87ed9dadd40e
+# 2f7939c545184491a259a24d49c6e63a
 msgid "http://stackoverflow.com/questions/8277299/using-node-js-with-django-and-backbone-js"
 msgstr ""
 
 #: ../../development/reusable.rst:96
-# c44c519f69bc4b7cb0433927d3b56724
+# 2f7126d4ea6e414e92eeda3d369f6b61
 msgid "http://maxburstein.com/blog/realtime-django-using-nodejs-and-socketio/"
 msgstr ""
 
 #: ../../development/reusable.rst:98
-# 804289ce002942ecbbf59b4347f64979
+# 2814626f1325455195c2958b8099c5a1
 msgid "Django Apps"
 msgstr ""
 
 #: ../../development/reusable.rst:100
-# c0618840c5a94920907e6ec6335eea7f
+# 1752e94c53ac4d2c918ce00a5003bb0e
 msgid "http://www.rkblog.rk.edu.pl/w/p/django/"
 msgstr ""
 
 #: ../../development/reusable.rst:101
-# 54df5bdd97e04a9b8f4eb9a89119759b
+# 95399b27a81f43ac843e8359a7a8a748
 msgid "http://swizec.com/blog/django-protip-1-a-better-app-structure/swizec/1386"
 msgstr ""
 
 #: ../../development/reusable.rst:103
-# 455899966a774c84a01abac02a2ca203
+# 3fb8ff06b68e49eaa2e4fbe525201993
 msgid "Django+Redis"
 msgstr ""
 
 #: ../../development/reusable.rst:105
-# 23014f4964ec4b2faa2ccd8a316873d9
+# 9caa48c709c34aa99913393afee401d1
 msgid "https://django-redis.readthedocs.org/en/latest/#django-redis"
 msgstr ""
 
 #: ../../development/reusable.rst:107
-# 37dbf9964101438fa211547fed576422
+# e6287e653e1f45a287f8c6c869a031bb
 msgid "coverage.py"
 msgstr ""
 
 #: ../../development/reusable.rst:109
-# 9f838ea223fc4ca6956a865b9f7446f5
+# 090c3b6b96d54d31887b640e94d0a73d
 msgid "http://ratnadeepdebnath.wordpress.com/2011/09/22/a-brief-introduction-to-coverage-py/"
 msgstr ""
 
 #: ../../development/reusable.rst:111
-# 91a5e10411e849c1bd44b4b3029264cf
+# 3f81f89ee2c94099ad0e6ec97247d3e6
 msgid "Javascript charts"
 msgstr ""
 
 #: ../../development/reusable.rst:113
-# e83b08adf85d430a993b3185a5978048
+# 8297ababaea843faafc4291399462954
 msgid "http://mbostock.github.com/d3/"
 msgstr ""
 
 #: ../../development/reusable.rst:114
-# e4199ebf4dd443cba401030d65bb1c85
+# 3a54f1afb2324a05bcdfee13a6d90074
 msgid "http://code.shutterstock.com/rickshaw/"
 msgstr ""
 
 #: ../../development/reusable.rst:116
-# 4d5a370c27da476c85463caf10e7c61f
+# 87b1b0e390604c158d5d456f01ba9aa1
 msgid "Bootstrap"
 msgstr ""
 
 #: ../../development/reusable.rst:118
-# 9107c8902d4343d6afcb4941e0f13217
+# 286c1858bd984bb888c3a845f88606df
 msgid "http://twitter.github.io/bootstrap/index.html"
 msgstr ""
 
 #: ../../development/reusable.rst:120
-# 86c7414aa58d4d8b990ae386ae65f308
+# 990e78707f824928b09cc2a8b9d7150a
 msgid "Tastypie"
 msgstr ""
 
 #: ../../development/reusable.rst:122
-# 4dd9a602bf464e14a39f25ee0ed8b5da
+# 13b4c82270c34bab80a070b1fe963e02
 msgid "http://django-tastypie.readthedocs.org/en/latest/tutorial.html#creating-resources"
 msgstr ""
 
 #: ../../development/reusable.rst:124
-# c4f6be16bec64fd9a8ad976d52a28517
+# ee6eb2374d8a4eab97e1a05902e7e24b
 msgid "Buildbot"
 msgstr ""
 
 #: ../../development/reusable.rst:126
-# e6629e8835054773863d9a756cc800a8
+# 2fc09fd7ea1e4ba48db92b0ed3cf5b67
 msgid "http://i3wm.org/docs/buildbot.html"
 msgstr ""
 
 #: ../../development/reusable.rst:127
-# b25056f76ef946428eb455d177d404b3
+# f441cdf79f21499faf76faad436de46e
 msgid "https://github.com/jollyroger/metabbotcfg/tree/434bea74cfbd37095ad21fe0c65af95bf8dce704"
 msgstr ""
 
 #: ../../development/reusable.rst:128
-# bb59b23f0f5f4c23bd3a9faf17092720
+# ad2c3040a09945139857ec8b2eeb60ae
 msgid "http://jacobian.org/writing/buildbot/configuration-and-architecture/"
 msgstr ""
 
 #: ../../development/reusable.rst:129
-# dd9d67977aba42deb27a27372138e9d1
+# 3464bfe008d941a1bb4f9b6c88d11e88
 msgid "http://anonscm.debian.org/gitweb/?p=openstack/openstack-auto-builder.git;a=blob;f=build-openstack-pkg"
 msgstr ""
 
 #: ../../development/reusable.rst:131
-# 9202e90a79eb4219a786eae0e02890cd
+# da96b10f002846dca2b05ad2bc7855a6
 msgid "Fabric"
 msgstr ""
 
 #: ../../development/reusable.rst:133
-# 4d7058d29850498f95940c33f04c4717
+# e6589de0ed5149df8c4c034526f685ba
 msgid "http://docs.fabfile.org/en/1.6/index.html"
 msgstr ""
 
 #: ../../development/reusable.rst:134
-# 9266472c3cb042ca96cdc8653418706c
+# 5f79920fc4714b65b6786c2135d6b2a1
 msgid "http://agiletesting.blogspot.com/2009/11/automated-deployments-with-puppet-and.html"
 msgstr ""
 
 #: ../../development/reusable.rst:136
-# 887640e0c3ca4047ba7f3be2310beb08
+# 507e557c067c4705b0f4fa56599fb0ed
 msgid "Python distribute"
 msgstr ""
 
 #: ../../development/reusable.rst:138
-# 99e07222144e4f909cf7c6a6320604d8
+# 4e56231d60db43c6abd61f5e9e498b59
 msgid "http://guide.python-distribute.org/"
 msgstr ""
 
 #: ../../development/reusable.rst:140
-# a57193224cb94ddf810eba86e2bf488e
+# a650f8f914f24b2599e0b8d62bee9f19
 msgid "Testing & Django"
 msgstr ""
 
 #: ../../development/reusable.rst:142
-# e8ce6e2b619a49adb83ba865cbae0f6d
+# 51c6dc5c2c484038a01e7bc91ff68a4b
 msgid "http://toastdriven.com/blog/2011/apr/17/guide-to-testing-in-django-2/"
 msgstr ""
 
 #: ../../development/reusable.rst:143
-# c1dbef98299b483b93fef08114facac1
+# 35f0ce9e9f1741e182361f225df38565
 msgid "http://toastdriven.com/blog/2011/apr/10/guide-to-testing-in-django/"
 msgstr ""
 
 #: ../../development/reusable.rst:145
-# aa76b182fd464ebe86568aca572053de
+# cc74a3943c634a2a879fb3f8fcbe13c3
 msgid "ACE Bootstrap: http://easy-themes.tk/themes/preview/ace/form-elements.html"
 msgstr ""
 
 #: ../../development/reusable.rst:146
-# 901625e088654d379e591872e0a4e42d
+# ae0f98b7a253444b8c11770da6746b3c
 msgid "Drone.io: https://drone.io/"
 msgstr ""
 
 #: ../../development/reusable.rst:147
-# 461e35f5e626424aa87b7f20fd95ad41
+# ee294ae4b1fe4776abf7abb1fc608778
 msgid "Django+tastypie+ember"
 msgstr ""
 
 #: ../../development/reusable.rst:149
-# 4e801eaf6be9435e8a2d6e253abf1cf4
+# 0b0001ecbdd142368df846e88695a51b
 msgid "https://github.com/escalant3/ember-data-tastypie-adapter"
 msgstr ""
 
 #: ../../development/reusable.rst:150
-# 67aed931645c4c979adc94e122de9619
+# 893e50fba88349ffb1cef87be642295a
 msgid "https://github.com/toranb/complex-ember-data-example"
 msgstr ""
 
 #: ../../development/reusable.rst:151
-# 95133e2b3875466c82e4a7802cc55b44
+# 0f4ae86e0f6d4c298309ffe6205e4efd
 msgid "https://github.com/toranb/ember-data-django-rest-adapter"
 msgstr ""
 
 #: ../../development/reusable.rst:153
-# af3af1ad3830458b905033ba9a472c87
+# 0c8e5175fb14446c8fe0c1449e609f33
 msgid "http://discuss.emberjs.com/t/setting-up-a-django-api-to-use-with-ember-js/163"
 msgstr ""
 
 #: ../../development/reusable.rst:154
-# 5173fab1e9c74c56b6ff05a9c6f136ad
+# 7f18045d2fbc4d868c544fb37b4b965b
 msgid "https://github.com/escalant3/django-ember-example/"
 msgstr ""
 
 #: ../../development/reusable.rst:155
-# 730f153415f44dbbbb12831d365ed4aa
+# a594d51443a74af0abb3023c545626d0
 msgid "http://tastypieapi.org/"
 msgstr ""
 
 #: ../../development/reusable.rst:156
-# f8856d45f8c641b38e7618956926d229
+# 0233fee36bdb4aebb51cd407b07f93e4
 msgid "http://django-tastypie.readthedocs.org/en/latest/tutorial.html"
 msgstr ""
 
 #: ../../development/reusable.rst:158
-# a7badd05b78c46268d8ee03e6c2b10b6
+# 2b3733028da04f1d9b1cf165f083da2e
 msgid "Django+RSS"
 msgstr ""
 
 #: ../../development/reusable.rst:160
-# 397d08b6ce394dfea70ed73d28af6634
+# 4cc6ccc7b9c6469f8607ca764f6a9e34
 msgid "http://www.jjude.com/adding-rss-feeds-to-django-applications/"
 msgstr ""
 
 #: ../../development/reusable.rst:161
-# cba99487d254446a9ba3e37974e75cad
+# abc221b55d2041439aa4eba643aad1ac
 msgid "http://django.es/blog/crear-feeds-con-django/"
 msgstr ""
 
 #: ../../development/roadmap.rst:3
-# 20e44485aa844690a20848dea6d70c1b
+# aa5f2d005b6e4a328099dc39a6967c79
 msgid "Hojas de ruta para próximas versiones"
 msgstr ""
 
 #: ../../development/roadmap.rst:5
-# fa7cd6123b814a16bc3a29a4f9c10a03
+# c878902bdfce447e9254e64c9c0648bc
 msgid "Esta es la planificación del desarrollo de Tribus. Cada hoja de ruta para una versión específica contiene una lista de las funcionalidades necesarias para completar el desarrollo de la versión. Cada funcionalidad tiene un ticket asignado en el sistema de gestión de tickets y un *Documento de Especificaciones*, el cuál describe en detalle en qué consiste la funcionalidad. Si deseas ayudar con algo, revisa los tickets e informa que estás trabajando en una funcionalidad a través de los comentarios."
 msgstr ""
 
 #: ../../development/roadmap.rst:7
-# b7284a91ea584480914e1bce65d9ff15
+# fd8bb3d106c14825ac2f6ba1faa20e84
 msgid "La lista de \"por hacer\" (TODO) muestra una lista de tareas aleatorias que los desarrolladores han ido anotando sin ningún orden en particular. Esta es una lista de deseos o \"wishlist\" que debe ser ubicada en una de las próximas hojas de ruta por uno de los mantenedores de Tribus."
 msgstr ""
 
 #: ../../development/roadmap.rst:10
-# 03968d91c6d44c4f8048b1ce96fb0bd0
+# ad61d6250b8b4b8faa1a397b3309d10c
 msgid "Lista de \"por hacer\""
 msgstr ""
 
 #: ../../development/roadmap.rst:15
-# e7fa06188f854c189d3756338b5da1f6
+# 0d5c1385412a42de968b4c54c8fba2b6
 msgid "Tribus 0.1"
 msgstr ""
 
 #: ../../development/roadmap.rst:17
-# f45ab39f65ca428396173af611534a7f
+# 7eb37e7c23b4471f86fa8550ee467063
 msgid "`Ticket <https://github.com/canaimagnulinux/tribus/issues/1>`_: Estructura inicial del proyecto (:doc:`Documento de Especificaciones <drafts/structure>`)."
 msgstr ""
 
 #: ../../development/roadmap.rst:18
-# cbd2edac79544c66872602fecea1abe0
+# 5ab044ead69141b38db70205fb97534d
 msgid "`Ticket <http://github.com/canaimagnulinux/tribus/issues/2>`_: Documentación inicial de procesos y diseño de la aplicación (:doc:`Documento de Especificaciones <drafts/documents>`)."
 msgstr ""
 
 #: ../../development/roadmap.rst:19
-# 38af00d3eaaf4f3583df2ae29a118c23
+# 965d6eefb40341589a917eac4938991e
 msgid "`Ticket <http://github.com/canaimagnulinux/tribus/issues/3>`_: Creación del sistema de mantenimiento de la aplicación (:doc:`Documento de Especificaciones <drafts/maint_system>`)."
 msgstr ""
 
 #: ../../development/roadmap.rst:20
-# 24b5f66f671742388f7711dcc3804589
+# 140ee25c987e426191312681785801ad
 msgid "`Ticket <http://github.com/canaimagnulinux/tribus/issues/4>`_: Sistema de lectura(autenticación), escritura y manipulación de datos de usuario con OpenLDAP y Django (:doc:`Documento de Especificaciones <drafts/user_app>`)."
 msgstr ""
 
 #: ../../development/roadmap.rst:21
-# 500a9e668894420d9b096f894e067a95
+# d39c3021e2a444f9ac761311f8fb0891
 msgid "`Ticket <http://github.com/canaimagnulinux/tribus/issues/5>`_: Sistema de registro y consulta de paquetes (:doc:`Documento de Especificaciones <drafts/package_app>`)."
 msgstr ""
 
 #: ../../development/roadmap.rst:22
-# 66ab648e58b64182a223749903ff0582
+# c9717daef4704937bfc161fa0bf3a951
 msgid "`Ticket <http://github.com/canaimagnulinux/tribus/issues/6>`_: Sistema para la publicación de mensajes cortos (Trib) (:doc:`Documento de Especificaciones <drafts/trib>`)."
 msgstr ""
 
 #: ../../development/style.rst:3
-# 856930df0d6e43c0852fac69d5b09904
+# 25ef07851de641b6b5bbaac7107b2222
 msgid "Normas de estilo para contribuciones"
 msgstr ""
 
 #: ../../development/style.rst:5
-# 7af8e6c7e58040ffa00a489725feecb1
+# a25a5ac8044b4eb788cdff8dfe6079ac
 msgid "Tribus hace un esfuerzo por seguir el estándar `PEP8 <http://www.python.org/dev/peps/pep-0008/>`_, especialmente en los siguientes puntos:"
 msgstr ""
 
 #: ../../development/style.rst:7
-# 311eb97e4247439485fa18809c886ce4
+# cf518833d04c4b968872049d24c7cd0e
 msgid "Mantener el largo de las líneas por debajo de 80 caracteres, tanto para el código como para la documentación."
 msgstr ""
 
 #: ../../development/style.rst:9
-# cde4399a630343efa007e13a864e52b2
+# d63382e7469d474abcf8132c410e0ec4
 msgid "Se aceptan excepciones cuando se hace imposible cortar la línea sin romper la funcionalidad o cuando se hace necesario reescribir código sólamente para cumplir con esta regla."
 msgstr ""
 
 #: ../../development/style.rst:11
-# 2283a2ee647f4fe7b70f21c2975366b8
+# c86a6bdfa8e4497680f5480aff6e4382
 msgid "La sangría debe ser de 4 espacios. Nada de 8 espacios, 2 espacios, 3 espacios o tabulaciones."
 msgstr ""
 
 #: ../../development/style.rst:13
-# d46205f69f6543569cac569513cfffd1
+# d6ed9bb345d3479da5750d1fc00bdc27
 msgid "Nombres de clases en estilo ``CamelCase`` y ``minúsculas_separadas_por_guiones_bajos`` para métodos, funciones, atributos y todo lo demás."
 msgstr ""
 
 #: ../../development/style.rst:15
-# 2e3e28f687644302bbaf28e468f6f8fc
+# d4fba93a42464ead9345b98816c90c6c
 msgid "Por otro lado, se hacen otras sugerencias específicas:"
 msgstr ""
 
 #: ../../development/style.rst:17
-# a51041cb3f95499c9f109f0004bc6bc1
+# 0705cc0afedf47f9869606f332ee7695
 msgid "En cualquier uso de parámetros, debe especificarse el nombre del mismo en conjunto con su valor. Por ejemplo, esto está bien: ``self.funcion(parametro_1='Valor 1', parametro_2='Valor 2')`` y esto está mal ``self.funcion('Valor 1', 'Valor 2')``."
 msgstr ""
 
 #: ../../development/style.rst:19
-# 7b36df16a58f4139886ab9afd572b405
+# 1761b961b0d94cb7988e43bcb269f365
 msgid "Se prefiere nombre de clases, funciones, atributos y métodos en inglés."
 msgstr ""
 
 #: ../../development/style.rst:21
-# 396c8efebfb04196b3c838750be60f80
+# a37dd3df23e746b6947e2745f979dc56
 msgid "Toda función o clase debe estar documentada de la forma en que autodoc de Sphinx la interpreta. La documentación debe estar en inglés."
 msgstr ""
 
 #: ../../development/style.rst:23
-# fddf58db6286432c85b8012c074cb753
+# c9bc03548aba4d3086e54fbf7b363aef
 msgid "Toda configuración debe ser incluída dentro del paquete tribus.config y referenciada desde donde se necesita."
 msgstr ""
 
 #: ../../development/style.rst:25
-# c2dc00750ca5423f856ee7fe89d25765
+# 4811341ff8e34e27bdaa2ed100c5e3c4
 msgid "Toda función o clase de bajo nivel, o constructora de otras funciones más complejas debe ser incluída dentro del paquete tribus.common y referenciada desde donde se necesita."
 msgstr ""
 
 #: ../../development/style.rst:27
-# 0ad3660a849642dd9252775c902df9e0
+# b10d4aad22424b19bc8c834afc2758ee
 msgid "Toda ilustración o imagen a incluir dentro de Tribus debe estar en formato SVG. Si usted desea incluir un archivo de imagen png o jpg que no puede ser vectorizado limpiamente, incrustelo primero en un svg."
 msgstr ""
 
 #: ../../development/style.rst:29
-# 9970a8aa1ecc4a25a9209b36502030f8
+# 8946cb06cb274dcdbea86ad0cb0d1f5d
 msgid "Si está haciendo una vista para tribus.web, no escriba elementos css nuevos sin antes revisar si existe algún elemento con las características que usted necesita."
 msgstr ""
 
 #: ../../development/style.rst:31
-# 0c3d2fd358b1423fba8714c1ca6e3929
+# 188ee0a247634f8899062aeb49e2d47d
 msgid "Se prefiere el uso de comillas simples para declarar cadenas de texto."
 msgstr ""
 
 #: ../../development/where.rst:3
-# 1550f3848fe6476e84f965bef7d20c7d
+# 7515c59a900944d2805a574be3d49a9a
 msgid "Descripción de la estructura del proyecto"
 msgstr ""
 
 #: ../../development/where.rst:5
-# 0d41da90674743db8a9e4e2c1b09f7b4
+# 3afe1912db0d438a9fcc51d8e2120edc
 msgid "Tribus está dividido en varios paquetes de python, entre los que podemos mencionar:"
 msgstr ""
 
 #: ../../../../../cli/__init__.py:docstring of tribus.cli:2
-# 4c7d09e40e074e5c9f7363d0bddb022b
+# 4f37b887c6f346c8a3b0680a6cf868fc
 msgid "tribus.cli"
 msgstr ""
 
 #: ../../../../../web/__init__.py:docstring of tribus.web:2
-# da484dba1a6a47d892033b512ae54896
+# 6c8f228f81f147f2a833d1e76e2f6759
 msgid "tribus.web"
 msgstr ""
 
 #: ../../../../../common/__init__.py:docstring of tribus.common:2
-# bb4d4678ac464341973fa7603c11787a
+# ce46db06710549978906884bd58fd259
 msgid "tribus.common"
 msgstr ""
 
 #: ../../../../../config/__init__.py:docstring of tribus.config:2
-# 35a8e99d66df4ac1bfcc033df63df3ca
+# acebbe3a682f485ead740de22c824293
 msgid "tribus.config"
 msgstr ""
 
 #: ../../../../../tests/__init__.py:docstring of tribus.tests:2
-# 8fbe10f9468a412dbf308d97ec4118a9
+# ba9297afae754d94bf80549e1ca1eb0b
 msgid "tribus.tests"
 msgstr ""
 
 #: ../../../../__init__.py:docstring of tribus.data:2
-# c8451e99fb38459e90b247c84e3bed61
+# 9028eb0ac811467cac0eaef94a24a8a3
 msgid "tribus.data"
 msgstr ""
 

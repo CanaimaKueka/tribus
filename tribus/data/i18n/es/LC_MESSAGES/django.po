@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tribus\n"
 "Report-Msgid-Bugs-To: desarrolladores@canaima.softwarelibre.gob.ve\n"
-"POT-Creation-Date: 2013-12-02 15:19-0530\n"
-"PO-Revision-Date: 2013-12-02 20:12+0000\n"
+"POT-Creation-Date: 2013-12-02 16:39-0530\n"
+"PO-Revision-Date: 2013-12-03 14:20+0000\n"
 "Last-Translator: jsfrncscg <jsfrncscg@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/projects/p/tribus/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -297,7 +297,7 @@ msgstr "Tribus es Software Libre"
 
 #: tribus/data/templates/index.html:8
 msgid "Join the Tribe!"
-msgstr "Únete a la Tribu!"
+msgstr "¡Únete a la Tribu!"
 
 #: tribus/data/templates/index.html:9
 msgid ""
@@ -318,37 +318,45 @@ msgid ""
 "target=\"_blank\">Privacy Policy</a>."
 msgstr "Al hacer clic sobre este botón, estas aceptando las <a href=\"/about/terms\" target=\"_blank\">Condiciones de Servicio</a> y las <a href=\"/about/privacy\" target=\"_blank\">Políticas de Privacidad</a>."
 
-#: tribus/data/templates/index.html:36
+#: tribus/data/templates/index.html:33
+msgid "Tribus is brought to you thanks to the efforts of "
+msgstr "Tribus es traído a ustedes gracias a los esfuerzos de"
+
+#: tribus/data/templates/index.html:46
+msgid "What is Tribus?"
+msgstr "¿Qué es Tribus?"
+
+#: tribus/data/templates/index.html:50
 msgid "Package cloud"
 msgstr "Nube de paquetes"
 
-#: tribus/data/templates/index.html:37
+#: tribus/data/templates/index.html:51
 msgid ""
 "We give you space to store the binaries of your source code in our package "
 "cloud. You can distribute your applications through a personal cloud, or "
 "have it enter Canaima's development cycle."
 msgstr "Le damos el espacio para almacenar los archivos binarios de su código fuente en nuestra nube de paquetes. Usted puede distribuir sus aplicaciones a través de una nube personal o integrándolos en el ciclo de desarrollo de Canaima."
 
-#: tribus/data/templates/index.html:40
+#: tribus/data/templates/index.html:54
 msgid "Source management"
 msgstr "Gestión de Código Fuente"
 
-#: tribus/data/templates/index.html:41
+#: tribus/data/templates/index.html:55
 msgid ""
 "Store your work in a public place, where everyone can review and contribute "
 "to your projects. We support the most popular versioning systems: <a "
 "href=\"http://subversion.apache.org/\" target=\"_blank\">subversion</a>, <a "
-"href=\"a:http://bazaar.canonical.com/en/\" target=\"_blank\">bazaar</a>, <a "
+"href=\"http://bazaar.canonical.com/en/\" target=\"_blank\">bazaar</a>, <a "
 "href=\"http://mercurial.selenic.com/\" target=\"_blank\">mercurial</a> and "
 "<a href=\"http://git-scm.com/\" target=\"_blank\">git</a> (or no versioning "
 "at all)."
-msgstr "Guarde sus trabajos en un espacio público, donde otros podrán ver sus proyectos y contribuir con ellos. Tenemos soporte para los sistemas de versionamiento mas populares: <a href=\"http://subversion.apache.org/\" target=\"_blank\">subversion</a>, <a href=\"http://bazaar.canonical.com/en/\" target=\"_blank\">bazaar</a>, <a href=\"http://mercurial.selenic.com/\" target=\"_blank\">mercurial</a> y<a href=\"http://git-scm.com/\" target=\"_blank\">git</a> (o incluso sin versionamiento alguno)."
+msgstr "Guarde sus trabajos en un espacio público, donde otros podrán ver sus proyectos y contribuir con ellos. Tenemos soporte para los sistemas de versionamiento mas populares: <a href=\"http://subversion.apache.org/\" target=\"_blank\">subversion</a>, <a href=\"http://bazaar.canonical.com/en/\" target=\"_blank\">bazaar</a>, <a href=\"http://mercurial.selenic.com/\" target=\"_blank\">mercurial</a> y <a href=\"http://git-scm.com/\" target=\"_blank\">git</a> (o incluso sin versionamiento alguno)."
 
-#: tribus/data/templates/index.html:44
+#: tribus/data/templates/index.html:58
 msgid "Continuous integration"
 msgstr "Integración continua"
 
-#: tribus/data/templates/index.html:45
+#: tribus/data/templates/index.html:59
 msgid ""
 "Focus yourself in the creative process of your work, while we handle the "
 "building and packaging of your applications. We have a <a "
@@ -356,37 +364,39 @@ msgid ""
 "waiting to compile your stuff."
 msgstr "Enfoquese en los procesos creativos de su trabajo, mientras nosotros manejamos la construcción y empaquetamiento de sus aplicaciones. Tenemos nuestro <a href=\"http://buildbot.net\" target=\"_blank\">buildbot</a> listo para compilar sus trabajos."
 
-#: tribus/data/templates/index.html:50
+#: tribus/data/templates/index.html:64
 msgid "Social network"
 msgstr "Red social"
 
-#: tribus/data/templates/index.html:51
+#: tribus/data/templates/index.html:65
 msgid ""
 "Share your activities in the platform with your friends and close "
 "contributors. Comment on your commits, patches, applications, translations, "
 "and more. Get everyone to know you and your work!"
-msgstr "Comparta sus actividades en la plataforma con sus amigos y contribuyentes cercanos. Opine sobre sus commits, parches, aplicaciones, traducciones, y más. Que todo el mundo sepa de usted y su trabajo!"
+msgstr "Comparta sus actividades en la plataforma con sus amigos y contribuyentes cercanos. Opine sobre sus contribuciones, parches, aplicaciones, traducciones, y más. ¡Que todo el mundo sepa de usted y su trabajo!"
 
-#: tribus/data/templates/index.html:54
+#: tribus/data/templates/index.html:68
 msgid "Ticket system"
 msgstr "Sistema de Tickets"
 
-#: tribus/data/templates/index.html:55
+#: tribus/data/templates/index.html:69
 msgid ""
 "Organize your team work by assigning milestones to your teammates and "
 "achieving goals together. Measure your effectiveness and planify your "
 "objectives in a clean and intuitive interface."
 msgstr "Organice su trabajo en equipo mediante la asignación de hitos y alcanzando sus metas juntos. Mida su eficacia y planifique sus objetivos en una interfaz clara e intuitiva."
 
-#: tribus/data/templates/index.html:58
+#: tribus/data/templates/index.html:72
 msgid "Easy documentation"
 msgstr "Documentación sencilla"
 
-#: tribus/data/templates/index.html:59
+#: tribus/data/templates/index.html:73
 msgid ""
 "We know how important it is to have a good and quickly-to-set-up "
-"documentation. That's why the only thing you have to do is write <a href="
-msgstr "Sabemos lo importante que es tener una documentación de calidad, fácil y rápida de configurar . Es por eso que lo único que tienes que hacer es escribir <a href="
+"documentation. That's why the only thing you have to do is write <a "
+"href='http://docutils.sourceforge.net/rst.html'> RST </a>, and we will take "
+"care of the HTML for you."
+msgstr "Sabemos lo importante que es tener una documentación de calidad, fácil y rápida de configurar. Es por eso que lo único que usted necesita hacer es escribir<a href='http://docutils.sourceforge.net/rst.html'> RST </a> y nosotros nos encargamos del HTML."
 
 #: tribus/data/templates/navbar.html:21
 msgid "What are you looking for?"
@@ -651,7 +661,7 @@ msgid ""
 "Services is conditioned on your acceptance and compliance with these Terms. "
 "By accessing or using the Services, you consent to the application of these "
 "Conditions."
-msgstr ""
+msgstr "Estas Condiciones de Servicio (en lo sucesivo las \"<strong>Condiciones</strong>\") rigen su acceso y uso de los servicios, incluyendo nuestras distintas paginas web, APIs, notificaciones por correo electrónico, aplicaciones e iconos  (en lo sucesivo los \"<strong>Servicios</strong>\" o \"<strong>Tribus</strong>\"), así como el acceso y uso de cualquier información, texto, gráficos, fotos o otros materiales cargados, descargados o reproducidos a través de los Servicios (en lo sucesivo, colectivamente llamado, el \" <strong>Contenido</strong>\"). El acceso y uso de los Servicios esta sujeto a su aprobación y cumplimiento con estas Condiciones. Al acceder o usar los Servicios, usted consiente la aplicación de estas Condiciones."
 
 #: tribus/data/templates/terms.html:20
 msgid "Basic Conditions"
@@ -690,7 +700,7 @@ msgid ""
 "the collection and use of your information by tribus. Hereby informing you "
 "that the use of the Services involves its implied consent to the collection "
 "and use of this information (as provided in the Privacy Policy)."
-msgstr ""
+msgstr "Cualquier información que usted provea a Tribus esta sujeta a nuestras <a href=\"/about/privacy\" target=\"_blank\"> Políticas de Privacidad </a> que rigen la recolección y uso de su información por parte de Tribus. Por este medio se le informa que el uso de los servicios involucra consentimiento implícito para la recolección y uso de esta información (tal cual lo establece las Políticas de Privacidad)."
 
 #: tribus/data/templates/terms.html:30
 msgid "Passwords"
@@ -704,7 +714,7 @@ msgid ""
 "password containing combinations of uppercase and lowercase letters, numbers"
 " and symbols). Tribus is not liable for any loss or damage resulting from "
 "breach of the aforementioned."
-msgstr ""
+msgstr "Usted es responsable del resguardo de la contraseña utilizada para acceder a los Servicios y de cualquier actividad o acción que se lleve a cabo con su contraseña. Le recomendamos proteger su cuenta con una contraseña robusta (una contraseña que contenga combinaciones de letras mayúsculas y minúsculas, números y símbolos). Tribus no se hace responsable de las pérdidas o daños que resulten del incumplimiento de lo anteriormente mencionado."
 
 #: tribus/data/templates/tribs.html:17
 msgid "What are you doing?"
@@ -835,7 +845,7 @@ msgstr "Introduzca una dirección de correo electrónico válida"
 
 #: tribus/web/registration/forms.py:159
 msgid "Create a password"
-msgstr "Crear una contraseña"
+msgstr "Establezca una contraseña"
 
 #: tribus/web/registration/forms.py:191 tribus/web/registration/forms.py:243
 msgid "A user with that username already exists."

@@ -70,27 +70,42 @@ function FollowsController($scope, $filter, UserFollows, UserProfile, $timeout){
     });
 
     $scope.convertmd5 = function(email){
-        var url = 'http://www.gravatar.com/avatar/'+md5(email)+'?d=mm&s=70&r=x';
+        var url = 'http://www.gravatar.com/avatar/'+md5(email)+'?d=mm&s=40&r=x';
         return url
     };
 
     $scope.eliminar = function(Uid){
+        console.log (this);
         var profile = UserProfile.query({id:user_id},function(){
             var profileview = UserProfile.query({id:Uid},function(){
+                //console.log ("/api/0.1/user/details/" + Uid);        
 
-                for (var i =0; i < profile[0].follows.length; i++){
-                    if (profile[0].follows[i]== "/api/0.1/user/details/" + Uid){
 
-                            profileview[0].followers.pop(i);
-                            profileview[0].$modify({author_id: Uid});
-
-                            profile[0].follows.pop(i);
+               for (var i =0; i < profile[0].follows.length; i++){
+                    // console.log(i, profile[0].follows[i]);
+                    if (profile[0].follows[i] == "/api/0.1/user/details/" + Uid){
+                        // console.log(i, profile[0].follows[i], "-----ejecutado");
+                            console.log(profile[0].follows, i);
+                            profile[0].follows.splice(i,1);;
+                            console.log(profile[0].follows, i);
                             profile[0].$modify({author_id:user_id}); 
+                            // console.log ($scope.follows);
                             $scope.follows.splice(i,1);
-                            //$scope.actualizar = true;
+                        break;
+                    }
+                };
+
+                for (var i =0; i < profileview[0].followers.length; i++){
+                    console.log(i, profileview[0].followers[i]);
+                    if (profileview[0].followers[i]== "/api/0.1/user/details/" + user_id){
+
+                            console.log(profileview[0]);
+                            profileview[0].followers.splice(i,1);
+                            profileview[0].$modify({author_id: Uid});
                         break;
                     }
                 }
+
             });
         });
     };
@@ -111,7 +126,7 @@ function FollowersController($scope, $filter, UserFollowers, UserProfile){
     });
 
     $scope.convertmd5 = function(email){
-        var url = 'http://www.gravatar.com/avatar/'+md5(email)+'?d=mm&s=70&r=x';
+        var url = 'http://www.gravatar.com/avatar/'+md5(email)+'?d=mm&s=40&r=x';
         return url
     }; 
 

@@ -1,3 +1,6 @@
+{% load i18n %}
+
+{% blocktrans %}
 You (or someone pretending to be you) have asked to register an account at 
 {{ site.name }}.  If this wasn't you, please ignore this email
 and your address will be removed from our records.
@@ -8,4 +11,5 @@ To activate this account, please click the following link within the next
 http://{{site.domain}}{% url 'registration_activation' activation_key %}
 
 Sincerely,
-{{ site.name }} Management
+{{ site.name }} Management' %}
+{% endblocktrans %}

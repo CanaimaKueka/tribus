@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tribus\n"
 "Report-Msgid-Bugs-To: desarrolladores@canaima.softwarelibre.gob.ve\n"
-"POT-Creation-Date: 2013-12-02 15:19-0530\n"
-"PO-Revision-Date: 2013-12-02 19:36+0000\n"
-"Last-Translator: Nitrio <hsh283@gmail.com>\n"
+"POT-Creation-Date: 2013-12-02 16:39-0530\n"
+"PO-Revision-Date: 2013-12-02 21:11+0000\n"
+"Last-Translator: jsfrncscg <jsfrncscg@gmail.com>\n"
 "Language-Team: Estonian (http://www.transifex.com/projects/p/tribus/language/et/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -312,37 +312,45 @@ msgid ""
 "target=\"_blank\">Privacy Policy</a>."
 msgstr ""
 
-#: tribus/data/templates/index.html:36
+#: tribus/data/templates/index.html:33
+msgid "Tribus is brought to you thanks to the efforts of "
+msgstr ""
+
+#: tribus/data/templates/index.html:46
+msgid "What is Tribus?"
+msgstr ""
+
+#: tribus/data/templates/index.html:50
 msgid "Package cloud"
 msgstr ""
 
-#: tribus/data/templates/index.html:37
+#: tribus/data/templates/index.html:51
 msgid ""
 "We give you space to store the binaries of your source code in our package "
 "cloud. You can distribute your applications through a personal cloud, or "
 "have it enter Canaima's development cycle."
 msgstr ""
 
-#: tribus/data/templates/index.html:40
+#: tribus/data/templates/index.html:54
 msgid "Source management"
 msgstr ""
 
-#: tribus/data/templates/index.html:41
+#: tribus/data/templates/index.html:55
 msgid ""
 "Store your work in a public place, where everyone can review and contribute "
 "to your projects. We support the most popular versioning systems: <a "
 "href=\"http://subversion.apache.org/\" target=\"_blank\">subversion</a>, <a "
-"href=\"a:http://bazaar.canonical.com/en/\" target=\"_blank\">bazaar</a>, <a "
+"href=\"http://bazaar.canonical.com/en/\" target=\"_blank\">bazaar</a>, <a "
 "href=\"http://mercurial.selenic.com/\" target=\"_blank\">mercurial</a> and "
 "<a href=\"http://git-scm.com/\" target=\"_blank\">git</a> (or no versioning "
 "at all)."
 msgstr ""
 
-#: tribus/data/templates/index.html:44
+#: tribus/data/templates/index.html:58
 msgid "Continuous integration"
 msgstr ""
 
-#: tribus/data/templates/index.html:45
+#: tribus/data/templates/index.html:59
 msgid ""
 "Focus yourself in the creative process of your work, while we handle the "
 "building and packaging of your applications. We have a <a "
@@ -350,36 +358,38 @@ msgid ""
 "waiting to compile your stuff."
 msgstr ""
 
-#: tribus/data/templates/index.html:50
+#: tribus/data/templates/index.html:64
 msgid "Social network"
 msgstr ""
 
-#: tribus/data/templates/index.html:51
+#: tribus/data/templates/index.html:65
 msgid ""
 "Share your activities in the platform with your friends and close "
 "contributors. Comment on your commits, patches, applications, translations, "
 "and more. Get everyone to know you and your work!"
 msgstr ""
 
-#: tribus/data/templates/index.html:54
+#: tribus/data/templates/index.html:68
 msgid "Ticket system"
 msgstr ""
 
-#: tribus/data/templates/index.html:55
+#: tribus/data/templates/index.html:69
 msgid ""
 "Organize your team work by assigning milestones to your teammates and "
 "achieving goals together. Measure your effectiveness and planify your "
 "objectives in a clean and intuitive interface."
 msgstr ""
 
-#: tribus/data/templates/index.html:58
+#: tribus/data/templates/index.html:72
 msgid "Easy documentation"
 msgstr ""
 
-#: tribus/data/templates/index.html:59
+#: tribus/data/templates/index.html:73
 msgid ""
 "We know how important it is to have a good and quickly-to-set-up "
-"documentation. That's why the only thing you have to do is write <a href="
+"documentation. That's why the only thing you have to do is write <a "
+"href='http://docutils.sourceforge.net/rst.html'> RST </a>, and we will take "
+"care of the HTML for you."
 msgstr ""
 
 #: tribus/data/templates/navbar.html:21
