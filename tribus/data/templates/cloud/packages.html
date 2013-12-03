@@ -10,20 +10,29 @@
                     <h1>{{ paquete.Package }}</h1>
                 </div>
                 {% if paquete.Maintainer == None %}
-                    <p align="center">{% trans 'This is not a real package.' %}</p>
+                    <span class="row-fluid bigger-150 lighter">
+                        {% trans 'This is not a real package.' %}
+                    </span>
                 {% else %}
                     {% if paquete.Description %}
-                    <div class="row-fluid">
+                    <span class="row-fluid bigger-150 lighter">
                         {{ paquete.Description }}
-                    </div>
+                    </span>
                     {% endif %}
                     {% if detalles %}
+                    <h3 class="smaller">{% blocktrans %}This package appears in the following distributions of {{ tribus_distro }}:{% endblocktrans %}</h3>
                     <accordion close-others="oneAtATime">
                         {% for dists in detalles.items %}
-                        <accordion-group heading="{{ dists.0 }}" is-open="false">
-                            <tabset>
+                        <accordion-group is-open="false">
+                            <accordion-heading>
+                                <i class="icon-chevron-right"></i> {% trans 'Distribution:' %} {{ dists.0 }}
+                            </accordion-heading>
+                            <tabset vertical="true" direction="'left'">
                                 {% for arch in dists.1.values %}
                                 <tab heading="{{ arch.data.Architecture }}">
+                                    <tab-heading>
+                                    <i class="icon-asterisk"></i> {{ arch.data.Architecture }}
+                                    </tab-heading>
                                     {% include 'cloud/architectures.html' %}
                                 </tab>
                                 {% endfor %}
@@ -38,9 +47,7 @@
                 <div class="widget-box transparent">
                     <div class="widget-body">
                         <div class="widget-main">
-                            <div class="cloud_avatar_container">
-                                <span class="cloud_avatar" style="background-image: url('http://screenshots.debian.net/screenshot/{{ paquete.Package }}')"></span>
-                            </div>
+                            <span class="cloud_avatar" style="background-image: url('http://screenshots.debian.net/screenshot/{{ paquete.Package }}')"></span>
                         </div>
                     </div>
                 </div>

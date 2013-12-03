@@ -1,12 +1,27 @@
 {% load i18n %}
-<legend> </legend>
-<p> * <b> {% trans tipo.0 %} </b> </p>
-<legend> </legend>
+<span class="row-fluid">
+	<span class="span12">
+		<dl class="dl-horizontal">
+		    <dt class="bigger-150">{% trans tipo.0 %}</dt>
+		    <dd class="bigger-150 lighter">
+		    	
+
+
+
+		    </dd>
+		</dl>
+	</span>
+</span>
+
+
 {% for relacion in tipo.1 %}
 	{% if relacion.alt_id %}
 		{% ifchanged relacion.alt_id %}
 			{% if forloop.first %}
-				<p><a href="{% url 'cloud_profile' relacion.related_package %}"> {{ relacion.related_package }}</a> {% if relacion.version %} ({{ relacion.relation }} {{ relacion.version }}) {% endif %} 
+				<a href="{% url 'cloud_profile' relacion.related_package %}">{{ relacion.related_package }}</a>
+				{% if relacion.version %}
+					({{ relacion.relation }} {{ relacion.version }})
+				{% endif %} 
 			{% else %}	
 				</p><p> <a href="{% url 'cloud_profile' relacion.related_package %}"> {{ relacion.related_package }} </a> {% if relacion.version %} ({{ relacion.relation }} {{ relacion.version }}) {% endif %}
 			{% endif %} 
