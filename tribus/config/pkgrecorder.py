@@ -17,3 +17,6 @@ detail_fields = ["Version", "Architecture", "Size", "MD5sum", "Filename",
                  "Installed-Size"]
 relation_types = ["pre-depends", "depends", "recommends", "suggests",
                   "provides", "enhances", "breaks", "replaces", "conflicts"]
+
+codenames = {'aponwao' : '2.1', 'roraima' : '3.0', 'auyantepui' : '3.1',
+             'kerepakupai' : '4.0', 'kukenan' : '4.1'}

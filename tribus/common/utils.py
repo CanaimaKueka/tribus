@@ -175,4 +175,26 @@ def scan_repository(repo_root):
         dist_releases[l[0]] = l[1]
         linea = dists.readline().strip("\n")
         
-    return dist_releases     
+    return dist_releases
+
+def scan_repository2(repo_root):
+    '''
+    Este metodo lee el archivo distributions ubicado en la raiz de un 
+    repositorio y genera un diccionario con las distribuciones y 
+    componentes presentes en dicho repositorio.
+    '''
+    
+    dist_releases = []
+    dists = urllib.urlopen(os.path.join(repo_root, "distributions"))
+    linea = dists.readline().strip("\n")
+    
+    while linea:
+        dist = {}
+        l = linea.split(" ")
+        dist['version'] = l[0]
+        dist['name'] = l[1]
+        dist['release'] = l[2]
+        dist_releases.append(dist)
+        linea = dists.readline().strip("\n")
+        
+    return dist_releases

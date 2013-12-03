@@ -21,11 +21,11 @@
                 {% endif %}
                 {% if detalles %}
                 <accordion close-others="oneAtATime">
-                    {% for dists in detalles.items %}
-                    <accordion-group heading="{{ dists.0 }}" is-open="false">
+                    {% for dists in detalles|dictsort:'version'%}
+                    <accordion-group heading="Canaima {{dists.version}} ({{ dists.codename }})" is-open="false">
                         <tabset>
-                            {%for arch in dists.1.values %}
-                            <tab heading="{{ arch.data.Architecture }}">
+                            {%for arch in dists.Architectures.items %}
+                            <tab heading="{{arch.0}}">
                                 {% include 'cloud/architectures.html' %}
                             </tab>
                             {% endfor %}

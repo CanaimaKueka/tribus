@@ -1,6 +1,26 @@
 {% load i18n %}
 <legend> </legend>
-<p> * <b> {% trans tipo.0 %} </b> </p>
+
+{% if tipo.0 == "pre-depends" %}
+	<p> * <b> {% trans 'pre-depends' %} </b> </p>
+{% elif tipo.0 == "depends" %}
+	<p> * <b> {% trans 'depends' %} </b> </p>
+{% elif tipo.0 == "recommends" %}
+	<p> * <b> {% trans 'recommends' %} </b> </p>
+{% elif tipo.0 == "suggests" %}
+	<p> * <b> {% trans 'suggests' %} </b> </p>
+{% elif tipo.0 == "provides" %}
+	<p> * <b> {% trans 'provides' %} </b> </p>
+{% elif tipo.0 == "enhances" %}
+	<p> * <b> {% trans 'enhances' %} </b> </p>
+{% elif tipo.0 == "breaks" %}
+	<p> * <b> {% trans 'breaks' %} </b> </p>
+{% elif tipo.0 == "replaces" %}
+	<p> * <b> {% trans 'replaces' %} </b> </p>
+{% elif tipo.0 == "conflicts" %}
+	<p> * <b> {% trans 'conflicts' %} </b> </p>
+{% endif %}
+
 <legend> </legend>
 {% for relacion in tipo.1 %}
 	{% if relacion.alt_id %}
