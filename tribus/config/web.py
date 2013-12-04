@@ -128,7 +128,7 @@ CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
 CELERYBEAT_SCHEDULE = {
     "update_cache": {
         "task": "tribus.web.cloud.tasks.update_cache",
-        "schedule": crontab(),
+        "schedule": crontab(minute='*/30'),
         "args": (),
     },               
 }

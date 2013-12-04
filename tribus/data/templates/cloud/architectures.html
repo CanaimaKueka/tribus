@@ -2,7 +2,7 @@
 <span class="row-fluid">
 	<span class="span12">
 		<dl class="dl-horizontal">
-		    <dt class="bigger-150">{% trans 'Version' %}</dt>
+		    <dt class="bigger-110">{% trans 'Version' %}</dt>
 		    <dd class="bigger-150 lighter">{{ arch.1.data.Version }}</dd>
 		</dl>
 		{% for tipo in arch.1.relations.items %}
@@ -13,14 +13,14 @@
 <span class="row-fluid">
 	<span class="span12">
 		<dl class="dl-horizontal">
-		    <dt class="bigger-150">{% trans 'Download Size' %}</dt>
+		    <dt class="bigger-110">{% trans 'Download Size' %}</dt>
 		    <dd class="bigger-150 lighter">{% widthratio arch.1.data.Size 1024 1 %}KB</dd>
-		    <dt class="bigger-150">{% trans 'Installed Size' %}</dt>
+		    <dt class="bigger-110">{% trans 'Installed Size' %}</dt>
 		    <dd class="bigger-150 lighter">{{ arch.1.data.InstalledSize }}KB</dd>
-		    <dt class="bigger-150">{% trans 'MD5sum' %}</dt>
+		    <dt class="bigger-110">{% trans 'MD5sum' %}</dt>
 		    <dd class="bigger-150 lighter">{{ arch.1.data.MD5sum }}</dd>
-		    <dt class="bigger-150"></dt>
-		    <dd class="bigger-150 lighter smaller-90 line-height-1">{% trans 'This is the MD5sum of the file. You can use this to test the consistency of the package.' %}</dd>
+		    <dt class="bigger-110"></dt>
+		    <dd class="bigger-110 lighter smaller-90 line-height-1">{% trans 'This is the MD5sum of the file. You can use this to test the consistency of the package.' %}</dd>
 		</dl>
 	</span>
 </span>

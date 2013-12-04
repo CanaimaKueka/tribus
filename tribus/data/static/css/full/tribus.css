@@ -6549,6 +6549,9 @@ input[type=checkbox].ace.ace-switch.ace-switch-7:checked+.lbl::after {
     width: 30%;
     padding: 0;
     margin: 0;
+    word-wrap: break-word;
+    text-overflow: clip;
+    white-space: normal;
 }
 
 .dl-horizontal > dd {
@@ -6558,6 +6561,8 @@ input[type=checkbox].ace.ace-switch.ace-switch-7:checked+.lbl::after {
     margin-left: 5%;
     float: right;
     word-wrap: break-word;
+    text-overflow: clip;
+    white-space: normal;
 }
 
 th,td,.table-bordered {
@@ -7080,6 +7085,7 @@ th .lbl:only-child,td .lbl:only-child {
 
 .widget-body a {
     color: #e78c7c;
+	word-wrap: break-word;
 }
 
 .widget-main {

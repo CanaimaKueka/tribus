@@ -3,18 +3,10 @@
 
 from django.shortcuts import render, get_object_or_404
 from tribus.web.cloud.models import *
-from tribus.config.pkgrecorder import LOCAL_ROOT, relation_types, CANAIMA_ROOT
+from tribus.config.pkgrecorder import LOCAL_ROOT, relation_types, CANAIMA_ROOT, codenames
 from haystack.query import SearchQuerySet
 from django.core.paginator import Paginator, InvalidPage
 from tribus.config.web import DEBUG
-version = {
-             'kukenan' : '1.0' ,
-             'aponwao' : '2.1',
-             'roraima' : '3.0',
-             'auyantepui' : '3.1',
-             'kerepakupai' : '4.0',
-             }
-
 
 def frontpage(request):
     return render(request, 'cloud/frontpage.html', {
@@ -54,26 +46,26 @@ def profile(request, name):
     distributions = []
     tmp_dict = {}
     for det in details_list:
-        if not tmp_dict.has_key(version[det.Distribution]):
-            tmp_dict[version[det.Distribution]] = {}
+        if not tmp_dict.has_key(codenames[det.Distribution]):
+            tmp_dict[codenames[det.Distribution]] = {}
             
-        tmp_dict[version[det.Distribution]]['codename'] = det.Distribution
-        tmp_dict[version[det.Distribution]]['version'] = version[det.Distribution]
+        tmp_dict[codenames[det.Distribution]]['codename'] = det.Distribution
+        tmp_dict[codenames[det.Distribution]]['version'] = codenames[det.Distribution]
         
-        if not tmp_dict[version[det.Distribution]].has_key('Architectures'):
-            tmp_dict[version[det.Distribution]]['Architectures'] = {}
+        if not tmp_dict[codenames[det.Distribution]].has_key('Architectures'):
+            tmp_dict[codenames[det.Distribution]]['Architectures'] = {}
         
-        tmp_dict[version[det.Distribution]]['Architectures'][det.Architecture] = {} 
-        tmp_dict[version[det.Distribution]]['Architectures'][det.Architecture]['data'] = det
+        tmp_dict[codenames[det.Distribution]]['Architectures'][det.Architecture] = {} 
+        tmp_dict[codenames[det.Distribution]]['Architectures'][det.Architecture]['data'] = det
         
-        tmp_dict[version[det.Distribution]]['Architectures'][det.Architecture]['relations'] = {}
+        tmp_dict[codenames[det.Distribution]]['Architectures'][det.Architecture]['relations'] = {}
         
         r = Relation.objects.filter(details = det).order_by("alt_id", "related_package", "version")
         for n in r:
             if n.relation_type in relation_types:
-                if not tmp_dict[version[det.Distribution]]['Architectures'][det.Architecture]['relations'].has_key(n.relation_type):
-                    tmp_dict[version[det.Distribution]]['Architectures'][det.Architecture]['relations'][n.relation_type] = []
-                tmp_dict[version[det.Distribution]]['Architectures'][det.Architecture]['relations'][n.relation_type].append(n)
+                if not tmp_dict[codenames[det.Distribution]]['Architectures'][det.Architecture]['relations'].has_key(n.relation_type):
+                    tmp_dict[codenames[det.Distribution]]['Architectures'][det.Architecture]['relations'][n.relation_type] = []
+                tmp_dict[codenames[det.Distribution]]['Architectures'][det.Architecture]['relations'][n.relation_type].append(n)
     
     for dist in tmp_dict.values():
         distributions.append(dist)
