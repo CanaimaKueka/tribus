@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  tribus\n"
 "Report-Msgid-Bugs-To: desarrolladores@canaima.softwarelibre.gob.ve\n"
-"POT-Creation-Date: 2013-12-03 14:16-0630\n"
+"POT-Creation-Date: 2013-12-04 01:16-0630\n"
 "PO-Revision-Date: 2013-12-02 21:11+0000\n"
 "Last-Translator: jsfrncscg <jsfrncscg@gmail.com>\n"
 "Language-Team: Swedish "
@@ -38,8 +38,55 @@ msgstr ""
 msgid "Harvester"
 msgstr ""
 
-#: tribus/data/templates/about.html:13 tribus/data/templates/privacy.html:28
-#: tribus/data/templates/terms.html:45
+#: tribus/data/templates/about.html:13
+msgid "Tribus"
+msgstr ""
+
+#: tribus/data/templates/about.html:16
+msgid ""
+"Tribus is a social network for managing open source software communities."
+" Its goal is to simplify the tedious and repetitive maintenance tasks, "
+"while making available to its members the best tools to express their "
+"creativity and develop the full potential of their abilities."
+msgstr ""
+
+#: tribus/data/templates/about.html:17
+msgid ""
+"Tribus promotes self-management and responsibility in various areas of "
+"software production process, establishing an organizational model that "
+"allows progression and natural rotation of roles."
+msgstr ""
+
+#: tribus/data/templates/about.html:18
+msgid "More information"
+msgstr ""
+
+#: tribus/data/templates/about.html:22
+msgid "Source code:"
+msgstr ""
+
+#: tribus/data/templates/about.html:28
+msgid "Ticket system:"
+msgstr ""
+
+#: tribus/data/templates/about.html:33
+msgid "Documentation:"
+msgstr ""
+
+#: tribus/data/templates/about.html:38
+msgid "Translation:"
+msgstr ""
+
+#: tribus/data/templates/about.html:43
+msgid "Twitter:"
+msgstr ""
+
+#: tribus/data/templates/about.html:48
+msgid "Facebook:"
+msgstr ""
+
+#: tribus/data/templates/about.html:65 tribus/data/templates/privacy.html:45
+#: tribus/data/templates/terms.html:38
 msgid "Go back"
 msgstr ""
 
@@ -52,24 +99,36 @@ msgstr ""
 msgid "Package not found!"
 msgstr ""
 
-#: tribus/data/templates/cloud/architectures.html:2
-msgid "Version:"
-msgstr ""
-
-#: tribus/data/templates/cloud/architectures.html:3
-msgid "Size:"
-msgstr ""
-
-#: tribus/data/templates/cloud/architectures.html:4
-msgid "Installed Size:"
-msgstr ""
-
 #: tribus/data/templates/cloud/architectures.html:5
-msgid "MD5sum:"
+msgid "Version"
 msgstr ""
 
-#: tribus/data/templates/cloud/architectures.html:8
-msgid "Download"
+#: tribus/data/templates/cloud/architectures.html:16
+msgid "Download Size"
+msgstr ""
+
+#: tribus/data/templates/cloud/architectures.html:18
+msgid "Installed Size"
+msgstr ""
+
+#: tribus/data/templates/cloud/architectures.html:20
+msgid "MD5sum"
+msgstr ""
+
+#: tribus/data/templates/cloud/architectures.html:23
+msgid ""
+"This is the MD5sum of the file. You can use this to test the consistency "
+"of the package."
+msgstr ""
+
+#: tribus/data/templates/cloud/architectures.html:31
+msgid ""
+"You can download this version of the package by pressing on the following"
+" button."
+msgstr ""
+
+#: tribus/data/templates/cloud/architectures.html:36
+msgid "Download package"
 msgstr ""
 
 #: tribus/data/templates/cloud/categories.html:2
@@ -143,83 +202,88 @@ msgstr ""
 msgid "next"
 msgstr ""
 
-#: tribus/data/templates/cloud/packages.html:15
+#: tribus/data/templates/cloud/packages.html:19
+#, python-format
+msgid "This package appears in the following distributions of %(tribus_distro)s:"
+msgstr ""
+
+#: tribus/data/templates/cloud/packages.html:42
 msgid "This is not a real package."
 msgstr ""
 
-#: tribus/data/templates/cloud/packages.html:49
-msgid "Package information"
+#: tribus/data/templates/cloud/packages.html:58
+msgid "Package Information"
 msgstr ""
 
-#: tribus/data/templates/cloud/packages.html:58
+#: tribus/data/templates/cloud/packages.html:68
 msgid "Maintainer"
 msgstr ""
 
-#: tribus/data/templates/cloud/packages.html:67
+#: tribus/data/templates/cloud/packages.html:77
 msgid "Section"
 msgstr ""
 
-#: tribus/data/templates/cloud/packages.html:76
+#: tribus/data/templates/cloud/packages.html:86
 msgid "Priority"
 msgstr ""
 
-#: tribus/data/templates/cloud/packages.html:85
+#: tribus/data/templates/cloud/packages.html:95
 msgid "Homepage"
 msgstr ""
 
-#: tribus/data/templates/cloud/packages.html:98
+#: tribus/data/templates/cloud/packages.html:108
 msgid "Tags"
 msgstr ""
 
-#: tribus/data/templates/cloud/packages.html:118
+#: tribus/data/templates/cloud/packages.html:128
 msgid "Debian Resources"
 msgstr ""
 
-#: tribus/data/templates/cloud/packages.html:127
+#: tribus/data/templates/cloud/packages.html:137
 msgid "Bug Tracking System"
 msgstr ""
 
-#: tribus/data/templates/cloud/packages.html:133
+#: tribus/data/templates/cloud/packages.html:143
 msgid "Package Tracking System"
 msgstr ""
 
 #: tribus/data/templates/cloud/relations.html:5
-msgid "pre-depends"
+msgid "Pre-Depends"
 msgstr ""
 
 #: tribus/data/templates/cloud/relations.html:7
-msgid "depends"
+msgid "Depends"
 msgstr ""
 
 #: tribus/data/templates/cloud/relations.html:9
-msgid "recommends"
+msgid "Recommends"
 msgstr ""
 
 #: tribus/data/templates/cloud/relations.html:11
-msgid "suggests"
+msgid "Suggests"
 msgstr ""
 
 #: tribus/data/templates/cloud/relations.html:13
-msgid "provides"
+msgid "Provides"
 msgstr ""
 
 #: tribus/data/templates/cloud/relations.html:15
-msgid "enhances"
+msgid "Enhances"
 msgstr ""
 
 #: tribus/data/templates/cloud/relations.html:17
-msgid "breaks"
+msgid "Breaks"
 msgstr ""
 
 #: tribus/data/templates/cloud/relations.html:19
-msgid "replaces"
+msgid "Replaces"
 msgstr ""
 
 #: tribus/data/templates/cloud/relations.html:21
-msgid "conflicts"
+msgid "Conflicts"
 msgstr ""
 
-#: tribus/data/templates/cloud/relations.html:34
+#: tribus/data/templates/cloud/relations.html:51
 msgid "or"
 msgstr ""
 
@@ -256,65 +320,64 @@ msgid "Translation Services"
 msgstr ""
 
 #: tribus/data/templates/dashboard.html:84
-#: tribus/data/templates/profile/profiles.html:253
+#: tribus/data/templates/profile/profiles.html:255
 #: tribus/data/templates/profile/profiles_view.html:96
 msgid "Your message has been published."
 msgstr ""
 
 #: tribus/data/templates/dashboard.html:85
-#: tribus/data/templates/profile/profiles.html:254
+#: tribus/data/templates/profile/profiles.html:256
 #: tribus/data/templates/profile/profiles_view.html:97
 msgid "There has been an error publishing your message. Please try again later."
 msgstr ""
 
 #: tribus/data/templates/dashboard.html:86
-#: tribus/data/templates/profile/profiles.html:255
+#: tribus/data/templates/profile/profiles.html:257
 #: tribus/data/templates/profile/profiles_view.html:98
 msgid "Your message has been deleted."
 msgstr ""
 
 #: tribus/data/templates/dashboard.html:87
-#: tribus/data/templates/profile/profiles.html:256
+#: tribus/data/templates/profile/profiles.html:258
 #: tribus/data/templates/profile/profiles_view.html:99
 msgid "There has been an error deleting your message. Please try again later."
 msgstr ""
 
 #: tribus/data/templates/dashboard.html:88
-#: tribus/data/templates/profile/profiles.html:257
+#: tribus/data/templates/profile/profiles.html:259
 #: tribus/data/templates/profile/profiles_view.html:100
 msgid "There has been an error consulting more messages. Please try again later."
 msgstr ""
 
 #: tribus/data/templates/dashboard.html:89
-#: tribus/data/templates/profile/profiles.html:258
+#: tribus/data/templates/profile/profiles.html:260
 #: tribus/data/templates/profile/profiles_view.html:101
 msgid "Your comment has been published."
 msgstr ""
 
 #: tribus/data/templates/dashboard.html:90
-#: tribus/data/templates/profile/profiles.html:259
+#: tribus/data/templates/profile/profiles.html:261
 #: tribus/data/templates/profile/profiles_view.html:102
 msgid "There has been an error publishng your comment. Please try again later."
 msgstr ""
 
 #: tribus/data/templates/dashboard.html:91
-#: tribus/data/templates/profile/profiles.html:260
+#: tribus/data/templates/profile/profiles.html:262
 #: tribus/data/templates/profile/profiles_view.html:103
 msgid "Your comment has been deleted."
 msgstr ""
 
 #: tribus/data/templates/dashboard.html:92
-#: tribus/data/templates/profile/profiles.html:261
+#: tribus/data/templates/profile/profiles.html:263
 #: tribus/data/templates/profile/profiles_view.html:104
 msgid "There has been an error deleting your comment. Please try again later."
 msgstr ""
 
-#: tribus/data/templates/footer.html:7 tribus/data/templates/privacy.html:13
-#: tribus/data/templates/terms.html:13
+#: tribus/data/templates/footer.html:7 tribus/data/templates/terms.html:13
 msgid "Terms of Service"
 msgstr ""
 
-#: tribus/data/templates/footer.html:9
+#: tribus/data/templates/footer.html:9 tribus/data/templates/privacy.html:13
 msgid "Privacy Policy"
 msgstr ""
 
@@ -447,7 +510,6 @@ msgid "There are no results matching this query."
 msgstr ""
 
 #: tribus/data/templates/navbar.html:67
-#: tribus/data/templates/profile/navbar.html:9
 #: tribus/data/templates/registration/password_change_form.html:3
 #: tribus/data/templates/registration/password_change_form.html:9
 #: tribus/data/templates/registration/password_change_form.html:19
@@ -466,18 +528,93 @@ msgid "Log in"
 msgstr ""
 
 #: tribus/data/templates/privacy.html:16
-msgid "Policy Privacy Tribes"
-msgstr ""
-
-#: tribus/data/templates/privacy.html:17
 msgid ""
-"This Privacy Policy describes how and when Tribus collect, use and share "
-"your information when you use our Services. Tribus receive your "
+"This Privacy Policy describes how and when Tribus will collect, use and "
+"share your information when you use our Services. Tribus receive your "
 "information through our various web services, APIs and email "
 "notifications (the \"<strong>Services</strong>\" or "
 "\"<strong>Tribus</strong>\"). By using any of our Services you consent to"
 " the collection, transfer, treatment, storage, disclosure and other uses "
 "of your information as described in this Privacy Policy."
+msgstr ""
+
+#: tribus/data/templates/privacy.html:18
+msgid "Information Collected Upon Registration"
+msgstr ""
+
+#: tribus/data/templates/privacy.html:20
+msgid ""
+"When you create or reconfigure a Tribus account, you provide some "
+"personal information, such as your name, username, password, and email "
+"address. Some of this information, for example, your name and username, "
+"is listed publicly on our Services, including on your profile page and in"
+" search results. Some Services, such as search, public user profiles and "
+"viewing lists, do not require registration."
+msgstr ""
+
+#: tribus/data/templates/privacy.html:22
+msgid "Additional Information"
+msgstr ""
+
+#: tribus/data/templates/privacy.html:24
+msgid ""
+"You may provide us with profile information to make public, such as a "
+"short description or a picture. We may use your contact information to "
+"send you information about our Services. We may use your contact "
+"information to help others find your Tribus account."
+msgstr ""
+
+#: tribus/data/templates/privacy.html:26
+msgid "Messages, Following, Followers and other Public Information"
+msgstr ""
+
+#: tribus/data/templates/privacy.html:28
+msgid ""
+"Our Services are primarily designed to help you share information with "
+"the world. Most of the information you provide us is information you are "
+"asking us to make public. This includes not only the messages you publish"
+" and the metadata provided with the message, such as when you published "
+"it, but also the people you follow, and many other bits of information "
+"that result from your use of the Services. When you share information or "
+"content like photos, videos, and links via the Services, you should think"
+" carefully about what you are making public."
+msgstr ""
+
+#: tribus/data/templates/privacy.html:30
+msgid "Cookies:"
+msgstr ""
+
+#: tribus/data/templates/privacy.html:32
+msgid ""
+"Like many websites, we use cookies and similar technologies to collect "
+"additional website usage data and to improve our Services, but we do not "
+"require cookies for many parts of our Services such as searching and "
+"looking at public user profiles. A cookie is a small data file that is "
+"transferred to your computer's hard disk. Tribus may use both session "
+"cookies and persistent cookies to better understand how you interact with"
+" our Services, to monitor aggregate usage by our users and web traffic "
+"routing on our Services, and to customize and improve our Services. Most "
+"Internet browsers automatically accept cookies. You can instruct your "
+"browser, by changing its settings, to stop accepting cookies or to prompt"
+" you before accepting a cookie from the websites you visit. However, some"
+" Services may not function properly if you disable cookies."
+msgstr ""
+
+#: tribus/data/templates/privacy.html:33
+msgid "Log Data:"
+msgstr ""
+
+#: tribus/data/templates/privacy.html:34
+msgid ""
+"Our servers automatically record information (\"<strong>Log "
+"Data</strong>\") created by your use of the Services. Log Data may "
+"include information such as your IP address, browser type, operating "
+"system, the referring web page, pages visited, location, your mobile "
+"carrier, device and application IDs, search terms, and cookie "
+"information. We receive Log Data when you interact with our Services, for"
+" example, when you visit our website, sign into our Services or interact "
+"with our email notifications. Tribus uses Log Data to provide our "
+"Services and to measure, customize, and improve them."
 msgstr ""
 
 #: tribus/data/templates/profile/profiles.html:3
@@ -510,49 +647,49 @@ msgid "Follows"
 msgstr ""
 
 #: tribus/data/templates/profile/profiles.html:74
-#: tribus/data/templates/profile/profiles.html:154
+#: tribus/data/templates/profile/profiles.html:156
 msgid "Are you looking for someone?"
 msgstr ""
 
-#: tribus/data/templates/profile/profiles.html:109
-#: tribus/data/templates/profile/profiles.html:184
+#: tribus/data/templates/profile/profiles.html:111
+#: tribus/data/templates/profile/profiles.html:186
 msgid "No matches found!"
 msgstr ""
 
-#: tribus/data/templates/profile/profiles.html:112
-#: tribus/data/templates/profile/profiles.html:187
+#: tribus/data/templates/profile/profiles.html:114
+#: tribus/data/templates/profile/profiles.html:189
 msgid "We were unable to find a user that matches your query."
 msgstr ""
 
-#: tribus/data/templates/profile/profiles.html:119
+#: tribus/data/templates/profile/profiles.html:121
 msgid "You are not following anyone"
 msgstr ""
 
-#: tribus/data/templates/profile/profiles.html:122
+#: tribus/data/templates/profile/profiles.html:124
 msgid ""
 "You are not following any user in Tribus. See if your friends are in "
 "Tribus by entering their names in the search bar on the top of the page."
 msgstr ""
 
-#: tribus/data/templates/profile/profiles.html:129
-#: tribus/data/templates/profile/profiles.html:204
+#: tribus/data/templates/profile/profiles.html:131
+#: tribus/data/templates/profile/profiles.html:206
 msgid "Previous"
 msgstr ""
 
-#: tribus/data/templates/profile/profiles.html:136
-#: tribus/data/templates/profile/profiles.html:211
+#: tribus/data/templates/profile/profiles.html:138
+#: tribus/data/templates/profile/profiles.html:213
 msgid "Next"
 msgstr ""
 
-#: tribus/data/templates/profile/profiles.html:145
+#: tribus/data/templates/profile/profiles.html:147
 msgid "Followers"
 msgstr ""
 
-#: tribus/data/templates/profile/profiles.html:194
+#: tribus/data/templates/profile/profiles.html:196
 msgid "You have no followers!"
 msgstr ""
 
-#: tribus/data/templates/profile/profiles.html:197
+#: tribus/data/templates/profile/profiles.html:199
 msgid ""
 "You have no followers (yet). Start following people and write about you "
 "so that other people take interest in what you write."
@@ -652,7 +789,9 @@ msgid "Reset your password"
 msgstr ""
 
 #: tribus/data/templates/registration/password_reset_form.html:11
-msgid "Forgot your password?  Enter your email in the form below and we"
+msgid ""
+"Forgot your password?  Enter your email in the form below and we'll send "
+"you instructions for creating a new one."
 msgstr ""
 
 #: tribus/data/templates/registration/signup_complete.html:3
@@ -680,70 +819,66 @@ msgstr ""
 
 #: tribus/data/templates/terms.html:16
 msgid ""
-"These Terms of Service (hereinafter the \"<strong> Conditions "
-"</strong>\") govern your access and use of services, including our "
-"various web sites, APIs, email notifications, applications and icons "
-"(hereinafter the \"<strong> Services </strong>\" or \"<strong> Tribus "
-"</strong>\"), as well as access to and use of any information, text, "
-"graphics, photos or other materials uploaded, downloaded, or play through"
-" Services (hereinafter, collectively, the \" <strong>Content</strong>\")."
-" Access to and use of the Services is conditioned on your acceptance and "
-"compliance with these Terms. By accessing or using the Services, you "
-"consent to the application of these Conditions."
+"These Terms of Service (\"<strong>Terms</strong>\") govern your access to"
+" and use of the services, including our website, APIs, email "
+"notifications, applications, buttons, and widgets, (the "
+"\"<strong>Services</strong>\" or \"<strong>Tribus</strong>\"), and any "
+"information, text, graphics, photos or other materials uploaded, "
+"downloaded or appearing on the Services (collectively referred to as "
+"\"<strong>Content</strong>\"). Your access to and use of the Services are"
+" conditioned on your acceptance of and compliance with these Terms. By "
+"accessing or using the Services you agree to be bound by these Terms."
 msgstr ""
 
-#: tribus/data/templates/terms.html:20
+#: tribus/data/templates/terms.html:18
 msgid "Basic Conditions"
 msgstr ""
 
-#: tribus/data/templates/terms.html:22
+#: tribus/data/templates/terms.html:19
 msgid ""
-"You are solely responsible for the use that may be made of the services, "
-"for all Content that you play through the Services and for any "
-"consequences resulting therefrom. The Content you submit, show or play "
-"may be viewed by other users of the Services. Note that you only need to "
-"provide Content that you see fit to share with third parties in "
-"accordance with the provisions of these Terms."
+"You are responsible for your use of the Services, for any Content you "
+"post to the Services, and for any consequences thereof. The Content you "
+"submit, post, or display will be able to be viewed by other users of the "
+"Services. You should only provide Content that you are comfortable "
+"sharing with others under these Terms."
+msgstr ""
+
+#: tribus/data/templates/terms.html:21
+msgid ""
+"The Services that Tribus provides are always evolving and the form and "
+"nature of the Services that Tribus provides may change from time to time "
+"without prior notice to you. In addition, Tribus may stop (permanently or"
+" temporarily) providing the Services (or any features within the "
+"Services) to you or to users generally and may not be able to provide you"
+" with prior notice. We also retain the right to create limits on use and "
+"storage at our sole discretion at any time without prior notice to you."
+msgstr ""
+
+#: tribus/data/templates/terms.html:23
+msgid "Privacy"
 msgstr ""
 
 #: tribus/data/templates/terms.html:24
 msgid ""
-"Tribus Services provides continually evolving and, therefore, the form or"
-" nature of such services may change from time to time without being "
-"notified in advance of such change. Also, Tribus may stop (permanently or"
-" temporarily) providing the Services (or any features within the "
-"Services) to you or all users in general and, in these circumstances, it "
-"is possible that Tribes can not notify this fact advance. Tribes also "
-"reserves the right to place limits on use and storage at our sole "
-"discretion Tribus, at any time and without notice."
+"Any information that you provide to Tribus is subject to our <a "
+"href=\"/about/privacy\" target=\"_blank\">Privacy Policy</a>, which "
+"governs our collection and use of your information. You understand that "
+"through your use of the Services you consent to the collection and use "
+"(as set forth in the Privacy Policy) of this information."
 msgstr ""
 
 #: tribus/data/templates/terms.html:26
-msgid "Privacity"
-msgstr ""
-
-#: tribus/data/templates/terms.html:28
-msgid ""
-"Any information you provide to Tribes is subject to our <a "
-"href=\"/about/privacy\" target=\"_blank\"> Privacy Policy </a> that "
-"governs the collection and use of your information by tribus. Hereby "
-"informing you that the use of the Services involves its implied consent "
-"to the collection and use of this information (as provided in the Privacy"
-" Policy)."
-msgstr ""
-
-#: tribus/data/templates/terms.html:30
 msgid "Passwords"
 msgstr ""
 
-#: tribus/data/templates/terms.html:32
+#: tribus/data/templates/terms.html:27
 msgid ""
-"You are responsible for the custody of the password used to access the "
-"Services and for any activity or action which is carried out with your "
-"password. We recommend you protect your account with a strong password (a"
-" password containing combinations of uppercase and lowercase letters, "
-"numbers and symbols). Tribus is not liable for any loss or damage "
-"resulting from breach of the aforementioned."
+"You are responsible for safeguarding the password that you use to access "
+"the Services and for any activities or actions under your password. We "
+"encourage you to use \"strong\" passwords (passwords that use a "
+"combination of upper and lower case letters, numbers and symbols) with "
+"your account. Tribus cannot and will not be liable for any loss or damage"
+" arising from your failure to comply with the above"
 msgstr ""
 
 #: tribus/data/templates/tribs.html:17

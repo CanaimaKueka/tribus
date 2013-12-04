@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Tribus 0.1.dev20131203184229\n"
+"Project-Id-Version: Tribus 0.1.dev20131204054628\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-03 14:16-0430\n"
+"POT-Creation-Date: 2013-12-04 01:16-0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../../copying.rst:3
-# b300018f1b354a3398d9e4d60e9febed
+# 84e4da1c5cc44579a7039a1c3729f7ef
 msgid "Copyright"
 msgstr ""
 
