@@ -5,27 +5,15 @@
 		    <dt class="bigger-150">{% trans 'Version' %}</dt>
 		    <dd class="bigger-150 lighter">{{ arch.1.data.Version }}</dd>
 		</dl>
-	</span>
-</span>
-{%for tipo in arch.1.relations.items %}
-	{% include 'cloud/relations.html' %}
-{% endfor %}
-<span class="row-fluid">
-		<span class="span12 center">
-		{% trans 'You can download this version of the package by pressing on the following button' %}
-		<!-- ARREGLAR URL DE DESCARGA: DEBE FUNCIONAR CON EL REPO EN PRODUCCION
-			PERO EN DESARROLLO NO REDIRIGE A LOS ARCHIVOS DEL REPOSITORIO -->
-        <a class="btn btn-sm btn-block btn-success" href="{{ raiz }}/{{ arch.1.data.Filename }}">
-            <i class="icon-download-alt bigger-120"></i>
-            <span class="bigger-110">{% trans 'Download package' %}</span>
-        </a>
-        
+		{% for tipo in arch.1.relations.items %}
+		{% include 'cloud/relations.html' %}
+		{% endfor %}
 	</span>
 </span>
 <span class="row-fluid">
 	<span class="span12">
 		<dl class="dl-horizontal">
-		    <dt class="bigger-150">{% trans 'Size' %}</dt>
+		    <dt class="bigger-150">{% trans 'Download Size' %}</dt>
 		    <dd class="bigger-150 lighter">{% widthratio arch.1.data.Size 1024 1 %}KB</dd>
 		    <dt class="bigger-150">{% trans 'Installed Size' %}</dt>
 		    <dd class="bigger-150 lighter">{{ arch.1.data.InstalledSize }}KB</dd>
@@ -34,5 +22,18 @@
 		    <dt class="bigger-150"></dt>
 		    <dd class="bigger-150 lighter smaller-90 line-height-1">{% trans 'This is the MD5sum of the file. You can use this to test the consistency of the package.' %}</dd>
 		</dl>
+	</span>
+</span>
+<span class="hr64 block"></span>
+<span class="row-fluid">
+		<span class="span5"></span>
+		<span class="span7 center">
+		{% trans 'You can download this version of the package by pressing on the following button.' %}
+		<!-- ARREGLAR URL DE DESCARGA: DEBE FUNCIONAR CON EL REPO EN PRODUCCION
+			PERO EN DESARROLLO NO REDIRIGE A LOS ARCHIVOS DEL REPOSITORIO -->
+        <a class="btn btn-sm btn-block btn-success" href="{{ raiz }}/{{ arch.1.data.Filename }}">
+            <i class="icon-download-alt bigger-120"></i>
+            <span class="bigger-110">{% trans 'Download package' %}</span>
+        </a>
 	</span>
 </span>

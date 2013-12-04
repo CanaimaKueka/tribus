@@ -9,11 +9,7 @@
                 <div class="page-header">
                     <h1>{{ paquete.Package }}</h1>
                 </div>
-                {% if paquete.Maintainer == None %}
-                    <span class="row-fluid bigger-150 lighter">
-                        {% trans 'This is not a real package.' %}
-                    </span>
-                {% else %}
+                {% if paquete.Maintainer %}
                     {% if paquete.Description %}
                     <span class="row-fluid bigger-150 lighter">
                         {{ paquete.Description }}
@@ -41,9 +37,14 @@
                         {% endfor %}
                     </accordion>
                     {% endif %}
+                {% else %}
+                    <span class="row-fluid bigger-150 lighter">
+                        {% trans 'This is not a real package.' %}
+                    </span>
                 {% endif %}
             </div>
             <div class="span4 dashboard_panel">
+                {% if paquete.Maintainer %}
                 <div class="widget-box transparent">
                     <div class="widget-body">
                         <div class="widget-main">
@@ -54,7 +55,7 @@
                 <div class="widget-box">
                     <div class="widget-header padding-2">
                         <h3 class="smaller lighter black">
-                            {% trans 'Package information' %}
+                            {% trans 'Package Information' %}
                         </h3>
                     </div>
                     <div class="widget-body">
@@ -146,6 +147,7 @@
                         </div>
                     </div>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>

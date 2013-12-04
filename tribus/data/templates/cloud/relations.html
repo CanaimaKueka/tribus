@@ -1,53 +1,67 @@
 {% load i18n %}
-<span class="row-fluid">
-	<span class="span12">
-		<dl class="dl-horizontal">
-		    <dt class="bigger-150">
-				{% if tipo.0 == "pre-depends" %}
-					{% trans 'pre-depends' %}
-				{% elif tipo.0 == "depends" %}
-					{% trans 'depends' %}
-				{% elif tipo.0 == "recommends" %}
-					{% trans 'recommends' %}
-				{% elif tipo.0 == "suggests" %}
-					{% trans 'suggests' %}
-				{% elif tipo.0 == "provides" %}
-					{% trans 'provides' %}
-				{% elif tipo.0 == "enhances" %}
-					{% trans 'enhances' %}
-				{% elif tipo.0 == "breaks" %}
-					{% trans 'breaks' %}
-				{% elif tipo.0 == "replaces" %}
-					{% trans 'replaces' %}
-				{% elif tipo.0 == "conflicts" %}
-					{% trans 'conflicts' %}
-				{% endif %}
-		    </dt>
-		    <dd class="bigger-150 lighter">
-		    	
-
-
-
-		    </dd>
-		</dl>
-	</span>
-</span>
-
-{% for relacion in tipo.1 %}
-	{% if relacion.alt_id %}
-		{% ifchanged relacion.alt_id %}
-			{% if forloop.first %}
-				<a href="{% url 'cloud_profile' relacion.related_package %}">{{ relacion.related_package }}</a>
-				{% if relacion.version %}
-					({{ relacion.relation }} {{ relacion.version }})
-				{% endif %} 
-			{% else %}	
-				</p><p> <a href="{% url 'cloud_profile' relacion.related_package %}"> {{ relacion.related_package }} </a> {% if relacion.version %} ({{ relacion.relation }} {{ relacion.version }}) {% endif %}
-			{% endif %} 
-		{% else %}
-		    {% trans 'or' %} <a href="{% url 'cloud_profile' relacion.related_package %}"> {{ relacion.related_package }} </a> {% if relacion.version %} ({{ relacion.relation }} {{ relacion.version }}) {% endif %}
-		{% endifchanged %}
-	{% else %}
-		<p> <a href="{% url 'cloud_profile' relacion.related_package %}"> {{ relacion.related_package }} </a> {% if relacion.version %} ({{ relacion.relation }} {{ relacion.version }}) {% endif %} </p>
-	{% endif %}
-{% endfor %}
+        <dl class="dl-horizontal">
+            <dt class="bigger-150">
+                {% if tipo.0 == "pre-depends" %}
+                    {% trans 'Pre-Depends' %}
+                {% elif tipo.0 == "depends" %}
+                    {% trans 'Depends' %}
+                {% elif tipo.0 == "recommends" %}
+                    {% trans 'Recommends' %}
+                {% elif tipo.0 == "suggests" %}
+                    {% trans 'Suggests' %}
+                {% elif tipo.0 == "provides" %}
+                    {% trans 'Provides' %}
+                {% elif tipo.0 == "enhances" %}
+                    {% trans 'Enhances' %}
+                {% elif tipo.0 == "breaks" %}
+                    {% trans 'Breaks' %}
+                {% elif tipo.0 == "replaces" %}
+                    {% trans 'Replaces' %}
+                {% elif tipo.0 == "conflicts" %}
+                    {% trans 'Conflicts' %}
+                {% endif %}
+            </dt>
+            <dd class="bigger-150 lighter">
+            {% for relacion in tipo.1 %}
+                {% if relacion.alt_id %}
+                    {% ifchanged relacion.alt_id %}
+                        {% if forloop.first %}
+                            <p>
+                                <a href="{% url 'cloud_profile' relacion.related_package %}" target="_blank">{{ relacion.related_package }}</a>
+                                {% if relacion.version %}
+                                    ({{ relacion.relation }} {{ relacion.version }})
+                                {% endif %}
+                        {% elif forloop.last %}  
+                            </p>
+                            <p>
+                                <a href="{% url 'cloud_profile' relacion.related_package %}" target="_blank">{{ relacion.related_package }}</a>
+                                {% if relacion.version %}
+                                    ({{ relacion.relation }} {{ relacion.version }})
+                                {% endif %}
+                            </p>
+                        {% else %}  
+                            </p>
+                            <p>
+                                <a href="{% url 'cloud_profile' relacion.related_package %}" target="_blank">{{ relacion.related_package }}</a>
+                                {% if relacion.version %}
+                                    ({{ relacion.relation }} {{ relacion.version }})
+                                {% endif %}
+                        {% endif %} 
+                    {% else %}
+                        {% trans 'or' %}
+                        <a href="{% url 'cloud_profile' relacion.related_package %}" target="_blank">{{ relacion.related_package }}</a>
+                        {% if relacion.version %}
+                            ({{ relacion.relation }} {{ relacion.version }})
+                        {% endif %}
+                    {% endifchanged %}
+                {% else %}
+                    <p>
+                        <a href="{% url 'cloud_profile' relacion.related_package %}" target="_blank">{{ relacion.related_package }}</a>
+                        {% if relacion.version %}
+                            ({{ relacion.relation }} {{ relacion.version }})
+                        {% endif %}
+                    </p>
+                {% endif %}
+            {% endfor %}
+            </dd>
+        </dl>
