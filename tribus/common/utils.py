@@ -200,8 +200,9 @@ def scan_repository2(repo_root):
     return dist_releases
 
 def filename_generator(file_parts, new_m_time):
-    import hashlib
+    filename = os.path.basename(file_parts[0])
+    url = os.path.dirname(file_parts[0])
+    ext = file_parts[1]
     m = hashlib.md5()
-    print file_parts[0].split('/')[-1:][0]
-    m.update(file_parts[0].split('/')[-1:][0])
-    return '{0}.{1}'.format(m.hexdigest(), new_m_time)
+    m.update(filename)
+    return '{0}/{1}.{2}{3}'.format(url, m.hexdigest(), new_m_time, ext)

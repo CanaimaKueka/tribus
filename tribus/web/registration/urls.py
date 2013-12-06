@@ -116,8 +116,8 @@ urlpatterns = patterns(
         view='django.contrib.auth.views.password_reset',
         kwargs={
             'template_name': 'registration/password_reset_form.html',
-            'email_template_name': 'registration/password_reset_email.txt',
-            'subject_template_name': 'registration/password_reset_subject.txt',
+            'email_template_name': 'registration/password_reset_email.html',
+            'subject_template_name': 'registration/password_reset_subject.html',
             'password_reset_form': PasswordResetForm,
             'post_reset_redirect': '/password/reset/done'
         },

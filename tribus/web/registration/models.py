@@ -23,6 +23,8 @@ from registration.models import RegistrationProfile as BaseRegistrationProfile
 
 from django.contrib.auth.models import User
 from django.db import transaction
+from django.conf import settings
+from django.template.loader import render_to_string
 
 
 class TribusRegistrationManager(BaseRegistrationManager):
@@ -45,3 +47,21 @@ class TribusRegistrationManager(BaseRegistrationManager):
 
 class TribusRegistrationProfile(BaseRegistrationProfile):
     objects = TribusRegistrationManager()
+
+
+    def send_activation_email(self, site):
+
+        ctx_dict = {'activation_key': self.activation_key,
+                    'expiration_days': settings.ACCOUNT_ACTIVATION_DAYS,
+                    'site': site}
+        subject = render_to_string('registration/activation_email_subject.html',
+                                   ctx_dict)
+        # Email subject *must not* contain newlines
+        subject = ''.join(subject.splitlines())
+        
+        message = render_to_string('registration/activation_email.html',
+                                   ctx_dict)
+        
+        self.user.email_user(subject, message, settings.DEFAULT_FROM_EMAIL)
+    
+
