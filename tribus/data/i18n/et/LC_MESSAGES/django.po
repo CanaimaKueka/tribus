@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  tribus\n"
 "Report-Msgid-Bugs-To: desarrolladores@canaima.softwarelibre.gob.ve\n"
-"POT-Creation-Date: 2013-12-04 01:16-0630\n"
+"POT-Creation-Date: 2013-12-06 15:44-0630\n"
 "PO-Revision-Date: 2013-12-02 21:11+0000\n"
 "Last-Translator: jsfrncscg <jsfrncscg@gmail.com>\n"
 "Language-Team: Estonian "
@@ -711,12 +711,47 @@ msgstr ""
 msgid "Activation complete"
 msgstr ""
 
-#: tribus/data/templates/registration/activation_complete.html:8
-msgid "Thanks, activation complete! You may now <a href="
+#: tribus/data/templates/registration/activation_complete.html:9
+#, python-format
+msgid ""
+"Thanks, activation complete! You may now <a href='%(the_url)s'>login</a> "
+"using the username and password you set at registration."
+msgstr ""
+
+#: tribus/data/templates/registration/activation_email.html:2
+msgid ""
+"You (or someone pretending to be you) have asked to register an account "
+"at %(site.name)s.  If this wasn't you, please ignore this email and your "
+"address will be removed from our records."
+msgstr ""
+
+#: tribus/data/templates/registration/activation_email.html:4
+#, python-format
+msgid ""
+"To activate this account, please click the following link within the next"
+" %(expiration_days)s days:"
+msgstr ""
+
+#: tribus/data/templates/registration/activation_email.html:11
+msgid ""
+"\n"
+"Sincerely,\n"
+"%(site.name)s Management\n"
+msgstr ""
+
+#: tribus/data/templates/registration/activation_email_subject.html:2
+#: tribus/data/templates/registration/password_reset_subject.html:2
+msgid "Account registration for %(site.name)s"
 msgstr ""
 
 #: tribus/data/templates/registration/activation_form.html:3
 msgid "Activation problem"
+msgstr ""
+
+#: tribus/data/templates/registration/activation_form.html:8
+msgid ""
+"Oops &ndash; it seems that your activation key is invalid. Please check "
+"the url again."
 msgstr ""
 
 #: tribus/data/templates/registration/form_errors.html:4
@@ -769,6 +804,25 @@ msgid ""
 "in</a>."
 msgstr ""
 
+#: tribus/data/templates/registration/password_reset_confirm.html:3
+msgid "Confirm password reset"
+msgstr ""
+
+#: tribus/data/templates/registration/password_reset_confirm.html:9
+#: tribus/data/templates/registration/password_reset_form.html:9
+msgid "Reset your password"
+msgstr ""
+
+#: tribus/data/templates/registration/password_reset_confirm.html:11
+msgid "Please enter your password twice."
+msgstr ""
+
+#: tribus/data/templates/registration/password_reset_confirm.html:19
+#: tribus/data/templates/registration/password_reset_form.html:3
+#: tribus/data/templates/registration/password_reset_form.html:19
+msgid "Reset password"
+msgstr ""
+
 #: tribus/data/templates/registration/password_reset_done.html:3
 msgid "Password reset"
 msgstr ""
@@ -779,13 +833,34 @@ msgid ""
 "check your email and click the link to continue."
 msgstr ""
 
-#: tribus/data/templates/registration/password_reset_form.html:3
-#: tribus/data/templates/registration/password_reset_form.html:19
-msgid "Reset password"
+#: tribus/data/templates/registration/password_reset_email.html:3
+msgid "Greetings %(user.full_name)s"
 msgstr ""
 
-#: tribus/data/templates/registration/password_reset_form.html:9
-msgid "Reset your password"
+#: tribus/data/templates/registration/password_reset_email.html:5
+#, python-format
+msgid ""
+"You are receiving this email because you (or someone pretending to be "
+"you) requested that your password be reset on the %(domain)s site.  If "
+"you do not wish to reset your password, please ignore this message."
+msgstr ""
+
+#: tribus/data/templates/registration/password_reset_email.html:7
+msgid ""
+"To reset your password, please click the following link, or copy and "
+"paste it into your web browser:"
+msgstr ""
+
+#: tribus/data/templates/registration/password_reset_email.html:11
+msgid "Your username, in case you've forgotten: %(user.username)s"
+msgstr ""
+
+#: tribus/data/templates/registration/password_reset_email.html:16
+#, python-format
+msgid ""
+"\n"
+"Best regards,\n"
+"%(site_name)s Management\n"
 msgstr ""
 
 #: tribus/data/templates/registration/password_reset_form.html:11
@@ -961,78 +1036,78 @@ msgstr ""
 msgid "Descripcion"
 msgstr ""
 
-#: tribus/web/profile/forms.py:33 tribus/web/registration/forms.py:64
-#: tribus/web/registration/forms.py:110 tribus/web/registration/forms.py:125
-#: tribus/web/registration/forms.py:140
+#: tribus/web/profile/forms.py:33 tribus/web/registration/forms.py:71
+#: tribus/web/registration/forms.py:117 tribus/web/registration/forms.py:132
+#: tribus/web/registration/forms.py:147
 msgid "This value may contain only letters, numbers and @/./+/-/_ characters."
 msgstr ""
 
-#: tribus/web/registration/forms.py:54 tribus/web/registration/forms.py:100
+#: tribus/web/registration/forms.py:61 tribus/web/registration/forms.py:107
 msgid "Username"
 msgstr ""
 
-#: tribus/web/registration/forms.py:58
+#: tribus/web/registration/forms.py:65
 msgid "Enter your username"
 msgstr ""
 
-#: tribus/web/registration/forms.py:69 tribus/web/registration/forms.py:156
-#: tribus/web/registration/forms.py:218
+#: tribus/web/registration/forms.py:76 tribus/web/registration/forms.py:163
+#: tribus/web/registration/forms.py:276
 msgid "Password"
 msgstr ""
 
-#: tribus/web/registration/forms.py:72
+#: tribus/web/registration/forms.py:79
 msgid "Enter your password"
 msgstr ""
 
-#: tribus/web/registration/forms.py:79
+#: tribus/web/registration/forms.py:86
 msgid "Remember my session"
 msgstr ""
 
-#: tribus/web/registration/forms.py:104
+#: tribus/web/registration/forms.py:111
 msgid "Pick a username"
 msgstr ""
 
-#: tribus/web/registration/forms.py:115 tribus/web/registration/forms.py:119
+#: tribus/web/registration/forms.py:122 tribus/web/registration/forms.py:126
 msgid "First name"
 msgstr ""
 
-#: tribus/web/registration/forms.py:130 tribus/web/registration/forms.py:134
+#: tribus/web/registration/forms.py:137 tribus/web/registration/forms.py:141
 msgid "Last name"
 msgstr ""
 
-#: tribus/web/registration/forms.py:145 tribus/web/registration/forms.py:201
+#: tribus/web/registration/forms.py:152 tribus/web/registration/forms.py:208
 msgid "Email"
 msgstr ""
 
-#: tribus/web/registration/forms.py:148 tribus/web/registration/forms.py:204
+#: tribus/web/registration/forms.py:155 tribus/web/registration/forms.py:211
 msgid "Enter a valid email"
 msgstr ""
 
-#: tribus/web/registration/forms.py:159
+#: tribus/web/registration/forms.py:166
 msgid "Create a password"
 msgstr ""
 
-#: tribus/web/registration/forms.py:191 tribus/web/registration/forms.py:243
+#: tribus/web/registration/forms.py:198 tribus/web/registration/forms.py:301
 msgid "A user with that username already exists."
 msgstr ""
 
-#: tribus/web/registration/forms.py:221
+#: tribus/web/registration/forms.py:279
 msgid "Create a new password"
 msgstr ""
 
-#: tribus/web/registration/forms.py:228
+#: tribus/web/registration/forms.py:286
 msgid "Password (repeat)"
 msgstr ""
 
-#: tribus/web/registration/forms.py:231
+#: tribus/web/registration/forms.py:289
 msgid "Repeat your new password"
 msgstr ""
 
-#: tribus/web/registration/forms.py:263
+#: tribus/web/registration/forms.py:321
 msgid "Old password"
 msgstr ""
 
-#: tribus/web/registration/forms.py:266
+#: tribus/web/registration/forms.py:324
 msgid "Enter your old password"
 msgstr ""
 
