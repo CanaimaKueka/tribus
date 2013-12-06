@@ -133,7 +133,7 @@ urlpatterns = patterns(
     ),
 
     url(regex=r'^password/reset/confirm/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)$',
-        view='django.contrib.auth.views.password_reset_confirm',
+        view='tribus.web.registration.views.password_reset_confirm',
         kwargs={
             'template_name': 'registration/password_reset_confirm.html',
             'set_password_form': SetPasswordForm,

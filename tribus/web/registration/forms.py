@@ -169,24 +169,6 @@ class SignupForm(Form):
                                     )
                                 )
 
-
-#     def clean_username(self):
-#         """
-#         Validate that the username is alphanumeric and is not already
-#         in use.
-#         
-#         """
-#         try:
-#             existingldap = LdapUser.objects.get(username=self.cleaned_data['username'])
-#         except LdapUser.DoesNotExist:
-#             existingdb = User.objects.filter(username__iexact=self.cleaned_data['username'])
-#             if existingdb.exists():
-#                 existingdb.delete()
-#             return self.cleaned_data['username']
-#         else:
-#             #if existingldap.exists():
-#             raise forms.ValidationError(_("A user with that username already exists."))
-#         
     def clean_username(self):
         """
         Validate that the username is alphanumeric and is not already
