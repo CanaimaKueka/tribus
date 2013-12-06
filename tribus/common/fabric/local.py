@@ -39,6 +39,7 @@ def development():
     env.hosts = ['localhost']
     env.basedir = BASEDIR
     env.virtualenv_dir = os.path.join(env.basedir, 'virtualenv')
+    env.virtualenv_site_dir = os.path.join(env.virtualenv_dir, 'lib', 'python%s' % sys.version[:3], 'site-packages')
     env.virtualenv_args = ' '.join(['--clear', '--no-site-packages', '--setuptools'])
     env.virtualenv_activate = os.path.join(env.virtualenv_dir, 'bin', 'activate')
     env.settings = 'tribus.config.web'
@@ -134,8 +135,8 @@ def filldb_from_remote():
     py_activate_virtualenv()
     from tribus.common.recorder import create_cache_dirs, fill_db_from_cache
     from tribus.config.pkgrecorder import CANAIMA_ROOT
-    resetdb()
-    create_cache_dirs(CANAIMA_ROOT)
+    #resetdb()
+    #create_cache_dirs(CANAIMA_ROOT)
     fill_db_from_cache()
     rebuild_index()
     
@@ -240,7 +241,7 @@ def py_activate_virtualenv():
     site.addsitedir(os.path.join(env.virtualenv_dir, 'lib', 'python%s' % sys.version[:3], 'site-packages'))
     sys.prefix = env.virtualenv_dir
     sys.path.insert(0, env.virtualenv_dir)
-
+    sys.path.insert(0, env.virtualenv_site_dir)
 
 def configure_django():
     syncdb_django()

@@ -39,13 +39,14 @@ TEMPLATE_DIRS = [get_path([BASEDIR, 'tribus', 'data', 'templates'])]
 
 DJANGO_STATIC = not DEBUG
 DJANGO_STATIC_MEDIA_ROOTS = [get_path([BASEDIR, 'tribus', 'data'])]
+DJANGO_STATIC_FILENAME_GENERATOR = 'tribus.common.utils.filename_generator'
+DJANGO_STATIC_NAME_MAX_LENGTH = 200
 
 LOGIN_URL = '/login'
 LOGOUT_URL = '/logout'
 LOGIN_REDIRECT_URL = '/'
 
 ROOT_URLCONF = 'tribus.web.urls'
-
 WSGI_APPLICATION = 'tribus.web.wsgi.application'
 
 #
@@ -53,10 +54,10 @@ WSGI_APPLICATION = 'tribus.web.wsgi.application'
 #
 
 AUTHENTICATION_BACKENDS = (
-    'social_auth.backends.twitter.TwitterBackend',
-    'social_auth.backends.facebook.FacebookBackend',
-    'social_auth.backends.google.GoogleOAuth2Backend',
-    'social_auth.backends.contrib.github.GithubBackend',
+    #'social_auth.backends.twitter.TwitterBackend',
+    #'social_auth.backends.facebook.FacebookBackend',
+    #'social_auth.backends.google.GoogleOAuth2Backend',
+    #'social_auth.backends.contrib.github.GithubBackend',
     'django_auth_ldap.backend.LDAPBackend',
 
 
@@ -69,23 +70,23 @@ AUTHENTICATION_BACKENDS = (
 # Other local configuration should be set in tribus/config/web_local.py
 SECRET_KEY = 'oue0893ro5c^82!zke^ypu16v0u&%s($lnegf^7-vcgc^$e&$f'
 
-SOCIAL_AUTH_ENABLED_BACKENDS = ('twitter', 'facebook', 'google', 'github')
-SOCIAL_AUTH_DEFAULT_USERNAME = 'tribus'
-SOCIAL_AUTH_UID_LENGTH = 32
-SOCIAL_AUTH_ASSOCIATION_HANDLE_LENGTH = 32
-SOCIAL_AUTH_NONCE_SERVER_URL_LENGTH = 32
-SOCIAL_AUTH_ASSOCIATION_SERVER_URL_LENGTH = 32
-SOCIAL_AUTH_ASSOCIATION_HANDLE_LENGTH = 32
+#SOCIAL_AUTH_ENABLED_BACKENDS = ('twitter', 'facebook', 'google', 'github')
+#SOCIAL_AUTH_DEFAULT_USERNAME = 'tribus'
+#SOCIAL_AUTH_UID_LENGTH = 32
+#SOCIAL_AUTH_ASSOCIATION_HANDLE_LENGTH = 32
+#SOCIAL_AUTH_NONCE_SERVER_URL_LENGTH = 32
+#SOCIAL_AUTH_ASSOCIATION_SERVER_URL_LENGTH = 32
+#SOCIAL_AUTH_ASSOCIATION_HANDLE_LENGTH = 32
 
-TWITTER_CONSUMER_KEY = 'A2jx982HVh8KuFQ9q2iN8A'
-TWITTER_CONSUMER_SECRET = 'wU3T7KPgvNqj3mBH7Pyn81T10lSw2NN4LLuZCLYk5U'
-GOOGLE_OAUTH2_CLIENT_ID = '827167166748-7h5k1crt9fsr8jjqindi1c8hfl48eahj.apps.googleusercontent.com'
-GOOGLE_OAUTH2_CLIENT_SECRET = 'VvoYXzfheMInzrcTq8v3Tdhf'
-FACEBOOK_APP_ID='172639862908723'
-FACEBOOK_API_SECRET='60735113b51809707ed3771b248fb37e'
-FACEBOOK_EXTENDED_PERMISSIONS = ['email']
-GITHUB_APP_ID = 'c3d70354858107387ef8'
-GITHUB_API_SECRET = '55adbc6ecf54d295b391c8a6a1037e71165728d6'
+#TWITTER_CONSUMER_KEY = 'A2jx982HVh8KuFQ9q2iN8A'
+#TWITTER_CONSUMER_SECRET = 'wU3T7KPgvNqj3mBH7Pyn81T10lSw2NN4LLuZCLYk5U'
+#GOOGLE_OAUTH2_CLIENT_ID = '827167166748-7h5k1crt9fsr8jjqindi1c8hfl48eahj.apps.googleusercontent.com'
+#GOOGLE_OAUTH2_CLIENT_SECRET = 'VvoYXzfheMInzrcTq8v3Tdhf'
+#FACEBOOK_APP_ID='172639862908723'
+#FACEBOOK_API_SECRET='60735113b51809707ed3771b248fb37e'
+#FACEBOOK_EXTENDED_PERMISSIONS = ['email']
+#GITHUB_APP_ID = 'c3d70354858107387ef8'
+#GITHUB_API_SECRET = '55adbc6ecf54d295b391c8a6a1037e71165728d6'
 
 #
 # DATABASE CONFIGURATION -------------------------------------------------------
@@ -128,7 +129,7 @@ CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
 CELERYBEAT_SCHEDULE = {
     "update_cache": {
         "task": "tribus.web.cloud.tasks.update_cache",
-        "schedule": crontab(minute='*/30'),
+        "schedule": crontab(minute=0, hour=0),
         "args": (),
     },               
 }
@@ -170,7 +171,7 @@ INSTALLED_APPS = (
     'tribus.web.profile',
     'ldapdb',
     'django_auth_ldap',
-    'social_auth',
+    #'social_auth',
     'djcelery',
     'south',
     'django_static',
@@ -183,16 +184,7 @@ INSTALLED_APPS = (
 
 )
 
-# EMAIL_USE_TLS = True
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_HOST_USER = 'martinez.faneyth@gmail.com'
-# EMAIL_HOST_PASSWORD = ''
-# EMAIL_PORT = 587
-# EMAIL_SUBJECT_PREFIX = '[Tribus] '
-
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -225,18 +217,18 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.tz',
     'django.contrib.messages.context_processors.messages',
     'tribus.web.processors.default_context',
-    'social_auth.context_processors.social_auth_by_type_backends',
+    #'social_auth.context_processors.social_auth_by_type_backends',
 )
 
 
-SOCIAL_AUTH_PIPELINE = (
-    'social_auth.backends.pipeline.social.social_auth_user',
-    'social_auth.backends.pipeline.user.get_username',
-    'tribus.web.registration.social.pipeline.create_user',
-    'social_auth.backends.pipeline.social.associate_user',
-    'social_auth.backends.pipeline.social.load_extra_data',
-    'social_auth.backends.pipeline.user.update_user_details'
-)
+#SOCIAL_AUTH_PIPELINE = (
+#    'social_auth.backends.pipeline.social.social_auth_user',
+#    'social_auth.backends.pipeline.user.get_username',
+#    'tribus.web.registration.social.pipeline.create_user',
+#    'social_auth.backends.pipeline.social.associate_user',
+#    'social_auth.backends.pipeline.social.load_extra_data',
+#    'social_auth.backends.pipeline.user.update_user_details'
+#)
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'

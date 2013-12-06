@@ -198,3 +198,10 @@ def scan_repository2(repo_root):
         linea = dists.readline().strip("\n")
         
     return dist_releases
+
+def filename_generator(file_parts, new_m_time):
+    import hashlib
+    m = hashlib.md5()
+    print file_parts[0].split('/')[-1:][0]
+    m.update(file_parts[0].split('/')[-1:][0])
+    return '{0}.{1}'.format(m.hexdigest(), new_m_time)

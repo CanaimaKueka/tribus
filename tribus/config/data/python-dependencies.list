@@ -1,4 +1,4 @@
-django-static==1.5.5
+
 django-tastypie==0.10.0
 cssmin==0.1.4
 slimit==0.8.1
@@ -33,3 +33,4 @@ whoosh==2.4.1
 transifex-client==0.9.1
 django-registration
 -e git+https://github.com/notanumber/xapian-haystack.git#egg=xapian-haystack
+-e git+https://github.com/joseguerrero/django-static.git#egg=django-static

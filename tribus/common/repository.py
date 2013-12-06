@@ -51,7 +51,7 @@ def init_sample_packages():
             rel = deb822.Release(datasource)
             if rel.has_key('MD5sum'):
                 for l in rel['MD5sum']:
-                    if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages$", l['name']):
+                    if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages.gz$", l['name']):
                         print "Seleccionando paquetes en -->", l['name']
                         list_name = string.join( l['name'].split("/"), "_")
                         list_file = os.path.join(SAMPLES_LISTS, string.join([release[0], list_name], "_"))

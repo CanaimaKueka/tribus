@@ -33,7 +33,7 @@ This module contains common functions to record package data from a repository.
 # 2. Parece necesario y correcto sustituir el None de las relacione simples por 0. PENDIENTE
 #===============================================================================
 
-import urllib, re, email.Utils, os, sys, string, random
+import urllib, re, email.Utils, os, sys, string, random, gzip
 path = os.path.join(os.path.dirname(__file__), '..', '..')
 base = os.path.realpath(os.path.abspath(os.path.normpath(path)))
 os.environ['PATH'] = base + os.pathsep + os.environ['PATH']
@@ -545,7 +545,7 @@ def update_dist_paragraphs(repository_root, dist):
     if datasource:
         rel = deb822.Release(datasource)
         for l in rel['MD5sum']:
-            if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages$", l['name']):
+            if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages.gz$", l['name']):
                 remote_file = os.path.join(source, l['name'])
                 local_file = os.path.join(base,  l['name'])
                 if not l['md5sum'] == md5Checksum(local_file):
@@ -596,7 +596,7 @@ def create_cache_dirs(repository_root):
             rel = deb822.Release(datasource)
             if rel.has_key('MD5sum'):
                 for l in rel['MD5sum']:
-                    if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages$", l['name']):                        
+                    if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages.gz$", l['name']):                        
                         comp = l['name'].split("/")
                         comp.pop()
                         partial_path = string.join(comp, "/")
@@ -628,8 +628,9 @@ def fill_db_from_cache():
         dist_sub_paths = filter(lambda p: "binary" in p, find_dirs(os.path.join(PACKAGECACHE, dist))) 
         
         for path in dist_sub_paths:
-            for p in find_files(path, "Packages"): 
-                for section in deb822.Packages.iter_paragraphs(file(p)):
+            for p in find_files(path, "Packages.gz"): 
+		print p
+                for section in deb822.Packages.iter_paragraphs(gzip.open(p,'r')):
 
                     record_section(section, dist)
                     

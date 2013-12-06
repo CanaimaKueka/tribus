@@ -22,7 +22,7 @@ import sys
 import os
 import site
 
-os.environ['DJANGO_SETTINGS_MODULE'] = 'tribus.web.settings'
+os.environ['DJANGO_SETTINGS_MODULE'] = 'tribus.config.web'
 
 base = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'virtualenv'))
 os.environ['PATH'] = os.path.join(base, 'bin') + os.pathsep + os.environ['PATH']
