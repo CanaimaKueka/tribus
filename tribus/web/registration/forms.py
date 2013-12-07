@@ -184,6 +184,21 @@ class SignupForm(Form):
                 existingdb.delete()
             return self.cleaned_data['username']
 
+    def clean_email(self):
+        """
+        Validate that the username is alphanumeric and is not already
+        in use.
+        
+        """
+        existingldap = LdapUser.objects.filter(email=self.cleaned_data['email'])
+        if existingldap.exists():
+            raise forms.ValidationError(_("A user with that email already exists."))
+        else:
+            existingdb = User.objects.filter(email__iexact=self.cleaned_data['email'])
+            if existingdb.exists():
+                existingdb.delete()
+            return self.cleaned_data['email']
+
 
 class PasswordResetForm(BasePasswordResetForm):
     email = forms.EmailField(
@@ -223,6 +238,17 @@ class PasswordResetForm(BasePasswordResetForm):
         """
         from django.core.mail import send_mail
         for user in self.users_cache:
+            UserModel = get_user_model()
+            user_django = UserModel._default_manager.get(email__iexact=user.email)
+
+            if not len(user_django):
+                user_django = User.objects.create_user(user.username,
+                                                    user.email,
+                                                    user.password)
+                user_django.is_active = True
+                user_django.last_login = timezone.now()
+                user_django.save()
+
             if not domain_override:
                 current_site = get_current_site(request)
                 site_name = current_site.name
@@ -230,23 +256,20 @@ class PasswordResetForm(BasePasswordResetForm):
             else:
                 site_name = domain = domain_override
 
-            user.pk = user.uid
-            user.last_login = timezone.now()
-
             c = {
-                'email': user.email,
+                'email': user_django.email,
                 'domain': domain,
                 'site_name': site_name,
-                'uid': int_to_base36(user.pk),
-                'user': user,
-                'token': token_generator.make_token(user),
+                'uid': int_to_base36(user_django.pk),
+                'user': user_django,
+                'token': token_generator.make_token(user_django),
                 'protocol': use_https and 'https' or 'http',
             }
 
             subject = loader.render_to_string(subject_template_name, c)
             subject = ''.join(subject.splitlines())
             email = loader.render_to_string(email_template_name, c)
-            send_mail(subject, email, from_email, [user.email])
+            send_mail(subject, email, from_email, [user_django.email])
 
 
 class SetPasswordForm(BaseSetPasswordForm):
