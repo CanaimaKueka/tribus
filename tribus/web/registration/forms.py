@@ -238,16 +238,13 @@ class PasswordResetForm(BasePasswordResetForm):
         """
         from django.core.mail import send_mail
         for user in self.users_cache:
-            UserModel = get_user_model()
-            user_django = UserModel._default_manager.get(email__iexact=user.email)
-
-            if not len(user_django):
-                user_django = User.objects.create_user(user.username,
-                                                    user.email,
-                                                    user.password)
-                user_django.is_active = True
-                user_django.last_login = timezone.now()
-                user_django.save()
+            obj, created = User.objects.get_or_create(username=user.username,
+                                                      email=user.email,
+                                                      password=user.password)
+            if created:
+		obj.is_active = True
+                obj.last_login = timezone.now()
+                obj.save()
 
             if not domain_override:
                 current_site = get_current_site(request)
@@ -257,19 +254,19 @@ class PasswordResetForm(BasePasswordResetForm):
                 site_name = domain = domain_override
 
             c = {
-                'email': user_django.email,
+                'email': obj.email,
                 'domain': domain,
                 'site_name': site_name,
-                'uid': int_to_base36(user_django.pk),
-                'user': user_django,
-                'token': token_generator.make_token(user_django),
+                'uid': int_to_base36(obj.pk),
+                'user': obj,
+                'token': token_generator.make_token(obj),
                 'protocol': use_https and 'https' or 'http',
             }
 
             subject = loader.render_to_string(subject_template_name, c)
             subject = ''.join(subject.splitlines())
             email = loader.render_to_string(email_template_name, c)
-            send_mail(subject, email, from_email, [user_django.email])
+            send_mail(subject, email, from_email, [obj.email])
 
 
 class SetPasswordForm(BaseSetPasswordForm):

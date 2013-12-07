@@ -290,7 +290,7 @@ function TribController($scope, $timeout, $modal, Tribs, Timeline){
         });
 
         deleteTribModal.result.then(function(){
-            Tribs.delete({
+            Tribs.remove({
                 id: $scope.delete_trib_id
             }, function(e){
                 $scope.tribs.splice($scope.delete_trib_index, 1);
@@ -503,7 +503,7 @@ function CommentController($scope, $timeout, $modal, Comments){
         });
 
         deleteCommentModal.result.then(function(){
-            Comments.delete({
+            Comments.remove({
                 id: $scope.delete_comment_id
             }, function(e){
                 $scope.comments.splice($scope.delete_comment_index, 1);

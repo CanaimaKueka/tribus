@@ -7,14 +7,22 @@
         <title>{% block title %}{% endblock %}</title>
         <meta charset="{{ app_charset|lower }}" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="search" href="/opensearch.xml" type="application/opensearchdescription+xml" title="Tribus" />
         {% staticall %}
             {% for css in render_css %}
+                {% if DEBUG %}
                 <link type="text/css" rel="stylesheet" href="{% static 'css/full/'|add:css|add:'.css' %}" />
+		{% else %}
+                <link type="text/css" rel="stylesheet" href="{% static 'css/min/'|add:css|add:'.css' %}" />
+		{% endif %}
             {% endfor %}
         {% endstaticall %}
+        {% if DEBUG %}
         <!--[if IE 7]><link type="text/css" rel="stylesheet" href="{% static 'css/full/font-awesome-ie7.css' %}" /><![endif]-->
         <!--[if lte IE 8]><link type="text/css" rel="stylesheet" href="{% static 'css/full/tribus-ie.css' %}" /><![endif]-->
+	{% else %}
+        <!--[if IE 7]><link type="text/css" rel="stylesheet" href="{% static 'css/min/font-awesome-ie7.css' %}" /><![endif]-->
+        <!--[if lte IE 8]><link type="text/css" rel="stylesheet" href="{% static 'css/min/tribus-ie.css' %}" /><![endif]-->
+	{% endif %}
     </head>
     <body>
         {% include 'navbar.html' %}
@@ -22,11 +30,20 @@
         {% include "footer.html" %}
         {% staticall %}
             {% for js in render_js %}
+                {% if DEBUG %}
                 <script type="text/javascript" src="{% static 'js/full/'|add:js|add:'.js' %}"></script>
+		{% else %}
+                <script type="text/javascript" src="{% static 'js/min/'|add:js|add:'.js' %}"></script>
+		{% endif %}
             {% endfor %}
         {% endstaticall %}
+        {% if DEBUG %}
         <!--[if lte IE 8]><script type="text/javascript" src="{% static 'js/full/excanvas.js' %}"></script><![endif]-->
         <!--[if lt IE 9]><script type="text/javascript" src="{% static 'js/full/html5shiv.js' %}"></script><![endif]-->
+	{% else %}
+        <!--[if lte IE 8]><script type="text/javascript" src="{% static 'js/min/excanvas.js' %}"></script><![endif]-->
+        <!--[if lt IE 9]><script type="text/javascript" src="{% static 'js/min/html5shiv.js' %}"></script><![endif]-->
+	{% endif %}
         {% block scripts %}{% endblock %}
     </body>
 </html>

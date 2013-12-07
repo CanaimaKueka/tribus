@@ -99,7 +99,7 @@ angular.module('Tribs', ['ngResource'])
                 method: 'GET',
                 isArray: false
             },
-            delete: {
+            remove: {
                 method: 'DELETE',
                 headers: {
                     'X-CSRFToken': angular.element(document.querySelector('input[name=csrfmiddlewaretoken]')).val()
@@ -132,7 +132,7 @@ angular.module('Comments', ['ngResource'])
                 method: 'GET',
                 isArray: false
             },
-            delete: {
+            remove: {
                 method: 'DELETE',
                 headers: {
                     'X-CSRFToken': angular.element(document.querySelector('input[name=csrfmiddlewaretoken]')).val()
