@@ -5,7 +5,6 @@
 # Translators:
 # Nitrio <hsh283@gmail.com>, 2013
 # jsfrncscg <jsfrncscg@gmail.com>, 2013
-# jsfrncscg <jsfrncscg@gmail.com>, 2013
 # Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>, 2013
 # Nitrio <hsh283@gmail.com>, 2013
 # Wuilmer Bolivar <el.wuilmer@gmail.com>, 2013
@@ -769,7 +768,7 @@ msgstr "¡Oh, no!"
 #: tribus/data/templates/registration/form_errors.html:5
 msgid ""
 "The operation could not be performed because one or more error(s) occurred."
-msgstr "La operación no pudo completarse debido a algún error(es)."
+msgstr "La operación no se pudo realizar porque se ha producido uno o más error(es)."
 
 #: tribus/data/templates/registration/form_errors.html:6
 msgid "Please resubmit the form after making the following changes:"
@@ -860,7 +859,7 @@ msgstr "Para restablecer su contraseña, por favor haga clic en el siguiente enl
 
 #: tribus/data/templates/registration/password_reset_email.html:11
 msgid "Your username, in case you've forgotten: %(user.username)s"
-msgstr "Su nombre de usuario, en caso de que lo haya olvidado: %(user.username)s"
+msgstr "Su nombre de usuario, en caso de que lo haya olvidado es: %(user.username)s"
 
 #: tribus/data/templates/registration/password_reset_email.html:16
 #, python-format
