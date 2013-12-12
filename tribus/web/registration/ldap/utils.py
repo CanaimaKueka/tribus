@@ -44,24 +44,6 @@ def edit_ldap_user(u):
     l.email = u.email
     l.description = u.description
     l.save()
-    print u.username ," Actualizado"
-
-#def create_ldap_password(password, algorithm='SSHA', salt=None):
-#    """
-#    Encrypts a password as used for an ldap userPassword attribute.
-#    """
-#    s = hashlib.sha1()
-#    s.update(password)
-
-#    if algorithm == 'SSHA':
-#        if salt is None:
-#            salt = ''.join([random.choice(string.letters) for i in range(8)])
-
-#        s.update(salt)
-#        return '{SSHA}%s' % base64.encodestring(s.digest() + salt).rstrip()
-#    else:
-#        raise NotImplementedError
-
 
 def get_last_uid():
     try:
