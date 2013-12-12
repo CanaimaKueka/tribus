@@ -31,3 +31,36 @@
 * [HECHO] Migrar de jQuery a AngularJS.
 * [HECHO] Revisar API.
 * [HECHO] Revisar CSS responsive.
+* [] Separar los CSS por componentes.
+* [] Hacer un CDN para los recursos multimedia.
+* [] Hacer validación de formularios del lado del cliente con angularjs y verificar las del lado del servidor.
+* [] i18n para la documentación automatizar el ciclo de compilación para cada idioma.
+Colocar número de seguidores, seguidos y tribs en el perfil
+Agregar funcionalidad para subir imagen de usuario. Agregar un dialogo (modal) que permita escoger entre gravatar y una imagen personalizada.
+Agregar tab de seguidores y seguidos cuando se ve el perfil de otra persona.
+Arreglar la búsqueda
+	Debes poder subir y bajar con el teclado.
+	Si se hace click en otra parte de la página, debe desaparecer.
+	Alargar el delay entre el keypress y la ejecución de la búsqueda.
+	Utilizar el plugin typeahead de angular.
+
+Permitir cambiar nombre de usuario, nombres, apellidos y correo.
+Eliminar duplicación de datos en los Documentos de Mongo. Relacionar Tribs y Comentarios con sus autores.
+Que la descripción cargue la descripción anterior.
+Diseñar una forma de migrar la base de datos entre versiones de Tribus.
+Agregar mentions.
+Agregar like y dislike.
+Agregar búsqueda de amigos en otras redes que estén en Tribus (gmail, twitter, facebook, github).
+Arreglar login por otros servicios.
+Cambiar el User Model (ESTUDIAR).
+Agregar permalinks a los tribs y comentarios. Hacer una vista para cada trib.
+Agregar mensajes privados/chat.
+Permitir publicar un trib en twitter y facebook.
+Separar los templates de angular bootstrap.
+Hacer el esquema de versionamiento y release.
+Documentar clases y funciones. Completar la documentacion para desarrolladores.
+Hacer las pruebas unitarias faltantes.
+Arreglar el admin.
+Agregar el opensearch.
+Hacer sprites.
+

@@ -32,5 +32,6 @@ mongodbforms==0.3
 whoosh==2.4.1
 transifex-client==0.9.1
 django-registration
+lxml
 -e git+https://github.com/notanumber/xapian-haystack.git#egg=xapian-haystack
 -e git+https://github.com/joseguerrero/django-static.git#egg=django-static
