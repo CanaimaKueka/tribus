@@ -126,7 +126,6 @@ def filldb_from_local():
     py_activate_virtualenv()
     from tribus.common.recorder import create_cache_dirs, fill_db_from_cache
     from tribus.config.pkgrecorder import LOCAL_ROOT
-    resetdb()
     create_cache_dirs(LOCAL_ROOT)
     fill_db_from_cache()
     rebuild_index()
@@ -135,8 +134,7 @@ def filldb_from_remote():
     py_activate_virtualenv()
     from tribus.common.recorder import create_cache_dirs, fill_db_from_cache
     from tribus.config.pkgrecorder import CANAIMA_ROOT
-    #resetdb()
-    #create_cache_dirs(CANAIMA_ROOT)
+    create_cache_dirs(CANAIMA_ROOT)
     fill_db_from_cache()
     rebuild_index()
     
@@ -283,7 +281,7 @@ def runserver_django():
 def runcelery_daemon():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python manage.py celeryd -l INFO' % env, capture=False)
+            local('%(command)s python manage.py celeryd -c 1 -l INFO' % env, capture=False)
             
             
 def runcelery_worker():

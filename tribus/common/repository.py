@@ -27,7 +27,7 @@ This module contains common functions to manage local and remote repositories.
 
 '''
 
-import urllib, re, os, sys, string, random
+import urllib, re, os, sys, string, random, gzip, urllib2
 path = os.path.join(os.path.dirname(__file__), '..', '..')
 base = os.path.realpath(os.path.abspath(os.path.normpath(path)))
 os.environ['PATH'] = base + os.pathsep + os.environ['PATH']
@@ -35,7 +35,7 @@ sys.prefix = base
 sys.path.insert(0, base)
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
 from debian import deb822
-from tribus.config.pkgrecorder import LOCAL_ROOT, CANAIMA_ROOT, SAMPLES_LISTS, SAMPLES_PACKAGES
+from tribus.config.pkgrecorder import LOCAL_ROOT, CANAIMA_ROOT, SAMPLES_LISTS, SAMPLES_PACKAGES, SAMPLES
 from tribus.common.utils import list_files, scan_repository
 
 
@@ -63,8 +63,9 @@ def select_sample_packages(package_url, package_list, include_relations = False)
     relaciones = []
     final = {}
     archivo = open(package_list, 'w')
-    remote_packages = urllib.urlopen(package_url)
-    for section in deb822.Packages.iter_paragraphs(remote_packages):
+    tmp_path = os.path.join(SAMPLES, "tmpckg.gzip")
+    urllib.urlretrieve(package_url, tmp_path)
+    for section in deb822.Packages.iter_paragraphs(gzip.open(tmp_path)):
         rnd = random.randint(0, 500)
         if section.has_key('Installed-Size'):
             if rnd == 500 and int(section['Installed-Size']) < 500:

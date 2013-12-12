@@ -587,16 +587,21 @@ def create_cache_dirs(repository_root):
     '''
     
     local_dists =  scan_repository(repository_root)
-    for dist in local_dists.items():
-        try:
-            datasource = urllib.urlopen(os.path.join(repository_root, dist[1]))
-        except:
-            datasource = None
+    
+    for dist in local_dists.items():    
+        if DEBUG:
+            datasource = open(os.path.join(repository_root, dist[1]))
+        else:
+            try:
+                datasource = urllib.urlopen(os.path.join(repository_root, dist[1]))
+            except:
+                datasource = None
+        
         if datasource:
             rel = deb822.Release(datasource)
-            if rel.has_key('MD5sum'):
-                for l in rel['MD5sum']:
-                    if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages.gz$", l['name']):                        
+            if rel.has_key('MD5Sum'):
+                for l in rel['MD5Sum']:
+                    if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages$", l['name']):                    
                         comp = l['name'].split("/")
                         comp.pop()
                         partial_path = string.join(comp, "/")
@@ -621,16 +626,11 @@ def fill_db_from_cache():
     .. versionadded:: 0.1
     '''
     
-    local_dists = filter(None,list_dirs(PACKAGECACHE))
-    
+    local_dists = filter(None, list_dirs(PACKAGECACHE))
     for dist in local_dists:
-
         dist_sub_paths = filter(lambda p: "binary" in p, find_dirs(os.path.join(PACKAGECACHE, dist))) 
-        
         for path in dist_sub_paths:
-            for p in find_files(path, "Packages.gz"): 
-		print p
-                for section in deb822.Packages.iter_paragraphs(gzip.open(p,'r')):
-
+            for p in find_files(path, "Packages.gz"):
+                for section in deb822.Packages.iter_paragraphs(gzip.open(p, 'r')):
                     record_section(section, dist)
                     
