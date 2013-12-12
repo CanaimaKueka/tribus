@@ -27,7 +27,7 @@ def package_list(request):
     
     context ["render_js"] = render_js
     
-    sqs = SearchQuerySet().models(Package).order_by('autoname')
+    sqs = SearchQuerySet().models(Package).order_by('name')
     paginator = Paginator(sqs, 30)
     
     try:
