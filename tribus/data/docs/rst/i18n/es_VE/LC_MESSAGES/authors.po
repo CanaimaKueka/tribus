@@ -1,0 +1,52 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2013, Desarrolladores de Tribus
+# This file is distributed under the same license as the Tribus package.
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: tribus\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-12-06 15:44-0430\n"
+"PO-Revision-Date: 2013-12-12 13:23+0000\n"
+"Last-Translator: jsfrncscg <jsfrncscg@gmail.com>\n"
+"Language-Team: Spanish (Venezuela) (http://www.transifex.com/projects/p/tribus/language/es_VE/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es_VE\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# 53d30823f13c462086cc829249599fcb
+#: ../../authors.rst:1
+msgid ""
+"Si usted es un colaborador activo de este proyecto, agregue una entrada en "
+"el lugar correspondiente según el siguiente formato:"
+msgstr ""
+
+# e712f1a5e1e94d09a1c85479e7b6b5b7
+#: ../../authors.rst:3
+msgid ""
+"[1er nombre] [2do nombre] [1er apellido] [2do apellido] [<CORREO>], Twitter:"
+" [@Cuenta]"
+msgstr ""
+
+# 13c5d085e8b94008a28f3b655e02e025
+#: ../../authors.rst:6
+msgid ""
+"Las siguientes personas han trabajado en este proyecto (en orden "
+"alfabético):"
+msgstr ""
+
+# 635052c7f720464182f04fd37b9d0fdc
+#: ../../authors.rst:8
+msgid ""
+"José Francisco Guerrero Rangel <jsfrncscg@gmail.com>, Twitter: @jsfrncscg"
+msgstr ""
+
+# d192c8a544d744e69324342dd9d03f8b
+#: ../../authors.rst:9
+msgid ""
+"Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>, Twitter: "
+"@LuisAlejandro"
+msgstr ""

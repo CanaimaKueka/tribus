@@ -1,0 +1,97 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2013, Desarrolladores de Tribus
+# This file is distributed under the same license as the Tribus package.
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: tribus\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-12-06 15:44-0430\n"
+"PO-Revision-Date: 2013-12-12 13:23+0000\n"
+"Last-Translator: jsfrncscg <jsfrncscg@gmail.com>\n"
+"Language-Team: Spanish (Venezuela) (http://www.transifex.com/projects/p/tribus/language/es_VE/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es_VE\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# 4c5c4ee5e8294680b73373fc2294c731
+#: ../../readme.rst:2
+msgid "Acerca"
+msgstr ""
+
+# 26c79e7cd2824c60951cc6e5a88defe7
+#: ../../readme.rst:4
+msgid ""
+"*Tribus* es una **red social** para la gestión de comunidades de software "
+"libre. Su objetivo es simplificar las tediosas y repetitivas tareas de "
+"mantenimiento, mientras pone a disposición de sus miembros **las mejores "
+"herramientas** que le permitirán **expresar su creatividad** y **desarrollar"
+" el máximo potencial de sus capacidades**."
+msgstr ""
+
+# 303f672eb71a4d5fb499603c4015763a
+#: ../../readme.rst:6
+msgid ""
+"*Tribus* promueve la **autogestión** y la **corresponsabilidad** en las "
+"diversas áreas del proceso productivo de software, estableciendo un **modelo"
+" organizacional** que permite una **progresión** y **rotación natural** de "
+"los roles."
+msgstr ""
+
+# 1063e1d1e4ce46c1b7b6abe4163d815b
+#: ../../readme.rst:9
+msgid "¿Cómo funciona?"
+msgstr ""
+
+# 80ce4c223211414987c8b2054b1a2002
+#: ../../readme.rst:11
+msgid ""
+"*Tribus* permite una gestión descentralizada a través del reconocimiento "
+"mutuo de las capacidades de sus miembros y la asignación proporcional de "
+"responsabilidades según el nivel de experiencia alcanzado."
+msgstr ""
+
+# 161bc67142aa45ecaf57d9b727cfece2
+#: ../../readme.rst:13
+msgid ""
+"El reconocimiento (o valoración) se realiza según un patrón establecido de "
+"puntos que representan la cantidad de experiencia obtenida a partir del "
+"cumplimiento de una o más actividades dentro de la plataforma. Hablamos de "
+"reconocimiento mutuo puesto que cada miembro inscrito en la red debe firmar "
+"un *contrato social* en el cuál acepta las condiciones en que él y todos los"
+" demás miembros serán valorados."
+msgstr ""
+
+# 55df6f9d54a04e3e99ea047446ad450b
+#: ../../readme.rst:15
+msgid ""
+"El reconocimiento sirve para establecer una metrica relativa de la cantidad "
+"de conocimiento adquirido por los miembros durante la interacción con la "
+"plataforma. Esto permite ofrecer responsabilidades de gestión dentro de la "
+"plataforma a los miembros con diferentes grados de experiencia, así como "
+"también establecer recompensas específicas a través de un *sistema de rangos"
+" o privilegios*."
+msgstr ""
+
+# aa842612115f40ebbc0545d38c7ca5b4
+#: ../../readme.rst:17
+msgid ""
+"La plataforma permite realizar diferentes actividades para facilitar el "
+"desenvolvimiento de proyectos de software libre en las áreas de diseño "
+"gráfico, documentación, traducción, desarrollo y activismo social, a través "
+"de las cuales se valoran las diferentes tareas que caracterizan la "
+"experiencia y conocimiento. Cada una de estas actividades ha sido desglosada"
+" en procesos con el objetivo de establecer una automatización a gran escala,"
+" permitiendo intervención humana en los niveles estrictamente necesarios."
+msgstr ""
+
+# 6f521726e88f4308be4485afc74dcbf1
+#: ../../readme.rst:19
+msgid ""
+"Para mayor información, consulte la documentación en "
+"``tribus/data/docs/html`` (primero debe hacer ``make build_sphinx`` para "
+"construirla)."
+msgstr ""
