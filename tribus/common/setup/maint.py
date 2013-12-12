@@ -21,8 +21,8 @@
 
 '''
 
-tribus.common.setup.install
-===========================
+tribus.common.setup.maint
+=========================
 
 
 '''

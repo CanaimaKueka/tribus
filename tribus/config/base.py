@@ -5,7 +5,7 @@ from tribus import BASEDIR
 from tribus.common.version import get_version
 
 NAME = u'Tribus'
-VERSION = (0, 1, 0, 'alpha', 0)
+VERSION = (0, 1, 0, 'alpha', 1)
 URL = u'http://git.canaima.softwarelibre.gob.ve/?p=tribus.git;a=summary'
 AUTHOR = u'Desarrolladores de Tribus'
 AUTHOR_EMAIL = u'desarrolladores@canaima.softwarelibre.gob.ve'
