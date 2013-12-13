@@ -27,7 +27,7 @@ This module contains common functions to manage local and remote repositories.
 
 '''
 
-import urllib, re, os, sys, string, random, gzip, urllib2
+import urllib, re, os, sys, random, gzip
 path = os.path.join(os.path.dirname(__file__), '..', '..')
 base = os.path.realpath(os.path.abspath(os.path.normpath(path)))
 os.environ['PATH'] = base + os.pathsep + os.environ['PATH']
@@ -35,10 +35,9 @@ sys.prefix = base
 sys.path.insert(0, base)
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
 from debian import deb822
-from tribus.config.pkgrecorder import LOCAL_ROOT, CANAIMA_ROOT, SAMPLES_LISTS, SAMPLES_PACKAGES, SAMPLES
-from tribus.common.utils import list_files, scan_repository
+from tribus.config.pkgrecorder import LOCAL_ROOT, CANAIMA_ROOT, SAMPLES
+from tribus.common.utils import scan_repository, find_files
 
-          
 def select_sample_packages(package_url, package_list, include_relations = False):
     inicial = {}
     relaciones = []
@@ -72,10 +71,10 @@ def select_sample_packages(package_url, package_list, include_relations = False)
 
 
 def init_sample_packages():
-    
-    if not os.path.isdir(SAMPLES_LISTS):
-        os.makedirs(SAMPLES_LISTS)
-
+    # Si la ruta para alojar los paquetes no existe se crea
+    if not os.path.isdir(SAMPLES):
+        os.makedirs(SAMPLES)
+    # Extraigo las distribuciones desde el repositorio oficial
     dist_releases = scan_repository(CANAIMA_ROOT)
     
     for release in dist_releases.items():
@@ -88,46 +87,51 @@ def init_sample_packages():
             
         if datasource:
             rel = deb822.Release(datasource)
-            if rel.has_key('MD5sum'):
+            #if rel.has_key('MD5sum'):
+            if 'MD5sum' in rel:
                 for l in rel['MD5sum']:
+                    # Para hacer el proceso mas rapido se descargan los Packages comprimidos
                     if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages.gz$", l['name']):
                         component, architecture, _ = l['name'].split("/")
-                        name = string.join([release[0], component, architecture, "Packages"], "_")
-                        # unimos la cadena con la ruta raiz                            
-                        f = os.path.join(SAMPLES_LISTS, name)
-                        # Verificar si el archivo existe y si tiene el mismo MD5
+                        list_path = os.path.join(SAMPLES, release[0], component, architecture)
+                        
+                        if not os.path.isdir(list_path):
+                            os.makedirs(list_path)
+                        
+                        f = os.path.join(list_path, "list")  
                         
                         if not os.path.isfile(f):
                             package_url = os.path.join(CANAIMA_ROOT, "dists", release[0], l['name'])
                             try:
-                                # Intenta leer un Packages y seleccionar un grupo de paquetes
                                 select_sample_packages(package_url, f, False)
                             except:
                                 print "Hubo un error descargando %s" % package_url
 
     if os.path.isfile(os.path.join(SAMPLES, "tmp.gzip")):
-            os.remove(os.path.join(SAMPLES, "tmp.gzip"))
+        os.remove(os.path.join(SAMPLES, "tmp.gzip"))
     
 def download_sample_packages():
-    files_list = list_files(SAMPLES_LISTS)
+    files_list = find_files(SAMPLES, 'list')
     for f in files_list:
-        pre_dist_path = f.split("/")[-1]
-        dist_path = pre_dist_path.split("_")
-        dist_path.pop()
-        final_path = string.join(dist_path, "/")
-        download_package_list(f, os.path.join(SAMPLES_PACKAGES, final_path))   
+        download_path = os.path.dirname(f)
+        download_package_list(f, download_path)   
     urllib.urlretrieve(os.path.join(CANAIMA_ROOT, "distributions"), os.path.join(LOCAL_ROOT, "distributions"))
     
 def download_package_list(file_with_package_list, download_dir):
-    os.makedirs(download_dir)
     archivo = open(file_with_package_list, 'r')
-    remote_root = "http://paquetes.canaima.softwarelibre.gob.ve"
     linea = archivo.readline().strip("\n")
-    
     while linea:
         l = linea.split("/")
-        print "Descargando ---->", l[-1]
-        urllib.urlretrieve(os.path.join(remote_root, linea), os.path.join(download_dir, l[-1]))
+        try:
+            print "Descargando ---->", l[-1]
+            urllib.urlretrieve(os.path.join(CANAIMA_ROOT, linea), os.path.join(download_dir, l[-1]))
+        except:
+            print "Hubo un error intentando descargar el paquete %s " % l[-1]
         linea = archivo.readline().strip("\n")
-        
     archivo.close()
+
+def main():
+    init_sample_packages()
+    download_sample_packages()
+    
+main()
