@@ -38,32 +38,14 @@ from debian import deb822
 from tribus.config.pkgrecorder import LOCAL_ROOT, CANAIMA_ROOT, SAMPLES_LISTS, SAMPLES_PACKAGES, SAMPLES
 from tribus.common.utils import list_files, scan_repository
 
-
-def init_sample_packages():
-    os.makedirs(SAMPLES_LISTS)
-    dist_releases = scan_repository(CANAIMA_ROOT)
-    for release in dist_releases.items():
-        try:
-            datasource = urllib.urlopen(os.path.join(CANAIMA_ROOT, release[1]))
-        except:
-            datasource = None
-        if datasource:
-            rel = deb822.Release(datasource)
-            if rel.has_key('MD5sum'):
-                for l in rel['MD5sum']:
-                    if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages.gz$", l['name']):
-                        print "Seleccionando paquetes en -->", l['name']
-                        list_name = string.join( l['name'].split("/"), "_")
-                        list_file = os.path.join(SAMPLES_LISTS, string.join([release[0], list_name], "_"))
-                        package_url = os.path.join(CANAIMA_ROOT, "dists", release[0], l['name'])
-                        select_sample_packages(package_url, list_file, False)
-                        
+          
 def select_sample_packages(package_url, package_list, include_relations = False):
     inicial = {}
     relaciones = []
     final = {}
     archivo = open(package_list, 'w')
-    tmp_path = os.path.join(SAMPLES, "tmpckg.gzip")
+    # Esto deberia ser una constante declarada en otra parte
+    tmp_path = os.path.join(SAMPLES, "tmp.gzip")
     urllib.urlretrieve(package_url, tmp_path)
     for section in deb822.Packages.iter_paragraphs(gzip.open(tmp_path)):
         rnd = random.randint(0, 500)
@@ -86,7 +68,45 @@ def select_sample_packages(package_url, package_list, include_relations = False)
                 archivo.write(section['filename']+"\n")
     
     archivo.close()
-    print "Paquetes seleccionados -->", len(inicial)
+    print "%s Paquetes seleccionados de %s "% (len(inicial), package_url)
+
+
+def init_sample_packages():
+    
+    if not os.path.isdir(SAMPLES_LISTS):
+        os.makedirs(SAMPLES_LISTS)
+
+    dist_releases = scan_repository(CANAIMA_ROOT)
+    
+    for release in dist_releases.items():
+        try:
+            # Se trata de un archivo remoto, por lo tanto lo abro a traves de la url
+            datasource = urllib.urlopen(os.path.join(CANAIMA_ROOT, "dists", release[0], "Release"))
+        except:
+            print "Se produjo un error leyendo los Release"
+            datasource = None
+            
+        if datasource:
+            rel = deb822.Release(datasource)
+            if rel.has_key('MD5sum'):
+                for l in rel['MD5sum']:
+                    if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages.gz$", l['name']):
+                        component, architecture, _ = l['name'].split("/")
+                        name = string.join([release[0], component, architecture, "Packages"], "_")
+                        # unimos la cadena con la ruta raiz                            
+                        f = os.path.join(SAMPLES_LISTS, name)
+                        # Verificar si el archivo existe y si tiene el mismo MD5
+                        
+                        if not os.path.isfile(f):
+                            package_url = os.path.join(CANAIMA_ROOT, "dists", release[0], l['name'])
+                            try:
+                                # Intenta leer un Packages y seleccionar un grupo de paquetes
+                                select_sample_packages(package_url, f, False)
+                            except:
+                                print "Hubo un error descargando %s" % package_url
+
+    if os.path.isfile(os.path.join(SAMPLES, "tmp.gzip")):
+            os.remove(os.path.join(SAMPLES, "tmp.gzip"))
     
 def download_sample_packages():
     files_list = list_files(SAMPLES_LISTS)
