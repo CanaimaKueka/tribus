@@ -11,7 +11,7 @@ urlpatterns = patterns('',
         view='tribus.web.profile.views.SearchProfile'
         ),
 
-	url(r'^profile$', 
+	url(r'^profile/$', 
         view='tribus.web.profile.views.UserProfile'
         ),
     )

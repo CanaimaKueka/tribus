@@ -12,7 +12,7 @@ urlpatterns = patterns('',
         'tribus.web.cloud.views.profile',
         name='cloud_profile'),
                        
-    url(r'^cloud/l/index$',
+    url(r'^cloud/l/index/$',
         'tribus.web.cloud.views.package_list',
         name='cloud_list'),
 

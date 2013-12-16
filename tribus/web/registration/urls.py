@@ -56,7 +56,7 @@ from tribus.web.registration.forms import LoginForm, PasswordResetForm, Password
 urlpatterns = patterns(
     '',
 
-    url(regex=r'^login$',
+    url(regex=r'^login/$',
         view='tribus.web.registration.views.login',
         kwargs={
             'template_name': 'registration/login_form.html',
@@ -66,7 +66,7 @@ urlpatterns = patterns(
         name='registration_login',
     ),
 
-    url(regex=r'^logout$',
+    url(regex=r'^logout/$',
         view='django.contrib.auth.views.logout',
         kwargs={
             'next_page': settings.LOGIN_REDIRECT_URL
@@ -74,7 +74,7 @@ urlpatterns = patterns(
         name='registration_logout'
     ),
 
-    url(regex=r'^signup$',
+    url(regex=r'^signup/$',
         view=RegistrationView.as_view(template_name='registration/signup_form.html'),
         name='registration_signup',
     ),
@@ -94,7 +94,7 @@ urlpatterns = patterns(
         name='registration_activation_complete',
     ),
 
-    url(regex=r'^password/change$',
+    url(regex=r'^password/change/$',
         view='django.contrib.auth.views.password_change',
         kwargs={
             'template_name': 'registration/password_change_form.html',
