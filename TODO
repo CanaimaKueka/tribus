@@ -14,6 +14,8 @@
         * [] #27 - Separar los templates de los elementos de AngularJS ui-bootstrap.
         * [] #28 - Arreglar acceso al panel de administración.
         * [] #29 - Traducir Tribus.
+        * [] #35 - Utilizar plataforma de integración continua.
+        * [] #37 - Mejorar formulario de busqueda.
 * [] Documentación:
 		* [] Documentación de tickets y funciones.
         * [] Documentar clases y funciones. 
