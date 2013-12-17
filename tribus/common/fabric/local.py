@@ -32,6 +32,7 @@ from tribus.config.pkg import (debian_run_dependencies, debian_build_dependencie
                               debian_maint_dependencies, f_workenv_preseed, f_sql_preseed,
                               f_users_ldif, f_python_dependencies)
 
+
 def development():
     env.user = pwd.getpwuid(os.getuid()).pw_name
     env.root = 'root'
@@ -51,7 +52,7 @@ def development():
     env.reprepro_dir = os.path.join(BASEDIR, 'test_repo')
     env.reprepro_conf_dir = os.path.join(BASEDIR, 'test_repo', 'conf')
     env.distributions_dir = os.path.join(BASEDIR, 'tribus', 'config' ,'data')
-    env.sample_packages_dir = os.path.join(BASEDIR, 'package_samples', 'packages')
+    env.sample_packages_dir = os.path.join(BASEDIR, 'package_samples')
     
     
 def environment():
@@ -105,8 +106,9 @@ def get_sample_packages():
 # 4) Indexar los paquetes descargados en el repositorio
     
 def index_sample_packages():
-    from tribus.common.utils import find_dirs, list_dirs
-    dirs = filter(lambda p: "binary" in p, find_dirs(env.sample_packages_dir))
+    from tribus.common.utils import find_dirs, list_dirs, find_files
+    #dirs = filter(lambda p: "binary" in p, find_dirs(env.sample_packages_dir))
+    dirs = [os.path.dirname(f) for f in find_files(env.sample_packages_dir, 'list')]
     dists = filter(None, list_dirs(env.sample_packages_dir))
     with lcd('%(reprepro_dir)s' % env):
         for d in dirs:
@@ -127,16 +129,16 @@ def filldb_from_local():
     from tribus.common.recorder import create_cache_dirs, fill_db_from_cache
     from tribus.config.pkgrecorder import LOCAL_ROOT
     create_cache_dirs(LOCAL_ROOT)
-    fill_db_from_cache()
-    rebuild_index()
+    #fill_db_from_cache()
+    #rebuild_index()
     
 def filldb_from_remote():
     py_activate_virtualenv()
     from tribus.common.recorder import create_cache_dirs, fill_db_from_cache
     from tribus.config.pkgrecorder import CANAIMA_ROOT
     create_cache_dirs(CANAIMA_ROOT)
-    fill_db_from_cache()
-    rebuild_index()
+    #fill_db_from_cache()
+    #rebuild_index()
     
 def resetdb():
     configure_sudo()
