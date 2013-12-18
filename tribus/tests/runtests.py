@@ -20,22 +20,33 @@
 
 '''
 
-Tribus setuptools script
-========================
+tribus.tests.runtests
+=====================
 
-This script invokes the setup script for Tribus.
-
-For more information about this file, see documentation on tribus/common/setup/utils.py
+This file contains the entry point to the tribus tests.
 
 '''
 
-from setuptools import setup
+import os
+import sys
 
-from tribus import BASEDIR
-from tribus.common.setup.utils import get_setup_data
+path = os.path.join(os.path.dirname(__file__), '..', '..')
+base = os.path.realpath(os.path.abspath(os.path.normpath(path)))
+os.environ['PATH'] = base + os.pathsep + os.environ['PATH']
+sys.prefix = base
+sys.path.insert(0, base)
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
 
-setup(**get_setup_data(BASEDIR))
-# try:
-#     setup(**get_setup_data(BASEDIR))
-# except Exception, e:
-#     print e
+from django.test.utils import get_runner
+from django.conf import settings
+
+
+def runtests():
+    runner = get_runner(settings)
+    instance = runner(verbosity=1, interactive=False, failfast=True)
+    failures = instance.run_tests(['tribus.tests'])
+    sys.exit(bool(failures))
+
+
+if __name__ == '__main__':
+    runtests()

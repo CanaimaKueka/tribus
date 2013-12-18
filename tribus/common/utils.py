@@ -52,7 +52,7 @@ def flatten_list(l=[], limit=1000, counter=0):
     '''
     assert l is not None
     assert limit > 0
-    assert counter == 0
+    assert counter >= 0
 
     for i in xrange(len(l)):
         if (isinstance(l[i], (list, tuple)) and counter < limit):

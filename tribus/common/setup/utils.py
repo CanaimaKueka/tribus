@@ -249,7 +249,7 @@ def get_setup_data(basedir):
     from tribus.common.setup.maint import extract_messages, init_catalog, update_catalog
 
     packages = get_packages(path=basedir, exclude_packages=exclude_packages)
-
+    
     return {
         'name': NAME,
         'version': get_version(VERSION),
@@ -267,6 +267,7 @@ def get_setup_data(basedir):
         'package_data': {'': []},               # package_data is empty because it is filled during execution of build_py
         'install_requires': install_requires,
         'dependency_links': dependency_links,
+        'test_suite': 'tribus.tests.runtests.runtests',
         'zip_safe': False,
         'cmdclass': {
             'clean': clean,

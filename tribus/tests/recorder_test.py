@@ -2,10 +2,12 @@
 # VERIFICACION DE ACTUALIZACION
 #===============================================================================
 
-import urllib, urllib2
+import urllib
+import urllib2
 from debian import deb822
 from tribus.web.cloud.models import *
 import re
+
 
 def check_version(exists, rr, r):
     if exists and len(exists) == 1:
@@ -25,6 +27,7 @@ def check_version(exists, rr, r):
             print "=D", actual[0], "esta bien actualizado"
         else:                                
             print "=C", actual[0], "no esta bien actualizado"
+
 
 def comprobarActualizacion(paquete):
     i386  = "http://10.16.106.152/repositorio/dists/waraira/main/binary-i386/Packages"
