@@ -177,6 +177,7 @@ def get_package_data(path=None, packages=None, data_files=None,
 
 def get_data_files(path=None, patterns=None, exclude_files=None):
     '''
+
     Procesess a list of patterns to get a list of files that should be put in
     a directory. This function helps the Tribus Maintainer to define a list of
     files to be installed in a certain system directory.
@@ -206,6 +207,7 @@ def get_data_files(path=None, patterns=None, exclude_files=None):
     :rtype: ``list``
 
     .. versionadded:: 0.1
+
     '''
     assert path is not None
     assert patterns is not None
