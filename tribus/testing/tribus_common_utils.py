@@ -37,7 +37,7 @@ from tribus.common.utils import cat_file
 class TestFileFunctions(TestCase):
 
     def setUp(self):
-        self.string = u'Lola quiere comía'
+        self.string = 'Lola quiere comía'
         self.test_file = '/tmp/test_cat_file'
 
         with open(self.test_file, 'w') as f:
