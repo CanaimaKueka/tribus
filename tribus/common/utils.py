@@ -78,12 +78,12 @@ def cat_file(filename=None):
 
     .. versionadded:: 0.1
 
-    .. doctest::
-        >>> f = open('/tmp/test_cat_file', 'w')
-        >>> f.write('This is a test case to see if the contents of a file are outputted the way it\\n should.')
-        >>> f.close()
-        >>> cat_file('/tmp/test_cat_file')
-        'This is a test case to see if the contents of a file are outputted the way it\\n should.'
+    >>> f = open('/tmp/test_cat_file', 'w')
+    >>> f.write('This is a test case to see if the contents of a file are outputted the way it\\n should.')
+    >>> f.close()
+    >>> cat_file('/tmp/test_cat_file')
+    'This is a test case to see if the contents of a file are outputted the way it\\n should.'
+
     '''
     assert filename is not None
     return open(filename).read()

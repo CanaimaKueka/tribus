@@ -20,12 +20,11 @@
 
 '''
 
-tribus.tests.tribus_common_utils
-================================
+tribus.testing.models
+=====================
 
-These are the tests for the tribus.common.utils module.
+This file contains all the tribus tests.
 
 '''
 
-from unittest import TestSuite
-
+from tribus.testing.tribus_common_utils import *

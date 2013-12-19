@@ -23,7 +23,7 @@ import os
 import pwd
 import sys
 import site
-import lsb_release
+# import lsb_release
 from fabric.api import *
 from tribus import BASEDIR
 from tribus.config.ldap import (AUTH_LDAP_SERVER_URI, AUTH_LDAP_BASE, AUTH_LDAP_BIND_DN,
@@ -39,6 +39,7 @@ def development():
     env.hosts = ['localhost']
     env.basedir = BASEDIR
     env.virtualenv_dir = os.path.join(env.basedir, 'virtualenv')
+    env.virtualenv_cachea = os.path.join(env.virtualenv_dir, 'cache')
     env.virtualenv_site_dir = os.path.join(env.virtualenv_dir, 'lib', 'python%s' % sys.version[:3], 'site-packages')
     env.virtualenv_args = ' '.join(['--clear', '--no-site-packages', '--setuptools'])
     env.virtualenv_activate = os.path.join(env.virtualenv_dir, 'bin', 'activate')
@@ -233,12 +234,12 @@ def create_virtualenv():
 def update_virtualenv():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s pip install -r %(f_python_dependencies)s' % env, capture=False)
+            local('%(command)s pip install --download-cache=%(virtualenv_cache)s --requirement=%(f_python_dependencies)s' % env, capture=False)
 
 
 def py_activate_virtualenv():
     os.environ['PATH'] = os.path.join(env.virtualenv_dir, 'bin') + os.pathsep + os.environ['PATH']
-    site.addsitedir(os.path.join(env.virtualenv_dir, 'lib', 'python%s' % sys.version[:3], 'site-packages'))
+    site.addsitedir(env.virtualenv_site_dir)
     sys.prefix = env.virtualenv_dir
     sys.path.insert(0, env.virtualenv_dir)
     sys.path.insert(0, env.virtualenv_site_dir)
@@ -428,3 +429,9 @@ def install():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
             local('%(command)s python setup.py install' % env, capture=False)
+
+
+def test():
+    with cd('%(basedir)s' % env):
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s python setup.py test --verbose' % env, capture=False)

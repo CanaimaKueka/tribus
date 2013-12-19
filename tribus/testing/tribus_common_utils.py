@@ -20,33 +20,35 @@
 
 '''
 
-tribus.tests.runtests
-=====================
+tribus.tests.tribus_common_utils
+================================
 
-This file contains the entry point to the tribus tests.
+These are the tests for the tribus.common.utils module.
 
 '''
 
-import os
-import sys
+# from unittest import TestSuite
 
-path = os.path.join(os.path.dirname(__file__), '..', '..')
-base = os.path.realpath(os.path.abspath(os.path.normpath(path)))
-os.environ['PATH'] = base + os.pathsep + os.environ['PATH']
-sys.prefix = base
-sys.path.insert(0, base)
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
+from unittest import TestCase
+from doctest import DocTestSuite
+from tribus.common import utils
+from tribus.common.utils import cat_file
 
-from django.test.utils import get_runner
-from django.conf import settings
+class TestFileFunctions(TestCase):
 
+    def setUp(self):
+        self.string = u'Lola quiere comía'
+        self.test_file = '/tmp/test_cat_file'
 
-def runtests():
-    runner = get_runner(settings)
-    instance = runner(verbosity=1, interactive=False, failfast=True)
-    failures = instance.run_tests(['tribus.tests'])
-    sys.exit(bool(failures))
+        with open(self.test_file, 'w') as f:
+        	f.write(self.string)
+        	f.close()
 
 
-if __name__ == '__main__':
-    runtests()
+    def test_cat_file(self):
+        self.assertEqual(cat_file(self.test_file), self.string)
+
+
+def load_tests(loader, tests, ignore):
+    tests.addTests(DocTestSuite(utils))
+    return tests

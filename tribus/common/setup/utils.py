@@ -267,7 +267,7 @@ def get_setup_data(basedir):
         'package_data': {'': []},               # package_data is empty because it is filled during execution of build_py
         'install_requires': install_requires,
         'dependency_links': dependency_links,
-        'test_suite': 'tribus.tests.runtests.runtests',
+        'test_suite': 'tribus.testing.runtests',
         'zip_safe': False,
         'cmdclass': {
             'clean': clean,

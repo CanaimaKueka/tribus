@@ -20,11 +20,24 @@
 
 '''
 
-tribus.tests
-============
+tribus.testing
+==============
 
-This module contains all the unit tests for tribus.
+This file contains the entry point to the tribus tests.
 
 '''
 
-from tribus.tests.tribus_common_utils import *
+import sys
+from django.test.utils import get_runner
+from django.conf import settings
+
+
+def runtests():
+    runner = get_runner(settings)
+    instance = runner(verbosity=1, interactive=False, failfast=True)
+    failures = instance.run_tests(['testing'])
+    sys.exit(bool(failures))
+
+
+if __name__ == '__main__':
+    runtests()
