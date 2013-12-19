@@ -134,23 +134,14 @@ CELERYBEAT_SCHEDULE = {
     },               
 }
 
-# Configuracion de haystack y whoosh
-#WHOOSH_INDEX = os.path.join(BASEDIR, 'whoosh_index/')
+# Configuracion de haystack
 XAPIAN_INDEX = os.path.join(BASEDIR, 'xapian_index/')
 HAYSTACK_LOGGING = True
 HAYSTACK_CONNECTIONS = {
-    #'default': {
-    #    'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
-    #    'PATH': WHOOSH_INDEX,
-    #},
-    #'default': {
-    #    'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
-    #    'URL': 'http://127.0.0.1:8983/solr'
-    #},                    
-    
     'default': {
         'ENGINE': 'xapian_backend.XapianEngine',
-        'PATH': XAPIAN_INDEX
+        'PATH': XAPIAN_INDEX,
+        'HAYSTACK_XAPIAN_LANGUAGE': 'spanish'
     },
 }
 
@@ -179,7 +170,6 @@ INSTALLED_APPS = (
     'tastypie',
     'tastypie_mongoengine',
     'haystack',
-    #'whoosh',
     'celery_haystack',
     'registration',
 

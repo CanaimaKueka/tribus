@@ -217,27 +217,6 @@ def scan_repository(repo_root):
         
     return dist_releases
 
-def scan_repository2(repo_root):
-    '''
-    Este metodo lee el archivo distributions ubicado en la raiz de un 
-    repositorio y genera un diccionario con las distribuciones y 
-    componentes presentes en dicho repositorio.
-    '''
-    
-    dist_releases = []
-    dists = urllib.urlopen(os.path.join(repo_root, "distributions"))
-    linea = dists.readline().strip("\n")
-    
-    while linea:
-        dist = {}
-        l = linea.split(" ")
-        dist['version'] = l[0]
-        dist['name'] = l[1]
-        dist['release'] = l[2]
-        dist_releases.append(dist)
-        linea = dists.readline().strip("\n")
-        
-    return dist_releases
 
 def filename_generator(file_parts, new_m_time):
     filename = os.path.basename(file_parts[0])
@@ -246,3 +225,14 @@ def filename_generator(file_parts, new_m_time):
     m = hashlib.md5()
     m.update(filename)
     return '{0}/{1}.{2}{3}'.format(url, m.hexdigest(), new_m_time, ext)
+
+
+def delete_dir(dirname):
+    if os.path.isdir(dirname):
+        print "Deleting %s" % dirname
+        for root, dirs, files in os.walk(dirname, topdown=False):
+            for name in files:
+                os.remove(os.path.join(root,name))
+            for name in dirs:
+                os.rmdir(os.path.join(root, name))
+        os.rmdir(dirname)

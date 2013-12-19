@@ -33,7 +33,7 @@ This module contains common functions to record package data from a repository.
 # 2. Parece necesario y correcto sustituir el None de las relacione simples por 0. PENDIENTE
 #===============================================================================
 
-import urllib, re, email.Utils, os, sys, string, random, gzip
+import urllib, re, email.Utils, os, sys, string, gzip
 path = os.path.join(os.path.dirname(__file__), '..', '..')
 base = os.path.realpath(os.path.abspath(os.path.normpath(path)))
 os.environ['PATH'] = base + os.pathsep + os.environ['PATH']
@@ -43,8 +43,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
 from debian import deb822
 from tribus.web.cloud.models import *
 from tribus.config.pkgrecorder import package_fields, detail_fields, LOCAL_ROOT, CANAIMA_ROOT
-from tribus.common.utils import find_files, md5Checksum, find_dirs, scan_repository,\
-    list_dirs
+from tribus.common.utils import find_files, md5Checksum, find_dirs, scan_repository, list_dirs
 from tribus.config.base import PACKAGECACHE
 from tribus.config.web import DEBUG
 from django.db.models import Q
@@ -351,7 +350,7 @@ def record_relations(details, relations_list):
     
     :param details: a `Details` object to which each relationship is related.
     
-    :param relations_list: a list of tuples containing package relations to another pacakges.  
+    :param relations_list: a list of tuples containing package relations to another packages.  
                       Its structure is similar to::
                       
                           [('depends', [[{'arch': None, 'name': u'libgl1-mesa-glx', 'version': None},
@@ -585,35 +584,43 @@ def create_cache_dirs(repository_root):
     
     .. versionadded:: 0.1
     '''
-    
+    # Pendiente aqui con el scan_repositorio
     local_dists =  scan_repository(repository_root)
-    for dist in local_dists.items():
-        try:
-            datasource = urllib.urlopen(os.path.join(repository_root, dist[1]))
-        except:
-            datasource = None
+    
+    for dist in local_dists.items():    
+        if DEBUG:
+            datasource = open(os.path.join(repository_root, dist[1]))
+        else:
+            try:
+                datasource = urllib.urlopen(os.path.join(repository_root, dist[1]))
+            except:
+                datasource = None
+        
         if datasource:
             rel = deb822.Release(datasource)
-            if rel.has_key('MD5sum'):
-                for l in rel['MD5sum']:
-                    if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages.gz$", l['name']):                        
-                        comp = l['name'].split("/")
-                        comp.pop()
-                        partial_path = string.join(comp, "/")
-                        
-                        path_to_package_dir = os.path.join(PACKAGECACHE, dist[0], partial_path)
-                        packages_file_path = os.path.join(PACKAGECACHE, dist[0], l['name']) 
-                        remote_path = os.path.join(repository_root, "dists", dist[0], l['name'])
-                        
-                        if not find_dirs(path_to_package_dir):
-                            os.makedirs(path_to_package_dir)
+            if rel.has_key('MD5Sum'):
+                for l in rel['MD5Sum']:
+                    if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages.gz$", l['name']):                 
+                        component, architecture, _ = l['name'].split("/")
+                        local_path = os.path.join(PACKAGECACHE, dist[0], component, architecture)
+                        remote_file = os.path.join(repository_root, "dists", dist[0], l['name'])
+                        if not os.path.isdir(local_path):
+                            os.makedirs(local_path)
+                        f = os.path.join(local_path, "Packages.gz")
+                        if not os.path.isfile(f):    
+                            try:
+                                urllib.urlretrieve(remote_file, f)
+                            except:
+                                print "Ocurrio un error obteniendo %s" % remote_file
                         else:
-                            os.remove(packages_file_path)
-                        try:
-                            urllib.urlretrieve(remote_path, packages_file_path)
-                        except IOError:
-                            print 'archivo %s no encontrado.' % (remote_path)
-         
+                            if md5Checksum(f) != l['md5sum']:
+                                os.remove(f)
+                                try:
+                                    urllib.urlretrieve(remote_file, f)
+                                except:
+                                    print "Ocurrio un error obteniendo %s" % remote_file
+
+
 def fill_db_from_cache():
     '''
     Records the data from each Package file inside the packagecache folder into the database.
@@ -621,16 +628,12 @@ def fill_db_from_cache():
     .. versionadded:: 0.1
     '''
     
-    local_dists = filter(None,list_dirs(PACKAGECACHE))
-    
+    local_dists = filter(None, list_dirs(PACKAGECACHE))
     for dist in local_dists:
-
-        dist_sub_paths = filter(lambda p: "binary" in p, find_dirs(os.path.join(PACKAGECACHE, dist))) 
-        
+        dist_sub_paths = [os.path.dirname(f) for f in find_files(os.path.join(PACKAGECACHE, dist), 'Packages.gz')]
+        #dist_sub_paths = filter(lambda p: "binary" in p, find_dirs(os.path.join(PACKAGECACHE, dist))) 
         for path in dist_sub_paths:
-            for p in find_files(path, "Packages.gz"): 
-		print p
-                for section in deb822.Packages.iter_paragraphs(gzip.open(p,'r')):
-
+            for p in find_files(path, "Packages.gz"):
+                for section in deb822.Packages.iter_paragraphs(gzip.open(p, 'r')):
                     record_section(section, dist)
                     
