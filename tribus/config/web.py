@@ -116,7 +116,7 @@ PASSWORD_HASHERS = (
     #'tribus.web.registration.hashers.DummyPasswordHasher',
 )
 
-APPEND_SLASH = False
+APPEND_SLASH = True
 TASTYPIE_ALLOW_MISSING_SLASH = True
 TASTYPIE_FULL_DEBUG = False
 API_LIMIT_PER_PAGE = 20
