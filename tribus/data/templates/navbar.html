@@ -13,17 +13,18 @@
                 <li class="divider-vertical"></li>
             </ul>
             {% if user.is_authenticated %}
-            
+
             <ul class="nav span4">
             	<li class="dropdown search" ng-controller="TypeaheadCtrl">
             		<form name="form-search" class="form-search" action="/search" method="POST">
 	    				{% csrf_token %}
 	    				<span class="input-icon">
-	    				<input type="text" ng-model="selected" name="q"
-	    				autocomplete="off"
-	    				placeholder="{% trans 'What are you looking for?' %}"
-	    				typeahead="item as item.name for item in getResults($viewValue)"
-	    				typeahead-template-url="itemTpl.html">
+    					<input type="text" ng-model="selected" name="q"
+                        autocomplete="off"
+                        placeholder="{% trans 'What are you looking for?' %}"
+                        typeahead="item as item.name for item in getResults($viewValue)"
+                        typeahead-wait-ms="300"
+                        typeahead-template-url="itemTpl.html">
 	    				<span class="icon-search nav-search-icon"></span>
 	    				</span>
     				</form>
