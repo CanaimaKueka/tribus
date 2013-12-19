@@ -148,8 +148,8 @@ class build_sphinx(base_build_sphinx):
         return set(filter(None, list_dirs(get_path([DOCDIR, 'rst', 'i18n'])))) - set(['pot'])
 
     def run(self):
-        for locale in self.get_sphinx_locale_list():
-            base_build_sphinx.run(self)
+        # for locale in self.get_sphinx_locale_list():
+        base_build_sphinx.run(self)
 
 
 class compile_catalog(base_compile_catalog):

@@ -27,14 +27,33 @@ This module contains common and low level functions to all modules in Tribus.
 
 '''
 
-import os, fnmatch, hashlib, urllib
+import os
+import fnmatch
+import hashlib
+import urllib
+from gettext import gettext as _
 
 from tribus.common.logger import get_logger
 
 log = get_logger()
 
 
-def flatten_list(l, limit=1000, counter=0):
+def flatten_list(l=[], limit=1000, counter=0):
+    '''
+
+    Converts a nested list into one combined list.
+
+    :param l: a list object with (optionally) nested list.
+    :param limit: the maximum amount of nested lists (recursive).
+    :param counter:
+
+    .. versionadded:: 0.1
+
+    '''
+    assert l is not None
+    assert limit > 0
+    assert counter >= 0
+
     for i in xrange(len(l)):
         if (isinstance(l[i], (list, tuple)) and counter < limit):
             for a in l.pop(i):
@@ -42,10 +61,31 @@ def flatten_list(l, limit=1000, counter=0):
                 i += 1
             counter += 1
             return flatten_list(l, limit, counter)
+
+    log.debug(_('I have flattened a list with %s elements.' % counter))
+
     return l
 
 
-def cat_file(filename):
+def cat_file(filename=None):
+    '''
+
+    Outputs the contents of a file.
+
+    :param filename: the file to read from.
+    :return: the contents of a file.
+    :rtype: a string.
+
+    .. versionadded:: 0.1
+
+    >>> f = open('/tmp/test_cat_file', 'w')
+    >>> f.write('This is a test case to see if the contents of a file are outputted the way it\\n should.')
+    >>> f.close()
+    >>> cat_file('/tmp/test_cat_file')
+    'This is a test case to see if the contents of a file are outputted the way it\\n should.'
+
+    '''
+    assert filename is not None
     return open(filename).read()
 
 
@@ -185,6 +225,7 @@ def filename_generator(file_parts, new_m_time):
     m = hashlib.md5()
     m.update(filename)
     return '{0}/{1}.{2}{3}'.format(url, m.hexdigest(), new_m_time, ext)
+
 
 def delete_dir(dirname):
     if os.path.isdir(dirname):

@@ -156,6 +156,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'tribus.testing',
     'tribus.web',
     'tribus.web.registration',
     'tribus.web.cloud',
@@ -173,6 +174,9 @@ INSTALLED_APPS = (
     'registration',
 
 )
+
+SOUTH_TESTS_MIGRATE = False
+SKIP_SOUTH_TESTS = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 

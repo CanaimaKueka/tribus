@@ -216,3 +216,7 @@ clean_dist: fabric
 clean_pyc: fabric
 
 	@$(FAB) development clean_pyc
+
+test: fabric
+
+	@$(FAB) development test

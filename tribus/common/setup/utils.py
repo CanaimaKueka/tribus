@@ -177,6 +177,7 @@ def get_package_data(path=None, packages=None, data_files=None,
 
 def get_data_files(path=None, patterns=None, exclude_files=None):
     '''
+
     Procesess a list of patterns to get a list of files that should be put in
     a directory. This function helps the Tribus Maintainer to define a list of
     files to be installed in a certain system directory.
@@ -206,6 +207,7 @@ def get_data_files(path=None, patterns=None, exclude_files=None):
     :rtype: ``list``
 
     .. versionadded:: 0.1
+
     '''
     assert path is not None
     assert patterns is not None
@@ -247,7 +249,7 @@ def get_setup_data(basedir):
     from tribus.common.setup.maint import extract_messages, init_catalog, update_catalog
 
     packages = get_packages(path=basedir, exclude_packages=exclude_packages)
-
+    
     return {
         'name': NAME,
         'version': get_version(VERSION),
@@ -265,6 +267,7 @@ def get_setup_data(basedir):
         'package_data': {'': []},               # package_data is empty because it is filled during execution of build_py
         'install_requires': install_requires,
         'dependency_links': dependency_links,
+        'test_suite': 'tribus.testing.SetupTesting',
         'zip_safe': False,
         'cmdclass': {
             'clean': clean,
