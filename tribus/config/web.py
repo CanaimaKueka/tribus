@@ -140,7 +140,8 @@ HAYSTACK_LOGGING = True
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'xapian_backend.XapianEngine',
-        'PATH': XAPIAN_INDEX
+        'PATH': XAPIAN_INDEX,
+        'HAYSTACK_XAPIAN_LANGUAGE': 'spanish'
     },
 }
 

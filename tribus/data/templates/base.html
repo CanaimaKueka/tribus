@@ -31,6 +31,19 @@
             ga('create', 'UA-46290421-1', 'gob.ve');
             ga('send', 'pageview');
         </script>
+        
+        <script type="text/ng-template" id="itemTpl.html">
+			<a tabindex="-1" href="{%verbatim%} {{match.model.url}} {%endverbatim%}">
+				<span ng-switch on="match.model.type">
+					<i ng-switch-when="user" class="icon-user"></i>
+					<i ng-switch-when="package" class="icon-gears"></i>
+					<i ng-switch-when="search" class="icon-search"></i>
+				</span>
+				<span data-ng-if="match.model.search">Buscar: </span><span ng-bind-html="match.model.name | typeaheadHighlight:query"></span>
+				<span data-ng-if="match.model.username">@</span><span data-ng-if="match.model.username" ng-bind-html="match.model.username | typeaheadHighlight:query"></span>
+			</a>
+		</script>
+        
     </head>
     <body>
         {% include 'navbar.html' %}

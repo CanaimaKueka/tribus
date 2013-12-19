@@ -19,6 +19,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from tribus.config.brand import *
+from tribus.config.web import DEBUG
 
 def default_context(request):
     return {
@@ -32,4 +33,5 @@ def default_context(request):
         'tribus_role_1': TRIBUS_ROLE_1,
         'tribus_role_2': TRIBUS_ROLE_2,
         'tribus_role_3': TRIBUS_ROLE_3,
+        'DEBUG': DEBUG,
     }
