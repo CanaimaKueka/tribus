@@ -3,8 +3,14 @@ Tribus
 
 .. image:: https://travis-ci.org/CanaimaGNULinux/tribus.png?branch=development
    :target: https://travis-ci.org/CanaimaGNULinux/tribus
+   :alt: Travis CI builds
 
+.. image:: https://coveralls.io/repos/CanaimaGNULinux/tribus/badge.png?branch=development
+   :target: https://coveralls.io/r/CanaimaGNULinux/tribus
+   :alt: Coverage
 
+.. image:: https://badge.fury.io/py/Tribus.png
+   :target: http://badge.fury.io/py/Tribus
 
 *Tribus* es una **red social** para la gestión de comunidades de software libre. Su objetivo es simplificar las tediosas y repetitivas tareas de mantenimiento, mientras pone a disposición de sus miembros **las mejores herramientas** que le permitirán **expresar su creatividad** y **desarrollar el máximo potencial de sus capacidades**.
 
