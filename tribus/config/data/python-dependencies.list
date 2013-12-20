@@ -33,6 +33,7 @@ lxml
 flake8
 coverage
 coveralls
+nodeenv
 -e git+https://github.com/LuisAlejandro/django-tastypie-mongoengine.git#egg=django-tastypie-mongoengine
 -e git+https://github.com/joseguerrero/xapian-haystack.git#egg=xapian-haystack
 -e git+https://github.com/joseguerrero/django-static.git#egg=django-static

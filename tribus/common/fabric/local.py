@@ -42,7 +42,7 @@ def development():
     env.hosts = ['localhost']
     env.basedir = BASEDIR
     env.virtualenv_dir = os.path.join(env.basedir, 'virtualenv')
-    env.virtualenv_cache = os.path.join(env.virtualenv_dir, 'cache')
+    env.virtualenv_cache = os.path.join(BASEDIR, 'virtualenv_cache')
     env.virtualenv_site_dir = os.path.join(
         env.virtualenv_dir, 'lib', 'python%s' %
         sys.version[:3], 'site-packages')
@@ -271,6 +271,12 @@ def update_virtualenv():
             local(
                 '%(command)s pip install --download-cache=%(virtualenv_cache)s --requirement=%(f_python_dependencies)s' %
                 env, capture=False)
+
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s nodeenv -p' % env, capture=False)
+
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s npm install -g' % env, capture=False)
 
 
 def py_activate_virtualenv():
