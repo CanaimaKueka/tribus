@@ -20,7 +20,7 @@
 
 from mongoengine import Document
 from mongoengine import (IntField, EmailField, StringField,
-                            ObjectIdField, DateTimeField)
+                         ObjectIdField, DateTimeField)
 
 
 class Trib(Document):
@@ -28,7 +28,7 @@ class Trib(Document):
     author_username = StringField(max_length=200, required=True)
     author_first_name = StringField(max_length=200, required=True)
     author_last_name = StringField(max_length=200, required=True)
-    author_email= EmailField(max_length=200, required=True)
+    author_email = EmailField(max_length=200, required=True)
     trib_content = StringField(max_length=200, required=True)
     trib_pub_date = StringField(required=True)
 
@@ -38,7 +38,7 @@ class Comment(Document):
     author_username = StringField(max_length=200, required=True)
     author_first_name = StringField(max_length=200, required=True)
     author_last_name = StringField(max_length=200, required=True)
-    author_email= EmailField(max_length=200, required=True)
+    author_email = EmailField(max_length=200, required=True)
     comment_content = StringField(max_length=200, required=True)
     comment_pub_date = StringField(required=True)
     trib_id = ObjectIdField()

@@ -21,7 +21,8 @@ TRIBUS_SPONSORS = [
         'url': 'http://cnti.gob.ve/',
     },
     {
-        'name': 'Fondo de Investigación y Desarrollo de las Telecomunicaciones',
+        'name':
+        'Fondo de Investigación y Desarrollo de las Telecomunicaciones',
         'image': '/static/img/fidetel-logo.svg',
         'url': 'http://fidetel.gob.ve/',
     },

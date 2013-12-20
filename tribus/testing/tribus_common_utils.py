@@ -34,6 +34,7 @@ from doctest import DocTestSuite
 from tribus.common import utils
 from tribus.common.utils import cat_file
 
+
 class TestFileFunctions(TestCase):
 
     def setUp(self):
@@ -41,9 +42,8 @@ class TestFileFunctions(TestCase):
         self.test_file = '/tmp/test_cat_file'
 
         with open(self.test_file, 'w') as f:
-        	f.write(self.string)
-        	f.close()
-
+            f.write(self.string)
+            f.close()
 
     def test_cat_file(self):
         self.assertEqual(cat_file(self.test_file), self.string)

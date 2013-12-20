@@ -18,6 +18,6 @@ DATABASES = {
 }
 
 INSTALLED_APPS = (
-	'south',
+    'south',
     'tribus.testing',
 )

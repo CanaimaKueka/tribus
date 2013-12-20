@@ -46,24 +46,28 @@ log = get_logger()
 
 
 class SetupTesting(TestSuite):
+
     """
     Test Suite configuring Django settings and using
     DjangoTestSuiteRunner as test runner.
     Also runs PEP8 and Coverage checks.
     """
+
     def __init__(self, *args, **kwargs):
         self.configure()
         self.coverage = coverage()
         self.coverage.start()
-        self.packages = get_packages(path=BASEDIR, exclude_packages=exclude_packages)
+        self.packages = get_packages(
+            path=BASEDIR,
+            exclude_packages=exclude_packages)
         self.options = {
             'failfast': '',
             'autoreload': '',
             'label': ['testing'],
-            }
+        }
 
         super(SetupTesting, self).__init__(tests=self.build_tests(),
-                *args, **kwargs)
+                                           *args, **kwargs)
 
         # Setup testrunner.
         from django.test.simple import DjangoTestSuiteRunner
@@ -82,7 +86,6 @@ class SetupTesting(TestSuite):
         self.test_runner.setup_test_environment()
         self.old_config = self.test_runner.setup_databases()
 
-
     def flake8_report(self):
         """
         Outputs flake8 report.
@@ -93,7 +96,6 @@ class SetupTesting(TestSuite):
         flake8_style = get_style_guide()
         report = flake8_style.check_files(pys)
         exit_code = print_report(report, flake8_style)
-
 
     def coverage_report(self):
         """
@@ -116,7 +118,6 @@ class SetupTesting(TestSuite):
                 result = Coveralls().wear()
             except CoverallsException as e:
                 log.error("Coveralls Exception: %s" % e)
-
 
     def build_tests(self):
         """

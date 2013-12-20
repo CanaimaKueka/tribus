@@ -34,11 +34,13 @@ import inspect
 import fnmatch
 
 from tribus.common.logger import get_logger
-from tribus.common.utils import (norm_path, find_files, path_to_package, find_dirs,
-                                 get_path, list_files, package_to_path, flatten_list,
-                                 readconfig)
+from tribus.common.utils import (
+    norm_path, find_files, path_to_package, find_dirs,
+    get_path, list_files, package_to_path, flatten_list,
+    readconfig)
 
 log = get_logger()
+
 
 def get_classifiers(filename=None):
     '''
@@ -97,7 +99,12 @@ def get_requirements(filename=None):
         if re.match(r'(\s*#)|(\s*$)', line):
             continue
         if re.match(r'\s*-e\s+', line):
-            requirements.append(re.sub(r'\s*-e\s+.*#egg=(.*)$', r'\1', line).strip())
+            requirements.append(
+                re.sub(
+                    r'\s*-e\s+.*#egg=(.*)$',
+                    r'\1',
+                    line).strip(
+                    ))
         elif re.match(r'\s*-f\s+', line):
             pass
         else:
@@ -112,7 +119,7 @@ def get_packages(path=None, exclude_packages=None):
 
     :param path: the path where the packages will be searched. It should
                  be supplied as a "cross-platform" (i.e. URL-style) path; it
-                 will be converted to the appropriate local path syntax.  
+                 will be converted to the appropriate local path syntax.
     :param exclude_packages: is a sequence of package names to exclude;
                              ``*`` can be used as a wildcard in the names,
                              such that ``foo.*`` will exclude all subpackages
@@ -128,15 +135,20 @@ def get_packages(path=None, exclude_packages=None):
     path = norm_path(path)
     for init in find_files(path=path, pattern='__init__.py'):
         include = True
-        package = path_to_package(os.path.dirname(init).replace(path+os.sep, ''))
-        for exclude in exclude_packages+['ez_setup', 'distribute_setup']:
-            if fnmatch.fnmatch(package, exclude+'*'):
+        package = path_to_package(
+            os.path.dirname(init).replace(path + os.sep, ''))
+        for exclude in exclude_packages + ['ez_setup', 'distribute_setup']:
+            if fnmatch.fnmatch(package, exclude + '*'):
                 include = False
         if include:
             packages.append(package)
-            log.debug("[%s.%s] Including package \"%s\" in package list." % (__name__, __fname__, package))
+            log.debug(
+                "[%s.%s] Including package \"%s\" in package list." %
+                (__name__, __fname__, package))
         else:
-            log.debug("[%s.%s] Skipping package \"%s\" because of exclude patterns." % (__name__, __fname__, package))
+            log.debug(
+                "[%s.%s] Skipping package \"%s\" because of exclude patterns." %
+                (__name__, __fname__, package))
     return filter(None, packages)
 
 
@@ -161,17 +173,19 @@ def get_package_data(path=None, packages=None, data_files=None,
         package_data[package] = []
         for f in find_files(path=get_path([path, package_to_path(package)]), pattern='*.*'):
             package_data[package].append(f)
-            for e in exclude_packages+['ez_setup', 'distribute_setup']:
+            for e in exclude_packages + ['ez_setup', 'distribute_setup']:
                 if fnmatch.fnmatch(f, get_path([path, package_to_path(e), '*'])) \
                    and f in package_data[package]:
                     package_data[package].remove(f)
-            for x in exclude_files+['*.py']:
+            for x in exclude_files + ['*.py']:
                 if fnmatch.fnmatch(f, get_path([path, x])) \
                    and f in package_data[package]:
                     package_data[package].remove(f)
-        package_data[package] = list(set(package_data[package]) - set(flatten_list(list(zip(*data_files)[1]))))
+        package_data[package] = list(
+            set(package_data[package]) - set(flatten_list(list(zip(*data_files)[1]))))
         for i, j in enumerate(package_data[package]):
-            package_data[package][i] = package_data[package][i].replace(path+os.sep+package_to_path(package)+os.sep, '')
+            package_data[package][i] = package_data[package][
+                i].replace(path + os.sep + package_to_path(package) + os.sep, '')
     return package_data
 
 
@@ -223,8 +237,10 @@ def get_data_files(path=None, patterns=None, exclude_files=None):
                 for exclude in exclude_files:
                     if fnmatch.fnmatch(files, exclude) and files in f:
                         f.remove(files)
-            d.append((dest+subdir.replace(os.path.join(path, src), ''), f))
-            log.debug("[%s.%s] Adding files to install on \"%s\"." % (__name__, __fname__, get_path([dest, subdir])))
+            d.append((dest + subdir.replace(os.path.join(path, src), ''), f))
+            log.debug(
+                "[%s.%s] Adding files to install on \"%s\"." %
+                (__name__, __fname__, get_path([dest, subdir])))
     return d
 
 
@@ -240,8 +256,9 @@ def get_setup_data(basedir):
     .. versionadded:: 0.1
     '''
     from tribus.config.base import NAME, VERSION, URL, AUTHOR, AUTHOR_EMAIL, DESCRIPTION, LICENSE, DOCDIR
-    from tribus.config.pkg import (classifiers, long_description, install_requires, dependency_links,
-                                   exclude_packages, platforms, keywords)
+    from tribus.config.pkg import (
+        classifiers, long_description, install_requires, dependency_links,
+        exclude_packages, platforms, keywords)
     from tribus.common.version import get_version
     from tribus.common.setup.build import build_man, build_css, build_js, build_sphinx, compile_catalog, build
     from tribus.common.setup.clean import clean_mo, clean_sphinx, clean_js, clean_css, clean_man, clean_img, clean_dist, clean_pyc, clean
@@ -249,7 +266,7 @@ def get_setup_data(basedir):
     from tribus.common.setup.maint import extract_messages, init_catalog, update_catalog
 
     packages = get_packages(path=basedir, exclude_packages=exclude_packages)
-    
+
     return {
         'name': NAME,
         'version': get_version(VERSION),
@@ -263,8 +280,13 @@ def get_setup_data(basedir):
         'keywords': keywords,
         'platforms': platforms,
         'packages': packages,
-        'data_files': [('', [])],               # data_files is empty because it is filled during execution of install_data
-        'package_data': {'': []},               # package_data is empty because it is filled during execution of build_py
+        'data_files': [('', [])],
+                        # data_files is empty because it is filled during
+                        # execution of install_data
+        'package_data':
+            {'': []},
+        # package_data is empty because it is filled during
+        # execution of build_py
         'install_requires': install_requires,
         'dependency_links': dependency_links,
         'test_suite': 'tribus.testing.SetupTesting',
@@ -293,9 +315,10 @@ def get_setup_data(basedir):
         },
         'message_extractors': {
             'tribus': [
-                ('**.html', 'tribus.common.setup.message_extractors:django', ''),
+                ('**.html',
+                 'tribus.common.setup.message_extractors:django', ''),
                 ('**.py', 'python', ''),
-                ],
+            ],
         },
         'command_options': {
             'egg_info': {
@@ -306,7 +329,7 @@ def get_setup_data(basedir):
                 'prefix': ('setup.py', '/usr'),
                 'exec_prefix': ('setup.py', '/usr'),
                 'install_layout': ('setup.py', 'deb'),
-            },       
+            },
             'update_catalog': {
                 'domain': ('setup.py', 'django'),
                 'input_file': ('setup.py', 'tribus/data/i18n/pot/django.pot'),
@@ -326,7 +349,9 @@ def get_setup_data(basedir):
             },
             'extract_messages': {
                 'copyright_holder': ('setup.py', 'Desarrolladores de Tribus'),
-                'msgid_bugs_address': ('setup.py', 'desarrolladores@canaima.softwarelibre.gob.ve'),
+                'msgid_bugs_address':
+                    ('setup.py',
+                     'desarrolladores@canaima.softwarelibre.gob.ve'),
                 'output_file': ('setup.py', 'tribus/data/i18n/pot/django.pot'),
                 'charset': ('setup.py', 'utf-8'),
                 'sort_by_file': ('setup.py', True),

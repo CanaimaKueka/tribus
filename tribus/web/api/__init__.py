@@ -22,7 +22,7 @@
 from tastypie.api import Api
 
 from tribus.web.api.resources import TribResource, TimelineResource, CommentResource,\
- UserResource, SearchResource, UserProfileResource, UserFollowsResource, UserFollowersResource
+    UserResource, SearchResource, UserProfileResource, UserFollowsResource, UserFollowersResource
 
 api_01 = Api(api_name='0.1')
 api_01.register(UserFollowsResource())

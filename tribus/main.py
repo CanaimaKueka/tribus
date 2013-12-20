@@ -63,7 +63,7 @@
 #             parser.add_argument(*_args, **_kwargs)
 
 #         subparsers = parser.add_subparsers(title='subcommands',
-#                                            description='valid subcommands', help='additional help')
+# description='valid subcommands', help='additional help')
 
 #         for cmd in find_tbs_subcommands(BASEDIR, 'tribus.cli.commands'):
 #             subparser = subparsers.add_parser(cmd.helper_name, help=cmd.helper_help)
@@ -81,14 +81,14 @@
 #             parser.print_usage()
 
 #     except SystemExit:
-#         # a number of internal functions might raise this one.
+# a number of internal functions might raise this one.
 #         raise
 #     except KeyboardInterrupt:
 #         sys.stderr.write("\nStopped.\n")
 #         sys.exit(1)
 #     except:
 #         sys.excepthook(*sys.exc_info())
-#         # we might leave stale threads if we don't explicitly exit()
+# we might leave stale threads if we don't explicitly exit()
 #         sys.exit(1)
 #     finally:
 #         print 'end'

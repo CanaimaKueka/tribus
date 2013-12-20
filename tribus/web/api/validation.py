@@ -26,7 +26,9 @@ from django.forms import ModelForm
 
 from mongodbforms.documents import document_to_dict
 
+
 class DocumentFormValidation(BaseValidation):
+
     """
     A validation class that uses a Django ``Form`` to validate the data.
 
@@ -41,7 +43,8 @@ class DocumentFormValidation(BaseValidation):
 
     def __init__(self, **kwargs):
         if not 'form_class' in kwargs:
-            raise ImproperlyConfigured("You must provide a 'form_class' to 'FormValidation' classes.")
+            raise ImproperlyConfigured(
+                "You must provide a 'form_class' to 'FormValidation' classes.")
 
         self.form_class = kwargs.pop('form_class')
         super(DocumentFormValidation, self).__init__(**kwargs)
