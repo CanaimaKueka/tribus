@@ -28,11 +28,14 @@ This file contains the entry point to the tribus tests.
 '''
 
 import sys
+import os
+from unittest import TestSuite
 from flake8.main import print_report
 from flake8.engine import get_style_guide
 from coverage import coverage
 from coverage.misc import CoverageException
-from unittest import TestSuite
+from coveralls import Coveralls
+from coveralls.api import CoverallsException
 
 from tribus import BASEDIR
 from tribus.common.utils import get_logger, find_files, get_path
@@ -97,13 +100,22 @@ class SetupTesting(TestSuite):
         Outputs Coverage report to screen and coverage.xml.
         """
 
+        include = ['%s*' % package for package in self.packages]
+        omit = ['*testing*']
+
         log.info("\n\nCoverage Report:")
         try:
-            include = ['%s*' % package for package in self.packages]
-            omit = ['*testing*']
+            self.coverage.stop()
             self.coverage.report(include=include, omit=omit)
         except CoverageException as e:
             log.info("Coverage Exception: %s" % e)
+
+        if os.environ.get('TRAVIS'):
+            log.info("Submitting coverage to coveralls.io...")
+            try:
+                result = Coveralls().wear()
+            except CoverallsException as e:
+                log.error("Coveralls Exception: %s" % e)
 
 
     def build_tests(self):
