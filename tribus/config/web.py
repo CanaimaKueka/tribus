@@ -106,8 +106,8 @@ DATABASES = {
         'NAME': AUTH_LDAP_SERVER_URI,
         'USER': AUTH_LDAP_BIND_DN,
         'PASSWORD': AUTH_LDAP_BIND_PASSWORD,
-     }
- }
+    }
+}
 
 DATABASE_ROUTERS = ['ldapdb.router.Router']
 

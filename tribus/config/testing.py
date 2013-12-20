@@ -6,17 +6,16 @@ from tribus.common.utils import get_path
 
 DEBUG = True
 
-DATA­BASES = {
-    'de­fault': {
-        'EN­GINE': 'django.db.backends.sql­ite3',
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
         'NAME': get_path([BASEDIR, 'data­base.db']),
         'USER': '',
-        'PASS­WORD': '',
+        'PASSWORD': '',
         'HOST': '',
         'PORT': '',
     }
 }
-
 
 INSTALLED_APPS = (
 	'south',
