@@ -37,7 +37,7 @@ from tribus.common.logger import get_logger
 
 log = get_logger()
 
-
+# TODO: Reference author from stackoverflow
 def flatten_list(l=[], limit=1000, counter=0):
     '''
 
@@ -49,8 +49,13 @@ def flatten_list(l=[], limit=1000, counter=0):
 
     .. versionadded:: 0.1
 
+    >>> l = [[['1'], [[2, 3, 4], [5, 6, [7]], [8]]], [9, 10, 11, 12], [13, 14]]
+    >>> flatten_list(l)
+    ['1', 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+
     '''
-    assert l is not None
+    assert l
+    assert type(l) == list
     assert limit > 0
     assert counter >= 0
 
@@ -61,9 +66,6 @@ def flatten_list(l=[], limit=1000, counter=0):
                 i += 1
             counter += 1
             return flatten_list(l, limit, counter)
-
-    log.debug(_('I have flattened a list with %s elements.' % counter))
-
     return l
 
 
@@ -79,51 +81,96 @@ def cat_file(filename=None):
     .. versionadded:: 0.1
 
     >>> f = open('/tmp/test_cat_file', 'w')
-    >>> f.write('This is a test case to see if the contents of a file are outputted the way it\\n should.')
+    >>> f.write('This is a test case\\n.')
     >>> f.close()
     >>> cat_file('/tmp/test_cat_file')
-    'This is a test case to see if the contents of a file are outputted the way it\\n should.'
+    'This is a test case\\n.'
 
     '''
-    assert filename is not None
+    assert filename
+    assert type(filename) == str
     return open(filename).read()
 
 
-def norm_path(path):
-    if path.endswith(os.sep):
-        return os.path.split(path)[0]
-    else:
-        return path
-
-
 def get_path(path=[]):
-    path[0] = os.path.realpath(os.path.abspath(path[0]))
-    return os.path.normpath(os.path.join(*path))
+    '''
+
+    Builds and normalizes a path.
+
+    :param path: a list with the components of a path.
+    :return: the full path.
+    :rtype: a string.
+
+    .. versionadded:: 0.1
+
+    >>> p = ['/usr', 'share', 'logs/vars', 'included', 'hola.deb']
+    >>> get_path(p)
+    '/usr/share/logs/vars/included/hola.deb'
+
+    '''
+    assert path
+    assert type(path) == list
+    return os.path.normpath(os.path.realpath(
+        os.path.abspath(os.path.join(*path))))
 
 
-def package_to_path(package):
-    """
-    Convert a package (as found by setuptools.find_packages)
-    e.g. "foo.bar" to usable path
-    e.g. "foo/bar"
+def package_to_path(package=None):
+    '''
 
-    No idea if this works on windows
-    """
+    Converts a python package string (e.g. "foo.bar") to a path string
+    (e.g. "foo/bar").
+
+    This function does not check if the python package really exists.
+
+    :param package: a string containing the representation of a python package.
+    :return: the path of the python package.
+    :rtype: a string.
+
+    .. versionadded:: 0.1
+
+    >>> p = 'tribus.common.setup.utils'
+    >>> package_to_path(p)
+    'tribus/common/setup/utils'
+
+    '''
+    assert package
+    assert type(package) == str
     return os.path.join(*package.split('.'))
 
 
-def path_to_package(path):
-    path = norm_path(path)
-    return path.replace(os.sep, '.')
+def path_to_package(path=None):
+    '''
+
+    Converts a path string (e.g. "foo/bar") to a python package string
+    (e.g. "foo.bar").
+
+    This function does not check if the path contains a python package.
+
+    :param package: a string containing a path.
+    :return: a strin with the representation of a python package.
+    :rtype: a string.
+
+    .. versionadded:: 0.1
+
+    >>> p = 'tribus/common/setup/utils'
+    >>> path_to_package(p)
+    'tribus.common.setup.utils'
+
+    '''
+    assert path
+    assert type(path) == str
+    return os.path.normpath(path).replace(os.sep, '.')
 
 
-def list_files(path):
+def list_files(path=None):
     '''
     Returns a list of all files and folders in a directory
     (non-recursive)
     '''
-    path = norm_path(path)
-    return [get_path([path, f]) for f in os.listdir(path) if os.path.isfile(get_path([path, f]))]
+    assert path
+    assert type(path) == str
+    return [get_path([path, f]) for f in os.listdir(path) \
+                                    if os.path.isfile(get_path([path, f]))]
 
 
 def find_files(path, pattern):
@@ -132,7 +179,7 @@ def find_files(path, pattern):
     supplied root directory.
     '''
     d = []
-    path = norm_path(path)
+    path = os.path.normpath(path)
     for directory, subdirs, files in os.walk(path):
         for filename in fnmatch.filter(files, pattern):
             d.append(get_path([directory, filename]))
@@ -144,7 +191,7 @@ def list_dirs(path):
     Get the subdirectories within a package
     This will include resources (non-submodules) and submodules
     """
-    path = norm_path(path)
+    path = os.path.normpath(path)
     try:
         subdirectories = ['']+os.walk(path).next()[1]
     except StopIteration:
@@ -157,7 +204,7 @@ def find_dirs(path):
     Get the subdirectories within a package
     This will include resources (non-submodules) and submodules
     """
-    path = norm_path(path)
+    path = os.path.normpath(path)
     try:
         subdirectories = [d[0] for d in os.walk(path) if os.path.isdir(d[0])]
     except StopIteration:

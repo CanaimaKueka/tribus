@@ -27,26 +27,24 @@ These are the tests for the tribus.common.utils module.
 
 '''
 
-# from unittest import TestSuite
-
 from unittest import TestCase
 from doctest import DocTestSuite
 from tribus.common import utils
 from tribus.common.utils import cat_file
 
-class TestFileFunctions(TestCase):
+# class TestFileFunctions(TestCase):
 
-    def setUp(self):
-        self.string = 'Lola quiere comía'
-        self.test_file = '/tmp/test_cat_file'
+#     def setUp(self):
+#         self.string = 'Lola quiere comía'
+#         self.test_file = '/tmp/test_cat_file'
 
-        with open(self.test_file, 'w') as f:
-        	f.write(self.string)
-        	f.close()
+#         with open(self.test_file, 'w') as f:
+#         	f.write(self.string)
+#         	f.close()
 
 
-    def test_cat_file(self):
-        self.assertEqual(cat_file(self.test_file), self.string)
+#     def test_cat_file(self):
+#         self.assertEqual(cat_file(self.test_file), self.string)
 
 
 def load_tests(loader, tests, ignore):

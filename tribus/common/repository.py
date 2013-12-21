@@ -21,7 +21,7 @@
 '''
 
 tribus.common.repository
-======================
+========================
 
 This module contains common functions to manage local and remote repositories.
 

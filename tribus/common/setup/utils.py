@@ -51,7 +51,7 @@ def get_classifiers(filename=None):
 
     .. versionadded:: 0.1
     '''
-    assert filename is not None
+    assert filename
     return readconfig(filename, conffile=False)
 
 
