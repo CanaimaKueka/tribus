@@ -31,11 +31,6 @@ import os
 import fnmatch
 import hashlib
 import urllib
-from gettext import gettext as _
-
-from tribus.common.logger import get_logger
-
-log = get_logger()
 
 # TODO: Reference author from stackoverflow
 def flatten_list(l=[], limit=1000, counter=0):
@@ -146,13 +141,13 @@ def path_to_package(path=None):
 
     This function does not check if the path contains a python package.
 
-    :param package: a string containing a path.
-    :return: a strin with the representation of a python package.
+    :param path: a string containing a path.
+    :return: a string with the representation of a python package.
     :rtype: a string.
 
     .. versionadded:: 0.1
 
-    >>> p = 'tribus/common/setup/utils'
+    >>> p = 'tribus/common/setup/utils/'
     >>> path_to_package(p)
     'tribus.common.setup.utils'
 
@@ -164,8 +159,32 @@ def path_to_package(path=None):
 
 def list_files(path=None):
     '''
-    Returns a list of all files and folders in a directory
-    (non-recursive)
+
+    Returns a list of all files in a directory (non-recursive).
+
+    :param path: a string containing a path.
+    :return: a list of all files in a directory (non-recursive).
+    :rtype: a list.
+
+    .. versionadded:: 0.1
+
+    >>> import os
+    >>> import shutil
+    >>> from tribus.common.utils import list_files, get_path
+    >>> tmpdir = get_path(['/tmp', 'test_list_files'])
+    >>> tmpfiles = ['1.txt', '2.txt']
+    >>> shutil.rmtree(tmpdir)
+    >>> os.makedirs(tmpdir)
+    >>> for t in tmpfiles:
+    ...     f = open(get_path([tmpdir, t]), 'w')
+    ...     f.write(t)
+    ...     f.close()
+    ... 
+    >>> l = list_files(path=tmpdir)
+    >>> l.sort()
+    >>> l
+    ['/tmp/test_list_files/1.txt', '/tmp/test_list_files/2.txt']
+
     '''
     assert path
     assert type(path) == str
@@ -173,27 +192,90 @@ def list_files(path=None):
                                     if os.path.isfile(get_path([path, f]))]
 
 
-def find_files(path, pattern):
+def find_files(path=None, pattern='*.*'):
     '''
-    Locate all files matching supplied filename pattern in and below
-    supplied root directory.
+
+    Locate all the files matching the supplied filename pattern in and below the
+    supplied root directory. If no pattern is supplied, all files will be
+    returned.
+
+    :param path: a string containing a path where the files will be looked for.
+    :param pattern: a string containing a regular expression.
+    :return: a list of files matching the pattern within path (recursive).
+    :rtype: a list.
+
+    .. versionadded:: 0.1
+
+    >>> import os
+    >>> import shutil
+    >>> from tribus.common.utils import find_files, get_path
+    >>> tmpdir_1 = get_path(['/tmp', 'test_find_files'])
+    >>> tmpdir_2 = get_path([tmpdir_1, '2'])
+    >>> tmpdir_3 = get_path([tmpdir_2, '3'])
+    >>> tmpfiles = ['1.txt', '2.txt']
+    >>> shutil.rmtree(tmpdir_1)
+    >>> os.makedirs(tmpdir_3)
+    >>> for t in tmpfiles:
+    ...     f = open(get_path([tmpdir_2, t]), 'w')
+    ...     f.write(t)
+    ...     f.close()
+    ...     for w in tmpfiles:
+    ...         f = open(get_path([tmpdir_3, w]), 'w')
+    ...         f.write(w)
+    ...         f.close()
+    ... 
+    >>> l = find_files(path=tmpdir_1, pattern='*.*')
+    >>> l.sort()
+    >>> l
+    ['/tmp/test_find_files/2/1.txt', '/tmp/test_find_files/2/2.txt', '/tmp/test_find_files/2/3/1.txt', '/tmp/test_find_files/2/3/2.txt']
+
     '''
     d = []
-    path = os.path.normpath(path)
-    for directory, subdirs, files in os.walk(path):
+    assert path
+    assert pattern
+    assert type(path) == str
+    assert type(pattern) == str
+    for directory, subdirs, files in os.walk(os.path.normpath(path)):
         for filename in fnmatch.filter(files, pattern):
             d.append(get_path([directory, filename]))
     return d
 
 
-def list_dirs(path):
-    """
-    Get the subdirectories within a package
-    This will include resources (non-submodules) and submodules
-    """
-    path = os.path.normpath(path)
+def list_dirs(path=None):
+    '''
+
+    Lists all subdirectories of a given path (non-recursive).
+
+    :param path: a string containing a path.
+    :return: a list of subdirectories under the given path (non-recursive).
+    :rtype: a list.
+
+    .. versionadded:: 0.1
+
+    >>> import os
+    >>> import shutil
+    >>> from tribus.common.utils import list_dirs, get_path
+    >>> tmpdir = get_path(['/tmp', 'test_list_dirs'])
+    >>> tmpdirs_1 = ['uno', 'dos']
+    >>> tmpdirs_2 = ['tres', 'cuatro']
+    >>> shutil.rmtree(tmpdir)
+    >>> os.makedirs(tmpdir)
+    >>> for t in tmpdirs_1:
+    ...     os.makedirs(get_path([tmpdir, t]))
+    ... 
+    >>> for w in tmpdirs_2:
+    ...     os.makedirs(get_path([tmpdir, tmpdirs_1[0], w]))
+    ... 
+    >>> l = list_dirs(path=tmpdir)
+    >>> l.sort()
+    >>> l
+    ['', 'dos', 'uno']
+
+    '''
+    assert path
+    assert type(path) == str
     try:
-        subdirectories = ['']+os.walk(path).next()[1]
+        subdirectories = ['']+os.walk(os.path.normpath(path)).next()[1]
     except StopIteration:
         subdirectories = []
     return subdirectories
