@@ -1,0 +1,15 @@
+{
+    "name": "tribus",
+    "repository": "https://github.com/CanaimaGNULinux/tribus",
+    "scripts": {
+        "test": "grunt test"
+    },
+    "devDependencies": {
+        "grunt-cli": "latest",
+        "grunt-karma": "latest",
+        "grunt-contrib-watch": "latest",
+        "csslint": "latest",
+        "jshint": "latest",
+        "karma": "latest",
+    }
+}

@@ -22,6 +22,7 @@ class Helper(object):
 # Command class from git-buildpackage: gbp.command_wrappers
 
 class Command(object):
+
     """
     Wraps a shell command, so we don't have to store any kind of command
     line options in one of the git-buildpackage commands
@@ -104,6 +105,6 @@ class Command(object):
         """
         try:
             ret = self.__call(args)
-        except OSError, e:
+        except OSError as e:
             raise CommandExecFailed("Execution failed: %s" % e)
         return ret

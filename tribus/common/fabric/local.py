@@ -26,11 +26,13 @@ import site
 # import lsb_release
 from fabric.api import *
 from tribus import BASEDIR
-from tribus.config.ldap import (AUTH_LDAP_SERVER_URI, AUTH_LDAP_BASE, AUTH_LDAP_BIND_DN,
-                               AUTH_LDAP_BIND_PASSWORD)
-from tribus.config.pkg import (debian_run_dependencies, debian_build_dependencies,
-                              debian_maint_dependencies, f_workenv_preseed, f_sql_preseed,
-                              f_users_ldif, f_python_dependencies)
+from tribus.config.ldap import (
+    AUTH_LDAP_SERVER_URI, AUTH_LDAP_BASE, AUTH_LDAP_BIND_DN,
+    AUTH_LDAP_BIND_PASSWORD)
+from tribus.config.pkg import (
+    debian_run_dependencies, debian_build_dependencies,
+    debian_maint_dependencies, f_workenv_preseed, f_sql_preseed,
+    f_users_ldif, f_python_dependencies)
 
 
 def development():
@@ -40,22 +42,41 @@ def development():
     env.hosts = ['localhost']
     env.basedir = BASEDIR
     env.virtualenv_dir = os.path.join(env.basedir, 'virtualenv')
-    env.virtualenv_cache = os.path.join(env.virtualenv_dir, 'cache')
-    env.virtualenv_site_dir = os.path.join(env.virtualenv_dir, 'lib', 'python%s' % sys.version[:3], 'site-packages')
-    env.virtualenv_args = ' '.join(['--clear', '--no-site-packages', '--setuptools'])
-    env.virtualenv_activate = os.path.join(env.virtualenv_dir, 'bin', 'activate')
+    env.virtualenv_cache = os.path.join(BASEDIR, 'virtualenv_cache')
+    env.virtualenv_site_dir = os.path.join(
+        env.virtualenv_dir, 'lib', 'python%s' %
+        sys.version[:3], 'site-packages')
+    env.virtualenv_args = ' '.join(
+        ['--clear', '--no-site-packages', '--setuptools'])
+    env.virtualenv_activate = os.path.join(
+        env.virtualenv_dir, 'bin', 'activate')
     env.settings = 'tribus.config.web'
     env.sudo_prompt = 'Executed'
     env.f_python_dependencies = f_python_dependencies
-    env.xapian_destdir = os.path.join(env.virtualenv_dir, 'lib', 'python%s' % sys.version[:3], 'site-packages', 'xapian')
-    env.xapian_init = os.path.join(os.path.sep, 'usr', 'share', 'pyshared', 'xapian', '__init__.py')
-    env.xapian_so = os.path.join(os.path.sep, 'usr', 'lib', 'python%s' % sys.version[:3], 'dist-packages', 'xapian', '_xapian.so')
+    env.xapian_destdir = os.path.join(
+        env.virtualenv_dir, 'lib', 'python%s' %
+        sys.version[:3], 'site-packages', 'xapian')
+    env.xapian_init = os.path.join(
+        os.path.sep,
+        'usr',
+        'share',
+        'pyshared',
+        'xapian',
+        '__init__.py')
+    env.xapian_so = os.path.join(
+        os.path.sep,
+        'usr',
+        'lib',
+        'python%s' % sys.version[:3],
+        'dist-packages',
+        'xapian',
+        '_xapian.so')
     env.reprepro_dir = os.path.join(BASEDIR, 'test_repo')
     env.reprepro_conf_dir = os.path.join(BASEDIR, 'test_repo', 'conf')
-    env.distributions_dir = os.path.join(BASEDIR, 'tribus', 'config' ,'data')
+    env.distributions_dir = os.path.join(BASEDIR, 'tribus', 'config', 'data')
     env.sample_packages_dir = os.path.join(BASEDIR, 'package_samples')
-    
-    
+
+
 def environment():
     configure_sudo()
     preseed_packages()
@@ -70,77 +91,85 @@ def environment():
     update_virtualenv()
     configure_django()
     deconfigure_sudo()
-    
+
 # REPOSITORY TASKS ------------------------------------------------------------
 
 # 1) Crear repositorio e inicializarlo
 
+
 def install_repository():
     with settings(command='rm -rf %(reprepro_dir)s' % env):
         local('%(command)s' % env, capture=False)
-    
+
     with settings(command='mkdir -p %(reprepro_conf_dir)s' % env):
         local('%(command)s' % env, capture=False)
-    
+
     with settings(command='cp %(distributions_dir)s/dists-template  %(reprepro_conf_dir)s/distributions' % env):
         local('%(command)s' % env, capture=False)
-    
+
     with lcd('%(reprepro_dir)s' % env):
         with settings(command='reprepro -VVV export'):
             local('%(command)s' % env, capture=False)
-    
-    
+
+
 # 2) Seleccionar muestra de paquetes
 
 def select_sample_packages():
     py_activate_virtualenv()
     from tribus.common.repository import init_sample_packages
-    init_sample_packages() 
-    
+    init_sample_packages()
+
 # 3) Descargar muestra de paquetes
+
 
 def get_sample_packages():
     py_activate_virtualenv()
     from tribus.common.repository import download_sample_packages
     download_sample_packages()
-    
+
 # 4) Indexar los paquetes descargados en el repositorio
-    
+
+
 def index_sample_packages():
     from tribus.common.utils import find_dirs, list_dirs, find_files
-    #dirs = filter(lambda p: "binary" in p, find_dirs(env.sample_packages_dir))
-    dirs = [os.path.dirname(f) for f in find_files(env.sample_packages_dir, 'list')]
+    # dirs = filter(lambda p: "binary" in p,
+    # find_dirs(env.sample_packages_dir))
+    dirs = [os.path.dirname(f)
+            for f in find_files(env.sample_packages_dir, 'list')]
     dists = filter(None, list_dirs(env.sample_packages_dir))
     with lcd('%(reprepro_dir)s' % env):
         for d in dirs:
-            # No se me ocurre una mejor forma (dinamica) de hacer esto      
+            # No se me ocurre una mejor forma (dinamica) de hacer esto
             dist = [dist_name for dist_name in dists if dist_name in d][0]
             try:
                 with settings(command='reprepro includedeb %s %s/*.deb' % (dist, d)):
                     local('%(command)s' % env, capture=False)
             except:
                 print "No hay paquetes en el directorio %s" % d
-    
+
 # -----------------------------------------------------------------------------
 
 # TRIBUS DATABASE TASKS -------------------------------------------------------
+
 
 def filldb_from_local():
     py_activate_virtualenv()
     from tribus.common.recorder import create_cache_dirs, fill_db_from_cache
     from tribus.config.pkgrecorder import LOCAL_ROOT
     create_cache_dirs(LOCAL_ROOT)
-    #fill_db_from_cache()
-    #rebuild_index()
-    
+    # fill_db_from_cache()
+    # rebuild_index()
+
+
 def filldb_from_remote():
     py_activate_virtualenv()
     from tribus.common.recorder import create_cache_dirs, fill_db_from_cache
     from tribus.config.pkgrecorder import CANAIMA_ROOT
     create_cache_dirs(CANAIMA_ROOT)
-    #fill_db_from_cache()
-    #rebuild_index()
-    
+    # fill_db_from_cache()
+    # rebuild_index()
+
+
 def resetdb():
     configure_sudo()
     drop_mongo()
@@ -151,10 +180,14 @@ def resetdb():
 
 # -----------------------------------------------------------------------------
 
+
 def rebuild_index():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python manage.py rebuild_index --noinput --verbosity 3 --traceback' % env, capture=False)
+            local(
+                '%(command)s python manage.py rebuild_index --noinput --verbosity 3 --traceback' %
+                env, capture=False)
+
 
 def include_xapian():
     with settings(command='mkdir -p %(xapian_destdir)s' % env):
@@ -165,6 +198,7 @@ def include_xapian():
 
     with settings(command='ln -fs %(xapian_so)s %(xapian_destdir)s' % env):
         local('%(command)s' % env, capture=False)
+
 
 def configure_sudo():
     with settings(command='su root -c "echo \'%(user)s ALL= NOPASSWD: ALL\' > /etc/sudoers.d/tribus; chmod 0440 /etc/sudoers.d/tribus"' % env):
@@ -234,19 +268,31 @@ def create_virtualenv():
 def update_virtualenv():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s pip install --download-cache=%(virtualenv_cache)s --requirement=%(f_python_dependencies)s' % env, capture=False)
+            local(
+                '%(command)s pip install --download-cache=%(virtualenv_cache)s --requirement=%(f_python_dependencies)s' %
+                env, capture=False)
+
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s nodeenv -p' % env, capture=False)
+
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s npm install -g' % env, capture=False)
 
 
 def py_activate_virtualenv():
-    os.environ['PATH'] = os.path.join(env.virtualenv_dir, 'bin') + os.pathsep + os.environ['PATH']
+    os.environ['PATH'] = os.path.join(
+        env.virtualenv_dir,
+        'bin') + os.pathsep + os.environ['PATH']
     site.addsitedir(env.virtualenv_site_dir)
     sys.prefix = env.virtualenv_dir
     sys.path.insert(0, env.virtualenv_dir)
     sys.path.insert(0, env.virtualenv_site_dir)
 
+
 def configure_django():
     syncdb_django()
     createsuperuser_django()
+
 
 def drop_mongo():
     with settings(command='mongo tribus --eval \'db.dropDatabase()\'' % env):
@@ -256,7 +302,9 @@ def drop_mongo():
 def createsuperuser_django():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python manage.py createsuperuser --noinput --username admin --email admin@localhost.com --verbosity 3 --traceback' % env, capture=False)
+            local(
+                '%(command)s python manage.py createsuperuser --noinput --username admin --email admin@localhost.com --verbosity 3 --traceback' %
+                env, capture=False)
 
     py_activate_virtualenv()
 
@@ -271,56 +319,76 @@ def createsuperuser_django():
 def syncdb_django():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python manage.py syncdb --noinput --verbosity 3 --traceback' % env, capture=False)
-            local('%(command)s python manage.py migrate --verbosity 3 --traceback' % env, capture=False)
+            local(
+                '%(command)s python manage.py syncdb --noinput --verbosity 3 --traceback' %
+                env, capture=False)
+            local(
+                '%(command)s python manage.py migrate --verbosity 3 --traceback' %
+                env, capture=False)
 
 
 def runserver_django():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python manage.py runserver --verbosity 3 --traceback' % env, capture=False)
-            
-            
+            local(
+                '%(command)s python manage.py runserver --verbosity 3 --traceback' %
+                env, capture=False)
+
+
 def runcelery_daemon():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python manage.py celeryd -c 1 -l INFO' % env, capture=False)
-            
-            
+            local(
+                '%(command)s python manage.py celeryd -c 1 -l INFO' %
+                env, capture=False)
+
+
 def runcelery_worker():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python manage.py celery beat -s celerybeat-schedule ' % env, capture=False)
-            
-            
+            local(
+                '%(command)s python manage.py celery beat -s celerybeat-schedule ' %
+                env, capture=False)
+
+
 def shell_django():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python manage.py shell --verbosity 3 --traceback' % env, capture=False)
+            local(
+                '%(command)s python manage.py shell --verbosity 3 --traceback' %
+                env, capture=False)
 
 
 def update_catalog():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py update_catalog' % env, capture=False)
+            local(
+                '%(command)s python setup.py update_catalog' %
+                env, capture=False)
 
 
 def extract_messages():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py extract_messages' % env, capture=False)
+            local(
+                '%(command)s python setup.py extract_messages' %
+                env, capture=False)
 
 
 def compile_catalog():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py compile_catalog' % env, capture=False)
+            local(
+                '%(command)s python setup.py compile_catalog' %
+                env, capture=False)
 
 
 def init_catalog():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py init_catalog' % env, capture=False)
+            local(
+                '%(command)s python setup.py init_catalog' %
+                env, capture=False)
 
 
 def tx_pull():
@@ -332,13 +400,17 @@ def tx_pull():
 def tx_push():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s tx push -s -t --skip --no-interactive' % env, capture=False)
+            local(
+                '%(command)s tx push -s -t --skip --no-interactive' %
+                env, capture=False)
 
 
 def build_sphinx():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py build_sphinx' % env, capture=False)
+            local(
+                '%(command)s python setup.py build_sphinx' %
+                env, capture=False)
 
 
 def build_css():
@@ -380,7 +452,9 @@ def clean_js():
 def clean_sphinx():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py clean_sphinx' % env, capture=False)
+            local(
+                '%(command)s python setup.py clean_sphinx' %
+                env, capture=False)
 
 
 def clean_mo():
@@ -398,7 +472,9 @@ def clean_man():
 def clean_dist():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py clean_dist' % env, capture=False)
+            local(
+                '%(command)s python setup.py clean_dist' %
+                env, capture=False)
 
 
 def clean_pyc():
@@ -434,4 +510,6 @@ def install():
 def test():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py test --verbose' % env, capture=False)
+            local(
+                '%(command)s python setup.py test --verbose' %
+                env, capture=False)

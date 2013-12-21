@@ -14,23 +14,22 @@ class Package(Helper):
     }
 
     helper_commands = {
-        'create':'''
+        'create': '''
 
 
         ''',
-        'download':,
-        'unpack':,
-        'upload':,
-        'describe':,
-        'download':,
-        'download':,
-        'download':,
-        'download':,
+        'download': ,
+        'unpack': ,
+        'upload': ,
+        'describe': ,
+        'download': ,
+        'download': ,
+        'download': ,
+        'download': ,
     }
     package_dist = ['debian', 'fedora', 'python', 'ruby']
     package_types = ['source', 'binary']
     package_locations = ['local', 'remote']
-
 
     def __init__(self, *args, **kwargs):
         return self.run(*args, **kwargs)

@@ -316,7 +316,10 @@ def readconfig(filename, options=[], conffile=False, strip_comments=True):
     f.close()
     return options
 
-# Taken from http://www.joelverhagen.com/blog/2011/02/md5-hash-of-file-in-python/
+# Taken from
+# http://www.joelverhagen.com/blog/2011/02/md5-hash-of-file-in-python/
+
+
 def md5Checksum(filePath):
     with open(filePath, 'rb') as fh:
         m = hashlib.md5()
@@ -326,24 +329,24 @@ def md5Checksum(filePath):
                 break
             m.update(data)
         return m.hexdigest()
-    
-    
+
+
 def scan_repository(repo_root):
     '''
-    Este metodo lee el archivo distributions ubicado en la raiz de un 
-    repositorio y genera un diccionario con las distribuciones y 
+    Este metodo lee el archivo distributions ubicado en la raiz de un
+    repositorio y genera un diccionario con las distribuciones y
     componentes presentes en dicho repositorio.
     '''
-    
+
     dist_releases = {}
     dists = urllib.urlopen(os.path.join(repo_root, "distributions"))
     linea = dists.readline().strip("\n")
-    
+
     while linea:
         l = linea.split(" ")
         dist_releases[l[0]] = l[1]
         linea = dists.readline().strip("\n")
-        
+
     return dist_releases
 
 
@@ -361,7 +364,7 @@ def delete_dir(dirname):
         print "Deleting %s" % dirname
         for root, dirs, files in os.walk(dirname, topdown=False):
             for name in files:
-                os.remove(os.path.join(root,name))
+                os.remove(os.path.join(root, name))
             for name in dirs:
                 os.rmdir(os.path.join(root, name))
         os.rmdir(dirname)

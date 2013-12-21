@@ -38,32 +38,34 @@ from sphinx.builders.htmlhelp import chm_locales
 from babel import Locale
 from babel.localedata import locale_identifiers
 from babel.messages.frontend import (extract_messages as base_extract_messages,
-									 init_catalog as base_init_catalog,
-									 update_catalog as base_update_catalog)
+                                     init_catalog as base_init_catalog,
+                                     update_catalog as base_update_catalog)
 
 from tribus.config.base import BASEDIR, DOCDIR
 from tribus.common.utils import get_path, list_files
 
+
 class extract_messages(base_extract_messages):
 
     def run(self):
-    	base_extract_messages.run(self)
+        base_extract_messages.run(self)
 
         srcdir = get_path([DOCDIR, 'rst'])
         outdir = get_path([DOCDIR, 'rst', 'i18n', 'pot'])
         doctreedir = get_path([DOCDIR, 'doctrees'])
         buildername = 'gettext'
-        app = Sphinx(srcdir=srcdir, confdir=srcdir, outdir=outdir, doctreedir=doctreedir,
-                     buildername=buildername, confoverrides=None, status=sys.stdout,
-                     warning=sys.stderr, freshenv=True, warningiserror=False, tags=None)
+        app = Sphinx(
+            srcdir=srcdir, confdir=srcdir, outdir=outdir, doctreedir=doctreedir,
+            buildername=buildername, confoverrides=None, status=sys.stdout,
+            warning=sys.stderr, freshenv=True, warningiserror=False, tags=None)
         try:
             app.build(force_all=True)
-        except Exception, e:
+        except Exception as e:
             print e
 
         try:
             shutil.rmtree(doctreedir)
-        except Exception, e:
+        except Exception as e:
             print e
 
 
@@ -77,10 +79,14 @@ class init_catalog(base_init_catalog):
         return filter(None, list_files(get_path([DOCDIR, 'rst', 'i18n', 'pot'])))
 
     def get_locale_list(self):
-        django_locales = set([i[0].replace('_', '-').lower() for i in settings.LANGUAGES])
-        babel_locales = set([j.replace('_', '-').lower() for j in locale_identifiers()])
-        sphinx_locales = set([k.replace('_', '-').lower() for k in chm_locales.keys()])
-        locales = [str(Locale.parse(identifier=l, sep='-')) for l in django_locales & babel_locales & sphinx_locales]
+        django_locales = set([i[0].replace('_', '-').lower()
+                             for i in settings.LANGUAGES])
+        babel_locales = set([j.replace('_', '-').lower()
+                            for j in locale_identifiers()])
+        sphinx_locales = set([k.replace('_', '-').lower()
+                             for k in chm_locales.keys()])
+        locales = [str(Locale.parse(identifier=l, sep='-'))
+                   for l in django_locales & babel_locales & sphinx_locales]
         return filter(None, locales)
 
     def run(self):
@@ -88,7 +94,13 @@ class init_catalog(base_init_catalog):
             self.locale = locale
             self.domain = 'django'
             self.output_dir = get_path([BASEDIR, 'tribus', 'data', 'i18n'])
-            self.input_file = get_path([BASEDIR, 'tribus', 'data', 'i18n', 'pot', 'django.pot'])
+            self.input_file = get_path(
+                [BASEDIR,
+                 'tribus',
+                 'data',
+                 'i18n',
+                 'pot',
+                 'django.pot'])
             self.output_file = None
             base_init_catalog.finalize_options(self)
             base_init_catalog.run(self)
