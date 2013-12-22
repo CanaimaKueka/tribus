@@ -46,8 +46,8 @@ def development():
     env.virtualenv_site_dir = os.path.join(
         env.virtualenv_dir, 'lib', 'python%s' %
         sys.version[:3], 'site-packages')
-    env.virtualenv_args = ' '.join(
-        ['--clear', '--no-site-packages', '--setuptools'])
+    env.virtualenv_args = ' '.join(['--clear', '--no-site-packages',
+                                    '--setuptools', '--unzip-setuptools'])
     env.virtualenv_activate = os.path.join(
         env.virtualenv_dir, 'bin', 'activate')
     env.settings = 'tribus.config.web'

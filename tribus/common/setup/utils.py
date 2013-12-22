@@ -35,7 +35,7 @@ import fnmatch
 
 from tribus.common.logger import get_logger
 from tribus.common.utils import (
-    norm_path, find_files, path_to_package, find_dirs,
+    find_files, path_to_package, find_dirs,
     get_path, list_files, package_to_path, flatten_list,
     readconfig)
 
@@ -112,7 +112,7 @@ def get_requirements(filename=None):
     return requirements
 
 
-def get_packages(path=None, exclude_packages=None):
+def get_packages(path=None, exclude_packages=[]):
     '''
     Returns a list of all python packages found within directory ``path``, with
     ``exclude_packages`` packages excluded.
@@ -129,27 +129,21 @@ def get_packages(path=None, exclude_packages=None):
 
     .. versionadded:: 0.1
     '''
-    assert path is not None
-    __fname__ = inspect.stack()[0][3]
-    packages = []
-    path = norm_path(path)
+    assert path
+    assert exclude_packages
+    assert type(path) == str
+    assert type(exclude_packages) == list
+    pkgs = []
+    path = os.path.normpath(path)
     for init in find_files(path=path, pattern='__init__.py'):
         include = True
-        package = path_to_package(
-            os.path.dirname(init).replace(path + os.sep, ''))
-        for exclude in exclude_packages + ['ez_setup', 'distribute_setup']:
-            if fnmatch.fnmatch(package, exclude + '*'):
+        pkg = path_to_package(os.path.dirname(init).replace(path + os.sep, ''))
+        for exclude in exclude_packages:
+            if fnmatch.fnmatch(pkg, exclude + '*'):
                 include = False
         if include:
-            packages.append(package)
-            log.debug(
-                "[%s.%s] Including package \"%s\" in package list." %
-                (__name__, __fname__, package))
-        else:
-            log.debug(
-                "[%s.%s] Skipping package \"%s\" because of exclude patterns." %
-                (__name__, __fname__, package))
-    return filter(None, packages)
+            pkgs.append(pkg)
+    return filter(None, pkgs)
 
 
 def get_package_data(path=None, packages=None, data_files=None,
@@ -167,7 +161,7 @@ def get_package_data(path=None, packages=None, data_files=None,
     assert packages is not None
     assert data_files is not None
     __fname__ = inspect.stack()[0][3]
-    path = norm_path(path)
+    path = os.path.normpath(path)
     package_data = {}
     for package in packages:
         package_data[package] = []
@@ -226,7 +220,7 @@ def get_data_files(path=None, patterns=None, exclude_files=None):
     assert path is not None
     assert patterns is not None
     __fname__ = inspect.stack()[0][3]
-    path = norm_path(path)
+    path = os.path.normpath(path)
     d = []
     for l in patterns:
         src, rgx, dest = l.split()
@@ -255,18 +249,20 @@ def get_setup_data(basedir):
 
     .. versionadded:: 0.1
     '''
-    from tribus.config.base import NAME, VERSION, URL, AUTHOR, AUTHOR_EMAIL, DESCRIPTION, LICENSE, DOCDIR
-    from tribus.config.pkg import (
-        classifiers, long_description, install_requires, dependency_links,
-        exclude_packages, platforms, keywords)
+    from tribus.config.base import (NAME, VERSION, URL, AUTHOR, AUTHOR_EMAIL,
+                                    DESCRIPTION, LICENSE, DOCDIR)
+    from tribus.config.pkg import (classifiers, long_description,
+                                   install_requires, dependency_links,
+                                   exclude_packages, platforms, keywords)
     from tribus.common.version import get_version
-    from tribus.common.setup.build import build_man, build_css, build_js, build_sphinx, compile_catalog, build
-    from tribus.common.setup.clean import clean_mo, clean_sphinx, clean_js, clean_css, clean_man, clean_img, clean_dist, clean_pyc, clean
+    from tribus.common.setup.build import (build_man, build_css, build_js,
+                                           build_sphinx, compile_catalog, build)
+    from tribus.common.setup.clean import (clean_mo, clean_sphinx, clean_js,
+                                           clean_css, clean_man, clean_img,
+                                           clean_dist, clean_pyc, clean)
     from tribus.common.setup.install import install_data, build_py
-    from tribus.common.setup.maint import extract_messages, init_catalog, update_catalog
-
-    packages = get_packages(path=basedir, exclude_packages=exclude_packages)
-
+    from tribus.common.setup.maint import (extract_messages, init_catalog,
+                                           update_catalog)
     return {
         'name': NAME,
         'version': get_version(VERSION),
@@ -279,14 +275,14 @@ def get_setup_data(basedir):
         'classifiers': classifiers,
         'keywords': keywords,
         'platforms': platforms,
-        'packages': packages,
+        'packages': get_packages(path=basedir,
+                                 exclude_packages=exclude_packages),
+        # data_files is empty because it is filled during
+        # execution of install_data
         'data_files': [('', [])],
-                        # data_files is empty because it is filled during
-                        # execution of install_data
-        'package_data':
-            {'': []},
         # package_data is empty because it is filled during
         # execution of build_py
+        'package_data': {'': []},
         'install_requires': install_requires,
         'dependency_links': dependency_links,
         'test_suite': 'tribus.testing.SetupTesting',

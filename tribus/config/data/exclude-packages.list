@@ -1,7 +1,8 @@
 tribus.data
-tribus.tests
-tribus.i18n
+tribus.testing
 tribus.config
 dist
 build
 virtualenv
+ez_setup
+distribute_setup

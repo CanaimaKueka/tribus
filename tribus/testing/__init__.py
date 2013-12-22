@@ -38,7 +38,8 @@ from coveralls import Coveralls
 from coveralls.api import CoverallsException
 
 from tribus import BASEDIR
-from tribus.common.utils import get_logger, find_files, get_path
+from tribus.common.utils import find_files, get_path
+from tribus.common.logger import get_logger
 from tribus.config.pkg import exclude_packages
 from tribus.common.setup.utils import get_packages
 
