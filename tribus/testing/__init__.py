@@ -37,8 +37,6 @@ from coverage import coverage
 from coverage.misc import CoverageException
 from coveralls import Coveralls
 from coveralls.api import CoverallsException
-from django.test.simple import DjangoTestSuiteRunner
-from south.management.commands import patch_for_test_db_setup
 
 from tribus import BASEDIR
 from tribus.common.utils import find_files, get_path
@@ -61,8 +59,9 @@ class SetupTesting(TestSuite):
         self.configure()
         self.coverage = coverage()
         self.coverage.start()
-        self.packages = get_packages(path=BASEDIR,
-                                     exclude_packages=exclude_packages)
+        self.packages = get_packages(
+            path=BASEDIR,
+            exclude_packages=exclude_packages)
         self.options = {
             'failfast': '',
             'autoreload': '',
@@ -72,15 +71,20 @@ class SetupTesting(TestSuite):
         super(SetupTesting, self).__init__(tests=self.build_tests(),
                                            *args, **kwargs)
 
-        self.test_runner = DjangoTestSuiteRunner(verbosity=1,
-                                                 interactive=False,
-                                                 failfast=True)
-
+        # Setup testrunner.
+        from django.test.simple import DjangoTestSuiteRunner
+        self.test_runner = DjangoTestSuiteRunner(
+            verbosity=1,
+            interactive=False,
+            failfast=True
+        )
+        # South patches the test management command to handle the
+        # SOUTH_TESTS_MIGRATE setting. Apply that patch if South is installed.
         try:
+            from south.management.commands import patch_for_test_db_setup
             patch_for_test_db_setup()
-        except Exception:
+        except ImportError:
             pass
-
         self.test_runner.setup_test_environment()
         self.old_config = self.test_runner.setup_databases()
 
