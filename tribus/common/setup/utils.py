@@ -160,7 +160,6 @@ def get_package_data(path=None, packages=None, data_files=None,
     assert path is not None
     assert packages is not None
     assert data_files is not None
-    __fname__ = inspect.stack()[0][3]
     path = os.path.normpath(path)
     package_data = {}
     for package in packages:
@@ -190,12 +189,13 @@ def get_data_files(path=None, patterns=None, exclude_files=None):
     a directory. This function helps the Tribus Maintainer to define a list of
     files to be installed in a certain system directory.
 
-    For example, generated documentation (everything under ``tribus/data/docs/html``
-    after executing ``make build_sphinx``) should be put in ``/usr/share/doc/tribus/``.
-    The maintainer should add a pattern like the following so that everything
-    from ``tribus/data/docs/html`` gets copied to ``/usr/share/doc/tribus/``
-    when the package is installed (``python setup.py install``) or a
-    binary distribution is created (``python setup.py bdist``).
+    For example, generated documentation (everything under
+    ``tribus/data/docs/html`` after executing ``make build_sphinx``) should be
+    put in ``/usr/share/doc/tribus/``. The maintainer should add a pattern like
+    the following so that everything from ``tribus/data/docs/html`` gets copied
+    to ``/usr/share/doc/tribus/`` when the package is installed
+    (``python setup.py install``) or a binary distribution is created
+    (``python setup.py bdist``).
 
     :param path: the path where the files reside. Generally the top level
                  directory of the project. Patterns will be expanded in
@@ -206,10 +206,11 @@ def get_data_files(path=None, patterns=None, exclude_files=None):
                           'another/path/inside/project *.foo.*regex* /dest2',
                           'path/ *.* dest/']
 
-                     which means, *Put every file from this folder matching the regex
-                     inside this other folder*.
+                     which means, *Put every file from this folder matching the
+                     regex inside this other folder*.
 
-    :param exclude_files: this is a list of file patterns to exclude from the results.
+    :param exclude_files: this is a list of file patterns to exclude from the
+                          results.
     :return: a list of pairs ``('directory', [file-list])`` ready for use
              in ``setup(data_files=...)`` from Setuptools/Distutils.
     :rtype: ``list``
@@ -219,7 +220,6 @@ def get_data_files(path=None, patterns=None, exclude_files=None):
     '''
     assert path is not None
     assert patterns is not None
-    __fname__ = inspect.stack()[0][3]
     path = os.path.normpath(path)
     d = []
     for l in patterns:
@@ -232,9 +232,6 @@ def get_data_files(path=None, patterns=None, exclude_files=None):
                     if fnmatch.fnmatch(files, exclude) and files in f:
                         f.remove(files)
             d.append((dest + subdir.replace(os.path.join(path, src), ''), f))
-            log.debug(
-                "[%s.%s] Adding files to install on \"%s\"." %
-                (__name__, __fname__, get_path([dest, subdir])))
     return d
 
 
@@ -256,13 +253,16 @@ def get_setup_data(basedir):
                                    exclude_packages, platforms, keywords)
     from tribus.common.version import get_version
     from tribus.common.setup.build import (build_man, build_css, build_js,
-                                           build_sphinx, compile_catalog, build)
+                                           build_sphinx, compile_catalog,
+                                           build)
     from tribus.common.setup.clean import (clean_mo, clean_sphinx, clean_js,
                                            clean_css, clean_man, clean_img,
                                            clean_dist, clean_pyc, clean)
     from tribus.common.setup.install import install_data, build_py
     from tribus.common.setup.maint import (extract_messages, init_catalog,
                                            update_catalog)
+    from tribus.common.setup.report import report_setup_data
+
     return {
         'name': NAME,
         'version': get_version(VERSION),
@@ -308,6 +308,7 @@ def get_setup_data(basedir):
             'update_catalog': update_catalog,
             'extract_messages': extract_messages,
             'install_data': install_data,
+            'report_setup_data': report_setup_data,
         },
         'message_extractors': {
             'tribus': [

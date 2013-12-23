@@ -131,12 +131,12 @@ def get_sample_packages():
 
 
 def index_sample_packages():
-    from tribus.common.utils import find_dirs, list_dirs, find_files
+    from tribus.common.utils import find_dirs, list_items, find_files
     # dirs = filter(lambda p: "binary" in p,
     # find_dirs(env.sample_packages_dir))
     dirs = [os.path.dirname(f)
             for f in find_files(env.sample_packages_dir, 'list')]
-    dists = filter(None, list_dirs(env.sample_packages_dir))
+    dists = filter(None, list_items(env.sample_packages_dir, dirs=True, files=False))
     with lcd('%(reprepro_dir)s' % env):
         for d in dirs:
             # No se me ocurre una mejor forma (dinamica) de hacer esto
@@ -512,4 +512,12 @@ def test():
         with settings(command='. %(virtualenv_activate)s;' % env):
             local(
                 '%(command)s python setup.py test --verbose' %
+                env, capture=False)
+
+
+def report_setup_data():
+    with cd('%(basedir)s' % env):
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local(
+                '%(command)s python setup.py report_setup_data' %
                 env, capture=False)

@@ -154,15 +154,15 @@ class clean_sphinx(Command):
         pass
 
     def run(self):
-        for html_dir in reversed(find_dirs(path=get_path([DOCDIR, 'html'])) + find_dirs(path=get_path([DOCDIR, 'doctrees']))):
-            if os.path.isdir(html_dir):
-                try:
-                    shutil.rmtree(html_dir)
-                    log.debug(
-                        "[%s.%s] Removing \"%s\"." %
-                        (__name__, self.__class__.__name__, html_dir))
-                except Exception as e:
-                    print e
+        html_dir = get_path([DOCDIR, 'html'])
+        if os.path.isdir(html_dir):
+            try:
+                shutil.rmtree(html_dir)
+                log.debug(
+                    "[%s.%s] Removing \"%s\"." %
+                    (__name__, self.__class__.__name__, html_dir))
+            except Exception as e:
+                print e
 
 
 class clean_man(Command):
@@ -179,7 +179,7 @@ class clean_man(Command):
         man_file = get_path([DOCDIR, 'man', 'tribus.1'])
         if os.path.isfile(man_file):
             try:
-                os.remove(man_file)
+                shutil.rmtree(man_file)
                 log.debug(
                     "[%s.%s] Removing \"%s\"." %
                     (__name__, self.__class__.__name__, man_file))
@@ -201,7 +201,7 @@ class clean_mo(Command):
         for mo_file in find_files(path=BASEDIR, pattern='*.mo'):
             if os.path.isfile(mo_file):
                 try:
-                    os.remove(mo_file)
+                    shutil.rmtree(mo_file)
                     log.debug(
                         "[%s.%s] Removing \"%s\"." %
                         (__name__, self.__class__.__name__, mo_file))
@@ -221,15 +221,15 @@ class clean_dist(Command):
 
     def run(self):
         for dist_dir in ['dist', 'build', 'Tribus.egg-info']:
-            for dist_subdir in reversed(find_dirs(path=get_path([BASEDIR, dist_dir]))):
-                if os.path.isdir(dist_subdir):
-                    try:
-                        shutil.rmtree(dist_subdir)
-                        log.debug(
-                            "[%s.%s] Removing \"%s\"." %
-                            (__name__, self.__class__.__name__, dist_subdir))
-                    except Exception as e:
-                        print e
+            dist_subdir = get_path([BASEDIR, dist_dir])
+            if os.path.isdir(dist_subdir):
+                try:
+                    shutil.rmtree(dist_subdir)
+                    log.debug("[%s.%s] Removing \"%s\"." %
+                              (__name__, self.__class__.__name__,
+                               dist_subdir))
+                except Exception as e:
+                    print e
 
 
 class clean(base_clean):

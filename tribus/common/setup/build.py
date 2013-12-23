@@ -39,7 +39,7 @@ from sphinx.setup_command import BuildDoc as base_build_sphinx
 from babel.messages.frontend import compile_catalog as base_compile_catalog
 
 from tribus.config.base import BASEDIR, DOCDIR
-from tribus.common.utils import get_path, find_files, list_files, list_dirs
+from tribus.common.utils import get_path, find_files, list_files, list_items
 from tribus.common.logger import get_logger
 
 log = get_logger()
@@ -173,7 +173,7 @@ class build_man(Command):
 class build_sphinx(base_build_sphinx):
 
     def get_sphinx_locale_list(self):
-        return set(filter(None, list_dirs(get_path([DOCDIR, 'rst', 'i18n'])))) - set(['pot'])
+        return set(filter(None, list_items(path=get_path([DOCDIR, 'rst', 'i18n']), dirs=True, files=False))) - set(['pot'])
 
     def run(self):
         # for locale in self.get_sphinx_locale_list():

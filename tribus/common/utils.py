@@ -28,41 +28,35 @@ This module contains common and low level functions to all modules in Tribus.
 '''
 
 import os
-import fnmatch
-import hashlib
-import urllib
 
 
-# TODO: Reference author from stackoverflow
-def flatten_list(l=[], limit=1000, counter=0):
+# Taken from: http://stackoverflow.com/a/2158532
+def flatten_list(l=[]):
     '''
 
     Converts a nested list into one combined list.
 
     :param l: a list object with (optionally) nested list.
-    :param limit: the maximum amount of nested lists (recursive).
-    :param counter:
+    :returns: a generator with all nested lists combined.
+    :rtype: a generator.
 
     .. versionadded:: 0.1
 
     >>> l = [[['1'], [[2, 3, 4], [5, 6, [7]], [8]]], [9, 10, 11, 12], [13, 14]]
-    >>> flatten_list(l)
+    >>> list(flatten_list(l))
     ['1', 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+    >>> l = []
+    >>> list(flatten_list(l))
+    []
 
     '''
-    assert l
-    assert type(l) == list
-    assert limit > 0
-    assert counter >= 0
-
-    for i in xrange(len(l)):
-        if (isinstance(l[i], (list, tuple)) and counter < limit):
-            for a in l.pop(i):
-                l.insert(i, a)
-                i += 1
-            counter += 1
-            return flatten_list(l, limit, counter)
-    return l
+    from collections import Iterable
+    for el in l:
+        if isinstance(el, Iterable) and not isinstance(el, basestring):
+            for sub in flatten_list(el):
+                yield sub
+        else:
+            yield el
 
 
 def cat_file(filename=None):
@@ -91,7 +85,10 @@ def cat_file(filename=None):
 def get_path(path=[]):
     '''
 
-    Builds and normalizes a path.
+    Builds and normalizes a path. This will resolve symlinks to their
+    destination and convert relative to absolute paths.
+
+    This function does not check if the python path really exists.
 
     :param path: a list with the components of a path.
     :return: the full path.
@@ -169,27 +166,6 @@ def list_files(path=None):
 
     .. versionadded:: 0.1
 
-    >>> import os
-    >>> import shutil
-    >>> from tribus.common.utils import list_files, get_path
-    >>> tmpdir = get_path(['/tmp', 'test_list_files'])
-    >>> tmpdir_1 = get_path([tmpdir, '1'])
-    >>> tmpfile_1 = get_path([tmpdir, '1.txt'])
-    >>> tmpfile_2 = get_path([tmpdir, '2.txt'])
-    >>> tmpfile_3 = get_path([tmpdir_1, '3.txt'])
-    >>> if os.path.isdir(tmpdir):
-    ...     shutil.rmtree(tmpdir)
-    ... 
-    >>> os.makedirs(tmpdir)
-    >>> os.makedirs(tmpdir_1)
-    >>> open(tmpfile_1, 'w').close()
-    >>> open(tmpfile_2, 'w').close()
-    >>> open(tmpfile_3, 'w').close()
-    >>> l = list_files(path=tmpdir)
-    >>> l.sort()
-    >>> l
-    ['/tmp/test_list_files/1.txt', '/tmp/test_list_files/2.txt']
-
     '''
     assert path
     assert type(path) == str
@@ -197,7 +173,7 @@ def list_files(path=None):
             if os.path.isfile(get_path([path, f]))]
 
 
-def find_files(path=None, pattern='*.*'):
+def find_files(path=None, pattern='*'):
     '''
 
     Locate all the files matching the supplied filename pattern in and below
@@ -211,43 +187,20 @@ def find_files(path=None, pattern='*.*'):
 
     .. versionadded:: 0.1
 
-    >>> import os
-    >>> import shutil
-    >>> from tribus.common.utils import find_files, get_path
-    >>> tmpdir = get_path(['/', 'tmp', 'test_find_files'])
-    >>> tmpdir_1 = get_path([tmpdir, '1'])
-    >>> tmpdir_2 = get_path([tmpdir, '2'])
-    >>> tmpfile_1 = get_path([tmpdir_1, '1.txt'])
-    >>> tmpfile_2 = get_path([tmpdir_2, '2.txt'])
-    >>> tmpfile_3 = get_path([tmpdir_2, '3.log'])
-    >>> tmpfile_4 = get_path([tmpdir_2, '4.txt'])
-    >>> if os.path.isdir(tmpdir):
-    ...     shutil.rmtree(tmpdir)
-    ... 
-    >>> if os.path.islink(tmpfile_4):
-    ...     shutil.rmtree(tmpfile_4)
-    ... 
-    >>> os.makedirs(tmpdir_1)
-    >>> os.makedirs(tmpdir_2)
-    >>> open(tmpfile_1, 'w').close()
-    >>> open(tmpfile_2, 'w').close()
-    >>> open(tmpfile_3, 'w').close()
-    >>> os.symlink(tmpfile_3, tmpfile_4)
-    >>> l = find_files(path=tmpdir, pattern='*.txt')
-    >>> l.sort()
-    >>> l
-    ['/tmp/test_find_files/1/1.txt', '/tmp/test_find_files/2/2.txt']
-
     '''
     d = []
+    import fnmatch
     assert path
     assert pattern
     assert type(path) == str
     assert type(pattern) == str
     for directory, subdirs, files in os.walk(os.path.normpath(path)):
         for filename in fnmatch.filter(files, pattern):
-            if not os.path.islink(os.path.join(directory, filename)):
-                d.append(get_path([directory, filename]))
+            if os.path.isfile(os.path.join(directory, filename)):
+                if os.path.islink(os.path.join(directory, filename)):
+                    d.append(os.path.join(get_path([directory]), filename))
+                else:
+                    d.append(get_path([directory, filename]))
     return d
 
 
@@ -262,52 +215,65 @@ def list_dirs(path=None):
 
     .. versionadded:: 0.1
 
-    >>> import os
-    >>> import shutil
-    >>> from tribus.common.utils import list_dirs, get_path
-    >>> tmpdir = get_path(['/', 'tmp', 'test_list_dirs'])
-    >>> tmpfiles = ['1.txt', '2.txt']
-    >>> tmpdirs_1 = ['uno', 'dos']
-    >>> tmpdirs_2 = ['tres', 'cuatro']
-    >>> shutil.rmtree(tmpdir)
-    >>> os.makedirs(tmpdir)
-    >>> for t in tmpdirs_1:
-    ...     os.makedirs(get_path([tmpdir, t]))
-    ...
-    >>> for x in tmpfiles:
-    ...     f = open(get_path([tmpdir, x]), 'w')
-    ...     f.write(x)
-    ...     f.close()
-    ...
-    >>> for w in tmpdirs_2:
-    ...     os.makedirs(get_path([tmpdir, tmpdirs_1[0], w]))
-    ...
-    >>> l = list_dirs(path=tmpdir)
-    >>> l.sort()
-    >>> l
-    ['', 'dos', 'uno']
+    '''
+    assert path
+    assert type(path) == str
+    return [get_path([path, f]) for f in os.listdir(path)
+            if os.path.isdir(get_path([path, f]))]
+
+
+def find_dirs(path=None, pattern='*'):
+    '''
+
+    Locate all the directories matching the supplied pattern in and below
+    the supplied root directory. If no pattern is supplied, all files will be
+    returned.
+
+    :param path: a string containing a path where the directories will be
+                 looked for.
+    :param pattern: a string containing a regular expression.
+    :return: a list of directories matching the pattern
+             within path (recursive).
+    :rtype: a list.
+
+    .. versionadded:: 0.1
+
+    '''
+    d = []
+    import fnmatch
+    assert path
+    assert pattern
+    assert type(path) == str
+    assert type(pattern) == str
+    for directory, subdirs, files in os.walk(os.path.normpath(path)):
+        for subdir in fnmatch.filter(subdirs, pattern):
+            if os.path.isdir(os.path.join(directory, subdir)):
+                if os.path.islink(os.path.join(directory, subdir)):
+                    d.append(os.path.join(get_path([directory]), subdir))
+                else:
+                    d.append(get_path([directory, subdir]))
+    return d
+
+
+def list_items(path=None, dirs=True, files=True):
+    '''
+
+    Lists items under a given path (non-recursive, unnormalized).
+
+    :param path: a string containing a path.
+    :param dirs: if False, no directories will be included in the result.
+    :param files: if False, no files will be included in the result.
+    :return: a list of items under the given path (non-recursive).
+    :rtype: a list.
+
+    .. versionadded:: 0.1
 
     '''
     assert path
     assert type(path) == str
-    try:
-        subdirectories = ['']+os.walk(os.path.normpath(path)).next()[1]
-    except StopIteration:
-        subdirectories = []
-    return subdirectories
-
-
-def find_dirs(path):
-    """
-    Get the subdirectories within a package
-    This will include resources (non-submodules) and submodules
-    """
-    path = os.path.normpath(path)
-    try:
-        subdirectories = [d[0] for d in os.walk(path) if os.path.isdir(d[0])]
-    except StopIteration:
-        subdirectories = []
-    return subdirectories
+    return [f for f in os.listdir(path)
+            if (os.path.isdir(os.path.join(path, f)) and dirs)
+            or (os.path.isfile(os.path.join(path, f)) and files)]
 
 
 def readconfig(filename, options=[], conffile=False, strip_comments=True):
@@ -336,6 +302,7 @@ def readconfig(filename, options=[], conffile=False, strip_comments=True):
 # Taken from
 # http://www.joelverhagen.com/blog/2011/02/md5-hash-of-file-in-python/
 def md5Checksum(filePath):
+    import hashlib
     with open(filePath, 'rb') as fh:
         m = hashlib.md5()
         while True:
@@ -353,6 +320,7 @@ def scan_repository(repo_root):
     componentes presentes en dicho repositorio.
     '''
 
+    import urllib
     dist_releases = {}
     dists = urllib.urlopen(os.path.join(repo_root, "distributions"))
     linea = dists.readline().strip("\n")
@@ -366,6 +334,7 @@ def scan_repository(repo_root):
 
 
 def filename_generator(file_parts, new_m_time):
+    import hashlib
     filename = os.path.basename(file_parts[0])
     url = os.path.dirname(file_parts[0])
     ext = file_parts[1]

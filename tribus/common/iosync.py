@@ -20,24 +20,42 @@
 
 '''
 
-Tribus setuptools script
-========================
+tribus.common.iosync
+====================
 
-This script invokes the setup script for Tribus.
-
-For more information about this file, see documentation on
-``tribus/common/setup/utils.py``
+This module contains common OS functions coupled with a OS ``sync()`` call to
+ensure that everything gets written to disk synchronously.
 
 '''
-import sys
-import traceback
-from setuptools import setup
 
-from tribus import BASEDIR
-from tribus.common.setup.utils import get_setup_data
+import os
 
-try:
-    setup(**get_setup_data(BASEDIR))
-except Exception, e:
-    traceback.print_exc()
-    sys.exit(1)
+def sync():
+    try:
+        getattr(os, 'sync')
+    except Exception:
+        import sh
+        os.sync = sh.sync
+    finally:
+        os.sync()
+
+
+def makedirs(path=None):
+    os.makedirs(path)
+    sync()
+
+
+def rmtree(path=None):
+    import shutil
+    shutil.rmtree(path)
+    sync()
+
+
+def touch(path=None):
+    open(path, 'w').close()
+    sync()
+
+
+def ln(source=None, dest=None):
+    os.symlink(source, dest)
+    sync()

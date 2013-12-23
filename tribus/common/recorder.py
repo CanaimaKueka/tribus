@@ -49,7 +49,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
 from debian import deb822
 from tribus.web.cloud.models import *
 from tribus.config.pkgrecorder import package_fields, detail_fields, LOCAL_ROOT, CANAIMA_ROOT
-from tribus.common.utils import find_files, md5Checksum, find_dirs, scan_repository, list_dirs
+from tribus.common.utils import find_files, md5Checksum, find_dirs, scan_repository, list_items
 from tribus.config.base import PACKAGECACHE
 from tribus.config.web import DEBUG
 from django.db.models import Q
@@ -653,7 +653,7 @@ def fill_db_from_cache():
     .. versionadded:: 0.1
     '''
 
-    local_dists = filter(None, list_dirs(PACKAGECACHE))
+    local_dists = filter(None, list_items(path=PACKAGECACHE, dirs=True, files=False))
     for dist in local_dists:
         dist_sub_paths = [os.path.dirname(f)
                           for f in find_files(os.path.join(PACKAGECACHE, dist), 'Packages.gz')]

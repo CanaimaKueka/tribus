@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  tribus\n"
 "Report-Msgid-Bugs-To: desarrolladores@canaima.softwarelibre.gob.ve\n"
-"POT-Creation-Date: 2013-12-12 15:09-0630\n"
+"POT-Creation-Date: 2013-12-23 08:29-0630\n"
 "PO-Revision-Date: 2013-12-06 20:41+0000\n"
 "Last-Translator: jsfrncscg <jsfrncscg@gmail.com>\n"
 "Language-Team: Spanish "
@@ -412,11 +412,13 @@ msgstr ""
 "Se ha producido un error al eliminar su comentario. Por favor inténtelo "
 "de nuevo más tarde."
 
-#: tribus/data/templates/footer.html:7 tribus/data/templates/terms.html:14
+#: tribus/data/templates/footer.html:7 tribus/data/templates/terms.html:3
+#: tribus/data/templates/terms.html:14
 msgid "Terms of Service"
 msgstr "Condiciones de Servicio"
 
-#: tribus/data/templates/footer.html:9 tribus/data/templates/privacy.html:14
+#: tribus/data/templates/footer.html:9 tribus/data/templates/privacy.html:3
+#: tribus/data/templates/privacy.html:14
 msgid "Privacy Policy"
 msgstr "Políticas de Privacidad"
 
@@ -561,47 +563,27 @@ msgstr ""
 " escribir<a href='http://docutils.sourceforge.net/rst.html'> RST </a> y "
 "nosotros nos encargamos del HTML."
 
-#: tribus/data/templates/navbar.html:21
+#: tribus/data/templates/navbar.html:24
 msgid "What are you looking for?"
 msgstr "¿Qué estás buscando?"
 
-#: tribus/data/templates/navbar.html:24
-#: tribus/data/templates/search/search.html:49
-#: tribus/data/templates/search/search.html:53
-msgid "Packages"
-msgstr "Paquetes"
-
-#: tribus/data/templates/navbar.html:32
-#: tribus/data/templates/search/search.html:50
-#: tribus/data/templates/search/search.html:54
-msgid "Users"
-msgstr "Usuarios"
-
-#: tribus/data/templates/navbar.html:40
-msgid "There are no results matching this query."
-msgstr "No hay resultados que coincidan con esta consulta."
-
-#: tribus/data/templates/navbar.html:67
+#: tribus/data/templates/navbar.html:52
 #: tribus/data/templates/registration/password_change_form.html:3
 #: tribus/data/templates/registration/password_change_form.html:9
 #: tribus/data/templates/registration/password_change_form.html:19
 msgid "Change password"
 msgstr "Cambiar contraseña"
 
-#: tribus/data/templates/navbar.html:70
+#: tribus/data/templates/navbar.html:55
 msgid "Logout"
 msgstr "Cerrar sesión"
 
-#: tribus/data/templates/navbar.html:82
+#: tribus/data/templates/navbar.html:67
 #: tribus/data/templates/registration/login_form.html:3
 #: tribus/data/templates/registration/login_form.html:9
 #: tribus/data/templates/registration/login_form.html:47
 msgid "Log in"
 msgstr "Iniciar sesión"
-
-#: tribus/data/templates/privacy.html:3 tribus/data/templates/terms.html:24
-msgid "Privacy"
-msgstr "Privacidad"
 
 #: tribus/data/templates/privacy.html:17
 msgid ""
@@ -1065,10 +1047,15 @@ msgstr "Resultados de la búsqueda"
 msgid "Filters:"
 msgstr "Filtros:"
 
-#: tribus/data/templates/terms.html:3
-#, fuzzy
-msgid "Terms"
-msgstr "Filtros:"
+#: tribus/data/templates/search/search.html:49
+#: tribus/data/templates/search/search.html:53
+msgid "Packages"
+msgstr "Paquetes"
+
+#: tribus/data/templates/search/search.html:50
+#: tribus/data/templates/search/search.html:54
+msgid "Users"
+msgstr "Usuarios"
 
 #: tribus/data/templates/terms.html:17
 msgid ""
@@ -1133,6 +1120,10 @@ msgstr ""
 "posible que Tribus no pueda notificarle este hecho con antelación. Tribus"
 " también se reserva el derecho a poner límites al uso y almacenamiento a "
 "total discreción de Tribus, en cualquier momento y sin previo aviso."
+
+#: tribus/data/templates/terms.html:24
+msgid "Privacy"
+msgstr "Privacidad"
 
 #: tribus/data/templates/terms.html:25
 msgid ""
@@ -1252,8 +1243,8 @@ msgstr "Cancelar"
 msgid "Delete message"
 msgstr "Borrar mensaje"
 
-#: tribus/web/forms.py:42 tribus/web/forms.py:44 tribus/web/forms.py:61
-#: tribus/web/forms.py:63
+#: tribus/web/forms.py:44 tribus/web/forms.py:46 tribus/web/forms.py:65
+#: tribus/web/forms.py:67
 #, fuzzy
 msgid "Enter a valid value."
 msgstr "Introduzca una dirección de correo electrónico válida"
@@ -1262,85 +1253,85 @@ msgstr "Introduzca una dirección de correo electrónico válida"
 msgid "Descripcion"
 msgstr "Descripción"
 
-#: tribus/web/profile/forms.py:33 tribus/web/registration/forms.py:71
-#: tribus/web/registration/forms.py:117 tribus/web/registration/forms.py:132
-#: tribus/web/registration/forms.py:147
+#: tribus/web/profile/forms.py:34 tribus/web/registration/forms.py:75
+#: tribus/web/registration/forms.py:126 tribus/web/registration/forms.py:143
+#: tribus/web/registration/forms.py:160
 msgid "This value may contain only letters, numbers and @/./+/-/_ characters."
 msgstr ""
 "Este campo sólo puede contener letras, números y los siguientes "
 "caracteres: @/./+/-/_"
 
-#: tribus/web/registration/forms.py:61 tribus/web/registration/forms.py:107
+#: tribus/web/registration/forms.py:63 tribus/web/registration/forms.py:114
 msgid "Username"
 msgstr "Nombre de usuario"
 
-#: tribus/web/registration/forms.py:65
+#: tribus/web/registration/forms.py:68
 msgid "Enter your username"
 msgstr "Introduzca su nombre de usuario"
 
-#: tribus/web/registration/forms.py:76 tribus/web/registration/forms.py:163
-#: tribus/web/registration/forms.py:279
+#: tribus/web/registration/forms.py:81 tribus/web/registration/forms.py:178
+#: tribus/web/registration/forms.py:303
 msgid "Password"
 msgstr "Contraseña"
 
-#: tribus/web/registration/forms.py:79
+#: tribus/web/registration/forms.py:85
 msgid "Enter your password"
 msgstr "Introduzca su contraseña"
 
-#: tribus/web/registration/forms.py:86
+#: tribus/web/registration/forms.py:92
 msgid "Remember my session"
 msgstr "Recordar mi sesión"
 
-#: tribus/web/registration/forms.py:111
+#: tribus/web/registration/forms.py:119
 msgid "Pick a username"
 msgstr "Elija un nombre de usuario"
 
-#: tribus/web/registration/forms.py:122 tribus/web/registration/forms.py:126
+#: tribus/web/registration/forms.py:132 tribus/web/registration/forms.py:136
 msgid "First name"
 msgstr "Primer nombre"
 
-#: tribus/web/registration/forms.py:137 tribus/web/registration/forms.py:141
+#: tribus/web/registration/forms.py:149 tribus/web/registration/forms.py:153
 msgid "Last name"
 msgstr "Segundo nombre"
 
-#: tribus/web/registration/forms.py:152 tribus/web/registration/forms.py:205
+#: tribus/web/registration/forms.py:166 tribus/web/registration/forms.py:227
 msgid "Email"
 msgstr "Correo"
 
-#: tribus/web/registration/forms.py:155 tribus/web/registration/forms.py:208
+#: tribus/web/registration/forms.py:170 tribus/web/registration/forms.py:231
 msgid "Enter a valid email"
 msgstr "Introduzca una dirección de correo electrónico válida"
 
-#: tribus/web/registration/forms.py:166
+#: tribus/web/registration/forms.py:182
 msgid "Create a password"
 msgstr "Establezca una contraseña"
 
-#: tribus/web/registration/forms.py:180 tribus/web/registration/forms.py:304
+#: tribus/web/registration/forms.py:198 tribus/web/registration/forms.py:330
 msgid "A user with that username already exists."
 msgstr "Ya existe un usuario registrado con ese nombre."
 
-#: tribus/web/registration/forms.py:195
+#: tribus/web/registration/forms.py:216
 #, fuzzy
 msgid "A user with that email already exists."
 msgstr "Ya existe un usuario registrado con ese nombre."
 
-#: tribus/web/registration/forms.py:282
+#: tribus/web/registration/forms.py:307
 msgid "Create a new password"
 msgstr "Ingrese su nueva contraseña"
 
-#: tribus/web/registration/forms.py:289
+#: tribus/web/registration/forms.py:314
 msgid "Password (repeat)"
 msgstr "Contraseña (repetir)"
 
-#: tribus/web/registration/forms.py:292
+#: tribus/web/registration/forms.py:318
 msgid "Repeat your new password"
 msgstr "Repita su nueva contraseña"
 
-#: tribus/web/registration/forms.py:324
+#: tribus/web/registration/forms.py:351
 msgid "Old password"
 msgstr "Contraseña anterior"
 
-#: tribus/web/registration/forms.py:327
+#: tribus/web/registration/forms.py:355
 msgid "Enter your old password"
 msgstr "Introduzca su contraseña anterior"
 

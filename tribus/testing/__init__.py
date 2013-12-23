@@ -29,6 +29,7 @@ This file contains the entry point to the tribus tests.
 
 import sys
 import os
+import pep257
 from unittest import TestSuite
 from flake8.main import print_report
 from flake8.engine import get_style_guide
@@ -36,6 +37,8 @@ from coverage import coverage
 from coverage.misc import CoverageException
 from coveralls import Coveralls
 from coveralls.api import CoverallsException
+from django.test.simple import DjangoTestSuiteRunner
+from south.management.commands import patch_for_test_db_setup
 
 from tribus import BASEDIR
 from tribus.common.utils import find_files, get_path
@@ -58,9 +61,8 @@ class SetupTesting(TestSuite):
         self.configure()
         self.coverage = coverage()
         self.coverage.start()
-        self.packages = get_packages(
-            path=BASEDIR,
-            exclude_packages=exclude_packages)
+        self.packages = get_packages(path=BASEDIR,
+                                     exclude_packages=exclude_packages)
         self.options = {
             'failfast': '',
             'autoreload': '',
@@ -70,22 +72,18 @@ class SetupTesting(TestSuite):
         super(SetupTesting, self).__init__(tests=self.build_tests(),
                                            *args, **kwargs)
 
-        # Setup testrunner.
-        from django.test.simple import DjangoTestSuiteRunner
-        self.test_runner = DjangoTestSuiteRunner(
-            verbosity=1,
-            interactive=False,
-            failfast=True
-        )
-        # South patches the test management command to handle the
-        # SOUTH_TESTS_MIGRATE setting. Apply that patch if South is installed.
+        self.test_runner = DjangoTestSuiteRunner(verbosity=1,
+                                                 interactive=False,
+                                                 failfast=True)
+
         try:
-            from south.management.commands import patch_for_test_db_setup
             patch_for_test_db_setup()
-        except ImportError:
+        except Exception:
             pass
+
         self.test_runner.setup_test_environment()
         self.old_config = self.test_runner.setup_databases()
+
 
     def flake8_report(self):
         """
@@ -97,6 +95,23 @@ class SetupTesting(TestSuite):
         flake8_style = get_style_guide()
         report = flake8_style.check_files(pys)
         exit_code = print_report(report, flake8_style)
+
+
+    def pep257_report(self):
+        """
+        Outputs flake8 report.
+        """
+        log.info("\n\nPEP257 Report:")
+        base = get_path([BASEDIR, 'tribus'])
+        pys = find_files(path=base, pattern='*.py')
+        report = pep257.check_files(pys)
+
+        if len(report) > 0:
+            for r in report:
+                log.info(r)
+        else:
+            log.info("\nNo errors found!")
+
 
     def coverage_report(self):
         """
@@ -116,9 +131,11 @@ class SetupTesting(TestSuite):
         if os.environ.get('TRAVIS'):
             log.info("Submitting coverage to coveralls.io...")
             try:
-                result = Coveralls().wear()
+                result = Coveralls()
+                result.wear()
             except CoverallsException as e:
                 log.error("Coveralls Exception: %s" % e)
+
 
     def build_tests(self):
         """
@@ -134,6 +151,7 @@ class SetupTesting(TestSuite):
         tests.append(build_suite(app))
 
         return tests
+
 
     def configure(self):
         """
@@ -166,4 +184,5 @@ class SetupTesting(TestSuite):
         self.test_runner.teardown_test_environment()
         self.coverage_report()
         self.flake8_report()
+        self.pep257_report()
         return result
