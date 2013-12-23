@@ -104,7 +104,8 @@ def install_repository():
     with settings(command='mkdir -p %(reprepro_conf_dir)s' % env):
         local('%(command)s' % env, capture=False)
 
-    with settings(command='cp %(distributions_dir)s/dists-template  %(reprepro_conf_dir)s/distributions' % env):
+    with settings(command='cp %(distributions_dir)s/dists-template  \
+                  %(reprepro_conf_dir)s/distributions' % env):
         local('%(command)s' % env, capture=False)
 
     with lcd('%(reprepro_dir)s' % env):
@@ -142,7 +143,8 @@ def index_sample_packages():
             # No se me ocurre una mejor forma (dinamica) de hacer esto
             dist = [dist_name for dist_name in dists if dist_name in d][0]
             try:
-                with settings(command='reprepro includedeb %s %s/*.deb' % (dist, d)):
+                with settings(command='reprepro includedeb %s %s/*.deb' %
+                             (dist, d)):
                     local('%(command)s' % env, capture=False)
             except:
                 print "No hay paquetes en el directorio %s" % d
@@ -185,7 +187,8 @@ def rebuild_index():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
             local(
-                '%(command)s python manage.py rebuild_index --noinput --verbosity 3 --traceback' %
+                '%(command)s python manage.py rebuild_index \
+--noinput --verbosity 3 --traceback' %
                 env, capture=False)
 
 
@@ -201,17 +204,20 @@ def include_xapian():
 
 
 def configure_sudo():
-    with settings(command='su root -c "echo \'%(user)s ALL= NOPASSWD: ALL\' > /etc/sudoers.d/tribus; chmod 0440 /etc/sudoers.d/tribus"' % env):
+    with settings(command='su root -c "echo \'%(user)s ALL= NOPASSWD: ALL\' > \
+/etc/sudoers.d/tribus; chmod 0440 /etc/sudoers.d/tribus"' % env):
         local('%(command)s' % env, capture=False)
 
 
 def deconfigure_sudo():
-    with settings(command='sudo /bin/bash -c "rm -rf /etc/sudoers.d/tribus"' % env):
+    with settings(command='sudo /bin/bash -c \
+                  "rm -rf /etc/sudoers.d/tribus"' % env):
         local('%(command)s' % env, capture=False)
 
 
 def preseed_packages():
-    with settings(command='sudo /bin/bash -c "debconf-set-selections %s"' % f_workenv_preseed):
+    with settings(command='sudo /bin/bash -c \
+"debconf-set-selections %s"' % f_workenv_preseed):
         local('%(command)s' % env, capture=False)
 
 
@@ -226,13 +232,15 @@ aptitude install --assume-yes --allow-untrusted \
 
 
 def configure_postgres():
-    with settings(command='sudo /bin/bash -c "echo \'postgres:tribus\' | chpasswd"'):
+    with settings(command='sudo /bin/bash -c \
+"echo \'postgres:tribus\' | chpasswd"'):
         local('%(command)s' % env, capture=False)
 
     with settings(command='cp %s /tmp/' % f_sql_preseed):
         local('%(command)s' % env, capture=False)
 
-    with settings(command='sudo /bin/bash -c "sudo -i -u postgres /bin/sh -c \'psql -f /tmp/preseed-db.sql\'"'):
+    with settings(command='sudo /bin/bash -c \
+"sudo -i -u postgres /bin/sh -c \'psql -f /tmp/preseed-db.sql\'"'):
         local('%(command)s' % env, capture=False)
 
 
@@ -261,7 +269,8 @@ sed \'s/dn: //g\' | sed \'s/ /_@_/g\'' % env):
 
 def create_virtualenv():
     with cd('%(basedir)s' % env):
-        with settings(command='virtualenv %(virtualenv_args)s %(virtualenv_dir)s' % env):
+        with settings(command='virtualenv \
+%(virtualenv_args)s %(virtualenv_dir)s' % env):
             local('%(command)s' % env, capture=False)
 
 
@@ -269,7 +278,9 @@ def update_virtualenv():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
             local(
-                '%(command)s pip install --download-cache=%(virtualenv_cache)s --requirement=%(f_python_dependencies)s' %
+                '%(command)s pip install \
+--download-cache=%(virtualenv_cache)s \
+--requirement=%(f_python_dependencies)s' %
                 env, capture=False)
 
         with settings(command='. %(virtualenv_activate)s;' % env):
@@ -303,7 +314,8 @@ def createsuperuser_django():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
             local(
-                '%(command)s python manage.py createsuperuser --noinput --username admin --email admin@localhost.com --verbosity 3 --traceback' %
+                '%(command)s python manage.py createsuperuser --noinput \
+--username admin --email admin@localhost.com --verbosity 3 --traceback' %
                 env, capture=False)
 
     py_activate_virtualenv()
@@ -320,10 +332,12 @@ def syncdb_django():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
             local(
-                '%(command)s python manage.py syncdb --noinput --verbosity 3 --traceback' %
+                '%(command)s python manage.py syncdb \
+--noinput --verbosity 3 --traceback' %
                 env, capture=False)
             local(
-                '%(command)s python manage.py migrate --verbosity 3 --traceback' %
+                '%(command)s python manage.py migrate \
+--verbosity 3 --traceback' %
                 env, capture=False)
 
 
@@ -331,7 +345,8 @@ def runserver_django():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
             local(
-                '%(command)s python manage.py runserver --verbosity 3 --traceback' %
+                '%(command)s python manage.py runserver \
+--verbosity 3 --traceback' %
                 env, capture=False)
 
 
@@ -347,7 +362,8 @@ def runcelery_worker():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
             local(
-                '%(command)s python manage.py celery beat -s celerybeat-schedule ' %
+                '%(command)s python manage.py \
+celery beat -s celerybeat-schedule ' %
                 env, capture=False)
 
 
@@ -355,7 +371,8 @@ def shell_django():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
             local(
-                '%(command)s python manage.py shell --verbosity 3 --traceback' %
+                '%(command)s python manage.py shell \
+--verbosity 3 --traceback' %
                 env, capture=False)
 
 
