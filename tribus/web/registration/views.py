@@ -55,9 +55,9 @@ class RegistrationView(BaseRegistrationView):
             site = RequestSite(request)
 
         new_user = TribusRegistrationProfile.objects.create_inactive_user(
-                    cleaned_data['username'], cleaned_data['first_name'],
-                    cleaned_data['last_name'], cleaned_data['email'],
-                    cleaned_data['password1'], site)
+            cleaned_data['username'], cleaned_data['first_name'],
+            cleaned_data['last_name'], cleaned_data['email'],
+            cleaned_data['password1'], site)
         signals.user_registered.send(sender=self.__class__,
                                      user=new_user,
                                      request=request)
@@ -68,8 +68,10 @@ class RegistrationView(BaseRegistrationView):
 
 
 class ActivationView(BaseActivationView):
+
     def activate(self, request, activation_key):
-        activated_user = TribusRegistrationProfile.objects.activate_user(activation_key)
+        activated_user = TribusRegistrationProfile.objects.activate_user(
+            activation_key)
 
         if activated_user:
             ldap_user = create_ldap_user(activated_user)
@@ -110,7 +112,8 @@ def password_reset_confirm(request, uidb36=None, token=None,
     UserModel = get_user_model()
     assert uidb36 is not None and token is not None  # checked by URLconf
     if post_reset_redirect is None:
-        post_reset_redirect = reverse('django.contrib.auth.views.password_reset_complete')
+        post_reset_redirect = reverse(
+            'django.contrib.auth.views.password_reset_complete')
     try:
         uid_int = base36_to_int(uidb36)
         user = UserModel._default_manager.get(pk=uid_int)

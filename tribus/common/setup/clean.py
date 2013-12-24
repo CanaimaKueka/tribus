@@ -57,7 +57,7 @@ class clean_img(Command):
                     log.debug("[%s.%s] Removing \"%s\"." % (__name__,
                                                             self.__class__.__name__,
                                                             png_file))
-                except Exception, e:
+                except Exception as e:
                     print e
 
 
@@ -79,7 +79,7 @@ class clean_pyc(Command):
                     log.debug("[%s.%s] Removing \"%s\"." % (__name__,
                                                             self.__class__.__name__,
                                                             pyc_file))
-                except Exception, e:
+                except Exception as e:
                     print e
 
 
@@ -95,13 +95,21 @@ class clean_css(Command):
 
     def run(self):
 
-        CSSMIN_DIR = get_path([BASEDIR, 'tribus', 'data', 'static', 'css', 'min'])
+        CSSMIN_DIR = get_path(
+            [BASEDIR,
+             'tribus',
+             'data',
+             'static',
+             'css',
+             'min'])
 
         if os.path.isdir(CSSMIN_DIR):
             try:
                 shutil.rmtree(CSSMIN_DIR)
-                log.debug("[%s.%s] Removing \"%s\"." % (__name__, self.__class__.__name__, CSSMIN_DIR))
-            except Exception, e:
+                log.debug(
+                    "[%s.%s] Removing \"%s\"." %
+                    (__name__, self.__class__.__name__, CSSMIN_DIR))
+            except Exception as e:
                 print e
 
 
@@ -117,13 +125,21 @@ class clean_js(Command):
 
     def run(self):
 
-        JSMIN_DIR = get_path([BASEDIR, 'tribus', 'data', 'static', 'js', 'min'])
-        
+        JSMIN_DIR = get_path(
+            [BASEDIR,
+             'tribus',
+             'data',
+             'static',
+             'js',
+             'min'])
+
         if os.path.isdir(JSMIN_DIR):
             try:
                 shutil.rmtree(JSMIN_DIR)
-                log.debug("[%s.%s] Removing \"%s\"." % (__name__, self.__class__.__name__, JSMIN_DIR))
-            except Exception, e:
+                log.debug(
+                    "[%s.%s] Removing \"%s\"." %
+                    (__name__, self.__class__.__name__, JSMIN_DIR))
+            except Exception as e:
                 print e
 
 
@@ -138,13 +154,15 @@ class clean_sphinx(Command):
         pass
 
     def run(self):
-        for html_dir in reversed(find_dirs(path=get_path([DOCDIR, 'html']))+find_dirs(path=get_path([DOCDIR, 'doctrees']))):
-            if os.path.isdir(html_dir):
-                try:
-                    shutil.rmtree(html_dir)
-                    log.debug("[%s.%s] Removing \"%s\"." % (__name__, self.__class__.__name__, html_dir))
-                except Exception, e:
-                    print e
+        html_dir = get_path([DOCDIR, 'html'])
+        if os.path.isdir(html_dir):
+            try:
+                shutil.rmtree(html_dir)
+                log.debug(
+                    "[%s.%s] Removing \"%s\"." %
+                    (__name__, self.__class__.__name__, html_dir))
+            except Exception as e:
+                print e
 
 
 class clean_man(Command):
@@ -161,9 +179,11 @@ class clean_man(Command):
         man_file = get_path([DOCDIR, 'man', 'tribus.1'])
         if os.path.isfile(man_file):
             try:
-                os.remove(man_file)
-                log.debug("[%s.%s] Removing \"%s\"." % (__name__, self.__class__.__name__, man_file))
-            except Exception, e:
+                shutil.rmtree(man_file)
+                log.debug(
+                    "[%s.%s] Removing \"%s\"." %
+                    (__name__, self.__class__.__name__, man_file))
+            except Exception as e:
                 print e
 
 
@@ -181,9 +201,11 @@ class clean_mo(Command):
         for mo_file in find_files(path=BASEDIR, pattern='*.mo'):
             if os.path.isfile(mo_file):
                 try:
-                    os.remove(mo_file)
-                    log.debug("[%s.%s] Removing \"%s\"." % (__name__, self.__class__.__name__, mo_file))
-                except Exception, e:
+                    shutil.rmtree(mo_file)
+                    log.debug(
+                        "[%s.%s] Removing \"%s\"." %
+                        (__name__, self.__class__.__name__, mo_file))
+                except Exception as e:
                     print e
 
 
@@ -199,16 +221,19 @@ class clean_dist(Command):
 
     def run(self):
         for dist_dir in ['dist', 'build', 'Tribus.egg-info']:
-            for dist_subdir in reversed(find_dirs(path=get_path([BASEDIR, dist_dir]))):
-                if os.path.isdir(dist_subdir):
-                    try:
-                        shutil.rmtree(dist_subdir)
-                        log.debug("[%s.%s] Removing \"%s\"." % (__name__, self.__class__.__name__, dist_subdir))
-                    except Exception, e:
-                        print e
+            dist_subdir = get_path([BASEDIR, dist_dir])
+            if os.path.isdir(dist_subdir):
+                try:
+                    shutil.rmtree(dist_subdir)
+                    log.debug("[%s.%s] Removing \"%s\"." %
+                              (__name__, self.__class__.__name__,
+                               dist_subdir))
+                except Exception as e:
+                    print e
 
 
 class clean(base_clean):
+
     def run(self):
         self.run_command('clean_dist')
         self.run_command('clean_mo')

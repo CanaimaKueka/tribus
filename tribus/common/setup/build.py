@@ -39,7 +39,7 @@ from sphinx.setup_command import BuildDoc as base_build_sphinx
 from babel.messages.frontend import compile_catalog as base_compile_catalog
 
 from tribus.config.base import BASEDIR, DOCDIR
-from tribus.common.utils import get_path, find_files, list_files, list_dirs
+from tribus.common.utils import get_path, find_files, list_files, list_items
 from tribus.common.logger import get_logger
 
 log = get_logger()
@@ -55,16 +55,29 @@ class build_css(Command):
     def finalize_options(self):
         pass
 
-
     def run(self):
-        log.debug("[%s.%s] Compressing CSS." % (__name__, self.__class__.__name__))
-        
-        CSSFULL_DIR = get_path([BASEDIR, 'tribus', 'data', 'static', 'css', 'full'])
-        CSSMIN_DIR = get_path([BASEDIR, 'tribus', 'data', 'static', 'css', 'min'])
+        log.debug(
+            "[%s.%s] Compressing CSS." %
+            (__name__, self.__class__.__name__))
+
+        CSSFULL_DIR = get_path(
+            [BASEDIR,
+             'tribus',
+             'data',
+             'static',
+             'css',
+             'full'])
+        CSSMIN_DIR = get_path(
+            [BASEDIR,
+             'tribus',
+             'data',
+             'static',
+             'css',
+             'min'])
 
         try:
             os.makedirs(CSSMIN_DIR)
-        except Exception, e:
+        except Exception as e:
             print e
 
         for CSS_FILE in find_files(path=CSSFULL_DIR, pattern='*.css'):
@@ -77,7 +90,7 @@ class build_css(Command):
                     _file.write(cssmin.cssmin(open(CSS_FILE).read()))
                     _file.close()
 
-            except Exception, e:
+            except Exception as e:
                 print e
 
             log.debug("[%s.%s] %s > %s." % (__name__, self.__class__.__name__,
@@ -95,19 +108,33 @@ class build_js(Command):
         pass
 
     def run(self):
-        log.debug("[%s.%s] Compressing JS." % (__name__, self.__class__.__name__))
-        
-        JSFULL_DIR = get_path([BASEDIR, 'tribus', 'data', 'static', 'js', 'full'])
-        JSMIN_DIR = get_path([BASEDIR, 'tribus', 'data', 'static', 'js', 'min'])
+        log.debug(
+            "[%s.%s] Compressing JS." %
+            (__name__, self.__class__.__name__))
+
+        JSFULL_DIR = get_path(
+            [BASEDIR,
+             'tribus',
+             'data',
+             'static',
+             'js',
+             'full'])
+        JSMIN_DIR = get_path(
+            [BASEDIR,
+             'tribus',
+             'data',
+             'static',
+             'js',
+             'min'])
 
         try:
             os.makedirs(JSMIN_DIR)
-        except Exception, e:
+        except Exception as e:
             print e
 
         for JS_FILE in find_files(path=JSFULL_DIR, pattern='*.js'):
 
-            JSMIN_FILE =get_path([JSMIN_DIR, os.path.basename(JS_FILE)])
+            JSMIN_FILE = get_path([JSMIN_DIR, os.path.basename(JS_FILE)])
 
             try:
 
@@ -115,7 +142,7 @@ class build_js(Command):
                     _file.write(slimit.minify(open(JS_FILE).read()))
                     _file.close()
 
-            except Exception, e:
+            except Exception as e:
                 print e
 
             log.debug("[%s.%s] %s > %s." % (__name__, self.__class__.__name__,
@@ -136,8 +163,9 @@ class build_man(Command):
         log.debug("[%s.%s] Compiling manual from RST sources." % (__name__,
                                                                   self.__class__.__name__))
         pub = Publisher(writer=manpage.Writer())
-        pub.set_components(reader_name='standalone', parser_name='restructuredtext',
-                           writer_name='pseudoxml')
+        pub.set_components(
+            reader_name='standalone', parser_name='restructuredtext',
+            writer_name='pseudoxml')
         pub.publish(argv=[u'%s' % get_path([DOCDIR, 'man', 'tribus.rst']),
                           u'%s' % get_path([DOCDIR, 'man', 'tribus.1'])])
 
@@ -145,11 +173,11 @@ class build_man(Command):
 class build_sphinx(base_build_sphinx):
 
     def get_sphinx_locale_list(self):
-        return set(filter(None, list_dirs(get_path([DOCDIR, 'rst', 'i18n'])))) - set(['pot'])
+        return set(filter(None, list_items(path=get_path([DOCDIR, 'rst', 'i18n']), dirs=True, files=False))) - set(['pot'])
 
     def run(self):
-        for locale in self.get_sphinx_locale_list():
-            base_build_sphinx.run(self)
+        # for locale in self.get_sphinx_locale_list():
+        base_build_sphinx.run(self)
 
 
 class compile_catalog(base_compile_catalog):
@@ -163,12 +191,14 @@ class compile_catalog(base_compile_catalog):
         for potfile in self.get_sphinx_pot_list():
             base_compile_catalog.initialize_options(self)
             self.domain = os.path.splitext(os.path.basename(potfile))[0]
-            self.directory = get_path([DOCDIR, 'rst', 'i18n']).replace(BASEDIR+os.sep, '')
+            self.directory = get_path(
+                [DOCDIR, 'rst', 'i18n']).replace(BASEDIR + os.sep, '')
             self.use_fuzzy = True
             base_compile_catalog.run(self)
 
 
 class build(base_build):
+
     def run(self):
         self.run_command('clean')
         self.run_command('update_catalog')

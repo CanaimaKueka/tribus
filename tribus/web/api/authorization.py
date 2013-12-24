@@ -23,6 +23,7 @@ from django.db.models.query import EmptyQuerySet
 from tastypie.exceptions import Unauthorized
 from tastypie.authorization import Authorization as BaseAuthorization
 
+
 class Authorization(BaseAuthorization):
 
     def read_list(self, object_list, bundle):
@@ -52,47 +53,48 @@ class Authorization(BaseAuthorization):
 
 class UserAuthorization(Authorization):
     # NO SE USA (hasta ahora)
+
     def read_list(self, object_list, bundle):
         return object_list.filter(id=bundle.request.user.id)
 
-
-    # SE DEBE PERMITIR LEER 
+    # SE DEBE PERMITIR LEER
     def read_detail(self, object_list, bundle):
-        #if int(bundle.obj.id) == bundle.request.user.id:
+        # if int(bundle.obj.id) == bundle.request.user.id:
         return True
-        #raise Unauthorized("You are not allowed to access that resource.")
-     
+        # raise Unauthorized("You are not allowed to access that resource.")
 
     def update_detail(self, object_list, bundle):
         if int(bundle.obj.id) == bundle.request.user.id:
             return True
-        raise Unauthorized("You are not allowed to access that resource.")   
+        raise Unauthorized("You are not allowed to access that resource.")
 
 
 class UserProfileAuthorization(Authorization):
 
-    def read_list(self, object_list, bundle):#filtrar todos los objetos pertenecientes a user
+    def read_list(self, object_list, bundle):  # filtrar todos los objetos pertenecientes a user
         return object_list
 
-    def read_detail(self, object_list, bundle):#aqui se debe hacer una val
+    def read_detail(self, object_list, bundle):  # aqui se debe hacer una val
         return True
 
 # HACER AUTORIZACION PARA PATCH
-    
 
     def update_detail(self, object_list, bundle):
-        print( "------------------->" , dir (bundle.request.PATCH), bundle.request.PATCH.items)
-        #if int(bundle.obj.id) == bundle.request.user.id:
+        print(
+            "------------------->",
+            dir(bundle.request.PATCH),
+            bundle.request.PATCH.items)
+        # if int(bundle.obj.id) == bundle.request.user.id:
         return True
-        #raise Unauthorized("You are not allowed to access that resource.")
-
+        # raise Unauthorized("You are not allowed to access that resource.")
 
 
 class UserFollowersAuthorization(Authorization):
+
     def get_followers(self, bundle):
-        search  = bundle.request.user.user_profile.followers.all()
-        followers =[int(f.id) for f in search]
-        print "<-----------------------",followers
+        search = bundle.request.user.user_profile.followers.all()
+        followers = [int(f.id) for f in search]
+        print "<-----------------------", followers
         return followers
 
     def read_list(self, object_list, bundle):
@@ -100,10 +102,11 @@ class UserFollowersAuthorization(Authorization):
 
 
 class UserFollowsAuthorization(Authorization):
+
     def get_follows(self, bundle):
-        search  = bundle.request.user.user_profile.follows.all()
-        follows =[int(f.id) for f in search]
-        print "<-----------------------",follows
+        search = bundle.request.user.user_profile.follows.all()
+        follows = [int(f.id) for f in search]
+        print "<-----------------------", follows
         return follows
 
     def read_list(self, object_list, bundle):
@@ -111,6 +114,7 @@ class UserFollowsAuthorization(Authorization):
 
 
 class TimelineAuthorization(Authorization):
+
     def get_timeline(self, bundle):
         follows = bundle.request.user.user_profile.follows.all()
         timeline = [int(f.id) for f in follows]
@@ -151,6 +155,7 @@ class TribAuthorization(Authorization):
             return True
         raise Unauthorized("You are not allowed to access that resource.")
 
+
 class CommentAuthorization(Authorization):
 
     def read_list(self, object_list, bundle):
@@ -176,4 +181,3 @@ class CommentAuthorization(Authorization):
 
     def delete_detail(self, object_list, bundle):
         return True
-

@@ -216,3 +216,23 @@ clean_dist: fabric
 clean_pyc: fabric
 
 	@$(FAB) development clean_pyc
+
+test: fabric
+
+	@$(FAB) development test
+
+install: fabric
+
+	@$(FAB) development install
+
+bdist: fabric
+
+	@$(FAB) development bdist
+
+sdist: fabric
+
+	@$(FAB) development sdist
+
+report_setup_data: fabric
+
+	@$(FAB) development report_setup_data

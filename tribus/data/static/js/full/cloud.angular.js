@@ -4,4 +4,4 @@
 
 // Application -----------------------------------------------------------------
 
-var tribus = angular.module('tribus', ['Search', 'ui.bootstrap']);
+var tribus = angular.module('tribus', ['ngSanitize', 'Search', 'ui.bootstrap']);

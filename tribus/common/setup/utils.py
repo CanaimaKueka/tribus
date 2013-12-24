@@ -34,11 +34,13 @@ import inspect
 import fnmatch
 
 from tribus.common.logger import get_logger
-from tribus.common.utils import (norm_path, find_files, path_to_package, find_dirs,
-                                 get_path, list_files, package_to_path, flatten_list,
-                                 readconfig)
+from tribus.common.utils import (
+    find_files, path_to_package, find_dirs,
+    get_path, list_files, package_to_path, flatten_list,
+    readconfig)
 
 log = get_logger()
+
 
 def get_classifiers(filename=None):
     '''
@@ -51,7 +53,7 @@ def get_classifiers(filename=None):
 
     .. versionadded:: 0.1
     '''
-    assert filename is not None
+    assert filename
     return readconfig(filename, conffile=False)
 
 
@@ -97,7 +99,12 @@ def get_requirements(filename=None):
         if re.match(r'(\s*#)|(\s*$)', line):
             continue
         if re.match(r'\s*-e\s+', line):
-            requirements.append(re.sub(r'\s*-e\s+.*#egg=(.*)$', r'\1', line).strip())
+            requirements.append(
+                re.sub(
+                    r'\s*-e\s+.*#egg=(.*)$',
+                    r'\1',
+                    line).strip(
+                    ))
         elif re.match(r'\s*-f\s+', line):
             pass
         else:
@@ -105,14 +112,14 @@ def get_requirements(filename=None):
     return requirements
 
 
-def get_packages(path=None, exclude_packages=None):
+def get_packages(path=None, exclude_packages=[]):
     '''
     Returns a list of all python packages found within directory ``path``, with
     ``exclude_packages`` packages excluded.
 
     :param path: the path where the packages will be searched. It should
                  be supplied as a "cross-platform" (i.e. URL-style) path; it
-                 will be converted to the appropriate local path syntax.  
+                 will be converted to the appropriate local path syntax.
     :param exclude_packages: is a sequence of package names to exclude;
                              ``*`` can be used as a wildcard in the names,
                              such that ``foo.*`` will exclude all subpackages
@@ -122,22 +129,21 @@ def get_packages(path=None, exclude_packages=None):
 
     .. versionadded:: 0.1
     '''
-    assert path is not None
-    __fname__ = inspect.stack()[0][3]
-    packages = []
-    path = norm_path(path)
+    assert path
+    assert exclude_packages
+    assert type(path) == str
+    assert type(exclude_packages) == list
+    pkgs = []
+    path = os.path.normpath(path)
     for init in find_files(path=path, pattern='__init__.py'):
         include = True
-        package = path_to_package(os.path.dirname(init).replace(path+os.sep, ''))
-        for exclude in exclude_packages+['ez_setup', 'distribute_setup']:
-            if fnmatch.fnmatch(package, exclude+'*'):
+        pkg = path_to_package(os.path.dirname(init).replace(path + os.sep, ''))
+        for exclude in exclude_packages:
+            if fnmatch.fnmatch(pkg, exclude + '*'):
                 include = False
         if include:
-            packages.append(package)
-            log.debug("[%s.%s] Including package \"%s\" in package list." % (__name__, __fname__, package))
-        else:
-            log.debug("[%s.%s] Skipping package \"%s\" because of exclude patterns." % (__name__, __fname__, package))
-    return filter(None, packages)
+            pkgs.append(pkg)
+    return filter(None, pkgs)
 
 
 def get_package_data(path=None, packages=None, data_files=None,
@@ -154,39 +160,42 @@ def get_package_data(path=None, packages=None, data_files=None,
     assert path is not None
     assert packages is not None
     assert data_files is not None
-    __fname__ = inspect.stack()[0][3]
-    path = norm_path(path)
+    path = os.path.normpath(path)
     package_data = {}
     for package in packages:
         package_data[package] = []
         for f in find_files(path=get_path([path, package_to_path(package)]), pattern='*.*'):
             package_data[package].append(f)
-            for e in exclude_packages+['ez_setup', 'distribute_setup']:
+            for e in exclude_packages + ['ez_setup', 'distribute_setup']:
                 if fnmatch.fnmatch(f, get_path([path, package_to_path(e), '*'])) \
                    and f in package_data[package]:
                     package_data[package].remove(f)
-            for x in exclude_files+['*.py']:
+            for x in exclude_files + ['*.py']:
                 if fnmatch.fnmatch(f, get_path([path, x])) \
                    and f in package_data[package]:
                     package_data[package].remove(f)
-        package_data[package] = list(set(package_data[package]) - set(flatten_list(list(zip(*data_files)[1]))))
+        package_data[package] = list(
+            set(package_data[package]) - set(flatten_list(list(zip(*data_files)[1]))))
         for i, j in enumerate(package_data[package]):
-            package_data[package][i] = package_data[package][i].replace(path+os.sep+package_to_path(package)+os.sep, '')
+            package_data[package][i] = package_data[package][
+                i].replace(path + os.sep + package_to_path(package) + os.sep, '')
     return package_data
 
 
 def get_data_files(path=None, patterns=None, exclude_files=None):
     '''
+
     Procesess a list of patterns to get a list of files that should be put in
     a directory. This function helps the Tribus Maintainer to define a list of
     files to be installed in a certain system directory.
 
-    For example, generated documentation (everything under ``tribus/data/docs/html``
-    after executing ``make build_sphinx``) should be put in ``/usr/share/doc/tribus/``.
-    The maintainer should add a pattern like the following so that everything
-    from ``tribus/data/docs/html`` gets copied to ``/usr/share/doc/tribus/``
-    when the package is installed (``python setup.py install``) or a
-    binary distribution is created (``python setup.py bdist``).
+    For example, generated documentation (everything under
+    ``tribus/data/docs/html`` after executing ``make build_sphinx``) should be
+    put in ``/usr/share/doc/tribus/``. The maintainer should add a pattern like
+    the following so that everything from ``tribus/data/docs/html`` gets copied
+    to ``/usr/share/doc/tribus/`` when the package is installed
+    (``python setup.py install``) or a binary distribution is created
+    (``python setup.py bdist``).
 
     :param path: the path where the files reside. Generally the top level
                  directory of the project. Patterns will be expanded in
@@ -197,20 +206,21 @@ def get_data_files(path=None, patterns=None, exclude_files=None):
                           'another/path/inside/project *.foo.*regex* /dest2',
                           'path/ *.* dest/']
 
-                     which means, *Put every file from this folder matching the regex
-                     inside this other folder*.
+                     which means, *Put every file from this folder matching the
+                     regex inside this other folder*.
 
-    :param exclude_files: this is a list of file patterns to exclude from the results.
+    :param exclude_files: this is a list of file patterns to exclude from the
+                          results.
     :return: a list of pairs ``('directory', [file-list])`` ready for use
              in ``setup(data_files=...)`` from Setuptools/Distutils.
     :rtype: ``list``
 
     .. versionadded:: 0.1
+
     '''
     assert path is not None
     assert patterns is not None
-    __fname__ = inspect.stack()[0][3]
-    path = norm_path(path)
+    path = os.path.normpath(path)
     d = []
     for l in patterns:
         src, rgx, dest = l.split()
@@ -221,8 +231,7 @@ def get_data_files(path=None, patterns=None, exclude_files=None):
                 for exclude in exclude_files:
                     if fnmatch.fnmatch(files, exclude) and files in f:
                         f.remove(files)
-            d.append((dest+subdir.replace(os.path.join(path, src), ''), f))
-            log.debug("[%s.%s] Adding files to install on \"%s\"." % (__name__, __fname__, get_path([dest, subdir])))
+            d.append((dest + subdir.replace(os.path.join(path, src), ''), f))
     return d
 
 
@@ -237,16 +246,22 @@ def get_setup_data(basedir):
 
     .. versionadded:: 0.1
     '''
-    from tribus.config.base import NAME, VERSION, URL, AUTHOR, AUTHOR_EMAIL, DESCRIPTION, LICENSE, DOCDIR
-    from tribus.config.pkg import (classifiers, long_description, install_requires, dependency_links,
+    from tribus.config.base import (NAME, VERSION, URL, AUTHOR, AUTHOR_EMAIL,
+                                    DESCRIPTION, LICENSE, DOCDIR)
+    from tribus.config.pkg import (classifiers, long_description,
+                                   install_requires, dependency_links,
                                    exclude_packages, platforms, keywords)
     from tribus.common.version import get_version
-    from tribus.common.setup.build import build_man, build_css, build_js, build_sphinx, compile_catalog, build
-    from tribus.common.setup.clean import clean_mo, clean_sphinx, clean_js, clean_css, clean_man, clean_img, clean_dist, clean_pyc, clean
+    from tribus.common.setup.build import (build_man, build_css, build_js,
+                                           build_sphinx, compile_catalog,
+                                           build)
+    from tribus.common.setup.clean import (clean_mo, clean_sphinx, clean_js,
+                                           clean_css, clean_man, clean_img,
+                                           clean_dist, clean_pyc, clean)
     from tribus.common.setup.install import install_data, build_py
-    from tribus.common.setup.maint import extract_messages, init_catalog, update_catalog
-
-    packages = get_packages(path=basedir, exclude_packages=exclude_packages)
+    from tribus.common.setup.maint import (extract_messages, init_catalog,
+                                           update_catalog)
+    from tribus.common.setup.report import report_setup_data
 
     return {
         'name': NAME,
@@ -260,11 +275,17 @@ def get_setup_data(basedir):
         'classifiers': classifiers,
         'keywords': keywords,
         'platforms': platforms,
-        'packages': packages,
-        'data_files': [('', [])],               # data_files is empty because it is filled during execution of install_data
-        'package_data': {'': []},               # package_data is empty because it is filled during execution of build_py
+        'packages': get_packages(path=basedir,
+                                 exclude_packages=exclude_packages),
+        # data_files is empty because it is filled during
+        # execution of install_data
+        'data_files': [('', [])],
+        # package_data is empty because it is filled during
+        # execution of build_py
+        'package_data': {'': []},
         'install_requires': install_requires,
         'dependency_links': dependency_links,
+        'test_suite': 'tribus.testing.SetupTesting',
         'zip_safe': False,
         'cmdclass': {
             'clean': clean,
@@ -287,12 +308,14 @@ def get_setup_data(basedir):
             'update_catalog': update_catalog,
             'extract_messages': extract_messages,
             'install_data': install_data,
+            'report_setup_data': report_setup_data,
         },
         'message_extractors': {
             'tribus': [
-                ('**.html', 'tribus.common.setup.message_extractors:django', ''),
+                ('**.html',
+                 'tribus.common.setup.message_extractors:django', ''),
                 ('**.py', 'python', ''),
-                ],
+            ],
         },
         'command_options': {
             'egg_info': {
@@ -303,7 +326,7 @@ def get_setup_data(basedir):
                 'prefix': ('setup.py', '/usr'),
                 'exec_prefix': ('setup.py', '/usr'),
                 'install_layout': ('setup.py', 'deb'),
-            },       
+            },
             'update_catalog': {
                 'domain': ('setup.py', 'django'),
                 'input_file': ('setup.py', 'tribus/data/i18n/pot/django.pot'),
@@ -323,7 +346,9 @@ def get_setup_data(basedir):
             },
             'extract_messages': {
                 'copyright_holder': ('setup.py', 'Desarrolladores de Tribus'),
-                'msgid_bugs_address': ('setup.py', 'desarrolladores@canaima.softwarelibre.gob.ve'),
+                'msgid_bugs_address':
+                    ('setup.py',
+                     'desarrolladores@canaima.softwarelibre.gob.ve'),
                 'output_file': ('setup.py', 'tribus/data/i18n/pot/django.pot'),
                 'charset': ('setup.py', 'utf-8'),
                 'sort_by_file': ('setup.py', True),
