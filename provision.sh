@@ -25,16 +25,18 @@ if [[ ${#apt_package_install_list[@]} = 0 ]]; then
                 echo -e "No apt packages to install.\n"
         else
                 
-                mv /etc/apt/sources.list /etc/apt/sources.list.bak
-                touch /etc/apt/sources.list
-                echo "deb http://http.us.debian.org/debian jessie main contrib non-free" >> /etc/apt/sources.list
+                # mv /etc/apt/sources.list /etc/apt/sources.list.bak
+                # touch /etc/apt/sources.list
+                # echo "deb http://http.us.debian.org/debian jessie main contrib non-free" >> /etc/apt/sources.list
+sed 's/wheezy/testing/g' < /etc/apt/sources.list > /etc/apt/sources.list.bak; mv /etc/apt/sources.list.bak /etc/apt/sources.list
                 echo "Running apt-get update..."
                 aptitude update --assume-yes
+                aptitude dist-upgrade --assume-yes
                 # install required packages
                 echo "Installing apt-get packages..."
                 aptitude install --assume-yes ${apt_package_install_list[@]}
                 # sed '$d' < /etc/apt/sources.list > /etc/apt/sources.list.bak; mv /etc/apt/sources.list.bak /etc/apt/sources.list
-                mv /etc/apt/sources.list.bak /etc/apt/sources.list
+                # mv /etc/apt/sources.list.bak /etc/apt/sources.list
                 aptitude update --assume-yes
                 # Clean up apt caches
                 apt-get clean
