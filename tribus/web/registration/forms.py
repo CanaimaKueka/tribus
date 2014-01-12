@@ -44,58 +44,65 @@ from django import forms
 from django.forms import Form
 from django.utils.datastructures import SortedDict
 from django.contrib.auth.forms import (AuthenticationForm,
-                                        PasswordResetForm as BasePasswordResetForm,
-                                        SetPasswordForm as BaseSetPasswordForm)
+                                       PasswordResetForm as BasePasswordResetForm,
+                                       SetPasswordForm as BaseSetPasswordForm)
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 
 from tribus.web.registration.ldap.models import LdapUser
 
+
 class LoginForm(AuthenticationForm):
+
     """
     Subclass of Django ``AuthenticationForm`` which adds a remember me
     checkbox.
     """
 
     username = forms.RegexField(
-                                    label = _('Username'), required = True,
-                                    regex = r'^[\w.@+-]+$',
-                                    widget = forms.TextInput(
-                                        attrs= {
-                                            'placeholder': _('Enter your username'),
-                                            'class': 'input-block padding-2p'
-                                        }
-                                    ),
-                                    max_length = 30,
-                                    error_messages = {
-                                        'invalid': _("This value may contain only letters, numbers and @/./+/-/_ characters.")
-                                    }
-                                )
+        label=_('Username'), required=True,
+        regex=r'^[\w.@+-]+$',
+        widget=forms.TextInput(
+            attrs={
+                'placeholder':
+                _('Enter your username'),
+                'class': 'input-block padding-2p'
+            }
+        ),
+        max_length=30,
+        error_messages={
+            'invalid':
+            _(
+                "This value may contain only letters, numbers and @/./+/-/_ characters.")
+        }
+    )
 
     password = forms.CharField(
-                                    label = _('Password'), required = True,
-                                    widget = forms.PasswordInput(
-                                        attrs = {
-                                            'placeholder': _('Enter your password'),
-                                            'class': 'input-block padding-2p'
-                                        }
-                                    )
-                                )
+        label=_('Password'), required=True,
+        widget=forms.PasswordInput(
+            attrs={
+                'placeholder':
+                _('Enter your password'),
+                'class': 'input-block padding-2p'
+            }
+        )
+    )
 
     remember_me = forms.BooleanField(
-                                        label = _('Remember my session'),
-                                        initial = False,
-                                        required = False
-                                    )
+        label=_('Remember my session'),
+        initial=False,
+        required=False
+    )
 
 
 class SignupForm(Form):
+
     """
     Form for registering a new user account.
-    
+
     Validates that the requested username is not already in use, and
     requires the password to be entered twice to catch typos.
-    
+
     Subclasses should feel free to add any additional validation they
     need, but should avoid defining a ``save()`` method -- the actual
     saving of collected user data is delegated to the active
@@ -104,82 +111,94 @@ class SignupForm(Form):
     """
     required_css_class = 'required'
     username = forms.RegexField(
-                                    label = _('Username'), required = True,
-                                    regex = r'^[\w.@+-]+$',
-                                    widget = forms.TextInput(
-                                        attrs = {
-                                            'placeholder': _('Pick a username'),
-                                            'class': 'input-block padding-2p'
-                                        }
-                                    ),
-                                    max_length = 30,
-                                    error_messages = {
-                                    'invalid': _("This value may contain only letters, numbers and @/./+/-/_ characters.")
-                                    }
-                                )
+        label=_('Username'), required=True,
+        regex=r'^[\w.@+-]+$',
+        widget=forms.TextInput(
+            attrs={
+                'placeholder':
+                _('Pick a username'),
+                'class': 'input-block padding-2p'
+            }
+        ),
+        max_length=30,
+        error_messages={
+            'invalid':
+            _(
+                "This value may contain only letters, numbers and @/./+/-/_ characters.")
+        }
+    )
 
     first_name = forms.RegexField(
-                                    label = _('First name'), required = True,
-                                    regex = r'^[\w.@+-]+$',
-                                    widget = forms.TextInput(
-                                        attrs = {
-                                            'placeholder': _('First name'),
-                                            'class': 'input-block padding-4p'
-                                        }
-                                    ),
-                                    max_length = 30,
-                                    error_messages = {
-                                    'invalid': _("This value may contain only letters, numbers and @/./+/-/_ characters.")
-                                    }
-                                )
+        label=_('First name'), required=True,
+        regex=r'^[\w.@+-]+$',
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': _('First name'),
+                'class': 'input-block padding-4p'
+            }
+        ),
+        max_length=30,
+        error_messages={
+            'invalid':
+            _(
+                "This value may contain only letters, numbers and @/./+/-/_ characters.")
+        }
+    )
 
     last_name = forms.RegexField(
-                                    label = _('Last name'), required = True,
-                                    regex = r'^[\w.@+-]+$',
-                                    widget = forms.TextInput(
-                                        attrs = {
-                                            'placeholder': _('Last name'),
-                                            'class': 'input-block padding-4p'
-                                        }
-                                    ),
-                                    max_length = 30,
-                                    error_messages = {
-                                    'invalid': _("This value may contain only letters, numbers and @/./+/-/_ characters.")
-                                    }
-                                )
+        label=_('Last name'), required=True,
+        regex=r'^[\w.@+-]+$',
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': _('Last name'),
+                'class': 'input-block padding-4p'
+            }
+        ),
+        max_length=30,
+        error_messages={
+            'invalid':
+            _(
+                "This value may contain only letters, numbers and @/./+/-/_ characters.")
+        }
+    )
 
     email = forms.EmailField(
-                                label = _('Email'), required = True,
-                                widget = forms.TextInput(
-                                    attrs = {
-                                        'placeholder': _('Enter a valid email'),
-                                        'class': 'input-block padding-2p'
-                                    }
-                                ),
-                                max_length=254
-                            )
+        label=_('Email'), required=True,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder':
+                _('Enter a valid email'),
+                'class': 'input-block padding-2p'
+            }
+        ),
+        max_length=254
+    )
 
     password1 = forms.CharField(
-                                    label = _('Password'), required = True,
-                                    widget = forms.PasswordInput(
-                                        attrs = {
-                                            'placeholder': _('Create a password'),
-                                            'class': 'input-block padding-2p'
-                                        }
-                                    )
-                                )
+        label=_('Password'), required=True,
+        widget=forms.PasswordInput(
+            attrs={
+                'placeholder':
+                _('Create a password'),
+                'class': 'input-block padding-2p'
+            }
+        )
+    )
 
     def clean_username(self):
         """
         Validate that the username is alphanumeric and is not already
         in use.
-        
+
         """
-        existingldap = LdapUser.objects.filter(username=self.cleaned_data['username'])
+        existingldap = LdapUser.objects.filter(
+            username=self.cleaned_data['username'])
         if existingldap.exists():
-            raise forms.ValidationError(_("A user with that username already exists."))
+            raise forms.ValidationError(
+                _("A user with that username already exists."))
         else:
-            existingdb = User.objects.filter(username__iexact=self.cleaned_data['username'])
+            existingdb = User.objects.filter(
+                username__iexact=self.cleaned_data['username'])
             if existingdb.exists():
                 existingdb.delete()
             return self.cleaned_data['username']
@@ -188,13 +207,16 @@ class SignupForm(Form):
         """
         Validate that the username is alphanumeric and is not already
         in use.
-        
+
         """
-        existingldap = LdapUser.objects.filter(email=self.cleaned_data['email'])
+        existingldap = LdapUser.objects.filter(
+            email=self.cleaned_data['email'])
         if existingldap.exists():
-            raise forms.ValidationError(_("A user with that email already exists."))
+            raise forms.ValidationError(
+                _("A user with that email already exists."))
         else:
-            existingdb = User.objects.filter(email__iexact=self.cleaned_data['email'])
+            existingdb = User.objects.filter(
+                email__iexact=self.cleaned_data['email'])
             if existingdb.exists():
                 existingdb.delete()
             return self.cleaned_data['email']
@@ -202,15 +224,16 @@ class SignupForm(Form):
 
 class PasswordResetForm(BasePasswordResetForm):
     email = forms.EmailField(
-                                label = _('Email'), required = True,
-                                widget = forms.TextInput(
-                                    attrs = {
-                                        'placeholder': _('Enter a valid email'),
-                                        'class': 'input-block padding-2p'
-                                    }
-                                ),
-                                max_length = 254
-                            )
+        label=_('Email'), required=True,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder':
+                _('Enter a valid email'),
+                'class': 'input-block padding-2p'
+            }
+        ),
+        max_length=254
+    )
 
     def clean_email(self):
         """
@@ -242,7 +265,7 @@ class PasswordResetForm(BasePasswordResetForm):
                                                       email=user.email,
                                                       password=user.password)
             if created:
-		obj.is_active = True
+                obj.is_active = True
                 obj.last_login = timezone.now()
                 obj.save()
 
@@ -258,7 +281,8 @@ class PasswordResetForm(BasePasswordResetForm):
                 'domain': domain,
                 'site_name': site_name,
                 'uid': int_to_base36(obj.pk),
-                'user': obj,
+                'username': obj.username.encode('utf-8'),
+                'first_name': obj.first_name.encode('utf-8'),
                 'token': token_generator.make_token(obj),
                 'protocol': use_https and 'https' or 'http',
             }
@@ -270,37 +294,40 @@ class PasswordResetForm(BasePasswordResetForm):
 
 
 class SetPasswordForm(BaseSetPasswordForm):
+
     """
     A form that lets a user change set his/her password without entering the
     old password
     """
     new_password1 = forms.CharField(
-                                    label = _('Password'), required = True,
-                                    widget = forms.PasswordInput(
-                                        attrs = {
-                                            'placeholder': _('Create a new password'),
-                                            'class': 'input-block padding-2p'
-                                        }
-                                    )
-                                )
+        label=_('Password'), required=True,
+        widget=forms.PasswordInput(
+            attrs={
+                'placeholder':
+                _('Create a new password'),
+                'class': 'input-block padding-2p'
+            }
+        )
+    )
 
     new_password2 = forms.CharField(
-                                    label = _('Password (repeat)'), required = True,
-                                    widget = forms.PasswordInput(
-                                        attrs = {
-                                            'placeholder': _('Repeat your new password'),
-                                            'class': 'input-block padding-2p'
-                                        }
-                                    )
-                                )
-
+        label=_('Password (repeat)'), required=True,
+        widget=forms.PasswordInput(
+            attrs={
+                'placeholder':
+                _('Repeat your new password'),
+                'class': 'input-block padding-2p'
+            }
+        )
+    )
 
     def save(self, commit=True):
 
         try:
             u = LdapUser.objects.get(username=self.user.username)
         except LdapUser.DoesNotExist:
-            raise forms.ValidationError(_("A user with that username already exists."))
+            raise forms.ValidationError(
+                _("A user with that username already exists."))
         else:
             self.user.set_password(self.cleaned_data['new_password1'])
 
@@ -314,20 +341,22 @@ class SetPasswordForm(BaseSetPasswordForm):
 
 
 class PasswordChangeForm(SetPasswordForm):
+
     """
     A form that lets a user change his/her password by entering
     their old password.
     """
 
     old_password = forms.CharField(
-                                    label = _('Old password'), required = True,
-                                    widget = forms.PasswordInput(
-                                        attrs = {
-                                            'placeholder': _('Enter your old password'),
-                                            'class': 'input-block padding-2p'
-                                        }
-                                    )
-                                )
+        label=_('Old password'), required=True,
+        widget=forms.PasswordInput(
+            attrs={
+                'placeholder':
+                _('Enter your old password'),
+                'class': 'input-block padding-2p'
+            }
+        )
+    )
 
 PasswordChangeForm.base_fields = SortedDict([
     (k, PasswordChangeForm.base_fields[k])

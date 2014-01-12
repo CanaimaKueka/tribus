@@ -8,4 +8,4 @@ tribus/data/icons 		*.*			share/icons
 tribus/data/docs/html	*.*			share/doc/tribus
 tribus/data/docs/man	*.*			share/man/man1
 tribus/i18n				*.*			share/locale
-tribus/config			*.*			etc/tribus
+tribus/config			*.*			/etc/tribus

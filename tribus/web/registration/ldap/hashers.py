@@ -18,9 +18,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import base64, hashlib, random, string
+import base64
+import hashlib
+import random
+import string
 
 from django.contrib.auth.hashers import BasePasswordHasher
+
 
 class DummyPasswordHasher(BasePasswordHasher):
     algorithm = "dummy"
@@ -30,6 +34,7 @@ class DummyPasswordHasher(BasePasswordHasher):
 
 
 class SSHAPasswordLDAPHasher(BasePasswordHasher):
+
     """
     The SHA1 password hashing algorithm (not recommended)
     """

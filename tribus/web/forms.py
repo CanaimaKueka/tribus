@@ -18,29 +18,51 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.utils.html import strip_tags
+from lxml.html import document_fromstring
 from mongodbforms import DocumentForm
+from django.core.exceptions import ValidationError
+from django.utils.html import strip_tags, escape
+from django.utils.translation import ugettext_lazy as _
 from tribus.web.documents import Trib, Comment
 
+
 class TribForm(DocumentForm):
+
     class Meta:
         document = Trib
 
     def clean(self):
         cleaned_data = super(TribForm, self).clean()
-        
+
         for key in cleaned_data.keys():
-            cleaned_data[key] = strip_tags(cleaned_data[key])
+            stripped_data = strip_tags(cleaned_data[key])
+            if unicode(stripped_data).strip():
+                parsed_data = document_fromstring(stripped_data).text_content()
+                if unicode(parsed_data).strip():
+                    cleaned_data[key] = escape(parsed_data)
+                else:
+                    raise ValidationError(_('Enter a valid value.'))
+            else:
+                raise ValidationError(_('Enter a valid value.'))
         return cleaned_data
 
+
 class CommentForm(DocumentForm):
+
     class Meta:
         document = Comment
 
     def clean(self):
         cleaned_data = super(CommentForm, self).clean()
-        
-        for key in cleaned_data.keys():
-            cleaned_data[key] = strip_tags(cleaned_data[key])
 
+        for key in cleaned_data.keys():
+            stripped_data = strip_tags(cleaned_data[key])
+            if unicode(stripped_data).strip():
+                parsed_data = document_fromstring(stripped_data).text_content()
+                if unicode(parsed_data).strip():
+                    cleaned_data[key] = escape(parsed_data)
+                else:
+                    raise ValidationError(_('Enter a valid value.'))
+            else:
+                raise ValidationError(_('Enter a valid value.'))
         return cleaned_data

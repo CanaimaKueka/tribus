@@ -1,33 +1,86 @@
+* [] Issues:
+        * [] #12 - Ocultar Correo electrónico en Perfil.
+        * [] #13 - Incorporar un Indice Alfabetico.
+        * [] #15 - Descripción de paquetes y comentarios.
+        * [] #16 - Se muestran variables.
+        * [] #17 - Palabras no traducidas en el correo.
+        * [] #18 - Target="_blank" en el footer.
+        * [] #20 - Barra al final del enlace.
+        * [] #22 - Hacer un sprite para los svg's de la portada.
+        * [] #23 - Agregar opensearch.
+        * [] #24 - Leer tickets en Github a través de la API y ponerlos en la doc.
+        * [] #25 - Hacer una rutina para limpiar SVG's con scour (optimize_svg).
+        * [] #26 - Realizar pruebas unitarias.
+        * [] #27 - Separar los templates de los elementos de AngularJS ui-bootstrap.
+        * [] #28 - Arreglar acceso al panel de administración.
+        * [] #29 - Traducir Tribus.
+        * [] #35 - Utilizar plataforma de integración continua.
+        * [] #37 - Mejorar formulario de busqueda.
+* [] Documentación:
+		* [] Documentación de tickets y funciones.
+        * [] Documentar clases y funciones. 
+        * [] Completar la documentacion para desarrolladores.
+        * [] i18n para la documentación automatizar el ciclo de compilación para cada idioma.
+        * [] Documentar la función de cada uno de los paquetes de tribus en su __init__.py para que sea recogido por Sphinx.
+        * [] Incluir cada uno de los módulos de los paquetes de tribus dentro de la documentación de la API (development/api).
+* [] Diseño:
+        * [] Hacer banners publicitarios.
+        * [] Separar los CSS por componentes.
+        * [] Mejorar UI de índice de paquetes.
+        * [] Mejorar ciclo de renderizado de css y js.
+        * [] Terminar Estilo visual de Application cloud.
+* [] Funciones redes sociales:
+        * [] Arreglar login por otros servicios.
+        * [] Permitir publicar un trib en twitter y facebook.
+        * [] Agregar búsqueda de amigos en otras redes que estén en Tribus (gmail, twitter, facebook, github).
+        * [] Hace pipeline para pedir información adicional para usuarios que se conectan a través de redes sociales.
+* [] Por agregar:
+        * [] Agregar mentions.
+        * [] Agregar hashtags.
+        * [] Agregar like y dislike.
+        * [] Agregar mensajes privados/chat.
+        * [] Agregar pruebas de calidad de código con PEP8, PyLint y Tox.
+        * [] Agregar una página de resultados a la aplicación de paquetería.
+        * [] Agregar tab de seguidores y seguidos cuando se ve el perfil de otra persona.
+        * [] Agregar permalinks a los tribs y comentarios. Hacer una vista para cada trib.
+        * [] Agregar funcionalidad para subir imagen de usuario. 
+        * [] Agregar un dialogo (modal) que permita escoger entre gravatar y una imagen personalizada.
+* [] Búsqueda:
+        * [] Poder subir y bajar con el teclado.
+        * [] Utilizar el plugin typeahead de angular.
+        * [] Si se hace click en otra parte de la página, debe desaparecer.
+        * [] Alargar el delay entre el keypress y la ejecución de la búsqueda.
+* [] Otros:
+        * [] Implementar caché.
+        * [] Hacer funciones para producción.
+        * [] Cambiar el User Model (ESTUDIAR).
+        * [] Hacer un CDN para los recursos multimedia.
+        * [] Sincronizar la hora local con el servidor.
+        * [] Hacer el esquema de versionamiento y release.
+        * [] Relacionar Tribs y Comentarios con sus autores.
+        * [] Que la descripción cargue la descripción anterior.
+        * [] Eliminar duplicación de datos en los Documentos de Mongo. 
+        * [] Hacer que se reutilice el virtualenv en vez de regenerarlo.
+        * [] Colocar número de seguidores, seguidos y tribs en el perfil.
+        * [] Permitir cambiar nombre de usuario, nombres, apellidos y correo.
+        * [] Diseñar una forma de migrar la base de datos entre versiones de Tribus.
+        * [] Separar las dependencias de construcción de las dependencias de operación.
+        * [] Hacer validación de formularios del lado del cliente con angularjs y verificar las del lado del servidor.
+
+
+Realizados:
 * [HECHO] Cambiar el sistema de configuración de setuptools. El proceso de generación de la lista de archivos se ejecuta siempre que se llama al setup.py.
-* [] Documentar la función de cada uno de los paquetes de tribus en su __init__.py para que sea recogido por Sphinx.
-* [] Incluir cada uno de los módulos de los paquetes de tribus dentro de la documentación de la API (development/api).
-* [] Separar las dependencias de construcción de las dependencias de operación.
-* [] Agregar pruebas de calidad de código con PEP8, PyLint y Tox.
 * [HECHO] Buscar el origen de tribus/common/setup/message_extractors.py y colocarlo en COPYING.
-* [] Agregar una página de resultados a la aplicación de paquetería.
 * [HECHO] MongoDB, Tastypie, AngularJS, Tribs
-* [] Hasher
-* [] Documentación de tickets y funciones.
-* [] Traducciones.
-* [] Mejorar UI de índice de paquetes.
 * [HECHO] Infinite scroll + limitTo + angular.js.
 * [HECHO] Better API URls, better pagination.
-* [] Sincronizar la hora local con el servidor.
-* [] Corregir autenticación con servicios.
 * [HECHO] Usar Django-registration.
-* [] Hacer banners publicitarios.
 * [HECHO] Hacer bienvenida para los usuarios nuevos.
-* [] Hace pipeline para pedir información adicional para usuarios que se conectan a través de redes sociales.
-* [] implementar caché.
-* [] hacer funciones para producción.
 * [HECHO] Mejorar estilo del menú de búsqueda.
-* [] Terminar Estilo visual de Application cloud.
-* [] Hacer about/
-* [] Mejorar ciclo de renderizado de css y js.
+* [HECHO] Hacer about/
 * [HECHO] Revisar sistema de comentarios.
-* [] Agregar "sponsors".
 * [HECHO] Agregar botón de application cloud en el dashboard.
-* [] Hacer que se reutilice el virtualenv en vez de regenerarlo.
 * [HECHO] Migrar de jQuery a AngularJS.
 * [HECHO] Revisar API.
 * [HECHO] Revisar CSS responsive.
+* [HECHO] Agregar "sponsors".

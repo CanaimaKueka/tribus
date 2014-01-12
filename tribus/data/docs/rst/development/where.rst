@@ -17,7 +17,7 @@ Tribus está dividido en varios paquetes de python, entre los que podemos mencio
 .. automodule:: tribus.config
    :members:
 
-.. automodule:: tribus.tests
+.. automodule:: tribus.testing
    :members:
  
 .. automodule:: tribus.data
