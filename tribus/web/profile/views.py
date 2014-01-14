@@ -63,7 +63,12 @@ def UserProfile(request):
     if request.user.is_authenticated():
         if request.method == "POST":
             u = User.objects.get(username__exact = request.user.username)
-            u.description = request.POST['descripcion']
+            u.description  = request.POST['descripcion']
+            if 'emailVisible' in request.POST:
+                u.emailVisible = request.POST['emailVisible']
+            else:
+                u.emailVisible = False
+            #u.emailVisible = request.POST['emailVisible']
             # u.email = request.POST['email']
             u.save()
             edit_ldap_user(u)

@@ -24,6 +24,7 @@ input, button, select, textarea {
     font-family: "Open Sans", Helvetica, sans-serif;
 }
 
+
 .main-container {
     position: static;
     padding: 0;
@@ -4934,6 +4935,7 @@ span.input-icon {
 .input-large {
     width: 246px;
     max-width: 100%;
+    resize:initial;
 }
 
 .input-xlarge {

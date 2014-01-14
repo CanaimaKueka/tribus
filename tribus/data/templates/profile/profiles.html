@@ -22,9 +22,11 @@
                         <i class="icon-user"></i>
                         {{ user_view.username }}
                     </span>
-                    <span>
+                    {% if user_view.emailVisible %}
+                    <span >
                         <i class="icon-envelope-alt"></i>
                         {{ user_view.email }}
+                    {% endif %}    
                     </span>
                     {% if user_view.description %}
                     <span>
@@ -53,6 +55,7 @@
                                 {% csrf_token %}
                                 <ul class="unstyled row-fluid">      
                                     <li><label class ="span2 offset1">{% trans 'Description'%}:</label>{{ editForm.descripcion }}</li>
+                                    <li><label class ="span2 offset1">{% trans 'Email Visible'%}:</label>{{ editForm.emailVisible }}</li>
                                 </ul>
                                 <div class="span2 offset3" >
                                     <button class="btn btn-success btn-block" type="submit">{% trans 'Confirm' %} </button>
@@ -132,7 +135,6 @@
                                         </button>
                                         {% verbatim %}
                                         {{ currentPage+1 }}/{{ numberOfPages() }} 
-                                        {{ filtername.length }}
                                         {% endverbatim %}
                                         <button data-ng-disabled="currentPage >= filtername.length/pageSize - 1" data-ng-click="currentPage= currentPage+1" >
                                             {% trans 'Next' %}
@@ -207,7 +209,6 @@
                                         </button>
                                         {% verbatim %}
                                         {{ currentPage+1 }}/{{ numberOfPages() }} 
-                                        {{ filtername.length }}
                                         {% endverbatim %}
                                         <button data-ng-disabled="currentPage >= filtername.length/pageSize - 1" data-ng-click="currentPage= currentPage+1" >
                                             {% trans 'Next' %}
@@ -231,6 +232,9 @@
     var user_first_name = '{{ user.first_name }}';
     var user_last_name = '{{ user.last_name }}';
     var user_email = '{{ user.email }}';
+    var description = '{{ user.description}}';
+    var visible_email = '{{ user.emailVisible}}';
+
     var profile_gravatar = 'http://www.gravatar.com/avatar/'+md5(user_email)+'?d=mm&s=250&r=x';
     var user_gravatar = 'http://www.gravatar.com/avatar/'+md5(user_email)+'?d=mm&s=40&r=x';
     var comment_gravatar = 'http://www.gravatar.com/avatar/'+md5(user_email)+'?d=mm&s=30&r=x';

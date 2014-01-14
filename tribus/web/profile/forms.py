@@ -24,7 +24,7 @@ class data_change(Form):
 	                                regex = r'^[\w.@+-]+$',
 	                                widget = forms.Textarea(
 	                                    attrs = {
-	                                        'class': 'input-large',
+	                                        'class': 'input-large form',
 	                                        'ng-maxlength': '20'
 	                                    }
 	                                ),
@@ -33,6 +33,17 @@ class data_change(Form):
 	                                'invalid': _("This value may contain only letters, numbers and @/./+/-/_ characters.")
 	                                }
 	                            )
+
+	emailVisible = forms.BooleanField(
+									widget = forms.CheckboxInput( 
+										attrs= {
+											'class':'checkForm',
+
+											}
+											)
+		)
+
+	#email_public = forms.
 
 	# email = forms.EmailField(label = _('email'), required = False,
 	#                                 widget = forms.TextInput(
