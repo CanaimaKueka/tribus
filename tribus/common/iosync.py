@@ -20,11 +20,42 @@
 
 '''
 
-tribus.tests
-============
+tribus.common.iosync
+====================
 
-This module contains all the unit tests for tribus.
+This module contains common OS functions coupled with a OS ``sync()`` call to
+ensure that everything gets written to disk synchronously.
 
 '''
 
-from tribus.tests.tribus_common_utils import *
+import os
+
+def sync():
+    try:
+        getattr(os, 'sync')
+    except Exception:
+        import sh
+        os.sync = sh.sync
+    finally:
+        os.sync()
+
+
+def makedirs(path=None):
+    os.makedirs(path)
+    sync()
+
+
+def rmtree(path=None):
+    import shutil
+    shutil.rmtree(path)
+    sync()
+
+
+def touch(path=None):
+    open(path, 'w').close()
+    sync()
+
+
+def ln(source=None, dest=None):
+    os.symlink(source, dest)
+    sync()

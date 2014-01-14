@@ -43,6 +43,7 @@ nosetests.xml
 
 # Virtualenv
 virtualenv
+virtualenv_cache
 
 # Packagecache
 packagecache
@@ -115,3 +116,8 @@ tribus/data/static/js/min/
 # CSS minificado
 tribus/data/static/css/min/
 
+# Node package manager logs
+npm-debug.log
+
+# Compiled documentation
+tribus/data/docs/html

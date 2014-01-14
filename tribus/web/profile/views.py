@@ -9,53 +9,53 @@ from django.contrib.auth.models import User
 from tribus.web.profile.forms import data_change
 from tribus.web.registration.ldap.utils import edit_ldap_user
 
+
 def SearchProfile(request, nick):
     if request.user.is_authenticated():
         try:
-            user = User.objects.get(username = request.user.username)
+            user = User.objects.get(username=request.user.username)
         except:
             user = None
         try:
-            user_view = User.objects.get(username = nick)
+            user_view = User.objects.get(username=nick)
         except:
             return HttpResponseRedirect('/profile')
 
         if request.user.username == nick:
-            return HttpResponseRedirect('/profile')  
+            return HttpResponseRedirect('/profile')
 
         # Cargamos la librería AngujarJS junto con sus plugins
         render_js = ['angular', 'angular.sanitize', 'angular.resource',
-                        'angular.infinite-scroll', 'angular.bootstrap',
-                        'angular.moment']
+                     'angular.infinite-scroll', 'angular.bootstrap',
+                     'angular.moment']
 
         # Cargamos las funciones de Tribus para AngularJS
         render_js += ['controllers.angular', 'services.angular',
-                        'elements.angular', 'profiles.angular',
-                        'navbar.angular']
+                      'elements.angular', 'profiles.angular',
+                      'navbar.angular']
 
         # Cargamos otras funciones adicionales
         render_js += ['moment', 'md5']
 
-        return render(request,'profile/profiles_view.html', {
-                'render_js': render_js,
-                'user': user,
-                'user_view': user_view,
-                })
+        return render(request, 'profile/profiles_view.html', {
+            'render_js': render_js,
+            'user': user,
+            'user_view': user_view,
+        })
     return HttpResponseRedirect("/")
 
 
-
 def UserProfile(request):
-        
+
     # Cargamos la librería AngujarJS junto con sus plugins
     render_js = ['angular', 'angular.sanitize', 'angular.resource',
-                    'angular.infinite-scroll', 'angular.bootstrap',
-                    'angular.moment']
+                 'angular.infinite-scroll', 'angular.bootstrap',
+                 'angular.moment']
 
     # Cargamos las funciones de Tribus para AngularJS
     render_js += ['controllers.angular', 'services.angular',
-                    'elements.angular', 'profiles.angular',
-                    'navbar.angular']
+                  'elements.angular', 'profiles.angular',
+                  'navbar.angular']
 
     # Cargamos otras funciones adicionales
     render_js += ['moment', 'md5']
@@ -76,10 +76,10 @@ def UserProfile(request):
 
         else:
             form = data_change()
-            return render(request,'profile/profiles.html', {
+            return render(request, 'profile/profiles.html', {
                 'render_js': render_js,
                 'user_view': request.user,
                 'editForm': form
-                })
+            })
 
     return HttpResponseRedirect('/')

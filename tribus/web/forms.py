@@ -25,7 +25,9 @@ from django.utils.html import strip_tags, escape
 from django.utils.translation import ugettext_lazy as _
 from tribus.web.documents import Trib, Comment
 
+
 class TribForm(DocumentForm):
+
     class Meta:
         document = Trib
 
@@ -44,7 +46,9 @@ class TribForm(DocumentForm):
                 raise ValidationError(_('Enter a valid value.'))
         return cleaned_data
 
+
 class CommentForm(DocumentForm):
+
     class Meta:
         document = Comment
 
@@ -54,7 +58,7 @@ class CommentForm(DocumentForm):
         for key in cleaned_data.keys():
             stripped_data = strip_tags(cleaned_data[key])
             if unicode(stripped_data).strip():
-		parsed_data = document_fromstring(stripped_data).text_content()
+                parsed_data = document_fromstring(stripped_data).text_content()
                 if unicode(parsed_data).strip():
                     cleaned_data[key] = escape(parsed_data)
                 else:

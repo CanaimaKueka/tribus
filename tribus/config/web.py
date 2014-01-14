@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import djcelery, mongoengine, os
+import djcelery
+import mongoengine
+import os
 
 from tribus import BASEDIR
 from tribus.common.utils import get_path
@@ -25,7 +27,7 @@ USE_L10N = True
 USE_TZ = True
 TIME_ZONE = 'America/Caracas'
 LANGUAGE_CODE = 'es'
-DATABASE_OPTIONS = { 'charset': 'utf8' }
+DATABASE_OPTIONS = {'charset': 'utf8'}
 DEFAULT_CHARSET = 'utf-8'
 LOCALE_PATHS = [get_path([BASEDIR, 'tribus', 'data', 'i18n'])]
 
@@ -61,7 +63,7 @@ AUTHENTICATION_BACKENDS = (
     'django_auth_ldap.backend.LDAPBackend',
 
 
-    #acomoda aplicacion de ldap
+    # acomoda aplicacion de ldap
     #'django.contrib.auth.backends.ModelBackend',
 )
 
@@ -70,23 +72,23 @@ AUTHENTICATION_BACKENDS = (
 # Other local configuration should be set in tribus/config/web_local.py
 SECRET_KEY = 'oue0893ro5c^82!zke^ypu16v0u&%s($lnegf^7-vcgc^$e&$f'
 
-#SOCIAL_AUTH_ENABLED_BACKENDS = ('twitter', 'facebook', 'google', 'github')
-#SOCIAL_AUTH_DEFAULT_USERNAME = 'tribus'
-#SOCIAL_AUTH_UID_LENGTH = 32
-#SOCIAL_AUTH_ASSOCIATION_HANDLE_LENGTH = 32
-#SOCIAL_AUTH_NONCE_SERVER_URL_LENGTH = 32
-#SOCIAL_AUTH_ASSOCIATION_SERVER_URL_LENGTH = 32
-#SOCIAL_AUTH_ASSOCIATION_HANDLE_LENGTH = 32
+# SOCIAL_AUTH_ENABLED_BACKENDS = ('twitter', 'facebook', 'google', 'github')
+# SOCIAL_AUTH_DEFAULT_USERNAME = 'tribus'
+# SOCIAL_AUTH_UID_LENGTH = 32
+# SOCIAL_AUTH_ASSOCIATION_HANDLE_LENGTH = 32
+# SOCIAL_AUTH_NONCE_SERVER_URL_LENGTH = 32
+# SOCIAL_AUTH_ASSOCIATION_SERVER_URL_LENGTH = 32
+# SOCIAL_AUTH_ASSOCIATION_HANDLE_LENGTH = 32
 
-#TWITTER_CONSUMER_KEY = 'A2jx982HVh8KuFQ9q2iN8A'
-#TWITTER_CONSUMER_SECRET = 'wU3T7KPgvNqj3mBH7Pyn81T10lSw2NN4LLuZCLYk5U'
-#GOOGLE_OAUTH2_CLIENT_ID = '827167166748-7h5k1crt9fsr8jjqindi1c8hfl48eahj.apps.googleusercontent.com'
-#GOOGLE_OAUTH2_CLIENT_SECRET = 'VvoYXzfheMInzrcTq8v3Tdhf'
-#FACEBOOK_APP_ID='172639862908723'
-#FACEBOOK_API_SECRET='60735113b51809707ed3771b248fb37e'
-#FACEBOOK_EXTENDED_PERMISSIONS = ['email']
-#GITHUB_APP_ID = 'c3d70354858107387ef8'
-#GITHUB_API_SECRET = '55adbc6ecf54d295b391c8a6a1037e71165728d6'
+# TWITTER_CONSUMER_KEY = 'A2jx982HVh8KuFQ9q2iN8A'
+# TWITTER_CONSUMER_SECRET = 'wU3T7KPgvNqj3mBH7Pyn81T10lSw2NN4LLuZCLYk5U'
+# GOOGLE_OAUTH2_CLIENT_ID = '827167166748-7h5k1crt9fsr8jjqindi1c8hfl48eahj.apps.googleusercontent.com'
+# GOOGLE_OAUTH2_CLIENT_SECRET = 'VvoYXzfheMInzrcTq8v3Tdhf'
+# FACEBOOK_APP_ID='172639862908723'
+# FACEBOOK_API_SECRET='60735113b51809707ed3771b248fb37e'
+# FACEBOOK_EXTENDED_PERMISSIONS = ['email']
+# GITHUB_APP_ID = 'c3d70354858107387ef8'
+# GITHUB_API_SECRET = '55adbc6ecf54d295b391c8a6a1037e71165728d6'
 
 #
 # DATABASE CONFIGURATION -------------------------------------------------------
@@ -106,8 +108,8 @@ DATABASES = {
         'NAME': AUTH_LDAP_SERVER_URI,
         'USER': AUTH_LDAP_BIND_DN,
         'PASSWORD': AUTH_LDAP_BIND_PASSWORD,
-     }
- }
+    }
+}
 
 DATABASE_ROUTERS = ['ldapdb.router.Router']
 
@@ -116,7 +118,7 @@ PASSWORD_HASHERS = (
     #'tribus.web.registration.hashers.DummyPasswordHasher',
 )
 
-APPEND_SLASH = False
+APPEND_SLASH = True
 TASTYPIE_ALLOW_MISSING_SLASH = True
 TASTYPIE_FULL_DEBUG = False
 API_LIMIT_PER_PAGE = 20
@@ -131,26 +133,17 @@ CELERYBEAT_SCHEDULE = {
         "task": "tribus.web.cloud.tasks.update_cache",
         "schedule": crontab(minute=0, hour=0),
         "args": (),
-    },               
+    },
 }
 
-# Configuracion de haystack y whoosh
-#WHOOSH_INDEX = os.path.join(BASEDIR, 'whoosh_index/')
+# Configuracion de haystack
 XAPIAN_INDEX = os.path.join(BASEDIR, 'xapian_index/')
 HAYSTACK_LOGGING = True
 HAYSTACK_CONNECTIONS = {
-    #'default': {
-    #    'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
-    #    'PATH': WHOOSH_INDEX,
-    #},
-    #'default': {
-    #    'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
-    #    'URL': 'http://127.0.0.1:8983/solr'
-    #},                    
-    
     'default': {
         'ENGINE': 'xapian_backend.XapianEngine',
-        'PATH': XAPIAN_INDEX
+        'PATH': XAPIAN_INDEX,
+        'HAYSTACK_XAPIAN_LANGUAGE': 'spanish'
     },
 }
 
@@ -165,6 +158,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'tribus.testing',
     'tribus.web',
     'tribus.web.registration',
     'tribus.web.cloud',
@@ -178,11 +172,13 @@ INSTALLED_APPS = (
     'tastypie',
     'tastypie_mongoengine',
     'haystack',
-    #'whoosh',
     'celery_haystack',
     'registration',
 
 )
+
+SOUTH_TESTS_MIGRATE = False
+SKIP_SOUTH_TESTS = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
@@ -221,7 +217,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 
-#SOCIAL_AUTH_PIPELINE = (
+# SOCIAL_AUTH_PIPELINE = (
 #    'social_auth.backends.pipeline.social.social_auth_user',
 #    'social_auth.backends.pipeline.user.get_username',
 #    'tribus.web.registration.social.pipeline.create_user',

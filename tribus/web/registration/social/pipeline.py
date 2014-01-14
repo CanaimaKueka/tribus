@@ -23,6 +23,7 @@ from social_auth.models import UserSocialAuth
 from tribus.web.registration.ldap.models import LdapUser
 from tribus.web.registration.ldap.utils import create_ldap_user
 
+
 def create_user(backend, details, response, uid, username, user=None, *args,
                 **kwargs):
     """Create user. Depends on get_username pipeline."""

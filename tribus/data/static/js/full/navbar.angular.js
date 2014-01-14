@@ -3,5 +3,5 @@
 
 // Controllers -----------------------------------------------------------------
 
-tribus.controller('SearchListController', ['$scope', 'Search',
-    SearchListController]);
+tribus.controller('TypeaheadCtrl', ['$scope', 'Search',
+    TypeaheadCtrl]);

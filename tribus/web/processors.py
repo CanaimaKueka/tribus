@@ -21,17 +21,19 @@
 from tribus.config.brand import *
 from tribus.config.web import DEBUG
 
+
 def default_context(request):
     return {
         'render_css': ['normalize', 'bootstrap', 'fonts', 'font-awesome',
-                        'tribus', 'tribus-responsive'],
+                       'tribus', 'tribus-responsive'],
         'render_js': ['angular', 'angular.bootstrap', 'angular.bootstrap',
-                        'angular.resource', 'elements.angular',
-                        'controllers.angular', 'services.angular',
-                        'search.angular'],
+                      'angular.resource', 'elements.angular',
+                      'controllers.angular', 'services.angular',
+                      'search.angular'],
         'tribus_distro': TRIBUS_DISTRO,
         'tribus_role_1': TRIBUS_ROLE_1,
         'tribus_role_2': TRIBUS_ROLE_2,
         'tribus_role_3': TRIBUS_ROLE_3,
         'DEBUG': DEBUG,
     }
+

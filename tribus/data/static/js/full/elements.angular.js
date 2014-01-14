@@ -21,22 +21,19 @@ angular.element(document).ready(function(){
          document.querySelector('.input.form'));
     console.log (formCheck,visible_email );
     formCheck.prop('ng-checked','true');
-    
-          
 
 
     topSearchInput.bind('keyup', function(){
-
         if(this.value.length > 1){
             angular.element(this).next()
                 .css('display', 'block');
         }
-
         if(this.value.length === 0){
             angular.element(this).next()
                 .css('display', 'none');
         }
     });
+
 
     actionTextarea.bind('keyup', function(){
 

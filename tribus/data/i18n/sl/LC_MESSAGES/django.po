@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  tribus\n"
 "Report-Msgid-Bugs-To: desarrolladores@canaima.softwarelibre.gob.ve\n"
-"POT-Creation-Date: 2013-12-12 15:09-0630\n"
+"POT-Creation-Date: 2013-12-23 08:29-0630\n"
 "PO-Revision-Date: 2013-12-02 21:11+0000\n"
 "Last-Translator: jsfrncscg <jsfrncscg@gmail.com>\n"
 "Language-Team: Slovenian "
@@ -382,11 +382,13 @@ msgstr ""
 msgid "There has been an error deleting your comment. Please try again later."
 msgstr ""
 
-#: tribus/data/templates/footer.html:7 tribus/data/templates/terms.html:14
+#: tribus/data/templates/footer.html:7 tribus/data/templates/terms.html:3
+#: tribus/data/templates/terms.html:14
 msgid "Terms of Service"
 msgstr ""
 
-#: tribus/data/templates/footer.html:9 tribus/data/templates/privacy.html:14
+#: tribus/data/templates/footer.html:9 tribus/data/templates/privacy.html:3
+#: tribus/data/templates/privacy.html:14
 msgid "Privacy Policy"
 msgstr ""
 
@@ -498,46 +500,26 @@ msgid ""
 "take care of the HTML for you."
 msgstr ""
 
-#: tribus/data/templates/navbar.html:21
+#: tribus/data/templates/navbar.html:24
 msgid "What are you looking for?"
 msgstr ""
 
-#: tribus/data/templates/navbar.html:24
-#: tribus/data/templates/search/search.html:49
-#: tribus/data/templates/search/search.html:53
-msgid "Packages"
-msgstr ""
-
-#: tribus/data/templates/navbar.html:32
-#: tribus/data/templates/search/search.html:50
-#: tribus/data/templates/search/search.html:54
-msgid "Users"
-msgstr ""
-
-#: tribus/data/templates/navbar.html:40
-msgid "There are no results matching this query."
-msgstr ""
-
-#: tribus/data/templates/navbar.html:67
+#: tribus/data/templates/navbar.html:52
 #: tribus/data/templates/registration/password_change_form.html:3
 #: tribus/data/templates/registration/password_change_form.html:9
 #: tribus/data/templates/registration/password_change_form.html:19
 msgid "Change password"
 msgstr ""
 
-#: tribus/data/templates/navbar.html:70
+#: tribus/data/templates/navbar.html:55
 msgid "Logout"
 msgstr ""
 
-#: tribus/data/templates/navbar.html:82
+#: tribus/data/templates/navbar.html:67
 #: tribus/data/templates/registration/login_form.html:3
 #: tribus/data/templates/registration/login_form.html:9
 #: tribus/data/templates/registration/login_form.html:47
 msgid "Log in"
-msgstr ""
-
-#: tribus/data/templates/privacy.html:3 tribus/data/templates/terms.html:24
-msgid "Privacy"
 msgstr ""
 
 #: tribus/data/templates/privacy.html:17
@@ -910,8 +892,14 @@ msgstr ""
 msgid "Filters:"
 msgstr ""
 
-#: tribus/data/templates/terms.html:3
-msgid "Terms"
+#: tribus/data/templates/search/search.html:49
+#: tribus/data/templates/search/search.html:53
+msgid "Packages"
+msgstr ""
+
+#: tribus/data/templates/search/search.html:50
+#: tribus/data/templates/search/search.html:54
+msgid "Users"
 msgstr ""
 
 #: tribus/data/templates/terms.html:17
@@ -949,6 +937,10 @@ msgid ""
 "Services) to you or to users generally and may not be able to provide you"
 " with prior notice. We also retain the right to create limits on use and "
 "storage at our sole discretion at any time without prior notice to you."
+msgstr ""
+
+#: tribus/data/templates/terms.html:24
+msgid "Privacy"
 msgstr ""
 
 #: tribus/data/templates/terms.html:25
@@ -1050,8 +1042,8 @@ msgstr ""
 msgid "Delete message"
 msgstr ""
 
-#: tribus/web/forms.py:42 tribus/web/forms.py:44 tribus/web/forms.py:61
-#: tribus/web/forms.py:63
+#: tribus/web/forms.py:44 tribus/web/forms.py:46 tribus/web/forms.py:65
+#: tribus/web/forms.py:67
 msgid "Enter a valid value."
 msgstr ""
 
@@ -1059,82 +1051,82 @@ msgstr ""
 msgid "Descripcion"
 msgstr ""
 
-#: tribus/web/profile/forms.py:33 tribus/web/registration/forms.py:71
-#: tribus/web/registration/forms.py:117 tribus/web/registration/forms.py:132
-#: tribus/web/registration/forms.py:147
+#: tribus/web/profile/forms.py:34 tribus/web/registration/forms.py:75
+#: tribus/web/registration/forms.py:126 tribus/web/registration/forms.py:143
+#: tribus/web/registration/forms.py:160
 msgid "This value may contain only letters, numbers and @/./+/-/_ characters."
 msgstr ""
 
-#: tribus/web/registration/forms.py:61 tribus/web/registration/forms.py:107
+#: tribus/web/registration/forms.py:63 tribus/web/registration/forms.py:114
 msgid "Username"
 msgstr ""
 
-#: tribus/web/registration/forms.py:65
+#: tribus/web/registration/forms.py:68
 msgid "Enter your username"
 msgstr ""
 
-#: tribus/web/registration/forms.py:76 tribus/web/registration/forms.py:163
-#: tribus/web/registration/forms.py:279
+#: tribus/web/registration/forms.py:81 tribus/web/registration/forms.py:178
+#: tribus/web/registration/forms.py:303
 msgid "Password"
 msgstr ""
 
-#: tribus/web/registration/forms.py:79
+#: tribus/web/registration/forms.py:85
 msgid "Enter your password"
 msgstr ""
 
-#: tribus/web/registration/forms.py:86
+#: tribus/web/registration/forms.py:92
 msgid "Remember my session"
 msgstr ""
 
-#: tribus/web/registration/forms.py:111
+#: tribus/web/registration/forms.py:119
 msgid "Pick a username"
 msgstr ""
 
-#: tribus/web/registration/forms.py:122 tribus/web/registration/forms.py:126
+#: tribus/web/registration/forms.py:132 tribus/web/registration/forms.py:136
 msgid "First name"
 msgstr ""
 
-#: tribus/web/registration/forms.py:137 tribus/web/registration/forms.py:141
+#: tribus/web/registration/forms.py:149 tribus/web/registration/forms.py:153
 msgid "Last name"
 msgstr ""
 
-#: tribus/web/registration/forms.py:152 tribus/web/registration/forms.py:205
+#: tribus/web/registration/forms.py:166 tribus/web/registration/forms.py:227
 msgid "Email"
 msgstr ""
 
-#: tribus/web/registration/forms.py:155 tribus/web/registration/forms.py:208
+#: tribus/web/registration/forms.py:170 tribus/web/registration/forms.py:231
 msgid "Enter a valid email"
 msgstr ""
 
-#: tribus/web/registration/forms.py:166
+#: tribus/web/registration/forms.py:182
 msgid "Create a password"
 msgstr ""
 
-#: tribus/web/registration/forms.py:180 tribus/web/registration/forms.py:304
+#: tribus/web/registration/forms.py:198 tribus/web/registration/forms.py:330
 msgid "A user with that username already exists."
 msgstr ""
 
-#: tribus/web/registration/forms.py:195
+#: tribus/web/registration/forms.py:216
 msgid "A user with that email already exists."
 msgstr ""
 
-#: tribus/web/registration/forms.py:282
+#: tribus/web/registration/forms.py:307
 msgid "Create a new password"
 msgstr ""
 
-#: tribus/web/registration/forms.py:289
+#: tribus/web/registration/forms.py:314
 msgid "Password (repeat)"
 msgstr ""
 
-#: tribus/web/registration/forms.py:292
+#: tribus/web/registration/forms.py:318
 msgid "Repeat your new password"
 msgstr ""
 
-#: tribus/web/registration/forms.py:324
+#: tribus/web/registration/forms.py:351
 msgid "Old password"
 msgstr ""
 
-#: tribus/web/registration/forms.py:327
+#: tribus/web/registration/forms.py:355
 msgid "Enter your old password"
 msgstr ""
 
