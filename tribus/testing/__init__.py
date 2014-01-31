@@ -74,7 +74,7 @@ class SetupTesting(TestSuite):
         # Setup testrunner.
         from django.test.simple import DjangoTestSuiteRunner
         self.test_runner = DjangoTestSuiteRunner(
-            verbosity=1,
+            verbosity=2,
             interactive=False,
             failfast=True
         )
@@ -186,7 +186,7 @@ class SetupTesting(TestSuite):
         result = super(SetupTesting, self).run(result, *args, **kwargs)
         self.test_runner.teardown_databases(self.old_config)
         self.test_runner.teardown_test_environment()
-        self.coverage_report()
-        self.flake8_report()
-        self.pep257_report()
+        #self.coverage_report()
+        #self.flake8_report()
+        #self.pep257_report()
         return result

@@ -1,3 +1,44 @@
+Package: 2ping
+Version: 2.0-1
+Installed-Size: 134
+Maintainer: Ryan Finnie <ryan@finnie.org>
+Architecture: all
+Depends: perl
+Recommends: perl-modules, libio-socket-inet6-perl
+Suggests: libdigest-sha-perl, libdigest-crc-perl
+Description: Ping utility to determine directional packet loss
+Homepage: http://www.finnie.org/software/2ping/
+Description-md5: 2543c220a763445976d1348c5b593743
+Tag: implemented-in::perl, interface::commandline, protocol::ip,
+ role::program, scope::utility, use::analysing, use::measuring,
+ works-with::network-traffic
+Section: net
+Priority: optional
+Filename: pool/main/2/2ping/2ping_2.0-1_all.deb
+Size: 30724
+MD5sum: a815f73f1894e7a12619d37d3dbc1bbc
+SHA1: 19baa38dcc480a218ac4db24ca6f0be6df04a1f6
+SHA256: fd4396ef6793a8fcdf38e751ae60ce513cf4389b5aeebb51af13a8f7995fd521
+
+Package: 3dchess
+Version: 0.8.1-17
+Installed-Size: 152
+Maintainer: Debian Games Team <pkg-games-devel@lists.alioth.debian.org>
+Architecture: i386
+Depends: libc6 (>= 2.0), libx11-6, libxpm4, libxt6, xaw3dg (>= 1.5+E-1)
+Description: Play chess across 3 boards!
+Description-md5: 12d01b96d7645ee302ebc29cde999e92
+Tag: game::board, game::board:chess, game::strategy, implemented-in::c,
+ interface::x11, role::program, uitoolkit::xlib, use::gameplaying,
+ x11::application
+Section: games
+Priority: optional
+Filename: pool/main/3/3dchess/3dchess_0.8.1-17_i386.deb
+Size: 35086
+MD5sum: 3379b9efd51c5d5d4d5b0148cfa934be
+SHA1: c2286aad7f8bacea2017cb079a74a2a51d14f563
+SHA256: fbf737dedbf0ddce57921f1582a5cf43f225ffacf17a02702a38bb9141d5e756
+
 Package: banshee
 Priority: optional
 Section: sound
@@ -70,6 +111,36 @@ Description: Debian Edu non-GNOME- and non-KDE-specific desktop applications
  that are useful for teachers and their students.
 Homepage: http://www.skolelinux.org
 Tag: interface::x11, role::metapackage, use::learning
+
+Package: exaile
+Priority: optional
+Section: sound
+Installed-Size: 4632
+Maintainer: FranÃ§ois FÃ©votte <francois.fevotte@ensta.org>
+Architecture: all
+Version: 0.2.14+debian-2.3
+Depends: python (>= 2.5), python-support (>= 0.90.0), python-pysqlite2, libgstreamer0.10-0, gstreamer0.10-plugins-base, gstreamer0.10-plugins-good, python-gst0.10, gstreamer0.10-alsa | gstreamer0.10-esd, python-gtk2, python-glade2, python-dbus, python-pyvorbis, python-mutagen, python-mmkeys, python-feedparser, libjs-prototype
+Recommends: gstreamer0.10-plugins-ugly, python-cddb, python-eggtrayicon, streamripper, python-gpod, python-gamin, python-notify, python-gtkmozembed
+Filename: pool/main/e/exaile/exaile_0.2.14+debian-2.3_all.deb
+Size: 1151808
+MD5sum: 7c9c67c05fa54078b1a8bafd465fd656
+SHA1: 86a5d824d7920a51c979b3dd9c745b9b683fe2ef
+SHA256: 2462e83f43f8322881da12bba516f4bf4aa5bd365f495efa48fc8b6137fb69fc
+Description: flexible audio player, similar to Amarok, but written in GTK+
+ Exaile is a media player aiming to be similar to KDE's Amarok, but for
+ GTK+. It incorporates many of the cool things from Amarok (and other
+ media players) like automatic fetching of album art, handling of large
+ libraries, lyrics fetching, artist/album information via the wikipedia,
+ last.fm support, and optional iPod support (assuming you have python-gpod
+ installed).
+ .
+ In addition, Exaile also includes a built-in shoutcast directory
+ browser, tabbed playlists (so you can have more than one playlist open
+ at a time), blacklisting of tracks (so they don't get scanned into your
+ library), downloading of guitar tablature from fretplay.com, and
+ submitting played tracks on your iPod to last.fm.
+Homepage: http://www.exaile.org/
+Tag: implemented-in::python, interface::x11, role::program, scope::application, sound::player, uitoolkit::gtk, use::playing, works-with::audio, works-with-format::{mp3,mpc,oggvorbis}, x11::application
 
 Package: libreoffice
 Version: 1:3.4.3-3canaima2

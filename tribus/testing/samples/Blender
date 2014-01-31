@@ -1,0 +1,20 @@
+Package: blender
+Version: 2.63a-1
+Installed-Size: 55328
+Maintainer: Debian Multimedia Maintainers <pkg-multimedia-maintainers@lists.alioth.debian.org>
+Architecture: i386
+Depends: python3.2, fonts-droid, libavcodec53 (>= 5:0.8-2~) | libavcodec-extra-53 (>= 5:0.8-2~), libavdevice53 (>= 5:0.8-2~), libavformat53 (>= 5:0.8-2~), libavutil51 (>= 5:0.8-2~), libc6 (>= 2.7), libfftw3-3, libfontconfig1 (>= 2.9.0), libfreetype6 (>= 2.2.1), libgcc1 (>= 1:4.1.1), libgl1-mesa-glx | libgl1, libglew1.7 (>= 1.7.0), libglu1-mesa | libglu1, libgomp1 (>= 4.2.1), libilmbase6 (>= 1.0.1), libjack-jackd2-0 (>= 1.9.5~dfsg-14) | libjack-0.116, libjpeg8 (>= 8c), libopenal1, libopenexr6 (>= 1.6.1), libopenjpeg2, libpng12-0 (>= 1.2.13-4), libpython3.2 (>= 3.2~a4), libsdl1.2debian (>= 1.2.11), libsndfile1 (>= 1.0.20), libstdc++6 (>= 4.6), libswscale2 (>= 5:0.8-2~), libtiff4 (>> 3.9.5-3~), libx11-6, libxi6, zlib1g (>= 1:1.2.3.3)
+Suggests: yafaray
+Description: Very fast and versatile 3D modeller/renderer
+Homepage: http://blender.org
+Description-md5: 90b4f36fda45432800e6a278de5b06b4
+Tag: implemented-in::c++, interface::3d, interface::x11, role::program,
+ scope::application, uitoolkit::sdl, use::editing, works-with::3dmodel,
+ x11::application
+Section: graphics
+Priority: optional
+Filename: pool/main/b/blender/blender_2.63a-1_i386.deb
+Size: 22484318
+MD5sum: 3917d6227e61324a29459303c0531587
+SHA1: b6c712fc29c3397f5db3afea9a8498db54f3b869
+SHA256: f281ba75ec6bf3d07d8c1e8f006a5317939aa86143e34f8697be5dd53983b9cb
