@@ -17,7 +17,6 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from tribus.config.pkgrecorder import SAMPLES
 
 '''
 
@@ -30,11 +29,10 @@ These are the tests for the tribus.common.recorder module.
 
 import os
 import email.Utils
-from fabric.api import *
+from fabric.api import env, lcd, local, settings
 from debian import deb822
 from django.test import TestCase
 from doctest import DocTestSuite
-from tribus.common import utils
 from tribus.web.cloud.models import Package
 from tribus.common.utils import get_path
 from tribus.__init__ import BASEDIR
@@ -51,28 +49,10 @@ class RecorderFunctions(TestCase):
         pass        
         
     def tearDown(self):
-        # Instrucciones para deshacer el entorno de pruebas
         pass
 #         with settings(command='rm -rf %(micro_repository_path)s' % env):
 #             local('%(command)s' % env, capture=False)
-    
-    
-#     def test_test1(self):
-#         from tribus.common.recorder import find_package
-#         p = Package.objects.get(Package = "banshee")
-#         p.delete()
-#         find_package("independencia-venezuela-deluxe")
-#         print Package.objects.filter(Package = "independencia-venezuela-deluxe")
-#         Package.objects.all().delete()
-#         print Package.objects.all()
-#         
-#         
-#     def test_test2(self):
-#         from tribus.web.cloud.models import Package
-#         print Package.objects.filter(Package = "banshee")
-#         print Package.objects.filter(Package = "independencia-venezuela-deluxe")
-        
-        
+
     def test_record_maintainer(self):
         from tribus.common.recorder import record_maintainer
         maintainer_data = "Super Mantenedor 86 <supermaintainer86@maintainer.com>"
@@ -81,22 +61,22 @@ class RecorderFunctions(TestCase):
         self.assertEqual(test_maintainer.Email, "supermaintainer86@maintainer.com", "El correo no coincide")
         
     
-    def test_select_paragraph_fields(self):
-        from tribus.common.recorder import select_paragraph_fields
-        from tribus.config.pkgrecorder import package_fields, detail_fields
+    def test_select_paragraph_data_fields(self):
+        from tribus.common.recorder import select_paragraph_data_fields
+        from tribus.config.pkgrecorder import PACKAGE_FIELDS, DETAIL_FIELDS
         section = deb822.Packages(open(os.path.join(SAMPLESDIR, "Blender")))
-        selected_package_fields = select_paragraph_fields(section, package_fields)
-        selected_details_fields = select_paragraph_fields(section, detail_fields)
-        self.assertLessEqual(len(selected_package_fields), len(package_fields))
+        selected_PACKAGE_FIELDS = select_paragraph_data_fields(section, PACKAGE_FIELDS)
+        selected_details_fields = select_paragraph_data_fields(section, DETAIL_FIELDS)
+        self.assertLessEqual(len(selected_PACKAGE_FIELDS), len(PACKAGE_FIELDS))
         # La prueba falla si se verifican los campos en cuyo nombre hay un guion (-)
         # hace falta una solucion
-        #for field in selected_package_fields.keys():
-        #    self.assertIn(field, package_fields)
-        self.assertLessEqual(len(selected_details_fields), len(detail_fields))
+        #for field in selected_PACKAGE_FIELDS.keys():
+        #    self.assertIn(field, PACKAGE_FIELDS)
+        self.assertLessEqual(len(selected_details_fields), len(DETAIL_FIELDS))
         # La prueba falla si se verifican los campos en cuyo nombre hay un guion (-)
         # hace falta una solucion
         #for field in selected_details_fields.keys():
-        #    self.assertIn(field, detail_fields)
+        #    self.assertIn(field, DETAIL_FIELDS)
         
         
     def test_find_package(self):
@@ -108,7 +88,6 @@ class RecorderFunctions(TestCase):
         
     def test_create_relationship(self):
         from tribus.common.recorder import create_relationship, find_package
-        # La via facil, crear un paquete al vuelo
         p = find_package("independencia-venezuela-gold_edition")
         fields = {"related_package": p, "relation_type": "depends",
         "relation": ">=", "version": "0~r11863", "alt_id": 2}
@@ -139,7 +118,7 @@ class RecorderFunctions(TestCase):
         
     def test_record_package(self):
         from tribus.common.recorder import record_package
-        from tribus.config.pkgrecorder import package_fields
+        from tribus.config.pkgrecorder import PACKAGE_FIELDS
         section = deb822.Packages(open(os.path.join(SAMPLESDIR, "Blender")))
         p = record_package(section)
         
@@ -149,7 +128,7 @@ class RecorderFunctions(TestCase):
             self.assertEqual(p.Maintainer.Name, name)
             self.assertEqual(p.Maintainer.Email, mail)
         
-        for field in package_fields:
+        for field in PACKAGE_FIELDS:
             if section.get(field):
                 self.assertEqual(getattr(p, 
                                          field.replace("-", "") if "-" in field else field),
@@ -158,13 +137,13 @@ class RecorderFunctions(TestCase):
         
     def test_record_details(self):
         from tribus.common.recorder import record_details, record_package
-        from tribus.config.pkgrecorder import detail_fields
+        from tribus.config.pkgrecorder import DETAIL_FIELDS
         test_dist = "kukenan"
         section = deb822.Packages(open(os.path.join(SAMPLESDIR, "Blender")))
         p = record_package(section)
         d = record_details(section, p, test_dist)
         self.assertEqual(d.Distribution, test_dist)
-        for field in detail_fields:
+        for field in DETAIL_FIELDS:
             self.assertEqual(getattr(d, 
                                      field.replace("-", "") if "-" in field else field),
                              section[field])
@@ -232,11 +211,11 @@ class RecorderFunctions(TestCase):
         
         
     def test_record_section(self):
-        from tribus.common.recorder import record_section
-        from tribus.config.pkgrecorder import package_fields, detail_fields
+        from tribus.common.recorder import record_paragraph
+        from tribus.config.pkgrecorder import PACKAGE_FIELDS, DETAIL_FIELDS
         test_dist = "kukenan"
         section = deb822.Packages(open(os.path.join(SAMPLESDIR, "Blender")))
-        record_section(section, test_dist)
+        record_paragraph(section, test_dist)
         
         p = Package.objects.get(Package = "blender")
         d = p.Details.all()[0]
@@ -265,7 +244,7 @@ class RecorderFunctions(TestCase):
                 self.assertIn((label.Name, label.Tags.Value),
                               clean_list)    
         
-        for field in package_fields:
+        for field in PACKAGE_FIELDS:
             if section.get(field):
                 self.assertEqual(str(getattr(p,
                                          field.replace("-", "") if "-" in field else field)),
@@ -274,7 +253,7 @@ class RecorderFunctions(TestCase):
         self.assertEqual(d.Distribution, test_dist)
         
         self.assertEqual(d.Distribution, test_dist)
-        for field in detail_fields:
+        for field in DETAIL_FIELDS:
             self.assertEqual(str(getattr(d, 
                                      field.replace("-", "") if "-" in field else field)),
                              section[field])
@@ -291,14 +270,14 @@ class RecorderFunctions(TestCase):
         pass
     
     
-    def test_update_section(self):
-        from tribus.common.recorder import record_section, update_section
-        from tribus.config.pkgrecorder import package_fields, detail_fields
+    def test_update_paragraph(self):
+        from tribus.common.recorder import record_paragraph, update_paragraph
+        from tribus.config.pkgrecorder import PACKAGE_FIELDS, DETAIL_FIELDS
         test_dist = "kukenan"
         old_section = deb822.Packages(open(os.path.join(SAMPLESDIR, "Blender")))
         new_section = deb822.Packages(open(os.path.join(SAMPLESDIR, "BlenderNew")))
-        record_section(old_section, test_dist)
-        update_section(new_section, test_dist)
+        record_paragraph(old_section, test_dist)
+        update_paragraph(new_section, test_dist)
         
         p = Package.objects.get(Package = "blender")
         d = p.Details.all()[0]
@@ -327,7 +306,7 @@ class RecorderFunctions(TestCase):
                 self.assertIn((label.Name, label.Tags.Value),
                               clean_list)
         
-        for field in package_fields:
+        for field in PACKAGE_FIELDS:
             if new_section.get(field):
                 self.assertEqual(str(getattr(p,
                                          field.replace("-", "") if "-" in field else field)),
@@ -335,7 +314,7 @@ class RecorderFunctions(TestCase):
         
         self.assertEqual(d.Distribution, test_dist)
         
-        for field in detail_fields:
+        for field in DETAIL_FIELDS:
             if new_section.get(field):
                 self.assertEqual(str(getattr(d, 
                                      field.replace("-", "") if "-" in field else field)),
@@ -345,8 +324,8 @@ class RecorderFunctions(TestCase):
                          total_relations)
         
     def test_update_package_list(self):
-        from tribus.common.recorder import update_package_list, record_section
-        from tribus.config.pkgrecorder import package_fields, detail_fields
+        from tribus.common.recorder import record_paragraph, update_package_list
+        from tribus.config.pkgrecorder import PACKAGE_FIELDS, DETAIL_FIELDS
         test_dist = "kukenan"
         old_amd_section = os.path.join(SAMPLESDIR, "Oldamd")
         old_i386_section = os.path.join(SAMPLESDIR, "Oldi386")
@@ -354,12 +333,12 @@ class RecorderFunctions(TestCase):
         new_i386_section = os.path.join(SAMPLESDIR, "Newi386")
         
         for section in deb822.Packages.iter_paragraphs(open(old_amd_section)):
-            record_section(section, test_dist)
+            record_paragraph(section, test_dist)
         for section in deb822.Packages.iter_paragraphs(open(old_i386_section)):
-            record_section(section, test_dist)
+            record_paragraph(section, test_dist)
         
-        update_package_list(new_amd_section, test_dist)
-        update_package_list(new_i386_section, test_dist)
+        update_package_list(new_amd_section, test_dist, 'i386')
+        update_package_list(new_i386_section, test_dist, 'amd64')
         
         for section in deb822.Packages.iter_paragraphs(open(new_i386_section)):
             p = Package.objects.get(Package = section['Package'])
@@ -368,7 +347,7 @@ class RecorderFunctions(TestCase):
             maintainer_data = section.get('Maintainer', None)
             tags = section.get('Tag', None)
             
-            for field in package_fields:
+            for field in PACKAGE_FIELDS:
                 if section.get(field):
                     self.assertEqual(str(getattr(p,
                                          field.replace("-", "") if "-" in field else field)),
@@ -376,7 +355,7 @@ class RecorderFunctions(TestCase):
                     
             self.assertEqual(d.Distribution, test_dist)
         
-            for field in detail_fields:
+            for field in DETAIL_FIELDS:
                 if section.get(field):
                     self.assertEqual(str(getattr(d, 
                                                  field.replace("-", "") if "-" in field else field)),
@@ -414,7 +393,7 @@ class RecorderFunctions(TestCase):
             maintainer_data = section.get('Maintainer', None)
             tags = section.get('Tag', None)
             
-            for field in package_fields:
+            for field in PACKAGE_FIELDS:
                 if section.get(field):
                     self.assertEqual(str(getattr(p,
                                          field.replace("-", "") if "-" in field else field)),
@@ -422,7 +401,7 @@ class RecorderFunctions(TestCase):
             
             self.assertEqual(d.Distribution, test_dist)
             
-            for field in detail_fields:
+            for field in DETAIL_FIELDS:
                 if section.get(field):
                     self.assertEqual(str(getattr(d, 
                                                  field.replace("-", "") if "-" in field else field)),
@@ -453,12 +432,27 @@ class RecorderFunctions(TestCase):
                                   clean_list)
     
     
+    # Como hacer un test para este metodo?
+    # Necesitaria (desplegar) un microrepositorio el alguna ubicacion temporal
+    # 1. Usando fabric o alguna vaina deberia crear un directorio donde alojar el repositorio
+    # 2. Descargar una muestra (PEQUEÑA) de paquetes para indexar el repositorio, la muestra debe ser lo suficientemente representativa
+    # conteniendo paquetes (LIGEROS) de varias de las distribuciones y arquitecturas asi como versiones superiores de los paquetes, que seran
+    # el motivo de la actualizacion.
+    # 3. Usando o emulando a fabric, se crea el micro-repositorio y se indexa la muestra de paquetes descargados
+    # 4. Se registran los paquetes en la base de datos desde el micro-repositorio.
+    # 5. Se invoca esta funcion o las correspondientes para que se verifique el md5 de los paquetes. 
+    # En este punto se me presenta un problema: Suponiendo que la muestra consiste en 5 paquetes, esos se registran en la base
+    # de datos y como consecuencia ademas de los 5 paquetes originales tendre registradas las dependencias asi sea como paquetes
+    # incompletos. Luego en el momento en que se hace la actualizacion, se detectara un grupo de paquetes que esta registrado en la base
+    # de datos pero no se encuentra en los archivos packages. Por lo tanto la conducta esperada es que al actualizar se eliminen los paquetes 
+    # cuyos campos de informacion estan incompletos. No tengo certeza en este punto, por lo tanto empezare a hacer las pruebas y a medida que se 
+    # vayan completando las revisare.
+
+
     def test_update_dist_paragraphs(self):
         # TODO ESTO PUEDE VERSE COMO UNA PRUEBA DE INTEGRACION
-        from tribus.common.recorder import create_cache_dirs, fill_db_from_cache, update_dist_paragraphs
-        from tribus.common.utils import get_path
-        from tribus.common.iosync import makedirs, touch, ln, rmtree
-        from django.db.models import Q
+        from tribus.common.recorder import fill_db_from_cache, create_cache, update_cache
+        from tribus.common.iosync import touch, rmtree
         
         dist = 'kerepakupai'
         env.micro_repository_path = os.path.join('/', 'tmp', 'tmp_repo')
@@ -471,7 +465,7 @@ class RecorderFunctions(TestCase):
         with settings(command='mkdir -p %(micro_repository_conf)s' % env):
             local('%(command)s' % env, capture=False)
         
-        with settings(command='cp %(samples_dir)s/distributions  \
+        with settings(command='cp %(samples_dir)s/distributions\
                   %(micro_repository_conf)s' % env):
             local('%(command)s' % env, capture=False)
             
@@ -504,7 +498,7 @@ class RecorderFunctions(TestCase):
         
         with lcd('%(micro_repository_path)s' % env):
             # Esto deberia ser objeto de un test separado OJO
-            create_cache_dirs(env.micro_repository_path, env.pcache)
+            create_cache(env.micro_repository_path, env.pcache)
             
         with lcd('%(micro_repository_path)s' % env):
             fill_db_from_cache(env.pcache)
@@ -530,13 +524,8 @@ class RecorderFunctions(TestCase):
                 with settings(command='reprepro remove %s %s' %
                              (dist, package)):
                     local('%(command)s' % env, capture=False)
-        
-        update_dist_paragraphs(env.micro_repository_path, dist, env.pcache)
-        
-        #print ">>>>>>", Package.objects.all()
-        #print ">>>>>>", Package.objects.all().count()
-        print 
-        print ">>>>>>", Package.objects.filter(Q(Details__Architecture = 'all') | Q(Details__Architecture = 'i386') | Q(Details__Architecture = 'amd64')).distinct()
+                    
+        update_cache(env.micro_repository_path, env.pcache)
         
         # ACTUALIZACIONES
 
@@ -548,12 +537,9 @@ class RecorderFunctions(TestCase):
         # libtacacs+1_4.0.4.26-3_amd64.deb AGREGAR 
         # libtacacs+1_4.0.4.26-3_i386.deb AGREGAR
         
-        
-        #rmtree(env.micro_repository_path)
-        
-    
-        
-    
+        rmtree(env.micro_repository_path)
+        rmtree(env.pcache)
+
 
 # ===============================================================================
 # VERIFICACION DE ACTUALIZACION

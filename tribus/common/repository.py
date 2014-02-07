@@ -27,21 +27,18 @@ This module contains common functions to manage local and remote repositories.
 
 '''
 
-import urllib
 import re
 import os
-import sys
-import random
 import gzip
-path = os.path.join(os.path.dirname(__file__), '..', '..')
-base = os.path.realpath(os.path.abspath(os.path.normpath(path)))
-os.environ['PATH'] = base + os.pathsep + os.environ['PATH']
-sys.prefix = base
-sys.path.insert(0, base)
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
+import urllib
+import random
 from debian import deb822
+from tribus.common.logger import get_logger
 from tribus.config.pkgrecorder import LOCAL_ROOT, CANAIMA_ROOT, SAMPLES
 from tribus.common.utils import scan_repository, find_files
+
+logger = get_logger()
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
 
 
 def select_sample_packages(
@@ -67,7 +64,6 @@ def select_sample_packages(
 
     if include_relations:
         remote_packages = urllib.urlopen(package_url)
-
         for section in deb822.Packages.iter_paragraphs(remote_packages):
             if section['Package'] in relaciones and int(section['Installed-Size']) < 500:
                 final[section['Package']] = section['Filename']
@@ -89,10 +85,7 @@ def init_sample_packages():
             # Se trata de un archivo remoto, por lo tanto lo abro a traves de
             # la url
             datasource = urllib.urlopen(
-                os.path.join(CANAIMA_ROOT,
-                             "dists",
-                             release[0],
-                             "Release"))
+                os.path.join(CANAIMA_ROOT, "dists", release[0], "Release"))
         except:
             print "Se produjo un error leyendo los Release"
             datasource = None
@@ -159,10 +152,3 @@ def download_package_list(file_with_package_list, download_dir):
             print "Hubo un error intentando descargar el paquete %s " % l[-1]
         linea = archivo.readline().strip("\n")
     archivo.close()
-
-
-def main():
-    init_sample_packages()
-    download_sample_packages()
-
-main()

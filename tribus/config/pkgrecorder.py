@@ -1,4 +1,4 @@
-#===============================================================================
+#=========================================================================
 # CONSTANTES UTILIZADAS POR EL MODULO DE REGISTRO DE PAQUETES
 #=========================================================================
 
@@ -8,9 +8,9 @@ LOCAL_ROOT = os.path.join("file://", BASEDIR, "test_repo")
 CANAIMA_ROOT = "http://paquetes.canaima.softwarelibre.gob.ve"
 SAMPLES = os.path.join(BASEDIR, 'package_samples')
 
-package_fields = ["Package", "Description", "Homepage", "Section",
+PACKAGE_FIELDS = ["Package", "Description", "Homepage", "Section",
                   "Priority", "Essential", "Bugs", "Multi-Arch"]
-detail_fields = ["Version", "Architecture", "Size", "MD5sum", "Filename",
+DETAIL_FIELDS = ["Version", "Architecture", "Size", "MD5sum", "Filename",
                  "Installed-Size"]
 relation_types = ["pre-depends", "depends", "recommends", "suggests",
                   "provides", "enhances", "breaks", "replaces", "conflicts"]

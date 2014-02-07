@@ -24,8 +24,9 @@ import pwd
 import sys
 import site
 # import lsb_release
-from fabric.api import *
+from fabric.api import local, env, settings, cd, lcd
 from tribus import BASEDIR
+from tribus.config.base import PACKAGECACHE
 from tribus.config.ldap import (
     AUTH_LDAP_SERVER_URI, AUTH_LDAP_BASE, AUTH_LDAP_BIND_DN,
     AUTH_LDAP_BIND_PASSWORD)
@@ -33,6 +34,9 @@ from tribus.config.pkg import (
     debian_run_dependencies, debian_build_dependencies,
     debian_maint_dependencies, f_workenv_preseed, f_sql_preseed,
     f_users_ldif, f_python_dependencies)
+from tribus.common.logger import get_logger
+
+logger = get_logger()
 
 
 def development():
@@ -120,21 +124,20 @@ def select_sample_packages():
     from tribus.common.repository import init_sample_packages
     init_sample_packages()
 
-# 3) Descargar muestra de paquetes
 
+# 3) Descargar muestra de paquetes
 
 def get_sample_packages():
     py_activate_virtualenv()
     from tribus.common.repository import download_sample_packages
     download_sample_packages()
 
+
 # 4) Indexar los paquetes descargados en el repositorio
 
-
 def index_sample_packages():
-    from tribus.common.utils import find_dirs, list_items, find_files
-    # dirs = filter(lambda p: "binary" in p,
-    # find_dirs(env.sample_packages_dir))
+    # Poner nombres mas adecuados
+    from tribus.common.utils import list_items, find_files
     dirs = [os.path.dirname(f)
             for f in find_files(env.sample_packages_dir, 'list')]
     dists = filter(None, list_items(env.sample_packages_dir, dirs=True, files=False))
@@ -146,31 +149,47 @@ def index_sample_packages():
                 with settings(command='reprepro includedeb %s %s/*.deb' %
                              (dist, d)):
                     local('%(command)s' % env, capture=False)
+            # Agregar tipo de excepcion
             except:
-                print "No hay paquetes en el directorio %s" % d
+                logger.error('There are no packages in %s' % d)
 
 # -----------------------------------------------------------------------------
 
 # TRIBUS DATABASE TASKS -------------------------------------------------------
 
 
+# TESTS TASKS -----------------------------------------------------------------
+# No esta automatizada aun
+def wipe_repo():
+    with lcd('%(reprepro_dir)s' % env):
+        with settings(command='reprepro removefilter kukenan \'Section\''):
+            local('%(command)s' % env, capture=False)
+        with settings(command='reprepro removefilter aponwao \'Section\''):
+            local('%(command)s' % env, capture=False)
+        with settings(command='reprepro removefilter auyantepui \'Section\''):
+            local('%(command)s' % env, capture=False)
+        with settings(command='reprepro removefilter roraima \'Section\''):
+            local('%(command)s' % env, capture=False)
+        with settings(command='reprepro removefilter kerepakupai \'Section\''):
+            local('%(command)s' % env, capture=False)
+
+# -----------------------------------------------------------------------------
+
+
 def filldb_from_local():
     py_activate_virtualenv()
-    from tribus.common.recorder import create_cache_dirs, fill_db_from_cache
+    from tribus.common.recorder import fill_db_from_cache, create_cache 
     from tribus.config.pkgrecorder import LOCAL_ROOT
-    create_cache_dirs(LOCAL_ROOT)
-    # fill_db_from_cache()
-    # rebuild_index()
-
+    create_cache(LOCAL_ROOT, PACKAGECACHE)
+    fill_db_from_cache(PACKAGECACHE)
+    
 
 def filldb_from_remote():
     py_activate_virtualenv()
-    from tribus.common.recorder import create_cache_dirs, fill_db_from_cache
+    from tribus.common.recorder import create_cache
     from tribus.config.pkgrecorder import CANAIMA_ROOT
-    create_cache_dirs(CANAIMA_ROOT)
-    # fill_db_from_cache()
-    # rebuild_index()
-
+    create_cache(CANAIMA_ROOT, PACKAGECACHE)
+    
 
 def resetdb():
     configure_sudo()
