@@ -43,7 +43,7 @@ from debian import deb822
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
 from tribus.common.logger import get_logger
 from tribus.config.pkgrecorder import LOCAL_ROOT, CANAIMA_ROOT, SAMPLES
-from tribus.common.utils import scan_repository, find_files
+from tribus.common.utils import find_files, readconfig
 
 logger = get_logger()
 
@@ -105,10 +105,12 @@ def init_sample_packages():
     
     if not os.path.isdir(SAMPLES):
         os.makedirs(SAMPLES)
-    
-    dist_releases = scan_repository(CANAIMA_ROOT)
+        
+    dist_releases = (branch.split()
+                     for branch in readconfig(os.path.join(CANAIMA_ROOT,
+                                                            "distributions")))
 
-    for release, _ in dist_releases.items():
+    for release, _ in dist_releases:
         try:
             datasource = urllib.urlopen(
                 os.path.join(CANAIMA_ROOT, "dists", release, "Release"))

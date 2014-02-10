@@ -51,8 +51,8 @@ from tribus.common.logger import get_logger
 from tribus.web.cloud.models import Package, Details, Relation, Label, Tag,\
 Maintainer
 from tribus.config.pkgrecorder import PACKAGE_FIELDS, DETAIL_FIELDS
-from tribus.common.utils import find_files, md5Checksum, scan_repository,\
-list_items
+from tribus.common.utils import find_files, md5Checksum,\
+list_items, readconfig
 
 logger = get_logger()
 
@@ -467,8 +467,11 @@ def create_cache(repository_root, cache_dir_path):
     .. versionadded:: 0.1
     '''
     
-    local_branches = scan_repository(repository_root)
-    for branch_name, branch_release_path in local_branches.items():
+    local_branches = (branch.split()
+                      for branch in readconfig(os.path.join(repository_root,
+                                                            "distributions")))
+    
+    for branch_name, branch_release_path in local_branches:
         try:
             release_data = urllib.urlopen(os.path.join(repository_root,
                                                        branch_release_path))
@@ -518,8 +521,13 @@ def update_cache(repository_root, cache_dir_path):
     .. versionadded:: 0.1
     '''
     
-    branches = scan_repository(repository_root)
-    for branch in branches.keys():
+    #branches = scan_repository(repository_root)
+    
+    local_branches = (branch.split()
+                      for branch in readconfig(os.path.join(repository_root,
+                                                            "distributions")))
+    
+    for branch, _ in local_branches:
         remote_branch_path = os.path.join(repository_root, "dists", branch)
         local_branch_path = os.path.join(cache_dir_path, branch)
 

@@ -28,6 +28,7 @@ This module contains common and low level functions to all modules in Tribus.
 '''
 
 import os
+import urllib
 
 
 # Taken from: http://stackoverflow.com/a/2158532
@@ -277,8 +278,30 @@ def list_items(path=None, dirs=True, files=True):
 
 
 def readconfig(filename, options=[], conffile=False, strip_comments=True):
-    f = open(filename)
-
+    '''
+    Reads a file whether if is a data or configuration file and returns
+    its content in a dictionary or a list. 
+    
+    :param filename: path to the file.
+    
+    :param options: a list of aditional options.
+    
+    :param conffile: if True then the result will be a dictionary else the result will be a list.
+    
+    :param strip_comments: if True then the comments in the file will be deleted.
+     
+    :return: a Dictionary or a List.
+ 
+    :rtype: ``dict`` ``list``
+ 
+    .. versionadded:: 0.1
+    '''
+    
+    try: 
+        f = urllib.urlopen(filename) # No estoy seguro si esto sea una buena idea
+    except:
+        f = open(filename)
+    
     if conffile:
         options = {}
     else:
@@ -318,34 +341,6 @@ def md5Checksum(filePath):
                 break
             m.update(data)
         return m.hexdigest()
-
-
-def scan_repository(repository_root):
-    '''
-    Reads the distribution file placed in the root of a given repository
-    and return a dictionary with the name of the components present in
-    the repository.
-    
-    :param repository_root: url of the repository.
-    
-    :return: a Dictionary.
-
-    :rtype: ``dict``
-
-    .. versionadded:: 0.1
-    '''
-
-    import urllib
-    dist_releases = {}
-    dists = urllib.urlopen(os.path.join(repository_root, "distributions"))
-    linea = dists.readline().strip("\n")
-
-    while linea:
-        l = linea.split(" ")
-        dist_releases[l[0]] = l[1]
-        linea = dists.readline().strip("\n")
-
-    return dist_releases
 
 
 def filename_generator(file_parts, new_m_time):
