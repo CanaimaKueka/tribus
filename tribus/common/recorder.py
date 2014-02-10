@@ -545,7 +545,7 @@ def update_cache(repository_root, cache_dir_path):
                         logger.info('There are no changes in %s' % local_package_path)
         else:
             logger.warning('The update could not be completed because the release file ' \
-                           'in \'%s\' not valid.' % remote_branch_path)
+                           'in \'%s\' is not valid.' % remote_branch_path)
 
 
 def update_package_list(control_file_path, branch, architecture):

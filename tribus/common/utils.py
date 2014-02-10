@@ -299,9 +299,16 @@ def readconfig(filename, options=[], conffile=False, strip_comments=True):
     return options
 
 
-# Taken from
-# http://www.joelverhagen.com/blog/2011/02/md5-hash-of-file-in-python/
 def md5Checksum(filePath):
+    '''
+    Returns the md5sum from a file. Taken from:
+    http://www.joelverhagen.com/blog/2011/02/md5-hash-of-file-in-python/ 
+
+    :param filePath: path to the file from which its md5sum will be calculated.
+    
+    .. versionadded:: 0.1
+    '''
+    
     import hashlib
     with open(filePath, 'rb') as fh:
         m = hashlib.md5()
@@ -313,16 +320,24 @@ def md5Checksum(filePath):
         return m.hexdigest()
 
 
-def scan_repository(repo_root):
+def scan_repository(repository_root):
     '''
-    Este metodo lee el archivo distributions ubicado en la raiz de un
-    repositorio y genera un diccionario con las distribuciones y
-    componentes presentes en dicho repositorio.
+    Reads the distribution file placed in the root of a given repository
+    and return a dictionary with the name of the components present in
+    the repository.
+    
+    :param repository_root: url of the repository.
+    
+    :return: a Dictionary.
+
+    :rtype: ``dict``
+
+    .. versionadded:: 0.1
     '''
 
     import urllib
     dist_releases = {}
-    dists = urllib.urlopen(os.path.join(repo_root, "distributions"))
+    dists = urllib.urlopen(os.path.join(repository_root, "distributions"))
     linea = dists.readline().strip("\n")
 
     while linea:

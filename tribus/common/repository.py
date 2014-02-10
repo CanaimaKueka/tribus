@@ -27,33 +27,55 @@ This module contains common functions to manage local and remote repositories.
 
 '''
 
+#=========================================================================
+# TODO:
+# 1. Hacer tests para estas funciones.
+# 2. Revisar procedimientos, colocar nombres mas apropiados de acuerdo 
+#    a las convenciones de nombres.
+#=========================================================================
+
 import re
 import os
 import gzip
 import urllib
 import random
 from debian import deb822
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
 from tribus.common.logger import get_logger
 from tribus.config.pkgrecorder import LOCAL_ROOT, CANAIMA_ROOT, SAMPLES
 from tribus.common.utils import scan_repository, find_files
 
 logger = get_logger()
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
 
 
-def select_sample_packages(
-        package_url, package_list, include_relations=False):
+def select_sample_packages(remote_control_file_path, package_list_path,
+                           include_relations=False):
+    '''
+    Reads a control file and makes a random selection of packages, 
+    then downloads the selected ones.
+    
+    :param remote_control_file_path: path to the control file from which the packages will be selected.
+    
+    :param package_list_path: path to the file where the package name and location will be written.
+    
+    :param include_relations: si es True se descargaran tambien las relaciones de cada paquete seleccionado
+    que cuyo tamano sea menor a 500 kilobytes. Si es Falso no se descargaran los paquetes relacionados.
+
+    .. versionadded:: 0.1
+    '''
+    
     inicial = {}
     relaciones = []
     final = {}
-    archivo = open(package_list, 'w')
+    archivo = open(package_list_path, 'w')
     # Esto deberia ser una constante declarada en otra parte
     tmp_path = os.path.join(SAMPLES, "tmp.gzip")
-    urllib.urlretrieve(package_url, tmp_path)
+    urllib.urlretrieve(remote_control_file_path, tmp_path)
     for section in deb822.Packages.iter_paragraphs(gzip.open(tmp_path)):
         rnd = random.randint(0, 500)
-        if 'Installed-Size' in section:
-            if rnd == 500 and int(section['Installed-Size']) < 500:
+        size = section.get('Installed-Size', None)
+        if size:
+            if rnd == 500 and int(size) < 500:
                 inicial[section['Package']] = section['Filename']
                 archivo.write(section['filename'] + "\n")
                 for relations in section.relations.items():
@@ -63,45 +85,48 @@ def select_sample_packages(
                                 relaciones.append(r['name'])
 
     if include_relations:
-        remote_packages = urllib.urlopen(package_url)
+        remote_packages = urllib.urlopen(remote_control_file_path)
         for section in deb822.Packages.iter_paragraphs(remote_packages):
             if section['Package'] in relaciones and int(section['Installed-Size']) < 500:
                 final[section['Package']] = section['Filename']
                 archivo.write(section['filename'] + "\n")
 
     archivo.close()
-    print "%s Paquetes seleccionados de %s " % (len(inicial), package_url)
+    logger.info("%s packages selected from %s " % (len(inicial), remote_control_file_path))
 
 
 def init_sample_packages():
-    # Si la ruta para alojar los paquetes no existe se crea
+    '''
+    Creates a directory structure to store packages for its later use
+    in a test package repository.
+    
+    .. versionadded:: 0.1
+    '''
+    
     if not os.path.isdir(SAMPLES):
         os.makedirs(SAMPLES)
-    # Extraigo las distribuciones desde el repositorio oficial
+    
     dist_releases = scan_repository(CANAIMA_ROOT)
 
-    for release in dist_releases.items():
+    for release, _ in dist_releases.items():
         try:
-            # Se trata de un archivo remoto, por lo tanto lo abro a traves de
-            # la url
             datasource = urllib.urlopen(
-                os.path.join(CANAIMA_ROOT, "dists", release[0], "Release"))
+                os.path.join(CANAIMA_ROOT, "dists", release, "Release"))
         except:
-            print "Se produjo un error leyendo los Release"
+            logger.warning('The process could not be completed because the release file'\
+                           'in \'%s\' is not valid.' % datasource)
             datasource = None
 
         if datasource:
             rel = deb822.Release(datasource)
-            # if rel.has_key('MD5sum'):
-            if 'MD5sum' in rel:
-                for l in rel['MD5sum']:
-                    # Para hacer el proceso mas rapido se descargan los
-                    # Packages comprimidos
+            md5list = rel.get('MD5sum', None)
+            if md5list:
+                for l in md5list:
                     if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages.gz$", l['name']):
                         component, architecture, _ = l['name'].split("/")
                         list_path = os.path.join(
                             SAMPLES,
-                            release[0],
+                            release,
                             component,
                             architecture)
 
@@ -114,41 +139,40 @@ def init_sample_packages():
                             package_url = os.path.join(
                                 CANAIMA_ROOT,
                                 "dists",
-                                release[0],
+                                release,
                                 l['name'])
                             try:
                                 select_sample_packages(package_url, f, False)
                             except:
-                                print "Hubo un error descargando %s" % package_url
+                                logger.error('There has been an error trying to get %s' % package_url)
 
     if os.path.isfile(os.path.join(SAMPLES, "tmp.gzip")):
         os.remove(os.path.join(SAMPLES, "tmp.gzip"))
 
 
 def download_sample_packages():
+    '''
+    Reads all the files named 'list' present in the SAMPLES directory
+    and downloads the packages in each 'list' file.
+    
+    .. versionadded:: 0.1
+    '''
+    
     files_list = find_files(SAMPLES, 'list')
     for f in files_list:
         download_path = os.path.dirname(f)
-        download_package_list(f, download_path)
-    urllib.urlretrieve(
-        os.path.join(
-            CANAIMA_ROOT,
-            "distributions"),
-        os.path.join(
-            LOCAL_ROOT,
-            "distributions"))
-
-
-def download_package_list(file_with_package_list, download_dir):
-    archivo = open(file_with_package_list, 'r')
-    linea = archivo.readline().strip("\n")
-    while linea:
-        l = linea.split("/")
-        try:
-            print "Descargando ---->", l[-1]
-            urllib.urlretrieve(
-                os.path.join(CANAIMA_ROOT, linea), os.path.join(download_dir, l[-1]))
-        except:
-            print "Hubo un error intentando descargar el paquete %s " % l[-1]
+        archivo = open(f, 'r')
         linea = archivo.readline().strip("\n")
-    archivo.close()
+        while linea:
+            l = linea.split("/")
+            try:
+                logger.info("Downloading ---->", l[-1])
+                urllib.urlretrieve(os.path.join(CANAIMA_ROOT, linea),
+                                   os.path.join(download_path, l[-1]))
+            except:
+                logger.info('There has been an error trying to get %s' % l[-1])
+            linea = archivo.readline().strip("\n")
+        archivo.close()
+        
+    urllib.urlretrieve(os.path.join(CANAIMA_ROOT, "distributions"),
+                       os.path.join(LOCAL_ROOT, "distributions"))
