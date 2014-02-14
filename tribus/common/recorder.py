@@ -31,11 +31,12 @@ This module contains common functions to record package data from a repository.
 #=========================================================================
 # TODO:
 # 1. Actualizacion de tags.
-# 2. Agregar las excepciones correspondientes en los try
-# 3. Realizar la comparacion en base a otro parametro
+# 2. Realizar la comparacion en base a otro parametro
 #    dado que las variaciones en el md5 no indican realmente una
 #    actualizacion en el paquete.
-# 4. Agregar pruebas faltantes, verificar las existentes.
+# 3. Agregar pruebas faltantes, verificar las existentes.
+# 4. Revisar si es conveniente colocar excepciones en los
+#    metodos de registro de datos como el ejemplo de record_maintainer. Consultar a luis
 #=========================================================================
 # NAMING CONVENTIONS MOSTLY BASED ON https://www.debian.org/doc/debian-policy/ch-controlfields.html
 
@@ -43,10 +44,13 @@ import os
 import re
 import gzip
 import urllib
+import urllib2
 import email.Utils
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
 from debian import deb822
 from django.db.models import Q
+from django.db import DatabaseError
+from django.db import transaction
 from tribus.common.logger import get_logger
 from tribus.web.cloud.models import Package, Details, Relation, Label, Tag,\
 Maintainer
@@ -56,6 +60,7 @@ list_items, readconfig
 
 logger = get_logger()
 
+@transaction.commit_manually
 def record_maintainer(maintainer_data):
     """
     Queries the database for an existent maintainer.
@@ -72,9 +77,17 @@ def record_maintainer(maintainer_data):
     """
     
     maintainer_name, maintainer_mail = email.Utils.parseaddr(maintainer_data)
-    maintainer, _ = Maintainer.objects.get_or_create(Name=maintainer_name,
-                                                     Email=maintainer_mail)
-    return maintainer
+    
+    try:
+        maintainer, _ = Maintainer.objects.get_or_create(Name=maintainer_name,
+                                                         Email=maintainer_mail)
+    except DatabaseError, e:
+        transaction.rollback()
+        logger.info("There has been an error recording %s" % (maintainer_data))
+        logger.error(e.message)
+    else:
+        transaction.commit()
+        return maintainer
 
 
 def select_paragraph_data_fields(paragraph, data_fields):
@@ -111,85 +124,6 @@ def select_paragraph_data_fields(paragraph, data_fields):
             else:
                 d[data_field] = paragraph[data_field]
     return d
-
-
-def find_package(package_name):
-    """
-    Queries the database for an existent package.
-    If it does not exists, it creates a new package only with its name.
-
-    :param package_name: the package name.
-
-    :return: a `Package` object.
-
-    :rtype: ``Package``
-
-    .. versionadded:: 0.1
-    """
-    
-    package, _ = Package.objects.get_or_create(Package=package_name)
-    return package
-
-
-def create_relationship(fields):
-    """
-    Queries the database for an existent relation.
-    If it does not exists, it creates a new relation.
-    
-    :param fields: is a dictionary which contains the relation information. Its structure is similar to::
-
-                        {"related_package": 5, "relation_type": "depends",
-                        "relation": ">=", "version": "0~r11863", "alt_id": None}
-                        
-                   Note: the key ´related_package´ accepts integers or ´Package´ instances as values.
-
-    :return: a `Relation` object.
-
-    :rtype: ``Relation``
-
-    .. versionadded:: 0.1
-    """
-    
-    relationship, _ = Relation.objects.get_or_create(**fields)
-    return relationship
-
-
-def create_tag(value):
-    """
-    Queries the database for an existent tag.
-    If it does not exists, it creates a new tag.
-
-    :param value: string with the value of the tag.
-
-    :return: a `Tag` object.
-
-    :rtype: ``Tag``
-
-    .. versionadded:: 0.1
-    """
-    
-    tag, _ = Tag.objects.get_or_create(Value=value)
-    return tag
-
-
-def create_label(label_name, tag):
-    """
-    Queries the database for an existent label.
-    If it does not exists, it creates a new label.
-
-    :param label_name: a string with the name of the label.
-
-    :param tag: a `Tag` object.
-
-    :return: a `Label` object.
-
-    :rtype: ``Label``
-
-    .. versionadded:: 0.1
-    """
-    
-    label, _ = Label.objects.get_or_create(Name=label_name, Tags=tag)
-    return label
 
 
 def record_package(paragraph):
@@ -276,9 +210,9 @@ def record_tags(paragraph, package):
     if 'Tag' in paragraph:
         tag_list = paragraph['Tag'].replace("\n", "").split(", ")
         for tag in tag_list:
-            tag_parts = tag.split("::")
-            value = create_tag(tag_parts[1])
-            label = create_label(tag_parts[0], value)
+            tag_name, tag_value = tag.split("::")
+            value, _ = Tag.objects.get_or_create(Value=tag_value)
+            label, _ = Label.objects.get_or_create(Name=tag_name, Tags=value)
             package.Labels.add(label)
 
 
@@ -321,13 +255,12 @@ def record_relationship(details, relation_type, fields, alt_id=0):
         relation_version, number_version = version
     else:
         relation_version, number_version = (None, None)
-    
-    related = find_package(fields['name'])
-    new_relation = create_relationship({"related_package": related,
-                                   "relation_type": relation_type,
-                                   "relation": relation_version,
-                                   "version": number_version,
-                                   "alt_id": alt_id})
+    related_package, _ = Package.objects.get_or_create(Package=fields['name'])
+    new_relation, _ = Relation.objects.get_or_create(**{"related_package": related_package,
+                                        "relation_type": relation_type,
+                                        "relation": relation_version,
+                                        "version": number_version,
+                                        "alt_id": alt_id})
     details.Relations.add(new_relation)
 
 
@@ -378,7 +311,7 @@ def record_paragraph(paragraph, branch):
         package = record_package(paragraph)
         details = record_details(paragraph, package, branch)
         record_relations(details, paragraph.relations.items())
-    except:
+    except: 
         logger.error('Could not record %s' % paragraph['Package'])
 
 
@@ -398,8 +331,7 @@ def update_package(paragraph):
     package = Package.objects.get(Package=paragraph['Package'])
     for field, value in select_paragraph_data_fields(paragraph, PACKAGE_FIELDS).items():
         setattr(package, field, value)
-    if package.Maintainer.Name not in paragraph['Maintainer'] or \
-            package.Maintainer.Email not in paragraph['Maintainer']:
+    if not package.Maintainer:
         package.Maintainer = record_maintainer(paragraph['Maintainer'])
     package.save()
     return package
@@ -470,14 +402,13 @@ def create_cache(repository_root, cache_dir_path):
     local_branches = (branch.split()
                       for branch in readconfig(os.path.join(repository_root,
                                                             "distributions")))
-    
     for branch_name, branch_release_path in local_branches:
         try:
             release_data = urllib.urlopen(os.path.join(repository_root,
                                                        branch_release_path))
-        except:
-            release_data = None
-        if release_data:
+        except urllib2.URLError, e:
+            logger.warning('Could not read release file in %s, error code #%s' % (branch_release_path, e.code))
+        else:
             release_control_file = deb822.Release(release_data)
             if 'MD5Sum' in release_control_file:
                 for control_file_data in release_control_file['MD5Sum']:
@@ -495,15 +426,15 @@ def create_cache(repository_root, cache_dir_path):
                         if not os.path.isfile(f):
                             try:
                                 urllib.urlretrieve(remote_file, f)
-                            except:
-                                logger.error('There has been an error trying to get %s' % remote_file)
+                            except urllib2.URLError, e:
+                                logger.error('Could not get %s, error code #%s' % (remote_file, e.code))
                         else:
                             if md5Checksum(f) != control_file_data['md5sum']:
                                 os.remove(f)
                                 try:
                                     urllib.urlretrieve(remote_file, f)
-                                except:
-                                    logger.error('There has been an error trying to get %s' % remote_file)
+                                except urllib2.URLError, e:
+                                    logger.error('Could not get %s, error code #%s' % (remote_file, e.code))
 
 
 def update_cache(repository_root, cache_dir_path):
@@ -521,21 +452,17 @@ def update_cache(repository_root, cache_dir_path):
     .. versionadded:: 0.1
     '''
     
-    #branches = scan_repository(repository_root)
-    
     local_branches = (branch.split()
                       for branch in readconfig(os.path.join(repository_root,
                                                             "distributions")))
-    
     for branch, _ in local_branches:
         remote_branch_path = os.path.join(repository_root, "dists", branch)
         local_branch_path = os.path.join(cache_dir_path, branch)
-
         try:
             release_path = urllib.urlopen(os.path.join(remote_branch_path, "Release"))
-        except:
-            release_path = None
-        if release_path:
+        except urllib2.URLError, e:
+            logger.warning('Could not read release file in %s, error code #%s' % (remote_branch_path, e.code))
+        else:
             release_control_file = deb822.Release(release_path)
             for package_control_file in release_control_file['MD5sum']:
                 if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages.gz$",
@@ -551,9 +478,6 @@ def update_cache(repository_root, cache_dir_path):
                         update_package_list(local_package_path, branch, architecture)
                     else:
                         logger.info('There are no changes in %s' % local_package_path)
-        else:
-            logger.warning('The update could not be completed because the release file ' \
-                           'in \'%s\' is not valid.' % remote_branch_path)
 
 
 def update_package_list(control_file_path, branch, architecture):
@@ -574,47 +498,44 @@ def update_package_list(control_file_path, branch, architecture):
     .. versionadded:: 0.1
     """
     
-    existent_packages = []
-    
-    # ESTO NO DEBERIA QUEDARSE ASI, TENGO QUE BUSCAR UNA FORMA DE ORGANIZAR CUANDO 
-    # LEO LOS PACKAGES Y CUANDO LOS PACKAGES.GZ
-    
-    if control_file_path.endswith(".gz"):
-        package_control_file = deb822.Packages.iter_paragraphs(gzip.open(control_file_path, 'r'))
+    try:
+        package_control_file = deb822.Packages.iter_paragraphs(gzip.open(control_file_path))
+    except IOError, e:
+        logger.warning('Could not read control file in %s, error code #%s' % (control_file_path, e.code))
     else:
-        package_control_file = deb822.Packages.iter_paragraphs(file(control_file_path))
-    logger.info('Updating package list')
-    for paragraph in package_control_file:
-        existent_packages.append(paragraph['Package'])
-        exists = Details.objects.filter(package__Package=paragraph['Package'],
-                                        Architecture=paragraph['Architecture'],
-                                        Distribution=branch)
-        if exists:
-            if paragraph['md5sum'] != exists[0].MD5sum:
-                logger.info('The md5 checksum does not match in the package \'%s\':' % paragraph['Package'])
-                logger.info('\'%s\' != \'%s\' ' % (paragraph['md5sum'], exists[0].MD5sum))
-                update_paragraph(paragraph, branch)
-        else:
-            logger.info('Adding new details to \'%s\' package in \'%s\' branch...'  % (paragraph['package'], branch))
-            record_paragraph(paragraph, branch)
-
-    bd_packages = Package.objects.filter(Details__Distribution=branch).filter(Q(Details__Architecture='all') |
-                                                                              Q(Details__Architecture=architecture)).distinct()
-    for package in bd_packages:
-        if package.Package not in existent_packages:
-            for detail in package.Details.all():
-                if detail.Distribution == branch and (detail.Architecture == architecture or detail.Architecture == 'all'):
-                    for relation in detail.Relations.all():
-                        detail.Relations.remove(relation)
-                        exists = Details.objects.filter(Relations=relation)
-                        if not exists:
-                            relation.delete()
-                    logger.info('Removing \'%s\' from \'%s\'...'
-                                % (detail, package.Package))
-                    detail.delete()
-            if not package.Details.all():
-                logger.info('Removing %s...' % package.Package)
-                package.delete()
+        logger.info('Updating package list')
+        existent_packages = []
+        for paragraph in package_control_file:
+            existent_packages.append(paragraph['Package'])
+            exists = Details.objects.filter(package__Package=paragraph['Package'],
+                                            Architecture=paragraph['Architecture'],
+                                            Distribution=branch)
+            if exists:
+                if paragraph['md5sum'] != exists[0].MD5sum:
+                    logger.info('The md5 checksum does not match in the package \'%s\':' % paragraph['Package'])
+                    logger.info('\'%s\' != \'%s\' ' % (paragraph['md5sum'], exists[0].MD5sum))
+                    update_paragraph(paragraph, branch)
+            else:
+                logger.info('Adding new details to \'%s\' package in \'%s\' branch...'  % (paragraph['package'], branch))
+                record_paragraph(paragraph, branch)
+    
+        bd_packages = Package.objects.filter(Details__Distribution=branch).filter(Q(Details__Architecture='all') |
+                                                                                  Q(Details__Architecture=architecture)).distinct()
+        for package in bd_packages:
+            if package.Package not in existent_packages:
+                for detail in package.Details.all():
+                    if detail.Distribution == branch and (detail.Architecture == architecture or detail.Architecture == 'all'):
+                        for relation in detail.Relations.all():
+                            detail.Relations.remove(relation)
+                            exists = Details.objects.filter(Relations=relation)
+                            if not exists:
+                                relation.delete()
+                        logger.info('Removing \'%s\' from \'%s\'...'
+                                    % (detail, package.Package))
+                        detail.delete()
+                if not package.Details.all():
+                    logger.info('Removing %s...' % package.Package)
+                    package.delete()
 
 
 def fill_db_from_cache(cache_dir_path):

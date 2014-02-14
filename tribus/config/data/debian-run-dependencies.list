@@ -5,3 +5,4 @@ redis-server
 mongodb-server
 python-xapian
 reprepro
+curl

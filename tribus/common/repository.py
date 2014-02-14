@@ -37,8 +37,9 @@ This module contains common functions to manage local and remote repositories.
 import re
 import os
 import gzip
-import urllib
 import random
+import urllib
+import urllib2
 from debian import deb822
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
 from tribus.common.logger import get_logger
@@ -46,7 +47,6 @@ from tribus.config.pkgrecorder import LOCAL_ROOT, CANAIMA_ROOT, SAMPLES
 from tribus.common.utils import find_files, readconfig
 
 logger = get_logger()
-
 
 def select_sample_packages(remote_control_file_path, package_list_path,
                            include_relations=False):
@@ -70,29 +70,34 @@ def select_sample_packages(remote_control_file_path, package_list_path,
     archivo = open(package_list_path, 'w')
     # Esto deberia ser una constante declarada en otra parte
     tmp_path = os.path.join(SAMPLES, "tmp.gzip")
-    urllib.urlretrieve(remote_control_file_path, tmp_path)
-    for section in deb822.Packages.iter_paragraphs(gzip.open(tmp_path)):
-        rnd = random.randint(0, 500)
-        size = section.get('Installed-Size', None)
-        if size:
-            if rnd == 500 and int(size) < 500:
-                inicial[section['Package']] = section['Filename']
-                archivo.write(section['filename'] + "\n")
-                for relations in section.relations.items():
-                    if relations[1]:
-                        for relation in relations[1]:
-                            for r in relation:
-                                relaciones.append(r['name'])
-
-    if include_relations:
-        remote_packages = urllib.urlopen(remote_control_file_path)
-        for section in deb822.Packages.iter_paragraphs(remote_packages):
-            if section['Package'] in relaciones and int(section['Installed-Size']) < 500:
-                final[section['Package']] = section['Filename']
-                archivo.write(section['filename'] + "\n")
-
-    archivo.close()
-    logger.info("%s packages selected from %s " % (len(inicial), remote_control_file_path))
+    
+    try:
+        urllib.urlretrieve(remote_control_file_path, tmp_path)
+    except urllib2.URLError, e:
+        logger.warning('Could not read control file in %s, error code #%s' % (remote_control_file_path, e.code))
+    else:
+        for section in deb822.Packages.iter_paragraphs(gzip.open(tmp_path)):
+            rnd = random.randint(0, 500)
+            size = section.get('Installed-Size', None)
+            if size:
+                if rnd == 500 and int(size) < 500:
+                    inicial[section['Package']] = section['Filename']
+                    archivo.write(section['filename'] + "\n")
+                    for relations in section.relations.items():
+                        if relations[1]:
+                            for relation in relations[1]:
+                                for r in relation:
+                                    relaciones.append(r['name'])
+    
+        if include_relations:
+            remote_packages = urllib.urlopen(remote_control_file_path)
+            for section in deb822.Packages.iter_paragraphs(remote_packages):
+                if section['Package'] in relaciones and int(section['Installed-Size']) < 500:
+                    final[section['Package']] = section['Filename']
+                    archivo.write(section['filename'] + "\n")
+    
+        archivo.close()
+        logger.info("%s packages selected from %s " % (len(inicial), remote_control_file_path))
 
 
 def init_sample_packages():
@@ -111,15 +116,12 @@ def init_sample_packages():
                                                             "distributions")))
 
     for release, _ in dist_releases:
+        release_path = os.path.join(CANAIMA_ROOT, "dists", release, "Release")
         try:
-            datasource = urllib.urlopen(
-                os.path.join(CANAIMA_ROOT, "dists", release, "Release"))
-        except:
-            logger.warning('The process could not be completed because the release file'\
-                           'in \'%s\' is not valid.' % datasource)
-            datasource = None
-
-        if datasource:
+            datasource = urllib.urlopen(release_path)
+        except urllib2.URLError, e:
+            logger.warning('Could not read release file in %s, error code #%s' % (release_path, e.code))
+        else:
             rel = deb822.Release(datasource)
             md5list = rel.get('MD5sum', None)
             if md5list:
@@ -131,23 +133,17 @@ def init_sample_packages():
                             release,
                             component,
                             architecture)
-
                         if not os.path.isdir(list_path):
                             os.makedirs(list_path)
-
                         f = os.path.join(list_path, "list")
-
                         if not os.path.isfile(f):
                             package_url = os.path.join(
                                 CANAIMA_ROOT,
                                 "dists",
                                 release,
                                 l['name'])
-                            try:
-                                select_sample_packages(package_url, f, False)
-                            except:
-                                logger.error('There has been an error trying to get %s' % package_url)
-
+                            select_sample_packages(package_url, f, False)
+                            
     if os.path.isfile(os.path.join(SAMPLES, "tmp.gzip")):
         os.remove(os.path.join(SAMPLES, "tmp.gzip"))
 
@@ -168,13 +164,13 @@ def download_sample_packages():
         while linea:
             l = linea.split("/")
             try:
-                logger.info("Downloading ---->", l[-1])
+                logger.info("Downloading ->", l[-1])
                 urllib.urlretrieve(os.path.join(CANAIMA_ROOT, linea),
                                    os.path.join(download_path, l[-1]))
-            except:
-                logger.info('There has been an error trying to get %s' % l[-1])
+            except urllib2.URLError, e:
+                logger.warning('Could not get %s, error code #%s' % (l[-1], e.code))
             linea = archivo.readline().strip("\n")
         archivo.close()
-        
+    # Esto deberia tener otro try
     urllib.urlretrieve(os.path.join(CANAIMA_ROOT, "distributions"),
                        os.path.join(LOCAL_ROOT, "distributions"))
