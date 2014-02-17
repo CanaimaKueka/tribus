@@ -23,6 +23,7 @@ import os
 import pwd
 import sys
 import site
+import urllib
 # import lsb_release
 from fabric.api import local, env, settings, cd, lcd
 from tribus import BASEDIR
@@ -122,7 +123,8 @@ def install_repository():
 def select_sample_packages():
     py_activate_virtualenv()
     from tribus.common.repository import init_sample_packages
-    init_sample_packages()
+    from tribus.config.pkgrecorder import CANAIMA_ROOT, SAMPLES_DIR
+    init_sample_packages(CANAIMA_ROOT, SAMPLES_DIR)
 
 
 # 3) Descargar muestra de paquetes
@@ -130,28 +132,30 @@ def select_sample_packages():
 def get_sample_packages():
     py_activate_virtualenv()
     from tribus.common.repository import download_sample_packages
-    download_sample_packages()
+    from tribus.config.pkgrecorder import CANAIMA_ROOT, LOCAL_ROOT, SAMPLES_DIR
+    download_sample_packages(CANAIMA_ROOT, SAMPLES_DIR)
+    urllib.urlretrieve(os.path.join(CANAIMA_ROOT, "distributions"),
+                       os.path.join(LOCAL_ROOT, "distributions"))
 
 
 # 4) Indexar los paquetes descargados en el repositorio
 
 def index_sample_packages():
-    # Poner nombres mas adecuados
     from tribus.common.utils import list_items, find_files
     dirs = [os.path.dirname(f)
             for f in find_files(env.sample_packages_dir, 'list')]
     dists = filter(None, list_items(env.sample_packages_dir, dirs=True, files=False))
     with lcd('%(reprepro_dir)s' % env):
-        for d in dirs:
+        for directory in dirs:
             # No se me ocurre una mejor forma (dinamica) de hacer esto
-            dist = [dist_name for dist_name in dists if dist_name in d][0]
-            try:
+            dist = [dist_name for dist_name in dists if dist_name in directory][0]
+            results = [each for each in os.listdir(directory) if each.endswith('.deb')]
+            if results:
                 with settings(command='reprepro includedeb %s %s/*.deb' %
-                             (dist, d)):
+                             (dist, directory)):
                     local('%(command)s' % env, capture=False)
-            # Agregar tipo de excepcion
-            except:
-                logger.error('There are no packages in %s' % d)
+            else:
+                logger.info('There are no packages in %s' % directory)
 
 # -----------------------------------------------------------------------------
 

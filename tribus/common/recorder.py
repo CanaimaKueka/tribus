@@ -18,7 +18,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
 '''
 
 tribus.common.recorder
@@ -286,9 +285,8 @@ def record_relations(details, relations_list):
             for relation in relations:
                 if len(relation) > 1:
                     for relation_element in relation:
-                        record_relationship(
-                            details, relation_type,
-                            relation_element, alt_id)
+                        record_relationship(details, relation_type,
+                                            relation_element, alt_id)
                     alt_id += 1
                 else:
                     record_relationship(details, relation_type, relation[0])
@@ -403,38 +401,36 @@ def create_cache(repository_root, cache_dir_path):
                       for branch in readconfig(os.path.join(repository_root,
                                                             "distributions")))
     for branch_name, branch_release_path in local_branches:
+        release_path = os.path.join(repository_root, branch_release_path)
         try:
-            release_data = urllib.urlopen(os.path.join(repository_root,
-                                                       branch_release_path))
+            md5list = deb822.Release(urllib.urlopen(release_path)).get('MD5sum')
         except urllib2.URLError, e:
             logger.warning('Could not read release file in %s, error code #%s' % (branch_release_path, e.code))
         else:
-            release_control_file = deb822.Release(release_data)
-            if 'MD5Sum' in release_control_file:
-                for control_file_data in release_control_file['MD5Sum']:
-                    if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages.gz$",
-                                control_file_data['name']):
-                        component, architecture, _ = control_file_data['name'].split("/")
-                        local_path = os.path.join(cache_dir_path, branch_name,
-                                                  component, architecture)
-                        remote_file = os.path.join(repository_root, "dists",
-                                                   branch_name,
-                                                   control_file_data['name'])
-                        if not os.path.isdir(local_path):
-                            os.makedirs(local_path)
-                        f = os.path.join(local_path, "Packages.gz")
-                        if not os.path.isfile(f):
+            for control_file_data in md5list:
+                if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages.gz$",
+                            control_file_data['name']):
+                    component, architecture, _ = control_file_data['name'].split("/")
+                    local_path = os.path.join(cache_dir_path, branch_name,
+                                              component, architecture)
+                    remote_file = os.path.join(repository_root, "dists",
+                                               branch_name,
+                                               control_file_data['name'])
+                    if not os.path.isdir(local_path):
+                        os.makedirs(local_path)
+                    f = os.path.join(local_path, "Packages.gz")
+                    if not os.path.isfile(f):
+                        try:
+                            urllib.urlretrieve(remote_file, f)
+                        except urllib2.URLError, e:
+                            logger.error('Could not get %s, error code #%s' % (remote_file, e.code))
+                    else:
+                        if md5Checksum(f) != control_file_data['md5sum']:
+                            os.remove(f)
                             try:
                                 urllib.urlretrieve(remote_file, f)
                             except urllib2.URLError, e:
                                 logger.error('Could not get %s, error code #%s' % (remote_file, e.code))
-                        else:
-                            if md5Checksum(f) != control_file_data['md5sum']:
-                                os.remove(f)
-                                try:
-                                    urllib.urlretrieve(remote_file, f)
-                                except urllib2.URLError, e:
-                                    logger.error('Could not get %s, error code #%s' % (remote_file, e.code))
 
 
 def update_cache(repository_root, cache_dir_path):
@@ -458,13 +454,13 @@ def update_cache(repository_root, cache_dir_path):
     for branch, _ in local_branches:
         remote_branch_path = os.path.join(repository_root, "dists", branch)
         local_branch_path = os.path.join(cache_dir_path, branch)
+        release_path = os.path.join(remote_branch_path, "Release")
         try:
-            release_path = urllib.urlopen(os.path.join(remote_branch_path, "Release"))
+            md5list = deb822.Release(urllib.urlopen(release_path)).get('MD5sum')
         except urllib2.URLError, e:
             logger.warning('Could not read release file in %s, error code #%s' % (remote_branch_path, e.code))
         else:
-            release_control_file = deb822.Release(release_path)
-            for package_control_file in release_control_file['MD5sum']:
+            for package_control_file in md5list:
                 if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages.gz$",
                             package_control_file['name']):
                     _, architecture, _ = package_control_file['name'].split("/")
@@ -501,7 +497,7 @@ def update_package_list(control_file_path, branch, architecture):
     try:
         package_control_file = deb822.Packages.iter_paragraphs(gzip.open(control_file_path))
     except IOError, e:
-        logger.warning('Could not read control file in %s, error code #%s' % (control_file_path, e.code))
+        logger.warning('Could not read control file in %s, error code #%s' % (control_file_path, e))
     else:
         logger.info('Updating package list')
         existent_packages = []

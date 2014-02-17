@@ -306,79 +306,80 @@ class RecorderFunctions(TestCase):
     def test_create_cache(self):
         pass
     
-
-    def test_update_cache(self):
-        # TODO ESTO PUEDE VERSE COMO UNA PRUEBA DE INTEGRACION
-        from tribus.common.recorder import fill_db_from_cache, create_cache, update_cache
-        from tribus.common.iosync import touch, rmtree
-        
-        dist = 'kerepakupai'
-        env.micro_repository_path = os.path.join('/', 'tmp', 'tmp_repo')
-        env.micro_repository_conf = os.path.join('/', 'tmp', 'tmp_repo', 'conf')
-        env.samples_dir = SAMPLESDIR
-        env.packages_dir = os.path.join(SAMPLESDIR, 'example_packages')
-        env.pcache = os.path.join('/', 'tmp', 'pcache')
-        env.distributions_path = os.path.join(env.micro_repository_path, 'distributions')
-        
-        with settings(command='mkdir -p %(micro_repository_conf)s' % env):
-            local('%(command)s' % env, capture=False)
-        
-        with settings(command='cp %(samples_dir)s/distributions\
-                  %(micro_repository_conf)s' % env):
-            local('%(command)s' % env, capture=False)
-            
-        with lcd('%(micro_repository_path)s' % env):
-            touch(env.distributions_path)
-            f = open(env.distributions_path, 'w')
-            f.write('kerepakupai dists/kerepakupai/Release')
-            f.close()
-            
-        with lcd('%(micro_repository_path)s' % env):
-            with settings(command='reprepro -VVV export'):
-                local('%(command)s' % env, capture=False)
-                
-        seed_packages = [('cube2font_1.2-2_i386.deb', 'main'), ('cube2font_1.2-2_amd64.deb', 'main'), 
-                         ('cl-sql-oracle_6.2.0-1_all.deb', 'no-libres'), ('libxine1-plugins_1.1.21-dmo2_all.deb', 'aportes'),
-                         ('acroread-debian-files_9.5.8_i386.deb', 'aportes'), ('acroread-debian-files_9.5.8_amd64.deb', 'aportes')]
-        
-        with lcd('%(micro_repository_path)s' % env):
-            for package, comp in seed_packages:
-                with settings(command='reprepro -S %s includedeb %s %s/%s' %
-                             (comp, dist, env.packages_dir, package)):
-                    local('%(command)s' % env, capture=False)
-        
-        with lcd('%(micro_repository_path)s' % env):
-            create_cache(env.micro_repository_path, env.pcache)
-            
-        with lcd('%(micro_repository_path)s' % env):
-            fill_db_from_cache(env.pcache)
-        
-        add_list = [('libtacacs+1_4.0.4.26-3_amd64.deb', 'main'), ('libtacacs+1_4.0.4.26-3_i386.deb', 'main')]
-        update_list = [('cube2font_1.2-2_i386.deb', 'main'), ('cube2font_1.2-2_amd64.deb', 'main'), 
-                       ('libxine1-plugins_1.1.21-dmo2_all.deb', 'aportes')]
-        delete_list = [('cl-sql-oracle', 'no-libres'), ('acroread-debian-files', 'aportes'),
-                       ('acroread-debian-files', 'aportes')]
-        
-        with lcd('%(micro_repository_path)s' % env):
-            for package, comp in add_list:
-                with settings(command='reprepro -S %s includedeb %s %s/%s' %
-                             (comp, dist, env.packages_dir, package)):
-                    local('%(command)s' % env, capture=False)
-                    
-            for package, comp in update_list:
-                with settings(command='reprepro -S %s includedeb %s %s/%s' %
-                             (comp, dist, env.packages_dir, package)):
-                    local('%(command)s' % env, capture=False)
-                    
-            for package, comp in delete_list:
-                with settings(command='reprepro remove %s %s' % 
-                              (dist, package)):
-                    local('%(command)s' % env, capture=False)
-        
-        update_cache(env.micro_repository_path, env.pcache)
-        # FALTAN LOS ASSERT PARA VERIFICAR QUE LA ACTUALIZACION FUE CORRECTO
-        rmtree(env.micro_repository_path)
-        rmtree(env.pcache)
+    
+#     REEVALUAR ESTE TEST!!!! 
+#     def test_update_cache(self):
+#         # TODO ESTO PUEDE VERSE COMO UNA PRUEBA DE INTEGRACION
+#         from tribus.common.recorder import fill_db_from_cache, create_cache, update_cache
+#         from tribus.common.iosync import touch, rmtree
+#         
+#         dist = 'kerepakupai'
+#         env.micro_repository_path = os.path.join('/', 'tmp', 'tmp_repo')
+#         env.micro_repository_conf = os.path.join('/', 'tmp', 'tmp_repo', 'conf')
+#         env.samples_dir = SAMPLESDIR
+#         env.packages_dir = os.path.join(SAMPLESDIR, 'example_packages')
+#         env.pcache = os.path.join('/', 'tmp', 'pcache')
+#         env.distributions_path = os.path.join(env.micro_repository_path, 'distributions')
+#         
+#         with settings(command='mkdir -p %(micro_repository_conf)s' % env):
+#             local('%(command)s' % env, capture=False)
+#         
+#         with settings(command='cp %(samples_dir)s/distributions\
+#                   %(micro_repository_conf)s' % env):
+#             local('%(command)s' % env, capture=False)
+#             
+#         with lcd('%(micro_repository_path)s' % env):
+#             touch(env.distributions_path)
+#             f = open(env.distributions_path, 'w')
+#             f.write('kerepakupai dists/kerepakupai/Release')
+#             f.close()
+#             
+#         with lcd('%(micro_repository_path)s' % env):
+#             with settings(command='reprepro -VVV export'):
+#                 local('%(command)s' % env, capture=False)
+#                 
+#         seed_packages = [('cube2font_1.2-2_i386.deb', 'main'), ('cube2font_1.2-2_amd64.deb', 'main'), 
+#                          ('cl-sql-oracle_6.2.0-1_all.deb', 'no-libres'), ('libxine1-plugins_1.1.21-dmo2_all.deb', 'aportes'),
+#                          ('acroread-debian-files_9.5.8_i386.deb', 'aportes'), ('acroread-debian-files_9.5.8_amd64.deb', 'aportes')]
+#         
+#         with lcd('%(micro_repository_path)s' % env):
+#             for package, comp in seed_packages:
+#                 with settings(command='reprepro -S %s includedeb %s %s/%s' %
+#                              (comp, dist, env.packages_dir, package)):
+#                     local('%(command)s' % env, capture=False)
+#         
+#         with lcd('%(micro_repository_path)s' % env):
+#             create_cache(env.micro_repository_path, env.pcache)
+#         
+#         with lcd('%(micro_repository_path)s' % env):
+#             fill_db_from_cache(env.pcache)
+#         
+#         add_list = [('libtacacs+1_4.0.4.26-3_amd64.deb', 'main'), ('libtacacs+1_4.0.4.26-3_i386.deb', 'main')]
+#         update_list = [('cube2font_1.2-2_i386.deb', 'main'), ('cube2font_1.2-2_amd64.deb', 'main'), 
+#                        ('libxine1-plugins_1.1.21-dmo2_all.deb', 'aportes')]
+#         delete_list = [('cl-sql-oracle', 'no-libres'), ('acroread-debian-files', 'aportes'),
+#                        ('acroread-debian-files', 'aportes')]
+#         
+#         with lcd('%(micro_repository_path)s' % env):
+#             for package, comp in add_list:
+#                 with settings(command='reprepro -S %s includedeb %s %s/%s' %
+#                              (comp, dist, env.packages_dir, package)):
+#                     local('%(command)s' % env, capture=False)
+#             
+#             for package, comp in update_list:
+#                 with settings(command='reprepro -S %s includedeb %s %s/%s' %
+#                              (comp, dist, env.packages_dir, package)):
+#                     local('%(command)s' % env, capture=False)
+#                     
+#             for package, comp in delete_list:
+#                 with settings(command='reprepro remove %s %s' % 
+#                               (dist, package)):
+#                     local('%(command)s' % env, capture=False)
+#         
+#         update_cache(env.micro_repository_path, env.pcache)
+#         # FALTAN LOS ASSERT PARA VERIFICAR QUE LA ACTUALIZACION FUE CORRECTO
+#         rmtree(env.micro_repository_path)
+#         rmtree(env.pcache)
 
 
     def test_update_package_list(self):

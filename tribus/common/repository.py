@@ -43,13 +43,57 @@ import urllib2
 from debian import deb822
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
 from tribus.common.logger import get_logger
-from tribus.config.pkgrecorder import LOCAL_ROOT, CANAIMA_ROOT, SAMPLES
 from tribus.common.utils import find_files, readconfig
 
 logger = get_logger()
 
+
+def init_sample_packages(repository_root, samples_dir):
+    '''
+    Creates a directory structure to store packages for its later use
+    in a test package repository.
+    
+    :param repository_root: url of the repository used.
+    
+    :param samples_dir: directory that will be used to store the examples for the repository.
+    
+    .. versionadded:: 0.1
+    '''
+    
+    if not os.path.isdir(samples_dir):
+        os.makedirs(samples_dir)
+    
+    # Puede que exista una forma mas sencilla de obtener los nombres
+    dist_releases = (branch.split()
+                     for branch in
+                     readconfig(os.path.join(repository_root,
+                                             "distributions")))
+    for release, _ in dist_releases:
+        release_path = os.path.join(repository_root, "dists", release, "Release")
+        try:
+            # Riesgo poco probable de que el Release no tenga MD5sum
+            md5list = deb822.Release(urllib.urlopen(release_path)).get('MD5sum')
+        except urllib2.URLError, e:
+            logger.warning('Could not read release file in %s, error code #%s' % (release_path, e.code))
+        else:
+            for l in md5list:
+                if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages.gz$", l['name']):
+                    list_dir = os.path.join(samples_dir, release,
+                                            os.path.dirname(l['name']))
+                    if not os.path.isdir(list_dir):
+                        os.makedirs(list_dir)
+                    list_path = os.path.join(list_dir, "list")
+                    if not os.path.isfile(list_path):
+                        control_f_path = os.path.join(repository_root, "dists",
+                                                      release, l['name'])
+                        select_sample_packages(control_f_path, list_path,
+                                               samples_dir, False)
+    if os.path.isfile(os.path.join(samples_dir, "tmp.gzip")):
+        os.remove(os.path.join(samples_dir, "tmp.gzip"))
+
+
 def select_sample_packages(remote_control_file_path, package_list_path,
-                           include_relations=False):
+                           samples_dir, include_relations=False):
     '''
     Reads a control file and makes a random selection of packages, 
     then downloads the selected ones.
@@ -58,119 +102,76 @@ def select_sample_packages(remote_control_file_path, package_list_path,
     
     :param package_list_path: path to the file where the package name and location will be written.
     
+    :param samples_dir: directory that will be used to store the examples for the repository.
+    
     :param include_relations: si es True se descargaran tambien las relaciones de cada paquete seleccionado
     que cuyo tamano sea menor a 500 kilobytes. Si es Falso no se descargaran los paquetes relacionados.
 
     .. versionadded:: 0.1
     '''
     
-    inicial = {}
-    relaciones = []
-    final = {}
-    archivo = open(package_list_path, 'w')
-    # Esto deberia ser una constante declarada en otra parte
-    tmp_path = os.path.join(SAMPLES, "tmp.gzip")
+    # No sabria decir que es lo que esta mal aqui
+    # pero no me gusta mucho la forma como se hace esto
+    tmp_file = os.path.join(samples_dir, "tmp.gzip")
     
     try:
-        urllib.urlretrieve(remote_control_file_path, tmp_path)
+        urllib.urlretrieve(remote_control_file_path, tmp_file)
     except urllib2.URLError, e:
-        logger.warning('Could not read control file in %s, error code #%s' % (remote_control_file_path, e.code))
+        logger.warning('Could not get control file %s, error code #%s' % (remote_control_file_path, e.code))
     else:
-        for section in deb822.Packages.iter_paragraphs(gzip.open(tmp_path)):
+        selected = 0
+        # No hay manejo de excepciones en caso de fallas al intentar leer el archivo
+        archivo = open(package_list_path, 'w')
+        for section in deb822.Packages.iter_paragraphs(gzip.open(tmp_file)):
+            # Debe existir un a mejor forma de seleccionar elementos aleatorios
             rnd = random.randint(0, 500)
             size = section.get('Installed-Size', None)
             if size:
                 if rnd == 500 and int(size) < 500:
-                    inicial[section['Package']] = section['Filename']
+                    selected += 1
                     archivo.write(section['filename'] + "\n")
-                    for relations in section.relations.items():
-                        if relations[1]:
-                            for relation in relations[1]:
-                                for r in relation:
-                                    relaciones.append(r['name'])
-    
+                    if include_relations:
+                        relaciones = []
+                        for _, relations in section.relations.items():
+                            if relations:
+                                for relation in relations:
+                                    for r in relation:
+                                        relaciones.append(r['name'])
+        # El tener que volver a leer el archivo para obtener las
+        # dependencias hace que el proceso sea mas lento
         if include_relations:
-            remote_packages = urllib.urlopen(remote_control_file_path)
-            for section in deb822.Packages.iter_paragraphs(remote_packages):
+            for section in deb822.Packages.iter_paragraphs(gzip.open(tmp_file)):
                 if section['Package'] in relaciones and int(section['Installed-Size']) < 500:
-                    final[section['Package']] = section['Filename']
+                    selected += 1
                     archivo.write(section['filename'] + "\n")
-    
         archivo.close()
-        logger.info("%s packages selected from %s " % (len(inicial), remote_control_file_path))
+        logger.info("%s packages selected from %s " % (selected, remote_control_file_path))
 
 
-def init_sample_packages():
+def download_sample_packages(repository_root, samples_dir):
     '''
-    Creates a directory structure to store packages for its later use
-    in a test package repository.
-    
-    .. versionadded:: 0.1
-    '''
-    
-    if not os.path.isdir(SAMPLES):
-        os.makedirs(SAMPLES)
-        
-    dist_releases = (branch.split()
-                     for branch in readconfig(os.path.join(CANAIMA_ROOT,
-                                                            "distributions")))
-
-    for release, _ in dist_releases:
-        release_path = os.path.join(CANAIMA_ROOT, "dists", release, "Release")
-        try:
-            datasource = urllib.urlopen(release_path)
-        except urllib2.URLError, e:
-            logger.warning('Could not read release file in %s, error code #%s' % (release_path, e.code))
-        else:
-            rel = deb822.Release(datasource)
-            md5list = rel.get('MD5sum', None)
-            if md5list:
-                for l in md5list:
-                    if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages.gz$", l['name']):
-                        component, architecture, _ = l['name'].split("/")
-                        list_path = os.path.join(
-                            SAMPLES,
-                            release,
-                            component,
-                            architecture)
-                        if not os.path.isdir(list_path):
-                            os.makedirs(list_path)
-                        f = os.path.join(list_path, "list")
-                        if not os.path.isfile(f):
-                            package_url = os.path.join(
-                                CANAIMA_ROOT,
-                                "dists",
-                                release,
-                                l['name'])
-                            select_sample_packages(package_url, f, False)
-                            
-    if os.path.isfile(os.path.join(SAMPLES, "tmp.gzip")):
-        os.remove(os.path.join(SAMPLES, "tmp.gzip"))
-
-
-def download_sample_packages():
-    '''
-    Reads all the files named 'list' present in the SAMPLES directory
+    Reads all the files named 'list' present in the samples directory
     and downloads the packages in each 'list' file.
     
+    :param repository_root: url of the repository used.
+    
+    :param samples_dir: directory that will be used to store the examples for the repository.
+    
     .. versionadded:: 0.1
     '''
     
-    files_list = find_files(SAMPLES, 'list')
+    files_list = find_files(samples_dir, 'list')
     for f in files_list:
         download_path = os.path.dirname(f)
-        archivo = open(f, 'r')
-        linea = archivo.readline().strip("\n")
-        while linea:
-            l = linea.split("/")
-            try:
-                logger.info("Downloading ->", l[-1])
-                urllib.urlretrieve(os.path.join(CANAIMA_ROOT, linea),
-                                   os.path.join(download_path, l[-1]))
-            except urllib2.URLError, e:
-                logger.warning('Could not get %s, error code #%s' % (l[-1], e.code))
-            linea = archivo.readline().strip("\n")
-        archivo.close()
-    # Esto deberia tener otro try
-    urllib.urlretrieve(os.path.join(CANAIMA_ROOT, "distributions"),
-                       os.path.join(LOCAL_ROOT, "distributions"))
+        with open(f) as list_file:
+            # for line in list_file:
+            for line in list_file.readlines():
+                l = line.replace('\n', '').split('/')
+                try:
+                    if not os.path.isfile(os.path.join(download_path, l[-1])):
+                        logger.info("Downloading -> %s" % l[-1])
+                        urllib.urlretrieve(os.path.join(repository_root, line),
+                                           os.path.join(download_path, l[-1]))
+                except urllib2.URLError, e:
+                    logger.warning('Could not get %s, error code #%s' % (l[-1], e.code))
+                

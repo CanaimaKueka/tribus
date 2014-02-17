@@ -6,7 +6,7 @@ import os
 from tribus.config.base import BASEDIR
 LOCAL_ROOT = os.path.join("file://", BASEDIR, "test_repo")
 CANAIMA_ROOT = "http://paquetes.canaima.softwarelibre.gob.ve"
-SAMPLES = os.path.join(BASEDIR, 'package_samples')
+SAMPLES_DIR = os.path.join(BASEDIR, 'package_samples')
 
 PACKAGE_FIELDS = ["Package", "Description", "Homepage", "Section",
                   "Priority", "Essential", "Bugs", "Multi-Arch"]
