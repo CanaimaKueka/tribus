@@ -23,7 +23,7 @@
 tribus.tests.tribus_common_recorder
 ================================
 
-These are the tests for the tribus.common.recorder module.
+These are the tests for the tribus.common.repository module.
 
 '''
 
@@ -40,6 +40,7 @@ from tribus.web.cloud.models import Package
 
 SAMPLESDIR = get_path([BASEDIR, "tribus", "testing", "samples" ])
 FIXTURES = get_path([BASEDIR, "tribus", "testing", "fixtures" ])
+dist = 'kerepakupai'
 
 class RepositoryFunctions(TestCase):
     
@@ -50,49 +51,15 @@ class RepositoryFunctions(TestCase):
     def tearDown(self):
         pass
     
+    
     def test_init_sample_packages(self):
-        from tribus.common.repository import init_sample_packages
-        from tribus.config.pkgrecorder import CANAIMA_ROOT, SAMPLES_DIR
-
-        dist = 'kerepakupai'
-        
-        # 1) Hace falta un repositorio
-        env.micro_repository_path = os.path.join('/', 'tmp', 'tmp_repo')
-        env.micro_repository_conf = os.path.join('/', 'tmp', 'tmp_repo', 'conf')
-        env.distributions_path = os.path.join(env.micro_repository_path, 'distributions')
-        
-        # 2) Hace falta descargar los samples desde un repositorio
-        env.samples_dir = SAMPLESDIR
-        env.packages_dir = os.path.join(SAMPLESDIR, 'package_lists')
-        env.pcache = os.path.join('/', 'tmp', 'pcache')
-        
-        # Necesito un paquete por cada componente, arquitectura y rama =/ buff que trabajo tan ladilla es hacer pruebas
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        pass
         
     
-    
-    def test_download_sample_packages(self):
+    def test_select_sample_packages(self):
         pass
     
     
-    
-        
-        
+    def test_download_sample_packages(self):
+        pass 
+

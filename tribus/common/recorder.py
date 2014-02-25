@@ -27,17 +27,8 @@ This module contains common functions to record package data from a repository.
 
 '''
 
-#=========================================================================
-# TODO:
-# 1. Actualizacion de tags.
-# 2. Realizar la comparacion en base a otro parametro
-#    dado que las variaciones en el md5 no indican realmente una
-#    actualizacion en el paquete.
-# 3. Agregar pruebas faltantes, verificar las existentes.
-# 4. Revisar si es conveniente colocar excepciones en los
-#    metodos de registro de datos como el ejemplo de record_maintainer. Consultar a luis
-#=========================================================================
-# NAMING CONVENTIONS MOSTLY BASED ON https://www.debian.org/doc/debian-policy/ch-controlfields.html
+# NAMING CONVENTIONS MOSTLY BASED ON:
+# https://www.debian.org/doc/debian-policy/ch-controlfields.html
 
 import os
 import re
@@ -48,8 +39,6 @@ import email.Utils
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
 from debian import deb822
 from django.db.models import Q
-from django.db import DatabaseError
-from django.db import transaction
 from tribus.common.logger import get_logger
 from tribus.web.cloud.models import Package, Details, Relation, Label, Tag,\
 Maintainer
@@ -59,34 +48,57 @@ list_items, readconfig
 
 logger = get_logger()
 
-@transaction.commit_manually
+# Version alternativa de registro con manejo de excepciones en caso de errores.
+# 
+# @transaction.commit_manually
+# def record_maintainer(maintainer_data):
+#     """
+#     Queries the database for an existent maintainer.
+#     If it does not exists, it creates a new maintainer.
+#   
+#     :param maintainer_data: a string which contains maintainer's name and
+#     email.
+#   
+#     :return: a `Maintainer` object.
+#   
+#     :rtype: ``Maintainer``
+#   
+#     .. versionadded:: 0.1
+#     """
+#       
+#     maintainer_name, maintainer_mail = email.Utils.parseaddr(maintainer_data)
+#       
+#     try:
+#         maintainer, _ = Maintainer.objects.get_or_create(Name=maintainer_name,
+#                                                          Email=maintainer_mail)
+#     except DatabaseError, e:
+#         transaction.rollback()
+#         logger.info("There has been an error recording %s" % (maintainer_data))
+#         logger.error(e.message)
+#     else:
+#         transaction.commit()
+#         return maintainer
+    
+    
 def record_maintainer(maintainer_data):
     """
     Queries the database for an existent maintainer.
     If it does not exists, it creates a new maintainer.
-
+  
     :param maintainer_data: a string which contains maintainer's name and
     email.
-
+  
     :return: a `Maintainer` object.
-
+  
     :rtype: ``Maintainer``
-
+  
     .. versionadded:: 0.1
     """
     
     maintainer_name, maintainer_mail = email.Utils.parseaddr(maintainer_data)
-    
-    try:
-        maintainer, _ = Maintainer.objects.get_or_create(Name=maintainer_name,
-                                                         Email=maintainer_mail)
-    except DatabaseError, e:
-        transaction.rollback()
-        logger.info("There has been an error recording %s" % (maintainer_data))
-        logger.error(e.message)
-    else:
-        transaction.commit()
-        return maintainer
+    maintainer, _ = Maintainer.objects.get_or_create(Name=maintainer_name,
+                                                      Email=maintainer_mail)
+    return maintainer
 
 
 def select_paragraph_data_fields(paragraph, data_fields):
@@ -309,7 +321,7 @@ def record_paragraph(paragraph, branch):
         package = record_package(paragraph)
         details = record_details(paragraph, package, branch)
         record_relations(details, paragraph.relations.items())
-    except: 
+    except:
         logger.error('Could not record %s' % paragraph['Package'])
 
 
@@ -372,7 +384,7 @@ def update_paragraph(paragraph, branch):
 
     .. versionadded:: 0.1
     """
-
+    
     logger.info('Updating package \'%s\'' % paragraph['Package'])
     package = update_package(paragraph)
     details = update_details(package, paragraph, branch)

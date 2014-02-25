@@ -36,21 +36,28 @@ from django.test import TestCase
 from doctest import DocTestSuite
 from tribus.__init__ import BASEDIR
 from tribus.common.utils import get_path
-from tribus.web.cloud.models import Package
+from tribus.web.cloud.models import Package, Details,Relation
 
 SAMPLESDIR = get_path([BASEDIR, "tribus", "testing", "samples" ])
-FIXTURES = get_path([BASEDIR, "tribus", "testing", "fixtures" ])
+test_dist = "kukenan"
 
 class RecorderFunctions(TestCase):
-    #fixtures = [os.path.join(FIXTURES, 'base_fixture.json')]
     
     def setUp(self):
         pass        
         
+        
     def tearDown(self):
         pass
-
+    
+    
+    # TEST COMPLETO Y CORRECTO
     def test_record_maintainer(self):
+        '''
+        El objetivo de este test es verificar que el registro de
+        un mantenedor se haga correctamente.
+        '''
+        
         from tribus.common.recorder import record_maintainer
         maintainer_data = "Super Mantenedor 86 <supermaintainer86@maintainer.com>"
         test_maintainer = record_maintainer(maintainer_data)
@@ -58,6 +65,8 @@ class RecorderFunctions(TestCase):
         self.assertEqual(test_maintainer.Email, "supermaintainer86@maintainer.com", "El correo no coincide")
     
     
+#     Caso de prueba adicional en caso de registro con manejo de excepciones
+#
 #     def test_record_maintainer_exception(self):
 #         from tribus.common.recorder import record_maintainer
 #         from django.db import DatabaseError
@@ -65,6 +74,7 @@ class RecorderFunctions(TestCase):
 #         self.assertRaises(DatabaseError, record_maintainer, maintainer_data)
     
     
+    # TEST INCOMPLETO
     def test_select_paragraph_data_fields(self):
         from tribus.common.recorder import select_paragraph_data_fields
         from tribus.config.pkgrecorder import PACKAGE_FIELDS, DETAIL_FIELDS
@@ -74,96 +84,109 @@ class RecorderFunctions(TestCase):
         self.assertLessEqual(len(selected_pckage_fields), len(PACKAGE_FIELDS))
         # La prueba falla si se verifican los campos en cuyo nombre hay un guion (-)
         # hace falta una solucion
-        #for field in selected_PACKAGE_FIELDS.keys():
+        #for field in selected_package_fields.keys():
         #    self.assertIn(field, PACKAGE_FIELDS)
         self.assertLessEqual(len(selected_details_fields), len(DETAIL_FIELDS))
         # La prueba falla si se verifican los campos en cuyo nombre hay un guion (-)
         # hace falta una solucion
         #for field in selected_details_fields.keys():
         #    self.assertIn(field, DETAIL_FIELDS)
-
-
+    
+    
+    # TEST COMPLETO Y CORRECTO
     def test_record_package(self):
+        '''
+        El objetivo de este test es verificar que los campos basicos
+        de un paquete sean registrados correctamente.
+        '''
+        
         from tribus.common.recorder import record_package
         from tribus.config.pkgrecorder import PACKAGE_FIELDS
-        section = deb822.Packages(open(os.path.join(SAMPLESDIR, "Blender")))
-        p = record_package(section)
-        
-        maintainer_data = section.get('Maintainer', None)
-        if maintainer_data:
-            name, mail = email.Utils.parseaddr(maintainer_data)
-            self.assertEqual(p.Maintainer.Name, name)
-            self.assertEqual(p.Maintainer.Email, mail)
+        paragraph = deb822.Packages(open(os.path.join(SAMPLESDIR, "Blender")))
+        package = record_package(paragraph)
         
         for field in PACKAGE_FIELDS:
-            if section.get(field):
-                self.assertEqual(getattr(p, 
-                                         field.replace("-", "") if "-" in field else field),
-                                 section[field])
-        
-        
+            if paragraph.get(field):
+                self.assertEqual(getattr(package,
+                    field.replace("-", "") if "-" in field else field),
+                    paragraph[field])
+    
+    
+    # TEST COMPLETO Y CORRECTO
     def test_record_details(self):
-        from tribus.common.recorder import record_details, record_package
+        '''
+        El objetivo de este test es verificar que los campos de detalles
+        sean registrados correctamente.
+        '''
+        
+        from tribus.common.recorder import record_details
         from tribus.config.pkgrecorder import DETAIL_FIELDS
-        test_dist = "kukenan"
-        section = deb822.Packages(open(os.path.join(SAMPLESDIR, "Blender")))
-        p = record_package(section)
-        d = record_details(section, p, test_dist)
-        self.assertEqual(d.Distribution, test_dist)
+        paragraph = deb822.Packages(open(os.path.join(SAMPLESDIR, "Blender")))
+        package, _ = Package.objects.get_or_create(Package = 'blender')
+        details = record_details(paragraph, package, test_dist)
+        self.assertEqual(details.Distribution, test_dist)
         for field in DETAIL_FIELDS:
-            self.assertEqual(getattr(d, 
-                                     field.replace("-", "") if "-" in field else field),
-                             section[field])
-        
-        
+            self.assertEqual(getattr(details,
+                field.replace("-", "") if "-" in field else field),
+                paragraph[field])
+    
+    
+    # TEST COMPLETO Y CORRECTO
     def test_record_tags(self):
-        from tribus.common.recorder import record_package
-        section = deb822.Packages(open(os.path.join(SAMPLESDIR, "Blender")))
-        p = record_package(section)
-        tags = section.get('Tag', None)
-        if tags:
-            tag_list = section['Tag'].replace("\n", "").split(", ")
-            clean_list = [tuple(tag.split("::")) for tag in tag_list]
-            for label in p.Labels.all():
-                self.assertIn((label.Name, label.Tags.Value), clean_list)
-    
-    
-    def test_record_relationship(self):
-        from tribus.common.recorder import record_relationship, record_package,\
-        record_details
-        section = deb822.Packages(open(os.path.join(SAMPLESDIR, "libopenal1")))
-        test_dist = "auyantepui"
-        p = record_package(section)
-        d = record_details(section, p, test_dist)
-        reldata = [
-                   ("depends", {"name": "libc6", "version": (">=", "2.3.6-6~")}),
-                   ("recommends", {"name": "libpulse0", "version": (">=", "0.9.21")}),
-                   ("suggests", {"name": "libportaudio2", "version": (None, None)})
-                   ]
-
-        for typerel, data in reldata:
-            record_relationship(d, typerel, data)
+        '''
+        El objetivo de este test es verificar que las etiquetas de un
+        paquete se registran correctamente.
+        '''
         
-        for relation in d.Relations.all():
+        from tribus.common.recorder import record_tags
+        paragraph = deb822.Packages(open(os.path.join(SAMPLESDIR, "Blender")))
+        package, _ = Package.objects.get_or_create(Package = 'blender')
+        record_tags(paragraph, package)
+        tag_list = paragraph['Tag'].replace("\n", "").split(", ")
+        clean_list = [tuple(tag.split("::")) for tag in tag_list]
+        for label in package.Labels.all():
+            self.assertIn((label.Name, label.Tags.Value), clean_list)
+    
+    
+    # TEST COMPLETO Y CORRECTO
+    def test_record_relationship(self):
+        '''
+        El objetivo de este test es verificar que las relaciones 
+        se registren correctamente y de acuerdo al formato que maneja
+        python-debian para archivos de control.
+        '''
+        
+        from tribus.common.recorder import record_relationship
+        details, _ = Details.objects.get_or_create(Version = '2.63a-1',
+                                                   Architecture = 'i386',
+                                                   Distribution = test_dist)
+        reldata = [("depends", {"name": "libc6", "version": (">=", "2.3.6-6~")}),
+                   ("recommends", {"name": "libpulse0", "version": (">=", "0.9.21")}),
+                   ("suggests", {"name": "libportaudio2", "version": (None, None)})]
+        
+        for typerel, data in reldata:
+            record_relationship(details, typerel, data)
+        
+        for relation in details.Relations.all():
             self.assertIn((relation.relation_type,
                            {"name": relation.related_package.Package,
                             "version": (relation.relation,
                                         relation.version)}), reldata)
-
-        self.assertEqual(len(reldata), d.Relations.all().count())
         
-        
+        self.assertEqual(len(reldata), details.Relations.all().count())
+    
+    
+    # TEST COMPLETO Y CORRECTO
     def test_record_relations(self):
-        from tribus.common.recorder import record_relations, record_package,\
-        record_details
-        from tribus.web.cloud.models import Relation
-        section = deb822.Packages(open(os.path.join(SAMPLESDIR, "Blender")))
-        p = record_package(section)
-        d = record_details(section, p, "kukenan")
-        record_relations(d, section.relations.items())
+        from tribus.common.recorder import record_relations
+        paragraph = deb822.Packages(open(os.path.join(SAMPLESDIR, "Blender")))
+        details, _ = Details.objects.get_or_create(Version = '2.63a-1',
+                                                   Architecture = 'i386',
+                                                   Distribution = test_dist)
+        record_relations(details, paragraph.relations.items())
         total_relations = 0
         
-        for relation_type, relations in section.relations.items():
+        for relation_type, relations in paragraph.relations.items():
             if relations:
                 for relation in relations:
                     if len(relation) > 1:
@@ -174,8 +197,8 @@ class RecorderFunctions(TestCase):
                             else:
                                 vn, vo = (None, None)
                             self.assertTrue(Relation.objects.get(relation_type = relation_type,
-                                               related_package__Package = element['name'],
-                                               version = vo, relation = vn))
+                                            related_package__Package = element['name'],
+                                            version = vo, relation = vn))
                             total_relations += 1
                     else:
                         version = relation[0].get('version', None)
@@ -184,310 +207,325 @@ class RecorderFunctions(TestCase):
                         else:
                             vn, vo = (None, None)
                         self.assertTrue(Relation.objects.get(relation_type = relation_type,
-                                               related_package__Package = relation[0]['name'],
-                                               version = vo, relation = vn))
+                                        related_package__Package = relation[0]['name'],
+                                        version = vo, relation = vn))
                         total_relations += 1
-        self.assertEqual(d.Relations.all().count(), total_relations)
-        
-        
+        self.assertEqual(details.Relations.all().count(), total_relations)
+    
+    
+    # TEST DE INTEGRACION COMPLETO Y CORRECTO
     def test_record_paragraph(self):
         from tribus.common.recorder import record_paragraph
         from tribus.config.pkgrecorder import PACKAGE_FIELDS, DETAIL_FIELDS
-        test_dist = "kukenan"
         paragraph = deb822.Packages(open(os.path.join(SAMPLESDIR, "Blender")))
         record_paragraph(paragraph, test_dist)
         p = Package.objects.get(Package = "blender")
-        d = p.Details.all()[0]
+        d = Details.objects.get(package = p)
         total_relations = 0
-        maintainer_data = paragraph.get('Maintainer', None)
-        tags = paragraph.get('Tag', None)
+        name, mail = email.Utils.parseaddr(paragraph.get('Maintainer'))
         
-        for relations in paragraph.relations.items():
-            if relations[1]:
-                for relation in relations[1]:
-                    if len(relation) > 1:
-                        for _ in relation:
-                            total_relations += 1
-                    else:
-                        total_relations += 1
-                        
-        if maintainer_data:
-            name, mail = email.Utils.parseaddr(maintainer_data)
-            self.assertEqual(p.Maintainer.Name, name)
-            self.assertEqual(p.Maintainer.Email, mail)
-            
-        if tags:
-            tag_list = paragraph['Tag'].replace("\n", "").split(", ")
-            clean_list = [tuple(tag.split("::")) for tag in tag_list]
-            for label in p.Labels.all():
-                self.assertIn((label.Name, label.Tags.Value),
-                              clean_list)    
+        self.assertEqual(d.Distribution, test_dist)
+        self.assertEqual(p.Maintainer.Name, name)
+        self.assertEqual(p.Maintainer.Email, mail)
+        
+        tag_list = paragraph['Tag'].replace("\n", "").split(", ")
+        clean_list = [tuple(tag.split("::")) for tag in tag_list]
+        for label in p.Labels.all():
+            self.assertIn((label.Name, label.Tags.Value), clean_list)
         
         for field in PACKAGE_FIELDS:
             if paragraph.get(field):
                 self.assertEqual(str(getattr(p,
-                                         field.replace("-", "") if "-" in field else field)),
-                                 paragraph[field])
+                    field.replace("-", "") if "-" in field else field)),
+                    paragraph[field])
         
-        self.assertEqual(d.Distribution, test_dist)
-        
-        self.assertEqual(d.Distribution, test_dist)
         for field in DETAIL_FIELDS:
-            self.assertEqual(str(getattr(d, 
-                                     field.replace("-", "") if "-" in field else field)),
-                             paragraph[field])
+            if paragraph.get(field):
+                self.assertEqual(str(getattr(d, 
+                    field.replace("-", "") if "-" in field else field)),
+                    paragraph[field])
         
-        self.assertEqual(d.Relations.all().count(),
-                         total_relations)
-        
-        
-    def test_update_package(self):
-        pass
-    
-    
-    def test_update_details(self):
-        pass
-    
-    
-    def test_update_paragraph(self):
-        from tribus.common.recorder import record_paragraph, update_paragraph
-        from tribus.config.pkgrecorder import PACKAGE_FIELDS, DETAIL_FIELDS
-        test_dist = "kukenan"
-        old_section = deb822.Packages(open(os.path.join(SAMPLESDIR, "Blender")))
-        new_section = deb822.Packages(open(os.path.join(SAMPLESDIR, "BlenderNew")))
-        record_paragraph(old_section, test_dist)
-        update_paragraph(new_section, test_dist)
-        
-        p = Package.objects.get(Package = "blender")
-        d = p.Details.all()[0]
-        total_relations = 0
-        maintainer_data = new_section.get('Maintainer', None)
-        tags = new_section.get('Tag', None)
-        
-        for relations in new_section.relations.items():
-            if relations[1]:
-                for relation in relations[1]:
+        for _, relations in paragraph.relations.items():
+            if relations:
+                for relation in relations:
                     if len(relation) > 1:
                         for _ in relation:
                             total_relations += 1
                     else:
                         total_relations += 1
         
-        if maintainer_data:
-            name, mail = email.Utils.parseaddr(maintainer_data)
-            self.assertEqual(p.Maintainer.Name, name)
-            self.assertEqual(p.Maintainer.Email, mail)
-            
-        if tags:
-            tag_list = new_section['Tag'].replace("\n", "").split(", ")
-            clean_list = [tuple(tag.split("::")) for tag in tag_list]
-            for label in p.Labels.all():
-                self.assertIn((label.Name, label.Tags.Value),
-                              clean_list)
+        self.assertEqual(d.Relations.all().count(), total_relations)
+    
+    
+    # TEST DE INTEGRACION COMPLETO Y CORRECTO (REDUNDANDTE)
+    def test_update_paragraph(self):
+        from tribus.common.recorder import record_paragraph, update_paragraph
+        from tribus.config.pkgrecorder import PACKAGE_FIELDS, DETAIL_FIELDS
         
-        for field in PACKAGE_FIELDS:
-            if new_section.get(field):
-                self.assertEqual(str(getattr(p,
-                                         field.replace("-", "") if "-" in field else field)),
-                                 new_section[field])
+        old_paragraph = deb822.Packages(open(os.path.join(SAMPLESDIR, "Blender")))
+        new_paragraph = deb822.Packages(open(os.path.join(SAMPLESDIR, "BlenderNew")))
         
+        record_paragraph(old_paragraph, test_dist)
+        update_paragraph(new_paragraph, test_dist)
+        
+        p = Package.objects.get(Package = "blender")
+        d = Details.objects.get(package = p)
+        name, mail = email.Utils.parseaddr(new_paragraph.get('Maintainer'))
+        total_relations = 0
+        
+        self.assertEqual(p.Maintainer.Name, name)
+        self.assertEqual(p.Maintainer.Email, mail)
         self.assertEqual(d.Distribution, test_dist)
         
+        tag_list = new_paragraph['Tag'].replace("\n", "").split(", ")
+        clean_list = [tuple(tag.split("::")) for tag in tag_list]
+        for label in p.Labels.all():
+            self.assertIn((label.Name, label.Tags.Value),
+                          clean_list)
+        
+        for field in PACKAGE_FIELDS:
+            if new_paragraph.get(field):
+                self.assertEqual(str(getattr(p,
+                    field.replace("-", "") if "-" in field else field)),
+                    new_paragraph[field])
+        
         for field in DETAIL_FIELDS:
-            if new_section.get(field):
+            if new_paragraph.get(field):
                 self.assertEqual(str(getattr(d, 
-                                     field.replace("-", "") if "-" in field else field)),
-                             new_section[field])
-
-        self.assertEqual(d.Relations.all().count(),
-                         total_relations)
-
-
+                    field.replace("-", "") if "-" in field else field)),
+                    new_paragraph[field])
+        
+        for _, relations in new_paragraph.relations.items():
+            if relations:
+                for relation in relations:
+                    if len(relation) > 1:
+                        for _ in relation:
+                            total_relations += 1
+                    else:
+                        total_relations += 1
+        
+        self.assertEqual(d.Relations.all().count(), total_relations)
+    
+    
     def test_create_cache(self):
         pass
     
     
-#     REEVALUAR ESTE TEST!!!! 
-#     def test_update_cache(self):
-#         # TODO ESTO PUEDE VERSE COMO UNA PRUEBA DE INTEGRACION
-#         from tribus.common.recorder import fill_db_from_cache, create_cache, update_cache
-#         from tribus.common.iosync import touch, rmtree
-#         
-#         dist = 'kerepakupai'
-#         env.micro_repository_path = os.path.join('/', 'tmp', 'tmp_repo')
-#         env.micro_repository_conf = os.path.join('/', 'tmp', 'tmp_repo', 'conf')
-#         env.samples_dir = SAMPLESDIR
-#         env.packages_dir = os.path.join(SAMPLESDIR, 'example_packages')
-#         env.pcache = os.path.join('/', 'tmp', 'pcache')
-#         env.distributions_path = os.path.join(env.micro_repository_path, 'distributions')
-#         
-#         with settings(command='mkdir -p %(micro_repository_conf)s' % env):
-#             local('%(command)s' % env, capture=False)
-#         
-#         with settings(command='cp %(samples_dir)s/distributions\
-#                   %(micro_repository_conf)s' % env):
-#             local('%(command)s' % env, capture=False)
-#             
-#         with lcd('%(micro_repository_path)s' % env):
-#             touch(env.distributions_path)
-#             f = open(env.distributions_path, 'w')
-#             f.write('kerepakupai dists/kerepakupai/Release')
-#             f.close()
-#             
-#         with lcd('%(micro_repository_path)s' % env):
-#             with settings(command='reprepro -VVV export'):
-#                 local('%(command)s' % env, capture=False)
-#                 
-#         seed_packages = [('cube2font_1.2-2_i386.deb', 'main'), ('cube2font_1.2-2_amd64.deb', 'main'), 
-#                          ('cl-sql-oracle_6.2.0-1_all.deb', 'no-libres'), ('libxine1-plugins_1.1.21-dmo2_all.deb', 'aportes'),
-#                          ('acroread-debian-files_9.5.8_i386.deb', 'aportes'), ('acroread-debian-files_9.5.8_amd64.deb', 'aportes')]
-#         
-#         with lcd('%(micro_repository_path)s' % env):
-#             for package, comp in seed_packages:
-#                 with settings(command='reprepro -S %s includedeb %s %s/%s' %
-#                              (comp, dist, env.packages_dir, package)):
-#                     local('%(command)s' % env, capture=False)
-#         
-#         with lcd('%(micro_repository_path)s' % env):
-#             create_cache(env.micro_repository_path, env.pcache)
-#         
-#         with lcd('%(micro_repository_path)s' % env):
-#             fill_db_from_cache(env.pcache)
-#         
-#         add_list = [('libtacacs+1_4.0.4.26-3_amd64.deb', 'main'), ('libtacacs+1_4.0.4.26-3_i386.deb', 'main')]
-#         update_list = [('cube2font_1.2-2_i386.deb', 'main'), ('cube2font_1.2-2_amd64.deb', 'main'), 
-#                        ('libxine1-plugins_1.1.21-dmo2_all.deb', 'aportes')]
-#         delete_list = [('cl-sql-oracle', 'no-libres'), ('acroread-debian-files', 'aportes'),
-#                        ('acroread-debian-files', 'aportes')]
-#         
-#         with lcd('%(micro_repository_path)s' % env):
-#             for package, comp in add_list:
-#                 with settings(command='reprepro -S %s includedeb %s %s/%s' %
-#                              (comp, dist, env.packages_dir, package)):
-#                     local('%(command)s' % env, capture=False)
-#             
-#             for package, comp in update_list:
-#                 with settings(command='reprepro -S %s includedeb %s %s/%s' %
-#                              (comp, dist, env.packages_dir, package)):
-#                     local('%(command)s' % env, capture=False)
-#                     
-#             for package, comp in delete_list:
-#                 with settings(command='reprepro remove %s %s' % 
-#                               (dist, package)):
-#                     local('%(command)s' % env, capture=False)
-#         
-#         update_cache(env.micro_repository_path, env.pcache)
-#         # FALTAN LOS ASSERT PARA VERIFICAR QUE LA ACTUALIZACION FUE CORRECTO
-#         rmtree(env.micro_repository_path)
-#         rmtree(env.pcache)
-
-
+    # TEST REDUNDANTE PERO NECESARIO (INCOMPLETO)
+    def test_update_cache(self):
+        import urllib
+        from tribus.common.recorder import fill_db_from_cache, create_cache, update_cache
+        from tribus.common.iosync import touch, rmtree
+        env.samples_dir = SAMPLESDIR
+        env.micro_repository_path = os.path.join('/', 'tmp', 'tmp_repo')
+        env.micro_repository_conf = os.path.join('/', 'tmp', 'tmp_repo', 'conf')
+        env.packages_dir = os.path.join(SAMPLESDIR, 'example_packages')
+        env.pcache = os.path.join('/', 'tmp', 'pcache')
+        env.distributions_path = os.path.join(env.micro_repository_path, 'distributions')
+        
+        source_seed_packages1 = 'http://paquetes.canaima.softwarelibre.gob.ve/pool'
+        source_seed_packages2 = 'http://ftp.us.debian.org/debian/pool'
+        
+        list_seed_packages1 = [('main/c/cube2font', 'cube2font_1.2-2_i386.deb'),
+                               ('main/c/cube2font', 'cube2font_1.2-2_amd64.deb'),
+                               ('no-libres/c/cl-sql', 'cl-sql-oracle_6.2.0-1_all.deb'),
+                               ('main/t/tacacs+', 'libtacacs+1_4.0.4.19-8_i386.deb'),
+                               ('main/t/tacacs+', 'libtacacs+1_4.0.4.19-8_amd64.deb'),
+                               ('aportes/a/acroread-debian-files', 'acroread-debian-files_9.5.8_i386.deb'),
+                               ('aportes/a/acroread-debian-files', 'acroread-debian-files_9.5.8_amd64.deb')]
+        
+        list_seed_packages2 = [('main/c/cube2font', 'cube2font_1.3.1-2_i386.deb'),
+                               ('main/c/cube2font', 'cube2font_1.3.1-2_amd64.deb'),
+                               ('main/x/xine-lib', 'libxine1-plugins_1.1.19-2_all.deb'),
+                               ('main/x/xine-lib', 'libxine1-plugins_1.1.21-1_all.deb')]
+        
+        for loc, name in list_seed_packages1:
+            remote_path = os.path.join(source_seed_packages1, loc, name)
+            local_path = os.path.join(env.packages_dir, name)
+            try:
+                urllib.urlretrieve(remote_path, local_path)
+            except:
+                print "No se pudo obtener una de las muestras, el test probablemente fallara"
+        
+        for loc, name in list_seed_packages2:
+            remote_path = os.path.join(source_seed_packages2, loc, name)
+            local_path = os.path.join(env.packages_dir, name)
+            try:
+                urllib.urlretrieve(remote_path, local_path)
+            except:
+                print "No se pudo obtener una de las muestras, el test probablemente fallara"
+        
+        with settings(command='mkdir -p %(micro_repository_conf)s' % env):
+            local('%(command)s' % env, capture=False)
+        
+        with settings(command='cp %(samples_dir)s/distributions\
+                  %(micro_repository_conf)s' % env):
+            local('%(command)s' % env, capture=False)
+        
+        with lcd('%(micro_repository_path)s' % env):
+            touch(env.distributions_path)
+            f = open(env.distributions_path, 'w')
+            f.write('kukenan dists/kukenan/Release')
+            f.close()
+        
+        with lcd('%(micro_repository_path)s' % env):
+            with settings(command='reprepro -VVV export'):
+                local('%(command)s' % env, capture=False)
+        
+        seed_packages = [('cube2font_1.2-2_i386.deb', 'main'), ('cube2font_1.2-2_amd64.deb', 'main'), 
+                         ('cl-sql-oracle_6.2.0-1_all.deb', 'no-libres'), ('libxine1-plugins_1.1.19-2_all.deb', 'main'),
+                         ('acroread-debian-files_9.5.8_i386.deb', 'aportes'), ('acroread-debian-files_9.5.8_amd64.deb', 'aportes')]
+        
+        with lcd('%(micro_repository_path)s' % env):
+            for package, comp in seed_packages:
+                with settings(command='reprepro -S %s includedeb %s %s/%s' %
+                             (comp, test_dist, env.packages_dir, package)):
+                    local('%(command)s' % env, capture=False)
+        
+        with lcd('%(micro_repository_path)s' % env):
+            create_cache(env.micro_repository_path, env.pcache)
+        
+        with lcd('%(micro_repository_path)s' % env):
+            fill_db_from_cache(env.pcache)
+        
+        add_list = [('libtacacs+1_4.0.4.19-8_amd64.deb', 'main'), ('libtacacs+1_4.0.4.19-8_i386.deb', 'main')]
+        update_list = [('cube2font_1.3.1-2_i386.deb', 'main'), ('cube2font_1.3.1-2_amd64.deb', 'main'), 
+                       ('libxine1-plugins_1.1.21-1_all.deb', 'main')]
+        delete_list = [('cl-sql-oracle', 'no-libres'), ('acroread-debian-files', 'aportes'),
+                       ('acroread-debian-files', 'aportes')]
+        
+        with lcd('%(micro_repository_path)s' % env):
+            for package, comp in add_list:
+                with settings(command='reprepro -S %s includedeb %s %s/%s' %
+                             (comp, test_dist, env.packages_dir, package)):
+                    local('%(command)s' % env, capture=False)
+            
+            for package, comp in update_list:
+                with settings(command='reprepro -S %s includedeb %s %s/%s' %
+                             (comp, test_dist, env.packages_dir, package)):
+                    local('%(command)s' % env, capture=False)
+            
+            for package, comp in delete_list:
+                with settings(command='reprepro remove %s %s' % 
+                              (test_dist, package)):
+                    local('%(command)s' % env, capture=False)
+        
+        update_cache(env.micro_repository_path, env.pcache)
+        # FALTAN LOS ASSERT PARA VERIFICAR QUE LA ACTUALIZACION FUE CORRECTA
+        rmtree(env.micro_repository_path)
+        rmtree(env.pcache)
+    
+    
+    # TEST COMPLETO PERO REDUNDANTE
     def test_update_package_list(self):
         from tribus.common.recorder import record_paragraph, update_package_list
         from tribus.config.pkgrecorder import PACKAGE_FIELDS, DETAIL_FIELDS
-        test_dist = "kukenan"
+        
         old_amd_section = os.path.join(SAMPLESDIR, "Oldamd")
         old_i386_section = os.path.join(SAMPLESDIR, "Oldi386")
-        new_amd_section = os.path.join(SAMPLESDIR, "Newamd.gz")
-        new_i386_section = os.path.join(SAMPLESDIR, "Newi386.gz")
+        new_amd_section = os.path.join(SAMPLESDIR, "Newamd")
+        new_i386_section = os.path.join(SAMPLESDIR, "Newi386")
+        new_amd_section_gz = os.path.join(SAMPLESDIR, "Newamd.gz")
+        new_i386_section_gz = os.path.join(SAMPLESDIR, "Newi386.gz")
         
-        for section in deb822.Packages.iter_paragraphs(open(old_amd_section)):
-            record_paragraph(section, test_dist)
-        for section in deb822.Packages.iter_paragraphs(open(old_i386_section)):
-            record_paragraph(section, test_dist)
+        for paragraph in deb822.Packages.iter_paragraphs(open(old_amd_section)):
+            record_paragraph(paragraph, test_dist)
+        for paragraph in deb822.Packages.iter_paragraphs(open(old_i386_section)):
+            record_paragraph(paragraph, test_dist)
         
-        update_package_list(new_amd_section, test_dist, 'i386')
-        update_package_list(new_i386_section, test_dist, 'amd64')
+        amd_in = open(new_amd_section, 'rb')
+        amd_out = gzip.open(os.path.join(SAMPLESDIR, 'Newamd.gz'), 'wb')
+        amd_out.writelines(amd_in)
+        amd_out.close()
+        amd_in.close()
         
-        for section in deb822.Packages.iter_paragraphs(gzip.open(new_i386_section)):
-            p = Package.objects.get(Package = section['Package'])
-            d = p.Details.filter(Architecture = section['Architecture'])[0]
+        i386_in = open(new_i386_section, 'rb')
+        i386_out = gzip.open(os.path.join(SAMPLESDIR, 'Newi386.gz'), 'wb')
+        i386_out.writelines(i386_in)
+        i386_out.close()
+        i386_in.close()
+        
+        update_package_list(new_i386_section_gz, test_dist, 'i386')
+        update_package_list(new_amd_section_gz, test_dist, 'amd64')
+        
+        for paragraph in deb822.Packages.iter_paragraphs(gzip.open(new_i386_section_gz)):
+            p = Package.objects.get(Package = paragraph['Package'])
+            d = p.Details.get(package = p, Architecture = paragraph['Architecture'])
+            name, mail = email.Utils.parseaddr(paragraph.get('Maintainer'))
             total_relations = 0
-            maintainer_data = section.get('Maintainer', None)
-            tags = section.get('Tag', None)
+            
+            self.assertEqual(p.Maintainer.Name, name)
+            self.assertEqual(p.Maintainer.Email, mail)
+            self.assertEqual(d.Distribution, test_dist)
+            
+            if paragraph.get('Tag'):
+                tag_list = paragraph['Tag'].replace("\n", "").split(", ")
+                clean_list = [tuple(tag.split("::")) for tag in tag_list]
+                for label in p.Labels.all():
+                    self.assertIn((label.Name, label.Tags.Value), clean_list)
             
             for field in PACKAGE_FIELDS:
-                if section.get(field):
+                if paragraph.get(field):
                     self.assertEqual(str(getattr(p,
-                                         field.replace("-", "") if "-" in field else field)),
-                                         section[field])
+                        field.replace("-", "") if "-" in field else field)),
+                        paragraph[field])
             
-            self.assertEqual(d.Distribution, test_dist)
-        
             for field in DETAIL_FIELDS:
-                if section.get(field):
+                if paragraph.get(field):
                     self.assertEqual(str(getattr(d, 
-                                                 field.replace("-", "") if "-" in field else field)),
-                                                 section[field])
+                        field.replace("-", "") if "-" in field else field)),
+                        paragraph[field])
             
-            for relations in section.relations.items():
-                if relations[1]:
-                    for relation in relations[1]:
+            for _, relations in paragraph.relations.items():
+                if relations:
+                    for relation in relations:
                         if len(relation) > 1:
                             for _ in relation:
                                 total_relations += 1
                         else:
                             total_relations += 1
             
-            self.assertEqual(d.Relations.all().count(),
-                             total_relations)
-            
-            if maintainer_data:
-                name, mail = email.Utils.parseaddr(maintainer_data)
-                self.assertEqual(p.Maintainer.Name, name)
-                self.assertEqual(p.Maintainer.Email, mail)
-            
-            if tags:
-                tag_list = section['Tag'].replace("\n", "").split(", ")
-                clean_list = [tuple(tag.split("::")) for tag in tag_list]
-                for label in p.Labels.all():
-                    self.assertIn((label.Name, label.Tags.Value),
-                                  clean_list)
-
-        for section in deb822.Packages.iter_paragraphs(gzip.open(new_amd_section)):
-            p = Package.objects.get(Package = section['Package'], Details__Architecture = section['Architecture'])
-            d = p.Details.filter(Architecture = section['Architecture'])[0]
+            self.assertEqual(d.Relations.all().count(), total_relations)
+        
+        
+        for paragraph in deb822.Packages.iter_paragraphs(gzip.open(new_amd_section_gz)):
+            p = Package.objects.get(Package = paragraph['Package'])
+            d = p.Details.get(package = p, Architecture = paragraph['Architecture'])
+            name, mail = email.Utils.parseaddr(paragraph.get('Maintainer'))
             total_relations = 0
-            maintainer_data = section.get('Maintainer', None)
-            tags = section.get('Tag', None)
             
-            for field in PACKAGE_FIELDS:
-                if section.get(field):
-                    self.assertEqual(str(getattr(p,
-                                         field.replace("-", "") if "-" in field else field)),
-                                         section[field])
-            
+            self.assertEqual(p.Maintainer.Name, name)
+            self.assertEqual(p.Maintainer.Email, mail)
             self.assertEqual(d.Distribution, test_dist)
             
+            if paragraph.get('Tag'):
+                tag_list = paragraph['Tag'].replace("\n", "").split(", ")
+                clean_list = [tuple(tag.split("::")) for tag in tag_list]
+                for label in p.Labels.all():
+                    self.assertIn((label.Name, label.Tags.Value), clean_list)
+            
+            for field in PACKAGE_FIELDS:
+                if paragraph.get(field):
+                    self.assertEqual(str(getattr(p,
+                        field.replace("-", "") if "-" in field else field)),
+                        paragraph[field])
+            
             for field in DETAIL_FIELDS:
-                if section.get(field):
+                if paragraph.get(field):
                     self.assertEqual(str(getattr(d, 
-                                                 field.replace("-", "") if "-" in field else field)),
-                                                 section[field])
-            # Cuenta las relaciones pero no verifica que los datos guardados sean los correctos
-            for relations in section.relations.items():
-                if relations[1]:
-                    for relation in relations[1]:
+                        field.replace("-", "") if "-" in field else field)),
+                        paragraph[field])
+            
+            for _, relations in paragraph.relations.items():
+                if relations:
+                    for relation in relations:
                         if len(relation) > 1:
                             for _ in relation:
                                 total_relations += 1
                         else:
                             total_relations += 1
             
-            self.assertEqual(d.Relations.all().count(),
-                             total_relations)
-            
-            if maintainer_data:
-                name, mail = email.Utils.parseaddr(maintainer_data)
-                self.assertEqual(p.Maintainer.Name, name)
-                self.assertEqual(p.Maintainer.Email, mail)
-            
-            if tags:
-                tag_list = section['Tag'].replace("\n", "").split(", ")
-                clean_list = [tuple(tag.split("::")) for tag in tag_list]
-                for label in p.Labels.all():
-                    self.assertIn((label.Name, label.Tags.Value),
-                                  clean_list)
+            self.assertEqual(d.Relations.all().count(), total_relations)
 
 
     def test_fill_db_from_cache(self):
