@@ -38,16 +38,3 @@ class RegistrationModelTests(TestCase):
     
     def tearDown(self):
         pass
-    
-#     Este Test esta repetido
-#     def test_maintainer_creation(self):
-#         maintainer_data = "Maintainer1 <Maintainer1@maintainer.com>"
-#         
-#         maintainer = (maintainer_data)
-#         self.assertEqual(maintainer.Name, "Maintainer1",
-#                          "El nombre no coincide")
-#         self.assertEqual(maintainer.Email, "Maintainer1@maintainer.com",
-#                          "El correo no coincide")
-#         
-        
-        

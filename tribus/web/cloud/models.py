@@ -37,8 +37,8 @@ from django.db import models
 #         else:
 #             transaction.commit()
 #             return maintainer
-    
-    
+
+
 class Maintainer(models.Model):
     """
     Representacion de un mantenedor de paquetes,
@@ -74,7 +74,7 @@ class Package(models.Model):
      "Priority", "Essential", "Bugs", "Multi-Arch"]
     """
     
-    Package = models.CharField("nombre del paquete", max_length=150)
+    Name = models.CharField("nombre del paquete", max_length=150)
     Maintainer = models.ForeignKey(
         Maintainer,
         verbose_name="nombre del mantenedor",
@@ -113,10 +113,10 @@ class Package(models.Model):
         blank=True)
 
     class Meta:
-        ordering = ["Package"]
+        ordering = ["Name"]
 
     def __unicode__(self):
-        return self.Package
+        return self.Name
 
 
 class Tag(models.Model):
@@ -157,6 +157,7 @@ class Label(models.Model):
     
     Una etiqueta puede estar asociada a uno o mas valores (Tags).
     """
+    
     Name = models.CharField("nombre etiqueta", max_length=100)
     Tags = models.ForeignKey(Tag, null=True)
 
@@ -182,7 +183,7 @@ class Relation(models.Model):
     que son alternativa en la relación. Por ejemplo, un archivo de 
     control puede tener un parrafo con los siguientes datos:
     
-    Package: blender
+    Name: blender
     Depends: libavcodec53 (>= 5:0.8-2~) | libavcodec-extra-53 (>= 5:0.8-2~) ...
     
     Donde:
@@ -197,12 +198,12 @@ class Relation(models.Model):
     """
     
     related_package = models.ForeignKey(Package, null=True, blank=True)
-    relation = models.CharField(
+    version = models.CharField(
         "numero de la version del paquete 'hijo'",
         max_length=50,
         null=True,
         blank=True)
-    version = models.CharField(
+    order = models.CharField(
         "orden de la version del paquete 'hijo'",
         max_length=75,
         null=True,
@@ -217,10 +218,10 @@ class Relation(models.Model):
         null=True)
 
     def __unicode__(self):
-        if self.relation and self.version:
-            return self.related_package.Package + " (" + self.relation + " " + self.version + ")"
+        if self.order and self.version:
+            return "%s (%s %s)" % (self.related_package.Name, self.order, self.version)
         else:
-            return self.related_package.Package
+            return self.related_package.Name
 
 
 class Details(models.Model):
@@ -264,4 +265,4 @@ class Details(models.Model):
 
     def __unicode__(self):
         if self.Architecture:
-            return self.Architecture + " : " + self.Distribution
+            return "%s : %s" % (self.Architecture, self.Distribution)

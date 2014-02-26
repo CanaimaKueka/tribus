@@ -70,7 +70,7 @@ class CloudViews(TestCase):
     
     
     def test_cloud_profile(self):
-        package = {'Package':'blender',
+        package = {'Name':'blender',
             'Description': 'Software de modelado 3d',
             'Homepage': 'http://blender.org/',
             'Section': 'graphics', 'Priority': 'optional',
@@ -91,70 +91,70 @@ class CloudViews(TestCase):
             'Distribution': "kukenan"
         }
         
-        rel_fields = ['related_package', 'version', 'relation',
+        rel_fields = ['related_package', 'order', 'version',
                       'alt_id', 'relation_type']
         
         rel_i386 = {
             'python3.2': 
-            {'related_package': Package.objects.create(Package='python3.2'),
-             'version': None, 'relation': None,
+            {'related_package': Package.objects.create(Name='python3.2'),
+             'order': None, 'version': None,
              'alt_id': 0, 'relation_type': 'depends'},
             
             'libstdc++6':
-            {'related_package': Package.objects.create(Package='libstdc++6'),
-             'version': '>=', 'relation': '4.6',
+            {'related_package': Package.objects.create(Name='libstdc++6'),
+             'order': '>=', 'version': '4.6',
              'alt_id': 0, 'relation_type': 'depends'},
             
             'libavcodec53':
-            {'related_package': Package.objects.create(Package='libavcodec53'), 
-             'version': '>=', 'relation': '5:0.8-2~',
+            {'related_package': Package.objects.create(Name='libavcodec53'), 
+             'order': '>=', 'version': '5:0.8-2~',
             'alt_id': 1, 'relation_type': 'depends'},
             
             'libavcodec-extra-53':
-            {'related_package': Package.objects.create(Package='libavcodec-extra-53'),
-             'version': '>=', 'relation': '5:0.8-2~', 
+            {'related_package': Package.objects.create(Name='libavcodec-extra-53'),
+             'order': '>=', 'version': '5:0.8-2~', 
              'alt_id': 1, 'relation_type': 'depends'},
             
             'libglu1-mesa':
-            {'related_package': Package.objects.create(Package='libglu1-mesa'), 
-             'version': None, 'relation': None, 
+            {'related_package': Package.objects.create(Name='libglu1-mesa'), 
+             'order': None, 'version': None, 
              'alt_id': 2, 'relation_type': 'depends'},
             
             'libglu1':
-            {'related_package': Package.objects.create(Package='libglu1'), 
-             'version': None, 'relation': None, 
+            {'related_package': Package.objects.create(Name='libglu1'), 
+             'order': None, 'version': None, 
              'alt_id': 2, 'relation_type': 'depends'}
         }
         
         rel_amd64 = {
             'libc6':
-            {'related_package': Package.objects.create(Package='libc6'),
-             'version': '>=', 'relation': '2.7', 
+            {'related_package': Package.objects.create(Name='libc6'),
+             'order': '>=', 'version': '2.7', 
              'alt_id': 0, 'relation_type': 'depends'},
             
             'libfftw3-3':
-            {'related_package': Package.objects.create(Package='libfftw3-3'), 
-             'version': None, 'relation': None, 
+            {'related_package': Package.objects.create(Name='libfftw3-3'), 
+             'order': None, 'version': None, 
              'alt_id': 0, 'relation_type': 'depends'},
             
             'libgl1-mesa-glx':
-            {'related_package': Package.objects.create(Package='libgl1-mesa-glx'), 
-             'version': None, 'relation': None, 
+            {'related_package': Package.objects.create(Name='libgl1-mesa-glx'), 
+             'order': None, 'version': None, 
              'alt_id': 1, 'relation_type': 'depends'},
             
             'libgl1':
-            {'related_package': Package.objects.create(Package='libgl1'), 
-             'version': None, 'relation': None, 
+            {'related_package': Package.objects.create(Name='libgl1'), 
+             'order': None, 'version': None, 
              'alt_id': 1, 'relation_type': 'depends'},
             
             'libglu1-mesa':
-            {'related_package': Package.objects.create(Package='libglu1-mesa'), 
-             'version': None, 'relation': None, 
+            {'related_package': Package.objects.create(Name='libglu1-mesa'), 
+             'order': None, 'version': None, 
              'alt_id': 2, 'relation_type': 'depends'},
             
             'libglu1':
-            {'related_package': Package.objects.create(Package='libglu1'), 
-             'version': None, 'relation': None, 
+            {'related_package': Package.objects.create(Name='libglu1'), 
+             'order': None, 'version': None, 
              'alt_id': 2, 'relation_type': 'depends'}
         }
         
@@ -199,9 +199,9 @@ class CloudViews(TestCase):
         for rel in resp_details.get('i386').get('relations').get('depends'):
             for field in rel_fields:
                 self.assertEqual(str(getattr(rel, field)),
-                    str(rel_i386.get(rel.related_package.Package).get(field)))
+                    str(rel_i386.get(rel.related_package.Name).get(field)))
                 
         for rel in resp_details.get('amd64').get('relations').get('depends'):
             for field in rel_fields:
                 self.assertEqual(str(getattr(rel, field)),
-                    str(rel_amd64.get(rel.related_package.Package).get(field)))
+                    str(rel_amd64.get(rel.related_package.Name).get(field)))

@@ -29,14 +29,14 @@
                             <p>
                                 <a href="{% url 'cloud_profile' relacion.related_package %}" target="_blank">{{ relacion.related_package }}</a>
                                 {% if relacion.version %}
-                                    ({{ relacion.relation }} {{ relacion.version }})
+                                    ({{ relacion.order }} {{ relacion.version }})
                                 {% endif %}
                         {% elif forloop.last %}  
                             </p>
                             <p>
                                 <a href="{% url 'cloud_profile' relacion.related_package %}" target="_blank">{{ relacion.related_package }}</a>
                                 {% if relacion.version %}
-                                    ({{ relacion.relation }} {{ relacion.version }})
+                                    ({{ relacion.order }} {{ relacion.version }})
                                 {% endif %}
                             </p>
                         {% else %}  
@@ -44,21 +44,21 @@
                             <p>
                                 <a href="{% url 'cloud_profile' relacion.related_package %}" target="_blank">{{ relacion.related_package }}</a>
                                 {% if relacion.version %}
-                                    ({{ relacion.relation }} {{ relacion.version }})
+                                    ({{ relacion.order }} {{ relacion.version }})
                                 {% endif %}
                         {% endif %} 
                     {% else %}
                         {% trans 'or' %}
                         <a href="{% url 'cloud_profile' relacion.related_package %}" target="_blank">{{ relacion.related_package }}</a>
                         {% if relacion.version %}
-                            ({{ relacion.relation }} {{ relacion.version }})
+                            ({{ relacion.order }} {{ relacion.version }})
                         {% endif %}
                     {% endifchanged %}
                 {% else %}
                     <p>
                         <a href="{% url 'cloud_profile' relacion.related_package %}" target="_blank">{{ relacion.related_package }}</a>
                         {% if relacion.version %}
-                            ({{ relacion.relation }} {{ relacion.version }})
+                            ({{ relacion.order }} {{ relacion.version }})
                         {% endif %}
                     </p>
                 {% endif %}

@@ -74,25 +74,6 @@ class RecorderFunctions(TestCase):
 #         self.assertRaises(DatabaseError, record_maintainer, maintainer_data)
     
     
-    # TEST INCOMPLETO
-    def test_select_paragraph_data_fields(self):
-        from tribus.common.recorder import select_paragraph_data_fields
-        from tribus.config.pkgrecorder import PACKAGE_FIELDS, DETAIL_FIELDS
-        section = deb822.Packages(open(os.path.join(SAMPLESDIR, "Blender")))
-        selected_pckage_fields = select_paragraph_data_fields(section, PACKAGE_FIELDS)
-        selected_details_fields = select_paragraph_data_fields(section, DETAIL_FIELDS)
-        self.assertLessEqual(len(selected_pckage_fields), len(PACKAGE_FIELDS))
-        # La prueba falla si se verifican los campos en cuyo nombre hay un guion (-)
-        # hace falta una solucion
-        #for field in selected_package_fields.keys():
-        #    self.assertIn(field, PACKAGE_FIELDS)
-        self.assertLessEqual(len(selected_details_fields), len(DETAIL_FIELDS))
-        # La prueba falla si se verifican los campos en cuyo nombre hay un guion (-)
-        # hace falta una solucion
-        #for field in selected_details_fields.keys():
-        #    self.assertIn(field, DETAIL_FIELDS)
-    
-    
     # TEST COMPLETO Y CORRECTO
     def test_record_package(self):
         '''
@@ -105,11 +86,9 @@ class RecorderFunctions(TestCase):
         paragraph = deb822.Packages(open(os.path.join(SAMPLESDIR, "Blender")))
         package = record_package(paragraph)
         
-        for field in PACKAGE_FIELDS:
+        for field, field_db in PACKAGE_FIELDS.items():
             if paragraph.get(field):
-                self.assertEqual(getattr(package,
-                    field.replace("-", "") if "-" in field else field),
-                    paragraph[field])
+                self.assertEqual(getattr(package, field_db), paragraph[field])
     
     
     # TEST COMPLETO Y CORRECTO
@@ -122,13 +101,11 @@ class RecorderFunctions(TestCase):
         from tribus.common.recorder import record_details
         from tribus.config.pkgrecorder import DETAIL_FIELDS
         paragraph = deb822.Packages(open(os.path.join(SAMPLESDIR, "Blender")))
-        package, _ = Package.objects.get_or_create(Package = 'blender')
+        package, _ = Package.objects.get_or_create(Name = 'blender')
         details = record_details(paragraph, package, test_dist)
         self.assertEqual(details.Distribution, test_dist)
-        for field in DETAIL_FIELDS:
-            self.assertEqual(getattr(details,
-                field.replace("-", "") if "-" in field else field),
-                paragraph[field])
+        for field, field_db in DETAIL_FIELDS.items():
+            self.assertEqual(getattr(details, field_db), paragraph[field])
     
     
     # TEST COMPLETO Y CORRECTO
@@ -140,7 +117,7 @@ class RecorderFunctions(TestCase):
         
         from tribus.common.recorder import record_tags
         paragraph = deb822.Packages(open(os.path.join(SAMPLESDIR, "Blender")))
-        package, _ = Package.objects.get_or_create(Package = 'blender')
+        package, _ = Package.objects.get_or_create(Name = 'blender')
         record_tags(paragraph, package)
         tag_list = paragraph['Tag'].replace("\n", "").split(", ")
         clean_list = [tuple(tag.split("::")) for tag in tag_list]
@@ -169,8 +146,8 @@ class RecorderFunctions(TestCase):
         
         for relation in details.Relations.all():
             self.assertIn((relation.relation_type,
-                           {"name": relation.related_package.Package,
-                            "version": (relation.relation,
+                           {"name": relation.related_package.Name,
+                            "version": (relation.order, 
                                         relation.version)}), reldata)
         
         self.assertEqual(len(reldata), details.Relations.all().count())
@@ -193,22 +170,22 @@ class RecorderFunctions(TestCase):
                         for element in relation:
                             version = element.get('version', None)
                             if version:
-                                vn, vo = version
+                                vo, vn = version
                             else:
-                                vn, vo = (None, None)
+                                vo, vn = (None, None)
                             self.assertTrue(Relation.objects.get(relation_type = relation_type,
-                                            related_package__Package = element['name'],
-                                            version = vo, relation = vn))
+                                            related_package__Name = element['name'],
+                                            order = vo, version = vn))
                             total_relations += 1
                     else:
                         version = relation[0].get('version', None)
                         if version:
-                            vn, vo = version
+                            vo, vn = version
                         else:
-                            vn, vo = (None, None)
+                            vo, vn = (None, None)
                         self.assertTrue(Relation.objects.get(relation_type = relation_type,
-                                        related_package__Package = relation[0]['name'],
-                                        version = vo, relation = vn))
+                                        related_package__Name = relation[0]['name'],
+                                        order = vo, version = vn))
                         total_relations += 1
         self.assertEqual(details.Relations.all().count(), total_relations)
     
@@ -219,7 +196,7 @@ class RecorderFunctions(TestCase):
         from tribus.config.pkgrecorder import PACKAGE_FIELDS, DETAIL_FIELDS
         paragraph = deb822.Packages(open(os.path.join(SAMPLESDIR, "Blender")))
         record_paragraph(paragraph, test_dist)
-        p = Package.objects.get(Package = "blender")
+        p = Package.objects.get(Name = "blender")
         d = Details.objects.get(package = p)
         total_relations = 0
         name, mail = email.Utils.parseaddr(paragraph.get('Maintainer'))
@@ -233,17 +210,13 @@ class RecorderFunctions(TestCase):
         for label in p.Labels.all():
             self.assertIn((label.Name, label.Tags.Value), clean_list)
         
-        for field in PACKAGE_FIELDS:
+        for field, field_db in PACKAGE_FIELDS.items():
             if paragraph.get(field):
-                self.assertEqual(str(getattr(p,
-                    field.replace("-", "") if "-" in field else field)),
-                    paragraph[field])
+                self.assertEqual(str(getattr(p, field_db)), paragraph[field])
         
-        for field in DETAIL_FIELDS:
+        for field, field_db in DETAIL_FIELDS.items():
             if paragraph.get(field):
-                self.assertEqual(str(getattr(d, 
-                    field.replace("-", "") if "-" in field else field)),
-                    paragraph[field])
+                self.assertEqual(str(getattr(d, field_db)), paragraph[field])
         
         for _, relations in paragraph.relations.items():
             if relations:
@@ -268,7 +241,7 @@ class RecorderFunctions(TestCase):
         record_paragraph(old_paragraph, test_dist)
         update_paragraph(new_paragraph, test_dist)
         
-        p = Package.objects.get(Package = "blender")
+        p = Package.objects.get(Name = "blender")
         d = Details.objects.get(package = p)
         name, mail = email.Utils.parseaddr(new_paragraph.get('Maintainer'))
         total_relations = 0
@@ -283,17 +256,13 @@ class RecorderFunctions(TestCase):
             self.assertIn((label.Name, label.Tags.Value),
                           clean_list)
         
-        for field in PACKAGE_FIELDS:
+        for field, field_db in PACKAGE_FIELDS.items():
             if new_paragraph.get(field):
-                self.assertEqual(str(getattr(p,
-                    field.replace("-", "") if "-" in field else field)),
-                    new_paragraph[field])
+                self.assertEqual(str(getattr(p, field_db)), new_paragraph[field])
         
-        for field in DETAIL_FIELDS:
+        for field, field_db in DETAIL_FIELDS.items():
             if new_paragraph.get(field):
-                self.assertEqual(str(getattr(d, 
-                    field.replace("-", "") if "-" in field else field)),
-                    new_paragraph[field])
+                self.assertEqual(str(getattr(d, field_db)), new_paragraph[field])
         
         for _, relations in new_paragraph.relations.items():
             if relations:
@@ -449,7 +418,7 @@ class RecorderFunctions(TestCase):
         update_package_list(new_amd_section_gz, test_dist, 'amd64')
         
         for paragraph in deb822.Packages.iter_paragraphs(gzip.open(new_i386_section_gz)):
-            p = Package.objects.get(Package = paragraph['Package'])
+            p = Package.objects.get(Name = paragraph['Package'])
             d = p.Details.get(package = p, Architecture = paragraph['Architecture'])
             name, mail = email.Utils.parseaddr(paragraph.get('Maintainer'))
             total_relations = 0
@@ -464,17 +433,13 @@ class RecorderFunctions(TestCase):
                 for label in p.Labels.all():
                     self.assertIn((label.Name, label.Tags.Value), clean_list)
             
-            for field in PACKAGE_FIELDS:
+            for field, field_db in PACKAGE_FIELDS.items():
                 if paragraph.get(field):
-                    self.assertEqual(str(getattr(p,
-                        field.replace("-", "") if "-" in field else field)),
-                        paragraph[field])
-            
-            for field in DETAIL_FIELDS:
+                    self.assertEqual(str(getattr(p, field_db)), paragraph[field])
+        
+            for field, field_db in DETAIL_FIELDS.items():
                 if paragraph.get(field):
-                    self.assertEqual(str(getattr(d, 
-                        field.replace("-", "") if "-" in field else field)),
-                        paragraph[field])
+                    self.assertEqual(str(getattr(d, field_db)), paragraph[field])
             
             for _, relations in paragraph.relations.items():
                 if relations:
@@ -489,7 +454,7 @@ class RecorderFunctions(TestCase):
         
         
         for paragraph in deb822.Packages.iter_paragraphs(gzip.open(new_amd_section_gz)):
-            p = Package.objects.get(Package = paragraph['Package'])
+            p = Package.objects.get(Name = paragraph['Package'])
             d = p.Details.get(package = p, Architecture = paragraph['Architecture'])
             name, mail = email.Utils.parseaddr(paragraph.get('Maintainer'))
             total_relations = 0
@@ -504,17 +469,13 @@ class RecorderFunctions(TestCase):
                 for label in p.Labels.all():
                     self.assertIn((label.Name, label.Tags.Value), clean_list)
             
-            for field in PACKAGE_FIELDS:
+            for field, field_db in PACKAGE_FIELDS.items():
                 if paragraph.get(field):
-                    self.assertEqual(str(getattr(p,
-                        field.replace("-", "") if "-" in field else field)),
-                        paragraph[field])
+                    self.assertEqual(str(getattr(p, field_db)), paragraph[field])
             
-            for field in DETAIL_FIELDS:
+            for field, field_db in DETAIL_FIELDS.items():
                 if paragraph.get(field):
-                    self.assertEqual(str(getattr(d, 
-                        field.replace("-", "") if "-" in field else field)),
-                        paragraph[field])
+                    self.assertEqual(str(getattr(d, field_db)), paragraph[field])
             
             for _, relations in paragraph.relations.items():
                 if relations:

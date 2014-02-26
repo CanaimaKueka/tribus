@@ -1,13 +1,13 @@
 {% extends 'cloud/base.html' %}
 {% load i18n %}
-{% block title %}{{ paquete.Package }}{% endblock %}
+{% block title %}{{ paquete.Name }}{% endblock %}
 {% block content %}
 <div class="jumbotron">
     <div class="container-fluid">
         <div class="row-fluid dashboard_container">
             <div class="span8 dashboard_timeline">
                 <div class="page-header">
-                    <h1>{{ paquete.Package }}</h1>
+                    <h1>{{ paquete.Name }}</h1>
                 </div>
                 {% if paquete.Maintainer %}
                     {% if paquete.Description %}
@@ -48,7 +48,7 @@
                 <div class="widget-box transparent">
                     <div class="widget-body">
                         <div class="widget-main">
-                            <span class="cloud_avatar" style="background-image: url('http://screenshots.debian.net/screenshot/{{ paquete.Package }}')"></span>
+                            <span class="cloud_avatar" style="background-image: url('http://screenshots.debian.net/screenshot/{{ paquete.Name }}')"></span>
                         </div>
                     </div>
                 </div>
@@ -133,13 +133,13 @@
                             <ul class="unstyled spaced">
                                 <li>
                                     <i class="icon-circle red"></i>
-                                    <a href="http://bugs.debian.org/{{ paquete.Package }}" target="_blank">
+                                    <a href="http://bugs.debian.org/{{ paquete.Name }}" target="_blank">
                                         {% trans 'Bug Tracking System' %}
                                     </a>
                                 </li>
                                 <li>
                                     <i class="icon-circle red"></i>
-                                    <a href="http://packages.qa.debian.org/{{ paquete.Package }}" target="_blank">
+                                    <a href="http://packages.qa.debian.org/{{ paquete.Name }}" target="_blank">
                                         {% trans 'Package Tracking System' %}
                                     </a>
                                 </li>

@@ -106,7 +106,7 @@ def profile(request, name):
         
     '''
     
-    package_info = get_object_or_404(Package, Package=name)
+    package_info = get_object_or_404(Package, Name=name)
     details_list = Details.objects.filter(package=package_info)
     distributions = []
     tmp_dict = {}

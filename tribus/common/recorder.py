@@ -101,42 +101,6 @@ def record_maintainer(maintainer_data):
     return maintainer
 
 
-def select_paragraph_data_fields(paragraph, data_fields):
-    """
-    Selects the necessary fields to record a control file
-    in the database. Hyphens in field's names are suppressed, e.g:
-    "Multi-Arch" is replaced by "MultiArch".
-
-    :param paragraph: contains information about a binary package.
-
-    :param data_fields: is a list of the necessary fields to record a Package or a Details object in the
-                   database. For a `Package` object, the necessary fields are::
-
-                        ["Package", "Description", "Homepage", "Section",
-                         "Priority", "Essential", "Bugs", "Multi-Arch"]
-
-                   and for a `Details` object::
-
-                        ["Version", "Architecture", "Size", "MD5sum", "Filename",
-                         "Installed-Size"]
-
-    :return: a dictionary with the selected fields.
-
-    :rtype: ``dict``
-
-    .. versionadded:: 0.1
-    """
-
-    d = {}
-    for data_field in data_fields:
-        if data_field in paragraph:
-            if "-" in data_field:
-                d[data_field.replace("-", "")] = paragraph[data_field]
-            else:
-                d[data_field] = paragraph[data_field]
-    return d
-
-
 def record_package(paragraph):
     """
     Queries the database for an existent package.
@@ -154,21 +118,14 @@ def record_package(paragraph):
     .. versionadded:: 0.1
     """
     
-    exists = Package.objects.filter(Package=paragraph['Package'])
-    if exists:
-        if exists[0].Maintainer:
-            return exists[0]
-        else:
-            exists.update(**select_paragraph_data_fields(paragraph, PACKAGE_FIELDS))
-            package = Package.objects.filter(Package=paragraph['Package'])[0]
-            package.Maintainer = record_maintainer(paragraph['Maintainer'])
-            package.save()
-            return package
+    package, _ = Package.objects.get_or_create(Name = paragraph['Package'])
+    
+    if package.Maintainer:
+        return package
     else:
-        data_fields = select_paragraph_data_fields(paragraph, PACKAGE_FIELDS)
-        maintainer = record_maintainer(paragraph['Maintainer'])
-        package = Package(**data_fields)
-        package.Maintainer = maintainer
+        for field, db_field in PACKAGE_FIELDS.items():
+            setattr(package, db_field, paragraph.get(field))
+        package.Maintainer = record_maintainer(paragraph['Maintainer'])
         package.save()
         record_tags(paragraph, package)
         return package
@@ -191,16 +148,15 @@ def record_details(paragraph, package, branch):
 
     .. versionadded:: 0.1
     """
-
-    exists = Details.objects.filter(package=package,
-                                    Architecture=paragraph['Architecture'],
-                                    Distribution=branch)
-    if exists:
-        return exists[0]
-    else:
-        data_fields = select_paragraph_data_fields(paragraph, DETAIL_FIELDS)
-        details = Details(**data_fields)
-        details.Distribution = branch
+    
+    try:
+        return Details.objects.get(package=package,
+                                   Architecture=paragraph['Architecture'],
+                                   Distribution=branch)
+    except Details.DoesNotExist:
+        details = Details(Distribution=branch)
+        for field, db_field in DETAIL_FIELDS.items():
+            setattr(details, db_field, paragraph.get(field))
         details.save()
         package.Details.add(details)
         return details
@@ -217,7 +173,7 @@ def record_tags(paragraph, package):
 
     .. versionadded:: 0.1
     """
-
+    
     if 'Tag' in paragraph:
         tag_list = paragraph['Tag'].replace("\n", "").split(", ")
         for tag in tag_list:
@@ -263,13 +219,13 @@ def record_relationship(details, relation_type, fields, alt_id=0):
     
     version = fields.get('version', None) 
     if version:
-        relation_version, number_version = version
+        order_version, number_version = version
     else:
-        relation_version, number_version = (None, None)
-    related_package, _ = Package.objects.get_or_create(Package=fields['name'])
+        order_version, number_version = (None, None)
+    related_package, _ = Package.objects.get_or_create(Name=fields['name'])
     new_relation, _ = Relation.objects.get_or_create(**{"related_package": related_package,
                                         "relation_type": relation_type,
-                                        "relation": relation_version,
+                                        "order": order_version,
                                         "version": number_version,
                                         "alt_id": alt_id})
     details.Relations.add(new_relation)
@@ -338,9 +294,9 @@ def update_package(paragraph):
     .. versionadded:: 0.1
     """
 
-    package = Package.objects.get(Package=paragraph['Package'])
-    for field, value in select_paragraph_data_fields(paragraph, PACKAGE_FIELDS).items():
-        setattr(package, field, value)
+    package = Package.objects.get(Name=paragraph['Package'])
+    for field, db_field in PACKAGE_FIELDS.items():
+        setattr(package, db_field, paragraph.get(field))
     if not package.Maintainer:
         package.Maintainer = record_maintainer(paragraph['Maintainer'])
     package.save()
@@ -367,8 +323,8 @@ def update_details(package, paragraph, branch):
     details = Details.objects.get(package=package,
                                   Architecture=paragraph['Architecture'],
                                   Distribution=branch)
-    for field, value in select_paragraph_data_fields(paragraph, DETAIL_FIELDS).items():
-        setattr(details, field, value)
+    for field, db_field in DETAIL_FIELDS.items():
+        setattr(details, db_field, paragraph.get(field))
     details.save()
     return details
 
@@ -515,7 +471,7 @@ def update_package_list(control_file_path, branch, architecture):
         existent_packages = []
         for paragraph in package_control_file:
             existent_packages.append(paragraph['Package'])
-            exists = Details.objects.filter(package__Package=paragraph['Package'],
+            exists = Details.objects.filter(package__Name=paragraph['Package'],
                                             Architecture=paragraph['Architecture'],
                                             Distribution=branch)
             if exists:
@@ -530,7 +486,7 @@ def update_package_list(control_file_path, branch, architecture):
         bd_packages = Package.objects.filter(Details__Distribution=branch).filter(Q(Details__Architecture='all') |
                                                                                   Q(Details__Architecture=architecture)).distinct()
         for package in bd_packages:
-            if package.Package not in existent_packages:
+            if package.Name not in existent_packages:
                 for detail in package.Details.all():
                     if detail.Distribution == branch and (detail.Architecture == architecture or detail.Architecture == 'all'):
                         for relation in detail.Relations.all():
@@ -539,10 +495,10 @@ def update_package_list(control_file_path, branch, architecture):
                             if not exists:
                                 relation.delete()
                         logger.info('Removing \'%s\' from \'%s\'...'
-                                    % (detail, package.Package))
+                                    % (detail, package.Name))
                         detail.delete()
                 if not package.Details.all():
-                    logger.info('Removing %s...' % package.Package)
+                    logger.info('Removing %s...' % package.Name)
                     package.delete()
 
 
