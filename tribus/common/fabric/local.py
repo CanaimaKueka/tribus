@@ -77,9 +77,8 @@ def development():
         'xapian',
         '_xapian.so')
     env.reprepro_dir = os.path.join(BASEDIR, 'test_repo')
-    env.reprepro_conf_dir = os.path.join(BASEDIR, 'test_repo', 'conf')
-    env.distributions_dir = os.path.join(BASEDIR, 'tribus', 'config', 'data')
     env.sample_packages_dir = os.path.join(BASEDIR, 'package_samples')
+    env.distributions_path = os.path.join(BASEDIR, 'tribus', 'config', 'data', 'dists-template')
 
 
 def environment():
@@ -99,37 +98,33 @@ def environment():
 
 # REPOSITORY TASKS ------------------------------------------------------------
 
-# 1) Crear repositorio e inicializarlo
-
 
 def install_repository():
-    with settings(command='rm -rf %(reprepro_dir)s' % env):
-        local('%(command)s' % env, capture=False)
-
-    with settings(command='mkdir -p %(reprepro_conf_dir)s' % env):
-        local('%(command)s' % env, capture=False)
-
-    with settings(command='cp %(distributions_dir)s/dists-template  \
-                  %(reprepro_conf_dir)s/distributions' % env):
-        local('%(command)s' % env, capture=False)
-
-    with lcd('%(reprepro_dir)s' % env):
-        with settings(command='reprepro -VVV export'):
-            local('%(command)s' % env, capture=False)
-
-
-# 2) Seleccionar muestra de paquetes
-
+    '''
+    Crea un repositorio de paquetes y lo inicializa.
+    '''
+    
+    py_activate_virtualenv()
+    from tribus.common.reprepro import create_repository
+    create_repository(env.reprepro_dir, env.distributions_path)
+    
+    
 def select_sample_packages():
+    '''
+    Selecciona una muestra de paquetes.
+    '''
+    
     py_activate_virtualenv()
     from tribus.common.repository import init_sample_packages
     from tribus.config.pkgrecorder import CANAIMA_ROOT, SAMPLES_DIR
     init_sample_packages(CANAIMA_ROOT, SAMPLES_DIR)
 
 
-# 3) Descargar muestra de paquetes
-
 def get_sample_packages():
+    '''
+    Descarga la muestra de paquetes
+    '''
+    
     py_activate_virtualenv()
     from tribus.common.repository import download_sample_packages
     from tribus.config.pkgrecorder import CANAIMA_ROOT, LOCAL_ROOT, SAMPLES_DIR
@@ -138,10 +133,13 @@ def get_sample_packages():
                        os.path.join(LOCAL_ROOT, "distributions"))
 
 
-# 4) Indexar los paquetes descargados en el repositorio
-
 def index_sample_packages():
+    '''
+    Indexa los paquetes descargados en el repositorio.
+    '''
+    
     from tribus.common.utils import list_items, find_files
+    from tribus.common.reprepro import include_deb
     dirs = [os.path.dirname(f)
             for f in find_files(env.sample_packages_dir, 'list')]
     dists = filter(None, list_items(env.sample_packages_dir, dirs=True, files=False))
@@ -151,9 +149,7 @@ def index_sample_packages():
             dist = [dist_name for dist_name in dists if dist_name in directory][0]
             results = [each for each in os.listdir(directory) if each.endswith('.deb')]
             if results:
-                with settings(command='reprepro includedeb %s %s/*.deb' %
-                             (dist, directory)):
-                    local('%(command)s' % env, capture=False)
+                include_deb(env.reprepro_dir, dist, directory)
             else:
                 logger.info('There are no packages in %s' % directory)
 
@@ -161,20 +157,12 @@ def index_sample_packages():
 
 
 # TESTS TASKS -----------------------------------------------------------------
-# No esta automatizada aun
-def wipe_repo():
-    with lcd('%(reprepro_dir)s' % env):
-        with settings(command='reprepro removefilter kukenan \'Section\''):
-            local('%(command)s' % env, capture=False)
-        with settings(command='reprepro removefilter aponwao \'Section\''):
-            local('%(command)s' % env, capture=False)
-        with settings(command='reprepro removefilter auyantepui \'Section\''):
-            local('%(command)s' % env, capture=False)
-        with settings(command='reprepro removefilter roraima \'Section\''):
-            local('%(command)s' % env, capture=False)
-        with settings(command='reprepro removefilter kerepakupai \'Section\''):
-            local('%(command)s' % env, capture=False)
 
+def wipe_repo():
+    from tribus.common.reprepro import reset_repository
+    reset_repository(env.reprepro_dir)
+    
+    
 # -----------------------------------------------------------------------------
 
 # TRIBUS DATABASE TASKS -------------------------------------------------------

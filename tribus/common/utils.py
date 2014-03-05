@@ -356,16 +356,16 @@ def filename_generator(file_parts, new_m_time):
 
 def repeated_relation_counter(control_file):
     archivo = urllib.urlopen(control_file)
-    for section in deb822.Packages.iter_paragraphs(archivo):
-        for rel in section.relations.items():
-            if rel[1]:
-                for r in rel[1]:
+    for paragraph in deb822.Packages.iter_paragraphs(archivo):
+        for rel_type, rel in paragraph.relations.items():
+            if rel:
+                for r in rel:
                     for rr in r:
                         encontrados = 0
-                        for name in section[rel[0]].replace(',', ' ').split():
-                            lista = re.match('^'+rr['name'].replace("+", "\+").replace("-", "\-")+'$', name)
-                            if lista and rr['version']:
+                        for name in paragraph[rel_type].replace(',', ' ').split():
+                            match = re.match('^'+rr['name'].replace("+", "\+").replace("-", "\-")+'$', name)
+                            if match and rr.get('version'):
                                 encontrados += 1
                         if encontrados > 2:
-                            print section['package'], encontrados
+                            print paragraph['package'], encontrados
                             print r
