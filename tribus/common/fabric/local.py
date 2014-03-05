@@ -153,16 +153,12 @@ def index_sample_packages():
             else:
                 logger.info('There are no packages in %s' % directory)
 
-# -----------------------------------------------------------------------------
-
-
-# TESTS TASKS -----------------------------------------------------------------
 
 def wipe_repo():
     from tribus.common.reprepro import reset_repository
     reset_repository(env.reprepro_dir)
-    
-    
+
+
 # -----------------------------------------------------------------------------
 
 # TRIBUS DATABASE TASKS -------------------------------------------------------

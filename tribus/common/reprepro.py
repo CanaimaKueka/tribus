@@ -30,7 +30,7 @@ This module contains functions to manage reprepro repositories.
 import os
 import shutil
 from fabric import local, lcd
-from tribus.common.utils import list_dirs
+from tribus.common.utils import list_items
 
 def create_repository(repository_root, distributions_path):
     '''
@@ -51,8 +51,11 @@ def create_repository(repository_root, distributions_path):
     shutil.copyfile(distributions_path, dist_dst)
     os.chdir(repository_root)
     local("reprepro -VVV export")
-
-
+    with open(os.path.join(repository_root, 'distributions'), 'w') as f:
+        for dist in list_items(os.path.join(repository_root, 'dists'), True, False):
+            f.write('%s dists/%s/Release\n' % (dist, dist))
+    
+    
 def include_deb(repository_root, distribution, package_path = None):
     '''
     Indexes a debian package (.deb) in the selected repository.
@@ -78,9 +81,8 @@ def reset_repository(repository_root):
     Elimina las distribuciones existentes en un repositorio.
     '''
     
-    dists = list_dirs(os.path.join(repository_root, 'dists'))
+    dists = list_items(os.path.join(repository_root, 'dists'), True, False)
     
     for dist in dists:
         local("reprepro removefilter %s \'Section\'" % dist)
-    
     

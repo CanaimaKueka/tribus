@@ -71,5 +71,3 @@ class RepreproFunctions(TestCase):
         #from tribus.common.reprepro import  reset_repository
         
         
-        
-        

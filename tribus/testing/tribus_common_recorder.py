@@ -30,7 +30,7 @@ These are the tests for the tribus.common.recorder module.
 import os
 import gzip
 import email.Utils
-from fabric.api import env, lcd, local, settings
+from fabric.api import lcd
 from debian import deb822
 from django.test import TestCase
 from doctest import DocTestSuite
@@ -283,14 +283,14 @@ class RecorderFunctions(TestCase):
     # TEST REDUNDANTE PERO NECESARIO (INCOMPLETO)
     def test_update_cache(self):
         import urllib
+        from tribus.common.iosync import rmtree
+        from tribus.common.reprepro import create_repository, include_deb
         from tribus.common.recorder import fill_db_from_cache, create_cache, update_cache
-        from tribus.common.iosync import touch, rmtree
-        env.samples_dir = SAMPLESDIR
-        env.micro_repository_path = os.path.join('/', 'tmp', 'tmp_repo')
-        env.micro_repository_conf = os.path.join('/', 'tmp', 'tmp_repo', 'conf')
-        env.packages_dir = os.path.join(SAMPLESDIR, 'example_packages')
-        env.pcache = os.path.join('/', 'tmp', 'pcache')
-        env.distributions_path = os.path.join(env.micro_repository_path, 'distributions')
+        
+        pcache = os.path.join('/', 'tmp', 'pcache')
+        tmp_repo = os.path.join('/', 'tmp', 'tmp_repo')
+        dists_path = os.path.join(SAMPLESDIR, 'distributions')
+        packages_dir = os.path.join(SAMPLESDIR, 'example_packages')
         
         source_seed_packages1 = 'http://paquetes.canaima.softwarelibre.gob.ve/pool'
         source_seed_packages2 = 'http://ftp.us.debian.org/debian/pool'
@@ -310,7 +310,7 @@ class RecorderFunctions(TestCase):
         
         for loc, name in list_seed_packages1:
             remote_path = os.path.join(source_seed_packages1, loc, name)
-            local_path = os.path.join(env.packages_dir, name)
+            local_path = os.path.join(packages_dir, name)
             try:
                 urllib.urlretrieve(remote_path, local_path)
             except:
@@ -318,44 +318,23 @@ class RecorderFunctions(TestCase):
         
         for loc, name in list_seed_packages2:
             remote_path = os.path.join(source_seed_packages2, loc, name)
-            local_path = os.path.join(env.packages_dir, name)
+            local_path = os.path.join(packages_dir, name)
             try:
                 urllib.urlretrieve(remote_path, local_path)
             except:
                 print "No se pudo obtener una de las muestras, el test probablemente fallara"
         
-        with settings(command='mkdir -p %(micro_repository_conf)s' % env):
-            local('%(command)s' % env, capture=False)
-        
-        with settings(command='cp %(samples_dir)s/distributions\
-                  %(micro_repository_conf)s' % env):
-            local('%(command)s' % env, capture=False)
-        
-        with lcd('%(micro_repository_path)s' % env):
-            touch(env.distributions_path)
-            f = open(env.distributions_path, 'w')
-            f.write('kukenan dists/kukenan/Release')
-            f.close()
-        
-        with lcd('%(micro_repository_path)s' % env):
-            with settings(command='reprepro -VVV export'):
-                local('%(command)s' % env, capture=False)
+        create_repository(tmp_repo, dists_path)
         
         seed_packages = [('cube2font_1.2-2_i386.deb', 'main'), ('cube2font_1.2-2_amd64.deb', 'main'), 
                          ('cl-sql-oracle_6.2.0-1_all.deb', 'no-libres'), ('libxine1-plugins_1.1.19-2_all.deb', 'main'),
                          ('acroread-debian-files_9.5.8_i386.deb', 'aportes'), ('acroread-debian-files_9.5.8_amd64.deb', 'aportes')]
         
-        with lcd('%(micro_repository_path)s' % env):
+        with lcd(tmp_repo):
             for package, comp in seed_packages:
-                with settings(command='reprepro -S %s includedeb %s %s/%s' %
-                             (comp, test_dist, env.packages_dir, package)):
-                    local('%(command)s' % env, capture=False)
-        
-        with lcd('%(micro_repository_path)s' % env):
-            create_cache(env.micro_repository_path, env.pcache)
-        
-        with lcd('%(micro_repository_path)s' % env):
-            fill_db_from_cache(env.pcache)
+                include_deb(tmp_repo, comp, package)
+            create_cache(tmp_repo, pcache)
+            fill_db_from_cache(pcache)
         
         add_list = [('libtacacs+1_4.0.4.19-8_amd64.deb', 'main'), ('libtacacs+1_4.0.4.19-8_i386.deb', 'main')]
         update_list = [('cube2font_1.3.1-2_i386.deb', 'main'), ('cube2font_1.3.1-2_amd64.deb', 'main'), 
@@ -363,26 +342,18 @@ class RecorderFunctions(TestCase):
         delete_list = [('cl-sql-oracle', 'no-libres'), ('acroread-debian-files', 'aportes'),
                        ('acroread-debian-files', 'aportes')]
         
-        with lcd('%(micro_repository_path)s' % env):
+        with lcd(tmp_repo):
             for package, comp in add_list:
-                with settings(command='reprepro -S %s includedeb %s %s/%s' %
-                             (comp, test_dist, env.packages_dir, package)):
-                    local('%(command)s' % env, capture=False)
-            
+                include_deb(tmp_repo, comp, package)
             for package, comp in update_list:
-                with settings(command='reprepro -S %s includedeb %s %s/%s' %
-                             (comp, test_dist, env.packages_dir, package)):
-                    local('%(command)s' % env, capture=False)
-            
+                include_deb(tmp_repo, comp, package)
             for package, comp in delete_list:
-                with settings(command='reprepro remove %s %s' % 
-                              (test_dist, package)):
-                    local('%(command)s' % env, capture=False)
+                include_deb(tmp_repo, comp, package)
         
-        update_cache(env.micro_repository_path, env.pcache)
+        update_cache(tmp_repo, pcache)
         # FALTAN LOS ASSERT PARA VERIFICAR QUE LA ACTUALIZACION FUE CORRECTA
-        rmtree(env.micro_repository_path)
-        rmtree(env.pcache)
+        rmtree(tmp_repo)
+        rmtree(pcache)
     
     
     # TEST COMPLETO PERO REDUNDANTE
