@@ -30,7 +30,7 @@ These are the tests for the tribus.common.repository module.
 import os
 import gzip
 import email.Utils
-from fabric.api import env, lcd, local, settings
+#from fabric.api import env, lcd, local, settings
 from debian import deb822
 from django.test import TestCase
 from doctest import DocTestSuite

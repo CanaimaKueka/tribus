@@ -4,39 +4,46 @@
 # TODO:
 # 1. Traducir documentación.
 #=========================================================================
+# Tratando de seguir estas recomendaciones
 
-from django.db import models
+from email.Utils import parseaddr
+from django.db import models, transaction
+from django.db.utils import DatabaseError
+from tribus.common.logger import get_logger
+from tribus.config.pkgrecorder import PACKAGE_FIELDS, DETAIL_FIELDS
 
-# class MaintainerManager(models.Manager):
-#     
-#     @transaction.commit_manually
-#     def record_maintainer(self, maintainer_data):
-#         """
-#         Queries the database for an existent maintainer.
-#         If it does not exists, it creates a new maintainer.
-#      
-#         :param maintainer_data: a string which contains maintainer's name and
-#         email.
-#      
-#         :return: a `Maintainer` object.
-#      
-#         :rtype: ``Maintainer``
-#      
-#         .. versionadded:: 0.1
-#         """
-#         
-#         maintainer_name, maintainer_mail = email.Utils.parseaddr(maintainer_data)
-#          
-#         try:
-#             maintainer, _ = Maintainer.objects.get_or_create(Name=maintainer_name,
-#                                                              Email=maintainer_mail)
-#         except DatabaseError, e:
-#             transaction.rollback()
-#             logger.info("There has been an error recording %s" % (maintainer_data))
-#             logger.error(e.message)
-#         else:
-#             transaction.commit()
-#             return maintainer
+logger = get_logger()
+
+
+class MaintainerManager(models.Manager):
+    @transaction.commit_manually
+    def create(self, maintainer_data):
+        """
+        Queries the database for an existent maintainer.
+        If it does not exists, it creates a new maintainer.
+      
+        :param maintainer_data: a string which contains maintainer's name and
+        email.
+      
+        :return: a `Maintainer` object.
+      
+        :rtype: ``Maintainer``
+      
+        .. versionadded:: 0.1
+        """
+        
+        maintainer_name, maintainer_mail = parseaddr(maintainer_data)
+        
+        try:
+            maintainer, _ = self.get_or_create(Name=maintainer_name,
+                                             Email=maintainer_mail)
+        except DatabaseError, e:
+            transaction.rollback()
+            logger.info("There has been an error recording %s" % (maintainer_data))
+            logger.error(e.message)
+        else:
+            transaction.commit()
+            return maintainer
 
 
 class Maintainer(models.Model):
@@ -49,16 +56,57 @@ class Maintainer(models.Model):
     Email = models.EmailField("correo electronico del mantenedor",
                               max_length=75)
     
-    #objects = MaintainerManager()
+    objects = MaintainerManager()
+    
+    class Meta:
+        ordering = ["Name"]
+    
     
     def __unicode__(self):
         return self.Name
     
     
-    class Meta:
-        ordering = ["Name"]
-
-
+class PackageManager(models.Manager):
+    @transaction.commit_manually
+    def create(self, paragraph):
+        """
+        Queries the database for an existent package.
+        If the package does exists but it doesn't have
+        a maintainer, then the package data will be
+        updated acording to the fields of the paragraph provided.
+        If the package doesn't exists then it's created.
+    
+        :param paragraph: contains information about a binary package.
+    
+        :return: a `Package` object.
+    
+        :rtype: ``Package``
+    
+        .. versionadded:: 0.1
+        """
+        
+        package, _ = self.get_or_create(Name = paragraph['Package'])
+        
+        if package.Maintainer:
+            transaction.commit()
+            return package
+        else:
+            try:
+                for field, db_field in PACKAGE_FIELDS.items():
+                    setattr(package, db_field, paragraph.get(field))
+                package.Maintainer = Maintainer.objects.create(paragraph['Maintainer'])
+                package.save()
+                package.record_tags(paragraph)
+            
+            except DatabaseError, e:
+                transaction.rollback()
+                logger.info("There has been an error recording %s" % (paragraph['Package']))
+                logger.error(e.message)
+            else:
+                transaction.commit()
+                return package
+    
+    
 class Package(models.Model):
     """
     Representacion de los datos básicos de un paquete binario
@@ -75,50 +123,75 @@ class Package(models.Model):
     """
     
     Name = models.CharField("nombre del paquete", max_length=150)
-    Maintainer = models.ForeignKey(
-        Maintainer,
-        verbose_name="nombre del mantenedor",
-        null=True)
-    Section = models.CharField(
-        "seccion del paquete",
-        max_length=50,
+    Maintainer = models.ForeignKey(Maintainer,
+        verbose_name="nombre del mantenedor", null=True)
+    Section = models.CharField("seccion del paquete", max_length=50,
         null=True)
     Essential = models.CharField("es esencial?", null=True, max_length=10)
-    Priority = models.CharField(
-        "prioridad del paquete",
-        max_length=50,
+    Priority = models.CharField("prioridad del paquete", max_length=50,
         null=True)
-    MultiArch = models.CharField(
-        "multi-arquitectura",
-        null=True,
+    MultiArch = models.CharField("multi-arquitectura", null=True,
         max_length=50)
-    Description = models.TextField(
-        "descripcion del paquete",
-        max_length=500,
+    Description = models.TextField("descripcion del paquete", max_length=500,
         null=True)
-    Homepage = models.URLField(
-        "pagina web del paquete",
-        max_length=200,
+    Homepage = models.URLField("pagina web del paquete", max_length=200,
         null=True)
     Bugs = models.CharField("bugs existentes", null=True, max_length=200)
-    Labels = models.ManyToManyField(
-        "Label",
-        null=True,
-        symmetrical=False,
+    Labels = models.ManyToManyField("Label", null=True, symmetrical=False,
         blank=True)
-    Details = models.ManyToManyField(
-        "Details",
-        null=True,
-        symmetrical=False,
+    Details = models.ManyToManyField("Details", null=True, symmetrical=False,
         blank=True)
+    
+    objects = PackageManager()
+    
 
     class Meta:
         ordering = ["Name"]
-
+    
+    
     def __unicode__(self):
         return self.Name
-
-
+    
+    
+    def update_package(self, paragraph):
+        """
+        Updates the basic data of a package in the database.
+    
+        :param paragraph: contains information about a binary package.
+    
+        :return: a `Package` object.
+    
+        :rtype: ``Package``
+    
+        .. versionadded:: 0.1
+        """
+        
+        for field, db_field in PACKAGE_FIELDS.items():
+            setattr(self, db_field, paragraph.get(field))
+        if not self.Maintainer:
+            self.Maintainer = Maintainer.objects.create(paragraph['Maintainer'])
+        self.save()
+    
+    
+    def record_tags(self, paragraph):
+        """
+        Processes the contents of the 'Tag' field in the provided paragraph,
+        records the labels into the database and relates them to a package.
+        
+        :param paragraph: contains information about a binary package.
+        
+        .. versionadded:: 0.1
+        """
+        
+        if 'Tag' in paragraph:
+            tag_list = paragraph['Tag'].replace("\n", "").split(", ")
+            for tag in tag_list:
+                tag_name, tag_value = tag.split("::")
+                value, _ = Tag.objects.get_or_create(Value=tag_value)
+                label, _ = Label.objects.get_or_create(Name=tag_name, Tags=value)
+                self.Labels.add(label)
+    
+    
 class Tag(models.Model):
     """
     Es cada uno de los valores que puede tener una etiqueta 
@@ -134,11 +207,12 @@ class Tag(models.Model):
     """
     
     Value = models.CharField("valor etiqueta", max_length=200)
-
+    
+    
     def __unicode__(self):
         return self.Value
-
-
+    
+    
 class Label(models.Model):
     """
     Es una palabra o pequena frase que ayuda a identificar
@@ -160,14 +234,16 @@ class Label(models.Model):
     
     Name = models.CharField("nombre etiqueta", max_length=100)
     Tags = models.ForeignKey(Tag, null=True)
-
+    
+    
     def __unicode__(self):
         return self.Tags.Value
-
+    
+    
     class Meta:
         ordering = ["Name"]
-
-
+    
+    
 class Relation(models.Model):
     """
     Representa los distintos lazos que relacionan un paquete
@@ -198,30 +274,53 @@ class Relation(models.Model):
     """
     
     related_package = models.ForeignKey(Package, null=True, blank=True)
-    version = models.CharField(
-        "numero de la version del paquete 'hijo'",
-        max_length=50,
-        null=True,
-        blank=True)
-    order = models.CharField(
-        "orden de la version del paquete 'hijo'",
-        max_length=75,
-        null=True,
-        blank=True)
-    relation_type = models.CharField(
-        "orden de la version del paquete 'hijo'",
-        max_length=75,
-        null=True,
-        blank=True)
-    alt_id = models.IntegerField(
-        "tamaño del paquete en esta arquitectura",
+    version = models.CharField("numero de la version del paquete 'hijo'", 
+        max_length=50, null=True, blank=True)
+    order = models.CharField("orden de la version del paquete 'hijo'",
+        max_length=75, null=True, blank=True)
+    relation_type = models.CharField("orden de la version del paquete 'hijo'",
+        max_length=75, null=True, blank=True)
+    alt_id = models.IntegerField("indice de relacion con otros paquetes",
         null=True)
-
+    
+    
     def __unicode__(self):
         if self.order and self.version:
             return "%s (%s %s)" % (self.related_package.Name, self.order, self.version)
         else:
             return self.related_package.Name
+    
+    
+class DetailsManager(models.Manager):
+    def create(self, paragraph, package, branch):
+        """
+        Queries the database for the details of a given package.
+        If there are no details then they are recorded.
+    
+        :param paragraph: contains information about a binary package.
+    
+        :param package: a `Package` object to which the details are related.
+    
+        :param branch: codename of the Canaima's version that will be recorded.
+    
+        :return: a `Details` object.
+    
+        :rtype: ``Details``
+    
+        .. versionadded:: 0.1
+        """
+        
+        try:
+            return self.get(package=package,
+                            Architecture=paragraph['Architecture'],
+                            Distribution=branch)
+        except Details.DoesNotExist:
+            details, _ = self.get_or_create(Distribution=branch)
+            for field, db_field in DETAIL_FIELDS.items():
+                setattr(details, db_field, paragraph.get(field))
+            details.save()
+            package.Details.add(details)
+            return details
 
 
 class Details(models.Model):
@@ -234,35 +333,125 @@ class Details(models.Model):
      "Installed-Size"]
     """
     
-    Version = models.CharField(
-        "version del paquete",
-        max_length=50,
-        null=True)
-    Architecture = models.CharField(
-        "arquitectura",
-        max_length=75,
-        null=True)
+    Version = models.CharField("version del paquete", max_length=50, null=True)
+    Architecture = models.CharField("arquitectura", max_length=75, null=True)
     Distribution = models.CharField("distribucion", max_length=75)
-    Size = models.IntegerField(
-        "tamaño del paquete en esta arquitectura",
+    Size = models.IntegerField("tamaño del paquete en esta arquitectura",
         null=True)
     InstalledSize = models.IntegerField(
-        "tamaño una vez instalado en esta arquitectura",
-        null=True)
-    MD5sum = models.CharField(
-        "llave md5 del paquete en esta arquitectura",
-        max_length=75,
-        null=True)
-    Filename = models.CharField(
-        "ruta del paquete en esta arquitectura",
-        max_length=150,
-        null=True)
-    Relations = models.ManyToManyField(
-        'Relation',
-        null=True,
-        symmetrical=False,
-        blank=True)
-
+        "tamaño una vez instalado en esta arquitectura", null=True)
+    MD5sum = models.CharField("llave md5 del paquete en esta arquitectura",
+        max_length=75, null=True)
+    Filename = models.CharField("ruta del paquete en esta arquitectura",
+        max_length=150, null=True)
+    Relations = models.ManyToManyField('Relation', null=True, 
+        symmetrical=False, blank=True)
+    
+    objects = DetailsManager()
+    
+    
     def __unicode__(self):
         if self.Architecture:
             return "%s : %s" % (self.Architecture, self.Distribution)
+        
+        
+    def update_details(self, package, paragraph, branch):
+        """
+        Updates the details of a Package in the database.
+    
+        :param package: a `Package` object to which the details are related.
+    
+        :param paragraph: contains information about a binary package.
+    
+        :param branch: codename of the Canaima's version that will be updated.
+    
+        :return: a `Details` object.
+    
+        :rtype: ``Details``
+    
+        .. versionadded:: 0.1
+        """
+        
+        for field, db_field in DETAIL_FIELDS.items():
+            setattr(self, db_field, paragraph.get(field))
+        self.save()
+        
+        for relation in self.Relations.all():
+            self.Relations.remove(relation)
+            exists = Details.objects.filter(Relations=relation)
+            if not exists:
+                relation.delete()
+        self.record_relations(paragraph.relations.items())
+        
+    
+    def record_relationship(self, relation_type, fields, alt_id=0):
+        """
+        Records a new relation in the database and then associates it to a `Details` object.
+    
+        :param relation_type: a string indicating the relationship type.
+    
+        :param fields: a dictionary which contains the relation information. Its structure is similar to::
+    
+                           {"name": "0ad-data", "version": (">=", "0~r11863"), "arch": None}
+    
+        :param alt_id: an integer used to relate a relation with its alternatives, e.g:
+    
+                           +----+-----------------+---------------+-----------+---------+--------+
+                           | id | related_package | relation_type | relation  | version | alt_id |
+                           +====+=================+===============+===========+=========+========+
+                           |  1 |       23        |     depends   |    <=     |  0.98   |        |
+                           +----+-----------------+---------------+-----------+---------+--------+
+                           |  2 |       24        |     depends   |    >=     |  0.64   |    1   |
+                           +----+-----------------+---------------+-----------+---------+--------+
+                           |  3 |       25        |     depends   |    >=     |  2.76   |    1   |
+                           +----+-----------------+---------------+-----------+---------+--------+
+                           |  4 |       26        |     depends   |           |         |    1   |
+                           +----+-----------------+---------------+-----------+---------+--------+
+                           |  5 |       27        |     depends   |    <<     |  2.14   |        |
+                           +----+-----------------+---------------+-----------+---------+--------+
+    
+                        in the above table, the relations with id 2, 3 and 4 are alternatives between
+                        themselves because they have the same value in the field `alt_id`.
+    
+        .. versionadded:: 0.1
+        """
+        
+        version = fields.get('version', None) 
+        if version:
+            order_version, number_version = version
+        else:
+            order_version, number_version = (None, None)
+        related_package, _ = Package.objects.get_or_create(Name=fields['name'])
+        new_relation, _ = Relation.objects.get_or_create(**{"related_package": related_package,
+                                                            "relation_type": relation_type,
+                                                            "order": order_version,
+                                                            "version": number_version,
+                                                            "alt_id": alt_id})
+        self.Relations.add(new_relation)
+    
+    
+    def record_relations(self, relations_list):
+        """
+        Records a set of relations associated to a `Details` object.
+    
+        :param relations_list: a list of tuples containing package relations to another packages.
+                          Its structure is similar to::
+    
+                              [('depends', [[{'arch': None, 'name': u'libgl1-mesa-glx', 'version': None},
+                              {'arch': None, 'name': u'libgl1', 'version': None}]],
+                              [{'arch': None, 'name': u'0ad-data', 'version': (u'>=', u'0~r11863')}]), ('suggests', [])]
+    
+        .. versionadded:: 0.1
+        """
+        
+        for relation_type, relations in relations_list:
+            alt_id = 1
+            if relations:
+                for relation in relations:
+                    if len(relation) > 1:
+                        for relation_element in relation:
+                            self.record_relationship(relation_type,
+                                                     relation_element, alt_id)
+                        alt_id += 1
+                    else:
+                        self.record_relationship(relation_type, relation[0])
