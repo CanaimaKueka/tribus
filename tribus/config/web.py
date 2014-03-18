@@ -129,10 +129,10 @@ BROKER_URL = 'redis://localhost:6379/0'
 # Programacion de task para djcelery
 CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
 CELERYBEAT_SCHEDULE = {
-    "update_cache_folder": {
+    "update_cache": {
         "task": "tribus.web.cloud.tasks.update_cache",
-        #"schedule": crontab(minute=0, hour=0), # A las 12 am
-        "schedule": crontab(), # Cada minuto
+        "schedule": crontab(minute=0, hour=0), # A las 12 am
+        #"schedule": crontab(), # Cada minuto
         "args": (),
     },
 }

@@ -41,33 +41,12 @@ from debian import deb822
 from django.db.models import Q
 from tribus.common.logger import get_logger
 from tribus.web.cloud.models import Package, Details
-from tribus.common.utils import find_files, md5Checksum,\
-list_items, readconfig
+from tribus.common.utils import md5Checksum, list_items, readconfig
 
 logger = get_logger()
 
-def record_paragraph(paragraph, branch):
-    """
-    Records the content of a paragraph in the database.
 
-    :param paragraph: contains information about a binary package.
-
-    :param branch: codename of the Canaima's version that will be recorded.
-
-    .. versionadded:: 0.1
-    """
-    
-    try:
-        logger.info('Recording package \'%s\' into \'%s\' branch...'
-                    % (paragraph['Package'], branch))
-        package = Package.objects.create(paragraph)
-        details = Details.objects.create(paragraph, package, branch)
-        details.record_relations(details, paragraph.relations.items())
-    except:
-        logger.error('Could not record %s' % paragraph['Package'])
-
-
-def update_paragraph(paragraph, branch):
+def update_paragraph(paragraph, branch, comp):
     """
     Updates basic data and details of a package in the database.
     It also updates the package's relations.
@@ -75,21 +54,17 @@ def update_paragraph(paragraph, branch):
     :param paragraph: contains information about a binary package.
 
     :param branch: codename of the Canaima's version that will be updated.
+    
+    :param comp: component to which the paragraph belongs.
 
     .. versionadded:: 0.1
     """
     
     logger.info('Updating package \'%s\'' % paragraph['Package'])
-    package = update_package(paragraph)
-    details = update_details(package, paragraph, branch)
-    for relation in details.Relations.all():
-        details.Relations.remove(relation)
-        exists = Details.objects.filter(Relations=relation)
-        if not exists:
-            relation.delete()
-    record_relations(details, paragraph.relations.items())
+    package = Package.objects.get(Name = paragraph.get('Package'))
+    package.update(paragraph, branch, comp)
     logger.info('Package \'%s\' successfully updated' % paragraph['Package'])
-    
+
 
 def create_cache(repository_root, cache_dir_path):
     '''
@@ -103,28 +78,28 @@ def create_cache(repository_root, cache_dir_path):
     .. versionadded:: 0.1
     '''
     
-    local_branches = (branch.split()
-                      for branch in readconfig(os.path.join(repository_root,
-                                                            "distributions")))
-    for branch_name, branch_release_path in local_branches:
-        release_path = os.path.join(repository_root, branch_release_path)
+    if not os.path.isdir(cache_dir_path):
+        os.makedirs(cache_dir_path)
+    
+    branches = (branch.split()
+                for branch in readconfig(os.path.join(repository_root,
+                                                      "distributions")))
+    for name, release_path in branches:
+        release_path = os.path.join(repository_root, release_path)
         try:
             md5list = deb822.Release(urllib.urlopen(release_path)).get('MD5sum')
         except urllib2.URLError, e:
-            logger.warning('Could not read release file in %s, error code #%s' % (branch_release_path, e.code))
+            logger.warning('Could not read release file in %s, error code #%s' % (release_path, e.code))
         else:
             for control_file_data in md5list:
-                if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages.gz$",
-                            control_file_data['name']):
+                if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages.gz$", control_file_data['name']):
                     component, architecture, _ = control_file_data['name'].split("/")
-                    local_path = os.path.join(cache_dir_path, branch_name,
-                                              component, architecture)
                     remote_file = os.path.join(repository_root, "dists",
-                                               branch_name,
-                                               control_file_data['name'])
-                    if not os.path.isdir(local_path):
-                        os.makedirs(local_path)
-                    f = os.path.join(local_path, "Packages.gz")
+                                               name, control_file_data['name'])
+                    local_name = "_".join([name, component,
+                                           architecture.replace("binary-", "")])
+                    f = os.path.join(cache_dir_path, local_name + ".gz")
+                    
                     if not os.path.isfile(f):
                         try:
                             urllib.urlretrieve(remote_file, f)
@@ -139,12 +114,12 @@ def create_cache(repository_root, cache_dir_path):
                                 logger.error('Could not get %s, error code #%s' % (remote_file, e.code))
 
 
-def update_cache(repository_root, cache_dir_path):
+def sync_cache(repository_root, cache_dir_path):
     '''
-    Updates the control files existent in the cache,
-    comparing the the ones in the repository with its local copies.
+    Synchronizes the existing control files in the cache,
+    comparing the the ones in the repository with the local copies.
     If there are differences in the MD5sum field then the local
-    copies are deleted and copied again from the repository. 
+    copies are deleted and copied again from the repository.
     It is assumed that the cache directory was created previously.
     
     :param repository_root: url of the repository from which the Packages files will be updated.
@@ -154,12 +129,12 @@ def update_cache(repository_root, cache_dir_path):
     .. versionadded:: 0.1
     '''
     
-    local_branches = (branch.split()
-                      for branch in readconfig(os.path.join(repository_root,
-                                                            "distributions")))
-    for branch, _ in local_branches:
+    branches = (branch.split()
+                for branch in readconfig(os.path.join(repository_root,
+                                                      "distributions")))
+    changes = []
+    for branch, _ in branches:
         remote_branch_path = os.path.join(repository_root, "dists", branch)
-        local_branch_path = os.path.join(cache_dir_path, branch)
         release_path = os.path.join(remote_branch_path, "Release")
         try:
             md5list = deb822.Release(urllib.urlopen(release_path)).get('MD5sum')
@@ -167,22 +142,25 @@ def update_cache(repository_root, cache_dir_path):
             logger.warning('Could not read release file in %s, error code #%s' % (remote_branch_path, e.code))
         else:
             for package_control_file in md5list:
-                if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages.gz$",
-                            package_control_file['name']):
-                    _, architecture, _ = package_control_file['name'].split("/")
-                    # BUSCAR UNA FORMA MENOS PROPENSA A ERRORES PARA HACER ESTO
-                    architecture = architecture.split("-")[1]
+                if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages.gz$", package_control_file['name']):
+                    component, architecture, _ = package_control_file['name'].split("/")
                     remote_package_path = os.path.join(remote_branch_path, package_control_file['name'])
-                    local_package_path = os.path.join(local_branch_path, package_control_file['name'])
-                    if package_control_file['md5sum'] != md5Checksum(local_package_path):
-                        os.remove(local_package_path)
-                        urllib.urlretrieve(remote_package_path, local_package_path)
-                        update_package_list(local_package_path, branch, architecture)
+                    local_name = "_".join([branch, component,
+                                           architecture.replace("binary-", "")])
+                    f = os.path.join(cache_dir_path, local_name + ".gz")
+                    if package_control_file['md5sum'] != md5Checksum(f):
+                        os.remove(f)
+                        try:
+                            urllib.urlretrieve(remote_package_path, f)
+                            changes.append(f)
+                        except urllib2.URLError, e:
+                            logger.error('Could not get %s, error code #%s' % (remote_package_path, e.code))
                     else:
-                        logger.info('There are no changes in %s' % local_package_path)
+                        logger.info('There are no changes in %s' % f)
+    return changes
 
 
-def update_package_list(control_file_path, branch, architecture):
+def update_db_from_cache(changes, cache_dir_path=None):
     """
     Updates all packages in a control file.
     If a package exists but the MD5sum field is different from the one
@@ -190,54 +168,68 @@ def update_package_list(control_file_path, branch, architecture):
     If the package doesn't exists then its created.
     If the package exists in the database but is not found in the control
     file then its deleted.
-
-    :param control_file_path: path to the control file.
-
-    :param branch: codename of the Canaima's version that will be updated.
     
-    :param architecture: architecture of the packages present in the control file.
-
+    :param cache_dir_path: path to the desired cache directory
+    
     .. versionadded:: 0.1
     """
     
-    try:
-        package_control_file = deb822.Packages.iter_paragraphs(gzip.open(control_file_path))
-    except IOError, e:
-        logger.warning('Could not read control file in %s, error code #%s' % (control_file_path, e))
+    if cache_dir_path:
+        control_files = list_items(cache_dir_path, False, True)
     else:
-        logger.info('Updating package list')
-        existent_packages = []
-        for paragraph in package_control_file:
-            existent_packages.append(paragraph['Package'])
-            exists = Details.objects.filter(package__Name=paragraph['Package'],
-                                            Architecture=paragraph['Architecture'],
-                                            Distribution=branch)
-            if exists:
-                if paragraph['md5sum'] != exists[0].MD5sum:
-                    logger.info('The md5 checksum does not match in the package \'%s\':' % paragraph['Package'])
-                    logger.info('\'%s\' != \'%s\' ' % (paragraph['md5sum'], exists[0].MD5sum))
-                    update_paragraph(paragraph, branch)
-            else:
-                logger.info('Adding new details to \'%s\' package in \'%s\' branch...'  % (paragraph['package'], branch))
-                record_paragraph(paragraph, branch)
-    
-        bd_packages = Package.objects.filter(Details__Distribution=branch).filter(Q(Details__Architecture='all') |
-                                                                                  Q(Details__Architecture=architecture)).distinct()
-        for package in bd_packages:
-            if package.Name not in existent_packages:
-                for detail in package.Details.all():
-                    if detail.Distribution == branch and (detail.Architecture == architecture or detail.Architecture == 'all'):
-                        for relation in detail.Relations.all():
-                            detail.Relations.remove(relation)
-                            exists = Details.objects.filter(Relations=relation)
-                            if not exists:
-                                relation.delete()
-                        logger.info('Removing \'%s\' from \'%s\'...'
-                                    % (detail, package.Name))
-                        detail.delete()
-                if not package.Details.all():
-                    logger.info('Removing %s...' % package.Name)
-                    package.delete()
+        control_files = changes
+    for control_file in control_files:
+        name, _ = control_file.split(".")
+        branch, comp, arch = name.split("_")
+        path = os.path.join(cache_dir_path, control_file)
+        try:
+            paragraphs = deb822.Packages.iter_paragraphs(gzip.open(path))
+        except IOError, e:
+            logger.warning('Could not read control file in %s, error code #%s' % (path, e))
+        else:
+            logger.info('=====================')
+            logger.info('Updating packages in %s:%s:%s' % (branch, comp, arch))
+            existent_packages = []
+            for paragraph in paragraphs:
+                existent_packages.append(paragraph['Package'])
+                exists = Details.objects.filter(package__Name=paragraph['Package'],
+                                                Architecture=paragraph['Architecture'],
+                                                Distribution=branch, 
+                                                Component = comp)
+                if exists:
+                    if paragraph['md5sum'] != exists[0].MD5sum:
+                        logger.info('The md5 checksum does not match in the package \'%s\':' % paragraph['Package'])
+                        logger.info('\'%s\' != \'%s\' ' % (paragraph['md5sum'], exists[0].MD5sum))
+                        update_paragraph(paragraph, branch, comp)
+                    else:
+                        logger.info('Nothing to change \'%s\':' % paragraph['Package'])
+                else:
+                    try:
+                        Package.objects.create_auto(paragraph, branch, comp)
+                    except:
+                        logger.error('Could not record %s' % paragraph['Package'])
+            
+            bd_packages = Package.objects.filter(Details__Distribution=branch,
+                                                 Details__Component = comp
+                                                 ).filter(Q(Details__Architecture='all') |
+                                                          Q(Details__Architecture=arch)).distinct()
+            for package in bd_packages:
+                if package.Name not in existent_packages:
+                    print package.Name, "not in %s %s %s" % (branch, comp, arch)
+                    for detail in package.Details.all():
+                        if (detail.Distribution == branch and detail.Component == comp and
+                            (detail.Architecture == arch or detail.Architecture == 'all')):
+                            for relation in detail.Relations.all():
+                                detail.Relations.remove(relation)
+                                exists = Details.objects.filter(Relations=relation)
+                                if not exists:
+                                    relation.delete()
+                            logger.info('Removing \'%s\' from \'%s\'...'
+                                        % (detail, package.Name))
+                            detail.delete()
+                    if not package.Details.all():
+                        logger.info('Removing %s...' % package.Name)
+                        package.delete()
 
 
 def fill_db_from_cache(cache_dir_path):
@@ -248,12 +240,14 @@ def fill_db_from_cache(cache_dir_path):
 
     .. versionadded:: 0.1
     '''
-
-    local_branches = filter(None, list_items(path=cache_dir_path, dirs=True, files=False))
-    for branch in local_branches:
-        dist_sub_paths = [os.path.dirname(f)
-                          for f in find_files(os.path.join(cache_dir_path, branch), 'Packages.gz')]
-        for path in dist_sub_paths:
-            for p in find_files(path, "Packages.gz"):
-                for paragraph in deb822.Packages.iter_paragraphs(gzip.open(p, 'r')):
-                    record_paragraph(paragraph, branch)
+    
+    control_files = list_items(cache_dir_path, False, True)
+    for control_file in control_files:
+        name, _ = control_file.split(".")
+        branch, comp, _ = name.split("_")
+        control_file_path = os.path.join(cache_dir_path, control_file)
+        for paragraph in deb822.Packages.iter_paragraphs(gzip.open(control_file_path, 'r')):
+            try:
+                Package.objects.create_auto(paragraph, branch, comp)
+            except:
+                logger.error('Could not record %s' % paragraph['Package'])

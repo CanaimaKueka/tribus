@@ -3,12 +3,14 @@
 #=========================================================================
 # TODO:
 # 1. Traducir documentación.
+# 2. Explicar en la documentacion de los managers porque son necesarios,
+#    cuales son los procedimientos especiales que justifican el uso
+#    de un manejador personalizado.
 #=========================================================================
-# Tratando de seguir estas recomendaciones
 
+from django.db import models
 from email.Utils import parseaddr
-from django.db import models, transaction
-from django.db.utils import DatabaseError
+from django.db.models import Q
 from tribus.common.logger import get_logger
 from tribus.config.pkgrecorder import PACKAGE_FIELDS, DETAIL_FIELDS
 
@@ -16,8 +18,7 @@ logger = get_logger()
 
 
 class MaintainerManager(models.Manager):
-    @transaction.commit_manually
-    def create(self, maintainer_data):
+    def create_auto(self, maintainer_data):
         """
         Queries the database for an existent maintainer.
         If it does not exists, it creates a new maintainer.
@@ -33,17 +34,9 @@ class MaintainerManager(models.Manager):
         """
         
         maintainer_name, maintainer_mail = parseaddr(maintainer_data)
-        
-        try:
-            maintainer, _ = self.get_or_create(Name=maintainer_name,
-                                             Email=maintainer_mail)
-        except DatabaseError, e:
-            transaction.rollback()
-            logger.info("There has been an error recording %s" % (maintainer_data))
-            logger.error(e.message)
-        else:
-            transaction.commit()
-            return maintainer
+        maintainer, _ = self.get_or_create(Name=maintainer_name,
+                                         Email=maintainer_mail)
+        return maintainer
 
 
 class Maintainer(models.Model):
@@ -67,8 +60,7 @@ class Maintainer(models.Model):
     
     
 class PackageManager(models.Manager):
-    @transaction.commit_manually
-    def create(self, paragraph):
+    def create_auto(self, paragraph, branch, comp):
         """
         Queries the database for an existent package.
         If the package does exists but it doesn't have
@@ -77,6 +69,10 @@ class PackageManager(models.Manager):
         If the package doesn't exists then it's created.
     
         :param paragraph: contains information about a binary package.
+        
+        :param branch: codename of the Canaima's version that will be updated.
+        
+        :param comp: component to which the paragraph belongs.
     
         :return: a `Package` object.
     
@@ -86,25 +82,21 @@ class PackageManager(models.Manager):
         """
         
         package, _ = self.get_or_create(Name = paragraph['Package'])
-        
         if package.Maintainer:
-            transaction.commit()
+            if not package.Details.filter(Distribution = branch,
+                Component = comp).filter(
+                    Q(Architecture = paragraph['Architecture']) |
+                    Q(Architecture = 'all')):
+                package.add_details(paragraph, branch, comp)
             return package
         else:
-            try:
-                for field, db_field in PACKAGE_FIELDS.items():
-                    setattr(package, db_field, paragraph.get(field))
-                package.Maintainer = Maintainer.objects.create(paragraph['Maintainer'])
-                package.save()
-                package.record_tags(paragraph)
-            
-            except DatabaseError, e:
-                transaction.rollback()
-                logger.info("There has been an error recording %s" % (paragraph['Package']))
-                logger.error(e.message)
-            else:
-                transaction.commit()
-                return package
+            for field, db_field in PACKAGE_FIELDS.items():
+                setattr(package, db_field, paragraph.get(field))
+            package.Maintainer = Maintainer.objects.create_auto(paragraph['Maintainer'])
+            package.save()
+            package.add_labels(paragraph)
+            package.add_details(paragraph, branch, comp)
+            return package
     
     
 class Package(models.Model):
@@ -153,11 +145,15 @@ class Package(models.Model):
         return self.Name
     
     
-    def update_package(self, paragraph):
+    def update(self, paragraph, branch, comp):
         """
         Updates the basic data of a package in the database.
     
         :param paragraph: contains information about a binary package.
+        
+        :param branch: codename of the Canaima's version that will be updated.
+        
+        :param comp: component to which the paragraph belongs.
     
         :return: a `Package` object.
     
@@ -169,18 +165,30 @@ class Package(models.Model):
         for field, db_field in PACKAGE_FIELDS.items():
             setattr(self, db_field, paragraph.get(field))
         if not self.Maintainer:
-            self.Maintainer = Maintainer.objects.create(paragraph['Maintainer'])
+            self.Maintainer = Maintainer.objects.create_maintainer(paragraph['Maintainer'])
         self.save()
-    
-    
-    def record_tags(self, paragraph):
+        for label in self.Labels.all():
+            self.Labels.remove(label)
+            exists = Package.objects.filter(Labels=label)
+            if not exists:
+                label.delete()
+        self.add_labels(paragraph)
+        # Que pasa si no se encuentra el detalle?
+        details = Details.objects.get(package = self,
+                                      Architecture = paragraph.get('Architecture'),
+                                      Distribution = branch,
+                                      Component = comp)
+        details.update(paragraph)
+        
+        
+    def add_labels(self, paragraph):
         """
         Processes the contents of the 'Tag' field in the provided paragraph,
         records the labels into the database and relates them to a package.
         
         :param paragraph: contains information about a binary package.
         
-        .. versionadded:: 0.1
+        .. versionadded:: 0.2
         """
         
         if 'Tag' in paragraph:
@@ -192,6 +200,29 @@ class Package(models.Model):
                 self.Labels.add(label)
     
     
+    def add_details(self, paragraph, branch, comp):
+        '''
+        Creates a new Details objects and relates it to the package.
+        
+        :param paragraph: contains information about a binary package.
+        
+        :param branch: codename of the Canaima's version that will be updated.
+        
+        :param comp: component to which the paragraph belongs.
+        
+        .. versionadded:: 0.2
+        '''
+        
+        details = Details.objects.create(Distribution=branch, Component = comp)
+        for field, db_field in DETAIL_FIELDS.items():
+            setattr(details, db_field, paragraph.get(field))
+        details.save()
+        details.add_relations(paragraph.relations.items())
+        self.Details.add(details)
+        logger.info('Adding new details to \'%s\' package in \'%s\' branch...'  % (paragraph['package'], branch))
+        return details
+    
+    
 class Tag(models.Model):
     """
     Es cada uno de los valores que puede tener una etiqueta 
@@ -200,7 +231,7 @@ class Tag(models.Model):
     
     La etiqueta 'implemented-in' puede tener uno o mas de
     los siguientes valores:
-     
+    
     ['java', 'python', 'C#']
     
     Cada uno de estos valores es un Tag.
@@ -292,7 +323,7 @@ class Relation(models.Model):
     
     
 class DetailsManager(models.Manager):
-    def create(self, paragraph, package, branch):
+    def create_auto(self, paragraph, package, branch, comp):
         """
         Queries the database for the details of a given package.
         If there are no details then they are recorded.
@@ -302,23 +333,27 @@ class DetailsManager(models.Manager):
         :param package: a `Package` object to which the details are related.
     
         :param branch: codename of the Canaima's version that will be recorded.
+        
+        :param comp: component to which the paragraph belongs.
     
         :return: a `Details` object.
     
         :rtype: ``Details``
     
-        .. versionadded:: 0.1
+        .. versionadded:: 0.2
         """
         
         try:
             return self.get(package=package,
                             Architecture=paragraph['Architecture'],
-                            Distribution=branch)
+                            Distribution=branch, 
+                            Component = comp)
         except Details.DoesNotExist:
-            details, _ = self.get_or_create(Distribution=branch)
+            details = self.create(Distribution=branch, Component=comp)
             for field, db_field in DETAIL_FIELDS.items():
                 setattr(details, db_field, paragraph.get(field))
             details.save()
+            details.add_relations(paragraph.relations.items())
             package.Details.add(details)
             return details
 
@@ -335,6 +370,7 @@ class Details(models.Model):
     
     Version = models.CharField("version del paquete", max_length=50, null=True)
     Architecture = models.CharField("arquitectura", max_length=75, null=True)
+    Component = models.CharField("componente", max_length=75, null=True)
     Distribution = models.CharField("distribucion", max_length=75)
     Size = models.IntegerField("tamaño del paquete en esta arquitectura",
         null=True)
@@ -355,15 +391,11 @@ class Details(models.Model):
             return "%s : %s" % (self.Architecture, self.Distribution)
         
         
-    def update_details(self, package, paragraph, branch):
+    def update(self, paragraph):
         """
         Updates the details of a Package in the database.
     
-        :param package: a `Package` object to which the details are related.
-    
         :param paragraph: contains information about a binary package.
-    
-        :param branch: codename of the Canaima's version that will be updated.
     
         :return: a `Details` object.
     
@@ -381,10 +413,10 @@ class Details(models.Model):
             exists = Details.objects.filter(Relations=relation)
             if not exists:
                 relation.delete()
-        self.record_relations(paragraph.relations.items())
+        self.add_relations(paragraph.relations.items())
         
     
-    def record_relationship(self, relation_type, fields, alt_id=0):
+    def add_relation(self, relation_type, fields, alt_id=0):
         """
         Records a new relation in the database and then associates it to a `Details` object.
     
@@ -430,7 +462,7 @@ class Details(models.Model):
         self.Relations.add(new_relation)
     
     
-    def record_relations(self, relations_list):
+    def add_relations(self, relations_list):
         """
         Records a set of relations associated to a `Details` object.
     
@@ -450,8 +482,8 @@ class Details(models.Model):
                 for relation in relations:
                     if len(relation) > 1:
                         for relation_element in relation:
-                            self.record_relationship(relation_type,
+                            self.add_relation(relation_type,
                                                      relation_element, alt_id)
                         alt_id += 1
                     else:
-                        self.record_relationship(relation_type, relation[0])
+                        self.add_relation(relation_type, relation[0])
