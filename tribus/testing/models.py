@@ -29,7 +29,8 @@ This file contains all the tribus tests.
 
 #from tribus.testing.tribus_common_utils import *
 #from tribus.testing.tribus_common_repository import *
-#from tribus.testing.tribus_common_recorder import *
-#from tribus.testing.tribus_web_cloud_views import *
-#from tribus.testing.tribus_common_reprepro import *
+from tribus.testing.tribus_web_cloud_views import *
+from tribus.testing.tribus_common_reprepro import *
+from tribus.testing.tribus_common_recorder import *
+from tribus.testing.tribus_web_cloud_models import *
 

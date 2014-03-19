@@ -27,16 +27,9 @@ These are the tests for the tribus.common.repository module.
 
 '''
 
-import os
-import gzip
-import email.Utils
-#from fabric.api import env, lcd, local, settings
-from debian import deb822
 from django.test import TestCase
-from doctest import DocTestSuite
 from tribus.__init__ import BASEDIR
 from tribus.common.utils import get_path
-from tribus.web.cloud.models import Package
 
 SAMPLESDIR = get_path([BASEDIR, "tribus", "testing", "samples" ])
 FIXTURES = get_path([BASEDIR, "tribus", "testing", "fixtures" ])

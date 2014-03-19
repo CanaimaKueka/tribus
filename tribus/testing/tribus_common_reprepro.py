@@ -29,9 +29,7 @@ These are the tests for the tribus.common.reprepro module.
 '''
 
 import os
-from debian import deb822
 from django.test import TestCase
-from doctest import DocTestSuite
 from tribus.common.utils import get_path
 from tribus.common.iosync import rmtree
 from tribus.__init__ import BASEDIR
@@ -58,7 +56,7 @@ class RepreproFunctions(TestCase):
         self.assertTrue(os.path.isfile(os.path.join(test_repo, 'conf', 'distributions')))
         rmtree(test_repo)
     
-    
+    '''
     def test_include_deb(self):
         # Para probar esta funcion necesitaria acceso a internet y a un repositorio 
         # que no este caido
@@ -69,5 +67,5 @@ class RepreproFunctions(TestCase):
         # Tambien necesito llenar el repositorio previamente
         pass
         #from tribus.common.reprepro import  reset_repository
-        
-        
+    '''
+    

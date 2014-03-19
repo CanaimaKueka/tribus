@@ -10,8 +10,7 @@ Description: Very fast and versatile 3D modeller/renderer
 Homepage: http://www.blender.org/
 Description-md5: 90b4f36fda45432800e6a278de5b06b4
 Tag: implemented-in::c++, interface::3d, interface::x11, role::program,
- scope::application, uitoolkit::sdl, use::editing, works-with::3dmodel,
- x11::application
+ x11::application, testlabel::testtag
 Section: graphics
 Priority: optional
 Filename: pool/main/b/blender/blender_2.69-3_i386.deb
