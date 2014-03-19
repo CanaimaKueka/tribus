@@ -174,4 +174,31 @@ def download_sample_packages(repository_root, samples_dir):
                                            os.path.join(download_path, l[-1]))
                 except urllib2.URLError, e:
                     logger.warning('Could not get %s, error code #%s' % (l[-1], e.code))
-                
+
+
+def get_selected_packages(remote_root, samples_dir, list_path):
+    '''
+    Creates a directory structure to store package samples for its later use
+    in a test package repository.
+    
+    :param samples_dir: directory that will be used to store the examples for the repository.
+    
+    .. versionadded:: 0.1
+    '''
+    
+    samples = readconfig(list_path, None, False, False)
+    for sample in samples:
+        dist, comp, pool = sample.split()
+        dest = os.path.join(samples_dir, dist, comp)
+        
+        if not os.path.isdir(dest):
+            os.makedirs(dest)
+        
+        try:
+            sample_name = os.path.basename(pool)
+            if not os.path.isfile(os.path.join(dest, sample_name)):
+                logger.info("Downloading -> %s" % sample_name)
+                urllib.urlretrieve(os.path.join(remote_root, pool),
+                                   os.path.join(dest, sample_name))
+        except urllib2.URLError, e:
+            logger.warning('Could not get %s, error code #%s' % (sample_name, e.code))

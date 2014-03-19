@@ -78,7 +78,10 @@ def development():
         '_xapian.so')
     env.reprepro_dir = os.path.join(BASEDIR, 'test_repo')
     env.sample_packages_dir = os.path.join(BASEDIR, 'package_samples')
-    env.distributions_path = os.path.join(BASEDIR, 'tribus', 'config', 'data', 'dists-template')
+    env.distributions_path = os.path.join(BASEDIR, 'tribus', 'config',
+                                          'data', 'dists-template')
+    env.selected_packages = os.path.join(BASEDIR, 'tribus', 'config',
+                                         'data', 'selected_packages.list')
 
 
 def environment():
@@ -131,7 +134,14 @@ def get_sample_packages():
     download_sample_packages(CANAIMA_ROOT, SAMPLES_DIR)
     urllib.urlretrieve(os.path.join(CANAIMA_ROOT, "distributions"),
                        os.path.join(LOCAL_ROOT, "distributions"))
-
+    
+    
+def get_selected():
+    py_activate_virtualenv()
+    from tribus.common.repository import get_selected_packages
+    from tribus.config.pkgrecorder import CANAIMA_ROOT, SAMPLES_DIR
+    get_selected_packages(CANAIMA_ROOT, SAMPLES_DIR, env.selected_packages)
+    
 
 def index_sample_packages():
     '''
@@ -154,6 +164,20 @@ def index_sample_packages():
                 logger.info('There are no packages in %s' % directory)
 
 
+def index_selected():
+    from tribus.common.utils import list_items, find_files
+    from tribus.common.reprepro import include_deb
+    from tribus.config.pkgrecorder import LOCAL_ROOT, SAMPLES_DIR
+    for dist in list_items(SAMPLES_DIR, True, False):
+        for comp in list_items(os.path.join(SAMPLES_DIR, dist), True, False):
+            for sample in find_files(os.path.join(SAMPLES_DIR, dist, comp)):
+                with lcd('%(reprepro_dir)s' % env):
+                    try:
+                        include_deb(LOCAL_ROOT, dist, comp, sample)
+                    except:
+                        logger.info('There are no packages here!')
+
+
 def wipe_repo():
     from tribus.common.reprepro import reset_repository
     reset_repository(env.reprepro_dir)
@@ -173,9 +197,10 @@ def filldb_from_local():
 
 def filldb_from_remote():
     py_activate_virtualenv()
-    from tribus.common.recorder import create_cache
+    from tribus.common.recorder import fill_db_from_cache, create_cache
     from tribus.config.pkgrecorder import CANAIMA_ROOT
     create_cache(CANAIMA_ROOT, PACKAGECACHE)
+    #fill_db_from_cache(PACKAGECACHE)
     
 
 def resetdb():
@@ -195,6 +220,14 @@ def rebuild_index():
             local(
                 '%(command)s python manage.py rebuild_index \
 --noinput --verbosity 3 --traceback' %
+                env, capture=False)
+
+
+def clean_tasks():
+    with cd('%(basedir)s' % env):
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local(
+                '%(command)s python manage.py celery purge' %
                 env, capture=False)
 
 

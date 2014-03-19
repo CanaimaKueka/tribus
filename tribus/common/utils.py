@@ -29,7 +29,6 @@ This module contains common and low level functions to all modules in Tribus.
 
 import os
 import re
-import deb822
 import urllib
 import hashlib
 
@@ -355,6 +354,7 @@ def filename_generator(file_parts, new_m_time):
 
 
 def repeated_relation_counter(control_file):
+    import deb822
     archivo = urllib.urlopen(control_file)
     for paragraph in deb822.Packages.iter_paragraphs(archivo):
         for rel_type, rel in paragraph.relations.items():
