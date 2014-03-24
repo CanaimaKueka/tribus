@@ -354,17 +354,20 @@ def createsuperuser_django():
         with settings(command='. %(virtualenv_activate)s;' % env):
             local(
                 '%(command)s python manage.py createsuperuser --noinput \
---username admin --email admin@localhost.com --verbosity 3 --traceback' %
+--username tribus --email tribus@localhost.com --verbosity 3 --traceback' %
                 env, capture=False)
 
     py_activate_virtualenv()
 
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
     from django.contrib.auth.models import User
-
-    u = User.objects.get(username__exact='admin')
+    from tribus.web.registration.ldap.utils import create_ldap_user
+ 
+    u = User.objects.get(username__exact='tribus')
     u.set_password('tribus')
     u.save()
+
+    create_ldap_user(u)
 
 
 def syncdb_django():
