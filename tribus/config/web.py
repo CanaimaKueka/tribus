@@ -174,7 +174,7 @@ INSTALLED_APPS = (
     'haystack',
     'celery_haystack',
     'registration',
-
+    'waffle'
 )
 
 SOUTH_TESTS_MIGRATE = False
@@ -183,39 +183,39 @@ SKIP_SOUTH_TESTS = True
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'django.contrib.staticfiles.finders.FileSystemFinder',
 )
 
-
 TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
+    'django.template.loaders.filesystem.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
-    # 'django.middleware.cache.UpdateCacheMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    # 'django.middleware.cache.FetchFromCacheMiddleware',
+    # 'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    # 'django.middleware.cache.FetchFromCacheMiddleware',
+    'waffle.middleware.WaffleMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.messages.context_processors.messages',
     'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.request',
+    'django.core.context_processors.static',
+    'django.core.context_processors.media',
     'django.core.context_processors.debug',
     'django.core.context_processors.i18n',
-    'django.core.context_processors.media',
-    'django.core.context_processors.static',
     'django.core.context_processors.tz',
-    'django.contrib.messages.context_processors.messages',
     'tribus.web.processors.default_context',
     #'social_auth.context_processors.social_auth_by_type_backends',
 )
-
 
 # SOCIAL_AUTH_PIPELINE = (
 #    'social_auth.backends.pipeline.social.social_auth_user',
@@ -239,7 +239,6 @@ CACHES = {
         },
     },
 }
-
 
 try:
     djcelery.setup_loader()

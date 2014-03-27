@@ -1,6 +1,7 @@
 {% load i18n %}
 {% load static %}
 {% load django_static %}
+{% load waffle_tags %}
 <!DOCTYPE html>
 <html data-ng-app="tribus">
     <head>
@@ -31,6 +32,10 @@
             ga('create', 'UA-46290421-1', 'gob.ve');
             ga('send', 'pageview');
         </script>
+        <script type="text/javascript">
+        	{% wafflejs %}
+        </script>
+        
         {% include 'angular-bootstrap-templates.html' %}
     </head>
     <body>

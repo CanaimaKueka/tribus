@@ -12,9 +12,11 @@
 				{% for result in page.object_list %}
 					<ul>
 					{% if result.model_name == "package" %}
-				    	<li> <b> <a href="/cloud/p/{{ result.autoname }}">{{ result.autoname }}</a> </b> 
-				    		{% if result.description %} {{ result.description|truncatechars:200 }}
-				    		{% else %} <i>Virtual package</i> {% endif %}</li>
+						{% flag package_cloud %}
+				    		<li> <b> <a href="/cloud/p/{{ result.autoname }}">{{ result.autoname }}</a> </b> 
+				    			{% if result.description %} {{ result.description|truncatechars:200 }}
+				    			{% else %} <i>Virtual package</i> {% endif %}</li>
+				    	{% endflag %}
 				    {% elif result.model_name == "user" %}
 				   		<li> <b> <a href="/profile/{{ result.username }}">{{ result.fullname }}</a></b>
 				   			{% if result.description %} {{ result.description|truncatechars:100 }}
@@ -45,12 +47,17 @@
 			</div>
 			<div>
 				{% if filter == "package" %}
-				<h2> {% trans 'Filters:' %} </h2>
-				    <p> <b><a href="?q={{query}}&filter=package"> {% trans "Packages" %}</a></b> </p>
-				    <p> <a href="?q={{query}}&filter=user"> {% trans "Users" %}</a> </p>
+					{% flag package_cloud %}
+						<h2> {% trans 'Filters:' %} </h2>
+				    		<p> <b><a href="?q={{query}}&filter=package"> {% trans "Packages" %}</a></b> </p>
+				    		<p> <a href="?q={{query}}&filter=user"> {% trans "Users" %}</a> </p>
+				    {% endflag %}
+				    
 				{% elif filter == "user" %}
-				<h2> {% trans 'Filters:' %} </h2> 
-					<p><a href="?q={{query}}&filter=package"> {% trans "Packages" %}</a></p>
+				<h2> {% trans 'Filters:' %} </h2>
+					{% flag package_cloud %} 
+						<p><a href="?q={{query}}&filter=package"> {% trans "Packages" %}</a></p>
+					{% endflag %}
 				    <p><b><a href="?q={{query}}&filter=user"> {% trans "Users" %}</a></b></p>
 				{% endif %}
 			</div>

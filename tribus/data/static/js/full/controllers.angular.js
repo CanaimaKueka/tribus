@@ -139,16 +139,19 @@ function TypeaheadCtrl($scope, Search){
     $scope.getResults = function(inputvalue){
         Search.query({ q: inputvalue }, function(results){
         	$scope.res = [];
-            if (results.objects[0].packages.length > 0) {
-                var packages = results.objects[0].packages;
-                for(var i = 0; i < packages.length; i++){
-                    packages[i].url = packages_url_placer.replace('%PACKAGE%', packages[i].name);
-                    $scope.res.push({name : packages[i].name,
-                    				 url : packages[i].url,
-                    				 type : "package"
-                    				 });
-                }
-            }
+        	
+        	if (waffle.flag_is_active('package_cloud')) {
+	            if (results.objects[0].packages.length > 0) {
+	                var packages = results.objects[0].packages;
+	                for(var i = 0; i < packages.length; i++){
+	                    packages[i].url = packages_url_placer.replace('%PACKAGE%', packages[i].name);
+	                    $scope.res.push({name : packages[i].name,
+	                    				 url : packages[i].url,
+	                    				 type : "package"
+	                    				 });
+	                }
+	            }
+           	}
             
             if (results.objects[0].users.length > 0) {
 	            var users = results.objects[0].users;

@@ -9,11 +9,23 @@
             {% include 'tribs.html' %}
             </div>
             <div class="span4 dashboard_panel">
-                <a href="/cloud/" class="btn btn-block btn-warning btn-large">
-                    <span class="bigger-140 width-100 block">
-                        {% trans 'Application Cloud' %}
-                    </span>
-                </a>
+                {% flag package_cloud %}
+	                <a href="/cloud/" class="btn btn-block btn-warning btn-large">
+	                    <span class="bigger-140 width-100 block">
+	                        {% trans 'Application Cloud' %}
+	                    </span>
+	                </a>
+				{% else %}
+  					<a href="/" class="btn btn-block btn-warning btn-large disabled">
+	                    <span class="bigger-140 width-100 block">
+	                        {% trans 'Application Cloud' %}
+	                    </span>
+	                    <span class="width-100 block">
+	                        {% trans 'We are working on this feature' %}
+	                    </span>
+	                </a>
+				{% endflag %}
+                
                 <a href="/" class="btn btn-block btn-warning btn-large disabled">
                     <span class="bigger-140 width-100 block">
                         {% trans 'Continuous Integration' %}
@@ -22,6 +34,7 @@
                         {% trans 'We are working on this feature' %}
                     </span>
                 </a>
+                
                 <a href="/" class="btn btn-block btn-warning btn-large disabled">
                     <span class="bigger-140 width-100 block">
                         {% trans 'Project Management' %}

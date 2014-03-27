@@ -12,8 +12,10 @@ from tribus.config.pkgrecorder import LOCAL_ROOT, relation_types, CANAIMA_ROOT, 
 from haystack.query import SearchQuerySet
 from django.core.paginator import Paginator, InvalidPage
 from tribus.config.web import DEBUG
+from waffle.decorators import waffle_flag
 
 
+@waffle_flag('package_cloud')
 def frontpage(request):
     '''
     Muestra la portada de la nube de aplicaciones.
@@ -32,6 +34,7 @@ def frontpage(request):
     })
 
 
+@waffle_flag('package_cloud')
 def package_list(request):
     '''
     Muestra una lista en orden alfabetico de todas 
@@ -76,6 +79,7 @@ def package_list(request):
     return render(request, 'cloud/package_list.html', context)
 
 
+@waffle_flag('package_cloud')
 def profile(request, name):
     '''
     Muestra el perfil de una aplicación especifica. El perfil esta compuesto por:
