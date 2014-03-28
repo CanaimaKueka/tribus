@@ -207,9 +207,28 @@ def resetdb():
     configure_sudo()
     drop_mongo()
     configure_postgres()
+    populate_ldap()
     configure_django()
     rebuild_index()
+    register_existent_modules()
     deconfigure_sudo()
+
+# -----------------------------------------------------------------------------
+# WAFFLE SWITCHES
+
+def register_existent_modules():
+    '''
+    Crea registra switches para los modulos existentes en tribus
+    * Nube de aplicaciones
+    * Perfiles de usuarios
+    '''
+    
+    with cd('%(basedir)s' % env):
+        local('python manage.py switch cloud off --create',
+                capture=False)
+        
+        local('python manage.py switch profile off --create',
+               capture=False)
 
 # -----------------------------------------------------------------------------
 

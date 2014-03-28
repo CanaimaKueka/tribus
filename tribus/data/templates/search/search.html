@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block title %}{% trans 'Tribus Search' %}{% endblock %}
+{% load waffle_tags %}
 {% block content %}
 <div class="jumbotron">
 	<div class="container-fluid">
@@ -12,15 +13,17 @@
 				{% for result in page.object_list %}
 					<ul>
 					{% if result.model_name == "package" %}
-						{% flag package_cloud %}
+						{% switch cloud %}
 				    		<li> <b> <a href="/cloud/p/{{ result.autoname }}">{{ result.autoname }}</a> </b> 
 				    			{% if result.description %} {{ result.description|truncatechars:200 }}
 				    			{% else %} <i>Virtual package</i> {% endif %}</li>
-				    	{% endflag %}
+				    	{% endswitch %}
 				    {% elif result.model_name == "user" %}
-				   		<li> <b> <a href="/profile/{{ result.username }}">{{ result.fullname }}</a></b>
-				   			{% if result.description %} {{ result.description|truncatechars:100 }}
-				   			{% else %} {% endif %}</li>
+				    	{% switch profile %}
+				   			<li> <b> <a href="/profile/{{ result.username }}">{{ result.fullname }}</a></b>
+				   				{% if result.description %} {{ result.description|truncatechars:100 }}
+				   				{% else %} {% endif %}</li>
+				   		{% endswitch %}
 				    {% endif %}
 				    </ul>
 				{% empty %}
@@ -47,18 +50,23 @@
 			</div>
 			<div>
 				{% if filter == "package" %}
-					{% flag package_cloud %}
-						<h2> {% trans 'Filters:' %} </h2>
-				    		<p> <b><a href="?q={{query}}&filter=package"> {% trans "Packages" %}</a></b> </p>
-				    		<p> <a href="?q={{query}}&filter=user"> {% trans "Users" %}</a> </p>
-				    {% endflag %}
+					<h2> {% trans 'Filters:' %} </h2>
+					{% switch cloud %}	
+				    	<p> <b><a href="?q={{query}}&filter=package"> {% trans "Packages" %}</a></b> </p>
+				    {% endswitch %}
+				    
+				    {% switch profile %}
+				    	<p> <a href="?q={{query}}&filter=user"> {% trans "Users" %}</a> </p>
+				    {% endswitch %}
 				    
 				{% elif filter == "user" %}
 				<h2> {% trans 'Filters:' %} </h2>
-					{% flag package_cloud %} 
+					{% switch cloud %}
 						<p><a href="?q={{query}}&filter=package"> {% trans "Packages" %}</a></p>
-					{% endflag %}
-				    <p><b><a href="?q={{query}}&filter=user"> {% trans "Users" %}</a></b></p>
+					{% endswitch %}
+					{% switch profile %}
+				    	<p><b><a href="?q={{query}}&filter=user"> {% trans "Users" %}</a></b></p>
+				    {% endswitch %}
 				{% endif %}
 			</div>
 		</div>
