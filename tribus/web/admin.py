@@ -17,3 +17,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+from django.contrib import admin
+from tribus.web.cloud.models import Package
+
+admin.site.register(Package)
