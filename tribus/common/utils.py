@@ -302,6 +302,9 @@ def readconfig(filename, options=[], conffile=False, strip_comments=True):
 # Taken from
 # http://www.joelverhagen.com/blog/2011/02/md5-hash-of-file-in-python/
 def md5Checksum(filePath):
+    '''
+    Este metodo calcula 
+    '''
     import hashlib
     with open(filePath, 'rb') as fh:
         m = hashlib.md5()

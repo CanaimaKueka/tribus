@@ -26,7 +26,8 @@ tribus.testing.models
 This file contains all the tribus tests.
 
 '''
-
-from tribus.testing.tribus_common_utils import *
+from tribus.testing.tribus_web_profile_views import *
+# from tribus.testing.tribus_web_registration_models import *
+# from tribus.testing.tribus_common_utils import *
 # from tribus.testing.tribus_common_repository import *
 # from tribus.testing.tribus_common_recorder import *
