@@ -7,18 +7,41 @@ from tribus.common.utils import get_path
 
 DEBUG = True
 
+try:
+    from tribus.config.ldap import AUTH_LDAP_BASE
+except:
+    pass
+
+SITE_ROOT = get_path([BASEDIR, 'tribus', 'web'])
+MEDIA_ROOT = ''
+MEDIA_URL = '/media/'
+STATIC_ROOT = ''
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [get_path([BASEDIR, 'tribus', 'data', 'static'])]
+TEMPLATE_DIRS = [get_path([BASEDIR, 'tribus', 'data', 'templates'])]
+
+DJANGO_STATIC = not DEBUG
+DJANGO_STATIC_MEDIA_ROOTS = [get_path([BASEDIR, 'tribus', 'data'])]
+DJANGO_STATIC_FILENAME_GENERATOR = 'tribus.common.utils.filename_generator'
+DJANGO_STATIC_NAME_MAX_LENGTH = 200
+
 DATABASES = {
     'default': {
+<<<<<<< HEAD
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'tribus',
         'USER': 'tribus',
         'PASSWORD': 'tribus',
         'HOST': 'localhost',
         'PORT': '',
+=======
+        'ENGINE': 'django.db.backends.sqlite3'
+>>>>>>> 855b0b4a85af16a758c7137dc47cef24cd37f09a
     }
 }
 
 INSTALLED_APPS = (
+<<<<<<< HEAD
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,10 +65,20 @@ INSTALLED_APPS = (
     'haystack',
     'celery_haystack',
     'registration',
+=======
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django_auth_ldap',
+    'django_static',
+>>>>>>> 855b0b4a85af16a758c7137dc47cef24cd37f09a
     'tribus.testing',
+    'tribus.web.cloud',
+    'south',
+    'haystack',
 )
 
 ROOT_URLCONF = 'tribus.web.urls'
+<<<<<<< HEAD
 STATIC_URL = '/static/'
 SITE_ID = 1
 EDIA_URL = '/media/'
@@ -77,3 +110,12 @@ try:
     mongoengine.connect(db='tribus')
 except:
     pass
+=======
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
+    },
+}
+
+>>>>>>> 855b0b4a85af16a758c7137dc47cef24cd37f09a

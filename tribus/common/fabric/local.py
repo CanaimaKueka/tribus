@@ -23,9 +23,11 @@ import os
 import pwd
 import sys
 import site
+import urllib
 # import lsb_release
-from fabric.api import *
+from fabric.api import local, env, settings, cd, lcd
 from tribus import BASEDIR
+from tribus.config.base import PACKAGECACHE
 from tribus.config.ldap import (
     AUTH_LDAP_SERVER_URI, AUTH_LDAP_BASE, AUTH_LDAP_BIND_DN,
     AUTH_LDAP_BIND_PASSWORD)
@@ -33,6 +35,9 @@ from tribus.config.pkg import (
     debian_run_dependencies, debian_build_dependencies,
     debian_maint_dependencies, f_workenv_preseed, f_sql_preseed,
     f_users_ldif, f_python_dependencies)
+from tribus.common.logger import get_logger
+
+logger = get_logger()
 
 
 def development():
@@ -72,9 +77,8 @@ def development():
         'xapian',
         '_xapian.so')
     env.reprepro_dir = os.path.join(BASEDIR, 'test_repo')
-    env.reprepro_conf_dir = os.path.join(BASEDIR, 'test_repo', 'conf')
-    env.distributions_dir = os.path.join(BASEDIR, 'tribus', 'config', 'data')
     env.sample_packages_dir = os.path.join(BASEDIR, 'package_samples')
+    env.distributions_path = os.path.join(BASEDIR, 'tribus', 'config', 'data', 'dists-template')
 
 
 def environment():
@@ -94,83 +98,85 @@ def environment():
 
 # REPOSITORY TASKS ------------------------------------------------------------
 
-# 1) Crear repositorio e inicializarlo
-
 
 def install_repository():
-    with settings(command='rm -rf %(reprepro_dir)s' % env):
-        local('%(command)s' % env, capture=False)
-
-    with settings(command='mkdir -p %(reprepro_conf_dir)s' % env):
-        local('%(command)s' % env, capture=False)
-
-    with settings(command='cp %(distributions_dir)s/dists-template  \
-                  %(reprepro_conf_dir)s/distributions' % env):
-        local('%(command)s' % env, capture=False)
-
-    with lcd('%(reprepro_dir)s' % env):
-        with settings(command='reprepro -VVV export'):
-            local('%(command)s' % env, capture=False)
-
-
-# 2) Seleccionar muestra de paquetes
-
+    '''
+    Crea un repositorio de paquetes y lo inicializa.
+    '''
+    
+    py_activate_virtualenv()
+    from tribus.common.reprepro import create_repository
+    create_repository(env.reprepro_dir, env.distributions_path)
+    
+    
 def select_sample_packages():
+    '''
+    Selecciona una muestra de paquetes.
+    '''
+    
     py_activate_virtualenv()
     from tribus.common.repository import init_sample_packages
-    init_sample_packages()
-
-# 3) Descargar muestra de paquetes
+    from tribus.config.pkgrecorder import CANAIMA_ROOT, SAMPLES_DIR
+    init_sample_packages(CANAIMA_ROOT, SAMPLES_DIR)
 
 
 def get_sample_packages():
+    '''
+    Descarga la muestra de paquetes
+    '''
+    
     py_activate_virtualenv()
     from tribus.common.repository import download_sample_packages
-    download_sample_packages()
-
-# 4) Indexar los paquetes descargados en el repositorio
+    from tribus.config.pkgrecorder import CANAIMA_ROOT, LOCAL_ROOT, SAMPLES_DIR
+    download_sample_packages(CANAIMA_ROOT, SAMPLES_DIR)
+    urllib.urlretrieve(os.path.join(CANAIMA_ROOT, "distributions"),
+                       os.path.join(LOCAL_ROOT, "distributions"))
 
 
 def index_sample_packages():
-    from tribus.common.utils import find_dirs, list_items, find_files
-    # dirs = filter(lambda p: "binary" in p,
-    # find_dirs(env.sample_packages_dir))
+    '''
+    Indexa los paquetes descargados en el repositorio.
+    '''
+    
+    from tribus.common.utils import list_items, find_files
+    from tribus.common.reprepro import include_deb
     dirs = [os.path.dirname(f)
             for f in find_files(env.sample_packages_dir, 'list')]
     dists = filter(None, list_items(env.sample_packages_dir, dirs=True, files=False))
     with lcd('%(reprepro_dir)s' % env):
-        for d in dirs:
+        for directory in dirs:
             # No se me ocurre una mejor forma (dinamica) de hacer esto
-            dist = [dist_name for dist_name in dists if dist_name in d][0]
-            try:
-                with settings(command='reprepro includedeb %s %s/*.deb' %
-                             (dist, d)):
-                    local('%(command)s' % env, capture=False)
-            except:
-                print "No hay paquetes en el directorio %s" % d
+            dist = [dist_name for dist_name in dists if dist_name in directory][0]
+            results = [each for each in os.listdir(directory) if each.endswith('.deb')]
+            if results:
+                include_deb(env.reprepro_dir, dist, directory)
+            else:
+                logger.info('There are no packages in %s' % directory)
+
+
+def wipe_repo():
+    from tribus.common.reprepro import reset_repository
+    reset_repository(env.reprepro_dir)
+
 
 # -----------------------------------------------------------------------------
 
 # TRIBUS DATABASE TASKS -------------------------------------------------------
 
-
 def filldb_from_local():
     py_activate_virtualenv()
-    from tribus.common.recorder import create_cache_dirs, fill_db_from_cache
+    from tribus.common.recorder import fill_db_from_cache, create_cache 
     from tribus.config.pkgrecorder import LOCAL_ROOT
-    create_cache_dirs(LOCAL_ROOT)
-    # fill_db_from_cache()
-    # rebuild_index()
-
+    create_cache(LOCAL_ROOT, PACKAGECACHE)
+    fill_db_from_cache(PACKAGECACHE)
+    
 
 def filldb_from_remote():
     py_activate_virtualenv()
-    from tribus.common.recorder import create_cache_dirs, fill_db_from_cache
+    from tribus.common.recorder import create_cache
     from tribus.config.pkgrecorder import CANAIMA_ROOT
-    create_cache_dirs(CANAIMA_ROOT)
-    # fill_db_from_cache()
-    # rebuild_index()
-
+    create_cache(CANAIMA_ROOT, PACKAGECACHE)
+    
 
 def resetdb():
     configure_sudo()

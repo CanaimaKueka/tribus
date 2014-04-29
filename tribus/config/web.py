@@ -129,9 +129,10 @@ BROKER_URL = 'redis://localhost:6379/0'
 # Programacion de task para djcelery
 CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
 CELERYBEAT_SCHEDULE = {
-    "update_cache": {
+    "update_cache_folder": {
         "task": "tribus.web.cloud.tasks.update_cache",
-        "schedule": crontab(minute=0, hour=0),
+        #"schedule": crontab(minute=0, hour=0), # A las 12 am
+        "schedule": crontab(), # Cada minuto
         "args": (),
     },
 }
@@ -165,7 +166,6 @@ INSTALLED_APPS = (
     'tribus.web.profile',
     'ldapdb',
     'django_auth_ldap',
-    #'social_auth',
     'djcelery',
     'south',
     'django_static',

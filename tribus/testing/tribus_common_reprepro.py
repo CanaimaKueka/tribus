@@ -18,48 +18,56 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
 '''
 
 tribus.tests.tribus_common_recorder
 ================================
 
-These are the tests for the tribus.common.repository module.
+These are the tests for the tribus.common.reprepro module.
 
 '''
 
 import os
-import gzip
-import email.Utils
-from fabric.api import env, lcd, local, settings
 from debian import deb822
 from django.test import TestCase
 from doctest import DocTestSuite
-from tribus.__init__ import BASEDIR
 from tribus.common.utils import get_path
-from tribus.web.cloud.models import Package
-
+from tribus.common.iosync import rmtree
+from tribus.__init__ import BASEDIR
 SAMPLESDIR = get_path([BASEDIR, "tribus", "testing", "samples" ])
-FIXTURES = get_path([BASEDIR, "tribus", "testing", "fixtures" ])
-dist = 'kerepakupai'
 
-class RepositoryFunctions(TestCase):
+class RepreproFunctions(TestCase):
     
     def setUp(self):
         pass        
-
-
+        
+        
     def tearDown(self):
         pass
     
     
-    def test_init_sample_packages(self):
+    def test_create_repository(self):
+        from tribus.common.reprepro import create_repository
+        test_repo = "/tmp/test_repo"
+        test_dist = os.path.join(SAMPLESDIR, 'distributions')
+        create_repository(test_repo, test_dist)
+        self.assertTrue(os.path.isdir(test_repo))
+        self.assertTrue(os.path.isdir(os.path.join(test_repo, 'db')))
+        self.assertTrue(os.path.isdir(os.path.join(test_repo, 'dists')))
+        self.assertTrue(os.path.isfile(os.path.join(test_repo, 'conf', 'distributions')))
+        rmtree(test_repo)
+    
+    
+    def test_include_deb(self):
+        # Para probar esta funcion necesitaria acceso a internet y a un repositorio 
+        # que no este caido
         pass
+    
+    
+    def test_reset_repository(self):
+        # Tambien necesito llenar el repositorio previamente
+        pass
+        #from tribus.common.reprepro import  reset_repository
         
-    
-    def test_select_sample_packages(self):
-        pass
-    
-    
-    def test_download_sample_packages(self):
-        pass 
-
+        

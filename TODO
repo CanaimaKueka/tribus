@@ -11,11 +11,11 @@
         * [] #24 - Leer tickets en Github a través de la API y ponerlos en la doc.
         * [] #25 - Hacer una rutina para limpiar SVG's con scour (optimize_svg).
         * [] #26 - Realizar pruebas unitarias.
-        * [] #27 - Separar los templates de los elementos de AngularJS ui-bootstrap.
+        * [HECHO] #27 - Separar los templates de los elementos de AngularJS ui-bootstrap.
         * [] #28 - Arreglar acceso al panel de administración.
         * [] #29 - Traducir Tribus.
         * [] #35 - Utilizar plataforma de integración continua.
-        * [] #37 - Mejorar formulario de busqueda.
+        * [HECHO] #37 - Mejorar formulario de busqueda.
 * [] Documentación:
 		* [] Documentación de tickets y funciones.
         * [] Documentar clases y funciones. 
@@ -46,10 +46,10 @@
         * [] Agregar funcionalidad para subir imagen de usuario. 
         * [] Agregar un dialogo (modal) que permita escoger entre gravatar y una imagen personalizada.
 * [] Búsqueda:
-        * [] Poder subir y bajar con el teclado.
-        * [] Utilizar el plugin typeahead de angular.
-        * [] Si se hace click en otra parte de la página, debe desaparecer.
-        * [] Alargar el delay entre el keypress y la ejecución de la búsqueda.
+        * [HECHO] Poder subir y bajar con el teclado.
+        * [HECHO] Utilizar el plugin typeahead de angular.
+        * [HECHO] Si se hace click en otra parte de la página, debe desaparecer.
+        * [HECHO] Alargar el delay entre el keypress y la ejecución de la búsqueda.
 * [] Otros:
         * [] Implementar caché.
         * [] Hacer funciones para producción.

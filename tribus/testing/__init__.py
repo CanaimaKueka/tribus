@@ -74,7 +74,7 @@ class SetupTesting(TestSuite):
         # Setup testrunner.
         from django.test.simple import DjangoTestSuiteRunner
         self.test_runner = DjangoTestSuiteRunner(
-            verbosity=1,
+            verbosity=2,
             interactive=False,
             failfast=True
         )

@@ -18,19 +18,23 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-'''
-
-tribus.testing.models
-=====================
-
-This file contains all the tribus tests.
+from django.test.testcases import TestCase
+from tribus.web.cloud.models import Maintainer, Package, Details,\
+Relation
 
 '''
 
-#from tribus.testing.tribus_common_utils import *
-from tribus.testing.tribus_web_profile_views import *
-from tribus.testing.tribus_common_repository import *
-from tribus.testing.tribus_common_recorder import *
-from tribus.testing.tribus_web_cloud_views import *
-from tribus.testing.tribus_common_reprepro import *
+tribus.tests.tribus_web_cloud_models
+================================
 
+These are the tests for the tribus.web.cloud models.
+
+'''
+
+class RegistrationModelTests(TestCase):
+
+    def setUp(self):
+        pass
+    
+    def tearDown(self):
+        pass

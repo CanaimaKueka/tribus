@@ -28,6 +28,10 @@ This module contains common and low level functions to all modules in Tribus.
 '''
 
 import os
+import re
+import deb822
+import urllib
+import hashlib
 
 
 # Taken from: http://stackoverflow.com/a/2158532
@@ -277,8 +281,30 @@ def list_items(path=None, dirs=True, files=True):
 
 
 def readconfig(filename, options=[], conffile=False, strip_comments=True):
-    f = open(filename)
-
+    '''
+    Reads a file whether if is a data or configuration file and returns
+    its content in a dictionary or a list. 
+    
+    :param filename: path to the file.
+    
+    :param options: a list of aditional options.
+    
+    :param conffile: if True then the result will be a dictionary else the result will be a list.
+    
+    :param strip_comments: if True then the comments in the file will be deleted.
+     
+    :return: a Dictionary or a List.
+ 
+    :rtype: ``dict`` ``list``
+ 
+    .. versionadded:: 0.1
+    '''
+    
+    try: 
+        f = urllib.urlopen(filename) # No estoy seguro si esto sea una buena idea
+    except:
+        f = open(filename)
+    
     if conffile:
         options = {}
     else:
@@ -299,13 +325,16 @@ def readconfig(filename, options=[], conffile=False, strip_comments=True):
     return options
 
 
-# Taken from
-# http://www.joelverhagen.com/blog/2011/02/md5-hash-of-file-in-python/
 def md5Checksum(filePath):
     '''
-    Este metodo calcula 
+    Returns the md5sum from a file. Taken from:
+    http://www.joelverhagen.com/blog/2011/02/md5-hash-of-file-in-python/ 
+
+    :param filePath: path to the file from which its md5sum will be calculated.
+    
+    .. versionadded:: 0.1
     '''
-    import hashlib
+
     with open(filePath, 'rb') as fh:
         m = hashlib.md5()
         while True:
@@ -316,31 +345,27 @@ def md5Checksum(filePath):
         return m.hexdigest()
 
 
-def scan_repository(repo_root):
-    '''
-    Este metodo lee el archivo distributions ubicado en la raiz de un
-    repositorio y genera un diccionario con las distribuciones y
-    componentes presentes en dicho repositorio.
-    '''
-
-    import urllib
-    dist_releases = {}
-    dists = urllib.urlopen(os.path.join(repo_root, "distributions"))
-    linea = dists.readline().strip("\n")
-
-    while linea:
-        l = linea.split(" ")
-        dist_releases[l[0]] = l[1]
-        linea = dists.readline().strip("\n")
-
-    return dist_releases
-
-
 def filename_generator(file_parts, new_m_time):
-    import hashlib
     filename = os.path.basename(file_parts[0])
     url = os.path.dirname(file_parts[0])
     ext = file_parts[1]
     m = hashlib.md5()
     m.update(filename)
     return '{0}/{1}.{2}{3}'.format(url, m.hexdigest(), new_m_time, ext)
+
+
+def repeated_relation_counter(control_file):
+    archivo = urllib.urlopen(control_file)
+    for paragraph in deb822.Packages.iter_paragraphs(archivo):
+        for rel_type, rel in paragraph.relations.items():
+            if rel:
+                for r in rel:
+                    for rr in r:
+                        encontrados = 0
+                        for name in paragraph[rel_type].replace(',', ' ').split():
+                            match = re.match('^'+rr['name'].replace("+", "\+").replace("-", "\-")+'$', name)
+                            if match and rr.get('version'):
+                                encontrados += 1
+                        if encontrados > 2:
+                            print paragraph['package'], encontrados
+                            print r

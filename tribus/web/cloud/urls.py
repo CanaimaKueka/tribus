@@ -16,11 +16,11 @@ urlpatterns = patterns('',
                            'tribus.web.cloud.views.package_list',
                            name='cloud_list'),
 
-                       url(r'^cloud/l/tag/(?P<tag>(\w*\W*)*)',
-                           'tribus.web.cloud.views.by_tag',
-                           name='cloud_by_tag'),
+#                        url(r'^cloud/l/tag/(?P<tag>(\w*\W*)*)',
+#                            'tribus.web.cloud.views.by_tag',
+#                            name='cloud_by_tag'),
 
-                       url(r'^cloud/l/category/(?P<category>(\w*\W*)*)',
-                           'tribus.web.cloud.views.by_category',
-                           name='cloud_by_category'),
+#                        url(r'^cloud/l/category/(?P<category>(\w*\W*)*)',
+#                            'tribus.web.cloud.views.by_category',
+#                            name='cloud_by_category'),
                        )
