@@ -216,6 +216,12 @@ def resetdb():
 # -----------------------------------------------------------------------------
 # WAFFLE SWITCHES
 
+switch_names = {
+    'cloud':'Package cloud',
+    'profile': 'User profiles',
+    'admin_first_time': "Admin's first time configuration"
+}
+
 def register_existent_modules():
     '''
     Crea registra switches para los modulos existentes en tribus
@@ -226,8 +232,11 @@ def register_existent_modules():
     with cd('%(basedir)s' % env):
         local('python manage.py switch cloud off --create',
                 capture=False)
-        
-        local('python manage.py switch profile off --create',
+
+        local('python manage.py switch profile on --create',
+               capture=False)
+
+        local("python manage.py switch admin_first_time off --create",
                capture=False)
 
 # -----------------------------------------------------------------------------
