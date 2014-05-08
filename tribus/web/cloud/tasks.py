@@ -15,3 +15,8 @@ def update_cache(*args):
         changes = sync_cache(CANAIMA_ROOT, PACKAGECACHE)
         if changes:
             update_db_from_cache(changes)
+
+
+@task
+def update_switches(*args):
+    return True
