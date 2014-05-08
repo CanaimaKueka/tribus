@@ -149,7 +149,8 @@ def sync_cache(repository_root, cache_dir_path):
                                            architecture.replace("binary-", "")])
                     f = os.path.join(cache_dir_path, local_name + ".gz")
                     if package_control_file['md5sum'] != md5Checksum(f):
-                        os.remove(f)
+                        if os.path.exists(f):
+                            os.remove(f)
                         try:
                             urllib.urlretrieve(remote_package_path, f)
                             changes.append(f)
