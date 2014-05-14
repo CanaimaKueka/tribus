@@ -1,16 +1,8 @@
 from django import forms
-from django.utils.encoding import force_text
-from django.utils.html import format_html
 from django.forms.util import flatatt
-from fabric.api import local, env, settings, cd, lcd
-from tribus import BASEDIR
-from tribus.web.cloud.tasks import update_switches
-
-switch_names = {
-    'cloud':'Package cloud',
-    'profile': 'User profiles',
-    'admin_first_time': "Admin's first time configuration" 
-}
+from django.utils.html import format_html
+from django.utils.encoding import force_text
+from tribus.web.admin.tasks import update_switches
 
 # Esto no va aqui, poner en otro archivo
 class AceCheckboxInput(forms.CheckboxInput):
@@ -50,16 +42,4 @@ class ActiveModulesForm(forms.Form):
                         #self.fields[v.name] = forms.BooleanField(label = k, required = False)
 
         elif request.method == "POST":
-#             for switch_name in switch_names.keys():
-#                 if switch_name in request.POST:
-#                     # Si esta presente en el POST es porque tiene un valor 
-#                     # distinto al valor original, el cambio solo se hace dentro de este if
-#                     print "SWITCH %s: %s" % (switch_name, request.POST.get(switch_name))
-#                     with cd('%s' % BASEDIR):
-#                         local('python manage.py switch %s on --create' % switch_name)
-#                 else:
-#                     print "SWITCH %s: off" % (switch_name)
-#                     with cd('%s' % BASEDIR):
-#                         local('python manage.py switch %s off --create' % switch_name)
-            print "AQUI DEBERIA AGREGAR EL TASK"
-            #update_switches.apply_async(queue='default')
+            update_switches.apply_async([request.POST])

@@ -20,11 +20,11 @@ LOGGING = {
         },
     },
     'loggers': {
-        'django': {
-            'handlers': ['console'],
-            'propagate': True,
-            'level': 'DEBUG',
-        },
+        #'django': {
+        #    'handlers': ['console'],
+        #    'propagate': True,
+        #    'level': 'DEBUG',
+        #},
         'django.request': {
             'handlers': ['console'],
             'propagate': True,

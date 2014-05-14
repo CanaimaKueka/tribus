@@ -1,20 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from tribus.config.brand import TRIBUS_SPONSORS
 from django.shortcuts import render
-from tribus.web.registration.forms import SignupForm
-from haystack.query import SearchQuerySet
-from django.core.paginator import Paginator, InvalidPage
-from django.contrib.contenttypes.models import ContentType
 from tribus.web.admin.forms import ActiveModulesForm
 from django.http.response import HttpResponseRedirect
-
-switch_names = {
-    'cloud':'Package cloud',
-    'profile': 'User profiles',
-    'admin_first_time': "Admin's first time configuration" 
-}
+from tribus.config.waffle_cfg import SWITCHES_CONFIGURATION
 
 def tribus_config(request):
     context = {}
@@ -51,11 +41,11 @@ def active_modules(request):
     sw = Switch.objects.order_by('name')
     
     if request.method == 'GET':
-        form = ActiveModulesForm(request, [(switch_names[switch.name], switch) for switch in sw])
+        form = ActiveModulesForm(request, [(SWITCHES_CONFIGURATION[switch.name][0], switch) for switch in sw])
         context['form'] = form
         
     if request.method == 'POST':
-        form_2 = ActiveModulesForm(request, [])
+        form_2 = ActiveModulesForm(request)
         if form_2.is_valid():
             return HttpResponseRedirect('/admin/tribus-config/')
             
