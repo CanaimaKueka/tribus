@@ -72,6 +72,8 @@ def get_last_uid():
     lastuid = int(u.uid)
     u.uid = int(u.uid)+1
     u.save()
+    print lastuid, 'lastuid'
+    print u.uid, 'maxUID'
 
     return lastuid
 
@@ -84,12 +86,12 @@ def create_last_uid_entry():
     maxuid.email = ''
     maxuid.username = 'maxUID'
     maxuid.password = ''
-    maxuid.uid = 2001
+    maxuid.uid = 5465
     maxuid.group = 1234
     maxuid.home_directory = '/home/'+maxuid.username
     maxuid.login_shell = '/bin/false'
     maxuid.description = 'Created by Tribus'
     maxuid.save()
 
-    return 2000
+    return 5466
 

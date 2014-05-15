@@ -242,7 +242,7 @@ class PasswordResetForm(BasePasswordResetForm):
                                                       email=user.email,
                                                       password=user.password)
             if created:
-		obj.is_active = True
+                obj.is_active = True
                 obj.last_login = timezone.now()
                 obj.save()
 
@@ -258,7 +258,8 @@ class PasswordResetForm(BasePasswordResetForm):
                 'domain': domain,
                 'site_name': site_name,
                 'uid': int_to_base36(obj.pk),
-                'user': obj,
+                'username': obj.username.encode('utf-8'),
+                'first_name': obj.first_name.encode('utf-8'),
                 'token': token_generator.make_token(obj),
                 'protocol': use_https and 'https' or 'http',
             }

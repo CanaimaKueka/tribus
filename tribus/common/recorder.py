@@ -486,7 +486,7 @@ def update_package_list(file_path, dist):
     existent_packages = []
     actual_arch = None
     
-    package_file = deb822.Packages.iter_paragraphs(file(file_path))
+    package_file = deb822.Packages.iter_paragraphs(gzip.open(file_path, 'r'))
     print "Actualizando lista de paquetes"
     for section in package_file:
         existent_packages.append(section['Package'])

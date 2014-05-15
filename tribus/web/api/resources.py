@@ -80,6 +80,7 @@ class UserFollowersResource(ModelResource):
         queryset = User.objects.all()
         resource_name = 'user/followers'
         ordering = ['id']
+	excludes = ['password', 'is_active', 'is_staff', 'is_superuser']
         allowed_methods = ['get']
         filtering = { 'id': ALL_WITH_RELATIONS }
         authorization = UserFollowersAuthorization()
@@ -91,6 +92,7 @@ class UserFollowsResource(ModelResource):
         queryset = User.objects.all()
         resource_name = 'user/follows'
         ordering = ['id']
+	excludes = ['password', 'is_active', 'is_staff', 'is_superuser']
         allowed_methods = ['get']
         filtering = { 'id': ALL_WITH_RELATIONS }
         authorization = UserFollowsAuthorization()
