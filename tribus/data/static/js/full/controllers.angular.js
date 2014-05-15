@@ -65,13 +65,13 @@ function FollowsController($scope, $filter, UserFollows, UserProfile, $timeout){
 
             $scope.numberOfPages = function(){
                 return Math.ceil($scope.filtername.length / $scope.pageSize);
-            }
+            };
         });
     });
 
     $scope.convertmd5 = function(email){
         var url = 'http://www.gravatar.com/avatar/'+md5(email)+'?d=mm&s=40&r=x';
-        return url
+        return url;
     };
 
     $scope.eliminar = function(Uid){
@@ -121,61 +121,54 @@ function FollowersController($scope, $filter, UserFollowers, UserProfile){
 
             $scope.numberOfPages = function(){
                 return Math.ceil($scope.filtername.length / $scope.pageSize);
-            }
+            };
         });
     });
 
     $scope.convertmd5 = function(email){
         var url = 'http://www.gravatar.com/avatar/'+md5(email)+'?d=mm&s=40&r=x';
-        return url
+        return url;
     }; 
 
 };
 
 
-function SearchListController($scope, Search){
-    $scope.package_results = [];
-    $scope.users_results = [];
-    
-    $scope.hasPackages = function(){
-        return $scope.package_results.length > 0;
-    };
-    
-    $scope.hasUsers = function(){
-        return $scope.users_results.length > 0;
-    };
-    
-    $scope.noResults = function(){
-        return !$scope.hasUsers() && !$scope.hasPackages();
-    };
-
-    $scope.refreshResults = function(){
-        if (($scope.top_search != undefined) && ($scope.top_search.length > 1)) {
-            $scope.no_results = false;
-            $scope.package_results = [];
-            $scope.users_results = [];
-
-            Search.query({ q: $scope.top_search }, function(results){
-                $scope.package_results = [];
-                $scope.users_results = [];
-
-                if (results.objects[0].packages.length > 0) {
-                    var packages = results.objects[0].packages;
-                    for(var i = 0; i < packages.length; i++){
-                        packages[i].url = packages_url_placer.replace('%PACKAGE%', packages[i].name);
-                        $scope.package_results.push(packages[i]);
-                    }
+function TypeaheadCtrl($scope, Search){
+	$scope.res = [];
+	
+    $scope.getResults = function(inputvalue){
+        Search.query({ q: inputvalue }, function(results){
+        	$scope.res = [];
+            if (results.objects[0].packages.length > 0) {
+                var packages = results.objects[0].packages;
+                for(var i = 0; i < packages.length; i++){
+                    packages[i].url = packages_url_placer.replace('%PACKAGE%', packages[i].name);
+                    $scope.res.push({name : packages[i].name,
+                    				 url : packages[i].url,
+                    				 type : "package"
+                    				 });
                 }
-                
-                if (results.objects[0].users.length > 0) {
-                    var users = results.objects[0].users;
-                    for(var i = 0; i < users.length; i++){
-                        users[i].url = user_url_placer.replace('%USER%', users[i].username);
-                        $scope.users_results.push(users[i]);
-                    }
-                }
-            });
-        }
+            }
+            
+            if (results.objects[0].users.length > 0) {
+	            var users = results.objects[0].users;
+	            for(var i = 0; i < users.length; i++){
+	                users[i].url = user_url_placer.replace('%USER%', users[i].username);
+	                $scope.res.push({name : users[i].fullname, 
+	                				 url : users[i].url,
+	                				 username : users[i].username,
+	                				 type : "user"
+	                				});
+	            }
+            }
+        });
+        
+        $scope.res.push({name : inputvalue, 
+	                	 url : "/search?q=" + inputvalue,
+	                	 type : "search",
+	                	 search : true,
+	                	});
+        return $scope.res;
     };
 };
 
@@ -223,7 +216,7 @@ function TribController($scope, $timeout, $modal, Tribs, Timeline){
         var alert = {
             type: alert_type,
             msg: alert_msg
-        }
+        };
         $scope.alerts.push(alert);
         $timeout(function(){
             $scope.closeAlert($scope.alerts.indexOf(alert));

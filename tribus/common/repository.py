@@ -21,92 +21,184 @@
 '''
 
 tribus.common.repository
-======================
+========================
 
 This module contains common functions to manage local and remote repositories.
 
 '''
 
-import urllib, re, os, sys, string, random
-path = os.path.join(os.path.dirname(__file__), '..', '..')
-base = os.path.realpath(os.path.abspath(os.path.normpath(path)))
-os.environ['PATH'] = base + os.pathsep + os.environ['PATH']
-sys.prefix = base
-sys.path.insert(0, base)
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
+#=========================================================================
+# TODO:
+# 1. Hacer tests para estas funciones.
+# 2. Revisar procedimientos, colocar nombres mas apropiados de acuerdo 
+#    a las convenciones de nombres.
+#=========================================================================
+
+import re
+import os
+import gzip
+import random
+import urllib
+import urllib2
 from debian import deb822
-from tribus.config.pkgrecorder import LOCAL_ROOT, CANAIMA_ROOT, SAMPLES_LISTS, SAMPLES_PACKAGES
-from tribus.common.utils import list_files, scan_repository
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
+from tribus.common.logger import get_logger
+from tribus.common.utils import find_files, readconfig
+
+logger = get_logger()
 
 
-def init_sample_packages():
-    os.makedirs(SAMPLES_LISTS)
-    dist_releases = scan_repository(CANAIMA_ROOT)
-    for release in dist_releases.items():
+def init_sample_packages(repository_root, samples_dir):
+    '''
+    Creates a directory structure to store packages for its later use
+    in a test package repository.
+    
+    :param repository_root: url of the repository used.
+    
+    :param samples_dir: directory that will be used to store the examples for the repository.
+    
+    .. versionadded:: 0.1
+    '''
+    
+    if not os.path.isdir(samples_dir):
+        os.makedirs(samples_dir)
+    
+    # Puede que exista una forma mas sencilla de obtener los nombres
+    dist_releases = (branch.split()
+                     for branch in
+                     readconfig(os.path.join(repository_root,
+                                             "distributions")))
+    for release, _ in dist_releases:
+        release_path = os.path.join(repository_root, "dists", release, "Release")
         try:
-            datasource = urllib.urlopen(os.path.join(CANAIMA_ROOT, release[1]))
-        except:
-            datasource = None
-        if datasource:
-            rel = deb822.Release(datasource)
-            if rel.has_key('MD5sum'):
-                for l in rel['MD5sum']:
-                    if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages.gz$", l['name']):
-                        print "Seleccionando paquetes en -->", l['name']
-                        list_name = string.join( l['name'].split("/"), "_")
-                        list_file = os.path.join(SAMPLES_LISTS, string.join([release[0], list_name], "_"))
-                        package_url = os.path.join(CANAIMA_ROOT, "dists", release[0], l['name'])
-                        select_sample_packages(package_url, list_file, False)
-                        
-def select_sample_packages(package_url, package_list, include_relations = False):
-    inicial = {}
-    relaciones = []
-    final = {}
-    archivo = open(package_list, 'w')
-    remote_packages = urllib.urlopen(package_url)
-    for section in deb822.Packages.iter_paragraphs(remote_packages):
-        rnd = random.randint(0, 500)
-        if section.has_key('Installed-Size'):
-            if rnd == 500 and int(section['Installed-Size']) < 500:
-                inicial[section['Package']] = section['Filename']
-                archivo.write(section['filename']+"\n")
-                for relations in section.relations.items():
-                    if relations[1]:
-                        for relation in relations[1]:
-                            for r in relation:
-                                relaciones.append(r['name'])
+            # Riesgo poco probable de que el Release no tenga MD5sum
+            md5list = deb822.Release(urllib.urlopen(release_path)).get('MD5sum')
+        except urllib2.URLError, e:
+            logger.warning('Could not read release file in %s, error code #%s' % (release_path, e.code))
+        else:
+            for l in md5list:
+                if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages.gz$", l['name']):
+                    list_dir = os.path.join(samples_dir, release,
+                                            os.path.dirname(l['name']))
+                    if not os.path.isdir(list_dir):
+                        os.makedirs(list_dir)
+                    list_path = os.path.join(list_dir, "list")
+                    if not os.path.isfile(list_path):
+                        control_f_path = os.path.join(repository_root, "dists",
+                                                      release, l['name'])
+                        select_sample_packages(control_f_path, list_path,
+                                               samples_dir, False)
+    if os.path.isfile(os.path.join(samples_dir, "tmp.gzip")):
+        os.remove(os.path.join(samples_dir, "tmp.gzip"))
+
+
+def select_sample_packages(remote_control_file_path, package_list_path,
+                           samples_dir, include_relations=False):
+    '''
+    Reads a control file and makes a random selection of packages, 
+    then downloads the selected ones.
     
-    if include_relations:
-        remote_packages = urllib.urlopen(package_url)
-                   
-        for section in deb822.Packages.iter_paragraphs(remote_packages):
-            if section['Package'] in relaciones and int(section['Installed-Size']) < 500:
-                final[section['Package']] = section['Filename']
-                archivo.write(section['filename']+"\n")
+    :param remote_control_file_path: path to the control file from which the packages will be selected.
     
-    archivo.close()
-    print "Paquetes seleccionados -->", len(inicial)
+    :param package_list_path: path to the file where the package name and location will be written.
     
-def download_sample_packages():
-    files_list = list_files(SAMPLES_LISTS)
+    :param samples_dir: directory that will be used to store the examples for the repository.
+    
+    :param include_relations: si es True se descargaran tambien las relaciones de cada paquete seleccionado
+    que cuyo tamano sea menor a 500 kilobytes. Si es Falso no se descargaran los paquetes relacionados.
+
+    .. versionadded:: 0.1
+    '''
+    
+    # No sabria decir que es lo que esta mal aqui
+    # pero no me gusta mucho la forma como se hace esto
+    tmp_file = os.path.join(samples_dir, "tmp.gzip")
+    
+    try:
+        urllib.urlretrieve(remote_control_file_path, tmp_file)
+    except urllib2.URLError, e:
+        logger.warning('Could not get control file %s, error code #%s' % (remote_control_file_path, e.code))
+    else:
+        selected = 0
+        # No hay manejo de excepciones en caso de fallas al intentar leer el archivo
+        archivo = open(package_list_path, 'w')
+        for section in deb822.Packages.iter_paragraphs(gzip.open(tmp_file)):
+            # Debe existir un a mejor forma de seleccionar elementos aleatorios
+            rnd = random.randint(0, 500)
+            size = section.get('Installed-Size', None)
+            if size:
+                if rnd == 500 and int(size) < 500:
+                    selected += 1
+                    archivo.write(section['filename'] + "\n")
+                    if include_relations:
+                        relaciones = []
+                        for _, relations in section.relations.items():
+                            if relations:
+                                for relation in relations:
+                                    for r in relation:
+                                        relaciones.append(r['name'])
+        # El tener que volver a leer el archivo para obtener las
+        # dependencias hace que el proceso sea mas lento
+        if include_relations:
+            for section in deb822.Packages.iter_paragraphs(gzip.open(tmp_file)):
+                if section['Package'] in relaciones and int(section['Installed-Size']) < 500:
+                    selected += 1
+                    archivo.write(section['filename'] + "\n")
+        archivo.close()
+        logger.info("%s packages selected from %s " % (selected, remote_control_file_path))
+
+
+def download_sample_packages(repository_root, samples_dir):
+    '''
+    Reads all the files named 'list' present in the samples directory
+    and downloads the packages in each 'list' file.
+    
+    :param repository_root: url of the repository used.
+    
+    :param samples_dir: directory that will be used to store the examples for the repository.
+    
+    .. versionadded:: 0.1
+    '''
+    
+    files_list = find_files(samples_dir, 'list')
     for f in files_list:
-        pre_dist_path = f.split("/")[-1]
-        dist_path = pre_dist_path.split("_")
-        dist_path.pop()
-        final_path = string.join(dist_path, "/")
-        download_package_list(f, os.path.join(SAMPLES_PACKAGES, final_path))   
-    urllib.urlretrieve(os.path.join(CANAIMA_ROOT, "distributions"), os.path.join(LOCAL_ROOT, "distributions"))
+        download_path = os.path.dirname(f)
+        with open(f) as list_file:
+            # for line in list_file:
+            for line in list_file.readlines():
+                l = line.replace('\n', '').split('/')
+                try:
+                    if not os.path.isfile(os.path.join(download_path, l[-1])):
+                        logger.info("Downloading -> %s" % l[-1])
+                        urllib.urlretrieve(os.path.join(repository_root, line),
+                                           os.path.join(download_path, l[-1]))
+                except urllib2.URLError, e:
+                    logger.warning('Could not get %s, error code #%s' % (l[-1], e.code))
+
+
+def get_selected_packages(remote_root, samples_dir, list_path):
+    '''
+    Creates a directory structure to store package samples for its later use
+    in a test package repository.
     
-def download_package_list(file_with_package_list, download_dir):
-    os.makedirs(download_dir)
-    archivo = open(file_with_package_list, 'r')
-    remote_root = "http://paquetes.canaima.softwarelibre.gob.ve"
-    linea = archivo.readline().strip("\n")
+    :param samples_dir: directory that will be used to store the examples for the repository.
     
-    while linea:
-        l = linea.split("/")
-        print "Descargando ---->", l[-1]
-        urllib.urlretrieve(os.path.join(remote_root, linea), os.path.join(download_dir, l[-1]))
-        linea = archivo.readline().strip("\n")
+    .. versionadded:: 0.1
+    '''
+    
+    samples = readconfig(list_path, None, False, False)
+    for sample in samples:
+        dist, comp, pool = sample.split()
+        dest = os.path.join(samples_dir, dist, comp)
         
-    archivo.close()
+        if not os.path.isdir(dest):
+            os.makedirs(dest)
+        
+        try:
+            sample_name = os.path.basename(pool)
+            if not os.path.isfile(os.path.join(dest, sample_name)):
+                logger.info("Downloading -> %s" % sample_name)
+                urllib.urlretrieve(os.path.join(remote_root, pool),
+                                   os.path.join(dest, sample_name))
+        except urllib2.URLError, e:
+            logger.warning('Could not get %s, error code #%s' % (sample_name, e.code))

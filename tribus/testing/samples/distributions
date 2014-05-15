@@ -1,0 +1,10 @@
+Origin: Canaima
+Label: Canaima
+Suite: desarrollo
+Codename: kukenan
+Version: 4.0
+Architectures: i386 amd64 source
+Components: main aportes no-libres
+Description: Canaima GNU/Linux
+DebIndices: Packages Release . .gz
+

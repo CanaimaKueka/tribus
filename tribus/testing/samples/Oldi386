@@ -1,0 +1,80 @@
+Package: 0ad
+Version: 0~r11863-2
+Installed-Size: 7745
+Maintainer: Debian Games Team <pkg-games-devel@lists.alioth.debian.org>
+Architecture: i386
+Depends: 0ad-data (>= 0~r11863), 0ad-data (<= 0~r11863-2), gamin | fam, libboost-signals1.49.0 (>= 1.49.0-1), libc6 (>= 2.11), libcurl3-gnutls (>= 7.16.2), libenet1a, libgamin0 | libfam0, libgcc1 (>= 1:4.1.1), libgl1-mesa-glx | libgl1, libjpeg8 (>= 8c), libmozjs185-1.0 (>= 1.8.5-1.0.0+dfsg), libnvtt2, libopenal1, libpng12-0 (>= 1.2.13-4), libsdl1.2debian (>= 1.2.11), libstdc++6 (>= 4.6), libvorbisfile3 (>= 1.1.2), libwxbase2.8-0 (>= 2.8.12.1), libwxgtk2.8-0 (>= 2.8.12.1), libx11-6, libxcursor1 (>> 1.1.2), libxml2 (>= 2.7.4), zlib1g (>= 1:1.2.0)
+Pre-Depends: dpkg (>= 1.15.6~)
+Size: 2226038
+SHA256: 2b092f5682ae14351d6f7e47a7c113b7c0cc9ec71046a2e3ecf95eb453909ad8
+SHA1: 602e20176706d3cc7535f01ffdbe91b270ae5012
+MD5sum: 93699f007bcd8a51e1ab5fba2ecdc400
+Description: Real-time strategy game of ancient warfare
+Homepage: http://www.wildfiregames.com/0ad/
+Description-md5: d943033bedada21853d2ae54a2578a7b
+Tag: game::strategy, implemented-in::c++, interface::x11, role::program,
+ uitoolkit::sdl, uitoolkit::wxwidgets, use::gameplaying,
+ x11::application
+Section: games
+Priority: optional
+Filename: pool/main/0/0ad/0ad_0~r11863-2_i386.deb
+
+Package: 0ad-data
+Version: 0~r11863-1
+Installed-Size: 713566
+Maintainer: Debian Games Team <pkg-games-devel@lists.alioth.debian.org>
+Architecture: all
+Depends: tex-gyre, ttf-dejavu-core
+Pre-Depends: dpkg (>= 1.15.6~)
+Suggests: 0ad
+Size: 316500336
+SHA256: b6e93331b7b1cc30ad7fa60eed9a233d0ab435ae0eacc4fcc8989c4266ed1511
+SHA1: 91b215066190b099dd75532b7843062517582acf
+MD5sum: aa036194b1d1bffa377b545b69d41c8e
+Description: Real-time strategy game of ancient warfare (data)
+Homepage: http://wildfiregames.com/0ad/
+Description-md5: df27feb8d9352e2909a3e6cd62916daa
+Section: games
+Priority: optional
+Filename: pool/main/0/0ad-data/0ad-data_0~r11863-1_all.deb
+
+Package: 2ping
+Version: 2.0-1
+Installed-Size: 134
+Maintainer: Ryan Finnie <ryan@finnie.org>
+Architecture: all
+Depends: perl
+Recommends: perl-modules, libio-socket-inet6-perl
+Suggests: libdigest-sha-perl, libdigest-crc-perl
+Description: Ping utility to determine directional packet loss
+Homepage: http://www.finnie.org/software/2ping/
+Description-md5: 2543c220a763445976d1348c5b593743
+Tag: implemented-in::perl, interface::commandline, protocol::ip,
+ role::program, scope::utility, use::analysing, use::measuring,
+ works-with::network-traffic
+Section: net
+Priority: optional
+Filename: pool/main/2/2ping/2ping_2.0-1_all.deb
+Size: 30724
+MD5sum: a815f73f1894e7a12619d37d3dbc1bbc
+SHA1: 19baa38dcc480a218ac4db24ca6f0be6df04a1f6
+SHA256: fd4396ef6793a8fcdf38e751ae60ce513cf4389b5aeebb51af13a8f7995fd521
+
+Package: 3dchess
+Version: 0.8.1-17
+Installed-Size: 152
+Maintainer: Debian Games Team <pkg-games-devel@lists.alioth.debian.org>
+Architecture: i386
+Depends: libc6 (>= 2.0), libx11-6, libxpm4, libxt6, xaw3dg (>= 1.5+E-1)
+Description: Play chess across 3 boards!
+Description-md5: 12d01b96d7645ee302ebc29cde999e92
+Tag: game::board, game::board:chess, game::strategy, implemented-in::c,
+ interface::x11, role::program, uitoolkit::xlib, use::gameplaying,
+ x11::application
+Section: games
+Priority: optional
+Filename: pool/main/3/3dchess/3dchess_0.8.1-17_i386.deb
+Size: 35086
+MD5sum: 3379b9efd51c5d5d4d5b0148cfa934be
+SHA1: c2286aad7f8bacea2017cb079a74a2a51d14f563
+SHA256: fbf737dedbf0ddce57921f1582a5cf43f225ffacf17a02702a38bb9141d5e756

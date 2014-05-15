@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tribus 0.1.dev20131118020506\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-06 15:44-0530\n"
-"PO-Revision-Date: 2013-11-18 00:52-1830\n"
+"POT-Creation-Date: 2013-12-23 08:29-0530\n"
+"PO-Revision-Date: 2013-11-18 00:52-2230\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: sv <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -17,33 +17,33 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-# 53d30823f13c462086cc829249599fcb
+# 411ead13ba8e48c59edb67063d5f7725
 #: ../../authors.rst:1
 msgid ""
 "Si usted es un colaborador activo de este proyecto, agregue una entrada "
 "en el lugar correspondiente según el siguiente formato:"
 msgstr ""
 
-# e712f1a5e1e94d09a1c85479e7b6b5b7
+# 2590db6d61644f9b98446ec215d65708
 #: ../../authors.rst:3
 msgid ""
 "[1er nombre] [2do nombre] [1er apellido] [2do apellido] [<CORREO>], "
 "Twitter: [@Cuenta]"
 msgstr ""
 
-# 13c5d085e8b94008a28f3b655e02e025
+# bf71d58a94de49879afef9281507fff8
 #: ../../authors.rst:6
 msgid ""
 "Las siguientes personas han trabajado en este proyecto (en orden "
 "alfabético):"
 msgstr ""
 
-# 635052c7f720464182f04fd37b9d0fdc
+# 6eb8b9383bfc4180b3bdd94797fbb9d6
 #: ../../authors.rst:8
 msgid "José Francisco Guerrero Rangel <jsfrncscg@gmail.com>, Twitter: @jsfrncscg"
 msgstr ""
 
-# d192c8a544d744e69324342dd9d03f8b
+# 3435f7cb2f904838976d45693fd14120
 #: ../../authors.rst:9
 msgid ""
 "Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>, Twitter: "

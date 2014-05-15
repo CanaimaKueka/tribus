@@ -17,28 +17,30 @@ from tribus.web.registration.ldap.models import LdapUser
 
 
 class data_change(Form):
-	required_css_class = 'required'
-	
-	descripcion = forms.RegexField(
-	                                label = _('Descripcion'), required = False,
-	                                regex = r'^[\w.@+-]+$',
-	                                widget = forms.Textarea(
-	                                    attrs = {
-	                                        'class': 'input-large',
-	                                        'ng-maxlength': '20'
-	                                    }
-	                                ),
-	                                max_length = 254,
-	                                error_messages = {
-	                                'invalid': _("This value may contain only letters, numbers and @/./+/-/_ characters.")
-	                                }
-	                            )
+    required_css_class = 'required'
 
-	# email = forms.EmailField(label = _('email'), required = False,
-	#                                 widget = forms.TextInput(
-	#                                     attrs = {
-	#                                         'class': 'input-large',
-	#                                         'type': 'email'
-	#                                     }
-	#                                 )
-	# 							)
+    descripcion = forms.RegexField(
+        label=_('Descripcion'), required=False,
+        regex=r'^[\w.@+-]+$',
+        widget=forms.Textarea(
+            attrs={
+                'class': 'input-large',
+                'ng-maxlength': '20'
+            }
+        ),
+        max_length=254,
+        error_messages={
+            'invalid':
+            _(
+                "This value may contain only letters, numbers and @/./+/-/_ characters.")
+        }
+    )
+
+    # email = forms.EmailField(label = _('email'), required = False,
+    #                                 widget = forms.TextInput(
+    #                                     attrs = {
+    #                                         'class': 'input-large',
+    #                                         'type': 'email'
+    #                                     }
+    #                                 )
+    # 							)

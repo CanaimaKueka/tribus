@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Tribus 0.1.dev20131206201358\n"
+"Project-Id-Version: Tribus 0.1a1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-06 15:44-0430\n"
+"POT-Creation-Date: 2013-12-23 08:29-0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,57 +17,57 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../../index.rst:3
-# 984e11801d344d659d3cced2acf8acbe
+# fc2a293afaf34f14abda28e4386b8e36
 msgid "Tribus"
 msgstr ""
 
 #: ../../readme.rst:2
-# 5bcea2bab8fc40d7b59022b7d4ba2d22
+# 26cbc033ae4d4148a2d3cdabe9696843
 msgid "Acerca"
 msgstr ""
 
 #: ../../readme.rst:4
-# 77a50007b744444e835bc51cc3b9fcd4
+# 1123c237225348fba85c8d0f7408a478
 msgid "*Tribus* es una **red social** para la gestión de comunidades de software libre. Su objetivo es simplificar las tediosas y repetitivas tareas de mantenimiento, mientras pone a disposición de sus miembros **las mejores herramientas** que le permitirán **expresar su creatividad** y **desarrollar el máximo potencial de sus capacidades**."
 msgstr ""
 
 #: ../../readme.rst:6
-# d2f22972a05341a7a73c265b9206eecf
+# e33d5af83bac4bfbaf21d5028170d1a9
 msgid "*Tribus* promueve la **autogestión** y la **corresponsabilidad** en las diversas áreas del proceso productivo de software, estableciendo un **modelo organizacional** que permite una **progresión** y **rotación natural** de los roles."
 msgstr ""
 
 #: ../../readme.rst:9
-# c72d86f1317a44ac8625e31882bfe8df
+# 5a1a20b086a94b4c9a99fa4b82e039a0
 msgid "¿Cómo funciona?"
 msgstr ""
 
 #: ../../readme.rst:11
-# e6b603d627144b1995eab05be78e873c
+# 7c20bc6bd6234eeeac8c0f29129a44e3
 msgid "*Tribus* permite una gestión descentralizada a través del reconocimiento mutuo de las capacidades de sus miembros y la asignación proporcional de responsabilidades según el nivel de experiencia alcanzado."
 msgstr ""
 
 #: ../../readme.rst:13
-# b5616a83575f4595b3612e2a9d8f4d68
+# cdc30c58b3d24bbdb00e55fe6920371a
 msgid "El reconocimiento (o valoración) se realiza según un patrón establecido de puntos que representan la cantidad de experiencia obtenida a partir del cumplimiento de una o más actividades dentro de la plataforma. Hablamos de reconocimiento mutuo puesto que cada miembro inscrito en la red debe firmar un *contrato social* en el cuál acepta las condiciones en que él y todos los demás miembros serán valorados."
 msgstr ""
 
 #: ../../readme.rst:15
-# 2cb6e2e9779745f5890d8a4f27810893
+# 3ad36346e2a641148707426676a898c3
 msgid "El reconocimiento sirve para establecer una metrica relativa de la cantidad de conocimiento adquirido por los miembros durante la interacción con la plataforma. Esto permite ofrecer responsabilidades de gestión dentro de la plataforma a los miembros con diferentes grados de experiencia, así como también establecer recompensas específicas a través de un *sistema de rangos o privilegios*."
 msgstr ""
 
 #: ../../readme.rst:17
-# c12498d198e5410ca7f8c059207e58bc
+# 9a57b8eae0254a9599725c74e777acae
 msgid "La plataforma permite realizar diferentes actividades para facilitar el desenvolvimiento de proyectos de software libre en las áreas de diseño gráfico, documentación, traducción, desarrollo y activismo social, a través de las cuales se valoran las diferentes tareas que caracterizan la experiencia y conocimiento. Cada una de estas actividades ha sido desglosada en procesos con el objetivo de establecer una automatización a gran escala, permitiendo intervención humana en los niveles estrictamente necesarios."
 msgstr ""
 
 #: ../../readme.rst:19
-# 5a8a629efe934d5b898f4433eb32575f
+# c37480bdd0254e6bac1a1f3c88968bbc
 msgid "Para mayor información, consulte la documentación en ``tribus/data/docs/html`` (primero debe hacer ``make build_sphinx`` para construirla)."
 msgstr ""
 
 #: ../../index.rst:13
-# bef3ead707ef49858d3bb2d695bf446a
+# e880b85f806f4de298b2a447ecdfa78a
 msgid "Documentación para usuarios"
 msgstr ""
 
@@ -77,187 +77,187 @@ msgstr ""
 #: ../../index.rst:47
 #: ../../index.rst:78
 #: ../../index.rst:113
-# 27191e95c07c447597f8a52d5293b239
-# 745fd196acd04c0aace7a75595c5bccd
-# a6982c66a7b146e6a1959c9dd4390f2f
-# a9f139822c36402ba3ef9d99477cc777
-# ecad786fa07b461c8820e3c3293a16f8
-# 57c844e9881340a5b0dbd2a42303c9ee
+# 97682534efb441eeb87bbe03f8a4f85d
+# 41442020303946139c1c0ceb9e4908d6
+# c3425ca979124c81afbb6e8f00d0fa83
+# fdcaa9d042544540a0ba7abae1b65733
+# f565fbb36c54443681d7418ee1781901
+# 7b7adda4ab7e4ba5a2f4844b42340aea
 msgid "TODO"
 msgstr ""
 
 #: ../../index.rst:20
-# eda69861b3d6415f8423ef8ac593f7b2
+# 0796eda71b3d4f94a1aa18f808f0bd1c
 msgid "Tutorial"
 msgstr ""
 
 #: ../../index.rst:32
-# cbd4c3edea2b45bba53a01b4af055f4b
+# ae9aa02b5c7d44928f4354fd23f41979
 msgid "Documentación de uso"
 msgstr ""
 
 #: ../../index.rst:45
-# 15806195dfd349fda3edca7b0a0b180f
+# b5a0c50bcc784f76872ba2e8fc3a4308
 msgid "Preguntas más frecuentes"
 msgstr ""
 
 #: ../../index.rst:55
-# bc5be26968a24575897f2feab6c0d2d2
+# 92115d126b0e4339bc502864cfc8adda
 msgid "Documentación para administradores de plataforma"
 msgstr ""
 
 #: ../../index.rst:57
-# ff693c13fb564a348208da7368f6b339
+# 6cd964ac45d440f5918acd10e7727666
 msgid "Esta sección describe todos los procedimientos necesarios para entender cómo instalar y publicar una instancia funcional de Tribus, así como también personalizar la configuración dependiendo de las necesidades del usuario. No es necesario ser un operador de plataforma para instalar una instancia de Tribus, pero si debe estar familiarizado con los comandos básicos de consola bajo ambiente GNU/Linux."
 msgstr ""
 
 #: ../../index.rst:62
-# aa47f505a9ef4713b24cddda65607f80
+# 6c502d5240ed49449202913be098a1ae
 msgid "Instalación"
 msgstr ""
 
 #: ../../index.rst:64
-# 5df5810686bb4ca6bc467fd510176e5d
+# 25f59ae25d5745b9a7de70ae5725d940
 msgid "La forma más fácil de instalar Tribus es a través de los paquetes de instalación hechos especialmente para tu distribución GNU/Linux. Estos paquetes permiten manejar las dependencias y la gestión de servicios de una manera más automatizada, sin que tengas que preocuparte de realizar configuraciones a mano. Para mayor información sobre las instrucciones de instalación y descarga de paquetes, consulta la página de :doc:`instalación <installation>`."
 msgstr ""
 
 #: ../../index.rst:66
-# 330afa40fd764fceb21e9dfa268b12ad
+# a5d1401b38dd4cf7ab853bdbf3383804
 msgid "Aunque recomendamos el uso de los paquetes para tu distribución, existen otros métodos de instalación. Tribus puede instalarse a través de un gestor de paquetes python como ``setuptools``, ``pip`` o ``easy_install`` desde el repositorio de paquetes python `pypi <http://pypi.python.org/>`_. También puede instalarse de la misma forma a través de su código fuente, que puede obtenerse a clonando el repositorio git o descargando un archivo comprimido."
 msgstr ""
 
 #: ../../index.rst:68
-# 2893645998554ff8ac3af04d5269ec72
+# 27bc417a7f6a4aa1be92c749df98880e
 msgid "Para mayor información, consulte las :doc:`instrucciones detalladas de instalación <installation>`."
 msgstr ""
 
 #: ../../index.rst:76
-# 86ad5a0bb00b4ed4aeb514a660fc4b72
+# 5b49b08e709b4365b8912110a7be1f56
 msgid "Configuración"
 msgstr ""
 
 #: ../../index.rst:88
-# d22a2f3652a24d93b3eb7c74fdde822b
+# 4d71759f8c754cd2902e1e4b93d75df5
 msgid "Documentación para desarrolladores"
 msgstr ""
 
 #: ../../index.rst:90
-# 7847f3f3c7bf4bfab523cf1feb1a06ae
+# af8e4687c43d41a0bf2908d72945e19f
 msgid "Esta sección describe cuales son las herramientas y normas para colaborar con el desarrollo de Tribus."
 msgstr ""
 
 #: ../../index.rst:92
-# fd2b8bc0de99461a8bed7fd62d73b749
+# 8bb79ca65ca04c169074d95f6c7f8fe0
 msgid "Generalmente se recomienda empezar leyendo sobre la :doc:`estructura del proyecto <development/where>`, permitiendo así encontrar las cosas más rápido y/o saber donde colocar ciertos elementos. También es indispensable leer el :doc:`protocolo de contribuciones <development/contributing>`, el cual contiene los pasos más importantes para agregar una contribución en Tribus. Seguidamente, las :doc:`herramientas de mantenimiento y desarrollo <development/maintaining>` describen un conjunto de rutinas que han sido escritas para asistir al desarrollador en sus tareas. También están disponibles los :doc:`estilos de programación <development/style>` sugeridos."
 msgstr ""
 
 #: ../../index.rst:94
-# 4e7991cd51f141b99490566452b15fdd
+# ecdf4bd0132f4d6db327ae606380a0a4
 msgid "Para pasar directamente a una tarea, lee las :doc:`hojas de ruta <development/roadmap>` que están en desarrollo y sigue las instrucciones del :doc:`protocolo de contribuciones <development/contributing>`. También están disponibles las :doc:`listas de cambios <development/changelog>` para versiones pasadas."
 msgstr ""
 
 #: ../../index.rst:111
-# e1bfd260396f4295b911cff6f643dc46
+# 4f72e457c8034980ac78a6833c5bf1e0
 msgid "Documentación de la API"
 msgstr ""
 
 #: ../../index.rst:124
-# 2818cc5a1a0c462eaec5e361ff6a725c
+# a83b062bbe8c49a4ad90bb8f3dbf9560
 msgid "Hojas de ruta"
 msgstr ""
 
 #: ../../index.rst:126
-# c6e4b676557e4649afeac11762293c89
+# 61d216fcf282421fb1b6b1b7d0137ebf
 msgid "Las hojas de ruta contienen la planificación establecida para las próximas versiones Tribus."
 msgstr ""
 
 #: ../../index.rst:128
-# ecce589eaa3244d29da6a3e7e9a4be90
+# 542fc85b58f242639390dcf9f8605f06
 msgid "Para mayor información, consulte :doc:`el Roadmap <development/roadmap>`."
 msgstr ""
 
 #: ../../index.rst:133
-# a85face8422949f2938ff863990ff251
+# 85815049a776476195d9bc85efbbc20d
 msgid "Lista de cambios"
 msgstr ""
 
 #: ../../index.rst:135
-# be493bc90fb94717b88a35a7744b2f87
+# 6f562560a6ee457d902f0773e38452bd
 msgid "La lista de cambios contiene información acerca de la lista de cambios que han sido introducidos para las diferentes versiones de Tribus."
 msgstr ""
 
 #: ../../index.rst:137
-# 1de25d7ce14e46e083666d0c37d304e9
+# bc08e41f61c44a4b8d2162a5ef0ac430
 msgid "Para mayor información, consulte :doc:`el Changelog <development/changelog>`."
 msgstr ""
 
 #: ../../index.rst:142
-# 8f3f1fa0387240e0a4a9e6f0a8c47c82
+# 3ef1fe85d1f24da3ba5ee4cc05c89030
 msgid "Licencia de distribución"
 msgstr ""
 
 #: ../../index.rst:144
-# ce95ca5bbd924ec9bd8453953d35e569
+# f92873ea94ef4553ae112e73df57920a
 msgid "Tribus está licenciado bajo **GPL-3**. Todas las contribuciones hechas por otros desarrolladores serán redistribuídas dentro de Tribus bajo la misma licencia, a menos que se especifique lo contrario. Es necesario hacer notar que las porciones de código que estén licenciadas bajo términos incompatibles con los de la licencia GPL-3 y deseen ser incorporados a Tribus, serán objeto de rechazo."
 msgstr ""
 
 #: ../../index.rst:156
-# 633f262b7fa04d85b97aba540a827032
+# e8825588c0064d4eaa116460cef57cb4
 msgid "Obtener ayuda"
 msgstr ""
 
 #: ../../index.rst:158
-# 47dce317d518495a815d10fc5ca0b2f9
+# b7678da514b4426a827728de364a9089
 msgid "Si ya has leído el :ref:`tutorial`, la :ref:`usage_docs`, las :ref:`faq` y la :ref:`api_docs`, y no has podido encontrar la solución a tus problemas, puedes consultar a alguno de los recursos que se listan más abajo. Sin embargo, asegúrate de leer bien todos los recursos de documentación que están disponibles **antes** de hacer un ticket de error o enviar un correo a la lista."
 msgstr ""
 
 #: ../../index.rst:163
-# 339a233267764f058e315bedd412908d
+# a6af4a1ab3b44e9ebf47dc3ffafa8965
 msgid "Foro"
 msgstr ""
 
 #: ../../index.rst:165
-# a88e1052fc374dbe8bb3b597c433b088
+# a8c318409a234250803e4fac5269ddc1
 msgid "La manera más expedita de conseguir ayuda con Tribus es a través del `foro <https://groups.google.com/forum/#!forum/tribusdev>`_. Los desarrolladores de Tribus hacen su mejor esfuerzo para contestar rápidamente, ten un poco de paciencia si no te responden inmediatamente."
 msgstr ""
 
 #: ../../index.rst:168
-# cd449edcb6dc48d7a0043427f127fa76
+# 1d979f97cd1d43d5888c43d76f1d8302
 msgid "Bugs/ticket tracker"
 msgstr ""
 
 #: ../../index.rst:170
-# d34a8863c86e4d2d9a9017882ce873ba
+# 861c999d58c54c9e9a92a6ef490f71ee
 msgid "Puedes revisar si ya se ha reportado un error relacionado con el problema que estás presentando en el gestor de `tickets <https://github.com/CanaimaGNULinux/tribus/issues>`_."
 msgstr ""
 
 #: ../../index.rst:173
-# 1e632000b3434f95837ec53061049e8d
+# 6f19cf3f94b44846b99d36cdbe2a6aac
 msgid "Twitter"
 msgstr ""
 
 #: ../../index.rst:175
-# 3315c1747b414b518b1fac7952289f0c
+# c3a117bf69fe4858a8474004e0cedd0c
 msgid "Tribus tiene una cuenta de twitter `@tribusdev <http://twitter.com/tribusdev>`_, la cual es utilizada para anuncios, información acerca del desarrollo, soporte e información relacionada."
 msgstr ""
 
 #: ../../index.rst:178
-# a1101d97ab7a488f9cf2c5f46d0193ef
+# 2aee4d4343f846f89dff20aad0875e90
 msgid "Grupo en Facebook"
 msgstr ""
 
 #: ../../index.rst:180
-# 227318c2d2d94b70a77578fab3f4c739
+# ff9b027373ee45dbb273e2eee8d6b88d
 msgid "Diversas cosas pueden compartirse en el `Grupo de Facebook <https://www.facebook.com/groups/tribusdev>`_."
 msgstr ""
 
 #: ../../index.rst:183
-# afc2947bfb284235badec8e4f17bee6a
+# d0b998c6c2da47df9f2c68e47804bfba
 msgid "IRC"
 msgstr ""
 
 #: ../../index.rst:185
-# e7cc0c1af7e44972838b85eea4016b89
+# effa465c320a404f9871fa8ac230d392
 msgid "Existe un canal IRC, en donde los desarrolladores comúnmente se reúnen: `tribus en FreeNode <http://webchat.freenode.net/?channels=tribus&uio=MTE9NTE3a>`_."
 msgstr ""
 

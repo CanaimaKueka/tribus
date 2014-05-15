@@ -1,0 +1,20 @@
+Package: blender
+Version: 2.69-3
+Installed-Size: 56032
+Maintainer: Debian Multimedia Maintainers <pkg-multimedia-maintainers@lists.alioth.debian.org>
+Architecture: i386
+Depends: blender-data (= 2.69-3), fonts-droid, libjs-jquery, libavcodec54 (>= 6:9.1-1) | libavcodec-extra-54 (>= 6:9.10), libavdevice53 (>= 6:9.1-1), libavformat54 (>= 6:9.1-1), libavutil52 (>= 6:9.1-1), libboost-date-time1.54.0, libboost-filesystem1.54.0, libboost-locale1.54.0, libboost-regex1.54.0, libboost-system1.54.0, libboost-thread1.54.0, libc6 (>= 2.15), libfftw3-double3, libfreetype6 (>= 2.2.1), libgcc1 (>= 1:4.1.1), libgl1-mesa-glx | libgl1, libglew1.10 (>= 1.10.0), libglu1-mesa | libglu1, libgomp1 (>= 4.2.1), libilmbase6 (>= 1.0.1), libjack-jackd2-0 (>= 1.9.5~dfsg-14) | libjack-0.116, libjpeg8 (>= 8c), libopenal1, libopenexr6 (>= 1.6.1), libopenimageio1.2, libopenjpeg2, libpng12-0 (>= 1.2.13-4), libpython3.3 (>= 3.3.3), libsdl1.2debian (>= 1.2.11), libsndfile1 (>= 1.0.20), libspnav0, libstdc++6 (>= 4.6), libswscale2 (>= 6:9.1-1), libtiff5 (>= 4.0.3), libx11-6, libxi6, libxxf86vm1, zlib1g (>= 1:1.2.3.4)
+Suggests: libtiff4, yafaray-exporter
+Breaks: yafaray-exporter (<< 0.1.2+really0.1.2~beta5-1)
+Description: Very fast and versatile 3D modeller/renderer
+Homepage: http://www.blender.org/
+Description-md5: 90b4f36fda45432800e6a278de5b06b4
+Tag: implemented-in::c++, interface::3d, interface::x11, role::program,
+ x11::application, testlabel::testtag
+Section: graphics
+Priority: optional
+Filename: pool/main/b/blender/blender_2.69-3_i386.deb
+Size: 17813394
+MD5sum: 6f538d189eb301dba45e8045ea1f758a
+SHA1: f29e89ebe5a23fab804282a3d33745ca944c13bb
+SHA256: 01fb8a22224792a3d65d6b9d474d62836e202a1dfa62c5f4aae2f95e10d683e8

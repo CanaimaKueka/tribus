@@ -27,7 +27,14 @@ from tastypie_mongoengine.resources import MongoEngineResource
 
 from tastypie.resources import ModelResource, Resource
 from tastypie.fields import ManyToManyField, OneToOneField
-from tribus.web.api.authorization import (TimelineAuthorization, TribAuthorization, CommentAuthorization, UserAuthorization, UserProfileAuthorization, UserFollowsAuthorization,UserFollowersAuthorization)
+from tribus.web.api.authorization import (
+    TimelineAuthorization,
+    TribAuthorization,
+    CommentAuthorization,
+    UserAuthorization,
+    UserProfileAuthorization,
+    UserFollowsAuthorization,
+    UserFollowersAuthorization)
 from tribus.web.documents import Trib, Comment
 
 from django.contrib.auth.models import User
@@ -45,7 +52,10 @@ from django.http.response import Http404
 
 
 class UserResource(ModelResource):
-    user_profile = OneToOneField(to='tribus.web.api.resources.UserProfileResource', attribute='user_profile', related_name='user')
+    user_profile = OneToOneField(
+        to='tribus.web.api.resources.UserProfileResource',
+        attribute='user_profile',
+        related_name='user')
 
     class Meta:
         queryset = User.objects.all()
@@ -53,54 +63,71 @@ class UserResource(ModelResource):
         ordering = ['id']
         excludes = ['password', 'is_active', 'is_staff', 'is_superuser']
         allowed_methods = ['get', 'patch']
-        filtering = { 'id': ALL_WITH_RELATIONS }
+        filtering = {'id': ALL_WITH_RELATIONS}
         authorization = UserAuthorization()
         authentication = SessionAuthentication()
         cache = NoCache()
 
-  
+
 class UserProfileResource(ModelResource):
-    user = OneToOneField(to='tribus.web.api.resources.UserResource', attribute='user', related_name='user_profile')
-    follows = ManyToManyField(to='tribus.web.api.resources.UserResource', attribute='follows', related_name='user_profile', blank=True, null=True)
-    followers = ManyToManyField(to='tribus.web.api.resources.UserResource', attribute='followers', related_name='user_profile', blank=True, null=True)
- 
+    user = OneToOneField(
+        to='tribus.web.api.resources.UserResource',
+        attribute='user',
+        related_name='user_profile')
+    follows = ManyToManyField(
+        to='tribus.web.api.resources.UserResource',
+        attribute='follows',
+        related_name='user_profile',
+        blank=True,
+        null=True)
+    followers = ManyToManyField(
+        to='tribus.web.api.resources.UserResource',
+        attribute='followers',
+        related_name='user_profile',
+        blank=True,
+        null=True)
+
     class Meta:
         queryset = UserProfile.objects.all()
         resource_name = 'user/profile'
         ordering = ['id']
         allowed_methods = ['get', 'patch']
-        filtering = { 'id': ALL_WITH_RELATIONS }
+        filtering = {'id': ALL_WITH_RELATIONS}
         authorization = UserProfileAuthorization()
         authentication = SessionAuthentication()
         cache = NoCache()
 
 
 class UserFollowersResource(ModelResource):
+
     class Meta:
         queryset = User.objects.all()
         resource_name = 'user/followers'
         ordering = ['id']
-	excludes = ['password', 'is_active', 'is_staff', 'is_superuser']
+        excludes = ['password', 'is_active', 'is_staff', 'is_superuser']
         allowed_methods = ['get']
-        filtering = { 'id': ALL_WITH_RELATIONS }
+        filtering = {'id': ALL_WITH_RELATIONS}
         authorization = UserFollowersAuthorization()
         authentication = SessionAuthentication()
         cache = NoCache()
 
+
 class UserFollowsResource(ModelResource):
+
     class Meta:
         queryset = User.objects.all()
         resource_name = 'user/follows'
         ordering = ['id']
-	excludes = ['password', 'is_active', 'is_staff', 'is_superuser']
+        excludes = ['password', 'is_active', 'is_staff', 'is_superuser']
         allowed_methods = ['get']
-        filtering = { 'id': ALL_WITH_RELATIONS }
+        filtering = {'id': ALL_WITH_RELATIONS}
         authorization = UserFollowsAuthorization()
         authentication = SessionAuthentication()
         cache = NoCache()
 
 
 class TimelineResource(MongoEngineResource):
+
     class Meta:
         queryset = Trib.objects.all()
         resource_name = 'user/timeline'
@@ -112,12 +139,13 @@ class TimelineResource(MongoEngineResource):
 
 
 class TribResource(MongoEngineResource):
+
     class Meta:
         queryset = Trib.objects.all()
         resource_name = 'user/tribs'
         ordering = ['trib_pub_date']
         allowed_methods = ['get', 'post', 'delete']
-        filtering = { 'author_id': ALL_WITH_RELATIONS }
+        filtering = {'author_id': ALL_WITH_RELATIONS}
         authorization = TribAuthorization()
         authentication = SessionAuthentication()
         validation = DocumentFormValidation(form_class=TribForm)
@@ -125,12 +153,13 @@ class TribResource(MongoEngineResource):
 
 
 class CommentResource(MongoEngineResource):
+
     class Meta:
         queryset = Comment.objects.all()
         resource_name = 'tribs/comments'
         ordering = ['comment_pub_date']
         allowed_methods = ['get', 'post', 'delete']
-        filtering = { 'trib_id': ALL_WITH_RELATIONS }
+        filtering = {'trib_id': ALL_WITH_RELATIONS}
         authorization = CommentAuthorization()
         authentication = SessionAuthentication()
         validation = DocumentFormValidation(form_class=CommentForm)
@@ -140,75 +169,79 @@ class CommentResource(MongoEngineResource):
 class SearchUserResource(Resource):
     name = fields.CharField(attribute='autoname')
     description = fields.CharField(attribute='description')
-    
+
     class Meta:
         resource_name = 'search'
         object_class = User
-    
+
     def obj_get_list(self, bundle, **kwargs):
         filters = {}
         if hasattr(bundle.request, 'GET'):
             filters = bundle.request.GET.copy()
         filters.update(kwargs)
-        if filters.has_key('q'):
-            sqs = SearchQuerySet().models(User).autocomplete(autoname = filters['q'])[:5]
+        if 'q' in filters:
+            sqs = SearchQuerySet().models(
+                User).autocomplete(autoname=filters['q'])[:5]
         else:
             sqs = EmptySearchQuerySet()
-            
+
         paginator = Paginator(filter(None, sqs), 5)
-        
+
         try:
             page = paginator.page(1)
         except InvalidPage:
             raise Http404("Sorry, no results on that page.")
-        
+
         return page
-    
+
+
 class SearchPackageResource(Resource):
     name = fields.CharField(attribute='autoname')
     description = fields.CharField(attribute='description')
-    
+
     class Meta:
         resource_name = 'search'
         object_class = Package
-    
+
     def obj_get_list(self, bundle, **kwargs):
         filters = {}
         if hasattr(bundle.request, 'GET'):
             filters = bundle.request.GET.copy()
         filters.update(kwargs)
-        if filters.has_key('q'):
-            sqs = SearchQuerySet().models(Package).autocomplete(autoname = filters['q'])[:5]
+        if 'q' in filters:
+            sqs = SearchQuerySet().models(
+                Package).autocomplete(autoname=filters['q'])[:5]
         else:
             sqs = EmptySearchQuerySet()
-        
+
         paginator = Paginator(filter(None, sqs), 5)
-        
+
         try:
             page = paginator.page(int(bundle.request.GET.get('page', 1)))
         except InvalidPage:
             raise Http404("Sorry, no results on that page.")
-        
+
         return page
+
 
 class SearchResource(Resource):
     users = fields.ListField()
     packages = fields.ListField()
-    
+
     class Meta:
         resource_name = 'search'
         allowed_methods = ['get']
         include_resource_uri = False
 
     def dehydrate_users(self, bundle):
-        return [ {'fullname':unicode(obj.fullname), 'username': unicode(obj.username)} for obj in bundle.obj['users']]
-    
+        return [{'fullname': unicode(obj.fullname), 'username': unicode(obj.username)} for obj in bundle.obj['users']]
+
     def dehydrate_packages(self, bundle):
-        return [ {'name':str(obj.name)} for obj in bundle.obj['packages']]
+        return [{'name': str(obj.name)} for obj in bundle.obj['packages']]
 
     def get_object_list(self, bundle):
         return [{'users': SearchUserResource().obj_get_list(bundle),
-                 'packages': SearchPackageResource().obj_get_list(bundle),}]
-                
-    def obj_get_list(self, bundle, **kwargs): 
-        return self.get_object_list(bundle)    
+                 'packages': SearchPackageResource().obj_get_list(bundle), }]
+
+    def obj_get_list(self, bundle, **kwargs):
+        return self.get_object_list(bundle)

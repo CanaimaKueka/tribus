@@ -1,6 +1,17 @@
 from celery import task
-from tribus.common.recorder import update_package_cache
-  
+from tribus.config.web import DEBUG
+from tribus.config.base import PACKAGECACHE
+from tribus.config.pkgrecorder import CANAIMA_ROOT, LOCAL_ROOT
+from tribus.common.recorder import sync_cache, update_db_from_cache
+
+
 @task
 def update_cache(*args):
-    update_package_cache()
+    if DEBUG:
+        changes = sync_cache(LOCAL_ROOT, PACKAGECACHE)
+        if changes:
+            update_db_from_cache(changes)
+    else:
+        changes = sync_cache(CANAIMA_ROOT, PACKAGECACHE)
+        if changes:
+            update_db_from_cache(changes)

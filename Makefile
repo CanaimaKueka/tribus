@@ -99,6 +99,14 @@ select_samples: fabric
 get_samples: fabric
 
 	@$(FAB) development get_sample_packages
+	
+get_selected: fabric
+
+	@$(FAB) development get_selected
+	
+index_selected: fabric
+
+	@$(FAB) development index_selected
 
 index_samples: fabric
 
@@ -120,6 +128,18 @@ filldb_from_remote: fabric
 rebuild_index: fabric
 
 	@$(FAB) development rebuild_index
+	
+clean_tasks: fabric
+
+	@$(FAB) development clean_tasks
+	
+# -----------------------------------------------------------------------------
+
+# TESTS TASKS -----------------------------------------------------------------
+
+wipe_repo: fabric
+
+	@$(FAB) development wipe_repo
 	
 # -----------------------------------------------------------------------------
 	
@@ -216,3 +236,23 @@ clean_dist: fabric
 clean_pyc: fabric
 
 	@$(FAB) development clean_pyc
+
+test: fabric
+
+	@$(FAB) development test
+
+install: fabric
+
+	@$(FAB) development install
+
+bdist: fabric
+
+	@$(FAB) development bdist
+
+sdist: fabric
+
+	@$(FAB) development sdist
+
+report_setup_data: fabric
+
+	@$(FAB) development report_setup_data

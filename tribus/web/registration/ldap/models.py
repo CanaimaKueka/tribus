@@ -27,6 +27,7 @@ from ldapdb.models.fields import CharField, IntegerField, ListField
 # This class comes from django-ldapdb's examples
 # https://github.com/jlaine/django-ldapdb
 class LdapUser(Model):
+
     """
     Class for representing an LDAP user entry.
     """
@@ -36,9 +37,9 @@ class LdapUser(Model):
 
     base_dn = settings.AUTH_LDAP_BASE
     object_classes = [
-       'posixAccount', 'shadowAccount', 'inetOrgPerson',
-       'top', 'person', 'organizationalPerson'
-       ]
+        'posixAccount', 'shadowAccount', 'inetOrgPerson',
+        'top', 'person', 'organizationalPerson'
+    ]
 
     first_name = CharField(db_column='givenName')
     last_name = CharField(db_column='sn')
@@ -53,13 +54,14 @@ class LdapUser(Model):
     description = CharField(db_column='description')
 
     def __str__(self):
-       return self.uid
+        return self.uid
 
     def __unicode__(self):
-       return self.full_name
+        return self.full_name
 
 
 class LdapGroup(Model):
+
     """
     Class for representing an LDAP group entry.
     """
@@ -77,4 +79,3 @@ class LdapGroup(Model):
 
     def __unicode__(self):
         return self.name
-

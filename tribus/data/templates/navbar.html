@@ -13,37 +13,22 @@
                 <li class="divider-vertical"></li>
             </ul>
             {% if user.is_authenticated %}
+
             <ul class="nav span4">
-                 <li class="dropdown search" data-ng-controller="SearchListController">
-                    <form name="form-search" class="form-search" action="/search" method="POST">
-                        {% csrf_token %}
-                        <span class="input-icon">
-                            <input id="drop-search" type="text" class="nav-search-input input-large top_search_input" autocomplete="off" name="q" placeholder="{% trans 'What are you looking for?' %}" data-ng-model="top_search" data-ng-keyup="refreshResults()" />
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="drop-search">
-                                <li role="presentation" class="dropdown-subtitles" data-ng-if="hasPackages()">
-                                    {% trans "Packages" %}
-                                </li>
-                                <li role="presentation" data-ng-repeat="result in package_results">
-                                    <a role="menuitem" tabindex="-1" href="{% verbatim %}{{ result.url }}{% endverbatim %}">
-                                        {% verbatim %}{{ result.name }}{% endverbatim %}
-                                    </a>
-                                </li>
-                                <li role="presentation" class="dropdown-subtitles" data-ng-if="hasUsers()">
-                                    {% trans "Users" %}
-                                </li>
-                                <li role="presentation" data-ng-repeat="result in users_results">
-                                    <a role="menuitem" tabindex="-1" href="{% verbatim %}{{ result.url }}{% endverbatim %}">
-                                        {% verbatim %}{{ result.fullname }}{% endverbatim %}
-                                    </a>
-                                </li>
-                                <li role="presentation" class="dropdown-subtitles" data-ng-if="noResults()">
-                                    {% trans "There are no results matching this query." %}
-                                </li>
-                            </ul>
-                            <span class="icon-search nav-search-icon"></span>
-                        </span>
-                    </form>     
-                </li>                       
+            	<li class="dropdown search" ng-controller="TypeaheadCtrl">
+            		<form name="form-search" class="form-search" action="/search/" method="POST">
+	    				{% csrf_token %}
+	    				<span class="input-icon">
+    					<input type="text" ng-model="selected" name="q"
+                        autocomplete="off"
+                        placeholder="{% trans 'What are you looking for?' %}"
+                        typeahead="item as item.name for item in getResults($viewValue)"
+                        typeahead-wait-ms="300"
+                        typeahead-template-url="itemTpl.html">
+	    				<span class="icon-search nav-search-icon"></span>
+	    				</span>
+    				</form>
+				</li>                  
             </ul>
             <ul class="nav nav-spacer">
                 <li class="width-100"></li>
