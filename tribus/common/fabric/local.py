@@ -25,7 +25,7 @@ import sys
 import site
 import urllib
 # import lsb_release
-from fabric.api import local, env, settings, cd, lcd
+from fabric.api import local, env, settings, cd
 from tribus import BASEDIR
 from tribus.config.base import PACKAGECACHE
 from tribus.config.ldap import (
@@ -153,7 +153,7 @@ def index_sample_packages():
     dirs = [os.path.dirname(f)
             for f in find_files(env.sample_packages_dir, 'list')]
     dists = filter(None, list_items(env.sample_packages_dir, dirs=True, files=False))
-    with lcd('%(reprepro_dir)s' % env):
+    with cd('%(reprepro_dir)s' % env):
         for directory in dirs:
             # No se me ocurre una mejor forma (dinamica) de hacer esto
             dist = [dist_name for dist_name in dists if dist_name in directory][0]
@@ -171,7 +171,7 @@ def index_selected():
     for dist in list_items(SAMPLES_DIR, True, False):
         for comp in list_items(os.path.join(SAMPLES_DIR, dist), True, False):
             for sample in find_files(os.path.join(SAMPLES_DIR, dist, comp)):
-                with lcd('%(reprepro_dir)s' % env):
+                with cd('%(reprepro_dir)s' % env):
                     try:
                         include_deb(LOCAL_ROOT, dist, comp, sample)
                     except:
@@ -193,15 +193,20 @@ def filldb_from_local():
     from tribus.config.pkgrecorder import LOCAL_ROOT
     create_cache(LOCAL_ROOT, PACKAGECACHE)
     fill_db_from_cache(PACKAGECACHE)
-    
+
+
+def create_cache_from_remote():
+    py_activate_virtualenv()
+    from tribus.common.recorder import create_cache
+    from tribus.config.pkgrecorder import CANAIMA_ROOT
+    create_cache(CANAIMA_ROOT, PACKAGECACHE)
+
 
 def filldb_from_remote():
     py_activate_virtualenv()
-    from tribus.common.recorder import fill_db_from_cache, create_cache
-    from tribus.config.pkgrecorder import CANAIMA_ROOT
-    create_cache(CANAIMA_ROOT, PACKAGECACHE)
-    #fill_db_from_cache(PACKAGECACHE)
-    
+    from tribus.common.recorder import fill_db_from_cache
+    fill_db_from_cache(PACKAGECACHE)
+
 
 def resetdb():
     configure_sudo()

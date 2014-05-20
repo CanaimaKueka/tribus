@@ -35,15 +35,22 @@ import re
 import gzip
 import urllib
 import urllib2
+import logging
 import email.Utils
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
 from debian import deb822
+from tribus import BASEDIR
 from django.db.models import Q
 from tribus.common.logger import get_logger
 from tribus.web.cloud.models import Package, Details
 from tribus.common.utils import md5Checksum, list_items, readconfig
 
 logger = get_logger()
+hdlr = logging.FileHandler(os.path.join(BASEDIR, 'tribus_recorder.log'))
+formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+hdlr.setFormatter(formatter)
+logger.addHandler(hdlr)
+logger.setLevel(logging.INFO)
 
 
 def update_paragraph(paragraph, branch, comp):
@@ -60,10 +67,12 @@ def update_paragraph(paragraph, branch, comp):
     .. versionadded:: 0.1
     """
     
-    logger.info('Updating package \'%s\'' % paragraph['Package'])
+    logger.info('Updating package \'%s\' in %s:%s' %
+                (paragraph['Package'], branch, comp))
     package = Package.objects.get(Name = paragraph.get('Package'))
     package.update(paragraph, branch, comp)
-    logger.info('Package \'%s\' successfully updated' % paragraph['Package'])
+    logger.info('Package \'%s\' successfully updated in %s:%s'
+                % (paragraph['Package'], branch, comp))
 
 
 def create_cache(repository_root, cache_dir_path):
