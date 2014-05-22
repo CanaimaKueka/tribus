@@ -37,6 +37,7 @@ nodeenv
 sh
 pep257
 fabric==1.8.2
+pyyaml
 -e git+https://github.com/LuisAlejandro/django-tastypie-mongoengine.git#egg=django-tastypie-mongoengine
 -e git+https://github.com/joseguerrero/xapian-haystack.git#egg=xapian-haystack
 -e git+https://github.com/joseguerrero/django-static.git#egg=django-static
