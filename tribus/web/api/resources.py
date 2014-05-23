@@ -52,7 +52,7 @@ from django.core.paginator import InvalidPage
 from django.http.response import Http404
 
 
-from tribus.common.charms.directory import CharmDirectory
+from tribus.common.charms.repository import LocalCharmRepository
 from tribus.common.utils import get_path, list_dirs
 from tribus.config.base import CHARMSDIR
 from tribus.common.charms.url import CharmCollection
@@ -273,7 +273,7 @@ class CharmObject(object):
 
 
 class CharmListResource(Resource):
-    charm = fields.CharField(attribute='charm')
+    charms = fields.CharField(attribute='charms')
 
     class Meta:
         resource_name = 'charms/list'
@@ -281,21 +281,21 @@ class CharmListResource(Resource):
 
     def get_object_list(self, bundle):
 
-        CHARMLIST = list_dirs(CHARMSDIR)
-
-        for CHARM in CHARMLIST:
-            
+        CHARM = LocalCharmRepository(CHARMSDIR)
+                
+        charms = CHARM.list()
+        
+        l = []
+        
+        for ch in charms:
+            l.append(ch.metadata.name)
 
         return [CharmObject({
-                    'name': CHARM.metadata.name,
-                    'summary': CHARM.metadata.summary,
-                    'maintainer': CHARM.metadata.maintainer,
-                    'description': CHARM.metadata.description,
+                    'charms': l
                 })]
 
     def obj_get_list(self, bundle, **kwargs):
         return self.get_object_list(bundle)
-
 
 
 class CharmMetadataResource(Resource):
@@ -314,16 +314,12 @@ class CharmMetadataResource(Resource):
             charm_name = bundle.request.GET.get('name', None)
 
         CHARM = CharmDirectory(get_path([CHARMSDIR, charm_name]))
-                
-        charms = CHARM.list()
-        
-        l = []
-        
-        for ch in charms:
-            l.append(ch.metadata.name)
 
         return [CharmObject({
-                    'charms': l
+                    'name': CHARM.metadata.name,
+                    'summary': CHARM.metadata.summary,
+                    'maintainer': CHARM.metadata.maintainer,
+                    'description': CHARM.metadata.description,
                 })]
 
     def obj_get_list(self, bundle, **kwargs):

@@ -23,7 +23,7 @@ from tastypie.api import Api
 
 from tribus.web.api.resources import TribResource, TimelineResource, CommentResource,\
     UserResource, SearchResource, UserProfileResource, UserFollowsResource, UserFollowersResource,\
-    CharmMetadataResource, CharmConfigResource
+    CharmMetadataResource, CharmConfigResource, CharmListResource
 
 api_01 = Api(api_name='0.1')
 api_01.register(UserFollowsResource())
@@ -36,3 +36,4 @@ api_01.register(UserProfileResource())
 api_01.register(SearchResource())
 api_01.register(CharmMetadataResource())
 api_01.register(CharmConfigResource())
+api_01.register(CharmListResource())
