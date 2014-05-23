@@ -7,7 +7,7 @@ import urlparse
 import yaml
 
 from tribus.common.charms.provider import get_charm_from_path
-from tribus.common.charms.url import CharmURL
+from tribus.common.charms.url import CharmURL, CharmCollection
 from tribus.common.errors import FileNotFound
 from tribus.common.utils import list_dirs
 from tribus.common import under
@@ -42,12 +42,20 @@ class LocalCharmRepository(object):
             raise RepositoryNotFound(path)
         self.path = path
 
-    # def list(self):
-    #     charms = []
 
-    #     for l in list_dirs(self.path):
-            
-
+    def list(self):
+        schema = "local"
+        col = CharmCollection(schema)
+        charms = []
+        
+        for l in list_dirs(self.path):
+            charmurl = CharmURL(col, l, None)
+            charm =  self.find(charmurl)
+            if charm:
+                charms.append(charm)
+        
+        return charms
+                
     def _collection(self, collection):
         path = os.path.join(self.path, collection.series)
         if not os.path.exists(path):

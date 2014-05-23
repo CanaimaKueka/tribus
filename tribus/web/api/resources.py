@@ -53,8 +53,9 @@ from django.http.response import Http404
 
 
 from tribus.common.charms.directory import CharmDirectory
-from tribus.common.utils import get_path
+from tribus.common.utils import get_path, list_dirs
 from tribus.config.base import CHARMSDIR
+from tribus.common.charms.url import CharmCollection
 
 
 
@@ -271,29 +272,29 @@ class CharmObject(object):
         return self._data
 
 
-# class CharmListResource(Resource):
-#     charm = fields.CharField(attribute='charm')
+class CharmListResource(Resource):
+    charm = fields.CharField(attribute='charm')
 
-#     class Meta:
-#         resource_name = 'charms/list'
-#         object_class = CharmObject
+    class Meta:
+        resource_name = 'charms/list'
+        object_class = CharmObject
 
-#     def get_object_list(self, bundle):
+    def get_object_list(self, bundle):
 
-#         CHARMLIST = list_dirs(CHARMSDIR)
+        CHARMLIST = list_dirs(CHARMSDIR)
 
-#         for CHARM in CHARMLIST:
+        for CHARM in CHARMLIST:
             
 
-#         return [CharmObject({
-#                     'name': CHARM.metadata.name,
-#                     'summary': CHARM.metadata.summary,
-#                     'maintainer': CHARM.metadata.maintainer,
-#                     'description': CHARM.metadata.description,
-#                 })]
+        return [CharmObject({
+                    'name': CHARM.metadata.name,
+                    'summary': CHARM.metadata.summary,
+                    'maintainer': CHARM.metadata.maintainer,
+                    'description': CHARM.metadata.description,
+                })]
 
-#     def obj_get_list(self, bundle, **kwargs):
-#         return self.get_object_list(bundle)
+    def obj_get_list(self, bundle, **kwargs):
+        return self.get_object_list(bundle)
 
 
 
@@ -313,12 +314,16 @@ class CharmMetadataResource(Resource):
             charm_name = bundle.request.GET.get('name', None)
 
         CHARM = CharmDirectory(get_path([CHARMSDIR, charm_name]))
+                
+        charms = CHARM.list()
+        
+        l = []
+        
+        for ch in charms:
+            l.append(ch.metadata.name)
 
         return [CharmObject({
-                    'name': CHARM.metadata.name,
-                    'summary': CHARM.metadata.summary,
-                    'maintainer': CHARM.metadata.maintainer,
-                    'description': CHARM.metadata.description,
+                    'charms': l
                 })]
 
     def obj_get_list(self, bundle, **kwargs):
