@@ -18,6 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import yaml
 
 from tastypie.cache import NoCache
 from tastypie.authentication import SessionAuthentication
@@ -49,6 +50,13 @@ from tribus.web.forms import TribForm, CommentForm
 from django.core.paginator import Paginator
 from django.core.paginator import InvalidPage
 from django.http.response import Http404
+
+
+from tribus.common.charms.repository import LocalCharmRepository
+from tribus.common.utils import get_path, list_dirs
+from tribus.config.base import CHARMSDIR
+from tribus.common.charms.url import CharmCollection
+
 
 
 class UserResource(ModelResource):
@@ -242,6 +250,99 @@ class SearchResource(Resource):
     def get_object_list(self, bundle):
         return [{'users': SearchUserResource().obj_get_list(bundle),
                  'packages': SearchPackageResource().obj_get_list(bundle), }]
+
+    def obj_get_list(self, bundle, **kwargs):
+        return self.get_object_list(bundle)
+
+
+class CharmObject(object):
+    def __init__(self, initial=None):
+        self.__dict__['_data'] = {}
+
+        if hasattr(initial, 'items'):
+            self.__dict__['_data'] = initial
+
+    def __getattr__(self, name):
+        return self._data.get(name, None)
+
+    def __setattr__(self, name, value):
+        self.__dict__['_data'][name] = value
+
+    def to_dict(self):
+        return self._data
+
+
+class CharmListResource(Resource):
+    charms = fields.CharField(attribute='charms')
+
+    class Meta:
+        resource_name = 'charms/list'
+        object_class = CharmObject
+
+    def get_object_list(self, bundle):
+
+        CHARM = LocalCharmRepository(CHARMSDIR)
+                
+        charms = CHARM.list()
+        
+        l = []
+        
+        for ch in charms:
+            l.append(ch.metadata.name)
+
+        return [CharmObject({
+                    'charms': l
+                })]
+
+    def obj_get_list(self, bundle, **kwargs):
+        return self.get_object_list(bundle)
+
+
+class CharmMetadataResource(Resource):
+    name = fields.CharField(attribute='name')
+    summary = fields.CharField(attribute='summary')
+    maintainer = fields.CharField(attribute='maintainer')
+    description = fields.CharField(attribute='description')
+
+    class Meta:
+        resource_name = 'charms/metadata'
+        object_class = CharmObject
+
+    def get_object_list(self, bundle):
+
+        if hasattr(bundle.request, 'GET'):
+            charm_name = bundle.request.GET.get('name', None)
+
+        CHARM = CharmDirectory(get_path([CHARMSDIR, charm_name]))
+
+        return [CharmObject({
+                    'name': CHARM.metadata.name,
+                    'summary': CHARM.metadata.summary,
+                    'maintainer': CHARM.metadata.maintainer,
+                    'description': CHARM.metadata.description,
+                })]
+
+    def obj_get_list(self, bundle, **kwargs):
+        return self.get_object_list(bundle)
+
+
+class CharmConfigResource(Resource):
+    config = fields.CharField(attribute='config')
+
+    class Meta:
+        resource_name = 'charms/config'
+        object_class = CharmObject
+
+    def get_object_list(self, bundle):
+
+        if hasattr(bundle.request, 'GET'):
+            charm_name = bundle.request.GET.get('name', None)
+
+        CHARM = CharmDirectory(get_path([CHARMSDIR, charm_name]))
+
+        return [CharmObject({
+                    'config': CHARM.config._data,
+                })]
 
     def obj_get_list(self, bundle, **kwargs):
         return self.get_object_list(bundle)

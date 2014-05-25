@@ -17,10 +17,14 @@ from tribus.web.registration.ldap.models import LdapUser
 
 
 class data_change(Form):
+
+
     required_css_class = 'required'
 
+
     descripcion = forms.RegexField(
-        label=_('Descripcion'), required=False,
+        label=_('Descripcion'),
+        required=False,
         regex=r'^[\w.@+-]+$',
         widget=forms.Textarea(
             attrs={
@@ -36,11 +40,13 @@ class data_change(Form):
         }
     )
 
-    # email = forms.EmailField(label = _('email'), required = False,
-    #                                 widget = forms.TextInput(
-    #                                     attrs = {
-    #                                         'class': 'input-large',
-    #                                         'type': 'email'
-    #                                     }
-    #                                 )
-    # 							)
+
+
+    emailVisible = forms.BooleanField(
+		widget = forms.CheckboxInput( 
+		attrs= {
+			'class':'checkForm',
+		}
+	))
+
+

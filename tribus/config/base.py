@@ -13,7 +13,6 @@ DESCRIPTION = (
     u'Red social para la gestión de comunidades de Software Libre.'),
 LICENSE = u'GPL'
 
-
 if BASEDIR == '/usr/share/pyshared':
     CONFDIR = '/etc/tribus'
     BINDIR = '/usr/bin'
@@ -22,6 +21,8 @@ if BASEDIR == '/usr/share/pyshared':
     ICONDIR = '/usr/share/icons/hicolor'
     LOCALEDIR = '/usr/share/locale'
     PACKAGECACHE = '/var/cache/tribus'
+    CHARMSDIR = BASEDIR + '/tribus/data/charms'
+
 else:
     CONFDIR = BASEDIR + '/tribus/config'
     BINDIR = BASEDIR
@@ -30,6 +31,7 @@ else:
     LOCALEDIR = BASEDIR + '/tribus/i18n'
     ICONDIR = BASEDIR + '/tribus/data/icons'
     PACKAGECACHE = BASEDIR + '/packagecache'
+    CHARMSDIR = BASEDIR + '/tribus/data/charms'
 
 DEFAULT_CLI_OPTIONS = {
     'version': [['-v', '--version'], {

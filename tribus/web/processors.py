@@ -36,3 +36,4 @@ def default_context(request):
         'tribus_role_3': TRIBUS_ROLE_3,
         'DEBUG': DEBUG,
     }
+

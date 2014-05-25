@@ -186,7 +186,9 @@ class SetupTesting(TestSuite):
         result = super(SetupTesting, self).run(result, *args, **kwargs)
         self.test_runner.teardown_databases(self.old_config)
         self.test_runner.teardown_test_environment()
-        #self.coverage_report()
-        #self.flake8_report()
-        #self.pep257_report()
+
+        #imprime informe para correccion de errores
+        # self.coverage_report()
+        # self.flake8_report()
+        # self.pep257_report()
         return result

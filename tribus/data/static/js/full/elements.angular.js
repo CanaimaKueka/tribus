@@ -10,6 +10,31 @@ angular.element(document).ready(function(){
     topSearchInput = angular.element(
         document.querySelector('input.top_search_input'));
 
+    formArea = angular.element(
+         document.querySelector('textarea.input-large.form'));   
+
+    if (description =! "None"){
+        formArea.text(description);
+    }
+
+    formCheck = angular.element(
+         document.querySelector('.input.form'));
+    console.log (formCheck,visible_email );
+    formCheck.prop('ng-checked','true');
+
+
+    topSearchInput.bind('keyup', function(){
+        if(this.value.length > 1){
+            angular.element(this).next()
+                .css('display', 'block');
+        }
+        if(this.value.length === 0){
+            angular.element(this).next()
+                .css('display', 'none');
+        }
+    });
+
+
     actionTextarea.bind('keyup', function(){
 
         tribCharCounter = angular.element(this.parentNode.children[1]);
