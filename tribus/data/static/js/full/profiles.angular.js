@@ -10,16 +10,18 @@ var tribus = angular.module('tribus', ['ngSanitize', 'Tribs' , 'Timeline',
 
 // Controllers -----------------------------------------------------------------
 
-tribus.controller('TribController', ['$scope', '$timeout', '$modal', 'Tribs', 'Timeline',
-    TribController]);
-tribus.controller('CommentController', ['$scope', '$timeout', '$modal', 'Comments',
-    CommentController]);
-tribus.controller('UserController',['$scope','UserProfile', 'User',
-    UserController]);
-tribus.controller('FollowsController', ['$scope', '$filter', 'UserFollows', 'UserProfile', '$timeout',
-    FollowsController]);
-tribus.controller('FollowersController', ['$scope', '$filter', 'UserFollowers', 'UserProfile', '$timeout',
-    FollowersController]);
+if (waffle.switch_is_active('profile')){ 
+	tribus.controller('TribController', ['$scope', '$timeout', '$modal', 'Tribs', 'Timeline',
+	    TribController]);
+	tribus.controller('CommentController', ['$scope', '$timeout', '$modal', 'Comments',
+	    CommentController]);
+	tribus.controller('UserController',['$scope','UserProfile', 'User',
+	    UserController]);
+	tribus.controller('FollowsController', ['$scope', '$filter', 'UserFollows', 'UserProfile', '$timeout',
+	    FollowsController]);
+	tribus.controller('FollowersController', ['$scope', '$filter', 'UserFollowers', 'UserProfile', '$timeout',
+	    FollowersController]);
+}
 
 tribus.filter('startFrom', function(){
     return function(input, start) {

@@ -50,6 +50,7 @@ from tribus.web.forms import TribForm, CommentForm
 from django.core.paginator import Paginator
 from django.core.paginator import InvalidPage
 from django.http.response import Http404
+from waffle import switch_is_active
 
 
 from tribus.common.charms.repository import LocalCharmRepository
@@ -241,15 +242,32 @@ class SearchResource(Resource):
         allowed_methods = ['get']
         include_resource_uri = False
 
+
     def dehydrate_users(self, bundle):
-        return [{'fullname': unicode(obj.fullname), 'username': unicode(obj.username)} for obj in bundle.obj['users']]
+        if switch_is_active('profile'):
+            return [{'fullname': unicode(obj.fullname),
+                     'username': unicode(obj.username)}
+                     for obj in bundle.obj['users']]
+        else:
+            return []
+
 
     def dehydrate_packages(self, bundle):
-        return [{'name': str(obj.name)} for obj in bundle.obj['packages']]
+        if switch_is_active('cloud'):
+            return [{'name': str(obj.name)} for obj in bundle.obj['packages']]
+        else:
+            return []
+
 
     def get_object_list(self, bundle):
-        return [{'users': SearchUserResource().obj_get_list(bundle),
-                 'packages': SearchPackageResource().obj_get_list(bundle), }]
+        d = {}
+        if switch_is_active('cloud'):
+            d['packages'] = SearchPackageResource().obj_get_list(bundle)
+        if switch_is_active('profile'):
+            d['users'] = SearchUserResource().obj_get_list(bundle)
+        
+        return [d]
+    
 
     def obj_get_list(self, bundle, **kwargs):
         return self.get_object_list(bundle)
