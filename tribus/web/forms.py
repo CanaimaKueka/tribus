@@ -54,7 +54,6 @@ class CommentForm(DocumentForm):
 
     def clean(self):
         cleaned_data = super(CommentForm, self).clean()
-
         for key in cleaned_data.keys():
             stripped_data = strip_tags(cleaned_data[key])
             if unicode(stripped_data).strip():
@@ -66,3 +65,4 @@ class CommentForm(DocumentForm):
             else:
                 raise ValidationError(_('Enter a valid value.'))
         return cleaned_data
+

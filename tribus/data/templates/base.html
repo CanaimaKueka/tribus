@@ -23,7 +23,9 @@
         {% else %}
         <!--[if IE 7]><link type="text/css" rel="stylesheet" href="{% static 'css/min/font-awesome-ie7.css' %}" /><![endif]-->
         <!--[if lte IE 8]><link type="text/css" rel="stylesheet" href="{% static 'css/min/tribus-ie.css' %}" /><![endif]-->
+
         {% endif %}
+
         <script type="text/javascript">
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
             (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -37,6 +39,7 @@
         </script>
         
         {% include 'angular-bootstrap-templates.html' %}
+
     </head>
     <body>
         {% include 'navbar.html' %}
