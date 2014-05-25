@@ -36,6 +36,7 @@ from tribus.config.pkg import (
     debian_maint_dependencies, f_workenv_preseed, f_sql_preseed,
     f_users_ldif, f_python_dependencies)
 from tribus.common.logger import get_logger
+from tribus.config.waffle_cfg import SWITCHES_CONFIGURATION
 
 logger = get_logger()
 
@@ -223,17 +224,16 @@ def resetdb():
 
 def register_existent_modules():
     '''
-    Crea registra switches para los modulos existentes en tribus
+    Registra switches para los modulos existentes en tribus
     * Nube de aplicaciones
     * Perfiles de usuarios
     '''
     
     with cd('%(basedir)s' % env):
-        local('python manage.py switch cloud off --create',
-                capture=False)
-        
-        local('python manage.py switch profile off --create',
-               capture=False)
+        for switch_name, switch_data in SWITCHES_CONFIGURATION.items():
+            local('python manage.py switch %s %s --create' 
+                  % (switch_name, switch_data[1]), capture=False)
+
 
 # -----------------------------------------------------------------------------
 
@@ -250,8 +250,8 @@ def rebuild_index():
 def clean_tasks():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local(
-                '%(command)s python manage.py celery purge' %
+            local('%(command)s python manage.py celery purge' % 
+                #'%(command)s celery purge -f -A tribus --app=tribus.config.celery_cfg' %
                 env, capture=False)
 
 
@@ -380,17 +380,13 @@ def createsuperuser_django():
                 '%(command)s python manage.py createsuperuser --noinput \
 --username tribus --email tribus@localhost.com --verbosity 3 --traceback' %
                 env, capture=False)
-
     py_activate_virtualenv()
-
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
     from django.contrib.auth.models import User
     from tribus.web.registration.ldap.utils import create_ldap_user
- 
     u = User.objects.get(username__exact='tribus')
     u.set_password('tribus')
     u.save()
-
     create_ldap_user(u)
 
 
@@ -420,17 +416,18 @@ def runcelery_daemon():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
             local(
-                '%(command)s python manage.py celeryd -c 1 -l INFO' %
+                '%(command)s python manage.py celeryd -c 1 --beat -l INFO' %
+                #'%(command)s celery worker -A tribus --app=tribus.config.celery_cfg -c 1 -l INFO' %
                 env, capture=False)
 
 
-def runcelery_worker():
-    with cd('%(basedir)s' % env):
-        with settings(command='. %(virtualenv_activate)s;' % env):
-            local(
-                '%(command)s python manage.py \
-celery beat -s celerybeat-schedule ' %
-                env, capture=False)
+#def runcelery_worker():
+#    with cd('%(basedir)s' % env):
+#        with settings(command='. %(virtualenv_activate)s;' % env):
+#            local(
+#                '%(command)s python manage.py celery beat -s celerybeat-schedule' %
+#                #'%(command)s celery worker -A tribus --app=tribus.config.celery_cfg -B -c 1 -l INFO' %
+#                env, capture=False)
 
 
 def shell_django():

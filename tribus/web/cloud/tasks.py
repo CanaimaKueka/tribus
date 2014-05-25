@@ -4,7 +4,6 @@ from tribus.config.base import PACKAGECACHE
 from tribus.config.pkgrecorder import CANAIMA_ROOT, LOCAL_ROOT
 from tribus.common.recorder import sync_cache, update_db_from_cache
 
-
 @task
 def update_cache(*args):
     if DEBUG:

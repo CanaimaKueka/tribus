@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
 import djcelery
 import mongoengine
-import os
-
 from tribus import BASEDIR
 from tribus.common.utils import get_path
 from celery.schedules import crontab
@@ -125,19 +124,22 @@ API_LIMIT_PER_PAGE = 20
 TASTYPIE_DEFAULT_FORMATS = ['json']
 ACCOUNT_ACTIVATION_DAYS = 7
 
+# CONFIGURACION CELERY
+
 BROKER_URL = 'redis://localhost:6379/0'
-# Programacion de task para djcelery
+CELERY_RESULT_BACKEND = 'redis://localhost/0'
 CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
+
 CELERYBEAT_SCHEDULE = {
     "update_cache": {
         "task": "tribus.web.cloud.tasks.update_cache",
         "schedule": crontab(minute=0, hour=0), # A las 12 am
         #"schedule": crontab(), # Cada minuto
         "args": (),
-    },
+    }
 }
 
-# Configuracion de haystack
+# CONFIGURACION HAYSTACK CON XAPIAN
 XAPIAN_INDEX = os.path.join(BASEDIR, 'xapian_index/')
 HAYSTACK_LOGGING = True
 HAYSTACK_CONNECTIONS = {
@@ -149,7 +151,6 @@ HAYSTACK_CONNECTIONS = {
 }
 
 HAYSTACK_SIGNAL_PROCESSOR = 'celery_haystack.signals.CelerySignalProcessor'
-
 
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -164,17 +165,18 @@ INSTALLED_APPS = (
     'tribus.web.registration',
     'tribus.web.cloud',
     'tribus.web.profile',
+    'tribus.web.admin',
     'ldapdb',
     'django_auth_ldap',
-    'djcelery',
     'south',
     'django_static',
+    'djcelery',
     'tastypie',
     'tastypie_mongoengine',
     'haystack',
     'celery_haystack',
     'registration',
-    'waffle'
+    'waffle',
 )
 
 SOUTH_TESTS_MIGRATE = False
@@ -188,8 +190,8 @@ STATICFILES_FINDERS = (
 )
 
 TEMPLATE_LOADERS = (
-    'django.template.loaders.app_directories.Loader',
     'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
 )
 
 MIDDLEWARE_CLASSES = (

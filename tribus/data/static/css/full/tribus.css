@@ -14812,6 +14812,21 @@ th[aria-selected=true] .ui-jqgrid-sortable {
     text-align: center;
 }
 
+.navbar .nav > li.brand > a > span.logo_admin_title {
+    font-family: 'League Gothic';
+    font-size: 2em;
+    font-weight: 400;
+    line-height: 33px;
+    margin: 0;
+    width: 48%;
+    padding: 0;
+    text-transform: uppercase;
+    display: block;
+    float: left;
+    height: 30px;
+    text-align: center;
+}
+
 .navbar .nav > li.brand > a > span.logo_subtitle {
     font-size: 0.6em;
     line-height: 0.8em;
