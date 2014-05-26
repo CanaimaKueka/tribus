@@ -161,7 +161,7 @@ def sync_cache(repository_root, cache_dir_path):
                         os.remove(f)
                         try:
                             urllib.urlretrieve(remote_package_path, f)
-                            changes.append(f)
+                            changes.append(os.path.basename(f))
                         except urllib2.URLError, e:
                             logger.error('Could not get %s, error code #%s' % (remote_package_path, e.code))
                     else:
@@ -169,7 +169,7 @@ def sync_cache(repository_root, cache_dir_path):
     return changes
 
 
-def update_db_from_cache(changes, cache_dir_path=None):
+def update_db_from_cache(changes, cache_dir_path=None, simulate = False):
     """
     Updates all packages in a control file.
     If a package exists but the MD5sum field is different from the one
@@ -209,7 +209,8 @@ def update_db_from_cache(changes, cache_dir_path=None):
                     if paragraph['md5sum'] != exists[0].MD5sum:
                         logger.info('The md5 checksum does not match in the package \'%s\':' % paragraph['Package'])
                         logger.info('\'%s\' != \'%s\' ' % (paragraph['md5sum'], exists[0].MD5sum))
-                        update_paragraph(paragraph, branch, comp)
+                        if not simulate:
+                            update_paragraph(paragraph, branch, comp)
                     else:
                         logger.info('Nothing to change \'%s\':' % paragraph['Package'])
                 else:
@@ -224,21 +225,25 @@ def update_db_from_cache(changes, cache_dir_path=None):
                                                           Q(Details__Architecture=arch)).distinct()
             for package in bd_packages:
                 if package.Name not in existent_packages:
-                    print package.Name, "not in %s %s %s" % (branch, comp, arch)
+                    logger.info("%s not in %s %s %s" % (package.Name, branch, comp, arch))
                     for detail in package.Details.all():
                         if (detail.Distribution == branch and detail.Component == comp and
                             (detail.Architecture == arch or detail.Architecture == 'all')):
                             for relation in detail.Relations.all():
-                                detail.Relations.remove(relation)
+                                if not simulate:
+                                    detail.Relations.remove(relation)
                                 exists = Details.objects.filter(Relations=relation)
                                 if not exists:
-                                    relation.delete()
+                                    if not simulate:
+                                        relation.delete()
                             logger.info('Removing \'%s\' from \'%s\'...'
                                         % (detail, package.Name))
-                            detail.delete()
+                            if not simulate:
+                                detail.delete()
                     if not package.Details.all():
                         logger.info('Removing %s...' % package.Name)
-                        package.delete()
+                        if not simulate:
+                            package.delete()
 
 
 def fill_db_from_cache(cache_dir_path):
