@@ -107,17 +107,17 @@ def install_repository():
     '''
     Crea un repositorio de paquetes y lo inicializa.
     '''
-    
+
     py_activate_virtualenv()
     from tribus.common.reprepro import create_repository
     create_repository(env.reprepro_dir, env.distributions_path)
-    
-    
+
+
 def select_sample_packages():
     '''
     Selecciona una muestra de paquetes.
     '''
-    
+
     py_activate_virtualenv()
     from tribus.common.repository import init_sample_packages
     from tribus.config.pkgrecorder import CANAIMA_ROOT, SAMPLES_DIR
@@ -128,27 +128,27 @@ def get_sample_packages():
     '''
     Descarga la muestra de paquetes
     '''
-    
+
     py_activate_virtualenv()
     from tribus.common.repository import download_sample_packages
     from tribus.config.pkgrecorder import CANAIMA_ROOT, LOCAL_ROOT, SAMPLES_DIR
     download_sample_packages(CANAIMA_ROOT, SAMPLES_DIR)
     urllib.urlretrieve(os.path.join(CANAIMA_ROOT, "distributions"),
                        os.path.join(LOCAL_ROOT, "distributions"))
-    
-    
+
+
 def get_selected():
     py_activate_virtualenv()
     from tribus.common.repository import get_selected_packages
     from tribus.config.pkgrecorder import CANAIMA_ROOT, SAMPLES_DIR
     get_selected_packages(CANAIMA_ROOT, SAMPLES_DIR, env.selected_packages)
-    
+
 
 def index_sample_packages():
     '''
     Indexa los paquetes descargados en el repositorio.
     '''
-    
+
     from tribus.common.utils import list_items, find_files
     from tribus.common.reprepro import include_deb
     dirs = [os.path.dirname(f)
@@ -190,7 +190,7 @@ def wipe_repo():
 
 def filldb_from_local():
     py_activate_virtualenv()
-    from tribus.common.recorder import fill_db_from_cache, create_cache 
+    from tribus.common.recorder import fill_db_from_cache, create_cache
     from tribus.config.pkgrecorder import LOCAL_ROOT
     create_cache(LOCAL_ROOT, PACKAGECACHE)
     fill_db_from_cache(PACKAGECACHE)
@@ -228,10 +228,10 @@ def register_existent_modules():
     * Nube de aplicaciones
     * Perfiles de usuarios
     '''
-    
+
     with cd('%(basedir)s' % env):
         for switch_name, switch_data in SWITCHES_CONFIGURATION.items():
-            local('python manage.py switch %s %s --create' 
+            local('python manage.py switch %s %s --create'
                   % (switch_name, switch_data[1]), capture=False)
 
 
@@ -250,7 +250,7 @@ def rebuild_index():
 def clean_tasks():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python manage.py celery purge' % 
+            local('%(command)s python manage.py celery purge' %
                 #'%(command)s celery purge -f -A tribus --app=tribus.config.celery_cfg' %
                 env, capture=False)
 
