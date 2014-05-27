@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from django.conf.urls import patterns, url
+from django.conf.urls import patterns, url, include
 
 urlpatterns = patterns('',
                        url(r'^cloud/$',
@@ -15,6 +15,8 @@ urlpatterns = patterns('',
                        url(r'^cloud/l/index/$',
                            'tribus.web.cloud.views.package_list',
                            name='cloud_list'),
+                       
+                       (r'^', include('waffle.urls')),
 
 #                        url(r'^cloud/l/tag/(?P<tag>(\w*\W*)*)',
 #                            'tribus.web.cloud.views.by_tag',

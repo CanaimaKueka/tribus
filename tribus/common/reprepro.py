@@ -56,7 +56,7 @@ def create_repository(repository_root, distributions_path):
             f.write('%s dists/%s/Release\n' % (dist, dist))
     
     
-def include_deb(repository_root, distribution, package_path = None):
+def include_deb(repository_root, distribution, comp = None, package_path = None):
     '''
     Indexes a debian package (.deb) in the selected repository.
     
@@ -69,11 +69,11 @@ def include_deb(repository_root, distribution, package_path = None):
     
     # Esto puede ser un problema si despues se ejecuta otro proceso 
     # sin especificar la ubicacion
-    os.chdir(repository_root) 
+    os.chdir(repository_root)
     if os.path.isdir(package_path):
-        local("reprepro includedeb %s %s/*.deb" % (distribution, package_path))
+        local("reprepro -C %s includedeb %s %s/*.deb" % (comp, distribution, package_path))
     elif os.path.isfile(package_path):
-        local('reprepro includedeb %s %s' % (distribution, package_path))
+        local('reprepro -C %s includedeb %s %s' % (comp, distribution, package_path))
 
 
 def reset_repository(repository_root):
@@ -81,8 +81,8 @@ def reset_repository(repository_root):
     Elimina las distribuciones existentes en un repositorio.
     '''
     
+    os.chdir(repository_root)
     dists = list_items(os.path.join(repository_root, 'dists'), True, False)
-    
     for dist in dists:
         local("reprepro removefilter %s \'Section\'" % dist)
     

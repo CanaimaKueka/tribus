@@ -25,7 +25,7 @@ from tribus.web.cloud.models import Package, Details, Relation
 '''
 
 tribus.tests.tribus_web_cloud_views
-================================
+===================================
 
 These are the tests for the tribus.web.cloud views.
 

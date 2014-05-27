@@ -139,28 +139,33 @@ function TypeaheadCtrl($scope, Search){
     $scope.getResults = function(inputvalue){
         Search.query({ q: inputvalue }, function(results){
         	$scope.res = [];
-            if (results.objects[0].packages.length > 0) {
-                var packages = results.objects[0].packages;
-                for(var i = 0; i < packages.length; i++){
-                    packages[i].url = packages_url_placer.replace('%PACKAGE%', packages[i].name);
-                    $scope.res.push({name : packages[i].name,
-                    				 url : packages[i].url,
-                    				 type : "package"
-                    				 });
-                }
-            }
-            
-            if (results.objects[0].users.length > 0) {
-	            var users = results.objects[0].users;
-	            for(var i = 0; i < users.length; i++){
-	                users[i].url = user_url_placer.replace('%USER%', users[i].username);
-	                $scope.res.push({name : users[i].fullname, 
-	                				 url : users[i].url,
-	                				 username : users[i].username,
-	                				 type : "user"
-	                				});
+        	
+        	if (waffle.switch_is_active('cloud')){
+	            if (results.objects[0].packages.length > 0) {
+	                var packages = results.objects[0].packages;
+	                for(var i = 0; i < packages.length; i++){
+	                    packages[i].url = packages_url_placer.replace('%PACKAGE%', packages[i].name);
+	                    $scope.res.push({name : packages[i].name,
+	                    				 url : packages[i].url,
+	                    				 type : "package"
+	                    				 });
+	                }
 	            }
-            }
+           	}
+           	
+            if (waffle.switch_is_active('profile')){
+	            if (results.objects[0].users.length > 0) {
+		            var users = results.objects[0].users;
+		            for(var i = 0; i < users.length; i++){
+		                users[i].url = user_url_placer.replace('%USER%', users[i].username);
+		                $scope.res.push({name : users[i].fullname, 
+		                				 url : users[i].url,
+		                				 username : users[i].username,
+		                				 type : "user"
+		                				});
+		            }
+	            }
+	        }
         });
         
         $scope.res.push({name : inputvalue, 

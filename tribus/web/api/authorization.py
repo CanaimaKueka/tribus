@@ -52,7 +52,6 @@ class Authorization(BaseAuthorization):
 
 
 class UserAuthorization(Authorization):
-    # NO SE USA (hasta ahora)
 
     def read_list(self, object_list, bundle):
         return object_list.filter(id=bundle.request.user.id)
@@ -80,10 +79,6 @@ class UserProfileAuthorization(Authorization):
 # HACER AUTORIZACION PARA PATCH
 
     def update_detail(self, object_list, bundle):
-        print(
-            "------------------->",
-            dir(bundle.request.PATCH),
-            bundle.request.PATCH.items)
         # if int(bundle.obj.id) == bundle.request.user.id:
         return True
         # raise Unauthorized("You are not allowed to access that resource.")
@@ -94,7 +89,6 @@ class UserFollowersAuthorization(Authorization):
     def get_followers(self, bundle):
         search = bundle.request.user.user_profile.followers.all()
         followers = [int(f.id) for f in search]
-        print "<-----------------------", followers
         return followers
 
     def read_list(self, object_list, bundle):
@@ -106,7 +100,6 @@ class UserFollowsAuthorization(Authorization):
     def get_follows(self, bundle):
         search = bundle.request.user.user_profile.follows.all()
         follows = [int(f.id) for f in search]
-        print "<-----------------------", follows
         return follows
 
     def read_list(self, object_list, bundle):

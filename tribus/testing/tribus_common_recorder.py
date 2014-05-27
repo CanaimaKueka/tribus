@@ -33,10 +33,9 @@ import email.Utils
 from fabric.api import lcd
 from debian import deb822
 from django.test import TestCase
-from doctest import DocTestSuite
 from tribus.__init__ import BASEDIR
 from tribus.common.utils import get_path
-from tribus.web.cloud.models import Package, Details,Relation
+from tribus.web.cloud.models import Package, Details
 
 SAMPLESDIR = get_path([BASEDIR, "tribus", "testing", "samples" ])
 test_dist = "kukenan"
@@ -50,201 +49,23 @@ class RecorderFunctions(TestCase):
     def tearDown(self):
         pass
     
-    
-    # TEST COMPLETO Y CORRECTO
-    def test_record_maintainer(self):
-        '''
-        El objetivo de este test es verificar que el registro de
-        un mantenedor se haga correctamente.
-        '''
-        
-        from tribus.common.recorder import record_maintainer
-        maintainer_data = "Super Mantenedor 86 <supermaintainer86@maintainer.com>"
-        test_maintainer = record_maintainer(maintainer_data)
-        self.assertEqual(test_maintainer.Name, "Super Mantenedor 86", "El nombre no coincide")
-        self.assertEqual(test_maintainer.Email, "supermaintainer86@maintainer.com", "El correo no coincide")
-    
-    
-#     Caso de prueba adicional en caso de registro con manejo de excepciones
-#
-#     def test_record_maintainer_exception(self):
-#         from tribus.common.recorder import record_maintainer
-#         from django.db import DatabaseError
-#         maintainer_data = "Simón José Antonio de la Santísima Trinidad Bolívar y Ponte Palacios y Blanco <simonjoséantoniodelasantísimatrinidadbolívarypontepalaciosyblanco@simonjoséantoniodelasantísimatrinidadbolívarypontepalaciosyblanco.com"
-#         self.assertRaises(DatabaseError, record_maintainer, maintainer_data)
-    
-    
-    # TEST COMPLETO Y CORRECTO
-    def test_record_package(self):
-        '''
-        El objetivo de este test es verificar que los campos basicos
-        de un paquete sean registrados correctamente.
-        '''
-        
-        from tribus.common.recorder import record_package
-        from tribus.config.pkgrecorder import PACKAGE_FIELDS
-        paragraph = deb822.Packages(open(os.path.join(SAMPLESDIR, "Blender")))
-        package = record_package(paragraph)
-        
-        for field, field_db in PACKAGE_FIELDS.items():
-            if paragraph.get(field):
-                self.assertEqual(getattr(package, field_db), paragraph[field])
-    
-    
-    # TEST COMPLETO Y CORRECTO
-    def test_record_details(self):
-        '''
-        El objetivo de este test es verificar que los campos de detalles
-        sean registrados correctamente.
-        '''
-        
-        from tribus.common.recorder import record_details
-        from tribus.config.pkgrecorder import DETAIL_FIELDS
-        paragraph = deb822.Packages(open(os.path.join(SAMPLESDIR, "Blender")))
-        package, _ = Package.objects.get_or_create(Name = 'blender')
-        details = record_details(paragraph, package, test_dist)
-        self.assertEqual(details.Distribution, test_dist)
-        for field, field_db in DETAIL_FIELDS.items():
-            self.assertEqual(getattr(details, field_db), paragraph[field])
-    
-    
-    # TEST COMPLETO Y CORRECTO
-    def test_record_tags(self):
-        '''
-        El objetivo de este test es verificar que las etiquetas de un
-        paquete se registran correctamente.
-        '''
-        
-        from tribus.common.recorder import record_tags
-        paragraph = deb822.Packages(open(os.path.join(SAMPLESDIR, "Blender")))
-        package, _ = Package.objects.get_or_create(Name = 'blender')
-        record_tags(paragraph, package)
-        tag_list = paragraph['Tag'].replace("\n", "").split(", ")
-        clean_list = [tuple(tag.split("::")) for tag in tag_list]
-        for label in package.Labels.all():
-            self.assertIn((label.Name, label.Tags.Value), clean_list)
-    
-    
-    # TEST COMPLETO Y CORRECTO
-    def test_record_relationship(self):
-        '''
-        El objetivo de este test es verificar que las relaciones 
-        se registren correctamente y de acuerdo al formato que maneja
-        python-debian para archivos de control.
-        '''
-        
-        from tribus.common.recorder import record_relationship
-        details, _ = Details.objects.get_or_create(Version = '2.63a-1',
-                                                   Architecture = 'i386',
-                                                   Distribution = test_dist)
-        reldata = [("depends", {"name": "libc6", "version": (">=", "2.3.6-6~")}),
-                   ("recommends", {"name": "libpulse0", "version": (">=", "0.9.21")}),
-                   ("suggests", {"name": "libportaudio2", "version": (None, None)})]
-        
-        for typerel, data in reldata:
-            record_relationship(details, typerel, data)
-        
-        for relation in details.Relations.all():
-            self.assertIn((relation.relation_type,
-                           {"name": relation.related_package.Name,
-                            "version": (relation.order, 
-                                        relation.version)}), reldata)
-        
-        self.assertEqual(len(reldata), details.Relations.all().count())
-    
-    
-    # TEST COMPLETO Y CORRECTO
-    def test_record_relations(self):
-        from tribus.common.recorder import record_relations
-        paragraph = deb822.Packages(open(os.path.join(SAMPLESDIR, "Blender")))
-        details, _ = Details.objects.get_or_create(Version = '2.63a-1',
-                                                   Architecture = 'i386',
-                                                   Distribution = test_dist)
-        record_relations(details, paragraph.relations.items())
-        total_relations = 0
-        
-        for relation_type, relations in paragraph.relations.items():
-            if relations:
-                for relation in relations:
-                    if len(relation) > 1:
-                        for element in relation:
-                            version = element.get('version', None)
-                            if version:
-                                vo, vn = version
-                            else:
-                                vo, vn = (None, None)
-                            self.assertTrue(Relation.objects.get(relation_type = relation_type,
-                                            related_package__Name = element['name'],
-                                            order = vo, version = vn))
-                            total_relations += 1
-                    else:
-                        version = relation[0].get('version', None)
-                        if version:
-                            vo, vn = version
-                        else:
-                            vo, vn = (None, None)
-                        self.assertTrue(Relation.objects.get(relation_type = relation_type,
-                                        related_package__Name = relation[0]['name'],
-                                        order = vo, version = vn))
-                        total_relations += 1
-        self.assertEqual(details.Relations.all().count(), total_relations)
-    
-    
+
     # TEST DE INTEGRACION COMPLETO Y CORRECTO
-    def test_record_paragraph(self):
-        from tribus.common.recorder import record_paragraph
-        from tribus.config.pkgrecorder import PACKAGE_FIELDS, DETAIL_FIELDS
-        paragraph = deb822.Packages(open(os.path.join(SAMPLESDIR, "Blender")))
-        record_paragraph(paragraph, test_dist)
-        p = Package.objects.get(Name = "blender")
-        d = Details.objects.get(package = p)
-        total_relations = 0
-        name, mail = email.Utils.parseaddr(paragraph.get('Maintainer'))
-        
-        self.assertEqual(d.Distribution, test_dist)
-        self.assertEqual(p.Maintainer.Name, name)
-        self.assertEqual(p.Maintainer.Email, mail)
-        
-        tag_list = paragraph['Tag'].replace("\n", "").split(", ")
-        clean_list = [tuple(tag.split("::")) for tag in tag_list]
-        for label in p.Labels.all():
-            self.assertIn((label.Name, label.Tags.Value), clean_list)
-        
-        for field, field_db in PACKAGE_FIELDS.items():
-            if paragraph.get(field):
-                self.assertEqual(str(getattr(p, field_db)), paragraph[field])
-        
-        for field, field_db in DETAIL_FIELDS.items():
-            if paragraph.get(field):
-                self.assertEqual(str(getattr(d, field_db)), paragraph[field])
-        
-        for _, relations in paragraph.relations.items():
-            if relations:
-                for relation in relations:
-                    if len(relation) > 1:
-                        for _ in relation:
-                            total_relations += 1
-                    else:
-                        total_relations += 1
-        
-        self.assertEqual(d.Relations.all().count(), total_relations)
-    
-    
-    # TEST DE INTEGRACION COMPLETO Y CORRECTO (REDUNDANDTE)
     def test_update_paragraph(self):
-        from tribus.common.recorder import record_paragraph, update_paragraph
+        from tribus.common.recorder import update_paragraph
         from tribus.config.pkgrecorder import PACKAGE_FIELDS, DETAIL_FIELDS
         
         old_paragraph = deb822.Packages(open(os.path.join(SAMPLESDIR, "Blender")))
         new_paragraph = deb822.Packages(open(os.path.join(SAMPLESDIR, "BlenderNew")))
         
-        record_paragraph(old_paragraph, test_dist)
-        update_paragraph(new_paragraph, test_dist)
+        Package.objects.create_auto(old_paragraph, test_dist, "main")
+        update_paragraph(new_paragraph, test_dist, "main")
         
         p = Package.objects.get(Name = "blender")
         d = Details.objects.get(package = p)
         name, mail = email.Utils.parseaddr(new_paragraph.get('Maintainer'))
         total_relations = 0
+        total_labels = 0
         
         self.assertEqual(p.Maintainer.Name, name)
         self.assertEqual(p.Maintainer.Email, mail)
@@ -253,8 +74,9 @@ class RecorderFunctions(TestCase):
         tag_list = new_paragraph['Tag'].replace("\n", "").split(", ")
         clean_list = [tuple(tag.split("::")) for tag in tag_list]
         for label in p.Labels.all():
-            self.assertIn((label.Name, label.Tags.Value),
-                          clean_list)
+            total_labels += 1
+            self.assertIn((label.Name, label.Tags.Value), clean_list)
+        self.assertEqual(total_labels, len(clean_list))
         
         for field, field_db in PACKAGE_FIELDS.items():
             if new_paragraph.get(field):
@@ -275,17 +97,13 @@ class RecorderFunctions(TestCase):
         
         self.assertEqual(d.Relations.all().count(), total_relations)
     
-    
-    def test_create_cache(self):
-        pass
-    
-    
+    '''
     # TEST REDUNDANTE PERO NECESARIO (INCOMPLETO)
     def test_update_cache(self):
         import urllib
         from tribus.common.iosync import rmtree
         from tribus.common.reprepro import create_repository, include_deb
-        from tribus.common.recorder import fill_db_from_cache, create_cache, update_cache
+        from tribus.common.recorder import fill_db_from_cache, create_cache
         
         pcache = os.path.join('/', 'tmp', 'pcache')
         tmp_repo = os.path.join('/', 'tmp', 'tmp_repo')
@@ -350,15 +168,16 @@ class RecorderFunctions(TestCase):
             for package, comp in delete_list:
                 include_deb(tmp_repo, comp, package)
         
-        update_cache(tmp_repo, pcache)
+        #sync_cache(tmp_repo, pcache)
         # FALTAN LOS ASSERT PARA VERIFICAR QUE LA ACTUALIZACION FUE CORRECTA
         rmtree(tmp_repo)
         rmtree(pcache)
     
+    def test_create_cache(self):
+        pass
     
     # TEST COMPLETO PERO REDUNDANTE
     def test_update_package_list(self):
-        from tribus.common.recorder import record_paragraph, update_package_list
         from tribus.config.pkgrecorder import PACKAGE_FIELDS, DETAIL_FIELDS
         
         old_amd_section = os.path.join(SAMPLESDIR, "Oldamd")
@@ -458,7 +277,4 @@ class RecorderFunctions(TestCase):
                             total_relations += 1
             
             self.assertEqual(d.Relations.all().count(), total_relations)
-
-
-    def test_fill_db_from_cache(self):
-        pass
+    '''

@@ -26,7 +26,7 @@ def default_context(request):
     return {
         'render_css': ['normalize', 'bootstrap', 'fonts', 'font-awesome',
                        'tribus', 'tribus-responsive'],
-        'render_js': ['angular', 'angular.bootstrap', 'angular.bootstrap',
+        'render_js': ['angular', 'angular.sanitize', 'angular.bootstrap',
                       'angular.resource', 'elements.angular',
                       'controllers.angular', 'services.angular',
                       'search.angular'],
@@ -36,3 +36,4 @@ def default_context(request):
         'tribus_role_3': TRIBUS_ROLE_3,
         'DEBUG': DEBUG,
     }
+

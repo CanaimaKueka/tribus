@@ -1,10 +1,13 @@
 {% load i18n %}
+{% load waffle_tags %}
+
 <div data-ng-controller="TribController" data-ng-init="addOldTribs();pollNewTribs()">
     <div class="alert-placeholder">
         <span data-alert data-ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">
             {% verbatim %}{{ alert.msg }}{% endverbatim %}
         </span>
     </div>
+    {% switch profile %}
     <div data-ng-show="template_name == 'dashboard' || template_name == 'profile'" class="action_publisher">
         <form autocomplete="off" name="action_form" data-ng-submit="createNewTrib()">
             <div class="row-fluid">
@@ -159,4 +162,17 @@
             </button>
         </div>
     </script>
+	{% else %}
+	<div>
+		<span class="trib_body">
+            <span class="trib_title">
+                <h2>{% trans 'Welcome to Tribus!' %}</h2>
+            </span>
+            <span class="trib_content">
+                <p>{% trans 'This is the dashboard, a place where you can follow the updates of your projects.' %}</p>
+                <p>{% trans 'You can always come back here by clicking on the Tribus logo.' %}</p>
+            </span>
+        </span>
+	</div>
+	{% endswitch %}
 </div>

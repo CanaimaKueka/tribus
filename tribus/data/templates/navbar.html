@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load waffle_tags %}
 <div class="navbar navbar-fixed-top">
     <div class="container-fluid">
         <div class="row-fluid">
@@ -16,7 +17,7 @@
 
             <ul class="nav span4">
             	<li class="dropdown search" ng-controller="TypeaheadCtrl">
-            		<form name="form-search" class="form-search" action="/search" method="POST">
+            		<form name="form-search" class="form-search" action="/search/" method="POST">
 	    				{% csrf_token %}
 	    				<span class="input-icon">
     					<input type="text" ng-model="selected" name="q"
@@ -35,6 +36,8 @@
             </ul>
             <ul class="nav span2 pull-right">
                 <li class="home"></li>
+                
+                {% switch profile %}
                 <li class="home">
                     <a href="/"><span class="bigger-150 icon-home"></span></a>
                 </li>
@@ -43,6 +46,8 @@
                     <a href="/profile/"><span class="bigger-150 icon-user"></span></a>
                 </li>
                 <li class="divider-vertical"></li>
+                {% endswitch%}
+                
                 <li class="dropdown settings">
                     <a id="drop-settings" href="#" class="dropdown-toggle" role="button">
                         <span class="bigger-150 icon-cog"></span>

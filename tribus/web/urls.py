@@ -21,10 +21,10 @@
 # from django.views.generic.simple import direct_to_template
 from django.views.generic.base import TemplateView
 from django.conf.urls import patterns, include, url
-# from django.contrib import admin
+from django.contrib import admin
 from tribus.web.api import api_01
 
-# admin.autodiscover()
+admin.autodiscover()
 
 urlpatterns = patterns(
     '',
@@ -41,7 +41,13 @@ urlpatterns = patterns(
     url(regex=r'', view=include('tribus.web.profile.urls')),
     url(regex=r'', view=include('social_auth.urls')),
     url(regex=r'^api/', view=include(api_01.urls)),
-    # url(regex=r'^admin/', view=include(admin.site.urls)),
+    
+    # urls adicionales para el admin aqui
+    url(regex=r'^admin/tribus-config/$', view='tribus.web.admin.views.tribus_config'),
+    url(regex=r'^admin/tribus-config/active-modules/$', view='tribus.web.admin.views.active_modules'),
+    url(regex=r'^admin/tribus-config/logger-levels/$', view='tribus.web.admin.views.logger_levels'),
+    
+    url(regex=r'^admin/', view=include(admin.site.urls)),
     # url(regex=r'^opensearch.xml/$', direct_to_template, {
     #     'template': 'opensearch.xml',
     #     'mimetype': 'application/opensearchdescription+xml'

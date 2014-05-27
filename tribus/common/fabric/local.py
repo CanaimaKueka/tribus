@@ -25,7 +25,7 @@ import sys
 import site
 import urllib
 # import lsb_release
-from fabric.api import local, env, settings, cd, lcd
+from fabric.api import local, env, settings, cd
 from tribus import BASEDIR
 from tribus.config.base import PACKAGECACHE
 from tribus.config.ldap import (AUTH_LDAP_SERVER_URI, AUTH_LDAP_BASE,
@@ -36,6 +36,7 @@ from tribus.config.pkg import (debian_run_dependencies,
                                f_sql_preseed, f_users_ldif,
                                f_python_dependencies)
 from tribus.common.logger import get_logger
+from tribus.config.waffle_cfg import SWITCHES_CONFIGURATION
 
 logger = get_logger()
 
@@ -78,7 +79,10 @@ def development():
         '_xapian.so')
     env.reprepro_dir = os.path.join(BASEDIR, 'test_repo')
     env.sample_packages_dir = os.path.join(BASEDIR, 'package_samples')
-    env.distributions_path = os.path.join(BASEDIR, 'tribus', 'config', 'data', 'dists-template')
+    env.distributions_path = os.path.join(BASEDIR, 'tribus', 'config',
+                                          'data', 'dists-template')
+    env.selected_packages = os.path.join(BASEDIR, 'tribus', 'config',
+                                         'data', 'selected_packages.list')
 
 
 def environment():
@@ -131,7 +135,14 @@ def get_sample_packages():
     download_sample_packages(CANAIMA_ROOT, SAMPLES_DIR)
     urllib.urlretrieve(os.path.join(CANAIMA_ROOT, "distributions"),
                        os.path.join(LOCAL_ROOT, "distributions"))
-
+    
+    
+def get_selected():
+    py_activate_virtualenv()
+    from tribus.common.repository import get_selected_packages
+    from tribus.config.pkgrecorder import CANAIMA_ROOT, SAMPLES_DIR
+    get_selected_packages(CANAIMA_ROOT, SAMPLES_DIR, env.selected_packages)
+    
 
 def index_sample_packages():
     '''
@@ -143,7 +154,7 @@ def index_sample_packages():
     dirs = [os.path.dirname(f)
             for f in find_files(env.sample_packages_dir, 'list')]
     dists = filter(None, list_items(env.sample_packages_dir, dirs=True, files=False))
-    with lcd('%(reprepro_dir)s' % env):
+    with cd('%(reprepro_dir)s' % env):
         for directory in dirs:
             # No se me ocurre una mejor forma (dinamica) de hacer esto
             dist = [dist_name for dist_name in dists if dist_name in directory][0]
@@ -152,6 +163,20 @@ def index_sample_packages():
                 include_deb(env.reprepro_dir, dist, directory)
             else:
                 logger.info('There are no packages in %s' % directory)
+
+
+def index_selected():
+    from tribus.common.utils import list_items, find_files
+    from tribus.common.reprepro import include_deb
+    from tribus.config.pkgrecorder import LOCAL_ROOT, SAMPLES_DIR
+    for dist in list_items(SAMPLES_DIR, True, False):
+        for comp in list_items(os.path.join(SAMPLES_DIR, dist), True, False):
+            for sample in find_files(os.path.join(SAMPLES_DIR, dist, comp)):
+                with cd('%(reprepro_dir)s' % env):
+                    try:
+                        include_deb(LOCAL_ROOT, dist, comp, sample)
+                    except:
+                        logger.info('There are no packages here!')
 
 
 def wipe_repo():
@@ -171,20 +196,44 @@ def filldb_from_local():
     fill_db_from_cache(PACKAGECACHE)
 
 
-def filldb_from_remote():
+def create_cache_from_remote():
     py_activate_virtualenv()
     from tribus.common.recorder import create_cache
     from tribus.config.pkgrecorder import CANAIMA_ROOT
     create_cache(CANAIMA_ROOT, PACKAGECACHE)
 
 
+def filldb_from_remote():
+    py_activate_virtualenv()
+    from tribus.common.recorder import fill_db_from_cache
+    fill_db_from_cache(PACKAGECACHE)
+
+
 def resetdb():
     configure_sudo()
     drop_mongo()
     configure_postgres()
+    populate_ldap()
     configure_django()
     rebuild_index()
+    register_existent_modules()
     deconfigure_sudo()
+
+# -----------------------------------------------------------------------------
+# WAFFLE SWITCHES
+
+def register_existent_modules():
+    '''
+    Registra switches para los modulos existentes en tribus
+    * Nube de aplicaciones
+    * Perfiles de usuarios
+    '''
+    
+    with cd('%(basedir)s' % env):
+        for switch_name, switch_data in SWITCHES_CONFIGURATION.items():
+            local('python manage.py switch %s %s --create' 
+                  % (switch_name, switch_data[1]), capture=False)
+
 
 # -----------------------------------------------------------------------------
 
@@ -195,6 +244,14 @@ def rebuild_index():
             local(
                 '%(command)s python manage.py rebuild_index \
 --noinput --verbosity 3 --traceback' %
+                env, capture=False)
+
+
+def clean_tasks():
+    with cd('%(basedir)s' % env):
+        with settings(command='. %(virtualenv_activate)s;' % env):
+            local('%(command)s python manage.py celery purge' % 
+                #'%(command)s celery purge -f -A tribus --app=tribus.config.celery_cfg' %
                 env, capture=False)
 
 
@@ -323,17 +380,16 @@ def createsuperuser_django():
         with settings(command='. %(virtualenv_activate)s;' % env):
             local(
                 '%(command)s python manage.py createsuperuser --noinput \
---username admin --email admin@localhost.com --verbosity 3 --traceback' %
+--username tribus --email tribus@localhost.com --verbosity 3 --traceback' %
                 env, capture=False)
-
     py_activate_virtualenv()
-
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
     from django.contrib.auth.models import User
-
-    u = User.objects.get(username__exact='admin')
+    from tribus.web.registration.ldap.utils import create_ldap_user
+    u = User.objects.get(username__exact='tribus')
     u.set_password('tribus')
     u.save()
+    create_ldap_user(u)
 
 
 def syncdb_django():
@@ -362,17 +418,18 @@ def runcelery_daemon():
     with cd('%(basedir)s' % env):
         with settings(command='. %(virtualenv_activate)s;' % env):
             local(
-                '%(command)s python manage.py celeryd -c 1 -l INFO' %
+                '%(command)s python manage.py celeryd -c 1 --beat -l INFO' %
+                #'%(command)s celery worker -A tribus --app=tribus.config.celery_cfg -c 1 -l INFO' %
                 env, capture=False)
 
 
-def runcelery_worker():
-    with cd('%(basedir)s' % env):
-        with settings(command='. %(virtualenv_activate)s;' % env):
-            local(
-                '%(command)s python manage.py \
-celery beat -s celerybeat-schedule ' %
-                env, capture=False)
+#def runcelery_worker():
+#    with cd('%(basedir)s' % env):
+#        with settings(command='. %(virtualenv_activate)s;' % env):
+#            local(
+#                '%(command)s python manage.py celery beat -s celerybeat-schedule' %
+#                #'%(command)s celery worker -A tribus --app=tribus.config.celery_cfg -B -c 1 -l INFO' %
+#                env, capture=False)
 
 
 def shell_django():

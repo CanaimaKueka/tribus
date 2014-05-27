@@ -24,6 +24,7 @@ input, button, select, textarea {
     font-family: "Open Sans", Helvetica, sans-serif;
 }
 
+
 .main-container {
     position: static;
     padding: 0;
@@ -4934,6 +4935,7 @@ span.input-icon {
 .input-large {
     width: 246px;
     max-width: 100%;
+    resize:initial;
 }
 
 .input-xlarge {
@@ -14796,6 +14798,21 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 }
 
 .navbar .nav > li.brand > a > span.logo_title {
+    font-family: 'League Gothic';
+    font-size: 2em;
+    font-weight: 400;
+    line-height: 33px;
+    margin: 0;
+    width: 48%;
+    padding: 0;
+    text-transform: uppercase;
+    display: block;
+    float: left;
+    height: 30px;
+    text-align: center;
+}
+
+.navbar .nav > li.brand > a > span.logo_admin_title {
     font-family: 'League Gothic';
     font-size: 2em;
     font-weight: 400;

@@ -8,7 +8,10 @@ var tribus = angular.module('tribus', ['ngSanitize', 'Tribs', 'Timeline', 'Comme
 
 // Controllers -----------------------------------------------------------------
 
-tribus.controller('TribController', ['$scope', '$timeout', '$modal', 'Tribs', 'Timeline',
-    TribController]);
-tribus.controller('CommentController', ['$scope', '$timeout', '$modal', 'Comments',
-    CommentController]);
+
+if (waffle.switch_is_active('profile')){
+	tribus.controller('TribController', ['$scope', '$timeout', '$modal', 'Tribs', 'Timeline',
+		TribController]);
+	tribus.controller('CommentController', ['$scope', '$timeout', '$modal', 'Comments',
+		CommentController]);
+};

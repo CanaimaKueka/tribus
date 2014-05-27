@@ -99,6 +99,14 @@ select_samples: fabric
 get_samples: fabric
 
 	@$(FAB) development get_sample_packages
+	
+get_selected: fabric
+
+	@$(FAB) development get_selected
+	
+index_selected: fabric
+
+	@$(FAB) development index_selected
 
 index_samples: fabric
 
@@ -120,6 +128,10 @@ filldb_from_remote: fabric
 rebuild_index: fabric
 
 	@$(FAB) development rebuild_index
+	
+clean_tasks: fabric
+
+	@$(FAB) development clean_tasks
 	
 # -----------------------------------------------------------------------------
 
