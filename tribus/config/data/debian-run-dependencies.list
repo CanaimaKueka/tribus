@@ -6,3 +6,4 @@ mongodb-server
 python-xapian
 reprepro
 curl
+python-debian

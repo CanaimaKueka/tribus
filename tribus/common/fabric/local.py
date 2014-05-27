@@ -28,13 +28,13 @@ import urllib
 from fabric.api import local, env, settings, cd, lcd
 from tribus import BASEDIR
 from tribus.config.base import PACKAGECACHE
-from tribus.config.ldap import (
-    AUTH_LDAP_SERVER_URI, AUTH_LDAP_BASE, AUTH_LDAP_BIND_DN,
-    AUTH_LDAP_BIND_PASSWORD)
-from tribus.config.pkg import (
-    debian_run_dependencies, debian_build_dependencies,
-    debian_maint_dependencies, f_workenv_preseed, f_sql_preseed,
-    f_users_ldif, f_python_dependencies)
+from tribus.config.ldap import (AUTH_LDAP_SERVER_URI, AUTH_LDAP_BASE,
+                                AUTH_LDAP_BIND_DN, AUTH_LDAP_BIND_PASSWORD)
+from tribus.config.pkg import (debian_run_dependencies,
+                               debian_build_dependencies,
+                               debian_maint_dependencies, f_workenv_preseed,
+                               f_sql_preseed, f_users_ldif,
+                               f_python_dependencies)
 from tribus.common.logger import get_logger
 
 logger = get_logger()
@@ -103,17 +103,17 @@ def install_repository():
     '''
     Crea un repositorio de paquetes y lo inicializa.
     '''
-    
+
     py_activate_virtualenv()
     from tribus.common.reprepro import create_repository
     create_repository(env.reprepro_dir, env.distributions_path)
-    
-    
+
+
 def select_sample_packages():
     '''
     Selecciona una muestra de paquetes.
     '''
-    
+
     py_activate_virtualenv()
     from tribus.common.repository import init_sample_packages
     from tribus.config.pkgrecorder import CANAIMA_ROOT, SAMPLES_DIR
@@ -124,7 +124,7 @@ def get_sample_packages():
     '''
     Descarga la muestra de paquetes
     '''
-    
+
     py_activate_virtualenv()
     from tribus.common.repository import download_sample_packages
     from tribus.config.pkgrecorder import CANAIMA_ROOT, LOCAL_ROOT, SAMPLES_DIR
@@ -137,7 +137,7 @@ def index_sample_packages():
     '''
     Indexa los paquetes descargados en el repositorio.
     '''
-    
+
     from tribus.common.utils import list_items, find_files
     from tribus.common.reprepro import include_deb
     dirs = [os.path.dirname(f)
@@ -165,18 +165,18 @@ def wipe_repo():
 
 def filldb_from_local():
     py_activate_virtualenv()
-    from tribus.common.recorder import fill_db_from_cache, create_cache 
+    from tribus.common.recorder import fill_db_from_cache, create_cache
     from tribus.config.pkgrecorder import LOCAL_ROOT
     create_cache(LOCAL_ROOT, PACKAGECACHE)
     fill_db_from_cache(PACKAGECACHE)
-    
+
 
 def filldb_from_remote():
     py_activate_virtualenv()
     from tribus.common.recorder import create_cache
     from tribus.config.pkgrecorder import CANAIMA_ROOT
     create_cache(CANAIMA_ROOT, PACKAGECACHE)
-    
+
 
 def resetdb():
     configure_sudo()
@@ -210,8 +210,12 @@ def include_xapian():
 
 
 def configure_sudo():
-    with settings(command='su root -c "echo \'%(user)s ALL= NOPASSWD: ALL\' > \
-/etc/sudoers.d/tribus; chmod 0440 /etc/sudoers.d/tribus"' % env):
+    with settings(command='su root -c "DEBIAN_FRONTEND=noninteractive \
+aptitude install --assume-yes --allow-untrusted \
+-o DPkg::Options::=--force-confmiss -o DPkg::Options::=--force-confnew \
+-o DPkg::Options::=--force-overwrite sudo; mkdir -p /etc/sudoers.d/; \
+echo \'%(user)s ALL= NOPASSWD: ALL\' > /etc/sudoers.d/tribus; \
+chmod 0440 /etc/sudoers.d/tribus"' % env):
         local('%(command)s' % env, capture=False)
 
 
@@ -230,10 +234,8 @@ def preseed_packages():
 def install_packages(dependencies):
     with settings(command='sudo /bin/bash -c "DEBIAN_FRONTEND=noninteractive \
 aptitude install --assume-yes --allow-untrusted \
--o DPkg::Options::=--force-confmiss \
--o DPkg::Options::=--force-confnew \
--o DPkg::Options::=--force-overwrite \
-%s"' % ' '.join(dependencies)):
+-o DPkg::Options::=--force-confmiss -o DPkg::Options::=--force-confnew \
+-o DPkg::Options::=--force-overwrite %s"' % ' '.join(dependencies)):
         local('%(command)s' % env, capture=False)
 
 
