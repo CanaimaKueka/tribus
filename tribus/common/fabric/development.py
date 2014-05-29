@@ -98,7 +98,7 @@ def environment():
     docker_install_packages(env.docker_image,
                             env.debian_docker_dependencies)
     docker_drop_mongo(env.docker_image)
-    # configure_postgres()
+    docker_configure_postgres(env.docker_image)
     # populate_ldap()
     # create_virtualenv()
     # include_xapian()
@@ -176,3 +176,19 @@ def docker_drop_mongo(image, db):
         --env DEBIAN_FRONTEND=noninteractive \
         %s \
         mongo %s --eval \'db.dropDatabase()\'"' % (image, db), capture=False)
+
+
+def docker_configure_postgres(image, pg_user, pg_passwd):
+    local('sudo /bin/bash -c \
+        "docker.io run -it \
+        --env DEBIAN_FRONTEND=noninteractive \
+        %s \
+        echo \'%s:%s\' | chpasswd"' % (image, pg_user, pg_passwd),
+        capture=False)
+
+    local('sudo /bin/bash -c \
+        "docker.io run -it \
+        --env DEBIAN_FRONTEND=noninteractive \
+        %s \
+        sudo -i -u postgres /bin/sh -c \'psql -f /tmp/preseed-db.sql\'"' % (pg_user, pg_passwd), capture=False)
+
