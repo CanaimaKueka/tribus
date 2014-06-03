@@ -2,15 +2,15 @@
 # -*- coding: utf-8 -*-
 
 from tribus import BASEDIR
-from tribus.common.version import get_version
+from tribus.common.utils import get_path
+# from tribus.common.version import get_version
 
 NAME = u'Tribus'
 VERSION = (0, 1, 0, 'alpha', 1)
-URL = u'http://git.canaima.softwarelibre.gob.ve/?p=tribus.git;a=summary'
+URL = u'http://github.com/CanaimaGNULinux/tribus'
 AUTHOR = u'Desarrolladores de Tribus'
-AUTHOR_EMAIL = u'desarrolladores@canaima.softwarelibre.gob.ve'
-DESCRIPTION = (
-    u'Red social para la gestión de comunidades de Software Libre.'),
+AUTHOR_EMAIL = u'tribusdev@googlegroups.com'
+DESCRIPTION = (u'Red social para la gestión de comunidades de Software Libre.')
 LICENSE = u'GPL'
 
 if BASEDIR == '/usr/share/pyshared':
@@ -33,23 +33,23 @@ else:
     PACKAGECACHE = BASEDIR + '/packagecache'
     CHARMSDIR = BASEDIR + '/tribus/data/charms'
 
-DEFAULT_CLI_OPTIONS = {
-    'version': [['-v', '--version'], {
-        'action': 'version',
-        'version': '%s %s' % (NAME, get_version(VERSION)),
-        'default': False
-    }],
-    'help': [['-h', '--help', '--ayuda'], {
-        'action': 'store_true',
-        'dest': 'print_help',
-        'default': False
-    }],
-    'usage': [['-u', '--usage', '--uso'], {
-        'action': 'store_true',
-        'dest': 'print_usage',
-        'default': False
-    }],
-}
+# DEFAULT_CLI_OPTIONS = {
+#     'version': [['-v', '--version'], {
+#         'action': 'version',
+#         'version': '%s %s' % (NAME, get_version(VERSION)),
+#         'default': False
+#     }],
+#     'help': [['-h', '--help', '--ayuda'], {
+#         'action': 'store_true',
+#         'dest': 'print_help',
+#         'default': False
+#     }],
+#     'usage': [['-u', '--usage', '--uso'], {
+#         'action': 'store_true',
+#         'dest': 'print_usage',
+#         'default': False
+#     }],
+# }
 # forbidden_filename_chars = {
 #     '/':'', ':':'', 'http':'', 'file':'', 'ftp':'', '?':'', '=':'', '&':'',
 # '-':'', '(':'', ')':'', '+':'', '-':'', '#':'', '$':'', '%':'', '@':'',
