@@ -3,39 +3,34 @@
 set -e
 set -x
 
-variant='minbase'
-include='iproute,iputils-ping,eatmydata,apt-cacher-ng'
+REPO="${1}"
+SUITE="${2}"
+ARCH="${3}"
 
-repo="$1"
-suite="$2"
-arch="$3"
-mirror="http://http.us.debian.org/debian"
+VARIANT='minbase'
+INCLUDE='iproute,iputils-ping,eatmydata,apt-cacher-ng'
+MIRROR="http://http.us.debian.org/debian"
+TARGET="/tmp/docker-rootfs-debootstrap-${SUITE}-$$-${RANDOM}"
 
-docker='docker.io'
-lsbDist='Debian'
-
-target="/tmp/docker-rootfs-debootstrap-$suite-$$-$RANDOM"
-
-cd "$( dirname "$( readlink -f "$BASH_SOURCE" )" )"
-returnTo="$( pwd -P )"
+cd "$( dirname "$( readlink -f "${BASH_SOURCE}" )" )"
+RETURNTO="$( pwd -P )"
 
 # bootstrap
-mkdir -p "$target"
-sudo debootstrap --verbose --variant="$variant" --include="$include" --arch="$arch" "$suite" "$target" "$mirror"
+mkdir -p "${TARGET}"
+sudo debootstrap --verbose --variant="${VARIANT}" \
+	--include="${INCLUDE}" --arch="${ARCH}" \
+	"${SUITE}" "${TARGET}" "${MIRROR}"
 
-cd "$target"
+cd "${TARGET}"
 
 # prevent init scripts from running during install/update
-#  policy-rc.d (for most scripts)
 {
 	echo $'#!/bin/sh\nexit 101'
 } | sudo tee usr/sbin/policy-rc.d > /dev/null
 
 sudo chmod +x usr/sbin/policy-rc.d
-#  initctl (for some pesky upstart scripts)
 sudo chroot . dpkg-divert --local --rename --add /sbin/initctl
 sudo ln -sf /bin/true sbin/initctl
-# see https://github.com/dotcloud/docker/issues/446#issuecomment-16953173
 
 # Speedup Dpkg
 {
@@ -64,23 +59,17 @@ sudo chroot . apt-get clean
 
 # Remove other stuff
 find usr -name "*.pyc" -print0 | xargs -0r sudo rm -rfv
-find var/cache/apt/archives -type c -print0 | xargs -0r sudo rm -rfv
-find var/lib/apt/lists -type c -print0 | xargs -0r sudo rm -rfv
-find var/cache/man -type c -print0 | xargs -0r sudo rm -rfv
-find usr/share/doc -type c -print0 | xargs -0r sudo rm -rfv
-find var/log -type c -print0 | xargs -0r sudo rm -rfv
-find var/tmp -type c -print0 | xargs -0r sudo rm -rfv
-find tmp -type c -print0 | xargs -0r sudo rm -rfv
+find var/cache/apt -type f -print0 | xargs -0r sudo rm -rfv
+find var/lib/apt/lists -type f -print0 | xargs -0r sudo rm -rfv
+find usr/share/doc -type f -print0 | xargs -0r sudo rm -rfv
+find usr/share/locale -type f -print0 | xargs -0r sudo rm -rfv
+find var/log -type f -print0 | xargs -0r sudo rm -rfv
+find var/tmp -type f -print0 | xargs -0r sudo rm -rfv
+find tmp -type f -print0 | xargs -0r sudo rm -rfv
 
-sudo rm -rf var/cache/apt/srcpkgcache.bin
-sudo rm -rf var/cache/apt/pkgcache.bin
-
-# create the image (and tag $repo:$suite)
-sudo tar --numeric-owner -c . | $docker import - $repo:$suite
-
-# test the image
-$docker run -i -t $repo:$suite echo success
+# create the image (and tag ${REPO}:${SUITE})
+sudo tar --numeric-owner -c . | sudo docker.io import - ${REPO}:${SUITE}
 
 # cleanup
-cd "$returnTo"
-sudo rm -rf "$target"
+cd "${RETURNTO}"
+sudo rm -rf "${TARGET}"

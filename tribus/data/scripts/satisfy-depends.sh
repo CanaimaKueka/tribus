@@ -24,7 +24,7 @@
 
 # Supported distributions by Package Manager
 DPKG_BASED="debian ubuntu canaima"
-YUM_BASED="fedora"
+YUM_BASED="fedora centos"
 PACMAN_BASED="arch"
 EMERGE_BASED="gentoo"
 
@@ -32,7 +32,7 @@ EMERGE_BASED="gentoo"
 DPKG_DEPENDS="docker.io fabric"
 YUM_DEPENDS="docker-io fabric"
 PACMAN_DEPENDS="docker fabric"
-EMERGE_DEPENDS="docker fabric"
+EMERGE_DEPENDS="dev-python/fabric app-emulation/docker"
 
 DEBIAN_MIRROR="http://http.us.debian.org/debian"
 UBUNTU_MIRROR="http://archive.ubuntu.com/ubuntu"
@@ -42,9 +42,14 @@ LSB_RELEASE="$( which lsb_release )"
 MV="$( which mv )"
 ECHO="$( which echo )"
 SUDO="$( which sudo )"
+
+# Package Manager binaries
 APTGET="$( which apt-get )"
 YUM="$( which yum )"
+PACMAN="$( which pacman )"
+EMERGE="$( which emerge )"
 
+# Package Manager commands and options
 APTGETCMD="env DEBIAN_FRONTEND=noninteractive ${APTGET}"
 APTGETOPTS="-qq -o Apt::Install-Recommends=false \
 -o Apt::Get::Assume-Yes=true \
@@ -53,9 +58,12 @@ APTGETOPTS="-qq -o Apt::Install-Recommends=false \
 -o DPkg::Options::=--force-confnew \
 -o DPkg::Options::=--force-overwrite \
 -o DPkg::Options::=--force-unsafe-io"
-
 YUMCMD="${YUM}"
-YUMOPTS="-y"
+YUMOPTS="--assumeyes --nogpgcheck --quiet"
+PACMANCMD="${PACMAN}"
+PACMANOPTS="--refresh --noconfirm --noprogressbar --quiet"
+EMERGECMD="env ACCEPT_KEYWORDS='~amd64 ~i386' ${EMERGE}"
+EMERGEOPTS="--quiet"
 
 # Let's try to identify which is the Operating System we are running in.
 # If we dont have lsb_release, then we have to do some guessing.
@@ -76,11 +84,33 @@ else
     if [ -z "${DISTRO}" ] && [ -r "/etc/fedora-release" ]; then
         DISTRO="fedora"
         CODENAME="$( . "/etc/os-release" && ${ECHO} "${VERSION,,}" | \
-            awk -F'(' '{ print $2 }' | sed 's/)//g' )"
+            sed 's/.*(\(.*\)).*/\1/g' )"
+    fi
+
+    if [ -z "${DISTRO}" ] && [ -r "/etc/centos-release" ]; then
+        DISTRO="centos"
+        VERSION="$( cat /etc/centos-release | awk '{print $3}' )"
+    fi
+
+    if [ -z "${DISTRO}" ] && [ -r "/etc/gentoo-release" ]; then
+        DISTRO="gentoo"
+        VERSION="$( cat /etc/gentoo-release | awk '{print $5}' )"
+    fi
+
+    if [ -z "${DISTRO}" ] && [ -r "/etc/arch-release" ]; then
+        DISTRO="arch"
     fi
 
     if [ -z "${DISTRO}" ] && [ -r "/etc/debian_version" ]; then
+        
         if [ -z "${DISTRO}" ] && [ -r "/etc/os-release" ]; then
+            DISTRO="$( . "/etc/os-release" && ${ECHO} "${ID,,}" )"
+            CODENAME="$( . "/etc/os-release" && ${ECHO} "${VERSION,,}" | \
+                sed 's/.*(\(.*\)).*/\1/g' )"
+        fi
+
+        
+        if [ -z "${DISTRO}" ] && [ -r "/etc/lsb-release" ]; then
             DISTRO="$( . "/etc/os-release" && ${ECHO} "${ID,,}" )"
         fi
     fi
@@ -103,7 +133,7 @@ if [ -z "${DISTRO}" ]; then
     ${ECHO} 1>&2 "  - docker (http://docker.io)"
     ${ECHO} 1>&2
 
-    exit 1
+    exit 0
 
 fi
 
@@ -239,7 +269,7 @@ if [ "${DPKG_BASED}" != "${DPKG_BASED/${DISTRO}}" ]; then
         ${ECHO} 1>&2 " http://github.com/CanaimaGNULinux/tribus/issues"
         ${ECHO} 1>&2
 
-        exit 1
+        exit 0
 
     fi
 
@@ -273,17 +303,76 @@ elif [ "${YUM_BASED}" != "${YUM_BASED/${DISTRO}}" ]; then
         ${ECHO} 1>&2 " http://github.com/CanaimaGNULinux/tribus/issues"
         ${ECHO} 1>&2
 
-        exit 1
+        exit 0
 
     fi
 
 elif [ "${PACMAN_BASED}" != "${PACMAN_BASED/${DISTRO}}" ]; then
 
-    pacman -S docker
+    # If our dependencies are met, let's exit early
+    if [ -n "$( which fab )" ] && [ -n "$( which docker )" ]; then
+
+        ${ECHO} "All dependencies are satisfied."
+        exit 0
+
+    fi
+
+    if [ "${DISTRO}" == "arch" ]; then
+
+        ${PACMANCMD} ${PACMANOPTS} -S ${PACMAN_DEPENDS}
+
+    else
+
+        ${ECHO} 1>&2
+        ${ECHO} 1>&2 " Sorry. You are using an unsupported version of ${DISTRO}."
+        ${ECHO} 1>&2
+        ${ECHO} 1>&2 " You will need to install the following dependencies"
+        ${ECHO} 1>&2 " manually:"
+        ${ECHO} 1>&2
+        ${ECHO} 1>&2 "  - fabric (http://fabfile.org)"
+        ${ECHO} 1>&2 "  - docker (http://docker.io)"
+        ${ECHO} 1>&2
+        ${ECHO} 1>&2 " Please open a ticket requesting support for your distribution:"
+        ${ECHO} 1>&2 " http://github.com/CanaimaGNULinux/tribus/issues"
+        ${ECHO} 1>&2
+
+        exit 1
+
+    fi
 
 elif [ "${EMERGE_BASED}" != "${EMERGE_BASED/${DISTRO}}" ]; then
 
-    emerge -av app-emulation/docker
+    # If our dependencies are met, let's exit early
+    if [ -n "$( which fab )" ] && [ -n "$( which docker )" ]; then
+
+        ${ECHO} "All dependencies are satisfied."
+        exit 0
+
+    fi
+
+    if [ "${DISTRO}" == "gentoo" ]; then
+
+        ${EMERGECMD} ${EMERGEOPTS} --sync
+        ${EMERGECMD} ${EMERGEOPTS} ${EMERGE_DEPENDS}
+
+    else
+
+        ${ECHO} 1>&2
+        ${ECHO} 1>&2 " Sorry. You are using an unsupported version of ${DISTRO}."
+        ${ECHO} 1>&2
+        ${ECHO} 1>&2 " You will need to install the following dependencies"
+        ${ECHO} 1>&2 " manually:"
+        ${ECHO} 1>&2
+        ${ECHO} 1>&2 "  - fabric (http://fabfile.org)"
+        ${ECHO} 1>&2 "  - docker (http://docker.io)"
+        ${ECHO} 1>&2
+        ${ECHO} 1>&2 " Please open a ticket requesting support for your distribution:"
+        ${ECHO} 1>&2 " http://github.com/CanaimaGNULinux/tribus/issues"
+        ${ECHO} 1>&2
+
+        exit 0
+
+    fi
 
 else
 
@@ -301,6 +390,6 @@ else
     ${ECHO} 1>&2 " http://github.com/CanaimaGNULinux/tribus/issues"
     ${ECHO} 1>&2
 
-    exit 1
+    exit 0
 
 fi
