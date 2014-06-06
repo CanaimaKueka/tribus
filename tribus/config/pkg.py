@@ -37,29 +37,35 @@ keywords = ('Social Network',
             'Source Code Management')
 f_readme = get_path([DOCDIR, 'rst', 'readme.rst'])
 f_python_classifiers = get_path([CONFDIR, 'data', 'python-classifiers.list'])
-f_python_dependencies = get_path([CONFDIR, 'data', 'python-dependencies.list'])
-f_debian_system_dependencies = get_path([CONFDIR, 'data',
-                                         'debian-system-dependencies.list'])
-f_debian_docker_dependencies = get_path([CONFDIR, 'data',
-                                         'debian-docker-dependencies.list'])
 f_exclude_sources = get_path([CONFDIR, 'data', 'exclude-sources.list'])
 f_exclude_packages = get_path([CONFDIR, 'data', 'exclude-packages.list'])
 f_exclude_patterns = get_path([CONFDIR, 'data', 'exclude-patterns.list'])
-f_data_patterns = get_path([CONFDIR, 'data', 'include-data-patterns.list'])
+f_include_data_patterns = get_path([CONFDIR, 'data',
+                                    'include-data-patterns.list'])
+
+f_python_dependencies = get_path([CONFDIR, 'data', 'python-dependencies.list'])
+f_debian_dependencies = get_path([CONFDIR, 'data', 'debian-dependencies.list'])
 f_preseed_db = get_path([CONFDIR, 'data', 'preseed-db.sql'])
 f_preseed_debconf = get_path([CONFDIR, 'data', 'preseed-debconf.conf'])
-f_users_ldif = get_path([CONFDIR, 'data', 'preseed-ldap-users.ldif'])
+f_preseed_ldap = get_path([CONFDIR, 'data', 'preseed-ldap.ldif'])
+f_preseed_env = get_path([CONFDIR, 'data', 'preseed-env.conf'])
 
 exclude_sources = readconfig(filename=f_exclude_sources, conffile=False)
 exclude_packages = readconfig(filename=f_exclude_packages, conffile=False)
 exclude_patterns = readconfig(filename=f_exclude_patterns, conffile=False)
-include_data_patterns = readconfig(filename=f_data_patterns, conffile=False)
+include_data_patterns = readconfig(filename=f_include_data_patterns,
+                                   conffile=False)
 
 long_description = cat_file(filename=f_readme)
 classifiers = get_classifiers(filename=f_python_classifiers)
 install_requires = get_requirements(filename=f_python_dependencies)
 dependency_links = get_dependency_links(filename=f_python_dependencies)
-debian_system_dependencies = readconfig(filename=f_debian_system_dependencies,
-                                        conffile=False)
-debian_docker_dependencies = readconfig(filename=f_debian_docker_dependencies,
-                                        conffile=False)
+
+python_dependencies = readconfig(filename=f_python_dependencies,
+                                 conffile=False)
+debian_dependencies = readconfig(filename=f_debian_dependencies,
+                                 conffile=False)
+preseed_db = readconfig(filename=f_preseed_db, conffile=False)
+preseed_debconf = readconfig(filename=f_preseed_debconf, conffile=False)
+preseed_ldap = readconfig(filename=f_preseed_ldap, conffile=False)
+preseed_env = readconfig(filename=f_preseed_env, conffile=False)

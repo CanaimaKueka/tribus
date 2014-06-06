@@ -1,6 +1,0 @@
-bash
-sudo
-make
-lsb-release
-coreutils
-debianutils

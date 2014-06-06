@@ -20,6 +20,12 @@
 
 # satisfy-depends.sh - A script to satisfy Tribus dependencies on several
 #                      GNU/Linux distributions.
+# bash
+# sudo
+# make
+# lsb-release
+# coreutils
+# debianutils
 
 
 # Supported distributions by Package Manager
@@ -104,20 +110,40 @@ else
     if [ -z "${DISTRO}" ] && [ -r "/etc/debian_version" ]; then
         
         if [ -z "${DISTRO}" ] && [ -r "/etc/os-release" ]; then
-            DISTRO="$( . "/etc/os-release" && ${ECHO} "${ID,,}" )"
-            CODENAME="$( . "/etc/os-release" && ${ECHO} "${VERSION,,}" | \
-                sed 's/.*(\(.*\)).*/\1/g' )"
-        fi
 
+            DISTRO="$( . "/etc/os-release" && ${ECHO} "${ID,,}" )"
+
+            if [ "${DISTRO}" == "debian" ]; then
+
+                CODENAME="$( . "/etc/os-release" && ${ECHO} "${VERSION,,}" | \
+                    sed 's/.*(\(.*\)).*/\1/g' )"
+
+            elif [ "${DISTRO}" == "ubuntu" ]; then
+        
+                CODENAME="$( . "/etc/os-release" && ${ECHO} "${VERSION,,}" | \
+                    awk '{print $2}' )"
+
+            elif [ "${DISTRO}" == "canaima" ]; then
+        
+                CODENAME="$( . "/etc/os-release" && ${ECHO} "${VERSION,,}" | \
+                    sed 's/.*(\(.*\)).*/\1/g' )"
+
+            fi
+
+        fi
         
         if [ -z "${DISTRO}" ] && [ -r "/etc/lsb-release" ]; then
-            DISTRO="$( . "/etc/os-release" && ${ECHO} "${ID,,}" )"
-        fi
-    fi
 
-    if [ -z "${DISTRO}" ] && [ -r "/etc/lsb-release" ]; then
-        DISTRO="$( . "/etc/lsb-release" && ${ECHO} "${DISTRIB_ID,,}" )"
-        CODENAME="$( . "/etc/lsb-release" && ${ECHO} "${DISTRIB_CODENAME,,}" )"
+            DISTRO="$( . "/etc/lsb-release" && ${ECHO} "${DISTRIB_ID,,}" )"
+
+            if [ "${DISTRO}" == "ubuntu" ]; then
+        
+                CODENAME="$( . "/etc/lsb-release" && ${ECHO} "${DISTRIB_CODENAME,,}" )"
+
+            fi
+
+        fi
+
     fi
 
 fi

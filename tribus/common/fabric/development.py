@@ -21,8 +21,11 @@
 import os
 from fabric.api import run, env
 from tribus import BASEDIR
-from tribus.config.pkg import (debian_docker_dependencies,
-                               f_preseed_debconf)
+from tribus.config.ldap import (AUTH_LDAP_SERVER_URI, AUTH_LDAP_BASE,
+                                AUTH_LDAP_BIND_DN, AUTH_LDAP_BIND_PASSWORD)
+from tribus.config.pkg import (debian_dependencies, python_dependencies,
+                               preseed_db, preseed_debconf, preseed_env,
+                               preseed_ldap, mount_volumes)
 from tribus.common.logger import get_logger
 from tribus.common.utils import get_path
 from tribus.common.system import get_local_arch
@@ -38,41 +41,34 @@ def development():
     env.environment = 'development'
 
     # Docker config
-    env.docker_arch = get_local_arch()
+    env.arch = get_local_arch()
     env.docker_basedir = get_path([os.sep, 'media', 'tribus'])
-    env.docker_preseed_debconf_file = env.docker_basedir + \
-        f_preseed_debconf.replace(env.basedir, '')
-    env.debian_docker_dependencies = ' '.join(debian_docker_dependencies)
-    env.docker_container = 'container'
-    env.docker_env_image = 'environment'
-    env.docker_env_vol = ('--volume /var/cache/apt-cacher-ng:'
-                          '/var/cache/apt-cacher-ng:rw '
-                          '--volume /var/cache/apt:/var/cache/apt:rw '
-                          '--volume %(basedir)s:%(docker_basedir)s:rw') % env
-    env.docker_env_args = ('--env DEBIAN_FRONTEND=noninteractive')
-    env.docker_base_image = 'luisalejandro/debian-%(docker_arch)s:wheezy' % env
+    env.docker_from = 'luisalejandro/debian-%(arch)s:wheezy' % env
 
-    if env.docker_arch == 'i386':
-        env.docker_base_image_id = '538beafc4d12'
+    if env.arch == 'i386':
+        env.docker_image_id = '538beafc4d12'
 
-    elif env.docker_arch == 'amd64':
-        env.docker_base_image_id = '538beafc4d12'
+    elif env.arch == 'amd64':
+        env.docker_image_id = '538beafc4d12'
 
+    env.debian_dependencies = ' '.join(debian_dependencies)
+    env.python_dependencies = ' '.join(python_dependencies)
 
-def environment():
-    local_configure_sudo()
-    docker_pull_base_image()
-    docker_preseed_packages()
-    # docker_install_packages(env.docker_env_image,
-    #                         env.debian_docker_dependencies)
-    # docker_drop_mongo(env.docker_image)
-    # docker_configure_postgres(env.docker_image)
-    # populate_ldap()
-    # create_virtualenv()
-    # include_xapian()
-    # update_virtualenv()
-    # configure_django()
-    # deconfigure_sudo()
+    env.preseed_db = '; '.join(preseed_db)
+    env.preseed_debconf = '\n'.join(preseed_debconf)
+    env.preseed_ldap = '\n'.join(preseed_ldap)
+    env.preseed_env = '\n'.join('ENV %s' % i.replace('=', ' ')
+                                for i in preseed_env)
+
+    env.ldap_passwd = AUTH_LDAP_BIND_PASSWORD
+    env.ldap_writer = AUTH_LDAP_BIND_DN
+    env.ldap_server = AUTH_LDAP_SERVER_URI
+
+    env.mount_volumes = '\n'.join('VOLUME %s' % i
+                                  for i in mount_volumes)
+    env.mount = ['/var/cache/apt-cacher-ng:/var/cache/apt-cacher-ng:rw',
+                 '/var/cache/apt:/var/cache/apt:rw',
+                 '%(basedir)s:%(docker_basedir)s:rw']
 
 
 def local_configure_sudo():
@@ -81,133 +77,66 @@ def local_configure_sudo():
          '> /etc/sudoers.d/tribus"') % env, capture=False)
 
 
-def docker_pull_base_image():
-
-    containers = run(('sudo /bin/bash -c "docker.io ps -aq"'), capture=True)
-
-    if containers:
-        run(('sudo /bin/bash -c '
-               '"docker.io rm -fv %s"') % containers.replace('\n', ' '),
-              capture=False)
-
-    if env.docker_base_image_id not in run(('sudo /bin/bash -c '
-                                              '"docker.io images -aq"'),
-                                             capture=True):
-        run(('sudo /bin/bash -c '
-               '"docker.io pull %(docker_base_image)s"') % env, capture=False)
-
-    run(('sudo /bin/bash -c '
-           '"docker.io run -it '
-           '--name %(docker_container)s '
-           '%(docker_env_args)s '
-           '%(docker_env_vol)s '
-           '%(docker_base_image)s '
-           'apt-get install '
-           '%(apt_args)s '
-           '%(docker_env_packages)s"') % env, capture=False)
-
-    run(('sudo /bin/bash -c '
-           '"docker.io commit '
-           '%(docker_container)s %(docker_env_image)s"') % env, capture=False)
-
-    run(('sudo /bin/bash -c '
-          '"docker.io rm -fv %(docker_container)s"') % env, capture=False)
+def generate_dockerfile():
+    run(('echo "'
+         'FROM %(docker_base_image)s\n'
+         'MAINTAINER Luis A. Martínez F. <luis@huntingbears.com.ve>\n'
+         '%(docker_preseed_env)s\n'
+         'VOLUME []'
+         'WORKDIR %(docker_basedir)s'
+         'RUN echo $\'%(preseed_debconf)s\' | debconf-set-selections\n'
+         'RUN apt-get update\n'
+         'RUN apt-get install %(apt_args)s %(debian_dependencies)s\n'
+         'RUN echo "postgres:tribus" | chpasswd\n'
+         'RUN sudo -i -u postgres /bin/sh -c "psql -c \'%(preseed_db)s\'"\n'
+         'RUN echo $\'%(preseed_ldap)s\' | ldapadd -x -w "%(ldap_passwd)s" -D "%(ldap_writer)s" -H "%(ldap_server)s"\n'
+         'RUN pip install %(python_dependencies)s\n'
+         '" > %(dockerfile_path)s') % env, capture=False)
 
 
-def docker_preseed_packages():
-    run(('sudo /bin/bash -c '
-           '"docker.io run -it '
-           '--name %(docker_container)s '
-           '%(docker_env_args)s '
-           '%(docker_env_vol)s '
-           '%(docker_base_image)s '
-           'ls /media/tribus"') % env, capture=False)
+# def generate_docker_image():
 
-    run(('sudo /bin/bash -c '
-           '"docker.io commit '
-           '%(docker_container)s %(docker_env_image)s"') % env, capture=False)
-
-    run(('sudo /bin/bash -c '
-          '"docker.io rm -fv %(docker_container)s"') % env, capture=False)
-
-    # run(('sudo /bin/bash -c '
-    #       '"docker.io run -it '
-    #       '--env DEBIAN_FRONTEND=noninteractive '
-    #       '%s '
-    #       'echo \'slapd slapd/purge_database boolean true\' '
-    #       '| debconf-set-selections"') % image, capture=False)
-
-    # run(('sudo /bin/bash -c '
-    #       '"docker.io run -it '
-    #       '--env DEBIAN_FRONTEND=noninteractive '
-    #       '%s '
-    #       'echo \'slapd slapd/domain string tribus.org\' '
-    #       '| debconf-set-selections"') % image, capture=False)
-
-    # run(('sudo /bin/bash -c '
-    #       '"docker.io run -it '
-    #       '--env DEBIAN_FRONTEND=noninteractive '
-    #       '%s '
-    #       'echo \'slapd shared/organization string tribus\' '
-    #       '| debconf-set-selections"') % image, capture=False)
-
-    # run(('sudo /bin/bash -c '
-    #       '"docker.io run -it '
-    #       '--env DEBIAN_FRONTEND=noninteractive '
-    #       '%s '
-    #       'echo \'slapd slapd/password1 password tribus\' '
-    #       '| debconf-set-selections"') % image, capture=False)
-
-    # run(('sudo /bin/bash -c '
-    #       '"docker.io run -it '
-    #       '--env DEBIAN_FRONTEND=noninteractive '
-    #       '%s '
-    #       'echo \'slapd slapd/password2 password tribus\' '
-    #       '| debconf-set-selections"') % image, capture=False)
+#     pass
 
 
-def docker_install_packages(image, dependencies):
-    run(('sudo /bin/bash -c '
-          '"docker.io run -it '
-          '--env DEBIAN_FRONTEND=noninteractive '
-          '%s '
-          'aptitude install '
-          '-o Aptitude::CmdLine::Assume-Yes=true '
-          '-o Aptitude::CmdLine::Ignore-Trust-Violations=true '
-          '-o DPkg::Options::=--force-confmiss '
-          '-o DPkg::Options::=--force-confnew '
-          '-o DPkg::Options::=--force-overwrite '
-          '-o DPkg::Options::=--force-unsafe-io '
-          '%s"') % (image, dependencies), capture=False)
+# def pull_docker_image():
+
+#     containers = run(('sudo /bin/bash -c "docker.io ps -aq"'), capture=True)
+
+#     if containers:
+#         run(('sudo /bin/bash -c '
+#              '"docker.io rm -fv %s"') % containers.replace('\n', ' '),
+#             capture=False)
 
 
-# def docker_drop_mongo(image, db):
-#     run(('sudo /bin/bash -c '
-#           '"docker.io run -it '
-#           '--env DEBIAN_FRONTEND=noninteractive '
-#           '%s '
-#           'mongo %s --eval \'db.dropDatabase()\'"') % (image, db), capture=False)
+# def docker_pull_base_image():
 
+#     containers = run(('sudo /bin/bash -c "docker.io ps -aq"'), capture=True)
 
-# def docker_configure_postgres(image, pg_user, pg_passwd):
-#     run(('sudo /bin/bash -c '
-#           '"docker.io run -it '
-#           '--env DEBIAN_FRONTEND=noninteractive '
-#           '%s '
-#           'echo \'%s:%s\' | chpasswd"') % (image, pg_user, pg_passwd),
-#           capture=False)
+#     if containers:
+#         run(('sudo /bin/bash -c '
+#                '"docker.io rm -fv %s"') % containers.replace('\n', ' '),
+#               capture=False)
+
+#     if env.docker_base_image_id not in run(('sudo /bin/bash -c '
+#                                               '"docker.io images -aq"'),
+#                                              capture=True):
+#         run(('sudo /bin/bash -c '
+#                '"docker.io pull %(docker_base_image)s"') % env, capture=False)
 
 #     run(('sudo /bin/bash -c '
-#           '"docker.io run -it '
-#           '--env DEBIAN_FRONTEND=noninteractive '
-#           '%s '
-#           'sudo -i -u postgres /bin/sh -c '
-#           '\'psql -f /tmp/preseed-db.sql\'"') % (pg_user, pg_passwd), capture=False)
+#            '"docker.io run -it '
+#            '--name %(docker_container)s '
+#            '%(docker_env_args)s '
+#            '%(docker_env_vol)s '
+#            '%(docker_base_image)s '
+#            'apt-get install '
+#            '%(apt_args)s '
+#            '%(docker_env_packages)s"') % env, capture=False)
 
+#     run(('sudo /bin/bash -c '
+#            '"docker.io commit '
+#            '%(docker_container)s %(docker_env_image)s"') % env, capture=False)
 
-# DROP DATABASE IF EXISTS test_tribus;
-# DROP DATABASE IF EXISTS tribus;
-# DROP ROLE IF EXISTS tribus;
-# CREATE ROLE tribus PASSWORD 'md51a2031d64cd6f9dd4944bac9e73f52dd' NOSUPERUSER CREATEDB CREATEROLE INHERIT LOGIN;
-# CREATE DATABASE tribus OWNER tribus;
-# GRANT ALL PRIVILEGES ON DATABASE tribus to tribus;
+#     run(('sudo /bin/bash -c '
+#           '"docker.io rm -fv %(docker_container)s"') % env, capture=False)
