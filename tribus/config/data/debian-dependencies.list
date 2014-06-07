@@ -13,7 +13,6 @@ libsasl2-dev
 libpq-dev
 gcc
 make
-fabric
 python-pip
 lsb-release
 git

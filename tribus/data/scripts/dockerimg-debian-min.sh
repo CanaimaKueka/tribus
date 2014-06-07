@@ -8,7 +8,7 @@ SUITE="${2}"
 ARCH="${3}"
 
 VARIANT='minbase'
-INCLUDE='iproute,iputils-ping,eatmydata,apt-cacher-ng'
+INCLUDE='iproute,iputils-ping'
 MIRROR="http://http.us.debian.org/debian"
 TARGET="/tmp/docker-rootfs-debootstrap-${SUITE}-$$-${RANDOM}"
 
@@ -46,7 +46,6 @@ sudo ln -sf /bin/true sbin/initctl
 	echo 'DPkg::Options:: "--force-confnew";'
 	echo 'DPkg::Options:: "--force-overwrite";'
 	echo 'DPkg::Options:: "--force-unsafe-io";'
-	echo 'Acquire::http::proxy "http://localhost:3142";'
 } | sudo tee etc/apt/apt.conf.d/custom > /dev/null
 
 # and remove the translations, too
@@ -61,6 +60,7 @@ sudo chroot . apt-get clean
 find usr -name "*.pyc" -print0 | xargs -0r sudo rm -rfv
 find var/cache/apt -type f -print0 | xargs -0r sudo rm -rfv
 find var/lib/apt/lists -type f -print0 | xargs -0r sudo rm -rfv
+find usr/share/man -type f -print0 | xargs -0r sudo rm -rfv
 find usr/share/doc -type f -print0 | xargs -0r sudo rm -rfv
 find usr/share/locale -type f -print0 | xargs -0r sudo rm -rfv
 find var/log -type f -print0 | xargs -0r sudo rm -rfv

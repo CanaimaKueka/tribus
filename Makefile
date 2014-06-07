@@ -32,25 +32,27 @@ USER = $(shell id -u -n)
 ROOT = root
 
 
-# MAINTAINER TASKS -------------------------------------------------------------
+# HELPER TASKS -----------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 dependencies:
 
-	@# We need to get (temporary) sudo access for the current user
-	@echo "We need your root password to verify some dependencies."
-	@$(SU) $(ROOT) -c 'echo "$(USER) ALL= NOPASSWD: ALL" > /etc/sudoers.d/tmp'
-
 	@# With this script we will satisfy dependencies on the supported
 	@# distributions.
-	@$(SUDO) $(BASH) -c '$(BASH) tribus/data/scripts/satisfy-depends.sh'
+	@$(BASH) tribus/data/scripts/satisfy-depends.sh
 
-	@# Revoking sudo access
-	@$(SUDO) $(BASH) -c 'rm -rf /etc/sudoers.d/tmp'
+
+# COMMON TASKS -----------------------------------------------------------------
+# ------------------------------------------------------------------------------
+
+environment: dependencies
+
+	@$(FAB) development environment
 
 runserver: dependencies
 
-	@$(FAB) development runserver_django
-	
+	@$(FAB) development runserver
+
 runceleryworker: dependencies
 
 	@$(FAB) development runcelery_worker
@@ -72,14 +74,11 @@ syncdb: dependencies
 
 	@$(FAB) development syncdb_django
 
-environment: dependencies
-
-	@$(FAB) development environment
-
 
 # REPOSITORY TASKS ------------------------------------------------------
 
 create_test_repository: dependencies
+
 	@$(FAB) development install_repository
 	@$(FAB) development select_sample_packages
 	@$(FAB) development get_sample_packages

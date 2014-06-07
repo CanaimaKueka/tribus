@@ -137,7 +137,7 @@ else
             DISTRO="$( . "/etc/lsb-release" && ${ECHO} "${DISTRIB_ID,,}" )"
 
             if [ "${DISTRO}" == "ubuntu" ]; then
-        
+
                 CODENAME="$( . "/etc/lsb-release" && ${ECHO} "${DISTRIB_CODENAME,,}" )"
 
             fi
@@ -178,51 +178,51 @@ if [ "${DPKG_BASED}" != "${DPKG_BASED/${DISTRO}}" ]; then
         ([ "${DISTRO}" == "canaima" ] && [ "${CODENAME}" == "kerepakupai" ]) || \
         ([ "${DISTRO}" == "canaima" ] && [ "${CODENAME}" == "kukenan" ]); then
 
-        ${MV} "/etc/apt/sources.list" "/etc/apt/sources.list.bk"
-        ${MV} "/etc/apt/sources.list.d" "/etc/apt/sources.list.d.bk"
+        ${SUDO} ${MV} "/etc/apt/sources.list" "/etc/apt/sources.list.bk"
+        ${SUDO} ${MV} "/etc/apt/sources.list.d" "/etc/apt/sources.list.d.bk"
 
-        ${ECHO} "deb ${DEBIAN_MIRROR} wheezy main" \
+        ${SUDO} ${ECHO} "deb ${DEBIAN_MIRROR} wheezy main" \
             >> "/etc/apt/sources.list"
 
-        ${APTGETCMD} ${APTGETOPTS} update
-        ${APTGETCMD} ${APTGETOPTS} install -t wheezy \
+        ${SUDO} ${APTGETCMD} ${APTGETOPTS} update
+        ${SUDO} ${APTGETCMD} ${APTGETOPTS} install -t wheezy \
             iptables perl libapparmor1 libdevmapper1.02.1 \
             libsqlite3-0 adduser libc6
 
-        ${ECHO} "deb ${DEBIAN_MIRROR} wheezy-backports main" \
+        ${SUDO} ${ECHO} "deb ${DEBIAN_MIRROR} wheezy-backports main" \
             >> "/etc/apt/sources.list"
 
-        ${APTGETCMD} ${APTGETOPTS} update
-        ${APTGETCMD} ${APTGETOPTS} install -t wheezy-backports \
+        ${SUDO} ${APTGETCMD} ${APTGETOPTS} update
+        ${SUDO} ${APTGETCMD} ${APTGETOPTS} install -t wheezy-backports \
             init-system-helpers fabric
 
-        ${ECHO} "deb ${DEBIAN_MIRROR} jessie main" \
+        ${SUDO} ${ECHO} "deb ${DEBIAN_MIRROR} jessie main" \
             >> "/etc/apt/sources.list"
 
-        ${APTGETCMD} ${APTGETOPTS} update
-        ${APTGETCMD} ${APTGETOPTS} install -t jessie docker.io
+        ${SUDO} ${APTGETCMD} ${APTGETOPTS} update
+        ${SUDO} ${APTGETCMD} ${APTGETOPTS} install -t jessie docker.io
 
-        ${MV} "/etc/apt/sources.list.bk" "/etc/apt/sources.list"
-        ${MV} "/etc/apt/sources.list.d.bk" "/etc/apt/sources.list.d"
+        ${SUDO} ${MV} "/etc/apt/sources.list.bk" "/etc/apt/sources.list"
+        ${SUDO} ${MV} "/etc/apt/sources.list.d.bk" "/etc/apt/sources.list.d"
 
-        ${APTGETCMD} ${APTGETOPTS} update
+        ${SUDO} ${APTGETCMD} ${APTGETOPTS} update
 
     elif ([ "${DISTRO}" == "debian" ] && [ "${CODENAME}" == "jessie" ]) || \
         ([ "${DISTRO}" == "debian" ] && [ "${CODENAME}" == "sid" ]); then
 
-        ${MV} "/etc/apt/sources.list" "/etc/apt/sources.list.bk"
-        ${MV} "/etc/apt/sources.list.d" "/etc/apt/sources.list.d.bk"
+        ${SUDO} ${MV} "/etc/apt/sources.list" "/etc/apt/sources.list.bk"
+        ${SUDO} ${MV} "/etc/apt/sources.list.d" "/etc/apt/sources.list.d.bk"
 
-        ${ECHO} "deb ${DEBIAN_MIRROR} ${CODENAME} main" \
+        ${SUDO} ${ECHO} "deb ${DEBIAN_MIRROR} ${CODENAME} main" \
             >> "/etc/apt/sources.list"
 
-        ${APTGETCMD} ${APTGETOPTS} update
-        ${APTGETCMD} ${APTGETOPTS} install ${DPKG_DEPENDS}
+        ${SUDO} ${APTGETCMD} ${APTGETOPTS} update
+        ${SUDO} ${APTGETCMD} ${APTGETOPTS} install ${DPKG_DEPENDS}
 
-        ${MV} "/etc/apt/sources.list.bk" "/etc/apt/sources.list"
-        ${MV} "/etc/apt/sources.list.d.bk" "/etc/apt/sources.list.d"
+        ${SUDO} ${MV} "/etc/apt/sources.list.bk" "/etc/apt/sources.list"
+        ${SUDO} ${MV} "/etc/apt/sources.list.d.bk" "/etc/apt/sources.list.d"
 
-        ${APTGETCMD} ${APTGETOPTS} update
+        ${SUDO} ${APTGETCMD} ${APTGETOPTS} update
 
     elif ([ "${DISTRO}" == "ubuntu" ] && [ "${CODENAME}" == "oneiric" ]) || \
         ([ "${DISTRO}" == "ubuntu" ] && [ "${CODENAME}" == "precise" ]) || \
@@ -230,55 +230,55 @@ if [ "${DPKG_BASED}" != "${DPKG_BASED/${DISTRO}}" ]; then
         ([ "${DISTRO}" == "ubuntu" ] && [ "${CODENAME}" == "raring" ]) || \
         ([ "${DISTRO}" == "ubuntu" ] && [ "${CODENAME}" == "saucy" ]); then
 
-        ${MV} "/etc/apt/sources.list" "/etc/apt/sources.list.bk"
-        ${MV} "/etc/apt/sources.list.d" "/etc/apt/sources.list.d.bk"
+        ${SUDO} ${MV} "/etc/apt/sources.list" "/etc/apt/sources.list.bk"
+        ${SUDO} ${MV} "/etc/apt/sources.list.d" "/etc/apt/sources.list.d.bk"
 
-        ${ECHO} "deb ${UBUNTU_MIRROR} ${CODENAME} main" \
+        ${SUDO} ${ECHO} "deb ${UBUNTU_MIRROR} ${CODENAME} main" \
             >> "/etc/apt/sources.list"
-        ${ECHO} "deb ${UBUNTU_MIRROR} ${CODENAME} universe" \
+        ${SUDO} ${ECHO} "deb ${UBUNTU_MIRROR} ${CODENAME} universe" \
             >> "/etc/apt/sources.list"
 
-        ${APTGETCMD} ${APTGETOPTS} update
-        ${APTGETCMD} ${APTGETOPTS} install -t ${CODENAME} \
+        ${SUDO} ${APTGETCMD} ${APTGETOPTS} update
+        ${SUDO} ${APTGETCMD} ${APTGETOPTS} install -t ${CODENAME} \
             iptables perl libapparmor1 libdevmapper1.02.1 \
             libsqlite3-0 adduser libc6
 
-        ${ECHO} "deb ${DEBIAN_MIRROR} wheezy-backports main" \
+        ${SUDO} ${ECHO} "deb ${DEBIAN_MIRROR} wheezy-backports main" \
             >> "/etc/apt/sources.list"
 
-        ${APTGETCMD} ${APTGETOPTS} update
-        ${APTGETCMD} ${APTGETOPTS} install -t wheezy-backports \
+        ${SUDO} ${APTGETCMD} ${APTGETOPTS} update
+        ${SUDO} ${APTGETCMD} ${APTGETOPTS} install -t wheezy-backports \
             init-system-helpers fabric
 
-        ${ECHO} "deb ${DEBIAN_MIRROR} jessie main" \
+        ${SUDO} ${ECHO} "deb ${DEBIAN_MIRROR} jessie main" \
             >> "/etc/apt/sources.list"
 
-        ${APTGETCMD} ${APTGETOPTS} update
-        ${APTGETCMD} ${APTGETOPTS} install -t jessie docker.io
+        ${SUDO} ${APTGETCMD} ${APTGETOPTS} update
+        ${SUDO} ${APTGETCMD} ${APTGETOPTS} install -t jessie docker.io
 
-        ${MV} "/etc/apt/sources.list.bk" "/etc/apt/sources.list"
-        ${MV} "/etc/apt/sources.list.d.bk" "/etc/apt/sources.list.d"
+        ${SUDO} ${MV} "/etc/apt/sources.list.bk" "/etc/apt/sources.list"
+        ${SUDO} ${MV} "/etc/apt/sources.list.d.bk" "/etc/apt/sources.list.d"
 
-        ${APTGETCMD} ${APTGETOPTS} update
+        ${SUDO} ${APTGETCMD} ${APTGETOPTS} update
 
     elif ([ "${DISTRO}" == "ubuntu" ] && [ "${CODENAME}" == "trusty" ]) || \
         ([ "${DISTRO}" == "ubuntu" ] && [ "${CODENAME}" == "utopic" ]); then
 
-        ${MV} "/etc/apt/sources.list" "/etc/apt/sources.list.bk"
-        ${MV} "/etc/apt/sources.list.d" "/etc/apt/sources.list.d.bk"
+        ${SUDO} ${MV} "/etc/apt/sources.list" "/etc/apt/sources.list.bk"
+        ${SUDO} ${MV} "/etc/apt/sources.list.d" "/etc/apt/sources.list.d.bk"
 
-        ${ECHO} "deb ${UBUNTU_MIRROR} ${CODENAME} main" \
+        ${SUDO} ${ECHO} "deb ${UBUNTU_MIRROR} ${CODENAME} main" \
             > "/etc/apt/sources.list"
-        ${ECHO} "deb ${UBUNTU_MIRROR} ${CODENAME} universe" \
+        ${SUDO} ${ECHO} "deb ${UBUNTU_MIRROR} ${CODENAME} universe" \
             > "/etc/apt/sources.list"
 
-        ${APTGETCMD} ${APTGETOPTS} update
-        ${APTGETCMD} ${APTGETOPTS} install ${DPKG_DEPENDS}
+        ${SUDO} ${APTGETCMD} ${APTGETOPTS} update
+        ${SUDO} ${APTGETCMD} ${APTGETOPTS} install ${DPKG_DEPENDS}
 
-        ${MV} "/etc/apt/sources.list.bk" "/etc/apt/sources.list"
-        ${MV} "/etc/apt/sources.list.d.bk" "/etc/apt/sources.list.d"
+        ${SUDO} ${MV} "/etc/apt/sources.list.bk" "/etc/apt/sources.list"
+        ${SUDO} ${MV} "/etc/apt/sources.list.d.bk" "/etc/apt/sources.list.d"
 
-        ${APTGETCMD} ${APTGETOPTS} update
+        ${SUDO} ${APTGETCMD} ${APTGETOPTS} update
 
     else
 
@@ -312,7 +312,7 @@ elif [ "${YUM_BASED}" != "${YUM_BASED/${DISTRO}}" ]; then
     if ([ "${DISTRO}" == "fedora" ] && [ "${CODENAME}" == "shrodinger" ]) || \
         ([ "${DISTRO}" == "fedora" ] && [ "${CODENAME}" == "heisenbug" ]); then
 
-        ${YUMCMD} ${YUMOPTS} install ${YUM_DEPENDS}
+        ${SUDO} ${YUMCMD} ${YUMOPTS} install ${YUM_DEPENDS}
 
     else
 
@@ -345,7 +345,7 @@ elif [ "${PACMAN_BASED}" != "${PACMAN_BASED/${DISTRO}}" ]; then
 
     if [ "${DISTRO}" == "arch" ]; then
 
-        ${PACMANCMD} ${PACMANOPTS} -S ${PACMAN_DEPENDS}
+        ${SUDO} ${PACMANCMD} ${PACMANOPTS} -S ${PACMAN_DEPENDS}
 
     else
 
@@ -378,8 +378,8 @@ elif [ "${EMERGE_BASED}" != "${EMERGE_BASED/${DISTRO}}" ]; then
 
     if [ "${DISTRO}" == "gentoo" ]; then
 
-        ${EMERGECMD} ${EMERGEOPTS} --sync
-        ${EMERGECMD} ${EMERGEOPTS} ${EMERGE_DEPENDS}
+        ${SUDO} ${EMERGECMD} ${EMERGEOPTS} --sync
+        ${SUDO} ${EMERGECMD} ${EMERGEOPTS} ${EMERGE_DEPENDS}
 
     else
 

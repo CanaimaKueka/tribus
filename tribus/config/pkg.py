@@ -62,7 +62,7 @@ install_requires = get_requirements(filename=f_python_dependencies)
 dependency_links = get_dependency_links(filename=f_python_dependencies)
 
 python_dependencies = readconfig(filename=f_python_dependencies,
-                                 conffile=False)
+                                 conffile=False, strip_comments=False)
 debian_dependencies = readconfig(filename=f_debian_dependencies,
                                  conffile=False)
 preseed_db = readconfig(filename=f_preseed_db, conffile=False)
