@@ -5,6 +5,10 @@ redis-server
 mongodb-server
 python-xapian
 reprepro
+sudo
+uwsgi
+nginx
+
 libxml2-dev
 libxslt1-dev
 python-dev
@@ -13,7 +17,8 @@ libsasl2-dev
 libpq-dev
 gcc
 make
-python-pip
+python-setuptools
 lsb-release
 git
 curl
+ca-certificates

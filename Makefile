@@ -41,6 +41,22 @@ dependencies:
 	@# distributions.
 	@$(BASH) tribus/data/scripts/satisfy-depends.sh
 
+generate_debian_base_image_i386:
+
+	@$(FAB) development generate_debian_base_image_i386
+
+generate_debian_base_image_amd64:
+
+	@$(FAB) development generate_debian_base_image_amd64
+
+generate_tribus_base_image_i386:
+
+	@$(FAB) development generate_tribus_base_image_i386
+
+generate_tribus_base_image_amd64:
+
+	@$(FAB) development generate_tribus_base_image_amd64
+
 
 # COMMON TASKS -----------------------------------------------------------------
 # ------------------------------------------------------------------------------
@@ -253,13 +269,3 @@ sdist: dependencies
 report_setup_data: dependencies
 
 	@$(FAB) development report_setup_data
-
-dockerimg_debian_wheezy_amd64:
-
-	@$(BASH) tribus/data/scripts/dockerimg-debian-min.sh \
-		luisalejandro/debian-amd64 wheezy amd64
-
-dockerimg_debian_wheezy_i386:
-
-	@$(BASH) tribus/data/scripts/dockerimg-debian-min.sh \
-		luisalejandro/debian-i386 wheezy i386
