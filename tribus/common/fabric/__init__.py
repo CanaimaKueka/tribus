@@ -33,23 +33,26 @@ from tribus import BASEDIR
 from tribus.config.base import CONFDIR
 from tribus.config.ldap import (AUTH_LDAP_SERVER_URI,
                                 AUTH_LDAP_BIND_DN, AUTH_LDAP_BIND_PASSWORD)
-from tribus.config.pkg import (debian_dependencies, python_dependencies,
-                               preseed_db, preseed_debconf, preseed_env,
-                               preseed_ldap)
+from tribus.config.pkg import (python_dependencies, debian_run_dependencies,
+                               debian_build_dependencies, preseed_db,
+                               preseed_debconf, preseed_env, preseed_ldap)
 from tribus.common.logger import get_logger
 from tribus.common.utils import get_path
 from tribus.common.system import get_local_arch
 from tribus.common.fabric.docker import (pull_debian_base_image,
                                          pull_tribus_base_image,
                                          generate_debian_base_image,
-                                         generate_tribus_base_image)
-from tribus.common.fabric.utils import (local_configure_sudo,
-                                        local_deconfigure_sudo)
+                                         generate_tribus_base_image,
+                                         django_restartserver,
+                                         django_runserver, django_stopserver,
+                                         django_syncdb)
 
 logger = get_logger()
 
 
 def development():
+    '''
+    '''
 
     # Fabric environment configuration
     env.user = pwd.getpwuid(os.getuid()).pw_name
@@ -61,10 +64,13 @@ def development():
     # Docker config
     env.arch = get_local_arch()
     env.docker_basedir = get_path([os.sep, 'media', 'tribus'])
-    env.debian_base_image = 'luisalejandro/debian-%(arch)s:wheezy' % env
-    env.tribus_base_image = 'luisalejandro/tribus-%(arch)s:wheezy' % env
     env.docker_maintainer = ('Luis Alejandro Martínez Faneyth '
                              '<luis@huntingbears.com.ve>')
+
+    env.debian_base_image = 'luisalejandro/debian-%(arch)s:wheezy' % env
+    env.tribus_base_image = 'luisalejandro/tribus-%(arch)s:wheezy' % env
+    env.tribus_runtime_image = 'luisalejandro/tribus-run-%(arch)s:wheezy' % env
+    env.tribus_runtime_container = 'tribus-run-container'
 
     if env.arch == 'i386':
         env.debian_base_image_id = '7902e3f5c3f8'
@@ -81,7 +87,8 @@ def development():
                                                  ('tribus-base-image-%(arch)s.conf'
                                                   '' % env)])
 
-    env.debian_dependencies = ' '.join(debian_dependencies)
+    env.debian_run_dependencies = ' '.join(debian_run_dependencies)
+    env.debian_build_dependencies = ' '.join(debian_build_dependencies)
     env.python_dependencies = ' '.join(python_dependencies)
 
     env.preseed_db = '\\\\\\n'.join(preseed_db)
@@ -98,60 +105,72 @@ def development():
                      '-D \\"%(ldap_writer)s\\" '
                      '-H \\"%(ldap_server)s\\"') % env
 
-    mount_volumes = ['/var/cache/apt-cacher-ng:/var/cache/apt-cacher-ng:rw',
-                     '/var/cache/apt:/var/cache/apt:rw',
-                     '%(basedir)s:%(docker_basedir)s:rw']
-    env.mount_volumes = '\n'.join('VOLUME %s' % i
-                                  for i in mount_volumes)
-    restart_services = ['mongodb', 'postgresql', 'redis-server', 'slapd']
-    env.restart_services = '\n'.join('RUN service %s restart' % i
-                                     for i in restart_services)
+    mounts = ['%(basedir)s:%(docker_basedir)s:ro']
+    env.mounts = ' --volume='.join('VOLUME %s' % i for i in mounts)
 
 
 def generate_debian_base_image_i386():
+    '''
+    '''
     env.arch = 'i386'
-    local_configure_sudo(env)
     generate_debian_base_image(env)
-    local_deconfigure_sudo(env)
 
 
 def generate_debian_base_image_amd64():
+    '''
+    '''
     env.arch = 'amd64'
-    local_configure_sudo(env)
     generate_debian_base_image(env)
-    local_deconfigure_sudo(env)
 
 
 def generate_tribus_base_image_i386():
+    '''
+    '''
     env.arch = 'i386'
     env.debian_base_image = 'luisalejandro/debian-i386:wheezy'
     env.tribus_base_image = 'luisalejandro/tribus-i386:wheezy'
     env.tribus_base_image_dockerfile = get_path([CONFDIR, 'dockerfile',
                                                  'tribus-base-image-i386.conf'])
-    local_configure_sudo(env)
     generate_tribus_base_image(env)
-    local_deconfigure_sudo(env)
 
 
 def generate_tribus_base_image_amd64():
+    '''
+    '''
     env.arch = 'amd64'
     env.debian_base_image = 'luisalejandro/debian-amd64:wheezy'
     env.tribus_base_image = 'luisalejandro/tribus-amd64:wheezy'
     env.tribus_base_image_dockerfile = get_path([CONFDIR, 'dockerfile',
                                                  'tribus-base-image-amd64.conf'])
-    local_configure_sudo(env)
     generate_tribus_base_image(env)
-    local_deconfigure_sudo(env)
 
 
 def environment():
     '''
     '''
-    local_configure_sudo(env)
     pull_debian_base_image(env)
     pull_tribus_base_image(env)
-    local_deconfigure_sudo(env)
 
 
-# def runserver():
-#     
+def syncdb():
+    '''
+    '''
+    django_syncdb(env)
+
+
+def runserver():
+    '''
+    '''
+    django_runserver(env)
+
+
+def stopserver():
+    '''
+    '''
+    django_stopserver(env)
+
+
+def restartserver():
+    '''
+    '''
+    django_restartserver(env)

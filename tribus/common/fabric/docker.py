@@ -37,15 +37,15 @@ def generate_tribus_base_image(env):
            'RUN echo \\"%(preseed_debconf)s\\" > /preseed-debconf.conf\n'
            'RUN debconf-set-selections /preseed-debconf.conf\n'
            'RUN apt-get update\n'
-           'RUN apt-get install %(debian_dependencies)s\n'
+           'RUN apt-get install %(debian_run_dependencies)s\n'
+           'RUN apt-get install %(debian_build_dependencies)s\n'
            'RUN easy_install pip\n'
            'RUN pip install %(python_dependencies)s\n'
            'RUN echo \\"root:tribus\\" | chpasswd\n'
            'RUN echo \\"postgres:tribus\\" | chpasswd\n'
-           'RUN service postgresql restart && '
-           'sudo -iu postgres /bin/bash -c \\"psql -f /preseed-db.sql\\"\n'
-           'RUN service slapd restart && '
-           'ldapadd %(ldap_args)s -f \\"/preseed-ldap.ldif\\"\n'
+           'RUN service postgresql restart && sudo -iu postgres /bin/bash -c \\"psql -f /preseed-db.sql\\"\n'
+           'RUN service slapd restart && ldapadd %(ldap_args)s -f \\"/preseed-ldap.ldif\\"\n'
+           'RUN apt-get purge %(debian_build_dependencies)s\n'
            'RUN apt-get autoremove\n'
            'RUN apt-get autoclean\n'
            'RUN apt-get clean\n'
@@ -61,7 +61,7 @@ def generate_tribus_base_image(env):
            'RUN find /src -type f -print0 | xargs -0r rm -rf\n'
            '\' > %(tribus_base_image_dockerfile)s"') % env, capture=False)
     local(('sudo /bin/bash -c '
-           '"docker.io build -t %(tribus_base_image)s '
+           '"docker.io build --rm --no-cache -t %(tribus_base_image)s '
            '- < %(tribus_base_image_dockerfile)s"') % env, capture=False)
 
 
@@ -103,16 +103,12 @@ def pull_tribus_base_image(env):
                '%(tribus_runtime_image)s"') % env)
 
 
-def generate_tribus_runtime_image(env):
-    local(('sudo /bin/bash -c "echo -e \''
-           'FROM %(tribus_runtime_image)s\n'
-           'MAINTAINER %(docker_maintainer)s\n'
-           '\' > %(tribus_base_image_dockerfile)s"') % env, capture=False)
+def django_syncdb(env):
+
     local(('sudo /bin/bash -c '
-           '"docker.io build -t %(tribus_base_image)s '
-           '- < %(tribus_base_image_dockerfile)s"') % env, capture=False)
-
-
+           '"docker.io run --name="%(tribus_runtime_container)s" '
+           '--volume'
+           '%(tribus_runtime_image)s" /bin/true') % env)
 
 # def docker_pull_base_image():
 

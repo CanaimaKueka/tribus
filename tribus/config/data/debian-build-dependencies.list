@@ -1,14 +1,3 @@
-postgresql
-slapd
-ldap-utils
-redis-server
-mongodb-server
-python-xapian
-reprepro
-sudo
-uwsgi
-nginx
-
 libxml2-dev
 libxslt1-dev
 python-dev

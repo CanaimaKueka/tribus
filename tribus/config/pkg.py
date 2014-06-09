@@ -44,7 +44,8 @@ f_include_data_patterns = get_path([CONFDIR, 'data',
                                     'include-data-patterns.list'])
 
 f_python_dependencies = get_path([CONFDIR, 'data', 'python-dependencies.list'])
-f_debian_dependencies = get_path([CONFDIR, 'data', 'debian-dependencies.list'])
+f_debian_run_dependencies = get_path([CONFDIR, 'data', 'debian-run-dependencies.list'])
+f_debian_build_dependencies = get_path([CONFDIR, 'data', 'debian-build-dependencies.list'])
 f_preseed_db = get_path([CONFDIR, 'data', 'preseed-db.sql'])
 f_preseed_debconf = get_path([CONFDIR, 'data', 'preseed-debconf.conf'])
 f_preseed_ldap = get_path([CONFDIR, 'data', 'preseed-ldap.ldif'])
@@ -63,8 +64,10 @@ dependency_links = get_dependency_links(filename=f_python_dependencies)
 
 python_dependencies = readconfig(filename=f_python_dependencies,
                                  conffile=False, strip_comments=False)
-debian_dependencies = readconfig(filename=f_debian_dependencies,
-                                 conffile=False)
+debian_run_dependencies = readconfig(filename=f_debian_run_dependencies,
+                                     conffile=False)
+debian_build_dependencies = readconfig(filename=f_debian_build_dependencies,
+                                       conffile=False)
 preseed_db = readconfig(filename=f_preseed_db, conffile=False)
 preseed_debconf = readconfig(filename=f_preseed_debconf, conffile=False)
 preseed_ldap = readconfig(filename=f_preseed_ldap, conffile=False)

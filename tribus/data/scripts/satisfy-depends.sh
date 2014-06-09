@@ -27,6 +27,11 @@
 # coreutils
 # debianutils
 
+set -x
+set -e
+
+ROOT="root"
+USER="$( id -un )"
 
 # Supported distributions by Package Manager
 DPKG_BASED="debian ubuntu canaima"
@@ -44,16 +49,17 @@ DEBIAN_MIRROR="http://http.us.debian.org/debian"
 UBUNTU_MIRROR="http://archive.ubuntu.com/ubuntu"
 
 # Where are our helper programs?
-LSB_RELEASE="$( which lsb_release )"
-MV="$( which mv )"
-ECHO="$( which echo )"
-SUDO="$( which sudo )"
+LSB_RELEASE="$( which lsb_release || true )"
+MV="$( which mv || true )"
+ECHO="$( which echo || true )"
+SU="$( which su || true )"
+SUDO="$( which sudo || true )"
 
 # Package Manager binaries
-APTGET="$( which apt-get )"
-YUM="$( which yum )"
-PACMAN="$( which pacman )"
-EMERGE="$( which emerge )"
+APTGET="$( which apt-get || true )"
+YUM="$( which yum || true )"
+PACMAN="$( which pacman || true )"
+EMERGE="$( which emerge || true )"
 
 # Package Manager commands and options
 APTGETCMD="env DEBIAN_FRONTEND=noninteractive ${APTGET}"
@@ -70,6 +76,7 @@ PACMANCMD="${PACMAN}"
 PACMANOPTS="--refresh --noconfirm --noprogressbar --quiet"
 EMERGECMD="env ACCEPT_KEYWORDS='~amd64 ~i386' ${EMERGE}"
 EMERGEOPTS="--quiet"
+
 
 # Let's try to identify which is the Operating System we are running in.
 # If we dont have lsb_release, then we have to do some guessing.
@@ -115,8 +122,9 @@ else
 
             if [ "${DISTRO}" == "debian" ]; then
 
-                CODENAME="$( . "/etc/os-release" && ${ECHO} "${VERSION,,}" | \
-                    sed 's/.*(\(.*\)).*/\1/g' )"
+                CODENAME="$( . "/etc/os-release" && \
+                    ${ECHO} "${PRETTY_NAME,,}" | awk '{print $3}' | \
+                    awk -F'/' '{print $2}' )"
 
             elif [ "${DISTRO}" == "ubuntu" ]; then
         
@@ -138,7 +146,8 @@ else
 
             if [ "${DISTRO}" == "ubuntu" ]; then
 
-                CODENAME="$( . "/etc/lsb-release" && ${ECHO} "${DISTRIB_CODENAME,,}" )"
+                CODENAME="$( . "/etc/lsb-release" && \
+                    ${ECHO} "${DISTRIB_CODENAME,,}" )"
 
             fi
 
@@ -149,7 +158,7 @@ else
 fi
 
 # This means we couldn't guess the name of your GNU/Linux Distribution
-if [ -z "${DISTRO}" ]; then
+if [ -z "${DISTRO}" ] || [ -z "${CODENAME}" ]; then
 
     ${ECHO} 1>&2
     ${ECHO} 1>&2 " Tribus couldn't identify your OS, you will need to install"
@@ -159,7 +168,7 @@ if [ -z "${DISTRO}" ]; then
     ${ECHO} 1>&2 "  - docker (http://docker.io)"
     ${ECHO} 1>&2
 
-    exit 0
+    exit 1
 
 fi
 
@@ -167,10 +176,18 @@ fi
 if [ "${DPKG_BASED}" != "${DPKG_BASED/${DISTRO}}" ]; then
 
     # If our dependencies are met, let's exit early
-    if [ -n "$( which fab )" ] && [ -n "$( which docker.io )" ]; then
+    if [ -n "$( which fab || true )" ] && [ -n "$( which docker.io || true )" ]; then
 
         ${ECHO} "All dependencies are satisfied."
         exit 0
+
+    fi
+
+    if [ "${USER}" != "${ROOT}" ]; then
+
+        # We need to get (temporary) sudo access for the current user
+        echo "We need your root password to verify some dependencies."
+        ${SU} ${ROOT} -c "${ECHO} \"${USER} ALL= NOPASSWD: ALL\" > /etc/sudoers.d/tmp"
 
     fi
 
@@ -178,51 +195,51 @@ if [ "${DPKG_BASED}" != "${DPKG_BASED/${DISTRO}}" ]; then
         ([ "${DISTRO}" == "canaima" ] && [ "${CODENAME}" == "kerepakupai" ]) || \
         ([ "${DISTRO}" == "canaima" ] && [ "${CODENAME}" == "kukenan" ]); then
 
-        ${SUDO} ${MV} "/etc/apt/sources.list" "/etc/apt/sources.list.bk"
-        ${SUDO} ${MV} "/etc/apt/sources.list.d" "/etc/apt/sources.list.d.bk"
+        ${SUDO} ${BASH} -c "${MV} /etc/apt/sources.list /etc/apt/sources.list.bk"
+        ${SUDO} ${BASH} -c "${MV} /etc/apt/sources.list.d /etc/apt/sources.list.d.bk"
 
-        ${SUDO} ${ECHO} "deb ${DEBIAN_MIRROR} wheezy main" \
-            >> "/etc/apt/sources.list"
+        ${SUDO} ${BASH} -c "${ECHO} \"deb ${DEBIAN_MIRROR} wheezy main\" \
+            > /etc/apt/sources.list"
 
-        ${SUDO} ${APTGETCMD} ${APTGETOPTS} update
-        ${SUDO} ${APTGETCMD} ${APTGETOPTS} install -t wheezy \
+        ${SUDO} ${BASH} -c "${APTGETCMD} ${APTGETOPTS} update"
+        ${SUDO} ${BASH} -c "${APTGETCMD} ${APTGETOPTS} install -t wheezy \
             iptables perl libapparmor1 libdevmapper1.02.1 \
-            libsqlite3-0 adduser libc6
+            libsqlite3-0 adduser libc6"
 
-        ${SUDO} ${ECHO} "deb ${DEBIAN_MIRROR} wheezy-backports main" \
-            >> "/etc/apt/sources.list"
+        ${SUDO} ${BASH} -c "${ECHO} \"deb ${DEBIAN_MIRROR} wheezy-backports main\" \
+            > /etc/apt/sources.list"
 
-        ${SUDO} ${APTGETCMD} ${APTGETOPTS} update
-        ${SUDO} ${APTGETCMD} ${APTGETOPTS} install -t wheezy-backports \
-            init-system-helpers fabric
+        ${SUDO} ${BASH} -c "${APTGETCMD} ${APTGETOPTS} update"
+        ${SUDO} ${BASH} -c "${APTGETCMD} ${APTGETOPTS} install -t wheezy-backports \
+            init-system-helpers fabric"
 
-        ${SUDO} ${ECHO} "deb ${DEBIAN_MIRROR} jessie main" \
-            >> "/etc/apt/sources.list"
+        ${SUDO} ${BASH} -c "${ECHO} \"deb ${DEBIAN_MIRROR} jessie main\" \
+            > /etc/apt/sources.list"
 
-        ${SUDO} ${APTGETCMD} ${APTGETOPTS} update
-        ${SUDO} ${APTGETCMD} ${APTGETOPTS} install -t jessie docker.io
+        ${SUDO} ${BASH} -c "${APTGETCMD} ${APTGETOPTS} update"
+        ${SUDO} ${BASH} -c "${APTGETCMD} ${APTGETOPTS} install -t jessie docker.io"
 
-        ${SUDO} ${MV} "/etc/apt/sources.list.bk" "/etc/apt/sources.list"
-        ${SUDO} ${MV} "/etc/apt/sources.list.d.bk" "/etc/apt/sources.list.d"
+        ${SUDO} ${BASH} -c "${MV} /etc/apt/sources.list.bk /etc/apt/sources.list"
+        ${SUDO} ${BASH} -c "${MV} /etc/apt/sources.list.d.bk /etc/apt/sources.list.d"
 
-        ${SUDO} ${APTGETCMD} ${APTGETOPTS} update
+        ${SUDO} ${BASH} -c "${APTGETCMD} ${APTGETOPTS} update"
 
     elif ([ "${DISTRO}" == "debian" ] && [ "${CODENAME}" == "jessie" ]) || \
         ([ "${DISTRO}" == "debian" ] && [ "${CODENAME}" == "sid" ]); then
 
-        ${SUDO} ${MV} "/etc/apt/sources.list" "/etc/apt/sources.list.bk"
-        ${SUDO} ${MV} "/etc/apt/sources.list.d" "/etc/apt/sources.list.d.bk"
+        ${SUDO} ${BASH} -c "${MV} /etc/apt/sources.list /etc/apt/sources.list.bk"
+        ${SUDO} ${BASH} -c "${MV} /etc/apt/sources.list.d /etc/apt/sources.list.d.bk"
 
-        ${SUDO} ${ECHO} "deb ${DEBIAN_MIRROR} ${CODENAME} main" \
-            >> "/etc/apt/sources.list"
+        ${SUDO} ${BASH} -c "${ECHO} \"deb ${DEBIAN_MIRROR} ${CODENAME} main\" \
+            > /etc/apt/sources.list"
 
-        ${SUDO} ${APTGETCMD} ${APTGETOPTS} update
-        ${SUDO} ${APTGETCMD} ${APTGETOPTS} install ${DPKG_DEPENDS}
+        ${SUDO} ${BASH} -c "${APTGETCMD} ${APTGETOPTS} update"
+        ${SUDO} ${BASH} -c "${APTGETCMD} ${APTGETOPTS} install ${DPKG_DEPENDS}"
 
-        ${SUDO} ${MV} "/etc/apt/sources.list.bk" "/etc/apt/sources.list"
-        ${SUDO} ${MV} "/etc/apt/sources.list.d.bk" "/etc/apt/sources.list.d"
+        ${SUDO} ${BASH} -c "${MV} /etc/apt/sources.list.bk /etc/apt/sources.list"
+        ${SUDO} ${BASH} -c "${MV} /etc/apt/sources.list.d.bk /etc/apt/sources.list.d"
 
-        ${SUDO} ${APTGETCMD} ${APTGETOPTS} update
+        ${SUDO} ${BASH} -c "${APTGETCMD} ${APTGETOPTS} update"
 
     elif ([ "${DISTRO}" == "ubuntu" ] && [ "${CODENAME}" == "oneiric" ]) || \
         ([ "${DISTRO}" == "ubuntu" ] && [ "${CODENAME}" == "precise" ]) || \
@@ -230,122 +247,55 @@ if [ "${DPKG_BASED}" != "${DPKG_BASED/${DISTRO}}" ]; then
         ([ "${DISTRO}" == "ubuntu" ] && [ "${CODENAME}" == "raring" ]) || \
         ([ "${DISTRO}" == "ubuntu" ] && [ "${CODENAME}" == "saucy" ]); then
 
-        ${SUDO} ${MV} "/etc/apt/sources.list" "/etc/apt/sources.list.bk"
-        ${SUDO} ${MV} "/etc/apt/sources.list.d" "/etc/apt/sources.list.d.bk"
+        ${SUDO} ${BASH} -c "${MV} /etc/apt/sources.list /etc/apt/sources.list.bk"
+        ${SUDO} ${BASH} -c "${MV} /etc/apt/sources.list.d /etc/apt/sources.list.d.bk"
 
-        ${SUDO} ${ECHO} "deb ${UBUNTU_MIRROR} ${CODENAME} main" \
-            >> "/etc/apt/sources.list"
-        ${SUDO} ${ECHO} "deb ${UBUNTU_MIRROR} ${CODENAME} universe" \
-            >> "/etc/apt/sources.list"
+        ${SUDO} ${BASH} -c "${ECHO} \"deb ${UBUNTU_MIRROR} ${CODENAME} main\" \
+            > /etc/apt/sources.list"
+        ${SUDO} ${BASH} -c "${ECHO} \"deb ${UBUNTU_MIRROR} ${CODENAME} universe\" \
+            > /etc/apt/sources.list"
 
-        ${SUDO} ${APTGETCMD} ${APTGETOPTS} update
-        ${SUDO} ${APTGETCMD} ${APTGETOPTS} install -t ${CODENAME} \
+        ${SUDO} ${BASH} -c "${APTGETCMD} ${APTGETOPTS} update"
+        ${SUDO} ${BASH} -c "${APTGETCMD} ${APTGETOPTS} install -t ${CODENAME} \
             iptables perl libapparmor1 libdevmapper1.02.1 \
-            libsqlite3-0 adduser libc6
+            libsqlite3-0 adduser libc6"
 
-        ${SUDO} ${ECHO} "deb ${DEBIAN_MIRROR} wheezy-backports main" \
-            >> "/etc/apt/sources.list"
+        ${SUDO} ${BASH} -c "${ECHO} \"deb ${DEBIAN_MIRROR} wheezy-backports main\" \
+            > /etc/apt/sources.list"
 
-        ${SUDO} ${APTGETCMD} ${APTGETOPTS} update
-        ${SUDO} ${APTGETCMD} ${APTGETOPTS} install -t wheezy-backports \
-            init-system-helpers fabric
+        ${SUDO} ${BASH} -c "${APTGETCMD} ${APTGETOPTS} update"
+        ${SUDO} ${BASH} -c "${APTGETCMD} ${APTGETOPTS} install -t wheezy-backports \
+            init-system-helpers fabric"
 
-        ${SUDO} ${ECHO} "deb ${DEBIAN_MIRROR} jessie main" \
-            >> "/etc/apt/sources.list"
+        ${SUDO} ${BASH} -c "${ECHO} \"deb ${DEBIAN_MIRROR} jessie main\" \
+            > /etc/apt/sources.list"
 
-        ${SUDO} ${APTGETCMD} ${APTGETOPTS} update
-        ${SUDO} ${APTGETCMD} ${APTGETOPTS} install -t jessie docker.io
+        ${SUDO} ${BASH} -c "${APTGETCMD} ${APTGETOPTS} update"
+        ${SUDO} ${BASH} -c "${APTGETCMD} ${APTGETOPTS} install -t jessie docker.io"
 
-        ${SUDO} ${MV} "/etc/apt/sources.list.bk" "/etc/apt/sources.list"
-        ${SUDO} ${MV} "/etc/apt/sources.list.d.bk" "/etc/apt/sources.list.d"
+        ${SUDO} ${BASH} -c "${MV} /etc/apt/sources.list.bk /etc/apt/sources.list"
+        ${SUDO} ${BASH} -c "${MV} /etc/apt/sources.list.d.bk /etc/apt/sources.list.d"
 
-        ${SUDO} ${APTGETCMD} ${APTGETOPTS} update
+        ${SUDO} ${BASH} -c "${APTGETCMD} ${APTGETOPTS} update"
 
     elif ([ "${DISTRO}" == "ubuntu" ] && [ "${CODENAME}" == "trusty" ]) || \
         ([ "${DISTRO}" == "ubuntu" ] && [ "${CODENAME}" == "utopic" ]); then
 
-        ${SUDO} ${MV} "/etc/apt/sources.list" "/etc/apt/sources.list.bk"
-        ${SUDO} ${MV} "/etc/apt/sources.list.d" "/etc/apt/sources.list.d.bk"
+        ${SUDO} ${BASH} -c "${MV} /etc/apt/sources.list /etc/apt/sources.list.bk"
+        ${SUDO} ${BASH} -c "${MV} /etc/apt/sources.list.d /etc/apt/sources.list.d.bk"
 
-        ${SUDO} ${ECHO} "deb ${UBUNTU_MIRROR} ${CODENAME} main" \
-            > "/etc/apt/sources.list"
-        ${SUDO} ${ECHO} "deb ${UBUNTU_MIRROR} ${CODENAME} universe" \
-            > "/etc/apt/sources.list"
+        ${SUDO} ${BASH} -c "${ECHO} \"deb ${UBUNTU_MIRROR} ${CODENAME} main\" \
+            > /etc/apt/sources.list"
+        ${SUDO} ${BASH} -c "${ECHO} \"deb ${UBUNTU_MIRROR} ${CODENAME} universe\" \
+            > /etc/apt/sources.list"
 
-        ${SUDO} ${APTGETCMD} ${APTGETOPTS} update
-        ${SUDO} ${APTGETCMD} ${APTGETOPTS} install ${DPKG_DEPENDS}
+        ${SUDO} ${BASH} -c "${APTGETCMD} ${APTGETOPTS} update"
+        ${SUDO} ${BASH} -c "${APTGETCMD} ${APTGETOPTS} install ${DPKG_DEPENDS}"
 
-        ${SUDO} ${MV} "/etc/apt/sources.list.bk" "/etc/apt/sources.list"
-        ${SUDO} ${MV} "/etc/apt/sources.list.d.bk" "/etc/apt/sources.list.d"
+        ${SUDO} ${BASH} -c "${MV} /etc/apt/sources.list.bk /etc/apt/sources.list"
+        ${SUDO} ${BASH} -c "${MV} /etc/apt/sources.list.d.bk /etc/apt/sources.list.d"
 
-        ${SUDO} ${APTGETCMD} ${APTGETOPTS} update
-
-    else
-
-        ${ECHO} 1>&2
-        ${ECHO} 1>&2 " Sorry. You are using an unsupported version of ${DISTRO}."
-        ${ECHO} 1>&2
-        ${ECHO} 1>&2 " You will need to install the following dependencies"
-        ${ECHO} 1>&2 " manually:"
-        ${ECHO} 1>&2
-        ${ECHO} 1>&2 "  - fabric (http://fabfile.org)"
-        ${ECHO} 1>&2 "  - docker (http://docker.io)"
-        ${ECHO} 1>&2
-        ${ECHO} 1>&2 " Please open a ticket requesting support for your distribution:"
-        ${ECHO} 1>&2 " http://github.com/CanaimaGNULinux/tribus/issues"
-        ${ECHO} 1>&2
-
-        exit 0
-
-    fi
-
-elif [ "${YUM_BASED}" != "${YUM_BASED/${DISTRO}}" ]; then
-
-    # If our dependencies are met, let's exit early
-    if [ -n "$( which fab )" ] && [ -n "$( which docker )" ]; then
-
-        ${ECHO} "All dependencies are satisfied."
-        exit 0
-
-    fi
-
-    if ([ "${DISTRO}" == "fedora" ] && [ "${CODENAME}" == "shrodinger" ]) || \
-        ([ "${DISTRO}" == "fedora" ] && [ "${CODENAME}" == "heisenbug" ]); then
-
-        ${SUDO} ${YUMCMD} ${YUMOPTS} install ${YUM_DEPENDS}
-
-    else
-
-        ${ECHO} 1>&2
-        ${ECHO} 1>&2 " Sorry. You are using an unsupported version of ${DISTRO}."
-        ${ECHO} 1>&2
-        ${ECHO} 1>&2 " You will need to install the following dependencies"
-        ${ECHO} 1>&2 " manually:"
-        ${ECHO} 1>&2
-        ${ECHO} 1>&2 "  - fabric (http://fabfile.org)"
-        ${ECHO} 1>&2 "  - docker (http://docker.io)"
-        ${ECHO} 1>&2
-        ${ECHO} 1>&2 " Please open a ticket requesting support for your distribution:"
-        ${ECHO} 1>&2 " http://github.com/CanaimaGNULinux/tribus/issues"
-        ${ECHO} 1>&2
-
-        exit 0
-
-    fi
-
-elif [ "${PACMAN_BASED}" != "${PACMAN_BASED/${DISTRO}}" ]; then
-
-    # If our dependencies are met, let's exit early
-    if [ -n "$( which fab )" ] && [ -n "$( which docker )" ]; then
-
-        ${ECHO} "All dependencies are satisfied."
-        exit 0
-
-    fi
-
-    if [ "${DISTRO}" == "arch" ]; then
-
-        ${SUDO} ${PACMANCMD} ${PACMANOPTS} -S ${PACMAN_DEPENDS}
+        ${SUDO} ${BASH} -c "${APTGETCMD} ${APTGETOPTS} update"
 
     else
 
@@ -366,7 +316,7 @@ elif [ "${PACMAN_BASED}" != "${PACMAN_BASED/${DISTRO}}" ]; then
 
     fi
 
-elif [ "${EMERGE_BASED}" != "${EMERGE_BASED/${DISTRO}}" ]; then
+elif [ "${YUM_BASED}" != "${YUM_BASED/${DISTRO}}" ]; then
 
     # If our dependencies are met, let's exit early
     if [ -n "$( which fab )" ] && [ -n "$( which docker )" ]; then
@@ -376,10 +326,18 @@ elif [ "${EMERGE_BASED}" != "${EMERGE_BASED/${DISTRO}}" ]; then
 
     fi
 
-    if [ "${DISTRO}" == "gentoo" ]; then
+    if [ "${USER}" != "${ROOT}" ]; then
 
-        ${SUDO} ${EMERGECMD} ${EMERGEOPTS} --sync
-        ${SUDO} ${EMERGECMD} ${EMERGEOPTS} ${EMERGE_DEPENDS}
+        # We need to get (temporary) sudo access for the current user
+        echo "We need your root password to verify some dependencies."
+        ${SU} ${ROOT} -c "${ECHO} \"${USER} ALL= NOPASSWD: ALL\" > /etc/sudoers.d/tmp"
+
+    fi
+
+    if ([ "${DISTRO}" == "fedora" ] && [ "${CODENAME}" == "shrodinger" ]) || \
+        ([ "${DISTRO}" == "fedora" ] && [ "${CODENAME}" == "heisenbug" ]); then
+
+        ${SUDO} ${BASH} -c "${YUMCMD} ${YUMOPTS} install ${YUM_DEPENDS}"
 
     else
 
@@ -396,9 +354,104 @@ elif [ "${EMERGE_BASED}" != "${EMERGE_BASED/${DISTRO}}" ]; then
         ${ECHO} 1>&2 " http://github.com/CanaimaGNULinux/tribus/issues"
         ${ECHO} 1>&2
 
+        exit 1
+
+    fi
+
+    # Revoking sudo access
+    ${SUDO} ${BASH} -c "rm -rf /etc/sudoers.d/tmp"
+
+
+elif [ "${PACMAN_BASED}" != "${PACMAN_BASED/${DISTRO}}" ]; then
+
+    # If our dependencies are met, let's exit early
+    if [ -n "$( which fab )" ] && [ -n "$( which docker )" ]; then
+
+        ${ECHO} "All dependencies are satisfied."
         exit 0
 
     fi
+
+    if [ "${USER}" != "${ROOT}" ]; then
+
+        # We need to get (temporary) sudo access for the current user
+        echo "We need your root password to verify some dependencies."
+        ${SU} ${ROOT} -c "${ECHO} \"${USER} ALL= NOPASSWD: ALL\" > /etc/sudoers.d/tmp"
+
+    fi
+
+    if [ "${DISTRO}" == "arch" ]; then
+
+        ${SUDO} ${BASH} -c "${PACMANCMD} ${PACMANOPTS} -S ${PACMAN_DEPENDS}"
+
+    else
+
+        ${ECHO} 1>&2
+        ${ECHO} 1>&2 " Sorry. You are using an unsupported version of ${DISTRO}."
+        ${ECHO} 1>&2
+        ${ECHO} 1>&2 " You will need to install the following dependencies"
+        ${ECHO} 1>&2 " manually:"
+        ${ECHO} 1>&2
+        ${ECHO} 1>&2 "  - fabric (http://fabfile.org)"
+        ${ECHO} 1>&2 "  - docker (http://docker.io)"
+        ${ECHO} 1>&2
+        ${ECHO} 1>&2 " Please open a ticket requesting support for your distribution:"
+        ${ECHO} 1>&2 " http://github.com/CanaimaGNULinux/tribus/issues"
+        ${ECHO} 1>&2
+
+        exit 1
+
+    fi
+
+    # Revoking sudo access
+    ${SUDO} ${BASH} -c "rm -rf /etc/sudoers.d/tmp"
+
+
+elif [ "${EMERGE_BASED}" != "${EMERGE_BASED/${DISTRO}}" ]; then
+
+    # If our dependencies are met, let's exit early
+    if [ -n "$( which fab )" ] && [ -n "$( which docker )" ]; then
+
+        ${ECHO} "All dependencies are satisfied."
+        exit 0
+
+    fi
+
+    if [ "${USER}" != "${ROOT}" ]; then
+
+        # We need to get (temporary) sudo access for the current user
+        echo "We need your root password to verify some dependencies."
+        ${SU} ${ROOT} -c "${ECHO} \"${USER} ALL= NOPASSWD: ALL\" > /etc/sudoers.d/tmp"
+
+    fi
+
+    if [ "${DISTRO}" == "gentoo" ]; then
+
+        ${SUDO} ${BASH} -c "${EMERGECMD} ${EMERGEOPTS} --sync"
+        ${SUDO} ${BASH} -c "${EMERGECMD} ${EMERGEOPTS} ${EMERGE_DEPENDS}"
+
+    else
+
+        ${ECHO} 1>&2
+        ${ECHO} 1>&2 " Sorry. You are using an unsupported version of ${DISTRO}."
+        ${ECHO} 1>&2
+        ${ECHO} 1>&2 " You will need to install the following dependencies"
+        ${ECHO} 1>&2 " manually:"
+        ${ECHO} 1>&2
+        ${ECHO} 1>&2 "  - fabric (http://fabfile.org)"
+        ${ECHO} 1>&2 "  - docker (http://docker.io)"
+        ${ECHO} 1>&2
+        ${ECHO} 1>&2 " Please open a ticket requesting support for your distribution:"
+        ${ECHO} 1>&2 " http://github.com/CanaimaGNULinux/tribus/issues"
+        ${ECHO} 1>&2
+
+        exit 1
+
+    fi
+
+    # Revoking sudo access
+    ${SUDO} ${BASH} -c "rm -rf /etc/sudoers.d/tmp"
+
 
 else
 
@@ -416,6 +469,6 @@ else
     ${ECHO} 1>&2 " http://github.com/CanaimaGNULinux/tribus/issues"
     ${ECHO} 1>&2
 
-    exit 0
+    exit 1
 
 fi
