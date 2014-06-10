@@ -22,15 +22,21 @@ from fabric.api import local
 
 
 def generate_debian_base_image(env):
+    '''
+    '''
+
     local(('sudo bash %(debian_base_image_script)s '
            'luisalejandro/debian-%(arch)s '
            'wheezy %(arch)s') % env, capture=False)
 
 
 def generate_tribus_base_image(env):
+    '''
+    '''
+
     local(('echo "'
            '%(preseed_env)s\n'
-           'debconf-set-selections %(preseed_db)s\n'
+           'debconf-set-selections %(preseed_debconf)s\n'
            'apt-get update\n'
            'apt-get install %(debian_run_dependencies)s\n'
            'apt-get install %(debian_build_dependencies)s\n'
@@ -39,7 +45,7 @@ def generate_tribus_base_image(env):
            'echo \"root:tribus\" | chpasswd\n'
            'echo \"postgres:tribus\" | chpasswd\n'
            '%(restart_services)s\n'
-           'sudo -iu postgres bash -c \"psql -f %(preseed_db)s\"\n'
+           'sudo -iu postgres bash -c \'psql -f %(preseed_db)s\'\n'
            'ldapadd %(ldap_args)s -f \"%(preseed_ldap)s\"\n'
            'apt-get purge %(debian_build_dependencies)s\n'
            'apt-get autoremove\n'
@@ -47,6 +53,7 @@ def generate_tribus_base_image(env):
            'apt-get clean\n'
            'find /usr -name "*.pyc" -print0 | xargs -0r rm -rf\n'
            'find /var/cache/apt -type f -print0 | xargs -0r rm -rf\n'
+           'find /var/lib/mongodb/journal -type f -print0 | xargs -0r rm -rf\n'
            'find /var/lib/apt/lists -type f -print0 | xargs -0r rm -rf\n'
            'find /usr/share/man -type f -print0 | xargs -0r rm -rf\n'
            'find /usr/share/doc -type f -print0 | xargs -0r rm -rf\n'
@@ -55,41 +62,52 @@ def generate_tribus_base_image(env):
            'find /var/tmp -type f -print0 | xargs -0r rm -rf\n'
            'find /tmp -type f -print0 | xargs -0r rm -rf\n'
            'find /src -type f -print0 | xargs -0r rm -rf\n'
+           'exit 0'
            '" > %(tribus_base_image_script)s') % env, capture=False)
-    # local(('sudo bash -c '
-    #        '"docker.io run -it --name %(tribus_base_image)s '
-    #        '%(mounts)s %(debian_base_image)s'
-    #        'bash %(tribus_base_image_script)s"') % env, capture=False)
+    local(('sudo bash -c '
+           '"docker.io run -it --name %(tribus_runtime_container)s '
+           '%(mounts)s %(debian_base_image)s '
+           'bash %(tribus_base_image_script)s"') % env, capture=False)
+    local(('sudo bash -c '
+           '"docker.io commit %(tribus_runtime_container)s '
+           '%(tribus_base_image)s"') % env)
 
 
 def pull_debian_base_image(env):
+    '''
+    '''
 
-    containers = local(('sudo bash -c "docker.io ps -aq"'), capture=True)
+    containers = local(('sudo bash -c '
+                        '"docker.io ps -aq"'), capture=True)
+    imagestat = local(('sudo bash -c '
+                       '"docker.io inspect %(debian_base_image)s"') % env,
+                      capture=True)
 
     if containers:
         local(('sudo bash -c '
                '"docker.io rm -fv %s"') % containers.replace('\n', ' '),
               capture=False)
 
-    if env.debian_base_image_id not in local(('sudo bash -c '
-                                              '"docker.io images -aq"'),
-                                             capture=True):
+    if imagestat.return_code:
         local(('sudo bash -c '
                '"docker.io pull %(debian_base_image)s"') % env)
 
 
 def pull_tribus_base_image(env):
+    '''
+    '''
 
     containers = local(('sudo bash -c "docker.io ps -aq"'), capture=True)
+    imagestat = local(('sudo bash -c '
+                       '"docker.io inspect %(tribus_base_image)s"'),
+                      capture=True)
 
     if containers:
         local(('sudo bash -c '
                '"docker.io rm -fv %s"') % containers.replace('\n', ' '),
               capture=False)
 
-    if env.tribus_base_image_id not in local(('sudo bash -c '
-                                              '"docker.io images -aq"'),
-                                             capture=True):
+    if imagestat.return_code:
         local(('sudo bash -c '
                '"docker.io pull %(tribus_base_image)s"') % env)
         local(('sudo bash -c '
@@ -101,24 +119,55 @@ def pull_tribus_base_image(env):
 
 
 def django_syncdb(env):
+    '''
+    '''
+
+    local(('echo "'
+           'cd %(basedir)s\n'
+           'python manage.py syncdb\n'
+           'python manage.py migrate\n'
+           'exit 0'
+           '" > %(tribus_django_syncdb_script)s') % env, capture=False)
 
     local(('sudo bash -c '
            '"docker.io run -it --name="%(tribus_runtime_container)s" '
            '%(mounts)s %(tribus_runtime_image)s '
            'bash %(tribus_django_syncdb_script)s"') % env)
 
+    local(('sudo bash -c '
+           '"docker.io commit %(tribus_runtime_container)s '
+           '%(tribus_runtime_image)s"') % env)
 
-def django_runserver():
+
+def django_runserver(env):
+    '''
+    '''
+
+    local(('echo "'
+           'cd %(basedir)s\n'
+           'ln -s %(tribus_nginx_config)s /etc/nginx/sites-enabled/\n'
+           'ln -s %(tribus_uwsgi_config)s /etc/uwsgi/apps-enabled/\n'
+           '%(restart_services)s\n'
+           'exit 0'
+           '" > %(tribus_django_syncdb_script)s') % env, capture=False)
+
+    local(('sudo bash -c '
+           '"docker.io run -it --name="%(tribus_runtime_container)s" '
+           '%(mounts)s %(tribus_runtime_image)s '
+           'bash %(tribus_django_syncdb_script)s"') % env)
+
+    local(('sudo bash -c '
+           '"docker.io commit %(tribus_runtime_container)s '
+           '%(tribus_runtime_image)s"') % env)
+
+
+def django_stopserver(env):
     '''
     '''
     pass
 
-def django_stopserver():
-    '''
-    '''
-    pass
 
-def django_restartserver():
+def django_restartserver(env):
     '''
     '''
     pass

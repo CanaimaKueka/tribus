@@ -1,5 +1,7 @@
+set -x
+set -e
 export DEBIAN_FRONTEND=noninteractive
-debconf-set-selections /home/huntingbears/desarrollo/tribus/tribus/config/data/preseed-db.sql
+debconf-set-selections /media/desarrollo/tribus/tribus/config/data/preseed-debconf.conf
 apt-get update
 apt-get install postgresql slapd ldap-utils redis-server mongodb-server python-xapian reprepro sudo uwsgi nginx
 apt-get install libxml2-dev libxslt1-dev python-dev libldap2-dev libsasl2-dev libpq-dev gcc make python-setuptools lsb-release git curl ca-certificates
@@ -11,14 +13,15 @@ service mongodb restart
 service postgresql restart
 service redis-server restart
 service slapd restart
-sudo -iu postgres bash -c psql -f /home/huntingbears/desarrollo/tribus/tribus/config/data/preseed-db.sql
-ldapadd -x -w "tribus" -D "cn=admin,dc=tribus,dc=org" -H "ldap://localhost" -f /home/huntingbears/desarrollo/tribus/tribus/config/data/preseed-ldap.ldif
+sudo -iu postgres bash -c 'psql -f /media/desarrollo/tribus/tribus/config/data/preseed-db.sql'
+ldapadd -x -w "tribus" -D "cn=admin,dc=tribus,dc=org" -H "ldap://localhost" -f /media/desarrollo/tribus/tribus/config/data/preseed-ldap.ldif
 apt-get purge libxml2-dev libxslt1-dev python-dev libldap2-dev libsasl2-dev libpq-dev gcc make python-setuptools lsb-release git curl ca-certificates
 apt-get autoremove
 apt-get autoclean
 apt-get clean
 find /usr -name *.pyc -print0 | xargs -0r rm -rf
 find /var/cache/apt -type f -print0 | xargs -0r rm -rf
+find /var/lib/mongodb/journal -type f -print0 | xargs -0r rm -rf
 find /var/lib/apt/lists -type f -print0 | xargs -0r rm -rf
 find /usr/share/man -type f -print0 | xargs -0r rm -rf
 find /usr/share/doc -type f -print0 | xargs -0r rm -rf
@@ -27,4 +30,4 @@ find /var/log -type f -print0 | xargs -0r rm -rf
 find /var/tmp -type f -print0 | xargs -0r rm -rf
 find /tmp -type f -print0 | xargs -0r rm -rf
 find /src -type f -print0 | xargs -0r rm -rf
-
+exit 0

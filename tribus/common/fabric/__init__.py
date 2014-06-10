@@ -52,6 +52,7 @@ logger = get_logger()
 def development():
     '''
     '''
+    env.warn_only = True
 
     # Fabric environment configuration
     env.user = pwd.getpwuid(os.getuid()).pw_name
@@ -62,7 +63,6 @@ def development():
 
     # Docker config
     env.arch = get_local_arch()
-    env.docker_basedir = get_path([os.sep, 'media', 'tribus'])
     env.docker_maintainer = ('Luis Alejandro Martínez Faneyth '
                              '<luis@huntingbears.com.ve>')
 
@@ -71,20 +71,15 @@ def development():
     env.tribus_runtime_image = 'luisalejandro/tribus-run-%(arch)s:wheezy' % env
     env.tribus_runtime_container = 'tribus-run-container'
 
-    if env.arch == 'i386':
-        env.debian_base_image_id = '7902e3f5c3f8'
-        env.tribus_base_image_id = '538beafc4d12'
-
-    elif env.arch == 'amd64':
-        env.debian_base_image_id = '7a4e3d67f626'
-        env.tribus_base_image_id = '538beafc4d12'
-
     env.debian_base_image_script = get_path([BASEDIR, 'tribus',
                                              'data', 'scripts',
                                              'debian-base-image.sh'])
     env.tribus_base_image_script = get_path([BASEDIR, 'tribus',
                                              'data', 'scripts',
                                              'tribus-base-image.sh'])
+    env.tribus_django_syncdb_script = get_path([BASEDIR, 'tribus',
+                                                'data', 'scripts',
+                                                'django-syncdb.sh'])
 
     env.preseed_db = get_path([CONFDIR, 'data', 'preseed-db.sql'])
     env.preseed_debconf = get_path([CONFDIR, 'data', 'preseed-debconf.conf'])
@@ -105,10 +100,11 @@ def development():
     preseed_env = ['DEBIAN_FRONTEND=noninteractive']
     env.preseed_env = '\n'.join('export %s' % i for i in preseed_env)
 
-    mounts = ['%(basedir)s:%(docker_basedir)s:ro']
-    env.mounts = ' --volume='.join(mounts)
+    mounts = ['%(basedir)s:%(basedir)s:ro' % env]
+    env.mounts = ' '.join('--volume %s' % i for i in mounts)
 
-    restart_services = ['mongodb', 'postgresql', 'redis-server', 'slapd']
+    restart_services = ['mongodb', 'postgresql', 'redis-server', 'slapd',
+                        'uwsgi']
     env.restart_services = '\n'.join('service %s restart' % i
                                      for i in restart_services)
 
@@ -133,6 +129,7 @@ def generate_tribus_base_image_i386():
     env.arch = 'i386'
     env.debian_base_image = 'luisalejandro/debian-i386:wheezy'
     env.tribus_base_image = 'luisalejandro/tribus-i386:wheezy'
+    pull_debian_base_image(env)
     generate_tribus_base_image(env)
 
 
@@ -142,6 +139,7 @@ def generate_tribus_base_image_amd64():
     env.arch = 'amd64'
     env.debian_base_image = 'luisalejandro/debian-amd64:wheezy'
     env.tribus_base_image = 'luisalejandro/tribus-amd64:wheezy'
+    pull_debian_base_image(env)
     generate_tribus_base_image(env)
 
 
@@ -149,7 +147,7 @@ def environment():
     '''
     '''
     pull_debian_base_image(env)
-    pull_tribus_base_image(env)
+    # pull_tribus_base_image(env)
 
 
 def syncdb():
