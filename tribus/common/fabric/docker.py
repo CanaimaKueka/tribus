@@ -22,110 +22,122 @@ from fabric.api import local
 
 
 def generate_debian_base_image(env):
-    local(('sudo /bin/bash %(debian_base_image_script)s '
+    local(('sudo bash %(debian_base_image_script)s '
            'luisalejandro/debian-%(arch)s '
            'wheezy %(arch)s') % env, capture=False)
 
 
 def generate_tribus_base_image(env):
-    local(('sudo /bin/bash -c "echo -e \''
-           'FROM %(debian_base_image)s\n'
-           'MAINTAINER %(docker_maintainer)s\n'
+    local(('echo "'
            '%(preseed_env)s\n'
-           'RUN echo \\"%(preseed_db)s\\" > /preseed-db.sql\n'
-           'RUN echo \\"%(preseed_ldap)s\\" > /preseed-ldap.ldif\n'
-           'RUN echo \\"%(preseed_debconf)s\\" > /preseed-debconf.conf\n'
-           'RUN debconf-set-selections /preseed-debconf.conf\n'
-           'RUN apt-get update\n'
-           'RUN apt-get install %(debian_run_dependencies)s\n'
-           'RUN apt-get install %(debian_build_dependencies)s\n'
-           'RUN easy_install pip\n'
-           'RUN pip install %(python_dependencies)s\n'
-           'RUN echo \\"root:tribus\\" | chpasswd\n'
-           'RUN echo \\"postgres:tribus\\" | chpasswd\n'
-           'RUN service postgresql restart && sudo -iu postgres /bin/bash -c \\"psql -f /preseed-db.sql\\"\n'
-           'RUN service slapd restart && ldapadd %(ldap_args)s -f \\"/preseed-ldap.ldif\\"\n'
-           'RUN apt-get purge %(debian_build_dependencies)s\n'
-           'RUN apt-get autoremove\n'
-           'RUN apt-get autoclean\n'
-           'RUN apt-get clean\n'
-           'RUN find /usr -name "*.pyc" -print0 | xargs -0r rm -rf\n'
-           'RUN find /var/cache/apt -type f -print0 | xargs -0r rm -rf\n'
-           'RUN find /var/lib/apt/lists -type f -print0 | xargs -0r rm -rf\n'
-           'RUN find /usr/share/man -type f -print0 | xargs -0r rm -rf\n'
-           'RUN find /usr/share/doc -type f -print0 | xargs -0r rm -rf\n'
-           'RUN find /usr/share/locale -type f -print0 | xargs -0r rm -rf\n'
-           'RUN find /var/log -type f -print0 | xargs -0r rm -rf\n'
-           'RUN find /var/tmp -type f -print0 | xargs -0r rm -rf\n'
-           'RUN find /tmp -type f -print0 | xargs -0r rm -rf\n'
-           'RUN find /src -type f -print0 | xargs -0r rm -rf\n'
-           '\' > %(tribus_base_image_dockerfile)s"') % env, capture=False)
-    local(('sudo /bin/bash -c '
-           '"docker.io build --rm --no-cache -t %(tribus_base_image)s '
-           '- < %(tribus_base_image_dockerfile)s"') % env, capture=False)
+           'debconf-set-selections %(preseed_db)s\n'
+           'apt-get update\n'
+           'apt-get install %(debian_run_dependencies)s\n'
+           'apt-get install %(debian_build_dependencies)s\n'
+           'easy_install pip\n'
+           'pip install %(python_dependencies)s\n'
+           'echo \"root:tribus\" | chpasswd\n'
+           'echo \"postgres:tribus\" | chpasswd\n'
+           '%(restart_services)s\n'
+           'sudo -iu postgres bash -c \"psql -f %(preseed_db)s\"\n'
+           'ldapadd %(ldap_args)s -f \"%(preseed_ldap)s\"\n'
+           'apt-get purge %(debian_build_dependencies)s\n'
+           'apt-get autoremove\n'
+           'apt-get autoclean\n'
+           'apt-get clean\n'
+           'find /usr -name "*.pyc" -print0 | xargs -0r rm -rf\n'
+           'find /var/cache/apt -type f -print0 | xargs -0r rm -rf\n'
+           'find /var/lib/apt/lists -type f -print0 | xargs -0r rm -rf\n'
+           'find /usr/share/man -type f -print0 | xargs -0r rm -rf\n'
+           'find /usr/share/doc -type f -print0 | xargs -0r rm -rf\n'
+           'find /usr/share/locale -type f -print0 | xargs -0r rm -rf\n'
+           'find /var/log -type f -print0 | xargs -0r rm -rf\n'
+           'find /var/tmp -type f -print0 | xargs -0r rm -rf\n'
+           'find /tmp -type f -print0 | xargs -0r rm -rf\n'
+           'find /src -type f -print0 | xargs -0r rm -rf\n'
+           '" > %(tribus_base_image_script)s') % env, capture=False)
+    # local(('sudo bash -c '
+    #        '"docker.io run -it --name %(tribus_base_image)s '
+    #        '%(mounts)s %(debian_base_image)s'
+    #        'bash %(tribus_base_image_script)s"') % env, capture=False)
 
 
 def pull_debian_base_image(env):
 
-    containers = local(('sudo /bin/bash -c "docker.io ps -aq"'), capture=True)
+    containers = local(('sudo bash -c "docker.io ps -aq"'), capture=True)
 
     if containers:
-        local(('sudo /bin/bash -c '
+        local(('sudo bash -c '
                '"docker.io rm -fv %s"') % containers.replace('\n', ' '),
               capture=False)
 
-    if env.debian_base_image_id not in local(('sudo /bin/bash -c '
+    if env.debian_base_image_id not in local(('sudo bash -c '
                                               '"docker.io images -aq"'),
                                              capture=True):
-        local(('sudo /bin/bash -c '
+        local(('sudo bash -c '
                '"docker.io pull %(debian_base_image)s"') % env)
 
 
 def pull_tribus_base_image(env):
 
-    containers = local(('sudo /bin/bash -c "docker.io ps -aq"'), capture=True)
+    containers = local(('sudo bash -c "docker.io ps -aq"'), capture=True)
 
     if containers:
-        local(('sudo /bin/bash -c '
+        local(('sudo bash -c '
                '"docker.io rm -fv %s"') % containers.replace('\n', ' '),
               capture=False)
 
-    if env.tribus_base_image_id not in local(('sudo /bin/bash -c '
+    if env.tribus_base_image_id not in local(('sudo bash -c '
                                               '"docker.io images -aq"'),
                                              capture=True):
-        local(('sudo /bin/bash -c '
+        local(('sudo bash -c '
                '"docker.io pull %(tribus_base_image)s"') % env)
-        local(('sudo /bin/bash -c '
+        local(('sudo bash -c '
                '"docker.io run --name="%(tribus_runtime_container)s" '
                '%(tribus_base_image)s" /bin/true') % env)
-        local(('sudo /bin/bash -c '
+        local(('sudo bash -c '
                '"docker.io commit %(tribus_runtime_container)s '
                '%(tribus_runtime_image)s"') % env)
 
 
 def django_syncdb(env):
 
-    local(('sudo /bin/bash -c '
-           '"docker.io run --name="%(tribus_runtime_container)s" '
-           '--volume'
-           '%(tribus_runtime_image)s" /bin/true') % env)
+    local(('sudo bash -c '
+           '"docker.io run -it --name="%(tribus_runtime_container)s" '
+           '%(mounts)s %(tribus_runtime_image)s '
+           'bash %(tribus_django_syncdb_script)s"') % env)
 
+
+def django_runserver():
+    '''
+    '''
+    pass
+
+def django_stopserver():
+    '''
+    '''
+    pass
+
+def django_restartserver():
+    '''
+    '''
+    pass
 # def docker_pull_base_image():
 
-#     containers = local(('sudo /bin/bash -c "docker.io ps -aq"'), capture=True)
+#     containers = local(('sudo bash -c "docker.io ps -aq"'), capture=True)
 
 #     if containers:
-#         local(('sudo /bin/bash -c '
+#         local(('sudo bash -c '
 #                '"docker.io rm -fv %s"') % containers.replace('\n', ' '),
 #               capture=False)
 
-#     if env.docker_base_image_id not in local(('sudo /bin/bash -c '
+#     if env.docker_base_image_id not in local(('sudo bash -c '
 #                                               '"docker.io images -aq"'),
 #                                              capture=True):
-#         local(('sudo /bin/bash -c '
+#         local(('sudo bash -c '
 #                '"docker.io pull %(docker_base_image)s"') % env)
 
-#     local(('sudo /bin/bash -c '
+#     local(('sudo bash -c '
 #            '"docker.io run -it '
 #            '--name %(docker_container)s '
 #            '%(docker_env_args)s '
@@ -135,9 +147,9 @@ def django_syncdb(env):
 #            '%(apt_args)s '
 #            '%(docker_env_packages)s"') % env)
 
-#     local(('sudo /bin/bash -c '
+#     local(('sudo bash -c '
 #            '"docker.io commit '
 #            '%(docker_container)s %(docker_env_image)s"') % env)
 
-#     local(('sudo /bin/bash -c '
+#     local(('sudo bash -c '
 #           '"docker.io rm -fv %(docker_container)s"') % env)

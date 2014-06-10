@@ -46,10 +46,6 @@ f_include_data_patterns = get_path([CONFDIR, 'data',
 f_python_dependencies = get_path([CONFDIR, 'data', 'python-dependencies.list'])
 f_debian_run_dependencies = get_path([CONFDIR, 'data', 'debian-run-dependencies.list'])
 f_debian_build_dependencies = get_path([CONFDIR, 'data', 'debian-build-dependencies.list'])
-f_preseed_db = get_path([CONFDIR, 'data', 'preseed-db.sql'])
-f_preseed_debconf = get_path([CONFDIR, 'data', 'preseed-debconf.conf'])
-f_preseed_ldap = get_path([CONFDIR, 'data', 'preseed-ldap.ldif'])
-f_preseed_env = get_path([CONFDIR, 'data', 'preseed-env.conf'])
 
 exclude_sources = readconfig(filename=f_exclude_sources, conffile=False)
 exclude_packages = readconfig(filename=f_exclude_packages, conffile=False)
@@ -68,7 +64,3 @@ debian_run_dependencies = readconfig(filename=f_debian_run_dependencies,
                                      conffile=False)
 debian_build_dependencies = readconfig(filename=f_debian_build_dependencies,
                                        conffile=False)
-preseed_db = readconfig(filename=f_preseed_db, conffile=False)
-preseed_debconf = readconfig(filename=f_preseed_debconf, conffile=False)
-preseed_ldap = readconfig(filename=f_preseed_ldap, conffile=False)
-preseed_env = readconfig(filename=f_preseed_env, conffile=False)

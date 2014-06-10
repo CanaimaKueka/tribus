@@ -34,8 +34,7 @@ from tribus.config.base import CONFDIR
 from tribus.config.ldap import (AUTH_LDAP_SERVER_URI,
                                 AUTH_LDAP_BIND_DN, AUTH_LDAP_BIND_PASSWORD)
 from tribus.config.pkg import (python_dependencies, debian_run_dependencies,
-                               debian_build_dependencies, preseed_db,
-                               preseed_debconf, preseed_env, preseed_ldap)
+                               debian_build_dependencies)
 from tribus.common.logger import get_logger
 from tribus.common.utils import get_path
 from tribus.common.system import get_local_arch
@@ -83,19 +82,17 @@ def development():
     env.debian_base_image_script = get_path([BASEDIR, 'tribus',
                                              'data', 'scripts',
                                              'debian-base-image.sh'])
-    env.tribus_base_image_dockerfile = get_path([CONFDIR, 'dockerfile',
-                                                 ('tribus-base-image-%(arch)s.conf'
-                                                  '' % env)])
+    env.tribus_base_image_script = get_path([BASEDIR, 'tribus',
+                                             'data', 'scripts',
+                                             'tribus-base-image.sh'])
 
+    env.preseed_db = get_path([CONFDIR, 'data', 'preseed-db.sql'])
+    env.preseed_debconf = get_path([CONFDIR, 'data', 'preseed-debconf.conf'])
+    env.preseed_ldap = get_path([CONFDIR, 'data', 'preseed-ldap.ldif'])
+
+    env.python_dependencies = ' '.join(python_dependencies)
     env.debian_run_dependencies = ' '.join(debian_run_dependencies)
     env.debian_build_dependencies = ' '.join(debian_build_dependencies)
-    env.python_dependencies = ' '.join(python_dependencies)
-
-    env.preseed_db = '\\\\\\n'.join(preseed_db)
-    env.preseed_debconf = '\\\\\\n'.join(preseed_debconf)
-    env.preseed_ldap = '\\\\\\n'.join(preseed_ldap)
-    env.preseed_env = '\n'.join('ENV %s' % i.replace('=', ' ')
-                                for i in preseed_env)
 
     env.ldap_passwd = AUTH_LDAP_BIND_PASSWORD
     env.ldap_writer = AUTH_LDAP_BIND_DN
@@ -105,8 +102,15 @@ def development():
                      '-D \\"%(ldap_writer)s\\" '
                      '-H \\"%(ldap_server)s\\"') % env
 
+    preseed_env = ['DEBIAN_FRONTEND=noninteractive']
+    env.preseed_env = '\n'.join('export %s' % i for i in preseed_env)
+
     mounts = ['%(basedir)s:%(docker_basedir)s:ro']
-    env.mounts = ' --volume='.join('VOLUME %s' % i for i in mounts)
+    env.mounts = ' --volume='.join(mounts)
+
+    restart_services = ['mongodb', 'postgresql', 'redis-server', 'slapd']
+    env.restart_services = '\n'.join('service %s restart' % i
+                                     for i in restart_services)
 
 
 def generate_debian_base_image_i386():
@@ -129,8 +133,6 @@ def generate_tribus_base_image_i386():
     env.arch = 'i386'
     env.debian_base_image = 'luisalejandro/debian-i386:wheezy'
     env.tribus_base_image = 'luisalejandro/tribus-i386:wheezy'
-    env.tribus_base_image_dockerfile = get_path([CONFDIR, 'dockerfile',
-                                                 'tribus-base-image-i386.conf'])
     generate_tribus_base_image(env)
 
 
@@ -140,8 +142,6 @@ def generate_tribus_base_image_amd64():
     env.arch = 'amd64'
     env.debian_base_image = 'luisalejandro/debian-amd64:wheezy'
     env.tribus_base_image = 'luisalejandro/tribus-amd64:wheezy'
-    env.tribus_base_image_dockerfile = get_path([CONFDIR, 'dockerfile',
-                                                 'tribus-base-image-amd64.conf'])
     generate_tribus_base_image(env)
 
 
