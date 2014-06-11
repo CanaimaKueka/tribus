@@ -116,14 +116,14 @@ def development():
                    'PYTHONPATH=$PYTHONPATH:%(basedir)s' % env]
     mounts = ['%(basedir)s:%(basedir)s:rw' % env]
     restart_services = ['mongodb', 'postgresql', 'redis-server', 'slapd',
-                        'uwsgi', 'supervisor']
+                        'uwsgi', 'nginx', 'supervisor']
 
     env.preseed_env = ' '.join('--env %s' % i for i in preseed_env)
     env.mounts = ' '.join('--volume %s' % i for i in mounts)
-    env.restart_services = '\n'.join('service %s restart' % i
+    env.restart_services = '\n'.join('service %s start' % i
                                      for i in restart_services)
     env.restart_services_python = '\n'.join('subprocess.call([\'service\','
-                                            '\'%s\', \'restart\'])' % i
+                                            '\'%s\', \'start\'])' % i
                                             for i in restart_services)
 
 
