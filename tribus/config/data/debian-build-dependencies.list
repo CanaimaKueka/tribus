@@ -6,7 +6,6 @@ libsasl2-dev
 libpq-dev
 gcc
 make
-python-setuptools
 lsb-release
 git
 curl

@@ -69,26 +69,26 @@ runserver: dependencies
 
 	@$(FAB) development runserver
 
-runceleryworker: dependencies
+stopserver: dependencies
 
-	@$(FAB) development runcelery_worker
-	
-runcelerydaemon: dependencies
+	@$(FAB) development stopserver
 
-	@$(FAB) development runcelery_daemon
+restartserver: dependencies
+
+	@$(FAB) development restartserver
+
+syncdb: dependencies
+
+	@$(FAB) development syncdb
 
 shell: dependencies
 
-	@$(FAB) development shell_django
+	@$(FAB) development shell
 
 prepare: dependencies
 
 	@$(FAB) development build_js
 	@$(FAB) development build_css
-
-syncdb: dependencies
-
-	@$(FAB) development syncdb_django
 
 
 # REPOSITORY TASKS ------------------------------------------------------

@@ -33,16 +33,18 @@ from tribus import BASEDIR
 from tribus.config.base import CONFDIR
 from tribus.config.ldap import (AUTH_LDAP_SERVER_URI,
                                 AUTH_LDAP_BIND_DN, AUTH_LDAP_BIND_PASSWORD)
+# from tribus.config.web import (WSGI_APPLICATION, STATICFILES_DIRS)
 from tribus.config.pkg import (python_dependencies, debian_run_dependencies,
                                debian_build_dependencies)
 from tribus.common.logger import get_logger
 from tribus.common.utils import get_path
 from tribus.common.system import get_local_arch
-from tribus.common.fabric.docker import (pull_debian_base_image,
-                                         pull_tribus_base_image,
-                                         generate_debian_base_image,
-                                         generate_tribus_base_image,
-                                         django_restartserver,
+from tribus.common.fabric.maint import (pull_debian_base_image,
+                                        pull_tribus_base_image,
+                                        generate_debian_base_image,
+                                        generate_tribus_base_image,
+                                        docker_kill_all_containers)
+from tribus.common.fabric.django import (django_restartserver,
                                          django_runserver, django_stopserver,
                                          django_syncdb)
 
@@ -52,16 +54,16 @@ logger = get_logger()
 def development():
     '''
     '''
-    env.warn_only = True
 
     # Fabric environment configuration
-    env.user = pwd.getpwuid(os.getuid()).pw_name
-    env.root = 'root'
     env.basedir = BASEDIR
     env.hosts = ['localhost']
     env.environment = 'development'
+    env.user = pwd.getpwuid(os.getuid()).pw_name
+    env.root = 'root'
 
     # Docker config
+    env.docker = 'docker.io'
     env.arch = get_local_arch()
     env.docker_maintainer = ('Luis Alejandro Martínez Faneyth '
                              '<luis@huntingbears.com.ve>')
@@ -71,6 +73,15 @@ def development():
     env.tribus_runtime_image = 'luisalejandro/tribus-run-%(arch)s:wheezy' % env
     env.tribus_runtime_container = 'tribus-run-container'
 
+    env.tribus_static_dir = get_path([BASEDIR, 'tribus', 'data', 'static'])
+
+    env.tribus_supervisor_config = get_path([CONFDIR, 'data',
+                                             'tribus.supervisor.conf'])
+    env.tribus_uwsgi_config = get_path([CONFDIR, 'data',
+                                        'tribus.uwsgi.ini'])
+    env.tribus_nginx_config = get_path([CONFDIR, 'data',
+                                        'tribus.nginx.conf'])
+
     env.debian_base_image_script = get_path([BASEDIR, 'tribus',
                                              'data', 'scripts',
                                              'debian-base-image.sh'])
@@ -79,7 +90,10 @@ def development():
                                              'tribus-base-image.sh'])
     env.tribus_django_syncdb_script = get_path([BASEDIR, 'tribus',
                                                 'data', 'scripts',
-                                                'django-syncdb.sh'])
+                                                'django-syncdb.py'])
+    env.tribus_django_runserver_script = get_path([BASEDIR, 'tribus',
+                                                   'data', 'scripts',
+                                                   'django-runserver.sh'])
 
     env.preseed_db = get_path([CONFDIR, 'data', 'preseed-db.sql'])
     env.preseed_debconf = get_path([CONFDIR, 'data', 'preseed-debconf.conf'])
@@ -97,16 +111,20 @@ def development():
                      '-D \\"%(ldap_writer)s\\" '
                      '-H \\"%(ldap_server)s\\"') % env
 
-    preseed_env = ['DEBIAN_FRONTEND=noninteractive']
-    env.preseed_env = '\n'.join('export %s' % i for i in preseed_env)
-
-    mounts = ['%(basedir)s:%(basedir)s:ro' % env]
-    env.mounts = ' '.join('--volume %s' % i for i in mounts)
-
+    preseed_env = ['DEBIAN_FRONTEND=noninteractive',
+                   'DJANGO_SETTINGS_MODULE=tribus.config.web',
+                   'PYTHONPATH=$PYTHONPATH:%(basedir)s' % env]
+    mounts = ['%(basedir)s:%(basedir)s:rw' % env]
     restart_services = ['mongodb', 'postgresql', 'redis-server', 'slapd',
-                        'uwsgi']
+                        'uwsgi', 'supervisor']
+
+    env.preseed_env = ' '.join('--env %s' % i for i in preseed_env)
+    env.mounts = ' '.join('--volume %s' % i for i in mounts)
     env.restart_services = '\n'.join('service %s restart' % i
                                      for i in restart_services)
+    env.restart_services_python = '\n'.join('subprocess.call([\'service\','
+                                            '\'%s\', \'restart\'])' % i
+                                            for i in restart_services)
 
 
 def generate_debian_base_image_i386():
@@ -147,7 +165,22 @@ def environment():
     '''
     '''
     pull_debian_base_image(env)
-    # pull_tribus_base_image(env)
+    pull_tribus_base_image(env)
+
+
+def reset_environment():
+    '''
+    '''
+    pull_debian_base_image(env)
+    pull_tribus_base_image(env)
+
+
+def update_environment():
+    '''
+    '''
+
+    pull_debian_base_image(env)
+    generate_tribus_base_image(env)
 
 
 def syncdb():

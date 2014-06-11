@@ -3,8 +3,12 @@ slapd
 ldap-utils
 redis-server
 mongodb-server
-python-xapian
 reprepro
 sudo
 uwsgi
+uwsgi-plugin-python
 nginx
+supervisor
+python-xapian
+python-setuptools
+udev

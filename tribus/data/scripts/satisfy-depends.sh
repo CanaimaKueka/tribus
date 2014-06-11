@@ -27,9 +27,6 @@
 # coreutils
 # debianutils
 
-set -x
-set -e
-
 ROOT="root"
 USER="$( id -un )"
 
@@ -49,17 +46,17 @@ DEBIAN_MIRROR="http://http.us.debian.org/debian"
 UBUNTU_MIRROR="http://archive.ubuntu.com/ubuntu"
 
 # Where are our helper programs?
-LSB_RELEASE="$( which lsb_release || true )"
-MV="$( which mv || true )"
-ECHO="$( which echo || true )"
-SU="$( which su || true )"
-SUDO="$( which sudo || true )"
+LSB_RELEASE="$( which lsb_release )"
+MV="$( which mv )"
+ECHO="$( which echo )"
+SU="$( which su )"
+SUDO="$( which sudo )"
 
 # Package Manager binaries
-APTGET="$( which apt-get || true )"
-YUM="$( which yum || true )"
-PACMAN="$( which pacman || true )"
-EMERGE="$( which emerge || true )"
+APTGET="$( which apt-get )"
+YUM="$( which yum )"
+PACMAN="$( which pacman )"
+EMERGE="$( which emerge )"
 
 # Package Manager commands and options
 APTGETCMD="env DEBIAN_FRONTEND=noninteractive ${APTGET}"
@@ -176,18 +173,10 @@ fi
 if [ "${DPKG_BASED}" != "${DPKG_BASED/${DISTRO}}" ]; then
 
     # If our dependencies are met, let's exit early
-    if [ -n "$( which fab || true )" ] && [ -n "$( which docker.io || true )" ]; then
+    if [ -n "$( which fab )" ] && [ -n "$( which docker.io )" ]; then
 
         ${ECHO} "All dependencies are satisfied."
         exit 0
-
-    fi
-
-    if [ "${USER}" != "${ROOT}" ]; then
-
-        # We need to get (temporary) sudo access for the current user
-        echo "We need your root password to verify some dependencies."
-        ${SU} ${ROOT} -c "${ECHO} \"${USER} ALL= NOPASSWD: ALL\" > /etc/sudoers.d/tmp"
 
     fi
 
@@ -326,14 +315,6 @@ elif [ "${YUM_BASED}" != "${YUM_BASED/${DISTRO}}" ]; then
 
     fi
 
-    if [ "${USER}" != "${ROOT}" ]; then
-
-        # We need to get (temporary) sudo access for the current user
-        echo "We need your root password to verify some dependencies."
-        ${SU} ${ROOT} -c "${ECHO} \"${USER} ALL= NOPASSWD: ALL\" > /etc/sudoers.d/tmp"
-
-    fi
-
     if ([ "${DISTRO}" == "fedora" ] && [ "${CODENAME}" == "shrodinger" ]) || \
         ([ "${DISTRO}" == "fedora" ] && [ "${CODENAME}" == "heisenbug" ]); then
 
@@ -358,10 +339,6 @@ elif [ "${YUM_BASED}" != "${YUM_BASED/${DISTRO}}" ]; then
 
     fi
 
-    # Revoking sudo access
-    ${SUDO} ${BASH} -c "rm -rf /etc/sudoers.d/tmp"
-
-
 elif [ "${PACMAN_BASED}" != "${PACMAN_BASED/${DISTRO}}" ]; then
 
     # If our dependencies are met, let's exit early
@@ -369,14 +346,6 @@ elif [ "${PACMAN_BASED}" != "${PACMAN_BASED/${DISTRO}}" ]; then
 
         ${ECHO} "All dependencies are satisfied."
         exit 0
-
-    fi
-
-    if [ "${USER}" != "${ROOT}" ]; then
-
-        # We need to get (temporary) sudo access for the current user
-        echo "We need your root password to verify some dependencies."
-        ${SU} ${ROOT} -c "${ECHO} \"${USER} ALL= NOPASSWD: ALL\" > /etc/sudoers.d/tmp"
 
     fi
 
@@ -403,10 +372,6 @@ elif [ "${PACMAN_BASED}" != "${PACMAN_BASED/${DISTRO}}" ]; then
 
     fi
 
-    # Revoking sudo access
-    ${SUDO} ${BASH} -c "rm -rf /etc/sudoers.d/tmp"
-
-
 elif [ "${EMERGE_BASED}" != "${EMERGE_BASED/${DISTRO}}" ]; then
 
     # If our dependencies are met, let's exit early
@@ -414,14 +379,6 @@ elif [ "${EMERGE_BASED}" != "${EMERGE_BASED/${DISTRO}}" ]; then
 
         ${ECHO} "All dependencies are satisfied."
         exit 0
-
-    fi
-
-    if [ "${USER}" != "${ROOT}" ]; then
-
-        # We need to get (temporary) sudo access for the current user
-        echo "We need your root password to verify some dependencies."
-        ${SU} ${ROOT} -c "${ECHO} \"${USER} ALL= NOPASSWD: ALL\" > /etc/sudoers.d/tmp"
 
     fi
 
@@ -448,10 +405,6 @@ elif [ "${EMERGE_BASED}" != "${EMERGE_BASED/${DISTRO}}" ]; then
         exit 1
 
     fi
-
-    # Revoking sudo access
-    ${SUDO} ${BASH} -c "rm -rf /etc/sudoers.d/tmp"
-
 
 else
 

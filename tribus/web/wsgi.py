@@ -18,25 +18,25 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import sys
-import os
-import site
+# import sys
+# import os
+# import site
 
-os.environ['DJANGO_SETTINGS_MODULE'] = 'tribus.config.web'
+# os.environ['DJANGO_SETTINGS_MODULE'] = 'tribus.config.web'
 
-base = os.path.abspath(
-    os.path.join(os.path.dirname(__file__),
-                 '..',
-                 '..',
-                 'virtualenv'))
-os.environ['PATH'] = os.path.join(
-    base,
-    'bin') + os.pathsep + os.environ['PATH']
-site.addsitedir(
-    os.path.join(base, 'lib', 'python%s' %
-                 sys.version[:3], 'site-packages'))
-sys.prefix = base
-sys.path.insert(0, base)
+# base = os.path.abspath(
+#     os.path.join(os.path.dirname(__file__),
+#                  '..',
+#                  '..',
+#                  'virtualenv'))
+# os.environ['PATH'] = os.path.join(
+#     base,
+#     'bin') + os.pathsep + os.environ['PATH']
+# site.addsitedir(
+#     os.path.join(base, 'lib', 'python%s' %
+#                  sys.version[:3], 'site-packages'))
+# sys.prefix = base
+# sys.path.insert(0, base)
 
 from django.core.wsgi import get_wsgi_application
 
