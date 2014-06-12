@@ -122,16 +122,3 @@ def django_runserver(env):
            '--name="%(tribus_runtime_container)s" '
            '%(preseed_env)s %(mounts)s %(tribus_runtime_image)s '
            'bash %(tribus_django_runserver_script)s"') % env)
-
-
-def django_stopserver(env):
-    '''
-    '''
-    docker_kill_all_containers(env)
-
-
-def django_restartserver(env):
-    '''
-    '''
-    django_stopserver(env)
-    django_runserver(env)

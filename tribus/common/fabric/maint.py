@@ -75,6 +75,7 @@ def generate_tribus_base_image(env):
            'apt-get autoclean\n'
            'apt-get clean\n'
            'find /usr -name "*.pyc" -print0 | xargs -0r rm -rf\n'
+           'find /src -name "*.pyc" -print0 | xargs -0r rm -rf\n'
            'find /var/cache/apt -type f -print0 | xargs -0r rm -rf\n'
            'find /var/lib/mongodb/ -type f -print0 | xargs -0r rm -rf\n'
            'find /var/lib/apt/lists -type f -print0 | xargs -0r rm -rf\n'

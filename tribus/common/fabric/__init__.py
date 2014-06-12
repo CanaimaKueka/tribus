@@ -30,7 +30,7 @@ import os
 import pwd
 from fabric.api import env
 from tribus import BASEDIR
-from tribus.config.base import CONFDIR
+from tribus.config.base import CONFDIR, AUTHOR, AUTHOR_EMAIL
 from tribus.config.ldap import (AUTH_LDAP_SERVER_URI,
                                 AUTH_LDAP_BIND_DN, AUTH_LDAP_BIND_PASSWORD)
 # from tribus.config.web import (WSGI_APPLICATION, STATICFILES_DIRS)
@@ -44,8 +44,7 @@ from tribus.common.fabric.maint import (pull_debian_base_image,
                                         generate_debian_base_image,
                                         generate_tribus_base_image,
                                         docker_kill_all_containers)
-from tribus.common.fabric.django import (django_restartserver,
-                                         django_runserver, django_stopserver,
+from tribus.common.fabric.django import (django_runserver,
                                          django_syncdb)
 
 logger = get_logger()
@@ -65,8 +64,7 @@ def development():
     # Docker config
     env.docker = 'docker.io'
     env.arch = get_local_arch()
-    env.docker_maintainer = ('Luis Alejandro Martínez Faneyth '
-                             '<luis@huntingbears.com.ve>')
+    env.docker_maintainer = '%s <%s>' % (AUTHOR, AUTHOR_EMAIL)
 
     env.debian_base_image = 'luisalejandro/debian-%(arch)s:wheezy' % env
     env.tribus_base_image = 'luisalejandro/tribus-%(arch)s:wheezy' % env
@@ -193,15 +191,3 @@ def runserver():
     '''
     '''
     django_runserver(env)
-
-
-def stopserver():
-    '''
-    '''
-    django_stopserver(env)
-
-
-def restartserver():
-    '''
-    '''
-    django_restartserver(env)
