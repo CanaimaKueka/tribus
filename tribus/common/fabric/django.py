@@ -53,6 +53,17 @@ def django_runserver(env):
     '''
 
     docker_kill_all_containers(env)
+    local(('sudo bash -c '
+           '"%(docker)s run -d -p 22 --name="%(tribus_runtime_container)s" '
+           '%(preseed_env)s %(mounts)s %(tribus_runtime_image)s '
+           '/usr/sbin/sshd -D"') % env)
+
+
+def django_deployserver(env):
+    '''
+    '''
+
+    docker_kill_all_containers(env)
     local(('echo "'
            'upstream uwsgi {\n'
            '\tserver\t\t\t\tunix:///var/run/tribus/uwsgi.sock;\n'

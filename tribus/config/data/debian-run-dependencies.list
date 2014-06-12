@@ -12,3 +12,4 @@ supervisor
 python-xapian
 python-setuptools
 udev
+openssh-server

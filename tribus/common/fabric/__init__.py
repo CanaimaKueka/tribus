@@ -113,16 +113,16 @@ def development():
                    'DJANGO_SETTINGS_MODULE=tribus.config.web',
                    'PYTHONPATH=$PYTHONPATH:%(basedir)s' % env]
     mounts = ['%(basedir)s:%(basedir)s:rw' % env]
-    restart_services = ['mongodb', 'postgresql', 'redis-server', 'slapd',
-                        'uwsgi', 'nginx', 'supervisor']
+    start_services = ['mongodb', 'postgresql', 'redis-server', 'slapd',
+                      'uwsgi', 'nginx', 'supervisor']
 
     env.preseed_env = ' '.join('--env %s' % i for i in preseed_env)
     env.mounts = ' '.join('--volume %s' % i for i in mounts)
-    env.restart_services = '\n'.join('service %s start' % i
-                                     for i in restart_services)
-    env.restart_services_python = '\n'.join('subprocess.call([\'service\','
-                                            '\'%s\', \'start\'])' % i
-                                            for i in restart_services)
+    env.start_services = '\n'.join('service %s start' % i
+                                   for i in start_services)
+    env.start_services_python = '\n'.join('subprocess.call([\'service\','
+                                          '\'%s\', \'start\'])' % i
+                                          for i in start_services)
 
 
 def generate_debian_base_image_i386():
