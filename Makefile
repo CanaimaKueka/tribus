@@ -57,38 +57,54 @@ generate_tribus_base_image_amd64:
 
 	@$(FAB) development generate_tribus_base_image_amd64
 
+kill_all_containers:
+
+	@$(FAB) development kill_all_containers
+
+kill_all_images:
+
+	@$(FAB) development kill_all_images
+
+kill_tribus_images:
+
+	@$(FAB) development kill_tribus_images
+
 
 # COMMON TASKS -----------------------------------------------------------------
 # ------------------------------------------------------------------------------
+
+startsshd: dependencies
+
+	@$(FAB) development startsshd
+
+stopsshd: dependencies
+
+	@$(FAB) development stopsshd
 
 environment: dependencies
 
 	@$(FAB) development environment
 
+update_environment: dependencies
+
+	@$(FAB) development update_environment
+
 runserver: dependencies
 
 	@$(FAB) development runserver
-
-stopserver: dependencies
-
-	@$(FAB) development stopserver
-
-restartserver: dependencies
-
-	@$(FAB) development restartserver
 
 syncdb: dependencies
 
 	@$(FAB) development syncdb
 
-shell: dependencies
+# shell: dependencies
 
-	@$(FAB) development shell
+# 	@$(FAB) development shell
 
-prepare: dependencies
+# prepare: dependencies
 
-	@$(FAB) development build_js
-	@$(FAB) development build_css
+# 	@$(FAB) development build_js
+# 	@$(FAB) development build_css
 
 
 # REPOSITORY TASKS ------------------------------------------------------

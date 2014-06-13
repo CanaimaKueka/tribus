@@ -5,11 +5,7 @@ redis-server
 mongodb-server
 reprepro
 sudo
-uwsgi
-uwsgi-plugin-python
-nginx
-supervisor
-python-xapian
-python-setuptools
 udev
 openssh-server
+python-xapian
+python-setuptools

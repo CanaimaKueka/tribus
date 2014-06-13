@@ -1,12 +1,12 @@
+python-dev
 libxml2-dev
 libxslt1-dev
-python-dev
-libldap2-dev
 libsasl2-dev
+libldap2-dev
 libpq-dev
-gcc
 make
 lsb-release
 git
 curl
 ca-certificates
+gcc

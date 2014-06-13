@@ -39,11 +39,14 @@ from tribus.config.pkg import (python_dependencies, debian_run_dependencies,
 from tribus.common.logger import get_logger
 from tribus.common.utils import get_path
 from tribus.common.system import get_local_arch
-from tribus.common.fabric.maint import (pull_debian_base_image,
-                                        pull_tribus_base_image,
-                                        generate_debian_base_image,
-                                        generate_tribus_base_image,
-                                        docker_kill_all_containers)
+from tribus.common.fabric.maint import (docker_pull_debian_base_image,
+                                        docker_pull_tribus_base_image,
+                                        docker_generate_debian_base_image,
+                                        docker_generate_tribus_base_image,
+                                        docker_kill_all_containers,
+                                        docker_kill_all_images,
+                                        docker_kill_tribus_images,
+                                        docker_startsshd, docker_stopsshd)
 from tribus.common.fabric.django import (django_runserver,
                                          django_syncdb)
 
@@ -88,7 +91,7 @@ def development():
                                              'tribus-base-image.sh'])
     env.tribus_django_syncdb_script = get_path([BASEDIR, 'tribus',
                                                 'data', 'scripts',
-                                                'django-syncdb.py'])
+                                                'django-syncdb.sh'])
     env.tribus_django_runserver_script = get_path([BASEDIR, 'tribus',
                                                    'data', 'scripts',
                                                    'django-runserver.sh'])
@@ -111,32 +114,39 @@ def development():
 
     preseed_env = ['DEBIAN_FRONTEND=noninteractive',
                    'DJANGO_SETTINGS_MODULE=tribus.config.web',
-                   'PYTHONPATH=$PYTHONPATH:%(basedir)s' % env]
+                   'PYTHONPATH=%(basedir)s' % env]
     mounts = ['%(basedir)s:%(basedir)s:rw' % env]
-    start_services = ['mongodb', 'postgresql', 'redis-server', 'slapd',
-                      'uwsgi', 'nginx', 'supervisor']
+    restart_services = ['mongodb', 'postgresql', 'redis-server', 'slapd']
 
-    env.preseed_env = ' '.join('--env %s' % i for i in preseed_env)
+    env.preseed_env = '\n'.join('export %s' % i for i in preseed_env)
     env.mounts = ' '.join('--volume %s' % i for i in mounts)
-    env.start_services = '\n'.join('service %s start' % i
-                                   for i in start_services)
-    env.start_services_python = '\n'.join('subprocess.call([\'service\','
-                                          '\'%s\', \'start\'])' % i
-                                          for i in start_services)
+    env.restart_services = '\n'.join('service %s restart' % i
+                                     for i in restart_services)
+
+    env.clean = ('find / -name \\"*.pyc\\" -print0 | xargs -0r rm -rf\n'
+                 'find /var/cache/apt -type f -print0 | xargs -0r rm -rf\n'
+                 'find /var/lib/mongodb -type f -print0 | xargs -0r rm -rf\n'
+                 'find /var/lib/apt/lists -type f -print0 | xargs -0r rm -rf\n'
+                 'find /usr/share/man -type f -print0 | xargs -0r rm -rf\n'
+                 'find /usr/share/doc -type f -print0 | xargs -0r rm -rf\n'
+                 'find /usr/share/locale -type f -print0 | xargs -0r rm -rf\n'
+                 'find /var/log -type f -print0 | xargs -0r rm -rf\n'
+                 'find /var/tmp -type f -print0 | xargs -0r rm -rf\n'
+                 'find /tmp -type f -print0 | xargs -0r rm -rf\n')
 
 
 def generate_debian_base_image_i386():
     '''
     '''
     env.arch = 'i386'
-    generate_debian_base_image(env)
+    docker_generate_debian_base_image(env)
 
 
 def generate_debian_base_image_amd64():
     '''
     '''
     env.arch = 'amd64'
-    generate_debian_base_image(env)
+    docker_generate_debian_base_image(env)
 
 
 def generate_tribus_base_image_i386():
@@ -145,8 +155,8 @@ def generate_tribus_base_image_i386():
     env.arch = 'i386'
     env.debian_base_image = 'luisalejandro/debian-i386:wheezy'
     env.tribus_base_image = 'luisalejandro/tribus-i386:wheezy'
-    pull_debian_base_image(env)
-    generate_tribus_base_image(env)
+    docker_pull_debian_base_image(env)
+    docker_generate_tribus_base_image(env)
 
 
 def generate_tribus_base_image_amd64():
@@ -155,30 +165,54 @@ def generate_tribus_base_image_amd64():
     env.arch = 'amd64'
     env.debian_base_image = 'luisalejandro/debian-amd64:wheezy'
     env.tribus_base_image = 'luisalejandro/tribus-amd64:wheezy'
-    pull_debian_base_image(env)
-    generate_tribus_base_image(env)
+    docker_pull_debian_base_image(env)
+    docker_generate_tribus_base_image(env)
+
+
+def kill_all_containers():
+    '''
+    '''
+    docker_kill_all_containers(env)
+
+
+def kill_all_images():
+    '''
+    '''
+    docker_kill_all_images(env)
+
+
+def kill_tribus_images():
+    '''
+    '''
+    docker_kill_tribus_images(env)
+
+
+def startsshd():
+    '''
+    '''
+    docker_startsshd(env)
+
+
+def stopsshd():
+    '''
+    '''
+    docker_stopsshd(env)
 
 
 def environment():
     '''
     '''
-    pull_debian_base_image(env)
-    pull_tribus_base_image(env)
-
-
-def reset_environment():
-    '''
-    '''
-    pull_debian_base_image(env)
-    pull_tribus_base_image(env)
+    docker_pull_debian_base_image(env)
+    docker_pull_tribus_base_image(env)
 
 
 def update_environment():
     '''
     '''
-
-    pull_debian_base_image(env)
-    generate_tribus_base_image(env)
+    docker_kill_all_containers(env)
+    docker_kill_tribus_images(env)
+    docker_pull_debian_base_image(env)
+    docker_pull_tribus_base_image(env)
 
 
 def syncdb():

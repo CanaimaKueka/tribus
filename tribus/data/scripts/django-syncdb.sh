@@ -7,9 +7,8 @@ service mongodb restart
 service postgresql restart
 service redis-server restart
 service slapd restart
-#python manage.py celeryd -c 1 --beat -l INFO >/dev/null 2>&1
-#python manage.py celery beat -s celerybeat-schedule >/dev/null 2>&1
-python manage.py runserver 0.0.0.0:8000
+python manage.py syncdb --noinput
+python manage.py migrate --noinput
 find / -name "*.pyc" -print0 | xargs -0r rm -rf
 find /var/cache/apt -type f -print0 | xargs -0r rm -rf
 find /var/lib/mongodb -type f -print0 | xargs -0r rm -rf
