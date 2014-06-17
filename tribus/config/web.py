@@ -28,7 +28,6 @@ try:
         "update_cache": {
             "task": "tribus.web.cloud.tasks.update_cache",
             "schedule": crontab(minute=0, hour=0), # A las 12 am
-            #"schedule": crontab(), # Cada minuto
             "args": (),
         }
     }
@@ -251,7 +250,7 @@ CACHES = {
         'LOCATION': 'localhost:6379:1',
         'OPTIONS': {
             'PARSER_CLASS': 'redis.connection.HiredisParser',
-            "CLIENT_CLASS": "redis_cache.client.DefaultClient",
+            'CLIENT_CLASS': 'redis_cache.client.DefaultClient',
         },
     },
 }

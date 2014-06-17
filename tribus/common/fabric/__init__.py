@@ -33,7 +33,7 @@ from tribus import BASEDIR
 from tribus.config.base import CONFDIR, AUTHOR, AUTHOR_EMAIL
 from tribus.config.ldap import (AUTH_LDAP_SERVER_URI,
                                 AUTH_LDAP_BIND_DN, AUTH_LDAP_BIND_PASSWORD)
-# from tribus.config.web import (WSGI_APPLICATION, STATICFILES_DIRS)
+from tribus.config.switches import SWITCHES_CONFIGURATION
 from tribus.config.pkg import (python_dependencies, debian_run_dependencies,
                                debian_build_dependencies)
 from tribus.common.logger import get_logger
@@ -46,7 +46,10 @@ from tribus.common.fabric.maint import (docker_pull_debian_base_image,
                                         docker_kill_all_containers,
                                         docker_kill_all_images,
                                         docker_kill_tribus_images,
-                                        docker_startsshd, docker_stopsshd)
+                                        docker_stop_container,
+                                        docker_login_container,
+                                        docker_reset_container,
+                                        docker_update_container)
 from tribus.common.fabric.django import (django_runserver,
                                          django_syncdb)
 
@@ -95,6 +98,9 @@ def development():
     env.tribus_django_runserver_script = get_path([BASEDIR, 'tribus',
                                                    'data', 'scripts',
                                                    'django-runserver.sh'])
+    env.tribus_start_container_script = get_path([BASEDIR, 'tribus',
+                                                  'data', 'scripts',
+                                                  'start-container.sh'])
 
     env.preseed_db = get_path([CONFDIR, 'data', 'preseed-db.sql'])
     env.preseed_debconf = get_path([CONFDIR, 'data', 'preseed-debconf.conf'])
@@ -116,12 +122,15 @@ def development():
                    'DJANGO_SETTINGS_MODULE=tribus.config.web',
                    'PYTHONPATH=%(basedir)s' % env]
     mounts = ['%(basedir)s:%(basedir)s:rw' % env]
-    restart_services = ['mongodb', 'postgresql', 'redis-server', 'slapd']
+    start_services = ['mongodb', 'postgresql', 'redis-server', 'slapd', 'ssh']
 
     env.preseed_env = '\n'.join('export %s' % i for i in preseed_env)
     env.mounts = ' '.join('--volume %s' % i for i in mounts)
-    env.restart_services = '\n'.join('service %s restart' % i
-                                     for i in restart_services)
+    env.start_services = '\n'.join('service %s start' % i
+                                   for i in start_services)
+    env.waffle_switches = '\n'.join(('python manage.py switch '
+                                     '%s %s --create') % (i, j[1])
+                                    for i, j in SWITCHES_CONFIGURATION.items())
 
     env.clean = ('find / -name \\"*.pyc\\" -print0 | xargs -0r rm -rf\n'
                  'find /var/cache/apt -type f -print0 | xargs -0r rm -rf\n'
@@ -187,18 +196,6 @@ def kill_tribus_images():
     docker_kill_tribus_images(env)
 
 
-def startsshd():
-    '''
-    '''
-    docker_startsshd(env)
-
-
-def stopsshd():
-    '''
-    '''
-    docker_stopsshd(env)
-
-
 def environment():
     '''
     '''
@@ -206,22 +203,37 @@ def environment():
     docker_pull_tribus_base_image(env)
 
 
-def update_environment():
-    '''
-    '''
-    docker_kill_all_containers(env)
-    docker_kill_tribus_images(env)
-    docker_pull_debian_base_image(env)
-    docker_pull_tribus_base_image(env)
-
-
-def syncdb():
-    '''
-    '''
-    django_syncdb(env)
-
-
-def runserver():
+def start_container():
     '''
     '''
     django_runserver(env)
+
+
+def stop_container():
+    '''
+    '''
+    docker_stop_container(env)
+
+
+def login_container():
+    '''
+    '''
+    docker_login_container(env)
+
+
+def reset_container():
+    '''
+    '''
+    docker_reset_container(env)
+
+
+def update_container():
+    '''
+    '''
+    docker_update_container(env)
+
+
+def sync_container():
+    '''
+    '''
+    django_syncdb(env)

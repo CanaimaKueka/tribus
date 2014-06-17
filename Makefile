@@ -18,7 +18,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-
 # COMMON VARIABLES & CONFIG ----------------------------------------------------
 
 SHELL = sh -e
@@ -73,38 +72,33 @@ kill_tribus_images:
 # COMMON TASKS -----------------------------------------------------------------
 # ------------------------------------------------------------------------------
 
-startsshd: dependencies
-
-	@$(FAB) development startsshd
-
-stopsshd: dependencies
-
-	@$(FAB) development stopsshd
-
 environment: dependencies
 
 	@$(FAB) development environment
 
-update_environment: dependencies
+start: dependencies
 
-	@$(FAB) development update_environment
+	@$(FAB) development start_container
 
-runserver: dependencies
+stop: dependencies
 
-	@$(FAB) development runserver
+	@$(FAB) development stop_container
 
-syncdb: dependencies
+login: dependencies
 
-	@$(FAB) development syncdb
+	@$(FAB) development login_container
 
-# shell: dependencies
+reset: dependencies
 
-# 	@$(FAB) development shell
+	@$(FAB) development reset_container
 
-# prepare: dependencies
+update: dependencies
 
-# 	@$(FAB) development build_js
-# 	@$(FAB) development build_css
+	@$(FAB) development update_container
+
+sync: dependencies
+
+	@$(FAB) development sync_container
 
 
 # REPOSITORY TASKS ------------------------------------------------------
@@ -285,3 +279,5 @@ sdist: dependencies
 report_setup_data: dependencies
 
 	@$(FAB) development report_setup_data
+
+.PHONY: environment

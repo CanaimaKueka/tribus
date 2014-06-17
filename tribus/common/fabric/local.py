@@ -36,69 +36,69 @@ from tribus.config.pkg import (
     debian_maint_dependencies, f_workenv_preseed, f_sql_preseed,
     f_users_ldif, f_python_dependencies)
 from tribus.common.logger import get_logger
-from tribus.config.waffle_cfg import SWITCHES_CONFIGURATION
+from tribus.config.switches import SWITCHES_CONFIGURATION
 
 logger = get_logger()
 
 
-def development():
-    env.user = pwd.getpwuid(os.getuid()).pw_name
-    env.root = 'root'
-    env.environment = 'development'
-    env.hosts = ['localhost']
-    env.basedir = BASEDIR
-    env.virtualenv_dir = os.path.join(env.basedir, 'virtualenv')
-    env.virtualenv_cache = os.path.join(BASEDIR, 'virtualenv_cache')
-    env.virtualenv_site_dir = os.path.join(
-        env.virtualenv_dir, 'lib', 'python%s' %
-        sys.version[:3], 'site-packages')
-    env.virtualenv_args = ' '.join(['--clear', '--no-site-packages',
-                                    '--setuptools', '--unzip-setuptools'])
-    env.virtualenv_activate = os.path.join(
-        env.virtualenv_dir, 'bin', 'activate')
-    env.settings = 'tribus.config.web'
-    env.sudo_prompt = 'Executed'
-    env.f_python_dependencies = f_python_dependencies
-    env.xapian_destdir = os.path.join(
-        env.virtualenv_dir, 'lib', 'python%s' %
-        sys.version[:3], 'site-packages', 'xapian')
-    env.xapian_init = os.path.join(
-        os.path.sep,
-        'usr',
-        'share',
-        'pyshared',
-        'xapian',
-        '__init__.py')
-    env.xapian_so = os.path.join(
-        os.path.sep,
-        'usr',
-        'lib',
-        'python%s' % sys.version[:3],
-        'dist-packages',
-        'xapian',
-        '_xapian.so')
-    env.reprepro_dir = os.path.join(BASEDIR, 'test_repo')
-    env.sample_packages_dir = os.path.join(BASEDIR, 'package_samples')
-    env.distributions_path = os.path.join(BASEDIR, 'tribus', 'config',
-                                          'data', 'dists-template')
-    env.selected_packages = os.path.join(BASEDIR, 'tribus', 'config',
-                                         'data', 'selected_packages.list')
+# def development():
+#     env.user = pwd.getpwuid(os.getuid()).pw_name
+#     env.root = 'root'
+#     env.environment = 'development'
+#     env.hosts = ['localhost']
+#     env.basedir = BASEDIR
+#     env.virtualenv_dir = os.path.join(env.basedir, 'virtualenv')
+#     env.virtualenv_cache = os.path.join(BASEDIR, 'virtualenv_cache')
+#     env.virtualenv_site_dir = os.path.join(
+#         env.virtualenv_dir, 'lib', 'python%s' %
+#         sys.version[:3], 'site-packages')
+#     env.virtualenv_args = ' '.join(['--clear', '--no-site-packages',
+#                                     '--setuptools', '--unzip-setuptools'])
+#     env.virtualenv_activate = os.path.join(
+#         env.virtualenv_dir, 'bin', 'activate')
+#     env.settings = 'tribus.config.web'
+#     env.sudo_prompt = 'Executed'
+#     env.f_python_dependencies = f_python_dependencies
+#     env.xapian_destdir = os.path.join(
+#         env.virtualenv_dir, 'lib', 'python%s' %
+#         sys.version[:3], 'site-packages', 'xapian')
+#     env.xapian_init = os.path.join(
+#         os.path.sep,
+#         'usr',
+#         'share',
+#         'pyshared',
+#         'xapian',
+#         '__init__.py')
+#     env.xapian_so = os.path.join(
+#         os.path.sep,
+#         'usr',
+#         'lib',
+#         'python%s' % sys.version[:3],
+#         'dist-packages',
+#         'xapian',
+#         '_xapian.so')
+#     env.reprepro_dir = os.path.join(BASEDIR, 'test_repo')
+#     env.sample_packages_dir = os.path.join(BASEDIR, 'package_samples')
+#     env.distributions_path = os.path.join(BASEDIR, 'tribus', 'config',
+#                                           'data', 'dists-template')
+#     env.selected_packages = os.path.join(BASEDIR, 'tribus', 'config',
+#                                          'data', 'selected_packages.list')
 
 
-def environment():
-    configure_sudo()
-    preseed_packages()
-    install_packages(debian_build_dependencies)
-    install_packages(debian_maint_dependencies)
-    install_packages(debian_run_dependencies)
-    drop_mongo()
-    configure_postgres()
-    populate_ldap()
-    create_virtualenv()
-    include_xapian()
-    update_virtualenv()
-    configure_django()
-    deconfigure_sudo()
+# def environment():
+#     configure_sudo()
+#     preseed_packages()
+#     install_packages(debian_build_dependencies)
+#     install_packages(debian_maint_dependencies)
+#     install_packages(debian_run_dependencies)
+#     drop_mongo()
+#     configure_postgres()
+#     populate_ldap()
+#     create_virtualenv()
+#     include_xapian()
+#     update_virtualenv()
+#     configure_django()
+#     deconfigure_sudo()
 
 # REPOSITORY TASKS ------------------------------------------------------------
 
@@ -222,17 +222,17 @@ def resetdb():
 # -----------------------------------------------------------------------------
 # WAFFLE SWITCHES
 
-def register_existent_modules():
-    '''
-    Registra switches para los modulos existentes en tribus
-    * Nube de aplicaciones
-    * Perfiles de usuarios
-    '''
+# def register_existent_modules():
+#     '''
+#     Registra switches para los modulos existentes en tribus
+#     * Nube de aplicaciones
+#     * Perfiles de usuarios
+#     '''
 
-    with cd('%(basedir)s' % env):
-        for switch_name, switch_data in SWITCHES_CONFIGURATION.items():
-            local('python manage.py switch %s %s --create'
-                  % (switch_name, switch_data[1]), capture=False)
+#     with cd('%(basedir)s' % env):
+#         for switch_name, switch_data in SWITCHES_CONFIGURATION.items():
+#             local('python manage.py switch %s %s --create'
+#                   % (switch_name, switch_data[1]), capture=False)
 
 
 # -----------------------------------------------------------------------------

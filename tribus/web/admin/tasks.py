@@ -1,6 +1,6 @@
 from celery import task
 from tribus import BASEDIR
-from tribus.config.waffle_cfg import SWITCHES_CONFIGURATION
+from tribus.config.switches import SWITCHES_CONFIGURATION
 from fabric.api import local, cd
 
 @task

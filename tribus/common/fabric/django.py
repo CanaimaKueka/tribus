@@ -19,39 +19,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from fabric.api import local, run
-from tribus.common.fabric.maint import (docker_kill_all_containers,
-                                        docker_startsshd)
-
-
-# def django_syncdb(env):
-#     '''
-#     '''
-
-#     docker_startsshd(env)
-#     local(('echo "#!/usr/bin/env python\n'
-#            'import subprocess\n'
-#            'from django.core import management\n'
-#            'from django.contrib.auth.models import User\n'
-#            'from tribus.web.registration.ldap.utils import create_ldap_user\n'
-#            '%(restart_services_python)s\n'
-#            'management.call_command(\'syncdb\', interactive=False)\n'
-#            'management.call_command(\'migrate\', interactive=False)\n'
-#            'su_data = [\'tribus\', \'tribus@localhost.com\', \'tribus\']\n'
-#            'su = User.objects.create_superuser(*su_data)\n'
-#            'create_ldap_user(su)\n'
-#            '" > %(tribus_django_syncdb_script)s') % env, capture=False)
-#     local(('sudo bash -c '
-#            '"%(docker)s run -it --name=%(tribus_runtime_container)s '
-#            '%(mounts)s %(tribus_runtime_image)s '
-#            'python %(tribus_django_syncdb_script)s"') % env)
-#     local(('sudo bash -c '
-#            '"%(docker)s commit %(tribus_runtime_container)s '
-#            '%(tribus_runtime_image)s"') % env)
+from tribus.common.fabric.maint import docker_check_container
 
 
 def django_syncdb(env):
     '''
     '''
+
+    docker_check_container(env)
 
     env.host_string = "127.0.0.1"
     env.user = 'root'
@@ -61,12 +36,12 @@ def django_syncdb(env):
     local(('echo "#!/usr/bin/env bash\n'
            'cd %(basedir)s\n'
            '%(preseed_env)s\n'
-           '%(restart_services)s\n'
+           'python manage.py celery purge\n'
+           '%(waffle_switches)s\n'
            'python manage.py syncdb --noinput\n'
            'python manage.py migrate --noinput\n'
-           '%(clean)s\n'
            'exit 0'
-           '" > %(tribus_django_syncdb_script)s') % env)
+           '" > %(tribus_django_syncdb_script)s') % env, capture=False)
     run(('bash %(tribus_django_syncdb_script)s') % env)
 
 
@@ -74,6 +49,8 @@ def django_runserver(env):
     '''
     '''
 
+    docker_check_container(env)
+
     env.host_string = "127.0.0.1"
     env.user = 'root'
     env.port = '22222'
@@ -82,13 +59,11 @@ def django_runserver(env):
     local(('echo "#!/usr/bin/env bash\n'
            'cd %(basedir)s\n'
            '%(preseed_env)s\n'
-           '%(restart_services)s\n'
-           '#python manage.py celeryd -c 1 --beat -l INFO >/dev/null 2>&1\n'
-           '#python manage.py celery beat -s celerybeat-schedule >/dev/null 2>&1\n'
+           'python manage.py celeryd -c 1 --beat -l INFO &\n'
+           'python manage.py celery beat -s celerybeat-schedule &\n'
            'python manage.py runserver 0.0.0.0:8000\n'
-           '%(clean)s\n'
            'exit 0'
-           '" > %(tribus_django_runserver_script)s') % env)
+           '" > %(tribus_django_runserver_script)s') % env, capture=False)
     run(('bash %(tribus_django_runserver_script)s') % env)
 
 
@@ -157,7 +132,7 @@ def django_runserver(env):
 #            'ln -fs %(tribus_nginx_config)s /etc/nginx/sites-enabled/\n'
 #            'ln -fs %(tribus_uwsgi_config)s /etc/uwsgi/apps-enabled/\n'
 #            'ln -fs %(tribus_supervisor_config)s /etc/supervisor/conf.d/\n'
-#            '%(restart_services)s\n'
+#            '%(start_services)s\n'
 #            'sleep 1200\n'
 #            'exit 0'
 #            '" > %(tribus_django_runserver_script)s') % env, capture=False)

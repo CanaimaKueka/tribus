@@ -9,3 +9,5 @@ udev
 openssh-server
 python-xapian
 python-setuptools
+libxml2
+libxslt1.1

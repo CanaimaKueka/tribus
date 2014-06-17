@@ -7,7 +7,7 @@
 # - Estado por defecto del switch
 
 SWITCHES_CONFIGURATION = {
-    'cloud':('Package cloud', "on"),
+    'cloud': ('Package cloud', "on"),
     'profile': ('User profiles', "on"),
-    'admin_first_time': ("Admin's first time configuration", "off") 
+    'admin_first_time': ("Admin's first time configuration", "off")
 }

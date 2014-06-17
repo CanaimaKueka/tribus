@@ -88,7 +88,6 @@ class SetupTesting(TestSuite):
         self.test_runner.setup_test_environment()
         self.old_config = self.test_runner.setup_databases()
 
-
     def flake8_report(self):
         """
         Outputs flake8 report.
@@ -98,8 +97,7 @@ class SetupTesting(TestSuite):
         pys = find_files(path=base, pattern='*.py')
         flake8_style = get_style_guide()
         report = flake8_style.check_files(pys)
-        exit_code = print_report(report, flake8_style)
-
+        print_report(report, flake8_style)
 
     def pep257_report(self):
         """
@@ -115,7 +113,6 @@ class SetupTesting(TestSuite):
                 log.info(r)
         else:
             log.info("\nNo errors found!")
-
 
     def coverage_report(self):
         """
@@ -140,7 +137,6 @@ class SetupTesting(TestSuite):
             except CoverallsException as e:
                 log.error("Coveralls Exception: %s" % e)
 
-
     def build_tests(self):
         """
         Build tests for inclusion in suite from resolved packages.
@@ -155,7 +151,6 @@ class SetupTesting(TestSuite):
         tests.append(build_suite(app))
 
         return tests
-
 
     def configure(self):
         """
@@ -187,8 +182,8 @@ class SetupTesting(TestSuite):
         self.test_runner.teardown_databases(self.old_config)
         self.test_runner.teardown_test_environment()
 
-        #imprime informe para correccion de errores
-        # self.coverage_report()
-        # self.flake8_report()
-        # self.pep257_report()
+        self.coverage_report()
+        self.flake8_report()
+        self.pep257_report()
+
         return result
