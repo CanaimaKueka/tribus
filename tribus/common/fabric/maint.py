@@ -135,8 +135,8 @@ def docker_pull_tribus_base_image(env):
     local(('sudo bash -c '
            '"%(docker)s pull %(tribus_base_image)s"') % env, capture=False)
     local(('sudo bash -c '
-           '"%(docker)s run -it --name="%(tribus_runtime_container)s" '
-           '%(tribus_base_image)s" true') % env, capture=False)
+           '"%(docker)s run -it --name %(tribus_runtime_container)s '
+           '%(tribus_base_image)s true"') % env, capture=False)
     docker_stop_container(env)
 
 
@@ -226,6 +226,6 @@ def docker_reset_container(env):
 
     docker_stop_container(env)
     local(('sudo bash -c '
-           '"%(docker)s run -it --name="%(tribus_runtime_container)s" '
-           '%(tribus_base_image)s" true') % env, capture=False)
+           '"%(docker)s run -it --name %(tribus_runtime_container)s '
+           '%(tribus_base_image)s true"') % env, capture=False)
     docker_stop_container(env)
