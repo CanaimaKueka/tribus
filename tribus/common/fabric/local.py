@@ -19,26 +19,26 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import os
-import pwd
-import sys
-import site
-import urllib
-# import lsb_release
-from fabric.api import local, env, settings, cd
-from tribus import BASEDIR
-from tribus.config.base import PACKAGECACHE
-from tribus.config.ldap import (
-    AUTH_LDAP_SERVER_URI, AUTH_LDAP_BASE, AUTH_LDAP_BIND_DN,
-    AUTH_LDAP_BIND_PASSWORD)
-from tribus.config.pkg import (
-    debian_run_dependencies, debian_build_dependencies,
-    debian_maint_dependencies, f_workenv_preseed, f_sql_preseed,
-    f_users_ldif, f_python_dependencies)
-from tribus.common.logger import get_logger
-from tribus.config.switches import SWITCHES_CONFIGURATION
+# import os
+# import pwd
+# import sys
+# import site
+# import urllib
+# # import lsb_release
+# from fabric.api import local, env, settings, cd
+# from tribus import BASEDIR
+# from tribus.config.base import PACKAGECACHE
+# from tribus.config.ldap import (
+#     AUTH_LDAP_SERVER_URI, AUTH_LDAP_BASE, AUTH_LDAP_BIND_DN,
+#     AUTH_LDAP_BIND_PASSWORD)
+# from tribus.config.pkg import (
+#     debian_run_dependencies, debian_build_dependencies,
+#     debian_maint_dependencies, f_workenv_preseed, f_sql_preseed,
+#     f_users_ldif, f_python_dependencies)
+# from tribus.common.logger import get_logger
+# from tribus.config.switches import SWITCHES_CONFIGURATION
 
-logger = get_logger()
+# logger = get_logger()
 
 
 # def development():
@@ -103,121 +103,121 @@ logger = get_logger()
 # REPOSITORY TASKS ------------------------------------------------------------
 
 
-def install_repository():
-    '''
-    Crea un repositorio de paquetes y lo inicializa.
-    '''
+# def install_repository():
+#     '''
+#     Crea un repositorio de paquetes y lo inicializa.
+#     '''
 
-    py_activate_virtualenv()
-    from tribus.common.reprepro import create_repository
-    create_repository(env.reprepro_dir, env.distributions_path)
-
-
-def select_sample_packages():
-    '''
-    Selecciona una muestra de paquetes.
-    '''
-
-    py_activate_virtualenv()
-    from tribus.common.repository import init_sample_packages
-    from tribus.config.pkgrecorder import CANAIMA_ROOT, SAMPLES_DIR
-    init_sample_packages(CANAIMA_ROOT, SAMPLES_DIR)
+#     py_activate_virtualenv()
+#     from tribus.common.reprepro import create_repository
+#     create_repository(env.reprepro_dir, env.distributions_path)
 
 
-def get_sample_packages():
-    '''
-    Descarga la muestra de paquetes
-    '''
+# def select_sample_packages():
+#     '''
+#     Selecciona una muestra de paquetes.
+#     '''
 
-    py_activate_virtualenv()
-    from tribus.common.repository import download_sample_packages
-    from tribus.config.pkgrecorder import CANAIMA_ROOT, LOCAL_ROOT, SAMPLES_DIR
-    download_sample_packages(CANAIMA_ROOT, SAMPLES_DIR)
-    urllib.urlretrieve(os.path.join(CANAIMA_ROOT, "distributions"),
-                       os.path.join(LOCAL_ROOT, "distributions"))
+#     py_activate_virtualenv()
+#     from tribus.common.repository import init_sample_packages
+#     from tribus.config.pkgrecorder import CANAIMA_ROOT, SAMPLES_DIR
+#     init_sample_packages(CANAIMA_ROOT, SAMPLES_DIR)
 
 
-def get_selected():
-    py_activate_virtualenv()
-    from tribus.common.repository import get_selected_packages
-    from tribus.config.pkgrecorder import CANAIMA_ROOT, SAMPLES_DIR
-    get_selected_packages(CANAIMA_ROOT, SAMPLES_DIR, env.selected_packages)
+# def get_sample_packages():
+#     '''
+#     Descarga la muestra de paquetes
+#     '''
+
+#     py_activate_virtualenv()
+#     from tribus.common.repository import download_sample_packages
+#     from tribus.config.pkgrecorder import CANAIMA_ROOT, LOCAL_ROOT, SAMPLES_DIR
+#     download_sample_packages(CANAIMA_ROOT, SAMPLES_DIR)
+#     urllib.urlretrieve(os.path.join(CANAIMA_ROOT, "distributions"),
+#                        os.path.join(LOCAL_ROOT, "distributions"))
 
 
-def index_sample_packages():
-    '''
-    Indexa los paquetes descargados en el repositorio.
-    '''
-
-    from tribus.common.utils import list_items, find_files
-    from tribus.common.reprepro import include_deb
-    dirs = [os.path.dirname(f)
-            for f in find_files(env.sample_packages_dir, 'list')]
-    dists = filter(None, list_items(env.sample_packages_dir, dirs=True, files=False))
-    with cd('%(reprepro_dir)s' % env):
-        for directory in dirs:
-            # No se me ocurre una mejor forma (dinamica) de hacer esto
-            dist = [dist_name for dist_name in dists if dist_name in directory][0]
-            results = [each for each in os.listdir(directory) if each.endswith('.deb')]
-            if results:
-                include_deb(env.reprepro_dir, dist, directory)
-            else:
-                logger.info('There are no packages in %s' % directory)
+# def get_selected():
+#     py_activate_virtualenv()
+#     from tribus.common.repository import get_selected_packages
+#     from tribus.config.pkgrecorder import CANAIMA_ROOT, SAMPLES_DIR
+#     get_selected_packages(CANAIMA_ROOT, SAMPLES_DIR, env.selected_packages)
 
 
-def index_selected():
-    from tribus.common.utils import list_items, find_files
-    from tribus.common.reprepro import include_deb
-    from tribus.config.pkgrecorder import LOCAL_ROOT, SAMPLES_DIR
-    for dist in list_items(SAMPLES_DIR, True, False):
-        for comp in list_items(os.path.join(SAMPLES_DIR, dist), True, False):
-            for sample in find_files(os.path.join(SAMPLES_DIR, dist, comp)):
-                with cd('%(reprepro_dir)s' % env):
-                    try:
-                        include_deb(LOCAL_ROOT, dist, comp, sample)
-                    except:
-                        logger.info('There are no packages here!')
+# def index_sample_packages():
+#     '''
+#     Indexa los paquetes descargados en el repositorio.
+#     '''
+
+#     from tribus.common.utils import list_items, find_files
+#     from tribus.common.reprepro import include_deb
+#     dirs = [os.path.dirname(f)
+#             for f in find_files(env.sample_packages_dir, 'list')]
+#     dists = filter(None, list_items(env.sample_packages_dir, dirs=True, files=False))
+#     with cd('%(reprepro_dir)s' % env):
+#         for directory in dirs:
+#             # No se me ocurre una mejor forma (dinamica) de hacer esto
+#             dist = [dist_name for dist_name in dists if dist_name in directory][0]
+#             results = [each for each in os.listdir(directory) if each.endswith('.deb')]
+#             if results:
+#                 include_deb(env.reprepro_dir, dist, directory)
+#             else:
+#                 logger.info('There are no packages in %s' % directory)
 
 
-def wipe_repo():
-    from tribus.common.reprepro import reset_repository
-    reset_repository(env.reprepro_dir)
+# def index_selected():
+#     from tribus.common.utils import list_items, find_files
+#     from tribus.common.reprepro import include_deb
+#     from tribus.config.pkgrecorder import LOCAL_ROOT, SAMPLES_DIR
+#     for dist in list_items(SAMPLES_DIR, True, False):
+#         for comp in list_items(os.path.join(SAMPLES_DIR, dist), True, False):
+#             for sample in find_files(os.path.join(SAMPLES_DIR, dist, comp)):
+#                 with cd('%(reprepro_dir)s' % env):
+#                     try:
+#                         include_deb(LOCAL_ROOT, dist, comp, sample)
+#                     except:
+#                         logger.info('There are no packages here!')
 
 
-# -----------------------------------------------------------------------------
-
-# TRIBUS DATABASE TASKS -------------------------------------------------------
-
-def filldb_from_local():
-    py_activate_virtualenv()
-    from tribus.common.recorder import fill_db_from_cache, create_cache
-    from tribus.config.pkgrecorder import LOCAL_ROOT
-    create_cache(LOCAL_ROOT, PACKAGECACHE)
-    fill_db_from_cache(PACKAGECACHE)
+# def wipe_repo():
+#     from tribus.common.reprepro import reset_repository
+#     reset_repository(env.reprepro_dir)
 
 
-def create_cache_from_remote():
-    py_activate_virtualenv()
-    from tribus.common.recorder import create_cache
-    from tribus.config.pkgrecorder import CANAIMA_ROOT
-    create_cache(CANAIMA_ROOT, PACKAGECACHE)
+# # -----------------------------------------------------------------------------
+
+# # TRIBUS DATABASE TASKS -------------------------------------------------------
+
+# def filldb_from_local():
+#     py_activate_virtualenv()
+#     from tribus.common.recorder import fill_db_from_cache, create_cache
+#     from tribus.config.pkgrecorder import LOCAL_ROOT
+#     create_cache(LOCAL_ROOT, PACKAGECACHE)
+#     fill_db_from_cache(PACKAGECACHE)
 
 
-def filldb_from_remote():
-    py_activate_virtualenv()
-    from tribus.common.recorder import fill_db_from_cache
-    fill_db_from_cache(PACKAGECACHE)
+# def create_cache_from_remote():
+#     py_activate_virtualenv()
+#     from tribus.common.recorder import create_cache
+#     from tribus.config.pkgrecorder import CANAIMA_ROOT
+#     create_cache(CANAIMA_ROOT, PACKAGECACHE)
 
 
-def resetdb():
-    configure_sudo()
-    drop_mongo()
-    configure_postgres()
-    populate_ldap()
-    configure_django()
-    rebuild_index()
-    register_existent_modules()
-    deconfigure_sudo()
+# def filldb_from_remote():
+#     py_activate_virtualenv()
+#     from tribus.common.recorder import fill_db_from_cache
+#     fill_db_from_cache(PACKAGECACHE)
+
+
+# def resetdb():
+#     configure_sudo()
+#     drop_mongo()
+#     configure_postgres()
+#     populate_ldap()
+#     configure_django()
+#     rebuild_index()
+#     register_existent_modules()
+#     deconfigure_sudo()
 
 # -----------------------------------------------------------------------------
 # WAFFLE SWITCHES
@@ -238,21 +238,21 @@ def resetdb():
 # -----------------------------------------------------------------------------
 
 
-def rebuild_index():
-    with cd('%(basedir)s' % env):
-        with settings(command='. %(virtualenv_activate)s;' % env):
-            local(
-                '%(command)s python manage.py rebuild_index \
---noinput --verbosity 3 --traceback' %
-                env, capture=False)
+# def rebuild_index():
+#     with cd('%(basedir)s' % env):
+#         with settings(command='. %(virtualenv_activate)s;' % env):
+#             local(
+#                 '%(command)s python manage.py rebuild_index \
+# --noinput --verbosity 3 --traceback' %
+#                 env, capture=False)
 
 
-def clean_tasks():
-    with cd('%(basedir)s' % env):
-        with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python manage.py celery purge' %
-                #'%(command)s celery purge -f -A tribus --app=tribus.config.celery_cfg' %
-                env, capture=False)
+# def clean_tasks():
+#     with cd('%(basedir)s' % env):
+#         with settings(command='. %(virtualenv_activate)s;' % env):
+#             local('%(command)s python manage.py celery purge' %
+#                 #'%(command)s celery purge -f -A tribus --app=tribus.config.celery_cfg' %
+#                 env, capture=False)
 
 
 # def include_xapian():
@@ -428,176 +428,3 @@ def clean_tasks():
 #                '%(command)s python manage.py celery beat -s celerybeat-schedule' %
 #                #'%(command)s celery worker -A tribus --app=tribus.config.celery_cfg -B -c 1 -l INFO' %
 #                env, capture=False)
-
-
-def shell_django():
-    with cd('%(basedir)s' % env):
-        with settings(command='. %(virtualenv_activate)s;' % env):
-            local(
-                '%(command)s python manage.py shell \
---verbosity 3 --traceback' %
-                env, capture=False)
-
-
-def update_catalog():
-    with cd('%(basedir)s' % env):
-        with settings(command='. %(virtualenv_activate)s;' % env):
-            local(
-                '%(command)s python setup.py update_catalog' %
-                env, capture=False)
-
-
-def extract_messages():
-    with cd('%(basedir)s' % env):
-        with settings(command='. %(virtualenv_activate)s;' % env):
-            local(
-                '%(command)s python setup.py extract_messages' %
-                env, capture=False)
-
-
-def compile_catalog():
-    with cd('%(basedir)s' % env):
-        with settings(command='. %(virtualenv_activate)s;' % env):
-            local(
-                '%(command)s python setup.py compile_catalog' %
-                env, capture=False)
-
-
-def init_catalog():
-    with cd('%(basedir)s' % env):
-        with settings(command='. %(virtualenv_activate)s;' % env):
-            local(
-                '%(command)s python setup.py init_catalog' %
-                env, capture=False)
-
-
-def tx_pull():
-    with cd('%(basedir)s' % env):
-        with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s tx pull -a --skip' % env, capture=False)
-
-
-def tx_push():
-    with cd('%(basedir)s' % env):
-        with settings(command='. %(virtualenv_activate)s;' % env):
-            local(
-                '%(command)s tx push -s -t --skip --no-interactive' %
-                env, capture=False)
-
-
-def build_sphinx():
-    with cd('%(basedir)s' % env):
-        with settings(command='. %(virtualenv_activate)s;' % env):
-            local(
-                '%(command)s python setup.py build_sphinx' %
-                env, capture=False)
-
-
-def build_css():
-    with cd('%(basedir)s' % env):
-        with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py build_css' % env, capture=False)
-
-
-def build_js():
-    with cd('%(basedir)s' % env):
-        with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py build_js' % env, capture=False)
-
-
-def build_man():
-    with cd('%(basedir)s' % env):
-        with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py build_man' % env, capture=False)
-
-
-def build():
-    with cd('%(basedir)s' % env):
-        with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py build' % env, capture=False)
-
-
-def clean_css():
-    with cd('%(basedir)s' % env):
-        with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py clean_css' % env, capture=False)
-
-
-def clean_js():
-    with cd('%(basedir)s' % env):
-        with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py clean_js' % env, capture=False)
-
-
-def clean_sphinx():
-    with cd('%(basedir)s' % env):
-        with settings(command='. %(virtualenv_activate)s;' % env):
-            local(
-                '%(command)s python setup.py clean_sphinx' %
-                env, capture=False)
-
-
-def clean_mo():
-    with cd('%(basedir)s' % env):
-        with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py clean_mo' % env, capture=False)
-
-
-def clean_man():
-    with cd('%(basedir)s' % env):
-        with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py clean_man' % env, capture=False)
-
-
-def clean_dist():
-    with cd('%(basedir)s' % env):
-        with settings(command='. %(virtualenv_activate)s;' % env):
-            local(
-                '%(command)s python setup.py clean_dist' %
-                env, capture=False)
-
-
-def clean_pyc():
-    with cd('%(basedir)s' % env):
-        with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py clean_pyc' % env, capture=False)
-
-
-def clean():
-    with cd('%(basedir)s' % env):
-        with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py clean' % env, capture=False)
-
-
-def sdist():
-    with cd('%(basedir)s' % env):
-        with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py sdist' % env, capture=False)
-
-
-def bdist():
-    with cd('%(basedir)s' % env):
-        with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py bdist' % env, capture=False)
-
-
-def install():
-    with cd('%(basedir)s' % env):
-        with settings(command='. %(virtualenv_activate)s;' % env):
-            local('%(command)s python setup.py install' % env, capture=False)
-
-
-def test():
-    with cd('%(basedir)s' % env):
-        with settings(command='. %(virtualenv_activate)s;' % env):
-            local(
-                '%(command)s python setup.py test --verbose' %
-                env, capture=False)
-
-
-def report_setup_data():
-    with cd('%(basedir)s' % env):
-        with settings(command='. %(virtualenv_activate)s;' % env):
-            local(
-                '%(command)s python setup.py report_setup_data' %
-                env, capture=False)

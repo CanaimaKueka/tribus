@@ -22,7 +22,7 @@ from fabric.api import run, env
 from tribus.common.fabric.docker import docker_check_container
 
 
-def celery_purge_tasks():
+def haystack_rebuild_index():
     '''
     '''
 
@@ -33,5 +33,5 @@ def celery_purge_tasks():
     env.port = '22222'
     env.password = 'tribus'
 
-    run('cd %(basedir)s && python manage.py celery purge' % env,
+    run('cd %(basedir)s && python manage.py rebuild_index' % env,
         capture=False)

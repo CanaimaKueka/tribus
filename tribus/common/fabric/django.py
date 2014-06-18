@@ -18,17 +18,17 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from fabric.api import local, run
-from tribus.common.fabric.maint import docker_check_container
+from fabric.api import local, run, env
+from tribus.common.fabric.docker import docker_check_container
 
 
-def django_syncdb(env):
+def django_syncdb():
     '''
     '''
 
-    docker_check_container(env)
+    docker_check_container()
 
-    env.host_string = "127.0.0.1"
+    env.host_string = '127.0.0.1'
     env.user = 'root'
     env.port = '22222'
     env.password = 'tribus'
@@ -36,8 +36,6 @@ def django_syncdb(env):
     local(('echo "#!/usr/bin/env bash\n'
            'cd %(basedir)s\n'
            '%(preseed_env)s\n'
-           'python manage.py celery purge\n'
-           '%(waffle_switches)s\n'
            'python manage.py syncdb --noinput\n'
            'python manage.py migrate --noinput\n'
            'exit 0'
@@ -45,13 +43,13 @@ def django_syncdb(env):
     run(('bash %(tribus_django_syncdb_script)s') % env)
 
 
-def django_runserver(env):
+def django_runserver():
     '''
     '''
 
-    docker_check_container(env)
+    docker_check_container()
 
-    env.host_string = "127.0.0.1"
+    env.host_string = '127.0.0.1'
     env.user = 'root'
     env.port = '22222'
     env.password = 'tribus'
@@ -67,11 +65,25 @@ def django_runserver(env):
     run(('bash %(tribus_django_runserver_script)s') % env)
 
 
-# def django_deployserver(env):
+def django_shell():
+    '''
+    '''
+
+    docker_check_container()
+
+    env.host_string = '127.0.0.1'
+    env.user = 'root'
+    env.port = '22222'
+    env.password = 'tribus'
+
+    run(('cd %(basedir)s && python manage.py shell') % env)
+
+
+# def django_deployserver():
 #     '''
 #     '''
 
-#     docker_kill_all_containers(env)
+#     docker_kill_all_containers()
 #     local(('echo "'
 #            'upstream uwsgi {\n'
 #            '\tserver\t\t\t\tunix:///var/run/tribus/uwsgi.sock;\n'
@@ -94,38 +106,38 @@ def django_runserver(env):
 #            '" > %(tribus_nginx_config)s') % env, capture=False)
 #     local(('echo "'
 #            '[program:tribus-celery]\n'
-#            'command=/usr/bin/python %(basedir)s/manage.py celeryd\n'
-#            'directory=%(basedir)s\n'
-#            'user=www-data\n'
-#            'numprocs=1\n'
-#            'stdout_logfile=/var/log/tribus/celeryd.log\n'
-#            'stderr_logfile=/var/log/tribus/celeryd.log\n'
-#            'autostart=true\n'
-#            'autorestart=true\n'
-#            'startsecs=10\n'
-#            'stopwaitsecs=30\n'
+#            'command = /usr/bin/python %(basedir)s/manage.py celeryd\n'
+#            'directory = %(basedir)s\n'
+#            'user = www-data\n'
+#            'numprocs = 1\n'
+#            'stdout_logfile = /var/log/tribus/celeryd.log\n'
+#            'stderr_logfile = /var/log/tribus/celeryd.log\n'
+#            'autostart = true\n'
+#            'autorestart = true\n'
+#            'startsecs = 10\n'
+#            'stopwaitsecs = 30\n'
 #            '\n'
 #            '[program:tribus-celerybeat]\n'
-#            'command=/usr/bin/python %(basedir)s/manage.py celerybeat\n'
-#            'directory=%(basedir)s\n'
-#            'user=www-data\n'
-#            'numprocs=1\n'
-#            'stdout_logfile=/var/log/tribus/celerybeat.log\n'
-#            'stderr_logfile=/var/log/tribus/celerybeat.log\n'
-#            'autostart=true\n'
-#            'autorestart=true\n'
-#            'startsecs=10\n'
-#            'stopwaitsecs=30\n'
+#            'command = /usr/bin/python %(basedir)s/manage.py celerybeat\n'
+#            'directory = %(basedir)s\n'
+#            'user = www-data\n'
+#            'numprocs = 1\n'
+#            'stdout_logfile = /var/log/tribus/celerybeat.log\n'
+#            'stderr_logfile = /var/log/tribus/celerybeat.log\n'
+#            'autostart = true\n'
+#            'autorestart = true\n'
+#            'startsecs = 10\n'
+#            'stopwaitsecs = 30\n'
 #            '" > %(tribus_supervisor_config)s') % env, capture=False)
 #     local(('echo "'
 #            '[uwsgi]\n'
-#            'chdir           = %(basedir)s\n'
-#            'env             = DJANGO_SETTINGS_MODULE=tribus.config.web\n'
-#            'wsgi-file       = %(basedir)s/tribus/web/wsgi.py\n'
-#            'logto           = /var/log/tribus/uwsgi.log\n'
-#            'pidfile         = /var/run/tribus/uwsgi.pid\n'
-#            'socket          = /var/run/tribus/uwsgi.sock\n'
-#            'plugin          = python\n'
+#            'chdir = %(basedir)s\n'
+#            'env = DJANGO_SETTINGS_MODULE=tribus.config.web\n'
+#            'wsgi-file = %(basedir)s/tribus/web/wsgi.py\n'
+#            'logto = /var/log/tribus/uwsgi.log\n'
+#            'pidfile = /var/run/tribus/uwsgi.pid\n'
+#            'socket = /var/run/tribus/uwsgi.sock\n'
+#            'plugin = python\n'
 #            '" > %(tribus_uwsgi_config)s') % env, capture=False)
 #     local(('echo "#!/usr/bin/env bash\n'
 #            'ln -fs /proc/self/fd /dev/fd\n'

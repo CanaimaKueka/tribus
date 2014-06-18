@@ -36,24 +36,13 @@ from tribus.config.ldap import (AUTH_LDAP_SERVER_URI,
 from tribus.config.switches import SWITCHES_CONFIGURATION
 from tribus.config.pkg import (python_dependencies, debian_run_dependencies,
                                debian_build_dependencies)
-from tribus.common.logger import get_logger
 from tribus.common.utils import get_path
 from tribus.common.system import get_local_arch
-from tribus.common.fabric.maint import (docker_pull_debian_base_image,
-                                        docker_pull_tribus_base_image,
-                                        docker_generate_debian_base_image,
-                                        docker_generate_tribus_base_image,
-                                        docker_kill_all_containers,
-                                        docker_kill_all_images,
-                                        docker_kill_tribus_images,
-                                        docker_stop_container,
-                                        docker_login_container,
-                                        docker_reset_container,
-                                        docker_update_container)
-from tribus.common.fabric.django import (django_runserver,
-                                         django_syncdb)
-
-logger = get_logger()
+from tribus.common.fabric.docker import *
+from tribus.common.fabric.django import *
+from tribus.common.fabric.setup import *
+from tribus.common.fabric.celery import *
+from tribus.common.fabric.haystack import *
 
 
 def development():
@@ -142,98 +131,3 @@ def development():
                  'find /var/log -type f -print0 | xargs -0r rm -rf\n'
                  'find /var/tmp -type f -print0 | xargs -0r rm -rf\n'
                  'find /tmp -type f -print0 | xargs -0r rm -rf\n')
-
-
-def generate_debian_base_image_i386():
-    '''
-    '''
-    env.arch = 'i386'
-    docker_generate_debian_base_image(env)
-
-
-def generate_debian_base_image_amd64():
-    '''
-    '''
-    env.arch = 'amd64'
-    docker_generate_debian_base_image(env)
-
-
-def generate_tribus_base_image_i386():
-    '''
-    '''
-    env.arch = 'i386'
-    env.debian_base_image = 'luisalejandro/debian-i386:wheezy'
-    env.tribus_base_image = 'luisalejandro/tribus-i386:wheezy'
-    docker_pull_debian_base_image(env)
-    docker_generate_tribus_base_image(env)
-
-
-def generate_tribus_base_image_amd64():
-    '''
-    '''
-    env.arch = 'amd64'
-    env.debian_base_image = 'luisalejandro/debian-amd64:wheezy'
-    env.tribus_base_image = 'luisalejandro/tribus-amd64:wheezy'
-    docker_pull_debian_base_image(env)
-    docker_generate_tribus_base_image(env)
-
-
-def kill_all_containers():
-    '''
-    '''
-    docker_kill_all_containers(env)
-
-
-def kill_all_images():
-    '''
-    '''
-    docker_kill_all_images(env)
-
-
-def kill_tribus_images():
-    '''
-    '''
-    docker_kill_tribus_images(env)
-
-
-def environment():
-    '''
-    '''
-    docker_pull_debian_base_image(env)
-    docker_pull_tribus_base_image(env)
-
-
-def start_container():
-    '''
-    '''
-    django_runserver(env)
-
-
-def stop_container():
-    '''
-    '''
-    docker_stop_container(env)
-
-
-def login_container():
-    '''
-    '''
-    docker_login_container(env)
-
-
-def reset_container():
-    '''
-    '''
-    docker_reset_container(env)
-
-
-def update_container():
-    '''
-    '''
-    docker_update_container(env)
-
-
-def sync_container():
-    '''
-    '''
-    django_syncdb(env)
