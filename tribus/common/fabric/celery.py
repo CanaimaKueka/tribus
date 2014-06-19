@@ -35,4 +35,4 @@ def celery_purge_tasks():
 
     with cd('%(basedir)s' % env):
         with shell_env(**env.preseed_env_dict):
-            run('python manage.py celery purge', capture=False)
+            run('python manage.py celery purge')

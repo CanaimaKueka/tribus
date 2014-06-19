@@ -35,7 +35,7 @@ def update_catalog():
 
     with cd('%(basedir)s' % env):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py update_catalog', capture=False)
+            run('python setup.py update_catalog')
 
 
 def extract_messages():
@@ -51,7 +51,7 @@ def extract_messages():
 
     with cd('%(basedir)s' % env):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py extract_messages', capture=False)
+            run('python setup.py extract_messages')
 
 
 def compile_catalog():
@@ -67,7 +67,7 @@ def compile_catalog():
 
     with cd('%(basedir)s' % env):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py compile_catalog', capture=False)
+            run('python setup.py compile_catalog')
 
 
 def init_catalog():
@@ -83,7 +83,7 @@ def init_catalog():
 
     with cd('%(basedir)s' % env):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py init_catalog', capture=False)
+            run('python setup.py init_catalog')
 
 
 def tx_pull():
@@ -99,7 +99,7 @@ def tx_pull():
 
     with cd('%(basedir)s' % env):
         with shell_env(**env.preseed_env_dict):
-            run('tx pull -a --skip', capture=False)
+            run('tx pull -a --skip')
 
 
 def tx_push():
@@ -115,7 +115,7 @@ def tx_push():
 
     with cd('%(basedir)s' % env):
         with shell_env(**env.preseed_env_dict):
-            run('tx push -s -t --skip --no-interactive', capture=False)
+            run('tx push -s -t --skip --no-interactive')
 
 
 def build_sphinx():
@@ -131,7 +131,7 @@ def build_sphinx():
 
     with cd('%(basedir)s' % env):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py build_sphinx', capture=False)
+            run('python setup.py build_sphinx')
 
 
 def build_css():
@@ -147,7 +147,7 @@ def build_css():
 
     with cd('%(basedir)s' % env):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py build_css', capture=False)
+            run('python setup.py build_css')
 
 
 def build_js():
@@ -163,7 +163,7 @@ def build_js():
 
     with cd('%(basedir)s' % env):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py build_js', capture=False)
+            run('python setup.py build_js')
 
 
 def build_man():
@@ -179,7 +179,7 @@ def build_man():
 
     with cd('%(basedir)s' % env):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py build_man', capture=False)
+            run('python setup.py build_man')
 
 
 def build():
@@ -195,7 +195,7 @@ def build():
 
     with cd('%(basedir)s' % env):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py build', capture=False)
+            run('python setup.py build')
 
 
 def clean_css():
@@ -211,7 +211,7 @@ def clean_css():
 
     with cd('%(basedir)s' % env):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py clean_css', capture=False)
+            run('python setup.py clean_css')
 
 
 def clean_js():
@@ -227,7 +227,7 @@ def clean_js():
 
     with cd('%(basedir)s' % env):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py clean_js', capture=False)
+            run('python setup.py clean_js')
 
 
 def clean_sphinx():
@@ -243,7 +243,7 @@ def clean_sphinx():
 
     with cd('%(basedir)s' % env):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py clean_sphinx', capture=False)
+            run('python setup.py clean_sphinx')
 
 
 def clean_mo():
@@ -259,7 +259,7 @@ def clean_mo():
 
     with cd('%(basedir)s' % env):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py clean_mo', capture=False)
+            run('python setup.py clean_mo')
 
 
 def clean_man():
@@ -275,7 +275,7 @@ def clean_man():
 
     with cd('%(basedir)s' % env):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py clean_man', capture=False)
+            run('python setup.py clean_man')
 
 
 def clean_dist():
@@ -291,7 +291,7 @@ def clean_dist():
 
     with cd('%(basedir)s' % env):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py clean_dist', capture=False)
+            run('python setup.py clean_dist')
 
 
 def clean_pyc():
@@ -307,7 +307,7 @@ def clean_pyc():
 
     with cd('%(basedir)s' % env):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py clean_pyc', capture=False)
+            run('python setup.py clean_pyc')
 
 
 def clean():
@@ -323,7 +323,7 @@ def clean():
 
     with cd('%(basedir)s' % env):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py clean', capture=False)
+            run('python setup.py clean')
 
 
 def sdist():
@@ -339,7 +339,7 @@ def sdist():
 
     with cd('%(basedir)s' % env):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py sdist', capture=False)
+            run('python setup.py sdist')
 
 
 def bdist():
@@ -355,7 +355,7 @@ def bdist():
 
     with cd('%(basedir)s' % env):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py bdist', capture=False)
+            run('python setup.py bdist')
 
 
 def install():
@@ -371,7 +371,7 @@ def install():
 
     with cd('%(basedir)s' % env):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py install', capture=False)
+            run('python setup.py install')
 
 
 def test():
@@ -387,7 +387,7 @@ def test():
 
     with cd('%(basedir)s' % env):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py test', capture=False)
+            run('python setup.py test')
 
 
 def report_setup_data():
@@ -403,4 +403,4 @@ def report_setup_data():
 
     with cd('%(basedir)s' % env):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py report_setup_data', capture=False)
+            run('python setup.py report_setup_data')

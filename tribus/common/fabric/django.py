@@ -36,7 +36,7 @@ def django_syncdb():
     with cd('%(basedir)s' % env):
         with shell_env(**env.preseed_env_dict):
             run(('( python manage.py syncdb --noinput ) &&'
-                 '( python manage.py migrate --noinput )'), capture=False)
+                 '( python manage.py migrate --noinput )'))
 
 
 def django_runserver():
@@ -54,7 +54,7 @@ def django_runserver():
         with shell_env(**env.preseed_env_dict):
             run(('( python manage.py celeryd -c 1 --beat -l INFO & ) &&'
                  '( python manage.py celery beat -s celerybeat-schedule & ) &&'
-                 '( python manage.py runserver 0.0.0.0:8000 )'), capture=False)
+                 '( python manage.py runserver 0.0.0.0:8000 )'))
 
 
 def django_shell():
@@ -70,7 +70,7 @@ def django_shell():
 
     with cd('%(basedir)s' % env):
         with shell_env(**env.preseed_env_dict):
-            run('python manage.py shell', capture=False)
+            run('python manage.py shell')
 
 
 # def django_deployserver():

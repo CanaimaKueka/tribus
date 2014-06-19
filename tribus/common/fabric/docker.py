@@ -181,13 +181,6 @@ def docker_check_container():
     '''
     '''
 
-    # if not local(('sudo bash -c '
-    #               '"%(docker)s images -a '
-    #               '| grep %(tribus_runtime_image)s" || true') % env,
-    #              capture=True):
-
-    #     docker_pull_tribus_base_image()
-
     if local(('sudo bash -c '
               '"%(docker)s ps -a '
               '| grep %(tribus_runtime_container)s" || true') % env,
