@@ -91,7 +91,7 @@ def generate_tribus_base_image_script():
            'echo \\"openldap:tribus\\" | chpasswd\n'
            'echo \\"mongodb:tribus\\" | chpasswd\n'
            'echo \\"redis:tribus\\" | chpasswd\n'
-           'sed -i \'s/journal=true/journal=false/g\' /etc/mongodb.conf\n'
+           'sed -i \'s/journal=true/nojournal=true/g\' /etc/mongodb.conf\n'
            '%(start_services)s\n'
            'sudo -i -u postgres bash -c \\"psql -f \'%(preseed_db)s\'\\"\n'
            'ldapadd %(ldap_args)s -f \\"%(preseed_ldap)s\\"\n'
@@ -180,6 +180,13 @@ def generate_tribus_base_image_amd64():
 def docker_check_container():
     '''
     '''
+
+    # if not local(('sudo bash -c '
+    #               '"%(docker)s images -a '
+    #               '| grep %(tribus_runtime_image)s" || true') % env,
+    #              capture=True):
+
+    #     docker_pull_tribus_base_image()
 
     if local(('sudo bash -c '
               '"%(docker)s ps -a '

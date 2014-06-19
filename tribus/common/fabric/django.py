@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from fabric.api import local, run, env
+from fabric.api import run, env, cd, shell_env
 from tribus.common.fabric.docker import docker_check_container
 
 
@@ -33,14 +33,10 @@ def django_syncdb():
     env.port = '22222'
     env.password = 'tribus'
 
-    local(('echo "#!/usr/bin/env bash\n'
-           'cd %(basedir)s\n'
-           '%(preseed_env)s\n'
-           'python manage.py syncdb --noinput\n'
-           'python manage.py migrate --noinput\n'
-           'exit 0'
-           '" > %(tribus_django_syncdb_script)s') % env, capture=False)
-    run(('bash %(tribus_django_syncdb_script)s') % env)
+    with cd('%(basedir)s' % env):
+        with shell_env(**env.preseed_env_dict):
+            run(('( python manage.py syncdb --noinput ) &&'
+                 '( python manage.py migrate --noinput )'), capture=False)
 
 
 def django_runserver():
@@ -54,15 +50,11 @@ def django_runserver():
     env.port = '22222'
     env.password = 'tribus'
 
-    local(('echo "#!/usr/bin/env bash\n'
-           'cd %(basedir)s\n'
-           '%(preseed_env)s\n'
-           'python manage.py celeryd -c 1 --beat -l INFO &\n'
-           'python manage.py celery beat -s celerybeat-schedule &\n'
-           'python manage.py runserver 0.0.0.0:8000\n'
-           'exit 0'
-           '" > %(tribus_django_runserver_script)s') % env, capture=False)
-    run(('bash %(tribus_django_runserver_script)s') % env)
+    with cd('%(basedir)s' % env):
+        with shell_env(**env.preseed_env_dict):
+            run(('( python manage.py celeryd -c 1 --beat -l INFO & ) &&'
+                 '( python manage.py celery beat -s celerybeat-schedule & ) &&'
+                 '( python manage.py runserver 0.0.0.0:8000 )'), capture=False)
 
 
 def django_shell():
@@ -76,7 +68,9 @@ def django_shell():
     env.port = '22222'
     env.password = 'tribus'
 
-    run(('cd %(basedir)s && python manage.py shell') % env)
+    with cd('%(basedir)s' % env):
+        with shell_env(**env.preseed_env_dict):
+            run('python manage.py shell', capture=False)
 
 
 # def django_deployserver():

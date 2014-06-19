@@ -157,11 +157,11 @@ shell: dependencies
 # rebuild_index: dependencies
 
 # 	@$(FAB) development haystack_rebuild_index
-	
+
 # purge_tasks: dependencies
 
 # 	@$(FAB) development celery_purge_tasks
-	
+
 # -----------------------------------------------------------------------------
 
 # TESTS TASKS -----------------------------------------------------------------
@@ -169,7 +169,7 @@ shell: dependencies
 # wipe_repo: dependencies
 
 # 	@$(FAB) development wipe_repo
-	
+
 # -----------------------------------------------------------------------------
 
 update_catalog: dependencies 
