@@ -33,10 +33,11 @@ def django_syncdb():
     env.port = '22222'
     env.password = 'tribus'
 
-    with cd('%(basedir)s' % env):
+    with cd(env.basedir):
         with shell_env(**env.preseed_env_dict):
-            run(('( python manage.py syncdb --noinput ) &&'
-                 '( python manage.py migrate --noinput )'))
+            run(('( python manage.py syncdb --noinput ) && '
+                 '( python manage.py migrate --noinput )'),
+                shell_escape=False)
 
 
 def django_runserver():
@@ -50,11 +51,12 @@ def django_runserver():
     env.port = '22222'
     env.password = 'tribus'
 
-    with cd('%(basedir)s' % env):
+    with cd(env.basedir):
         with shell_env(**env.preseed_env_dict):
-            run(('( python manage.py celeryd -c 1 --beat -l INFO & ) &&'
-                 '( python manage.py celery beat -s celerybeat-schedule & ) &&'
-                 '( python manage.py runserver 0.0.0.0:8000 )'))
+            run(('( python manage.py celeryd -c 1 --beat -l INFO & ) && '
+                 '( python manage.py celery beat -s celerybeat-schedule & ) && '
+                 '( python manage.py runserver 0.0.0.0:8000 )'),
+                shell_escape=False)
 
 
 def django_shell():
@@ -68,9 +70,10 @@ def django_shell():
     env.port = '22222'
     env.password = 'tribus'
 
-    with cd('%(basedir)s' % env):
+    with cd(env.basedir):
         with shell_env(**env.preseed_env_dict):
-            run('python manage.py shell')
+            run('python manage.py shell',
+                shell_escape=False)
 
 
 # def django_deployserver():

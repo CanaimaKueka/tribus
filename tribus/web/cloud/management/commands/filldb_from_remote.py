@@ -18,22 +18,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from fabric.api import run, env, cd, shell_env
-from tribus.common.fabric.docker import docker_check_container
+from django.core.management.base import BaseCommand
+from tribus.common.recorder import fill_db_from_cache
 
 
-def haystack_rebuild_index():
-    '''
-    '''
+class Command(BaseCommand):
 
-    docker_check_container()
-
-    env.host_string = '127.0.0.1'
-    env.user = 'root'
-    env.port = '22222'
-    env.password = 'tribus'
-
-    with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('python manage.py rebuild_index',
-                shell_escape=False)
+    def handle(self, *args, **options):
+        fill_db_from_cache(PACKAGECACHE)

@@ -33,9 +33,9 @@ def update_catalog():
     env.port = '22222'
     env.password = 'tribus'
 
-    with cd('%(basedir)s' % env):
+    with cd(env.basedir):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py update_catalog')
+            run('python setup.py update_catalog', shell_escape=False)
 
 
 def extract_messages():
@@ -49,9 +49,9 @@ def extract_messages():
     env.port = '22222'
     env.password = 'tribus'
 
-    with cd('%(basedir)s' % env):
+    with cd(env.basedir):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py extract_messages')
+            run('python setup.py extract_messages', shell_escape=False)
 
 
 def compile_catalog():
@@ -65,9 +65,9 @@ def compile_catalog():
     env.port = '22222'
     env.password = 'tribus'
 
-    with cd('%(basedir)s' % env):
+    with cd(env.basedir):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py compile_catalog')
+            run('python setup.py compile_catalog', shell_escape=False)
 
 
 def init_catalog():
@@ -81,9 +81,9 @@ def init_catalog():
     env.port = '22222'
     env.password = 'tribus'
 
-    with cd('%(basedir)s' % env):
+    with cd(env.basedir):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py init_catalog')
+            run('python setup.py init_catalog', shell_escape=False)
 
 
 def tx_pull():
@@ -97,7 +97,7 @@ def tx_pull():
     env.port = '22222'
     env.password = 'tribus'
 
-    with cd('%(basedir)s' % env):
+    with cd(env.basedir):
         with shell_env(**env.preseed_env_dict):
             run('tx pull -a --skip')
 
@@ -113,7 +113,7 @@ def tx_push():
     env.port = '22222'
     env.password = 'tribus'
 
-    with cd('%(basedir)s' % env):
+    with cd(env.basedir):
         with shell_env(**env.preseed_env_dict):
             run('tx push -s -t --skip --no-interactive')
 
@@ -129,9 +129,9 @@ def build_sphinx():
     env.port = '22222'
     env.password = 'tribus'
 
-    with cd('%(basedir)s' % env):
+    with cd(env.basedir):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py build_sphinx')
+            run('python setup.py build_sphinx', shell_escape=False)
 
 
 def build_css():
@@ -145,9 +145,9 @@ def build_css():
     env.port = '22222'
     env.password = 'tribus'
 
-    with cd('%(basedir)s' % env):
+    with cd(env.basedir):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py build_css')
+            run('python setup.py build_css', shell_escape=False)
 
 
 def build_js():
@@ -161,9 +161,9 @@ def build_js():
     env.port = '22222'
     env.password = 'tribus'
 
-    with cd('%(basedir)s' % env):
+    with cd(env.basedir):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py build_js')
+            run('python setup.py build_js', shell_escape=False)
 
 
 def build_man():
@@ -177,9 +177,9 @@ def build_man():
     env.port = '22222'
     env.password = 'tribus'
 
-    with cd('%(basedir)s' % env):
+    with cd(env.basedir):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py build_man')
+            run('python setup.py build_man', shell_escape=False)
 
 
 def build():
@@ -193,9 +193,9 @@ def build():
     env.port = '22222'
     env.password = 'tribus'
 
-    with cd('%(basedir)s' % env):
+    with cd(env.basedir):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py build')
+            run('python setup.py build', shell_escape=False)
 
 
 def clean_css():
@@ -209,9 +209,9 @@ def clean_css():
     env.port = '22222'
     env.password = 'tribus'
 
-    with cd('%(basedir)s' % env):
+    with cd(env.basedir):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py clean_css')
+            run('python setup.py clean_css', shell_escape=False)
 
 
 def clean_js():
@@ -225,9 +225,9 @@ def clean_js():
     env.port = '22222'
     env.password = 'tribus'
 
-    with cd('%(basedir)s' % env):
+    with cd(env.basedir):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py clean_js')
+            run('python setup.py clean_js', shell_escape=False)
 
 
 def clean_sphinx():
@@ -241,9 +241,9 @@ def clean_sphinx():
     env.port = '22222'
     env.password = 'tribus'
 
-    with cd('%(basedir)s' % env):
+    with cd(env.basedir):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py clean_sphinx')
+            run('python setup.py clean_sphinx', shell_escape=False)
 
 
 def clean_mo():
@@ -257,9 +257,9 @@ def clean_mo():
     env.port = '22222'
     env.password = 'tribus'
 
-    with cd('%(basedir)s' % env):
+    with cd(env.basedir):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py clean_mo')
+            run('python setup.py clean_mo', shell_escape=False)
 
 
 def clean_man():
@@ -273,9 +273,9 @@ def clean_man():
     env.port = '22222'
     env.password = 'tribus'
 
-    with cd('%(basedir)s' % env):
+    with cd(env.basedir):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py clean_man')
+            run('python setup.py clean_man', shell_escape=False)
 
 
 def clean_dist():
@@ -289,9 +289,9 @@ def clean_dist():
     env.port = '22222'
     env.password = 'tribus'
 
-    with cd('%(basedir)s' % env):
+    with cd(env.basedir):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py clean_dist')
+            run('python setup.py clean_dist', shell_escape=False)
 
 
 def clean_pyc():
@@ -305,9 +305,9 @@ def clean_pyc():
     env.port = '22222'
     env.password = 'tribus'
 
-    with cd('%(basedir)s' % env):
+    with cd(env.basedir):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py clean_pyc')
+            run('python setup.py clean_pyc', shell_escape=False)
 
 
 def clean():
@@ -321,9 +321,9 @@ def clean():
     env.port = '22222'
     env.password = 'tribus'
 
-    with cd('%(basedir)s' % env):
+    with cd(env.basedir):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py clean')
+            run('python setup.py clean', shell_escape=False)
 
 
 def sdist():
@@ -337,9 +337,9 @@ def sdist():
     env.port = '22222'
     env.password = 'tribus'
 
-    with cd('%(basedir)s' % env):
+    with cd(env.basedir):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py sdist')
+            run('python setup.py sdist', shell_escape=False)
 
 
 def bdist():
@@ -353,9 +353,9 @@ def bdist():
     env.port = '22222'
     env.password = 'tribus'
 
-    with cd('%(basedir)s' % env):
+    with cd(env.basedir):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py bdist')
+            run('python setup.py bdist', shell_escape=False)
 
 
 def install():
@@ -369,9 +369,9 @@ def install():
     env.port = '22222'
     env.password = 'tribus'
 
-    with cd('%(basedir)s' % env):
+    with cd(env.basedir):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py install')
+            run('python setup.py install', shell_escape=False)
 
 
 def test():
@@ -385,9 +385,9 @@ def test():
     env.port = '22222'
     env.password = 'tribus'
 
-    with cd('%(basedir)s' % env):
+    with cd(env.basedir):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py test')
+            run('python setup.py test', shell_escape=False)
 
 
 def report_setup_data():
@@ -401,6 +401,6 @@ def report_setup_data():
     env.port = '22222'
     env.password = 'tribus'
 
-    with cd('%(basedir)s' % env):
+    with cd(env.basedir):
         with shell_env(**env.preseed_env_dict):
-            run('python setup.py report_setup_data')
+            run('python setup.py report_setup_data', shell_escape=False)

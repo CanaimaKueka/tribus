@@ -30,7 +30,7 @@ This module contains common functions to manage local and remote repositories.
 #=========================================================================
 # TODO:
 # 1. Hacer tests para estas funciones.
-# 2. Revisar procedimientos, colocar nombres mas apropiados de acuerdo 
+# 2. Revisar procedimientos, colocar nombres mas apropiados de acuerdo
 #    a las convenciones de nombres.
 #=========================================================================
 
@@ -41,7 +41,6 @@ import random
 import urllib
 import urllib2
 from debian import deb822
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
 from tribus.common.logger import get_logger
 from tribus.common.utils import find_files, readconfig
 
@@ -50,19 +49,22 @@ logger = get_logger()
 
 def init_sample_packages(repository_root, samples_dir):
     '''
+
     Creates a directory structure to store packages for its later use
     in a test package repository.
-    
+
     :param repository_root: url of the repository used.
-    
-    :param samples_dir: directory that will be used to store the examples for the repository.
-    
+
+    :param samples_dir: directory that will be used to store the examples for
+                        the repository.
+
     .. versionadded:: 0.1
+
     '''
-    
+
     if not os.path.isdir(samples_dir):
         os.makedirs(samples_dir)
-    
+
     # Puede que exista una forma mas sencilla de obtener los nombres
     dist_releases = (branch.split()
                      for branch in
@@ -73,6 +75,7 @@ def init_sample_packages(repository_root, samples_dir):
         try:
             # Riesgo poco probable de que el Release no tenga MD5sum
             md5list = deb822.Release(urllib.urlopen(release_path)).get('MD5sum')
+            print md5list
         except urllib2.URLError, e:
             logger.warning('Could not read release file in %s, error code #%s' % (release_path, e.code))
         else:
@@ -95,25 +98,29 @@ def init_sample_packages(repository_root, samples_dir):
 def select_sample_packages(remote_control_file_path, package_list_path,
                            samples_dir, include_relations=False):
     '''
-    Reads a control file and makes a random selection of packages, 
-    then downloads the selected ones.
-    
-    :param remote_control_file_path: path to the control file from which the packages will be selected.
-    
-    :param package_list_path: path to the file where the package name and location will be written.
-    
-    :param samples_dir: directory that will be used to store the examples for the repository.
-    
-    :param include_relations: si es True se descargaran tambien las relaciones de cada paquete seleccionado
-    que cuyo tamano sea menor a 500 kilobytes. Si es Falso no se descargaran los paquetes relacionados.
+
+    Reads a control file and makes a random selection of packages, then
+    downloads the selected ones.
+
+    :param remote_control_file_path: path to the control file from which the
+                                     packages will be selected.
+    :param package_list_path: path to the file where the package name and
+                              location will be written.
+    :param samples_dir: directory that will be used to store the examples for
+                        the repository.
+    :param include_relations: si es True se descargaran tambien las relaciones
+                              de cada paquete seleccionado que cuyo tamano sea
+                              menor a 500 kilobytes. Si es Falso no se
+                              descargaran los paquetes relacionados.
 
     .. versionadded:: 0.1
+
     '''
-    
+
     # No sabria decir que es lo que esta mal aqui
     # pero no me gusta mucho la forma como se hace esto
     tmp_file = os.path.join(samples_dir, "tmp.gzip")
-    
+
     try:
         urllib.urlretrieve(remote_control_file_path, tmp_file)
     except urllib2.URLError, e:
@@ -150,16 +157,18 @@ def select_sample_packages(remote_control_file_path, package_list_path,
 
 def download_sample_packages(repository_root, samples_dir):
     '''
+
     Reads all the files named 'list' present in the samples directory
     and downloads the packages in each 'list' file.
-    
+
     :param repository_root: url of the repository used.
-    
-    :param samples_dir: directory that will be used to store the examples for the repository.
-    
+    :param samples_dir: directory that will be used to store the examples for
+                        the repository.
+
     .. versionadded:: 0.1
+
     '''
-    
+
     files_list = find_files(samples_dir, 'list')
     for f in files_list:
         download_path = os.path.dirname(f)
@@ -178,22 +187,25 @@ def download_sample_packages(repository_root, samples_dir):
 
 def get_selected_packages(remote_root, samples_dir, list_path):
     '''
+
     Creates a directory structure to store package samples for its later use
     in a test package repository.
-    
-    :param samples_dir: directory that will be used to store the examples for the repository.
-    
+
+    :param samples_dir: directory that will be used to store the examples for
+                        the repository.
+
     .. versionadded:: 0.1
+
     '''
-    
+
     samples = readconfig(list_path, None, False, False)
     for sample in samples:
         dist, comp, pool = sample.split()
         dest = os.path.join(samples_dir, dist, comp)
-        
+
         if not os.path.isdir(dest):
             os.makedirs(dest)
-        
+
         try:
             sample_name = os.path.basename(pool)
             if not os.path.isfile(os.path.join(dest, sample_name)):

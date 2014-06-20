@@ -43,6 +43,7 @@ from tribus.common.fabric.django import *
 from tribus.common.fabric.setup import *
 from tribus.common.fabric.celery import *
 from tribus.common.fabric.haystack import *
+from tribus.common.fabric.cloud import *
 
 
 def development():

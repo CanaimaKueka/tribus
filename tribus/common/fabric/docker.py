@@ -266,8 +266,4 @@ def docker_reset_container():
     local(('sudo bash -c '
            '"%(docker)s run -it --name %(tribus_runtime_container)s '
            '%(tribus_base_image)s true"') % env, capture=False)
-<<<<<<< HEAD:tribus/common/fabric/maint.py
-    docker_stop_container(env)
-=======
     docker_stop_container()
->>>>>>> 0fef977912e304f336b2c50c54fbbc2378f0974f:tribus/common/fabric/docker.py

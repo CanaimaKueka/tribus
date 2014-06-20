@@ -35,12 +35,13 @@ from tribus.common.utils import list_items
 
 def create_repository(repository_root, distributions_path):
     '''
-    Creates and initializes a packages repository from a
-    `distributions` configuration file.
+
+    Creates and initializes a package repository from a `distributions`
+    configuration file.
 
     :param repository_root: path where the repository will be created.
-
     :param distributions_path: path to the `distributions` configuration file.
+
     '''
 
     conf_dir = os.path.join(repository_root, 'conf')
@@ -60,13 +61,14 @@ def create_repository(repository_root, distributions_path):
 
 def include_deb(repository_root, distribution, comp=None, package_path=None):
     '''
+
     Indexes a debian package (.deb) in the selected repository.
 
     :param repository_root: path of the repository used.
-
     :param distribution: distribution where the package will be indexed.
+    :param package_path: either the path of a single .deb package or a
+                         directory with many .deb packages.
 
-    :param package_path: Either the path of a single .deb package or a directory with many .deb packages.
     '''
 
     # Esto puede ser un problema si despues se ejecuta otro proceso 
