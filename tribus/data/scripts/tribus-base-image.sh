@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 export DEBIAN_FRONTEND=noninteractive
 export DJANGO_SETTINGS_MODULE=tribus.config.web
-export PYTHONPATH=/home/huntingbears/desarrollo/tribus
-debconf-set-selections /home/huntingbears/desarrollo/tribus/tribus/config/data/preseed-debconf.conf
+export PYTHONPATH=/media/desarrollo/tribus
+debconf-set-selections /media/desarrollo/tribus/tribus/config/data/preseed-debconf.conf
 apt-get update
 apt-get install postgresql slapd ldap-utils redis-server mongodb-server reprepro sudo udev openssh-server python-xapian python-setuptools libxml2 libxslt1.1
 apt-get install python-dev libxml2-dev libxslt1-dev libsasl2-dev libldap2-dev libpq-dev make lsb-release git curl ca-certificates gcc
@@ -19,8 +19,8 @@ service postgresql start
 service redis-server start
 service slapd start
 service ssh start
-sudo -i -u postgres bash -c "psql -f '/home/huntingbears/desarrollo/tribus/tribus/config/data/preseed-db.sql'"
-ldapadd -x -w "tribus" -D "cn=admin,dc=tribus,dc=org" -H "ldap://localhost" -f "/home/huntingbears/desarrollo/tribus/tribus/config/data/preseed-ldap.ldif"
+sudo -i -u postgres bash -c "psql -f '/media/desarrollo/tribus/tribus/config/data/preseed-db.sql'"
+ldapadd -x -w "tribus" -D "cn=admin,dc=tribus,dc=org" -H "ldap://localhost" -f "/media/desarrollo/tribus/tribus/config/data/preseed-ldap.ldif"
 apt-get purge python-dev libxml2-dev libxslt1-dev libsasl2-dev libldap2-dev libpq-dev make lsb-release git curl ca-certificates gcc
 apt-get autoremove
 apt-get autoclean

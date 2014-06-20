@@ -109,66 +109,66 @@ shell: dependencies
 
 # REPOSITORY TASKS ------------------------------------------------------
 
-# create_test_repository: dependencies
+create_test_repository: dependencies
 
-# 	@$(FAB) development install_repository
-# 	@$(FAB) development select_sample_packages
-# 	@$(FAB) development get_sample_packages
-# 	@$(FAB) development index_sample_packages
+	@$(FAB) development install_repository
+	@$(FAB) development select_sample_packages
+	@$(FAB) development get_sample_packages
+	@$(FAB) development index_sample_packages
 
 
-# install_repository: dependencies
+install_repository: dependencies
 
-# 	@$(FAB) development install_repository
+	@$(FAB) development install_repository
 
-# select_samples: dependencies
+select_samples: dependencies
 
-# 	@$(FAB) development select_sample_packages
+	@$(FAB) development select_sample_packages
 
-# get_samples: dependencies
+get_samples: dependencies
 
-# 	@$(FAB) development get_sample_packages
+	@$(FAB) development get_sample_packages
 	
-# get_selected: dependencies
+get_selected: dependencies
 
-# 	@$(FAB) development get_selected
+	@$(FAB) development get_selected
 	
-# index_selected: dependencies
+index_selected: dependencies
 
-# 	@$(FAB) development index_selected
+	@$(FAB) development index_selected
 
-# index_samples: dependencies
+index_samples: dependencies
 
-# 	@$(FAB) development index_sample_packages
+	@$(FAB) development index_sample_packages
 	
 # -----------------------------------------------------------------------------
 
-# filldb_from_local: dependencies
+filldb_from_local: dependencies
 
-# 	@$(FAB) development filldb_from_local 
+	@$(FAB) development filldb_from_local 
 	
-# filldb_from_remote: dependencies
+filldb_from_remote: dependencies
 
-# 	@$(FAB) development filldb_from_remote
-	
+	@$(FAB) development filldb_from_remote
+
 
 # INDEX TASKS -----------------------------------------------------------------
 
-# rebuild_index: dependencies
+rebuild_index: dependencies
 
-# 	@$(FAB) development haystack_rebuild_index
+	@$(FAB) development haystack_rebuild_index
 	
-# purge_tasks: dependencies
+purge_tasks: dependencies
 
-# 	@$(FAB) development celery_purge_tasks
+	@$(FAB) development celery_purge_tasks
 	
 # -----------------------------------------------------------------------------
 
 # TESTS TASKS -----------------------------------------------------------------
 
-# wipe_repo: dependencies
+wipe_repo: dependencies
 
-# 	@$(FAB) development wipe_repo
+	@$(FAB) development wipe_repo
 	
 # -----------------------------------------------------------------------------
 
