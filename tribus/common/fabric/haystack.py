@@ -35,5 +35,4 @@ def haystack_rebuild_index():
 
     with cd(env.basedir):
         with shell_env(**env.preseed_env_dict):
-            run('python manage.py rebuild_index',
-                shell_escape=False)
+            run('python manage.py rebuild_index', shell_escape=False)

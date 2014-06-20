@@ -21,7 +21,7 @@
 '''
 
 tribus.tests.tribus_common_recorder
-================================
+===================================
 
 These are the tests for the tribus.common.recorder module.
 
@@ -37,55 +37,55 @@ from tribus.__init__ import BASEDIR
 from tribus.common.utils import get_path
 from tribus.web.cloud.models import Package, Details
 
-SAMPLESDIR = get_path([BASEDIR, "tribus", "testing", "samples" ])
+SAMPLESDIR = get_path([BASEDIR, "tribus", "testing", "samples"])
 test_dist = "kukenan"
 
+
 class RecorderFunctions(TestCase):
-    
+
     def setUp(self):
-        pass        
-        
-        
+        pass
+
     def tearDown(self):
         pass
-    
 
-    # TEST DE INTEGRACION COMPLETO Y CORRECTO
     def test_update_paragraph(self):
         from tribus.common.recorder import update_paragraph
         from tribus.config.pkgrecorder import PACKAGE_FIELDS, DETAIL_FIELDS
-        
+
         old_paragraph = deb822.Packages(open(os.path.join(SAMPLESDIR, "Blender")))
         new_paragraph = deb822.Packages(open(os.path.join(SAMPLESDIR, "BlenderNew")))
-        
+
         Package.objects.create_auto(old_paragraph, test_dist, "main")
         update_paragraph(new_paragraph, test_dist, "main")
-        
-        p = Package.objects.get(Name = "blender")
-        d = Details.objects.get(package = p)
+
+        p = Package.objects.get(Name="blender")
+        d = Details.objects.get(package=p)
         name, mail = email.Utils.parseaddr(new_paragraph.get('Maintainer'))
         total_relations = 0
         total_labels = 0
-        
+
         self.assertEqual(p.Maintainer.Name, name)
         self.assertEqual(p.Maintainer.Email, mail)
         self.assertEqual(d.Distribution, test_dist)
-        
+
         tag_list = new_paragraph['Tag'].replace("\n", "").split(", ")
         clean_list = [tuple(tag.split("::")) for tag in tag_list]
+
         for label in p.Labels.all():
             total_labels += 1
             self.assertIn((label.Name, label.Tags.Value), clean_list)
+
         self.assertEqual(total_labels, len(clean_list))
-        
+
         for field, field_db in PACKAGE_FIELDS.items():
             if new_paragraph.get(field):
                 self.assertEqual(str(getattr(p, field_db)), new_paragraph[field])
-        
+
         for field, field_db in DETAIL_FIELDS.items():
             if new_paragraph.get(field):
                 self.assertEqual(str(getattr(d, field_db)), new_paragraph[field])
-        
+
         for _, relations in new_paragraph.relations.items():
             if relations:
                 for relation in relations:
@@ -94,9 +94,9 @@ class RecorderFunctions(TestCase):
                             total_relations += 1
                     else:
                         total_relations += 1
-        
+
         self.assertEqual(d.Relations.all().count(), total_relations)
-    
+
     '''
     # TEST REDUNDANTE PERO NECESARIO (INCOMPLETO)
     def test_update_cache(self):

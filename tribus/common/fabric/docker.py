@@ -32,7 +32,8 @@ def docker_kill_all_containers():
     if containers:
         env.docker_containers_to_kill = containers.replace('\n', ' ')
         local(('sudo bash -c '
-               '"%(docker)s stop %(docker_containers_to_kill)s"') % env,
+               '"%(docker)s stop --time 1 '
+               '%(docker_containers_to_kill)s"') % env,
               capture=False)
         local(('sudo bash -c '
                '"%(docker)s rm -fv %(docker_containers_to_kill)s"') % env,
@@ -224,7 +225,8 @@ def docker_stop_container():
               '| grep %(tribus_runtime_container)s" || true') % env,
              capture=True):
         local(('sudo bash -c '
-               '"%(docker)s stop %(tribus_runtime_container)s"') % env,
+               '"%(docker)s stop --time 1 '
+               '%(tribus_runtime_container)s"') % env,
               capture=False)
         local(('sudo bash -c '
                '"%(docker)s commit %(tribus_runtime_container)s '

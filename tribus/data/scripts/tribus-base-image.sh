@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 export DEBIAN_FRONTEND=noninteractive
 export DJANGO_SETTINGS_MODULE=tribus.config.web
-export PYTHONPATH=/media/desarrollo/tribus
+export PYTHONPATH=/media/desarrollo/tribus:
 debconf-set-selections /media/desarrollo/tribus/tribus/config/data/preseed-debconf.conf
 apt-get update
 apt-get install postgresql slapd ldap-utils redis-server mongodb-server reprepro sudo udev openssh-server python-xapian python-setuptools libxml2 libxslt1.1
@@ -13,7 +13,7 @@ echo "postgres:tribus" | chpasswd
 echo "openldap:tribus" | chpasswd
 echo "mongodb:tribus" | chpasswd
 echo "redis:tribus" | chpasswd
-sed -i 's/journal=true/journal=false/g' /etc/mongodb.conf
+sed -i 's/journal=true/nojournal=true/g' /etc/mongodb.conf
 service mongodb start
 service postgresql start
 service redis-server start

@@ -77,6 +77,7 @@ environment: dependencies
 
 	@$(FAB) development docker_pull_debian_base_image
 	@$(FAB) development docker_pull_tribus_base_image
+	@$(FAB) development django_syncdb
 
 start: dependencies
 
@@ -93,6 +94,7 @@ login: dependencies
 reset: dependencies
 
 	@$(FAB) development docker_reset_container
+	@$(FAB) development django_syncdb
 
 update: dependencies
 
