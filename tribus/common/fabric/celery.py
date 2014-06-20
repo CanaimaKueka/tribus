@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from fabric.api import run, env
+from fabric.api import run, env, cd, shell_env
 from tribus.common.fabric.docker import docker_check_container
 
 
@@ -33,5 +33,6 @@ def celery_purge_tasks():
     env.port = '22222'
     env.password = 'tribus'
 
-    run('cd %(basedir)s && python manage.py celery purge' % env,
-        capture=False)
+    with cd('%(basedir)s' % env):
+        with shell_env(**env.preseed_env_dict):
+            run('python manage.py celery purge')

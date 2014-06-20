@@ -281,22 +281,21 @@ def list_items(path=None, dirs=True, files=True):
 
 def readconfig(filename, options=[], conffile=False, strip_comments=True):
     '''
+
     Reads a file whether if is a data or configuration file and returns
     its content in a dictionary or a list.
 
     :param filename: path to the file.
-
     :param options: a list of aditional options.
-
-    :param conffile: if True then the result will be a dictionary else the result will be a list.
-
-    :param strip_comments: if True then the comments in the file will be deleted.
-
+    :param conffile: if True then the result will be a dictionary else the
+                     result will be a list.
+    :param strip_comments: if True then the comments in the file will be
+                           deleted.
     :return: a Dictionary or a List.
-
     :rtype: ``dict`` ``list``
 
     .. versionadded:: 0.1
+
     '''
 
     try:

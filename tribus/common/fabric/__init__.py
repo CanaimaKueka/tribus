@@ -107,9 +107,12 @@ def development():
                      '-D \\"%(ldap_writer)s\\" '
                      '-H \\"%(ldap_server)s\\"') % env
 
-    preseed_env = ['DEBIAN_FRONTEND=noninteractive',
-                   'DJANGO_SETTINGS_MODULE=tribus.config.web',
-                   'PYTHONPATH=%(basedir)s' % env]
+    env.preseed_env_dict = {
+        'DEBIAN_FRONTEND': 'noninteractive',
+        'DJANGO_SETTINGS_MODULE': 'tribus.config.web',
+        'PYTHONPATH': '%(basedir)s:${PYTHONPATH}' % env
+    }
+    preseed_env = ['%s=%s' % (i, j) for i, j in env.preseed_env_dict.items()]
     mounts = ['%(basedir)s:%(basedir)s:rw' % env]
     start_services = ['mongodb', 'postgresql', 'redis-server', 'slapd', 'ssh']
 
