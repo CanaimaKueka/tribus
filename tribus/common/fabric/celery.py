@@ -18,19 +18,21 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-'''
-
-Django management script for Tribus
-===================================
-
-This file is an entry point for managing Tribus in development mode.
-
-'''
+from fabric.api import run, env, cd, shell_env
+from tribus.common.fabric.docker import docker_check_container
 
 
-if __name__ == "__main__":
+def celery_purge_tasks():
+    '''
+    '''
 
-    import sys
-    from django.core.management import execute_from_command_line
+    docker_check_container()
 
-    execute_from_command_line(sys.argv)
+    env.host_string = '127.0.0.1'
+    env.user = 'root'
+    env.port = '22222'
+    env.password = 'tribus'
+
+    with cd(env.basedir):
+        with shell_env(**env.preseed_env_dict):
+            run('python manage.py celery purge', shell_escape=False)

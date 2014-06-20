@@ -18,19 +18,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-'''
-
-Django management script for Tribus
-===================================
-
-This file is an entry point for managing Tribus in development mode.
-
-'''
+from django.core.management.base import BaseCommand
+from tribus.common.repository import download_sample_packages
+from tribus.config.pkgrecorder import CANAIMA_ROOT, LOCAL_ROOT, SAMPLES_DIR
 
 
-if __name__ == "__main__":
+class Command(BaseCommand):
 
-    import sys
-    from django.core.management import execute_from_command_line
-
-    execute_from_command_line(sys.argv)
+    def handle(self, *args, **options):
+        download_sample_packages(CANAIMA_ROOT, SAMPLES_DIR)
+        urllib.urlretrieve(os.path.join(CANAIMA_ROOT, "distributions"),
+                           os.path.join(LOCAL_ROOT, "distributions"))

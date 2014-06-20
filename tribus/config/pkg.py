@@ -32,42 +32,35 @@ from tribus.common.setup.utils import (get_requirements, get_dependency_links,
                                        get_classifiers)
 
 platforms = ('Any')
-keywords = (
-    'Social Network',
-    'Continuous Integration',
-    'Source Code Management')
+keywords = ('Social Network',
+            'Continuous Integration',
+            'Source Code Management')
 f_readme = get_path([DOCDIR, 'rst', 'readme.rst'])
 f_python_classifiers = get_path([CONFDIR, 'data', 'python-classifiers.list'])
-f_python_dependencies = get_path([CONFDIR, 'data', 'python-dependencies.list'])
-f_debian_build_dependencies = get_path(
-    [CONFDIR, 'data', 'debian-build-dependencies.list'])
-f_debian_maint_dependencies = get_path(
-    [CONFDIR, 'data', 'debian-maint-dependencies.list'])
-f_debian_run_dependencies = get_path(
-    [CONFDIR, 'data', 'debian-run-dependencies.list'])
 f_exclude_sources = get_path([CONFDIR, 'data', 'exclude-sources.list'])
 f_exclude_packages = get_path([CONFDIR, 'data', 'exclude-packages.list'])
 f_exclude_patterns = get_path([CONFDIR, 'data', 'exclude-patterns.list'])
-f_data_patterns = get_path([CONFDIR, 'data', 'include-data-patterns.list'])
-f_workenv_preseed = get_path([CONFDIR, 'data', 'preseed-slapd-debconf.conf'])
-f_sql_preseed = get_path([CONFDIR, 'data', 'preseed-db.sql'])
-f_users_ldif = get_path([CONFDIR, 'data', 'preseed-ldap-users.ldif'])
+f_include_data_patterns = get_path([CONFDIR, 'data',
+                                    'include-data-patterns.list'])
+
+f_python_dependencies = get_path([CONFDIR, 'data', 'python-dependencies.list'])
+f_debian_run_dependencies = get_path([CONFDIR, 'data', 'debian-run-dependencies.list'])
+f_debian_build_dependencies = get_path([CONFDIR, 'data', 'debian-build-dependencies.list'])
 
 exclude_sources = readconfig(filename=f_exclude_sources, conffile=False)
 exclude_packages = readconfig(filename=f_exclude_packages, conffile=False)
 exclude_patterns = readconfig(filename=f_exclude_patterns, conffile=False)
-include_data_patterns = readconfig(filename=f_data_patterns, conffile=False)
+include_data_patterns = readconfig(filename=f_include_data_patterns,
+                                   conffile=False)
 
 long_description = cat_file(filename=f_readme)
 classifiers = get_classifiers(filename=f_python_classifiers)
 install_requires = get_requirements(filename=f_python_dependencies)
 dependency_links = get_dependency_links(filename=f_python_dependencies)
-debian_build_dependencies = readconfig(
-    filename=f_debian_build_dependencies,
-    conffile=False)
-debian_maint_dependencies = readconfig(
-    filename=f_debian_maint_dependencies,
-    conffile=False)
-debian_run_dependencies = readconfig(
-    filename=f_debian_run_dependencies,
-    conffile=False)
+
+python_dependencies = readconfig(filename=f_python_dependencies,
+                                 conffile=False, strip_comments=False)
+debian_run_dependencies = readconfig(filename=f_debian_run_dependencies,
+                                     conffile=False)
+debian_build_dependencies = readconfig(filename=f_debian_build_dependencies,
+                                       conffile=False)

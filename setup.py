@@ -29,6 +29,7 @@ For more information about this file, see documentation on
 ``tribus/common/setup/utils.py``
 
 '''
+
 import sys
 import traceback
 from setuptools import setup

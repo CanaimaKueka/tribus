@@ -281,29 +281,28 @@ def list_items(path=None, dirs=True, files=True):
 
 def readconfig(filename, options=[], conffile=False, strip_comments=True):
     '''
+
     Reads a file whether if is a data or configuration file and returns
-    its content in a dictionary or a list. 
-    
+    its content in a dictionary or a list.
+
     :param filename: path to the file.
-    
     :param options: a list of aditional options.
-    
-    :param conffile: if True then the result will be a dictionary else the result will be a list.
-    
-    :param strip_comments: if True then the comments in the file will be deleted.
-     
+    :param conffile: if True then the result will be a dictionary else the
+                     result will be a list.
+    :param strip_comments: if True then the comments in the file will be
+                           deleted.
     :return: a Dictionary or a List.
- 
     :rtype: ``dict`` ``list``
- 
+
     .. versionadded:: 0.1
+
     '''
-    
-    try: 
+
+    try:
         f = urllib.urlopen(filename) # No estoy seguro si esto sea una buena idea
     except:
         f = open(filename)
-    
+
     if conffile:
         options = {}
     else:
@@ -327,10 +326,10 @@ def readconfig(filename, options=[], conffile=False, strip_comments=True):
 def md5Checksum(filePath):
     '''
     Returns the md5sum from a file. Taken from:
-    http://www.joelverhagen.com/blog/2011/02/md5-hash-of-file-in-python/ 
+    http://www.joelverhagen.com/blog/2011/02/md5-hash-of-file-in-python/
 
     :param filePath: path to the file from which its md5sum will be calculated.
-    
+
     .. versionadded:: 0.1
     '''
     if os.path.exists(filePath):

@@ -18,19 +18,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-'''
-
-Django management script for Tribus
-===================================
-
-This file is an entry point for managing Tribus in development mode.
-
-'''
+from django.core.management.base import BaseCommand
+from tribus.common.recorder import fill_db_from_cache, create_cache
+from tribus.config.pkgrecorder import LOCAL_ROOT
 
 
-if __name__ == "__main__":
+class Command(BaseCommand):
 
-    import sys
-    from django.core.management import execute_from_command_line
-
-    execute_from_command_line(sys.argv)
+    def handle(self, *args, **options):
+        create_cache(LOCAL_ROOT, PACKAGECACHE)
+        fill_db_from_cache(PACKAGECACHE)

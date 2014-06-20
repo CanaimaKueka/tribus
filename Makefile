@@ -1,5 +1,4 @@
 #!/usr/bin/make -f
-# -*- makefile -*-
 #
 # Copyright (C) 2013 Desarrolladores de Tribus
 #
@@ -19,240 +18,266 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
+# COMMON VARIABLES & CONFIG ----------------------------------------------------
+# ------------------------------------------------------------------------------
+
 SHELL = sh -e
 PATH = "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
-FAB = fab
-SU = su
-APTITUDE = aptitude
 FAB = $(shell which fab)
+BASH = $(shell which bash)
 SU = $(shell which su)
+SUDO = $(shell which sudo)
 APTITUDE = $(shell which aptitude)
+USER = $(shell id -u -n)
+ROOT = root
 
-# MAINTAINER TASKS ---------------------------------------------------------------------------------
 
-checkpkg:
+# HELPER TASKS -----------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
-	@printf "Checking if we have $(PACKAGE) ... "
-	@if [ -z $(shell which $(TESTBIN)) ]; then \
-		echo "[ABSENT]"; \
-		echo "Installing $(PACKAGE) ... "; \
-		echo "Enter your root password:"; \
-		$(SU) root -c 'DEBIAN_FRONTEND="noninteractive" $(APTITUDE) install --assume-yes --allow-untrusted -o DPkg::Options::="--force-confmiss" -o DPkg::Options::="--force-confnew" -o DPkg::Options::="--force-overwrite" $(PACKAGE)'; \
-	else \
-		echo "[OK]"; \
-	fi
-	@echo
+dependencies:
 
-fabric:
+	@# With this script we will satisfy dependencies on the supported
+	@# distributions.
+	@$(BASH) tribus/data/scripts/satisfy-depends.sh
 
-	@$(MAKE) checkpkg PACKAGE=fabric TESTBIN=fab
-	@$(MAKE) checkpkg PACKAGE=openssh-server TESTBIN=sshd
+generate_debian_base_image_i386:
 
-runserver: fabric
+	@$(FAB) development generate_debian_base_image_i386
 
-	@$(FAB) development runserver_django
-	
-runceleryworker: fabric
+generate_debian_base_image_amd64:
 
-	@$(FAB) development runcelery_worker
-	
-runcelerydaemon: fabric
+	@$(FAB) development generate_debian_base_image_amd64
 
-	@$(FAB) development runcelery_daemon
+generate_tribus_base_image_i386:
 
-shell: fabric
+	@$(FAB) development generate_tribus_base_image_i386
 
-	@$(FAB) development shell_django
+generate_tribus_base_image_amd64:
 
-prepare: fabric
+	@$(FAB) development generate_tribus_base_image_amd64
 
-	@$(FAB) development build_js
-	@$(FAB) development build_css
-	
+kill_all_containers:
 
-syncdb: fabric
+	@$(FAB) development docker_kill_all_containers
 
-	@$(FAB) development syncdb_django
+kill_all_images:
 
-environment: fabric
+	@$(FAB) development docker_kill_all_images
 
-	@$(FAB) development environment
+kill_tribus_images:
+
+	@$(FAB) development docker_kill_tribus_images
+
+
+# COMMON TASKS -----------------------------------------------------------------
+# ------------------------------------------------------------------------------
+
+environment: dependencies
+
+	@$(FAB) development docker_pull_debian_base_image
+	@$(FAB) development docker_pull_tribus_base_image
+	@$(FAB) development django_syncdb
+
+start: dependencies
+
+	@$(FAB) development django_runserver
+
+stop: dependencies
+
+	@$(FAB) development docker_stop_container
+
+login: dependencies
+
+	@$(FAB) development docker_login_container
+
+reset: dependencies
+
+	@$(FAB) development docker_reset_container
+	@$(FAB) development django_syncdb
+
+update: dependencies
+
+	@$(FAB) development docker_update_container
+
+sync: dependencies
+
+	@$(FAB) development django_syncdb
+
+shell: dependencies
+
+	@$(FAB) development django_shell
 
 
 # REPOSITORY TASKS ------------------------------------------------------
 
-create_test_repository: fabric
+create_test_repository: dependencies
+
 	@$(FAB) development install_repository
 	@$(FAB) development select_sample_packages
 	@$(FAB) development get_sample_packages
 	@$(FAB) development index_sample_packages
 
 
-install_repository: fabric
+install_repository: dependencies
 
 	@$(FAB) development install_repository
 
-select_samples: fabric
+select_samples: dependencies
 
 	@$(FAB) development select_sample_packages
 
-get_samples: fabric
+get_samples: dependencies
 
 	@$(FAB) development get_sample_packages
-	
-get_selected: fabric
+
+get_selected: dependencies
 
 	@$(FAB) development get_selected
-	
-index_selected: fabric
+
+index_selected: dependencies
 
 	@$(FAB) development index_selected
 
-index_samples: fabric
+index_samples: dependencies
 
 	@$(FAB) development index_sample_packages
-	
+
 # -----------------------------------------------------------------------------
 
-filldb_from_local: fabric
+filldb_from_local: dependencies
 
 	@$(FAB) development filldb_from_local 
-	
-filldb_from_remote: fabric
+
+filldb_from_remote: dependencies
 
 	@$(FAB) development filldb_from_remote
-	
+
 
 # INDEX TASKS -----------------------------------------------------------------
 
-rebuild_index: fabric
+rebuild_index: dependencies
 
-	@$(FAB) development rebuild_index
-	
-clean_tasks: fabric
+	@$(FAB) development haystack_rebuild_index
 
-	@$(FAB) development clean_tasks
-	
+purge_tasks: dependencies
+
+	@$(FAB) development celery_purge_tasks
+
 # -----------------------------------------------------------------------------
 
 # TESTS TASKS -----------------------------------------------------------------
 
-wipe_repo: fabric
+wipe_repo: dependencies
 
 	@$(FAB) development wipe_repo
-	
+
 # -----------------------------------------------------------------------------
-	
-resetdb:
 
-	@$(FAB) development resetdb
-	
-update_virtualenv: fabric
-
-	@$(FAB) development update_virtualenv
-
-update_catalog: fabric 
+update_catalog: dependencies 
 
 	@$(FAB) development update_catalog
 
-compile_catalog: fabric 
+compile_catalog: dependencies 
 
 	@$(FAB) development compile_catalog
 
-init_catalog: fabric 
+init_catalog: dependencies 
 
 	@$(FAB) development init_catalog
 
-extract_messages: fabric 
+extract_messages: dependencies 
 
 	@$(FAB) development extract_messages
 
-tx_push: fabric 
+tx_push: dependencies 
 
 	@$(FAB) development tx_push
 
-tx_pull: fabric 
+tx_pull: dependencies 
 
 	@$(FAB) development tx_pull
 
 
 # BUILD TASKS ------------------------------------------------------------------------------
 
-build: fabric
+build: dependencies
 
 	@$(FAB) development build
 
-build_sphinx: fabric
+build_sphinx: dependencies
 
 	@$(FAB) development build_sphinx
 
-build_mo: fabric
+build_mo: dependencies
 
 	@$(FAB) development build_mo
 
-build_css: fabric
+build_css: dependencies
 
 	@$(FAB) development build_css
 
-build_js: fabric
+build_js: dependencies
 
 	@$(FAB) development build_js
 
-build_man: fabric
+build_man: dependencies
 
 	@$(FAB) development build_man
 
 
 # CLEAN TASKS ------------------------------------------------------------------------------
 
-clean: fabric
+clean: dependencies
 
 	@$(FAB) development clean
 
-clean_css: fabric
+clean_css: dependencies
 
 	@$(FAB) development clean_css
 
-clean_js: fabric
+clean_js: dependencies
 
 	@$(FAB) development clean_js
 
-clean_mo: fabric
+clean_mo: dependencies
 
 	@$(FAB) development clean_mo
 
-clean_sphinx: fabric
+clean_sphinx: dependencies
 
 	@$(FAB) development clean_sphinx
 
-clean_man: fabric
+clean_man: dependencies
 
 	@$(FAB) development clean_man
 
-clean_dist: fabric
+clean_dist: dependencies
 
 	@$(FAB) development clean_dist
 
-clean_pyc: fabric
+clean_pyc: dependencies
 
 	@$(FAB) development clean_pyc
 
-test: fabric
+test: dependencies
 
 	@$(FAB) development test
 
-install: fabric
+install: dependencies
 
 	@$(FAB) development install
 
-bdist: fabric
+bdist: dependencies
 
 	@$(FAB) development bdist
 
-sdist: fabric
+sdist: dependencies
 
 	@$(FAB) development sdist
 
-report_setup_data: fabric
+report_setup_data: dependencies
 
 	@$(FAB) development report_setup_data
+
+.PHONY: environment

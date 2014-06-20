@@ -4,7 +4,7 @@
 from django.shortcuts import render
 from tribus.web.admin.forms import ActiveModulesForm
 from django.http.response import HttpResponseRedirect
-from tribus.config.waffle_cfg import SWITCHES_CONFIGURATION
+from tribus.config.switches import SWITCHES_CONFIGURATION
 
 def tribus_config(request):
     context = {}

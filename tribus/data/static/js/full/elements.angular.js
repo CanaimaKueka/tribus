@@ -19,7 +19,6 @@ angular.element(document).ready(function(){
 
     formCheck = angular.element(
          document.querySelector('.input.form'));
-    console.log (formCheck,visible_email );
     formCheck.prop('ng-checked','true');
 
 
