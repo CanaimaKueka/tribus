@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  tribus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-23 08:29-0530\n"
+"POT-Creation-Date: 2014-06-22 06:28+0000\n"
 "PO-Revision-Date: 2013-12-10 21:46+0000\n"
 "Last-Translator: jsfrncscg <jsfrncscg@gmail.com>\n"
 "Language-Team: Arabic "
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-# c66db458e5664e288f81707b1a05efc5
+# d89ab2c302c34bedb150df2fdc35e6d4
 #: ../../copying.rst:3
 msgid "Copyright"
 msgstr ""

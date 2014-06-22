@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  tribus\n"
 "Report-Msgid-Bugs-To: desarrolladores@canaima.softwarelibre.gob.ve\n"
-"POT-Creation-Date: 2013-12-23 08:29-0630\n"
+"POT-Creation-Date: 2014-06-22 06:28+0000\n"
 "PO-Revision-Date: 2013-12-02 21:11+0000\n"
 "Last-Translator: jsfrncscg <jsfrncscg@gmail.com>\n"
 "Language-Team: Polish "
@@ -95,6 +95,332 @@ msgstr ""
 msgid "Go back"
 msgstr ""
 
+#: tribus/data/templates/admin/404.html:4
+#: tribus/data/templates/admin/404.html:8
+msgid "Page not found"
+msgstr ""
+
+#: tribus/data/templates/admin/404.html:10
+msgid "We're sorry, but the requested page could not be found."
+msgstr ""
+
+#: tribus/data/templates/admin/500.html:6
+#: tribus/data/templates/admin/app_index.html:7
+#: tribus/data/templates/admin/change_form.html:19
+#: tribus/data/templates/admin/change_list.html:41
+#: tribus/data/templates/admin/delete_confirmation.html:7
+#: tribus/data/templates/admin/delete_selected_confirmation.html:7
+#: tribus/data/templates/admin/invalid_setup.html:6
+#: tribus/data/templates/admin/object_history.html:7
+#: tribus/data/templates/admin/auth/user/change_password.html:13
+msgid "Home"
+msgstr ""
+
+#: tribus/data/templates/admin/500.html:7
+msgid "Server error"
+msgstr ""
+
+#: tribus/data/templates/admin/500.html:11
+msgid "Server error (500)"
+msgstr ""
+
+#: tribus/data/templates/admin/500.html:14
+msgid "Server Error <em>(500)</em>"
+msgstr ""
+
+#: tribus/data/templates/admin/500.html:15
+msgid ""
+"There's been an error. It's been reported to the site administrators via "
+"email and should be fixed shortly. Thanks for your patience."
+msgstr ""
+
+#: tribus/data/templates/admin/actions.html:4
+msgid "Run the selected action"
+msgstr ""
+
+#: tribus/data/templates/admin/actions.html:4
+msgid "Go"
+msgstr ""
+
+#: tribus/data/templates/admin/actions.html:11
+msgid "Click here to select the objects across all pages"
+msgstr ""
+
+#: tribus/data/templates/admin/actions.html:11
+#, python-format
+msgid "Select all %(total_count)s %(module_name)s"
+msgstr ""
+
+#: tribus/data/templates/admin/actions.html:13
+msgid "Clear selection"
+msgstr ""
+
+#: tribus/data/templates/admin/app_index.html:10
+#: tribus/data/templates/admin/index.html:21
+#, python-format
+msgid "%(name)s"
+msgstr ""
+
+#: tribus/data/templates/admin/auth/user/add_form.html:6
+msgid ""
+"First, enter a username and password. Then, you'll be able to edit more "
+"user options."
+msgstr ""
+
+#: tribus/data/templates/admin/auth/user/add_form.html:8
+msgid "Enter a username and password."
+msgstr ""
+
+#: tribus/data/templates/admin/auth/user/change_password.html:31
+#, python-format
+msgid "Enter a new password for the user <strong>%(username)s</strong>."
+msgstr ""
+
+#: tribus/data/templates/admin/auth/user/change_password.html:38
+#: tribus/web/registration/forms.py:81 tribus/web/registration/forms.py:178
+#: tribus/web/registration/forms.py:303
+msgid "Password"
+msgstr ""
+
+#: tribus/data/templates/admin/auth/user/change_password.html:44
+msgid "Password (again)"
+msgstr ""
+
+#: tribus/data/templates/admin/auth/user/change_password.html:45
+msgid "Enter the same password as above, for verification."
+msgstr ""
+
+#: tribus/data/templates/admin/base.html:47
+msgid "Welcome,"
+msgstr ""
+
+#: tribus/data/templates/admin/base.html:60
+msgid "Documentation"
+msgstr ""
+
+#: tribus/data/templates/admin/change_form.html:22
+#: tribus/data/templates/admin/index.html:33
+msgid "Add"
+msgstr ""
+
+#: tribus/data/templates/admin/change_form.html:32
+#: tribus/data/templates/admin/object_history.html:11
+msgid "History"
+msgstr ""
+
+#: tribus/data/templates/admin/change_form.html:33
+#: tribus/data/templates/admin/edit_inline/stacked.html:9
+#: tribus/data/templates/admin/edit_inline/tabular.html:30
+msgid "View on site"
+msgstr ""
+
+#: tribus/data/templates/admin/change_form.html:44
+#: tribus/data/templates/admin/change_list.html:67
+#: tribus/data/templates/admin/login.html:17
+#: tribus/data/templates/admin/auth/user/change_password.html:27
+msgid "Please correct the error below."
+msgid_plural "Please correct the errors below."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: tribus/data/templates/admin/change_list.html:58
+#, python-format
+msgid "Add %(name)s"
+msgstr ""
+
+#: tribus/data/templates/admin/change_list.html:78
+msgid "Filter"
+msgstr ""
+
+#: tribus/data/templates/admin/change_list_results.html:17
+msgid "Remove from sorting"
+msgstr ""
+
+#: tribus/data/templates/admin/change_list_results.html:18
+#, python-format
+msgid "Sorting priority: %(priority_number)s"
+msgstr ""
+
+#: tribus/data/templates/admin/change_list_results.html:19
+msgid "Toggle sorting"
+msgstr ""
+
+#: tribus/data/templates/admin/delete_confirmation.html:18
+#, python-format
+msgid ""
+"Deleting the %(object_name)s '%(escaped_object)s' would result in "
+"deleting related objects, but your account doesn't have permission to "
+"delete the following types of objects:"
+msgstr ""
+
+#: tribus/data/templates/admin/delete_confirmation.html:26
+#, python-format
+msgid ""
+"Deleting the %(object_name)s '%(escaped_object)s' would require deleting "
+"the following protected related objects:"
+msgstr ""
+
+#: tribus/data/templates/admin/delete_confirmation.html:34
+#, python-format
+msgid ""
+"Are you sure you want to delete the %(object_name)s "
+"\"%(escaped_object)s\"? All of the following related items will be "
+"deleted:"
+msgstr ""
+
+#: tribus/data/templates/admin/delete_confirmation.html:39
+#: tribus/data/templates/admin/delete_selected_confirmation.html:44
+msgid "Yes, I'm sure"
+msgstr ""
+
+#: tribus/data/templates/admin/delete_selected_confirmation.html:10
+msgid "Delete multiple objects"
+msgstr ""
+
+#: tribus/data/templates/admin/delete_selected_confirmation.html:17
+#, python-format
+msgid ""
+"Deleting the selected %(objects_name)s would result in deleting related "
+"objects, but your account doesn't have permission to delete the following"
+" types of objects:"
+msgstr ""
+
+#: tribus/data/templates/admin/delete_selected_confirmation.html:25
+#, python-format
+msgid ""
+"Deleting the selected %(objects_name)s would require deleting the "
+"following protected related objects:"
+msgstr ""
+
+#: tribus/data/templates/admin/delete_selected_confirmation.html:33
+#, python-format
+msgid ""
+"Are you sure you want to delete the selected %(objects_name)s? All of the"
+" following objects and their related items will be deleted:"
+msgstr ""
+
+#: tribus/data/templates/admin/edit_inline/stacked.html:26
+#: tribus/data/templates/admin/edit_inline/tabular.html:76
+msgid "Remove"
+msgstr ""
+
+#: tribus/data/templates/admin/edit_inline/stacked.html:27
+#: tribus/data/templates/admin/edit_inline/tabular.html:75
+#, python-format
+msgid "Add another %(verbose_name)s"
+msgstr ""
+
+#: tribus/data/templates/admin/edit_inline/tabular.html:17
+msgid "Delete?"
+msgstr ""
+
+#: tribus/data/templates/admin/filter.html:2
+#, python-format
+msgid " By %(filter_title)s "
+msgstr ""
+
+#: tribus/data/templates/admin/index.html:20
+#, python-format
+msgid "Models in the %(name)s application"
+msgstr ""
+
+#: tribus/data/templates/admin/index.html:39
+msgid "Change"
+msgstr ""
+
+#: tribus/data/templates/admin/index.html:49
+msgid "You don't have permission to edit anything."
+msgstr ""
+
+#: tribus/data/templates/admin/index.html:57
+msgid "Recent Actions"
+msgstr ""
+
+#: tribus/data/templates/admin/index.html:58
+msgid "My Actions"
+msgstr ""
+
+#: tribus/data/templates/admin/index.html:62
+msgid "None available"
+msgstr ""
+
+#: tribus/data/templates/admin/index.html:76
+msgid "Unknown content"
+msgstr ""
+
+#: tribus/data/templates/admin/invalid_setup.html:12
+msgid ""
+"Something's wrong with your database installation. Make sure the "
+"appropriate database tables have been created, and make sure the database"
+" is readable by the appropriate user."
+msgstr ""
+
+#: tribus/data/templates/admin/login.html:37
+msgid "Password:"
+msgstr ""
+
+#: tribus/data/templates/admin/login.html:44
+msgid "Forgotten your password or username?"
+msgstr ""
+
+#: tribus/data/templates/admin/object_history.html:23
+msgid "Date/time"
+msgstr ""
+
+#: tribus/data/templates/admin/object_history.html:24
+msgid "User"
+msgstr ""
+
+#: tribus/data/templates/admin/object_history.html:25
+msgid "Action"
+msgstr ""
+
+#: tribus/data/templates/admin/object_history.html:39
+msgid ""
+"This object doesn't have a change history. It probably wasn't added via "
+"this admin site."
+msgstr ""
+
+#: tribus/data/templates/admin/pagination.html:10
+msgid "Show all"
+msgstr ""
+
+#: tribus/data/templates/admin/pagination.html:11
+#: tribus/data/templates/admin/submit_line.html:3
+msgid "Save"
+msgstr ""
+
+#: tribus/data/templates/admin/search_form.html:7
+#: tribus/data/templates/cloud/categories.html:3
+msgid "Search"
+msgstr ""
+
+#: tribus/data/templates/admin/search_form.html:9
+#, python-format
+msgid "%(counter)s result"
+msgid_plural "%(counter)s results"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: tribus/data/templates/admin/search_form.html:9
+#, python-format
+msgid "%(full_result_count)s total"
+msgstr ""
+
+#: tribus/data/templates/admin/submit_line.html:5
+msgid "Save as new"
+msgstr ""
+
+#: tribus/data/templates/admin/submit_line.html:6
+msgid "Save and add another"
+msgstr ""
+
+#: tribus/data/templates/admin/submit_line.html:7
+msgid "Save and continue editing"
+msgstr ""
+
 #: tribus/data/templates/cloud/404.html:4
 #: tribus/data/templates/search/search.html:3
 msgid "Tribus Search"
@@ -140,10 +466,6 @@ msgstr ""
 msgid "Categories"
 msgstr ""
 
-#: tribus/data/templates/cloud/categories.html:3
-msgid "Search"
-msgstr ""
-
 #: tribus/data/templates/cloud/frontpage.html:10
 #, python-format
 msgid ""
@@ -183,27 +505,27 @@ msgid "Virtual package"
 msgstr ""
 
 #: tribus/data/templates/cloud/package_list.html:21
-#: tribus/data/templates/search/search.html:25
+#: tribus/data/templates/search/search.html:30
 msgid "No results found"
 msgstr ""
 
 #: tribus/data/templates/cloud/package_list.html:28
-#: tribus/data/templates/search/search.html:32
+#: tribus/data/templates/search/search.html:37
 msgid "previous"
 msgstr ""
 
 #: tribus/data/templates/cloud/package_list.html:32
-#: tribus/data/templates/search/search.html:36
+#: tribus/data/templates/search/search.html:41
 msgid "Page"
 msgstr ""
 
 #: tribus/data/templates/cloud/package_list.html:32
-#: tribus/data/templates/search/search.html:36
+#: tribus/data/templates/search/search.html:41
 msgid "of"
 msgstr ""
 
 #: tribus/data/templates/cloud/package_list.html:36
-#: tribus/data/templates/search/search.html:40
+#: tribus/data/templates/search/search.html:45
 msgid "next"
 msgstr ""
 
@@ -296,19 +618,17 @@ msgstr ""
 msgid "Dashboard"
 msgstr ""
 
-#: tribus/data/templates/dashboard.html:14
+#: tribus/data/templates/dashboard.html:16
+#: tribus/data/templates/dashboard.html:22
 #: tribus/data/templates/cloud/frontpage.html:9
 msgid "Application Cloud"
 msgstr ""
 
-#: tribus/data/templates/dashboard.html:19
-msgid "Continuous Integration"
-msgstr ""
-
-#: tribus/data/templates/dashboard.html:22
-#: tribus/data/templates/dashboard.html:30
-#: tribus/data/templates/dashboard.html:38
-#: tribus/data/templates/dashboard.html:46
+#: tribus/data/templates/dashboard.html:25
+#: tribus/data/templates/dashboard.html:35
+#: tribus/data/templates/dashboard.html:44
+#: tribus/data/templates/dashboard.html:52
+#: tribus/data/templates/dashboard.html:60
 #: tribus/data/templates/cloud/frontpage.html:17
 #: tribus/data/templates/cloud/frontpage.html:29
 #: tribus/data/templates/cloud/frontpage.html:36
@@ -316,83 +636,87 @@ msgstr ""
 msgid "We are working on this feature"
 msgstr ""
 
-#: tribus/data/templates/dashboard.html:27
+#: tribus/data/templates/dashboard.html:32
+msgid "Continuous Integration"
+msgstr ""
+
+#: tribus/data/templates/dashboard.html:41
 msgid "Project Management"
 msgstr ""
 
-#: tribus/data/templates/dashboard.html:35
+#: tribus/data/templates/dashboard.html:49
 msgid "Documentation Management"
 msgstr ""
 
-#: tribus/data/templates/dashboard.html:43
+#: tribus/data/templates/dashboard.html:57
 msgid "Translation Services"
 msgstr ""
 
-#: tribus/data/templates/dashboard.html:85
-#: tribus/data/templates/profile/profiles.html:255
+#: tribus/data/templates/dashboard.html:99
+#: tribus/data/templates/profile/profiles.html:259
 #: tribus/data/templates/profile/profiles_view.html:96
 msgid "Your message has been published."
 msgstr ""
 
-#: tribus/data/templates/dashboard.html:86
-#: tribus/data/templates/profile/profiles.html:256
+#: tribus/data/templates/dashboard.html:100
+#: tribus/data/templates/profile/profiles.html:260
 #: tribus/data/templates/profile/profiles_view.html:97
 msgid "There has been an error publishing your message. Please try again later."
 msgstr ""
 
-#: tribus/data/templates/dashboard.html:87
-#: tribus/data/templates/profile/profiles.html:257
+#: tribus/data/templates/dashboard.html:101
+#: tribus/data/templates/profile/profiles.html:261
 #: tribus/data/templates/profile/profiles_view.html:98
 msgid "Your message has been deleted."
 msgstr ""
 
-#: tribus/data/templates/dashboard.html:88
-#: tribus/data/templates/profile/profiles.html:258
+#: tribus/data/templates/dashboard.html:102
+#: tribus/data/templates/profile/profiles.html:262
 #: tribus/data/templates/profile/profiles_view.html:99
 msgid "There has been an error deleting your message. Please try again later."
 msgstr ""
 
-#: tribus/data/templates/dashboard.html:89
-#: tribus/data/templates/profile/profiles.html:259
+#: tribus/data/templates/dashboard.html:103
+#: tribus/data/templates/profile/profiles.html:263
 #: tribus/data/templates/profile/profiles_view.html:100
 msgid "There has been an error consulting more messages. Please try again later."
 msgstr ""
 
-#: tribus/data/templates/dashboard.html:90
-#: tribus/data/templates/profile/profiles.html:260
+#: tribus/data/templates/dashboard.html:104
+#: tribus/data/templates/profile/profiles.html:264
 #: tribus/data/templates/profile/profiles_view.html:101
 msgid "Your comment has been published."
 msgstr ""
 
-#: tribus/data/templates/dashboard.html:91
-#: tribus/data/templates/profile/profiles.html:261
+#: tribus/data/templates/dashboard.html:105
+#: tribus/data/templates/profile/profiles.html:265
 #: tribus/data/templates/profile/profiles_view.html:102
 msgid "There has been an error publishng your comment. Please try again later."
 msgstr ""
 
-#: tribus/data/templates/dashboard.html:92
-#: tribus/data/templates/profile/profiles.html:262
+#: tribus/data/templates/dashboard.html:106
+#: tribus/data/templates/profile/profiles.html:266
 #: tribus/data/templates/profile/profiles_view.html:103
 msgid "Your comment has been deleted."
 msgstr ""
 
-#: tribus/data/templates/dashboard.html:93
-#: tribus/data/templates/profile/profiles.html:263
+#: tribus/data/templates/dashboard.html:107
+#: tribus/data/templates/profile/profiles.html:267
 #: tribus/data/templates/profile/profiles_view.html:104
 msgid "There has been an error deleting your comment. Please try again later."
 msgstr ""
 
-#: tribus/data/templates/footer.html:7 tribus/data/templates/terms.html:3
+#: tribus/data/templates/footer.html:8 tribus/data/templates/terms.html:3
 #: tribus/data/templates/terms.html:14
 msgid "Terms of Service"
 msgstr ""
 
-#: tribus/data/templates/footer.html:9 tribus/data/templates/privacy.html:3
+#: tribus/data/templates/footer.html:10 tribus/data/templates/privacy.html:3
 #: tribus/data/templates/privacy.html:14
 msgid "Privacy Policy"
 msgstr ""
 
-#: tribus/data/templates/footer.html:14
+#: tribus/data/templates/footer.html:16
 msgid "Tribus is Free Software"
 msgstr ""
 
@@ -500,22 +824,27 @@ msgid ""
 "take care of the HTML for you."
 msgstr ""
 
-#: tribus/data/templates/navbar.html:24
+#: tribus/data/templates/navbar.html:25
 msgid "What are you looking for?"
 msgstr ""
 
-#: tribus/data/templates/navbar.html:52
+#: tribus/data/templates/navbar.html:57
+#: tribus/data/templates/admin/base.html:67
+#: tribus/data/templates/admin/auth/user/change_password.html:17
+#: tribus/data/templates/admin/auth/user/change_password.html:51
 #: tribus/data/templates/registration/password_change_form.html:3
 #: tribus/data/templates/registration/password_change_form.html:9
 #: tribus/data/templates/registration/password_change_form.html:19
 msgid "Change password"
 msgstr ""
 
-#: tribus/data/templates/navbar.html:55
+#: tribus/data/templates/navbar.html:60
+#: tribus/data/templates/admin/base.html:73
 msgid "Logout"
 msgstr ""
 
-#: tribus/data/templates/navbar.html:67
+#: tribus/data/templates/navbar.html:72
+#: tribus/data/templates/admin/login.html:48
 #: tribus/data/templates/registration/login_form.html:3
 #: tribus/data/templates/registration/login_form.html:9
 #: tribus/data/templates/registration/login_form.html:47
@@ -620,71 +949,75 @@ msgstr ""
 msgid "Change avatar"
 msgstr ""
 
-#: tribus/data/templates/profile/profiles.html:43
+#: tribus/data/templates/profile/profiles.html:45
 #: tribus/data/templates/profile/profiles_view.html:51
 msgid "Wall"
 msgstr ""
 
-#: tribus/data/templates/profile/profiles.html:50
+#: tribus/data/templates/profile/profiles.html:52
 msgid "Edit Profile"
 msgstr ""
 
-#: tribus/data/templates/profile/profiles.html:55
+#: tribus/data/templates/profile/profiles.html:57
 msgid "Description"
 msgstr ""
 
 #: tribus/data/templates/profile/profiles.html:58
+msgid "Email Visible"
+msgstr ""
+
+#: tribus/data/templates/profile/profiles.html:61
 msgid "Confirm"
 msgstr ""
 
-#: tribus/data/templates/profile/profiles.html:65
+#: tribus/data/templates/profile/profiles.html:68
 msgid "Follows"
 msgstr ""
 
-#: tribus/data/templates/profile/profiles.html:74
-#: tribus/data/templates/profile/profiles.html:156
+#: tribus/data/templates/profile/profiles.html:77
+#: tribus/data/templates/profile/profiles.html:158
 msgid "Are you looking for someone?"
 msgstr ""
 
-#: tribus/data/templates/profile/profiles.html:111
-#: tribus/data/templates/profile/profiles.html:186
+#: tribus/data/templates/profile/profiles.html:114
+#: tribus/data/templates/profile/profiles.html:188
 msgid "No matches found!"
 msgstr ""
 
-#: tribus/data/templates/profile/profiles.html:114
-#: tribus/data/templates/profile/profiles.html:189
+#: tribus/data/templates/profile/profiles.html:117
+#: tribus/data/templates/profile/profiles.html:191
 msgid "We were unable to find a user that matches your query."
 msgstr ""
 
-#: tribus/data/templates/profile/profiles.html:121
+#: tribus/data/templates/profile/profiles.html:124
 msgid "You are not following anyone"
 msgstr ""
 
-#: tribus/data/templates/profile/profiles.html:124
+#: tribus/data/templates/profile/profiles.html:127
 msgid ""
 "You are not following any user in Tribus. See if your friends are in "
 "Tribus by entering their names in the search bar on the top of the page."
 msgstr ""
 
-#: tribus/data/templates/profile/profiles.html:131
-#: tribus/data/templates/profile/profiles.html:206
+#: tribus/data/templates/profile/profiles.html:134
+#: tribus/data/templates/profile/profiles.html:208
 msgid "Previous"
 msgstr ""
 
-#: tribus/data/templates/profile/profiles.html:138
-#: tribus/data/templates/profile/profiles.html:213
+#: tribus/data/templates/profile/profiles.html:140
+#: tribus/data/templates/profile/profiles.html:214
 msgid "Next"
 msgstr ""
 
-#: tribus/data/templates/profile/profiles.html:147
+#: tribus/data/templates/profile/profiles.html:149
 msgid "Followers"
 msgstr ""
 
-#: tribus/data/templates/profile/profiles.html:196
+#: tribus/data/templates/profile/profiles.html:198
 msgid "You have no followers!"
 msgstr ""
 
-#: tribus/data/templates/profile/profiles.html:199
+#: tribus/data/templates/profile/profiles.html:201
 msgid ""
 "You have no followers (yet). Start following people and write about you "
 "so that other people take interest in what you write."
@@ -883,22 +1216,22 @@ msgstr ""
 msgid "Sign up to Tribus"
 msgstr ""
 
-#: tribus/data/templates/search/search.html:10
+#: tribus/data/templates/search/search.html:11
 msgid "Search results"
 msgstr ""
 
-#: tribus/data/templates/search/search.html:48
-#: tribus/data/templates/search/search.html:52
+#: tribus/data/templates/search/search.html:53
+#: tribus/data/templates/search/search.html:63
 msgid "Filters:"
 msgstr ""
 
-#: tribus/data/templates/search/search.html:49
-#: tribus/data/templates/search/search.html:53
+#: tribus/data/templates/search/search.html:55
+#: tribus/data/templates/search/search.html:65
 msgid "Packages"
 msgstr ""
 
-#: tribus/data/templates/search/search.html:50
-#: tribus/data/templates/search/search.html:54
+#: tribus/data/templates/search/search.html:59
+#: tribus/data/templates/search/search.html:68
 msgid "Users"
 msgstr ""
 
@@ -966,92 +1299,100 @@ msgid ""
 " arising from your failure to comply with the above"
 msgstr ""
 
-#: tribus/data/templates/tribs.html:17
+#: tribus/data/templates/tribs.html:20
 msgid "What are you doing?"
 msgstr ""
 
-#: tribus/data/templates/tribs.html:24
+#: tribus/data/templates/tribs.html:27
 msgid "Publish"
 msgstr ""
 
-#: tribus/data/templates/tribs.html:35
+#: tribus/data/templates/tribs.html:38 tribus/data/templates/tribs.html:169
 msgid "Welcome to Tribus!"
 msgstr ""
 
-#: tribus/data/templates/tribs.html:38
+#: tribus/data/templates/tribs.html:41
 msgid ""
 "This is the dashboard, a place where you can follow the updates of your "
 "favorite projects and partners."
 msgstr ""
 
-#: tribus/data/templates/tribs.html:39
+#: tribus/data/templates/tribs.html:42
 msgid ""
 "Start by looking for your friends in the search bar on the top of the "
 "screen. Then, click on the Follow button in your friend's profile to "
 "start following their updates in your dashboard."
 msgstr ""
 
-#: tribus/data/templates/tribs.html:40
+#: tribus/data/templates/tribs.html:43 tribus/data/templates/tribs.html:173
 msgid "You can always come back here by clicking on the Tribus logo."
 msgstr ""
 
-#: tribus/data/templates/tribs.html:47
+#: tribus/data/templates/tribs.html:50
 #, python-format
 msgid "Hi %(user_from_template)s, this is your profile."
 msgstr ""
 
-#: tribus/data/templates/tribs.html:48
+#: tribus/data/templates/tribs.html:51
 msgid "Start by writing something on your wall."
 msgstr ""
 
-#: tribus/data/templates/tribs.html:55
+#: tribus/data/templates/tribs.html:58
 #, python-format
 msgid "This is the profile of %(user_from_template)s."
 msgstr ""
 
-#: tribus/data/templates/tribs.html:56
+#: tribus/data/templates/tribs.html:59
 #, python-format
 msgid "%(user_from_template)s has not written anything yet."
 msgstr ""
 
-#: tribus/data/templates/tribs.html:80 tribus/data/templates/tribs.html:133
+#: tribus/data/templates/tribs.html:83 tribus/data/templates/tribs.html:136
 msgid "Comment"
 msgstr ""
 
-#: tribus/data/templates/tribs.html:83
+#: tribus/data/templates/tribs.html:86
+#: tribus/data/templates/admin/delete_confirmation.html:11
+#: tribus/data/templates/admin/submit_line.html:4
 msgid "Delete"
 msgstr ""
 
-#: tribus/data/templates/tribs.html:91
+#: tribus/data/templates/tribs.html:94
 msgid "Load more comments"
 msgstr ""
 
-#: tribus/data/templates/tribs.html:127
+#: tribus/data/templates/tribs.html:130
 msgid "What do you want to say?"
 msgstr ""
 
-#: tribus/data/templates/tribs.html:151
+#: tribus/data/templates/tribs.html:154
 msgid "Are you sure you want to delete this message?"
 msgstr ""
 
-#: tribus/data/templates/tribs.html:155
+#: tribus/data/templates/tribs.html:158
 msgid "Cancel"
 msgstr ""
 
-#: tribus/data/templates/tribs.html:158
+#: tribus/data/templates/tribs.html:161
 msgid "Delete message"
 msgstr ""
 
-#: tribus/web/forms.py:44 tribus/web/forms.py:46 tribus/web/forms.py:65
-#: tribus/web/forms.py:67
+#: tribus/data/templates/tribs.html:172
+msgid ""
+"This is the dashboard, a place where you can follow the updates of your "
+"projects."
+msgstr ""
+
+#: tribus/web/forms.py:44 tribus/web/forms.py:46 tribus/web/forms.py:64
+#: tribus/web/forms.py:66
 msgid "Enter a valid value."
 msgstr ""
 
-#: tribus/web/profile/forms.py:23
+#: tribus/web/profile/forms.py:26
 msgid "Descripcion"
 msgstr ""
 
-#: tribus/web/profile/forms.py:34 tribus/web/registration/forms.py:75
+#: tribus/web/profile/forms.py:38 tribus/web/registration/forms.py:75
 #: tribus/web/registration/forms.py:126 tribus/web/registration/forms.py:143
 #: tribus/web/registration/forms.py:160
 msgid "This value may contain only letters, numbers and @/./+/-/_ characters."
@@ -1063,11 +1404,6 @@ msgstr ""
 
 #: tribus/web/registration/forms.py:68
 msgid "Enter your username"
-msgstr ""
-
-#: tribus/web/registration/forms.py:81 tribus/web/registration/forms.py:178
-#: tribus/web/registration/forms.py:303
-msgid "Password"
 msgstr ""
 
 #: tribus/web/registration/forms.py:85

@@ -168,6 +168,11 @@ class build_sphinx(base_build_sphinx):
         # for locale in self.get_sphinx_locale_list():
         base_build_sphinx.run(self)
 
+        try:
+            shutil.rmtree(doctreedir)
+        except Exception as e:
+            print e
+
 
 class compile_catalog(base_compile_catalog):
 

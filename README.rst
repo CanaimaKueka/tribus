@@ -7,10 +7,23 @@ Tribus
 
 .. image:: https://coveralls.io/repos/CanaimaGNULinux/tribus/badge.png?branch=development
    :target: https://coveralls.io/r/CanaimaGNULinux/tribus
-   :alt: Coverage
+   :alt: Test Coverage
 
-.. image:: https://badge.fury.io/py/Tribus.png
-   :target: http://badge.fury.io/py/Tribus
+.. image:: https://pypip.in/license/Tribus/badge.png
+    :target: https://pypi.python.org/pypi/Tribus/
+    :alt: License
+
+.. image:: https://pypip.in/version/Tribus/badge.png
+    :target: https://pypi.python.org/pypi/Tribus/
+    :alt: Latest Version
+
+.. image:: https://pypip.in/download/Tribus/badge.png
+    :target: https://pypi.python.org/pypi/Tribus/
+    :alt: Downloads
+
+.. image:: https://badge.waffle.io/canaimagnulinux/tribus.png?label=ready&title=Ready 
+   :target: https://waffle.io/canaimagnulinux/tribus 
+   :alt: 'Stories in Ready'
 
 *Tribus* es una **red social** para la gestión de comunidades de software libre. Su objetivo es simplificar las tediosas y repetitivas tareas de mantenimiento, mientras pone a disposición de sus miembros **las mejores herramientas** que le permitirán **expresar su creatividad** y **desarrollar el máximo potencial de sus capacidades**.
 

@@ -154,15 +154,15 @@ class clean_sphinx(Command):
         pass
 
     def run(self):
-        html_dir = get_path([DOCDIR, 'html'])
-        if os.path.isdir(html_dir):
-            try:
-                shutil.rmtree(html_dir)
-                log.debug(
-                    "[%s.%s] Removing \"%s\"." %
-                    (__name__, self.__class__.__name__, html_dir))
-            except Exception as e:
-                print e
+        for sphnxdir in [get_path([DOCDIR, 'html']),
+                         get_path([DOCDIR, 'doctrees'])]:
+            if os.path.isdir(sphnxdir):
+                try:
+                    shutil.rmtree(sphnxdir)
+                    log.debug("[%s.%s] Removing \"%s\"." %
+                              (__name__, self.__class__.__name__, sphnxdir))
+                except Exception as e:
+                    print e
 
 
 class clean_man(Command):

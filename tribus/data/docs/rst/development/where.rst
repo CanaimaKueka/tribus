@@ -1,6 +1,6 @@
-=========================================
-Descripción de la estructura del proyecto
-=========================================
+======================================
+Documentación interna de las funciones
+======================================
 
 Tribus está dividido en varios paquetes de python, entre los que podemos mencionar:
 

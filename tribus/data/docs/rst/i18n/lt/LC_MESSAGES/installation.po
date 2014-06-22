@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tribus 0.1.dev20131118020506\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-23 08:29-0530\n"
-"PO-Revision-Date: 2013-11-18 00:52-2330\n"
+"POT-Creation-Date: 2014-06-22 06:28+0000\n"
+"PO-Revision-Date: 2013-11-18 00:52-2430\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: lt <LL@li.org>\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-# 3b14233ee19e4f87bbeebc47a4558121
+# a5f972385ab342a9a391c152bb32dfd0
 #: ../../installation.rst:3
 msgid "Instalación"
 msgstr ""

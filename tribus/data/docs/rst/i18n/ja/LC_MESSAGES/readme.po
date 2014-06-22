@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tribus 0.1.dev20131118020506\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-23 08:29-0530\n"
-"PO-Revision-Date: 2013-11-18 00:52-2330\n"
+"POT-Creation-Date: 2014-06-22 06:28+0000\n"
+"PO-Revision-Date: 2013-11-18 00:52-2430\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: ja <LL@li.org>\n"
 "Plural-Forms: nplurals=1; plural=0\n"
@@ -17,12 +17,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-# f4a5c8fe4e6a4772b6854cf4ef4d4af2
+# 7cbe82a27da24cd68eb220c8e3b25702
 #: ../../readme.rst:2
 msgid "Acerca"
 msgstr ""
 
-# daf8f207798449529f72721c814bd637
+# c02f9306265b46159575079b1640ba42
 #: ../../readme.rst:4
 msgid ""
 "*Tribus* es una **red social** para la gestión de comunidades de software"
@@ -32,7 +32,7 @@ msgid ""
 "**desarrollar el máximo potencial de sus capacidades**."
 msgstr ""
 
-# 7d9e3c53263f4d0192f47990ab662bba
+# 7ed14aeaab3d4abea18c5cde4b8a38b7
 #: ../../readme.rst:6
 msgid ""
 "*Tribus* promueve la **autogestión** y la **corresponsabilidad** en las "
@@ -41,12 +41,12 @@ msgid ""
 "natural** de los roles."
 msgstr ""
 
-# 3fede5fcb0fd4caa931c0240c25e2f50
+# fc4400d5407c4b86ab936fec1b50ff94
 #: ../../readme.rst:9
 msgid "¿Cómo funciona?"
 msgstr ""
 
-# 4f65a5155d18497cb1fdba4da5637b32
+# b58e0881552b4eaba009443afa8bbc68
 #: ../../readme.rst:11
 msgid ""
 "*Tribus* permite una gestión descentralizada a través del reconocimiento "
@@ -54,7 +54,7 @@ msgid ""
 "responsabilidades según el nivel de experiencia alcanzado."
 msgstr ""
 
-# f22542dd5e9343ec8e24d3669ae2b4fe
+# 4bb896000104446f8db5e66b4b7c2b40
 #: ../../readme.rst:13
 msgid ""
 "El reconocimiento (o valoración) se realiza según un patrón establecido "
@@ -65,7 +65,7 @@ msgid ""
 " que él y todos los demás miembros serán valorados."
 msgstr ""
 
-# a3cdda4c0d1e4a758ba58c24b66d8e5e
+# 8ac0d3a5b6214ac9b0aa1594e80c597d
 #: ../../readme.rst:15
 msgid ""
 "El reconocimiento sirve para establecer una metrica relativa de la "
@@ -76,7 +76,7 @@ msgid ""
 " de un *sistema de rangos o privilegios*."
 msgstr ""
 
-# ef7868b6ad724823afdf188860d9e7a3
+# f50a03ad380d48bd8829a938ccc25c76
 #: ../../readme.rst:17
 msgid ""
 "La plataforma permite realizar diferentes actividades para facilitar el "
@@ -89,7 +89,7 @@ msgid ""
 "estrictamente necesarios."
 msgstr ""
 
-# 4c667b8a183d424bafbe7f2e1241987c
+# 07ba2fdd815d4e72897b28131309b2a2
 #: ../../readme.rst:19
 msgid ""
 "Para mayor información, consulte la documentación en "

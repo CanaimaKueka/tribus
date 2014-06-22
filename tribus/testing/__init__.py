@@ -48,10 +48,13 @@ log = get_logger()
 
 
 class SetupTesting(TestSuite):
+
     """
 
+    This is the Test Suite of Tribus.
+
     Test Suite configuring Django settings and using DjangoTestSuiteRunner
-    as test runner. Also runs PEP8 and Coverage checks.
+    as test runner. Also runs Flake8, PEP257 and Coverage checks.
 
     """
 
@@ -87,13 +90,8 @@ class SetupTesting(TestSuite):
 
     def build_tests(self):
         """
-
         Build tests for inclusion in suite from resolved packages.
-        TODO: Cleanup/simplify this method, flow too complex,
-        too much duplication.
-
         """
-
         from django.db.models import get_app
         from django.test.simple import build_suite
 
@@ -101,7 +99,6 @@ class SetupTesting(TestSuite):
 
     def configure(self):
         """
-
         Configures Django settings.
 
         """
