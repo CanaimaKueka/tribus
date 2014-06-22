@@ -11,3 +11,7 @@ python-xapian
 python-setuptools
 libxml2
 libxslt1.1
+make
+git
+curl
+lsb-release

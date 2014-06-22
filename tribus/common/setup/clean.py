@@ -53,7 +53,7 @@ class clean_img(Command):
         for png_file in find_files(path=BASEDIR, pattern='*.png'):
             if os.path.isfile(png_file):
                 try:
-                    os.remove(png_file)
+                    os.unlink(png_file)
                     log.debug("[%s.%s] Removing \"%s\"." % (__name__,
                                                             self.__class__.__name__,
                                                             png_file))
@@ -75,7 +75,7 @@ class clean_pyc(Command):
         for pyc_file in find_files(path=BASEDIR, pattern='*.pyc'):
             if os.path.isfile(pyc_file):
                 try:
-                    os.remove(pyc_file)
+                    os.unlink(pyc_file)
                     log.debug("[%s.%s] Removing \"%s\"." % (__name__,
                                                             self.__class__.__name__,
                                                             pyc_file))
@@ -179,7 +179,7 @@ class clean_man(Command):
         man_file = get_path([DOCDIR, 'man', 'tribus.1'])
         if os.path.isfile(man_file):
             try:
-                shutil.rmtree(man_file)
+                os.unlink(man_file)
                 log.debug(
                     "[%s.%s] Removing \"%s\"." %
                     (__name__, self.__class__.__name__, man_file))
@@ -201,7 +201,7 @@ class clean_mo(Command):
         for mo_file in find_files(path=BASEDIR, pattern='*.mo'):
             if os.path.isfile(mo_file):
                 try:
-                    shutil.rmtree(mo_file)
+                    os.unlink(mo_file)
                     log.debug(
                         "[%s.%s] Removing \"%s\"." %
                         (__name__, self.__class__.__name__, mo_file))

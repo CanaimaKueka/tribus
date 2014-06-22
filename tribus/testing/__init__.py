@@ -161,14 +161,11 @@ class SetupTesting(TestSuite):
         pys = find_files(path=base, pattern='*.py')
         report = pep257.check(pys)
 
-        for r in report:
-            print r
-
-        # if len(list(report)) > 0:
-        #     for r in report:
-        #         log.info(r)
-        # else:
-        #     log.info("\nNo errors found!")
+        if len(list(report)) > 0:
+            for r in report:
+                log.info(r)
+        else:
+            log.info("\nNo errors found!")
 
     def coverage_report(self):
         '''
