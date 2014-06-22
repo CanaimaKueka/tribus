@@ -1,16 +1,17 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import os
-import mongoengine
+
+# import os
+# import mongoengine
 from tribus import BASEDIR
 from tribus.common.utils import get_path
 
 DEBUG = True
 
-try:
-    from tribus.config.ldap import AUTH_LDAP_BASE
-except:
-    pass
+# try:
+#     from tribus.config.ldap import AUTH_LDAP_BASE
+# except:
+#     pass
 
 SITE_ROOT = get_path([BASEDIR, 'tribus', 'web'])
 MEDIA_ROOT = ''

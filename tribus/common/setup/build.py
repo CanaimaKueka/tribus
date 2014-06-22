@@ -56,24 +56,13 @@ class build_css(Command):
         pass
 
     def run(self):
-        log.debug(
-            "[%s.%s] Compressing CSS." %
-            (__name__, self.__class__.__name__))
+        log.debug('[%s.%s] Compressing CSS.' % (__name__,
+                                                self.__class__.__name__))
 
-        CSSFULL_DIR = get_path(
-            [BASEDIR,
-             'tribus',
-             'data',
-             'static',
-             'css',
-             'full'])
-        CSSMIN_DIR = get_path(
-            [BASEDIR,
-             'tribus',
-             'data',
-             'static',
-             'css',
-             'min'])
+        CSSFULL_DIR = get_path([BASEDIR, 'tribus', 'data', 'static', 'css',
+                                'full'])
+        CSSMIN_DIR = get_path([BASEDIR, 'tribus', 'data', 'static', 'css',
+                               'min'])
 
         try:
             os.makedirs(CSSMIN_DIR)
@@ -93,7 +82,7 @@ class build_css(Command):
             except Exception as e:
                 print e
 
-            log.debug("[%s.%s] %s > %s." % (__name__, self.__class__.__name__,
+            log.debug('[%s.%s] %s > %s.' % (__name__, self.__class__.__name__,
                                             CSS_FILE, CSSMIN_FILE))
 
 

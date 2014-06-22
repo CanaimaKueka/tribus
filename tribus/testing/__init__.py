@@ -48,36 +48,32 @@ log = get_logger()
 
 
 class SetupTesting(TestSuite):
+    '''
 
-    """
-    Test Suite configuring Django settings and using
-    DjangoTestSuiteRunner as test runner.
-    Also runs PEP8 and Coverage checks.
-    """
+    Test Suite configuring Django settings and using DjangoTestSuiteRunner
+    as test runner. Also runs PEP8 and Coverage checks.
+
+    '''
 
     def __init__(self, *args, **kwargs):
         self.configure()
         self.coverage = coverage()
         self.coverage.start()
-        self.packages = get_packages(
-            path=BASEDIR,
-            exclude_packages=exclude_packages)
-        self.options = {
-            'failfast': '',
-            'autoreload': '',
-            'label': ['testing'],
-        }
+        self.packages = get_packages(path=BASEDIR,
+                                     exclude_packages=exclude_packages)
+        self.options = {'failfast': True,
+                        'autoreload': '',
+                        'label': ['testing']}
 
         super(SetupTesting, self).__init__(tests=self.build_tests(),
                                            *args, **kwargs)
 
         # Setup testrunner.
         from django.test.simple import DjangoTestSuiteRunner
-        self.test_runner = DjangoTestSuiteRunner(
-            verbosity=2,
-            interactive=False,
-            failfast=True
-        )
+        self.test_runner = DjangoTestSuiteRunner(verbosity=2,
+                                                 interactive=False,
+                                                 failfast=True)
+
         # South patches the test management command to handle the
         # SOUTH_TESTS_MIGRATE setting. Apply that patch if South is installed.
         try:
@@ -85,77 +81,31 @@ class SetupTesting(TestSuite):
             patch_for_test_db_setup()
         except ImportError:
             pass
+
         self.test_runner.setup_test_environment()
         self.old_config = self.test_runner.setup_databases()
 
-    def flake8_report(self):
-        """
-        Outputs flake8 report.
-        """
-        log.info("\n\nFlake8 Report:")
-        base = get_path([BASEDIR, 'tribus'])
-        pys = find_files(path=base, pattern='*.py')
-        flake8_style = get_style_guide()
-        report = flake8_style.check_files(pys)
-        print_report(report, flake8_style)
-
-    def pep257_report(self):
-        """
-        Outputs flake8 report.
-        """
-        log.info("\n\nPEP257 Report:")
-        base = get_path([BASEDIR, 'tribus'])
-        pys = find_files(path=base, pattern='*.py')
-        report = pep257.check_files(pys)
-
-        if len(report) > 0:
-            for r in report:
-                log.info(r)
-        else:
-            log.info("\nNo errors found!")
-
-    def coverage_report(self):
-        """
-        Outputs Coverage report to screen and coverage.xml.
-        """
-
-        include = ['%s*' % package for package in self.packages]
-        omit = ['*testing*']
-
-        log.info("\n\nCoverage Report:")
-        try:
-            self.coverage.stop()
-            self.coverage.report(include=include, omit=omit)
-        except CoverageException as e:
-            log.info("Coverage Exception: %s" % e)
-
-        if os.environ.get('TRAVIS'):
-            log.info("Submitting coverage to coveralls.io...")
-            try:
-                result = Coveralls()
-                result.wear()
-            except CoverallsException as e:
-                log.error("Coveralls Exception: %s" % e)
-
     def build_tests(self):
-        """
+        '''
+
         Build tests for inclusion in suite from resolved packages.
         TODO: Cleanup/simplify this method, flow too complex,
         too much duplication.
-        """
+
+        '''
+
         from django.db.models import get_app
         from django.test.simple import build_suite
 
-        tests = []
-        app = get_app(self.options['label'][0])
-        tests.append(build_suite(app))
-
-        return tests
+        return [build_suite(get_app('testing'))]
 
     def configure(self):
-        """
+        '''
+
         Configures Django settings.
-        """
+
+        '''
+
         from django.conf import settings
         from django.utils.importlib import import_module
 
@@ -174,16 +124,71 @@ class SetupTesting(TestSuite):
             settings.configure(**setting_attrs)
 
     def run(self, result, *args, **kwargs):
-        """
+        '''
+
         Run the test, teardown the environment and generate reports.
-        """
+
+        '''
+
         result.failfast = self.options['failfast']
         result = super(SetupTesting, self).run(result, *args, **kwargs)
         self.test_runner.teardown_databases(self.old_config)
         self.test_runner.teardown_test_environment()
 
-        self.coverage_report()
-        self.flake8_report()
+        # self.coverage_report()
+        # self.flake8_report()
         self.pep257_report()
 
         return result
+
+    def flake8_report(self):
+        '''
+        Outputs flake8 report.
+        '''
+        log.info("\n\nFlake8 Report:")
+        base = get_path([BASEDIR, 'tribus'])
+        pys = find_files(path=base, pattern='*.py')
+        flake8_style = get_style_guide()
+        report = flake8_style.check_files(pys)
+        print_report(report, flake8_style)
+
+    def pep257_report(self):
+        '''
+        Outputs flake8 report.
+        '''
+        log.info("\n\nPEP257 Report:")
+        base = get_path([BASEDIR, 'tribus'])
+        pys = find_files(path=base, pattern='*.py')
+        report = pep257.check(pys)
+
+        for r in report:
+            print r
+
+        # if len(list(report)) > 0:
+        #     for r in report:
+        #         log.info(r)
+        # else:
+        #     log.info("\nNo errors found!")
+
+    def coverage_report(self):
+        '''
+        Outputs Coverage report to screen and coverage.xml.
+        '''
+
+        include = ['%s*' % package for package in self.packages]
+        omit = ['*testing*']
+
+        log.info("\n\nCoverage Report:")
+        try:
+            self.coverage.stop()
+            self.coverage.report(include=include, omit=omit)
+        except CoverageException as e:
+            log.info("Coverage Exception: %s" % e)
+
+        if os.environ.get('TRAVIS'):
+            log.info("Submitting coverage to coveralls.io...")
+            try:
+                result = Coveralls()
+                result.wear()
+            except CoverallsException as e:
+                log.error("Coveralls Exception: %s" % e)

@@ -6,3 +6,4 @@ build
 virtualenv
 ez_setup
 distribute_setup
+*.egg

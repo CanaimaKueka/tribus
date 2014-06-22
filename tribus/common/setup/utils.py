@@ -30,7 +30,6 @@ by Setuptools/Distutils setup script.
 
 import os
 import re
-import inspect
 import fnmatch
 
 from tribus.common.logger import get_logger
@@ -44,6 +43,7 @@ log = get_logger()
 
 def get_classifiers(filename=None):
     '''
+
     Reads python classifiers from a file.
 
     :param filename: a filename containing python classifiers
@@ -52,7 +52,9 @@ def get_classifiers(filename=None):
     :rtype: ``list``
 
     .. versionadded:: 0.1
+
     '''
+
     assert filename
     return readconfig(filename, conffile=False)
 
@@ -61,6 +63,7 @@ def get_classifiers(filename=None):
 #
 def get_dependency_links(filename=None):
     '''
+
     Procesess dependency links from a requirements file
     or a simple pip dependency file.
 
@@ -70,6 +73,7 @@ def get_dependency_links(filename=None):
     :rtype: ``list``
 
     .. versionadded:: 0.1
+
     '''
     assert filename is not None
     dependency_links = []
@@ -347,8 +351,8 @@ def get_setup_data(basedir):
             'extract_messages': {
                 'copyright_holder': ('setup.py', 'Desarrolladores de Tribus'),
                 'msgid_bugs_address':
-                    ('setup.py',
-                     'desarrolladores@canaima.softwarelibre.gob.ve'),
+                ('setup.py',
+                    'desarrolladores@canaima.softwarelibre.gob.ve'),
                 'output_file': ('setup.py', 'tribus/data/i18n/pot/django.pot'),
                 'charset': ('setup.py', 'utf-8'),
                 'sort_by_file': ('setup.py', True),

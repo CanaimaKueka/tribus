@@ -1,6 +1,5 @@
 import os
 import urllib
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
 from debian import deb822
 from tribus.web.cloud.models import Package, Details
 from tribus.common.utils import readconfig

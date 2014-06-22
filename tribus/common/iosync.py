@@ -30,6 +30,7 @@ ensure that everything gets written to disk synchronously.
 
 import os
 
+
 def sync():
     try:
         getattr(os, 'sync')

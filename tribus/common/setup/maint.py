@@ -28,8 +28,6 @@ tribus.common.setup.maint
 '''
 
 import os
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
-
 import sys
 import shutil
 from django.conf import settings

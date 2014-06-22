@@ -1,6 +1,5 @@
 import os
 import urllib
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
 from tribus.common.iosync import rmtree
 from debian import deb822
 
