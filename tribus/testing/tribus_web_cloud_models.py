@@ -124,7 +124,6 @@ class RegistrationModelTests(TestCase):
     def test_package_add_details(self):
         pass
     
-    
     def test_details_create(self):
         """
         El objetivo de este test es verificar que los campos de detalles
