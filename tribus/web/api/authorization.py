@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2013 Desarrolladores de Tribus
+# Copyright (C) 2013-2014 Tribus Developers
 #
 # This file is part of Tribus.
 #
@@ -127,15 +127,15 @@ class TimelineAuthorization(Authorization):
 class TribAuthorization(Authorization):
 
     def read_list(self, object_list, bundle):
-        '''
+        """
         Everyone can list each other's tribs.
-        '''
+        """
         return object_list
 
     def read_detail(self, object_list, bundle):
-        '''
+        """
         Everyone can read details about each other's tribs.
-        '''
+        """
         return True
 
     def create_detail(self, object_list, bundle):

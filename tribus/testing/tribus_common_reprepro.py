@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2013 Desarrolladores de Tribus
+# Copyright (C) 2013-2014 Tribus Developers
 #
 # This file is part of Tribus.
 #
@@ -19,14 +19,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-'''
+"""
 
 tribus.tests.tribus_common_recorder
 ================================
 
 These are the tests for the tribus.common.reprepro module.
 
-'''
+"""
 
 import os
 from django.test import TestCase
@@ -56,7 +56,7 @@ class RepreproFunctions(TestCase):
         self.assertTrue(os.path.isfile(os.path.join(test_repo, 'conf', 'distributions')))
         rmtree(test_repo)
     
-    '''
+    """
     def test_include_deb(self):
         # Para probar esta funcion necesitaria acceso a internet y a un repositorio 
         # que no este caido
@@ -67,5 +67,5 @@ class RepreproFunctions(TestCase):
         # Tambien necesito llenar el repositorio previamente
         pass
         #from tribus.common.reprepro import  reset_repository
-    '''
+    """
     

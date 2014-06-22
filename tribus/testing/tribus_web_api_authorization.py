@@ -8,9 +8,9 @@ from django.contrib.auth.models import User
 
 
 class EntryResourcesTest(ResourceTestCase):
-	'''
+	"""
 		Test para tribus.web.api.autorization.py
-	'''
+	"""
 	fixtures = ['test_entries.json']
 
 	def setUp(self):

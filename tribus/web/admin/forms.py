@@ -21,9 +21,9 @@ class AceCheckboxInput(forms.CheckboxInput):
 
 
 class ActiveModulesForm(forms.Form):
-    '''
+    """
     Documentar lo que se hace aqui y para que
-    '''
+    """
     
     def __init__(self, *args, **kwargs):
         super(ActiveModulesForm, self).__init__(args, kwargs)

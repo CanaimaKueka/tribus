@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2013 Desarrolladores de Tribus
+# Copyright (C) 2013-2014 Tribus Developers
 #
 # This file is part of Tribus.
 #
@@ -23,8 +23,8 @@ from tribus.common.fabric.docker import docker_check_container
 
 
 def get_selected():
-    '''
-    '''
+    """
+    """
 
     docker_check_container()
 
@@ -40,8 +40,8 @@ def get_selected():
 
 
 def install_repository():
-    '''
-    '''
+    """
+    """
 
     docker_check_container()
 
@@ -57,8 +57,8 @@ def install_repository():
 
 
 def get_sample_packages():
-    '''
-    '''
+    """
+    """
 
     docker_check_container()
 
@@ -74,8 +74,8 @@ def get_sample_packages():
 
 
 def select_sample_packages():
-    '''
-    '''
+    """
+    """
 
     docker_check_container()
 
@@ -91,8 +91,8 @@ def select_sample_packages():
 
 
 def index_selected():
-    '''
-    '''
+    """
+    """
 
     docker_check_container()
 
@@ -108,8 +108,8 @@ def index_selected():
 
 
 def index_sample_packages():
-    '''
-    '''
+    """
+    """
 
     docker_check_container()
 
@@ -125,8 +125,8 @@ def index_sample_packages():
 
 
 def wipe_repo():
-    '''
-    '''
+    """
+    """
 
     docker_check_container()
 
@@ -142,8 +142,8 @@ def wipe_repo():
 
 
 def filldb_from_remote():
-    '''
-    '''
+    """
+    """
 
     docker_check_container()
 
@@ -159,8 +159,8 @@ def filldb_from_remote():
 
 
 def filldb_from_local():
-    '''
-    '''
+    """
+    """
 
     docker_check_container()
 
@@ -176,8 +176,8 @@ def filldb_from_local():
 
 
 def create_cache_from_remote():
-    '''
-    '''
+    """
+    """
 
     docker_check_container()
 

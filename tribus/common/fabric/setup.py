@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2013 Desarrolladores de Tribus
+# Copyright (C) 2013-2014 Tribus Developers
 #
 # This file is part of Tribus.
 #
@@ -23,8 +23,8 @@ from tribus.common.fabric.docker import docker_check_container
 
 
 def update_catalog():
-    '''
-    '''
+    """
+    """
 
     docker_check_container()
 
@@ -39,8 +39,8 @@ def update_catalog():
 
 
 def extract_messages():
-    '''
-    '''
+    """
+    """
 
     docker_check_container()
 
@@ -55,8 +55,8 @@ def extract_messages():
 
 
 def compile_catalog():
-    '''
-    '''
+    """
+    """
 
     docker_check_container()
 
@@ -71,8 +71,8 @@ def compile_catalog():
 
 
 def init_catalog():
-    '''
-    '''
+    """
+    """
 
     docker_check_container()
 
@@ -87,8 +87,8 @@ def init_catalog():
 
 
 def tx_pull():
-    '''
-    '''
+    """
+    """
 
     docker_check_container()
 
@@ -103,8 +103,8 @@ def tx_pull():
 
 
 def tx_push():
-    '''
-    '''
+    """
+    """
 
     docker_check_container()
 
@@ -119,8 +119,8 @@ def tx_push():
 
 
 def build_sphinx():
-    '''
-    '''
+    """
+    """
 
     docker_check_container()
 
@@ -135,8 +135,8 @@ def build_sphinx():
 
 
 def build_css():
-    '''
-    '''
+    """
+    """
 
     docker_check_container()
 
@@ -151,8 +151,8 @@ def build_css():
 
 
 def build_js():
-    '''
-    '''
+    """
+    """
 
     docker_check_container()
 
@@ -167,8 +167,8 @@ def build_js():
 
 
 def build_man():
-    '''
-    '''
+    """
+    """
 
     docker_check_container()
 
@@ -183,8 +183,8 @@ def build_man():
 
 
 def build():
-    '''
-    '''
+    """
+    """
 
     docker_check_container()
 
@@ -199,8 +199,8 @@ def build():
 
 
 def clean_css():
-    '''
-    '''
+    """
+    """
 
     docker_check_container()
 
@@ -215,8 +215,8 @@ def clean_css():
 
 
 def clean_js():
-    '''
-    '''
+    """
+    """
 
     docker_check_container()
 
@@ -231,8 +231,8 @@ def clean_js():
 
 
 def clean_sphinx():
-    '''
-    '''
+    """
+    """
 
     docker_check_container()
 
@@ -247,8 +247,8 @@ def clean_sphinx():
 
 
 def clean_mo():
-    '''
-    '''
+    """
+    """
 
     docker_check_container()
 
@@ -263,8 +263,8 @@ def clean_mo():
 
 
 def clean_man():
-    '''
-    '''
+    """
+    """
 
     docker_check_container()
 
@@ -279,8 +279,8 @@ def clean_man():
 
 
 def clean_dist():
-    '''
-    '''
+    """
+    """
 
     docker_check_container()
 
@@ -295,8 +295,8 @@ def clean_dist():
 
 
 def clean_pyc():
-    '''
-    '''
+    """
+    """
 
     docker_check_container()
 
@@ -311,8 +311,8 @@ def clean_pyc():
 
 
 def clean():
-    '''
-    '''
+    """
+    """
 
     docker_check_container()
 
@@ -327,8 +327,8 @@ def clean():
 
 
 def sdist():
-    '''
-    '''
+    """
+    """
 
     docker_check_container()
 
@@ -343,8 +343,8 @@ def sdist():
 
 
 def bdist():
-    '''
-    '''
+    """
+    """
 
     docker_check_container()
 
@@ -359,8 +359,8 @@ def bdist():
 
 
 def install():
-    '''
-    '''
+    """
+    """
 
     docker_check_container()
 
@@ -375,8 +375,8 @@ def install():
 
 
 def test():
-    '''
-    '''
+    """
+    """
 
     docker_check_container()
 
@@ -391,8 +391,8 @@ def test():
 
 
 def report_setup_data():
-    '''
-    '''
+    """
+    """
 
     docker_check_container()
 

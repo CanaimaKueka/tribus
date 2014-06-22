@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2013 Desarrolladores de Tribus
+# Copyright (C) 2013-2014 Tribus Developers
 #
 # This file is part of Tribus.
 #
@@ -18,14 +18,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-'''
+"""
 
 tribus.common.repository
 ========================
 
 This module contains common functions to manage local and remote repositories.
 
-'''
+"""
 
 #=========================================================================
 # TODO:
@@ -48,7 +48,7 @@ logger = get_logger()
 
 
 def init_sample_packages(repository_root, samples_dir):
-    '''
+    """
 
     Creates a directory structure to store packages for its later use
     in a test package repository.
@@ -60,7 +60,7 @@ def init_sample_packages(repository_root, samples_dir):
 
     .. versionadded:: 0.1
 
-    '''
+    """
 
     if not os.path.isdir(samples_dir):
         os.makedirs(samples_dir)
@@ -97,7 +97,7 @@ def init_sample_packages(repository_root, samples_dir):
 
 def select_sample_packages(remote_control_file_path, package_list_path,
                            samples_dir, include_relations=False):
-    '''
+    """
 
     Reads a control file and makes a random selection of packages, then
     downloads the selected ones.
@@ -115,7 +115,7 @@ def select_sample_packages(remote_control_file_path, package_list_path,
 
     .. versionadded:: 0.1
 
-    '''
+    """
 
     # No sabria decir que es lo que esta mal aqui
     # pero no me gusta mucho la forma como se hace esto
@@ -156,7 +156,7 @@ def select_sample_packages(remote_control_file_path, package_list_path,
 
 
 def download_sample_packages(repository_root, samples_dir):
-    '''
+    """
 
     Reads all the files named 'list' present in the samples directory
     and downloads the packages in each 'list' file.
@@ -167,7 +167,7 @@ def download_sample_packages(repository_root, samples_dir):
 
     .. versionadded:: 0.1
 
-    '''
+    """
 
     files_list = find_files(samples_dir, 'list')
     for f in files_list:
@@ -186,7 +186,7 @@ def download_sample_packages(repository_root, samples_dir):
 
 
 def get_selected_packages(remote_root, samples_dir, list_path):
-    '''
+    """
 
     Creates a directory structure to store package samples for its later use
     in a test package repository.
@@ -196,7 +196,7 @@ def get_selected_packages(remote_root, samples_dir, list_path):
 
     .. versionadded:: 0.1
 
-    '''
+    """
 
     samples = readconfig(list_path, None, False, False)
     for sample in samples:

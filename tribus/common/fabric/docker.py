@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2013 Desarrolladores de Tribus
+# Copyright (C) 2013-2014 Tribus Developers
 #
 # This file is part of Tribus.
 #
@@ -23,8 +23,8 @@ from fabric.api import local, env
 
 
 def docker_kill_all_containers():
-    '''
-    '''
+    """
+    """
 
     containers = local(('sudo bash -c '
                         '"%(docker)s ps -aq"') % env, capture=True)
@@ -41,8 +41,8 @@ def docker_kill_all_containers():
 
 
 def docker_kill_all_images():
-    '''
-    '''
+    """
+    """
 
     images = local(('sudo bash -c '
                     '"%(docker)s images -aq"') % env, capture=True)
@@ -55,8 +55,8 @@ def docker_kill_all_images():
 
 
 def docker_kill_tribus_images():
-    '''
-    '''
+    """
+    """
 
     local(('sudo bash -c '
            '"%(docker)s rmi -f %(tribus_runtime_image)s '
@@ -65,8 +65,8 @@ def docker_kill_tribus_images():
 
 
 def docker_generate_debian_base_image():
-    '''
-    '''
+    """
+    """
 
     docker_stop_container()
     local(('sudo bash %(debian_base_image_script)s '
@@ -76,8 +76,8 @@ def docker_generate_debian_base_image():
 
 
 def generate_tribus_base_image_script():
-    '''
-    '''
+    """
+    """
 
     local(('echo "#!/usr/bin/env bash\n'
            '%(preseed_env)s\n'
@@ -106,8 +106,8 @@ def generate_tribus_base_image_script():
 
 
 def docker_generate_tribus_base_image():
-    '''
-    '''
+    """
+    """
 
     docker_stop_container()
     generate_tribus_base_image_script()
@@ -122,8 +122,8 @@ def docker_generate_tribus_base_image():
 
 
 def docker_pull_debian_base_image():
-    '''
-    '''
+    """
+    """
 
     docker_stop_container()
     local(('sudo bash -c '
@@ -132,8 +132,8 @@ def docker_pull_debian_base_image():
 
 
 def docker_pull_tribus_base_image():
-    '''
-    '''
+    """
+    """
 
     docker_stop_container()
     local(('sudo bash -c '
@@ -145,22 +145,22 @@ def docker_pull_tribus_base_image():
 
 
 def generate_debian_base_image_i386():
-    '''
-    '''
+    """
+    """
     env.arch = 'i386'
     docker_generate_debian_base_image()
 
 
 def generate_debian_base_image_amd64():
-    '''
-    '''
+    """
+    """
     env.arch = 'amd64'
     docker_generate_debian_base_image()
 
 
 def generate_tribus_base_image_i386():
-    '''
-    '''
+    """
+    """
     env.arch = 'i386'
     env.debian_base_image = 'luisalejandro/debian-i386:wheezy'
     env.tribus_base_image = 'luisalejandro/tribus-i386:wheezy'
@@ -169,8 +169,8 @@ def generate_tribus_base_image_i386():
 
 
 def generate_tribus_base_image_amd64():
-    '''
-    '''
+    """
+    """
     env.arch = 'amd64'
     env.debian_base_image = 'luisalejandro/debian-amd64:wheezy'
     env.tribus_base_image = 'luisalejandro/tribus-amd64:wheezy'
@@ -179,8 +179,8 @@ def generate_tribus_base_image_amd64():
 
 
 def docker_check_container():
-    '''
-    '''
+    """
+    """
 
     if local(('sudo bash -c '
               '"%(docker)s ps -a '
@@ -200,8 +200,8 @@ def docker_check_container():
 
 
 def docker_start_container():
-    '''
-    '''
+    """
+    """
 
     local(('echo "#!/usr/bin/env bash\n'
            '%(start_services)s\n'
@@ -217,8 +217,8 @@ def docker_start_container():
 
 
 def docker_stop_container():
-    '''
-    '''
+    """
+    """
 
     if local(('sudo bash -c '
               '"%(docker)s ps -a '
@@ -237,19 +237,22 @@ def docker_stop_container():
 
 
 def docker_login_container():
-    '''
-    '''
+    """
+    """
 
     docker_stop_container()
     local(('sudo bash -c '
-           '"%(docker)s run -it --name %(tribus_runtime_container)s '
+           '"%(docker)s run -it '
+           '-p 127.0.0.1:22222:22 '
+           '-p 127.0.0.1:8000:8000 '
+           '--name %(tribus_runtime_container)s '
            '%(mounts)s %(tribus_runtime_image)s bash"') % env, capture=False)
     docker_stop_container()
 
 
 def docker_update_container():
-    '''
-    '''
+    """
+    """
 
     docker_stop_container()
     generate_tribus_base_image_script()
@@ -261,8 +264,8 @@ def docker_update_container():
 
 
 def docker_reset_container():
-    '''
-    '''
+    """
+    """
 
     docker_stop_container()
     local(('sudo bash -c '

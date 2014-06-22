@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2013 Desarrolladores de Tribus
+# Copyright (C) 2013-2014 Tribus Developers
 #
 # This file is part of Tribus.
 #
@@ -29,13 +29,13 @@ from tribus.common.utils import get_path
 SAMPLESDIR = get_path([BASEDIR, "tribus", "testing", "samples" ])
 test_dist = "kukenan"
 
-'''
+"""
 tribus.tests.tribus_web_cloud_models
 ====================================
 
 These are the tests for the tribus.web.cloud models.
 
-'''
+"""
 
 class RegistrationModelTests(TestCase):
 
@@ -48,10 +48,10 @@ class RegistrationModelTests(TestCase):
     
     
     def test_maintainer_create(self):
-        '''
+        """
         El objetivo de este test es verificar que el registro de
         un mantenedor se haga correctamente.
-        '''
+        """
         
         maintainer_data = "Super Mantenedor 86 <supermaintainer86@maintainer.com>"
         test_maintainer = Maintainer.objects.create_auto(maintainer_data)
@@ -60,10 +60,10 @@ class RegistrationModelTests(TestCase):
     
     
     def test_package_create_auto(self):
-        '''
+        """
         El objetivo de este test es verificar que los campos basicos
         de un paquete sean registrados correctamente.
-        '''
+        """
         
         from tribus.config.pkgrecorder import PACKAGE_FIELDS, DETAIL_FIELDS
         paragraph = deb822.Packages(open(os.path.join(SAMPLESDIR, "Blender")))
@@ -107,10 +107,10 @@ class RegistrationModelTests(TestCase):
     
     
     def test_package_add_labels(self):
-        '''
+        """
         El objetivo de este test es verificar que las etiquetas de un
         paquete se registran correctamente.
-        '''
+        """
         
         paragraph = deb822.Packages(open(os.path.join(SAMPLESDIR, "Blender")))
         package, _ = Package.objects.get_or_create(Name = 'blender')
@@ -126,10 +126,10 @@ class RegistrationModelTests(TestCase):
     
     
     def test_details_create(self):
-        '''
+        """
         El objetivo de este test es verificar que los campos de detalles
         sean registrados correctamente.
-        '''
+        """
         
         from tribus.config.pkgrecorder import DETAIL_FIELDS
         paragraph = deb822.Packages(open(os.path.join(SAMPLESDIR, "Blender")))
@@ -145,11 +145,11 @@ class RegistrationModelTests(TestCase):
     
     
     def test_details_add_relation(self):
-        '''
+        """
         El objetivo de este test es verificar que las relaciones 
         se registren correctamente y de acuerdo al formato que maneja
         python-debian para archivos de control.
-        '''
+        """
         
         details, _ = Details.objects.get_or_create(Version = '2.63a-1',
                                                    Architecture = 'i386',

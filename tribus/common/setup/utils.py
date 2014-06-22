@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2013 Desarrolladores de Tribus
+# Copyright (C) 2013-2014 Tribus Developers
 #
 # This file is part of Tribus.
 #
@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-'''
+"""
 
 tribus.common.setup.utils
 =========================
@@ -26,7 +26,7 @@ tribus.common.setup.utils
 This module contains common functions to process the information needed
 by Setuptools/Distutils setup script.
 
-'''
+"""
 
 import os
 import re
@@ -42,7 +42,7 @@ log = get_logger()
 
 
 def get_classifiers(filename=None):
-    '''
+    """
 
     Reads python classifiers from a file.
 
@@ -53,7 +53,7 @@ def get_classifiers(filename=None):
 
     .. versionadded:: 0.1
 
-    '''
+    """
 
     assert filename
     return readconfig(filename, conffile=False)
@@ -62,7 +62,7 @@ def get_classifiers(filename=None):
 # TODO: Inspired from:
 #
 def get_dependency_links(filename=None):
-    '''
+    """
 
     Procesess dependency links from a requirements file
     or a simple pip dependency file.
@@ -74,7 +74,7 @@ def get_dependency_links(filename=None):
 
     .. versionadded:: 0.1
 
-    '''
+    """
     assert filename is not None
     dependency_links = []
     for line in readconfig(filename, conffile=False):
@@ -86,7 +86,7 @@ def get_dependency_links(filename=None):
 # TODO: Inspired from:
 #
 def get_requirements(filename=None):
-    '''
+    """
     Procesess dependencies from a requirements file
     or a simple pip dependency file.
 
@@ -96,7 +96,7 @@ def get_requirements(filename=None):
     :rtype: ``list``
 
     .. versionadded:: 0.1
-    '''
+    """
     assert filename is not None
     requirements = []
     for line in readconfig(filename, conffile=False, strip_comments=False):
@@ -117,7 +117,7 @@ def get_requirements(filename=None):
 
 
 def get_packages(path=None, exclude_packages=[]):
-    '''
+    """
     Returns a list of all python packages found within directory ``path``, with
     ``exclude_packages`` packages excluded.
 
@@ -132,7 +132,7 @@ def get_packages(path=None, exclude_packages=[]):
     :rtype: ``list``
 
     .. versionadded:: 0.1
-    '''
+    """
     assert path
     assert exclude_packages
     assert type(path) == str
@@ -152,7 +152,7 @@ def get_packages(path=None, exclude_packages=[]):
 
 def get_package_data(path=None, packages=None, data_files=None,
                      exclude_packages=None, exclude_files=None):
-    '''
+    """
     For a list of packages, find the package_data
 
     This function scans the subdirectories of a package and considers all
@@ -160,7 +160,7 @@ def get_package_data(path=None, packages=None, data_files=None,
     the package_data
 
     Returns a dictionary suitable for setup(package_data=<result>)
-    '''
+    """
     assert path is not None
     assert packages is not None
     assert data_files is not None
@@ -187,7 +187,7 @@ def get_package_data(path=None, packages=None, data_files=None,
 
 
 def get_data_files(path=None, patterns=None, exclude_files=None):
-    '''
+    """
 
     Procesess a list of patterns to get a list of files that should be put in
     a directory. This function helps the Tribus Maintainer to define a list of
@@ -221,7 +221,7 @@ def get_data_files(path=None, patterns=None, exclude_files=None):
 
     .. versionadded:: 0.1
 
-    '''
+    """
     assert path is not None
     assert patterns is not None
     path = os.path.normpath(path)
@@ -240,7 +240,7 @@ def get_data_files(path=None, patterns=None, exclude_files=None):
 
 
 def get_setup_data(basedir):
-    '''
+    """
     Prepares a dictionary of values to configure python Distutils.
 
     :param basedir: the path where the files reside. Generally the top level
@@ -249,7 +249,7 @@ def get_setup_data(basedir):
     :rtype: ``dictionary``
 
     .. versionadded:: 0.1
-    '''
+    """
     from tribus.config.base import (NAME, VERSION, URL, AUTHOR, AUTHOR_EMAIL,
                                     DESCRIPTION, LICENSE, DOCDIR)
     from tribus.config.pkg import (classifiers, long_description,

@@ -209,7 +209,7 @@ class Package(models.Model):
     
     
     def add_details(self, paragraph, branch, comp):
-        '''
+        """
         Creates a new Details objects and relates it to the package.
         
         :param paragraph: contains information about a binary package.
@@ -219,7 +219,7 @@ class Package(models.Model):
         :param comp: component to which the paragraph belongs.
         
         .. versionadded:: 0.2
-        '''
+        """
         
         details = Details.objects.create(Distribution=branch, Component = comp)
         for field, db_field in DETAIL_FIELDS.items():

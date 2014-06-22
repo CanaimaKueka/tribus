@@ -1,5 +1,5 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) 2013, Desarrolladores de Tribus
+# Copyright (C) 2014, Desarrolladores de Tribus
 # This file is distributed under the same license as the Tribus package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tribus 0.1a1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-23 08:29-0430\n"
+"POT-Creation-Date: 2014-06-22 06:28+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../../tutorial.rst:3
-# aea6e15aa90241e2a1c88cbd910b1a9a
+# 5ed8964a0b0e42b5a9dcd3cf9e7cfac7
 msgid "Tutorial"
 msgstr ""
 

@@ -32,14 +32,14 @@
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-'''
+"""
 
 tribus.common.setup.message_extractors
 ======================================
 
 This module contains message extractors that work with babel.
 
-'''
+"""
 
 from django.template import Lexer, TOKEN_TEXT, TOKEN_VAR, TOKEN_BLOCK
 from django.utils.translation.trans_real import (inline_re, block_re,
@@ -48,7 +48,7 @@ from django.utils.translation.trans_real import (inline_re, block_re,
 
 
 def django(fileobj, keywords, comment_tags, options):
-    '''
+    """
 
     Extract messages from Django template files.
 
@@ -62,7 +62,7 @@ def django(fileobj, keywords, comment_tags, options):
              tuples
     :rtype: ``iterator``
 
-    '''
+    """
     intrans = False
     inplural = False
     singular = []

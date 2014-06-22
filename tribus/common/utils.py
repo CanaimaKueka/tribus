@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2013 Desarrolladores de Tribus
+# Copyright (C) 2013-2014 Tribus Developers
 #
 # This file is part of Tribus.
 #
@@ -18,14 +18,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-'''
+"""
 
 tribus.common.utils
 ===================
 
 This module contains common and low level functions to all modules in Tribus.
 
-'''
+"""
 
 import os
 import re
@@ -35,7 +35,7 @@ import hashlib
 
 # Taken from: http://stackoverflow.com/a/2158532
 def flatten_list(l=[]):
-    '''
+    """
 
     Converts a nested list into one combined list.
 
@@ -52,7 +52,7 @@ def flatten_list(l=[]):
     >>> list(flatten_list(l))
     []
 
-    '''
+    """
     from collections import Iterable
     for el in l:
         if isinstance(el, Iterable) and not isinstance(el, basestring):
@@ -63,7 +63,7 @@ def flatten_list(l=[]):
 
 
 def cat_file(filename=None):
-    '''
+    """
 
     Outputs the contents of a file.
 
@@ -79,14 +79,14 @@ def cat_file(filename=None):
     >>> cat_file('/tmp/test_cat_file')
     'This is a test case\\n.'
 
-    '''
+    """
     assert filename
     assert type(filename) == str
     return open(filename).read()
 
 
 def get_path(path=[]):
-    '''
+    """
 
     Builds and normalizes a path. This will resolve symlinks to their
     destination and convert relative to absolute paths.
@@ -103,7 +103,7 @@ def get_path(path=[]):
     >>> get_path(p)
     '/usr/share/logs/vars/included/hola.deb'
 
-    '''
+    """
     assert path
     assert type(path) == list
     return os.path.normpath(os.path.realpath(
@@ -111,7 +111,7 @@ def get_path(path=[]):
 
 
 def package_to_path(package=None):
-    '''
+    """
 
     Converts a python package string (e.g. "foo.bar") to a path string
     (e.g. "foo/bar").
@@ -128,14 +128,14 @@ def package_to_path(package=None):
     >>> package_to_path(p)
     'tribus/common/setup/utils'
 
-    '''
+    """
     assert package
     assert type(package) == str
     return os.path.join(*package.split('.'))
 
 
 def path_to_package(path=None):
-    '''
+    """
 
     Converts a path string (e.g. "foo/bar") to a python package string
     (e.g. "foo.bar").
@@ -152,14 +152,14 @@ def path_to_package(path=None):
     >>> path_to_package(p)
     'tribus.common.setup.utils'
 
-    '''
+    """
     assert path
     assert type(path) == str
     return os.path.normpath(path).replace(os.sep, '.')
 
 
 def list_files(path=None):
-    '''
+    """
 
     Returns a list of all files in a directory (non-recursive).
 
@@ -169,7 +169,7 @@ def list_files(path=None):
 
     .. versionadded:: 0.1
 
-    '''
+    """
     assert path
     assert type(path) == str
     return [get_path([path, f]) for f in os.listdir(path)
@@ -177,7 +177,7 @@ def list_files(path=None):
 
 
 def find_files(path=None, pattern='*'):
-    '''
+    """
 
     Locate all the files matching the supplied filename pattern in and below
     the supplied root directory. If no pattern is supplied, all files will be
@@ -190,7 +190,7 @@ def find_files(path=None, pattern='*'):
 
     .. versionadded:: 0.1
 
-    '''
+    """
     d = []
     import fnmatch
     assert path
@@ -208,7 +208,7 @@ def find_files(path=None, pattern='*'):
 
 
 def list_dirs(path=None):
-    '''
+    """
 
     Lists all subdirectories of a given path (non-recursive).
 
@@ -218,7 +218,7 @@ def list_dirs(path=None):
 
     .. versionadded:: 0.1
 
-    '''
+    """
     assert path
     assert type(path) == str
     return [get_path([path, f]) for f in os.listdir(path)
@@ -226,7 +226,7 @@ def list_dirs(path=None):
 
 
 def find_dirs(path=None, pattern='*'):
-    '''
+    """
 
     Locate all the directories matching the supplied pattern in and below
     the supplied root directory. If no pattern is supplied, all files will be
@@ -241,7 +241,7 @@ def find_dirs(path=None, pattern='*'):
 
     .. versionadded:: 0.1
 
-    '''
+    """
     d = []
     import fnmatch
     assert path
@@ -259,7 +259,7 @@ def find_dirs(path=None, pattern='*'):
 
 
 def list_items(path=None, dirs=True, files=True):
-    '''
+    """
 
     Lists items under a given path (non-recursive, unnormalized).
 
@@ -271,7 +271,7 @@ def list_items(path=None, dirs=True, files=True):
 
     .. versionadded:: 0.1
 
-    '''
+    """
     assert path
     assert type(path) == str
     return [f for f in os.listdir(path)
@@ -280,7 +280,7 @@ def list_items(path=None, dirs=True, files=True):
 
 
 def readconfig(filename, options=[], conffile=False, strip_comments=True):
-    '''
+    """
 
     Reads a file whether if is a data or configuration file and returns
     its content in a dictionary or a list.
@@ -296,7 +296,7 @@ def readconfig(filename, options=[], conffile=False, strip_comments=True):
 
     .. versionadded:: 0.1
 
-    '''
+    """
 
     try:
         f = urllib.urlopen(filename) # No estoy seguro si esto sea una buena idea
@@ -324,14 +324,14 @@ def readconfig(filename, options=[], conffile=False, strip_comments=True):
 
 
 def md5Checksum(filePath):
-    '''
+    """
     Returns the md5sum from a file. Taken from:
     http://www.joelverhagen.com/blog/2011/02/md5-hash-of-file-in-python/
 
     :param filePath: path to the file from which its md5sum will be calculated.
 
     .. versionadded:: 0.1
-    '''
+    """
     if os.path.exists(filePath):
         with open(filePath, 'rb') as fh:
             m = hashlib.md5()

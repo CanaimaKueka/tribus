@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2013 Desarrolladores de Tribus
+# Copyright (C) 2013-2014 Tribus Developers
 #
 # This file is part of Tribus.
 #
@@ -19,13 +19,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-'''
+"""
 
 tribus.common.setup.install
 ===========================
 
 
-'''
+"""
 
 from distutils.command.install_data import install_data as base_install_data
 from distutils.command.build_py import build_py as base_build_py

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2013 Desarrolladores de Tribus
+# Copyright (C) 2013-2014 Tribus Developers
 #
 # This file is part of Tribus.
 #
@@ -23,8 +23,8 @@ from tribus.common.fabric.docker import docker_check_container
 
 
 def django_syncdb():
-    '''
-    '''
+    """
+    """
 
     docker_check_container()
 
@@ -45,8 +45,8 @@ def django_syncdb():
 
 
 def django_runserver():
-    '''
-    '''
+    """
+    """
 
     docker_check_container()
 
@@ -67,8 +67,8 @@ def django_runserver():
 
 
 def django_shell():
-    '''
-    '''
+    """
+    """
 
     docker_check_container()
 
@@ -84,8 +84,8 @@ def django_shell():
 
 
 # def django_deployserver():
-#     '''
-#     '''
+#     """
+#     """
 
 #     docker_kill_all_containers()
 #     local(('echo "'

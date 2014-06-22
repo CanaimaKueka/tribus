@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2013 Desarrolladores de Tribus
+# Copyright (C) 2013-2014 Tribus Developers
 #
 # This file is part of Tribus.
 #
@@ -18,14 +18,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-'''
+"""
 
 tribus.common.reprepro
 ======================
 
 This module contains functions to manage reprepro repositories.
 
-'''
+"""
 
 import os
 import shutil
@@ -34,7 +34,7 @@ from tribus.common.utils import list_items
 
 
 def create_repository(repository_root, distributions_path):
-    '''
+    """
 
     Creates and initializes a package repository from a `distributions`
     configuration file.
@@ -42,7 +42,7 @@ def create_repository(repository_root, distributions_path):
     :param repository_root: path where the repository will be created.
     :param distributions_path: path to the `distributions` configuration file.
 
-    '''
+    """
 
     conf_dir = os.path.join(repository_root, 'conf')
     dist_dst = os.path.join(conf_dir, 'distributions')
@@ -60,7 +60,7 @@ def create_repository(repository_root, distributions_path):
 
 
 def include_deb(repository_root, distribution, comp=None, package_path=None):
-    '''
+    """
 
     Indexes a debian package (.deb) in the selected repository.
 
@@ -69,7 +69,7 @@ def include_deb(repository_root, distribution, comp=None, package_path=None):
     :param package_path: either the path of a single .deb package or a
                          directory with many .deb packages.
 
-    '''
+    """
 
     # Esto puede ser un problema si despues se ejecuta otro proceso 
     # sin especificar la ubicacion
@@ -81,9 +81,9 @@ def include_deb(repository_root, distribution, comp=None, package_path=None):
 
 
 def reset_repository(repository_root):
-    '''
+    """
     Elimina las distribuciones existentes en un repositorio.
-    '''
+    """
 
     os.chdir(repository_root)
     dists = list_items(os.path.join(repository_root, 'dists'), True, False)

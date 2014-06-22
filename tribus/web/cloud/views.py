@@ -17,7 +17,7 @@ from waffle.decorators import waffle_switch
 
 @waffle_switch('cloud')
 def frontpage(request):
-    '''
+    """
     Muestra la portada de la nube de aplicaciones.
     
     **Contexto:**
@@ -25,7 +25,7 @@ def frontpage(request):
     ``render_js``
         Lista de los modulos de angular.js usados por la plantilla.
     
-    '''
+    """
     
     return render(request, 'cloud/frontpage.html', {
         'render_js': ['angular', 'angular.sanitize', 'angular.resource', 'angular.bootstrap',
@@ -36,7 +36,7 @@ def frontpage(request):
 
 @waffle_switch('cloud')
 def package_list(request):
-    '''
+    """
     Muestra una lista en orden alfabetico de todas 
     las aplicaciones disponibles en la plataforma de tribus.
     Solo se muestran 30 resultados por pagina. 
@@ -49,7 +49,7 @@ def package_list(request):
     ``page``
         Resultados de la pagina actual.
         
-    '''
+    """
     
     context = {}
 
@@ -81,7 +81,7 @@ def package_list(request):
 
 @waffle_switch('cloud')
 def profile(request, name):
-    '''
+    """
     Muestra el perfil de una aplicación especifica. El perfil esta compuesto por:
     
     - Nombre y descripción de la aplicación.
@@ -108,7 +108,7 @@ def profile(request, name):
     ``detalles``
         Lista que contiene información detallada de la aplicación segun se arquitectura y distribución.
         
-    '''
+    """
     
     package_info = get_object_or_404(Package, Name=name)
     details_list = Details.objects.filter(package=package_info)

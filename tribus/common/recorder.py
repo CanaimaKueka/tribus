@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2013 Desarrolladores de Tribus
+# Copyright (C) 2013-2014 Tribus Developers
 #
 # This file is part of Tribus.
 #
@@ -18,14 +18,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-'''
+"""
 
 tribus.common.recorder
 ======================
 
 This module contains common functions to record package data from a repository.
 
-'''
+"""
 
 # NAMING CONVENTIONS MOSTLY BASED ON:
 # https://www.debian.org/doc/debian-policy/ch-controlfields.html
@@ -76,7 +76,7 @@ def update_paragraph(paragraph, branch, comp):
 
 
 def create_cache(repository_root, cache_dir_path):
-    '''
+    """
     Creates the cache and all other necessary directories to organize the
     control files pulled from the repository.
 
@@ -85,7 +85,7 @@ def create_cache(repository_root, cache_dir_path):
     :param cache_dir_path: path where the cache will be created.
 
     .. versionadded:: 0.1
-    '''
+    """
     
     if not os.path.isdir(cache_dir_path):
         os.makedirs(cache_dir_path)
@@ -124,7 +124,7 @@ def create_cache(repository_root, cache_dir_path):
 
 
 def sync_cache(repository_root, cache_dir_path):
-    '''
+    """
     Synchronizes the existing control files in the cache,
     comparing the the ones in the repository with the local copies.
     If there are differences in the MD5sum field then the local
@@ -136,7 +136,7 @@ def sync_cache(repository_root, cache_dir_path):
     :param cache_dir_path: path to the desired cache directory
 
     .. versionadded:: 0.1
-    '''
+    """
     
     branches = (branch.split()
                 for branch in readconfig(os.path.join(repository_root,
@@ -243,13 +243,13 @@ def update_db_from_cache(changes, cache_dir_path=None):
 
 
 def fill_db_from_cache(cache_dir_path):
-    '''
+    """
     Records the data from each control file in the cache folder into the database.
     
     :param cache_dir_path: path where the package cache is stored.
 
     .. versionadded:: 0.1
-    '''
+    """
     
     control_files = list_items(cache_dir_path, False, True)
     for control_file in control_files:

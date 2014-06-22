@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2013 Desarrolladores de Tribus
+# Copyright (C) 2013-2014 Tribus Developers
 #
 # This file is part of Tribus.
 #
@@ -23,8 +23,8 @@ from tribus.common.fabric.docker import docker_check_container
 
 
 def celery_purge_tasks():
-    '''
-    '''
+    """
+    """
 
     docker_check_container()
 

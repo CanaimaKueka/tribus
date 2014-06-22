@@ -1,5 +1,5 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) 2013, Desarrolladores de Tribus
+# Copyright (C) 2014, Desarrolladores de Tribus
 # This file is distributed under the same license as the Tribus package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tribus 0.1a1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-23 08:29-0430\n"
+"POT-Creation-Date: 2014-06-22 06:28+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,17 +17,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../../contributors.rst:3
-# 99ffc019fd984ac3a207f894981db11c
+# 8cd6250cc4934de3b0af66e49d58104c
 msgid "Autores"
 msgstr ""
 
 #: ../../contributors.rst:5
-# f3502536d3f747d9b6704d802c667ad0
+# d75cf7ed21f946c597562abb54fe63e0
 msgid "Si usted es un colaborador activo de este proyecto, agregue una entrada en el archivo CONTRIBUTORS (se encuentra en el directorio raíz del proyecto), siguiendo el formato::"
 msgstr ""
 
 #: ../../contributors.rst:9
-# 0d55c460956a469f9a958780a079d382
+# ccd8fd2740b042dfb8c6332ea1d253fd
 msgid "Las siguientes personas han trabajado en este proyecto y son titulares de derecho de autor (en orden alfabético):"
 msgstr ""
 

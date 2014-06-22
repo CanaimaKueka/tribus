@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2013 Desarrolladores de Tribus
+# Copyright (C) 2013-2014 Tribus Developers
 #
 # This file is part of Tribus.
 #
@@ -22,14 +22,14 @@ from django.test.testcases import TestCase
 from django.core.urlresolvers import reverse
 from tribus.web.cloud.models import Package, Details, Relation
 
-'''
+"""
 
 tribus.tests.tribus_web_cloud_views
 ===================================
 
 These are the tests for the tribus.web.cloud views.
 
-'''
+"""
 
 class CloudViews(TestCase):
     
