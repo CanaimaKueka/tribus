@@ -183,9 +183,12 @@ class SetupTesting(TestSuite):
             log.info("Coverage Exception: %s" % e)
 
         if os.environ.get('TRAVIS'):
+            log.info(os.environ.get('TRAVIS'))
+            log.info(os.environ.get('TRAVIS_JOB_ID'))
             log.info("Submitting coverage to coveralls.io...")
             try:
                 result = Coveralls()
                 result.wear()
+                log.info(result.create_data())
             except CoverallsException as e:
                 log.error("Coveralls Exception: %s" % e)
