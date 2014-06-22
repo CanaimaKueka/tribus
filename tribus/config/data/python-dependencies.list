@@ -16,7 +16,7 @@ python-debian==0.1.21
 chardet==2.2.1
 django-ldapdb==0.3.2
 django-auth-ldap==1.2.0
-django-social-auth==0.7.28
+#django-social-auth==0.7.28
 django-haystack==2.1.0
 celery-haystack==0.7.2
 django-waffle==0.10
