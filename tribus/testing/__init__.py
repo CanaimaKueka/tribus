@@ -178,17 +178,18 @@ class SetupTesting(TestSuite):
         log.info("\n\nCoverage Report:")
         try:
             self.coverage.stop()
+            result = Coveralls()
+            result.wear()
+            log.info(result.create_data())
             self.coverage.report(include=include, omit=omit)
         except CoverageException as e:
             log.info("Coverage Exception: %s" % e)
 
-        if os.environ.get('TRAVIS'):
-            log.info(os.environ.get('TRAVIS'))
-            log.info(os.environ.get('TRAVIS_JOB_ID'))
-            log.info("Submitting coverage to coveralls.io...")
-            try:
-                result = Coveralls()
-                result.wear()
-                log.info(result.create_data())
-            except CoverallsException as e:
-                log.error("Coveralls Exception: %s" % e)
+        # if os.environ.get('TRAVIS'):
+        #     log.info("Submitting coverage to coveralls.io...")
+        #     try:
+        #         result = Coveralls()
+        #         result.wear()
+        #         log.info(result.create_data())
+        #     except CoverallsException as e:
+        #         log.error("Coveralls Exception: %s" % e)
