@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+	<ShortName>Tribe</ShortName>
+	  <LongName>Join the Tribe</LongName>
+<Tags>Package cloud - Source management - Continuous integration - Social network - Ticket system - Easy documentation</Tags> 
+	<Description>What are you looking for?</Description>
+<Contact>desarrolladores@canaima.softwarelibre.gob.ve</Contact>
+	<Language>en</Language>
+	<Url type="text/html" 
+		template="http://tribus.readthedocs.org/es/latest/?s={searchTerms}"/>
+	<Url type="application/atom+xml"
+		template="http://tribus.readthedocs.org/es/latest/?feed=atom&s={searchTerms}"/>
+	<Url type="application/rss+xml" 
+		template="http://tribus.readthedocs.org/es/latest/?feed=rss2&s={searchTerms}"/>
+<Image height="16" width="16" type="image/tribus.icon">http://tribus.canaima.softwarelibre.gob.ve/favicon.ico</Image>
+	<Developer>Tribe Developer</Developer>
+		<Attribution> </Attribution>
+	<OutputEncoding>UTF-8</OutputEncoding>
+		<InputEncoding>UTF-8</InputEncoding>
+	  <AdultContent>false</AdultContent>
+</OpenSearchDescription>
