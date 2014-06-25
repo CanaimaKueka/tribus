@@ -20,9 +20,9 @@
 
 """
 
-tribus.cli
-==========
+This is the Tribus module where all command line functions reside.
 
-
+This module contains funtions to provide the same functionality of the web
+interface but through the console.
 
 """
