@@ -5,9 +5,9 @@ Tribus
    :target: https://pypi.python.org/pypi/Tribus/
    :alt: Latest version available in PyPi
 
-.. image:: https://pypip.in/license/Tribus/badge.png
-   :target: https://pypi.python.org/pypi/Tribus/
-   :alt: License
+.. image:: https://badge.waffle.io/canaimagnulinux/tribus.png?label=ready&title=Ready 
+   :target: https://waffle.io/canaimagnulinux/tribus 
+   :alt: Development workflow management
 
 .. image:: https://travis-ci.org/CanaimaGNULinux/tribus.png?branch=development
    :target: https://travis-ci.org/CanaimaGNULinux/tribus
@@ -21,10 +21,9 @@ Tribus
    :target: https://requires.io/github/CanaimaGNULinux/tribus/requirements/?branch=development
    :alt: Status of the Python dependencies
 
-.. image:: https://badge.waffle.io/canaimagnulinux/tribus.png?label=ready&title=Ready 
-   :target: https://waffle.io/canaimagnulinux/tribus 
-   :alt: Development workflow management
-
+.. image:: https://landscape.io/github/CanaimaGNULinux/tribus/development/landscape.png
+   :target: https://landscape.io/github/CanaimaGNULinux/tribus/development
+   :alt: General health status
 
 *Tribus* es una **red social** para la gestión de comunidades de software libre. Su objetivo es simplificar las tediosas y repetitivas tareas de mantenimiento, mientras pone a disposición de sus miembros **las mejores herramientas** que le permitirán **expresar su creatividad** y **desarrollar el máximo potencial de sus capacidades**.
 

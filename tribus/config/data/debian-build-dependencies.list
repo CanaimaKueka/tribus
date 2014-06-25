@@ -4,5 +4,4 @@ libxslt1-dev
 libsasl2-dev
 libldap2-dev
 libpq-dev
-ca-certificates
 gcc

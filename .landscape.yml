@@ -1,0 +1,8 @@
+doc-warnings: true
+test-warnings: true
+strictness: veryhigh
+max-line-length: 79
+uses:
+    - django
+    - celery
+autodetect: true

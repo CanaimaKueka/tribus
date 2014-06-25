@@ -85,7 +85,7 @@ def generate_tribus_base_image_script():
            'apt-get update\n'
            'apt-get install %(debian_run_dependencies)s\n'
            'apt-get install %(debian_build_dependencies)s\n'
-           'easy_install pip\n'
+           'python %(tribus_get_pip_script)s\n'
            'pip install %(python_dependencies)s\n'
            'echo \\"root:tribus\\" | chpasswd\n'
            'echo \\"postgres:tribus\\" | chpasswd\n'
