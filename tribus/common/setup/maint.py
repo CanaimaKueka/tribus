@@ -52,10 +52,12 @@ class extract_messages(base_extract_messages):
         outdir = get_path([DOCDIR, 'rst', 'i18n', 'pot'])
         doctreedir = get_path([DOCDIR, 'doctrees'])
         buildername = 'gettext'
-        app = Sphinx(
-            srcdir=srcdir, confdir=srcdir, outdir=outdir, doctreedir=doctreedir,
-            buildername=buildername, confoverrides=None, status=sys.stdout,
-            warning=sys.stderr, freshenv=True, warningiserror=False, tags=None)
+
+        app = Sphinx(srcdir=srcdir, confdir=srcdir, outdir=outdir,
+                     doctreedir=doctreedir, buildername=buildername,
+                     confoverrides=None, status=sys.stdout, warning=sys.stderr,
+                     freshenv=True, warningiserror=False, tags=None)
+
         try:
             app.build(force_all=True)
         except Exception as e:

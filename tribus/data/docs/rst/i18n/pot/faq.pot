@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tribus 0.1a1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-22 06:28+0000\n"
+"POT-Creation-Date: 2014-06-25 05:33+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../../faq.rst:3
-# 4d21e3e3b6ef4abdb4a00178b684be57
+# d8a5f8e5e3f3467b8947f2919ed98257
 msgid "Preguntas frecuentes"
 msgstr ""
 

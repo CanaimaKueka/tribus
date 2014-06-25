@@ -99,7 +99,7 @@ def tx_pull():
 
     with cd(env.basedir):
         with shell_env(**env.preseed_env_dict):
-            run('tx pull -a --skip')
+            run('tx pull -a --skip', shell_escape=False)
 
 
 def tx_push():
@@ -115,7 +115,7 @@ def tx_push():
 
     with cd(env.basedir):
         with shell_env(**env.preseed_env_dict):
-            run('tx push -s -t --skip --no-interactive')
+            run('tx push -s -t --skip --no-interactive', shell_escape=False)
 
 
 def build_sphinx():

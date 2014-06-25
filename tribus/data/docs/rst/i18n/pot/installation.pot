@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tribus 0.1a1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-22 06:28+0000\n"
+"POT-Creation-Date: 2014-06-25 05:33+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../../installation.rst:3
-# a5f972385ab342a9a391c152bb32dfd0
+# 5b59b371663e421a86988bed84d43668
 msgid "Instalación"
 msgstr ""
 

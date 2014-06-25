@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  tribus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-22 06:28+0000\n"
+"POT-Creation-Date: 2014-06-25 05:33+0000\n"
 "PO-Revision-Date: 2013-12-12 13:23+0000\n"
 "Last-Translator: jsfrncscg <jsfrncscg@gmail.com>\n"
 "Language-Team: Spanish (Venezuela) "
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-# c76b7afbf1b14a3b9e43d907252b4337
+# a80ab7eb15744279a6efc701011df822
 #: ../../license.rst:3
 msgid "Licencia"
 msgstr ""

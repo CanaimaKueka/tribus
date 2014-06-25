@@ -7,11 +7,6 @@ file_filter = tribus/data/i18n/<lang>/LC_MESSAGES/django.po
 source_file = tribus/data/i18n/pot/django.pot
 source_lang = en
 
-[tribus.authors-docs]
-file_filter = tribus/data/docs/rst/i18n/<lang>/LC_MESSAGES/authors.po
-source_file = tribus/data/docs/rst/i18n/pot/authors.pot
-source_lang = en
-
 [tribus.contributors-docs]
 file_filter = tribus/data/docs/rst/i18n/<lang>/LC_MESSAGES/contributors.po
 source_file = tribus/data/docs/rst/i18n/pot/contributors.pot
