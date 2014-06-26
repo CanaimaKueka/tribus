@@ -91,6 +91,9 @@ def development():
     env.tribus_start_container_script = get_path([BASEDIR, 'tribus',
                                                   'data', 'scripts',
                                                   'start-container.sh'])
+    env.tribus_get_pip_script = get_path([BASEDIR, 'tribus',
+                                          'data', 'scripts',
+                                          'get-pip.py'])
 
     env.preseed_db = get_path([CONFDIR, 'data', 'preseed-db.sql'])
     env.preseed_debconf = get_path([CONFDIR, 'data', 'preseed-debconf.conf'])

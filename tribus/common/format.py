@@ -119,23 +119,23 @@ class YAMLFormat(BaseFormat):
     charm_format = 2
 
     def format(self, data):
-        """Formats `data` in Juju's preferred YAML format"""
+        """Format ``data`` in Tribus preferred YAML format."""
         # Return value such that it roundtrips; this allows us to
         # report back the boolean false instead of the Python
         # output format, False
         if data is None:
-            return ""
-        serialized = yaml.dump(
-            data, indent=4, default_flow_style=False, width=80,
-            allow_unicode=True, Dumper=yaml.CSafeDumper)
-        if serialized.endswith("\n...\n"):
+            return ''
+        serialized = yaml.dump(data=data, indent=4, default_flow_style=False,
+                               width=80, allow_unicode=True,
+                               Dumper=yaml.CSafeDumper)
+        if serialized.endswith('\n...\n'):
             # Remove explicit doc end sentinel, still valid yaml
             serialized = serialized[0:-5]
         # Also remove any extra \n, will still be valid yaml
-        return serialized.rstrip("\n")
+        return serialized.rstrip('\n')
 
     def format_raw(self, data):
-        """Formats `data` as a raw string if str, otherwise as YAML"""
+        """Format ``data`` as a raw string if str, otherwise as YAML."""
         if isinstance(data, str):
             return data
         else:
@@ -145,28 +145,26 @@ class YAMLFormat(BaseFormat):
     dump = format
 
     def load(self, data):
-        """Loads data safely, ensuring no Python specific type info leaks"""
-        return yaml.load(data, Loader=yaml.CSafeLoader)
+        """Load data safely, ensuring no Python specific type info leaks."""
+        return yaml.load(stream=data, Loader=yaml.CSafeLoader)
 
 
 def is_valid_charm_format(charm_format):
-    """True if `charm_format` is a valid format"""
+    """True if `charm_format` is a valid format."""
     return charm_format in (PythonFormat.charm_format, YAMLFormat.charm_format)
 
 
 def get_charm_formatter(charm_format):
-    """Map `charm_format` to the implementing strategy for that format"""
+    """Map ``charm_format`` to the implementing strategy for that format."""
     if charm_format == PythonFormat.charm_format:
         return PythonFormat()
     elif charm_format == YAMLFormat.charm_format:
         return YAMLFormat()
     else:
-        raise TribusError(
-            "Expected charm format to be either 1 or 2, got %s" % (
-                charm_format,))
+        raise TribusError('Expected charm format to be either 1 or 2, got %s' %
+                          (charm_format,))
 
 
 def get_charm_formatter_from_env():
-    """Return the formatter specified by $_JUJU_CHARM_FORMAT"""
-    return get_charm_formatter(int(
-            os.environ.get("_JUJU_CHARM_FORMAT", "1")))
+    """Return the formatter specified by ${TRIBUS_CHARM_FORMAT}."""
+    return get_charm_formatter(int(os.environ.get('TRIBUS_CHARM_FORMAT', '1')))
