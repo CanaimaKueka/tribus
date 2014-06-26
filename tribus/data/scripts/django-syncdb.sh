@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-cd /home/huntingbears/desarrollo/tribus
+cd /home/armikhael/Tribus/tribus
 export DEBIAN_FRONTEND=noninteractive
 export DJANGO_SETTINGS_MODULE=tribus.config.web
-export PYTHONPATH=/home/huntingbears/desarrollo/tribus:
+export PYTHONPATH=/home/armikhael/Tribus/tribus:
 python manage.py syncdb --noinput
 python manage.py migrate --noinput
 python manage.py switch profile on --create
