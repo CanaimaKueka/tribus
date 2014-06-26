@@ -117,7 +117,7 @@ La manera más expedita de conseguir ayuda con Tribus es a través del `foro <ht
 Bugs/ticket tracker
 -------------------
 
-Puedes revisar si ya se ha reportado un error relacionado con el problema que estás presentando en el gestor de `tickets <https://github.com/CanaimaGNULinux/tribus/issues>`_.
+Puedes revisar si ya se ha reportado un error relacionado con el problema que estás presentando en el gestor de `tickets <https://github.com/tribusdev/tribus/issues>`_.
 
 Twitter
 -------

@@ -7,7 +7,7 @@ from tribus.common.utils import get_path
 
 NAME = u'Tribus'
 VERSION = (0, 1, 0, 'alpha', 1)
-URL = u'http://github.com/CanaimaGNULinux/tribus'
+URL = u'http://github.com/tribusdev/tribus'
 AUTHOR = u'Desarrolladores de Tribus'
 AUTHOR_EMAIL = u'tribusdev@googlegroups.com'
 DESCRIPTION = (u'Red social para la gestión de comunidades de Software Libre.')

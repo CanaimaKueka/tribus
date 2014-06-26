@@ -298,7 +298,7 @@ if [ "${DPKG_BASED}" != "${DPKG_BASED/${DISTRO}}" ]; then
         ${ECHO} 1>&2 "  - docker (http://docker.io)"
         ${ECHO} 1>&2
         ${ECHO} 1>&2 " Please open a ticket requesting support for your distribution:"
-        ${ECHO} 1>&2 " http://github.com/CanaimaGNULinux/tribus/issues"
+        ${ECHO} 1>&2 " http://github.com/tribusdev/tribus/issues"
         ${ECHO} 1>&2
 
         exit 1
@@ -332,7 +332,7 @@ elif [ "${YUM_BASED}" != "${YUM_BASED/${DISTRO}}" ]; then
         ${ECHO} 1>&2 "  - docker (http://docker.io)"
         ${ECHO} 1>&2
         ${ECHO} 1>&2 " Please open a ticket requesting support for your distribution:"
-        ${ECHO} 1>&2 " http://github.com/CanaimaGNULinux/tribus/issues"
+        ${ECHO} 1>&2 " http://github.com/tribusdev/tribus/issues"
         ${ECHO} 1>&2
 
         exit 1
@@ -365,7 +365,7 @@ elif [ "${PACMAN_BASED}" != "${PACMAN_BASED/${DISTRO}}" ]; then
         ${ECHO} 1>&2 "  - docker (http://docker.io)"
         ${ECHO} 1>&2
         ${ECHO} 1>&2 " Please open a ticket requesting support for your distribution:"
-        ${ECHO} 1>&2 " http://github.com/CanaimaGNULinux/tribus/issues"
+        ${ECHO} 1>&2 " http://github.com/tribusdev/tribus/issues"
         ${ECHO} 1>&2
 
         exit 1
@@ -399,7 +399,7 @@ elif [ "${EMERGE_BASED}" != "${EMERGE_BASED/${DISTRO}}" ]; then
         ${ECHO} 1>&2 "  - docker (http://docker.io)"
         ${ECHO} 1>&2
         ${ECHO} 1>&2 " Please open a ticket requesting support for your distribution:"
-        ${ECHO} 1>&2 " http://github.com/CanaimaGNULinux/tribus/issues"
+        ${ECHO} 1>&2 " http://github.com/tribusdev/tribus/issues"
         ${ECHO} 1>&2
 
         exit 1
@@ -419,7 +419,7 @@ else
     ${ECHO} 1>&2 "  - docker (http://docker.io)"
     ${ECHO} 1>&2
     ${ECHO} 1>&2 " Please open a ticket requesting support for your distribution:"
-    ${ECHO} 1>&2 " http://github.com/CanaimaGNULinux/tribus/issues"
+    ${ECHO} 1>&2 " http://github.com/tribusdev/tribus/issues"
     ${ECHO} 1>&2
 
     exit 1

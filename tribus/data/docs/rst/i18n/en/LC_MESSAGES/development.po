@@ -282,15 +282,15 @@ msgstr ""
 msgid ""
 "Clonar el repositorio principal directamente desde la `cuenta oficial de "
 "los desarrolladores de Tribus en GitHub "
-"<https://github.com/CanaimaGNULinux/tribus>`_, "
-"``git://github.com/CanaimaGNULinux/tribus.git``"
+"<https://github.com/tribusdev/tribus>`_, "
+"``git://github.com/tribusdev/tribus.git``"
 msgstr ""
 
 # 28140f7d8d7945f88df6260ff51f3ee6
 #: ../../development/contributing.rst:23
 msgid ""
 "Hacer tu propia derivación del repositorio de Tribus en GitHub, visitando"
-" `la página del repositorio <https://github.com/CanaimaGNULinux/tribus>`_"
+" `la página del repositorio <https://github.com/tribusdev/tribus>`_"
 " y haciendo click en el botón \"fork\" (necesitas una cuenta activa en "
 "GitHub)."
 msgstr ""
@@ -2049,7 +2049,7 @@ msgstr ""
 # e1dc23c8eb724f5ca5da757eb37bdd63
 #: ../../development/roadmap.rst:17
 msgid ""
-"`Ticket <https://github.com/canaimagnulinux/tribus/issues/1>`_: "
+"`Ticket <https://github.com/tribusdev/tribus/issues/1>`_: "
 "Estructura inicial del proyecto (:doc:`Documento de Especificaciones "
 "<drafts/structure>`)."
 msgstr ""
@@ -2057,7 +2057,7 @@ msgstr ""
 # 57c8f924bd704e409c15d676b488af32
 #: ../../development/roadmap.rst:18
 msgid ""
-"`Ticket <http://github.com/canaimagnulinux/tribus/issues/2>`_: "
+"`Ticket <http://github.com/tribusdev/tribus/issues/2>`_: "
 "Documentación inicial de procesos y diseño de la aplicación "
 "(:doc:`Documento de Especificaciones <drafts/documents>`)."
 msgstr ""
@@ -2065,7 +2065,7 @@ msgstr ""
 # 6bc8def0c5d940a6887567cb379437c3
 #: ../../development/roadmap.rst:19
 msgid ""
-"`Ticket <http://github.com/canaimagnulinux/tribus/issues/3>`_: Creación "
+"`Ticket <http://github.com/tribusdev/tribus/issues/3>`_: Creación "
 "del sistema de mantenimiento de la aplicación (:doc:`Documento de "
 "Especificaciones <drafts/maint_system>`)."
 msgstr ""
@@ -2073,7 +2073,7 @@ msgstr ""
 # 4f3403688ca3479e96dd65610c200c58
 #: ../../development/roadmap.rst:20
 msgid ""
-"`Ticket <http://github.com/canaimagnulinux/tribus/issues/4>`_: Sistema de"
+"`Ticket <http://github.com/tribusdev/tribus/issues/4>`_: Sistema de"
 " lectura(autenticación), escritura y manipulación de datos de usuario con"
 " OpenLDAP y Django (:doc:`Documento de Especificaciones "
 "<drafts/user_app>`)."
@@ -2082,7 +2082,7 @@ msgstr ""
 # 8a4a1c6acd3d479d995ff101e044d042
 #: ../../development/roadmap.rst:21
 msgid ""
-"`Ticket <http://github.com/canaimagnulinux/tribus/issues/5>`_: Sistema de"
+"`Ticket <http://github.com/tribusdev/tribus/issues/5>`_: Sistema de"
 " registro y consulta de paquetes (:doc:`Documento de Especificaciones "
 "<drafts/package_app>`)."
 msgstr ""
@@ -2090,7 +2090,7 @@ msgstr ""
 # 91d48b26241a483d91a1d1c6216ac185
 #: ../../development/roadmap.rst:22
 msgid ""
-"`Ticket <http://github.com/canaimagnulinux/tribus/issues/6>`_: Sistema "
+"`Ticket <http://github.com/tribusdev/tribus/issues/6>`_: Sistema "
 "para la publicación de mensajes cortos (Trib) (:doc:`Documento de "
 "Especificaciones <drafts/trib>`)."
 msgstr ""
