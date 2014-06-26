@@ -37,10 +37,10 @@ import hashlib
 def flatten_list(l=[]):
     """
 
-    Converts a nested list into one combined list.
+    Convert a nested list into one combined list.
 
     :param l: a list object with (optionally) nested list.
-    :returns: a generator with all nested lists combined.
+    :return: a generator with all nested lists combined.
     :rtype: a generator.
 
     .. versionadded:: 0.1

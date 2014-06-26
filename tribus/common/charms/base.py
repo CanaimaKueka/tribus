@@ -14,8 +14,8 @@ def get_revision(file_content, metadata, path):
 
 
 class CharmBase(object):
-    """Abstract base class for charm implementations.
-    """
+
+    """Abstract base class for charm implementations."""
 
     _sha256 = None
 
@@ -24,9 +24,12 @@ class CharmBase(object):
                                   (self.__class__.__name__, attr))
 
     def get_revision(self):
-        """Get the revision, preferably from the revision file.
+        """
+
+        Get the revision, preferably from the revision file.
 
         Will fall back to metadata if not available.
+
         """
         self._unsupported("get_revision()")
 

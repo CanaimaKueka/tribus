@@ -1,19 +1,50 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2013-2014 Tribus Developers
+#
+# This file is part of Tribus.
+#
+# Tribus is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Tribus is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 """
+
+This module contains common juju Exceptions.
+
 This file holds the generic errors which are sensible for several
 areas of juju.
+
 """
 
 
-class jujuError(Exception):
-    """All errors in juju are subclasses of this.
+class TribusError(Exception):
+
+    """
+
+    All errors in juju are subclasses of this.
 
     This error should not be raised by itself, though, since it means
     pretty much nothing.  It's useful mostly as something to catch instead.
+
     """
 
 
-class IncompatibleVersion(jujuError):
-    """Raised when there is a mismatch in versions using the topology.
+class IncompatibleVersion(TribusError):
+
+    """
+
+    Raised when there is a mismatch in versions using the topology.
 
     This mismatch will occur when the /topology node has the key
     version set to a version different from
@@ -26,6 +57,7 @@ class IncompatibleVersion(jujuError):
     every read, the error is defined here because of its
     generality. Doing the check in the topology is just because of the
     centrality of that piece within juju.
+
     """
 
     def __init__(self, current, wanted):
@@ -33,15 +65,18 @@ class IncompatibleVersion(jujuError):
         self.wanted = wanted
 
     def __str__(self):
-        return (
-            "Incompatible juju protocol versions (found %r, want %r)" % (
-                self.current, self.wanted))
+        return ('Incompatible juju protocol versions '
+                '(found %r, want %r)' % (self.current, self.wanted))
 
 
-class FileNotFound(jujuError):
-    """Raised when a file is not found, obviously! :-)
+class FileNotFound(TribusError):
+
+    """
+
+    Raised when a file is not found.
 
     @ivar path: Path of the directory or file which wasn't found.
+
     """
 
     def __init__(self, path):
@@ -51,7 +86,7 @@ class FileNotFound(jujuError):
         return "File was not found: %r" % (self.path,)
 
 
-class CharmError(jujuError):
+class CharmError(TribusError):
     """An error occurred while processing a charm."""
 
     def __init__(self, path, message):
@@ -89,7 +124,7 @@ class CharmUpgradeError(CharmError):
         return "Cannot upgrade charm: %s" % self.message
 
 
-class FileAlreadyExists(jujuError):
+class FileAlreadyExists(TribusError):
     """Raised when something refuses to overwrite an existing file.
 
     @ivar path: Path of the directory or file which wasn't found.
@@ -102,7 +137,7 @@ class FileAlreadyExists(jujuError):
         return "File already exists, won't overwrite: %r" % (self.path,)
 
 
-class NoConnection(jujuError):
+class NoConnection(TribusError):
     """Raised when the CLI is unable to establish a Zookeeper connection."""
 
 
@@ -128,7 +163,7 @@ class EnvironmentPending(NoConnection):
     """Raised when the juju environment is not accessible."""
 
 
-class ConstraintError(jujuError):
+class ConstraintError(TribusError):
     """Machine constraints are inappropriate or incomprehensible"""
 
 
@@ -142,7 +177,7 @@ class UnknownConstraintError(ConstraintError):
         return "Unknown constraint: %r" % self.name
 
 
-class ProviderError(jujuError):
+class ProviderError(TribusError):
     """Raised when an exception occurs in a provider."""
 
 
@@ -166,7 +201,7 @@ class ProviderInteractionError(ProviderError):
     """Raised when an unexpected error occurs interacting with a provider"""
 
 
-class CannotTerminateMachine(jujuError):
+class CannotTerminateMachine(TribusError):
     """Cannot terminate machine because of some reason"""
 
     def __init__(self, id, reason):
@@ -177,7 +212,7 @@ class CannotTerminateMachine(jujuError):
         return "Cannot terminate machine %d: %s" % (self.id, self.reason)
 
 
-class InvalidPlacementPolicy(jujuError):
+class InvalidPlacementPolicy(TribusError):
     """The provider does not support the user specified placement policy.
     """
 
@@ -195,11 +230,11 @@ class InvalidPlacementPolicy(jujuError):
                 ", ".join(self.provider_policies)))
 
 
-class ServiceError(jujuError):
+class ServiceError(TribusError):
     """Some problem with an upstart service"""
 
 
-class SSLVerificationError(jujuError):
+class SSLVerificationError(TribusError):
     """User friendly wrapper for SSL certificate errors
 
     Unfortunately the SSL exceptions on certificate validation failure are not
@@ -216,7 +251,7 @@ class SSLVerificationError(jujuError):
             "set 'ssl-hostname-verification' to false to permit")
 
 
-class SSLVerificationUnsupported(jujuError):
+class SSLVerificationUnsupported(TribusError):
     """Verifying https certificates unsupported as txaws lacks support"""
 
     def __str__(self):
