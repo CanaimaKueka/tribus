@@ -35,64 +35,62 @@ import re
 import gzip
 import urllib
 import urllib2
-import logging
-import email.Utils
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tribus.config.web")
 from debian import deb822
-from tribus import BASEDIR
 from django.db.models import Q
 from tribus.common.logger import get_logger
 from tribus.web.cloud.models import Package, Details
 from tribus.common.utils import md5Checksum, list_items, readconfig
 
 logger = get_logger()
-hdlr = logging.FileHandler(os.path.join(BASEDIR, 'tribus_recorder.log'))
-formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
-hdlr.setFormatter(formatter)
-logger.addHandler(hdlr)
-logger.setLevel(logging.INFO)
+# hdlr = logging.FileHandler(os.path.join(BASEDIR, 'tribus_recorder.log'))
+# formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+# hdlr.setFormatter(formatter)
+# logger.addHandler(hdlr)
+# logger.setLevel(logging.INFO)
 
 
 def update_paragraph(paragraph, branch, comp):
     """
+
     Updates basic data and details of a package in the database.
     It also updates the package's relations.
 
     :param paragraph: contains information about a binary package.
-
     :param branch: codename of the Canaima's version that will be updated.
-    
     :param comp: component to which the paragraph belongs.
 
     .. versionadded:: 0.1
+
     """
-    
-    logger.info('Updating package \'%s\' in %s:%s' %
+
+    logger.info('Updating package "%s" in %s:%s' %
                 (paragraph['Package'], branch, comp))
-    package = Package.objects.get(Name = paragraph.get('Package'))
+    package = Package.objects.get(Name=paragraph.get('Package'))
     package.update(paragraph, branch, comp)
-    logger.info('Package \'%s\' successfully updated in %s:%s'
-                % (paragraph['Package'], branch, comp))
+    logger.info('Package "%s" successfully updated in %s:%s' %
+                (paragraph['Package'], branch, comp))
 
 
 def create_cache(repository_root, cache_dir_path):
     """
+
     Creates the cache and all other necessary directories to organize the
     control files pulled from the repository.
 
-    :param repository_root: url of the repository from which the control files files will be pulled.
-    
+    :param repository_root: url of the repository from which the control files
+                            files will be pulled.
     :param cache_dir_path: path where the cache will be created.
 
     .. versionadded:: 0.1
+
     """
-    
+
     if not os.path.isdir(cache_dir_path):
         os.makedirs(cache_dir_path)
-    
+
     branches = (branch.split()
                 for branch in readconfig(os.path.join(repository_root,
-                                                      "distributions")))
+                                                      'distributions')))
     for name, release_path in branches:
         release_path = os.path.join(repository_root, release_path)
         try:
@@ -101,14 +99,14 @@ def create_cache(repository_root, cache_dir_path):
             logger.warning('Could not read release file in %s, error code #%s' % (release_path, e.code))
         else:
             for control_file_data in md5list:
-                if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages.gz$", control_file_data['name']):
-                    component, architecture, _ = control_file_data['name'].split("/")
-                    remote_file = os.path.join(repository_root, "dists",
+                if re.match('[\w]*-?[\w]*/[\w]*-[\w]*/Packages.gz$', control_file_data['name']):
+                    component, architecture, _ = control_file_data['name'].split('/')
+                    remote_file = os.path.join(repository_root, 'dists',
                                                name, control_file_data['name'])
-                    local_name = "_".join([name, component,
-                                           architecture.replace("binary-", "")])
-                    f = os.path.join(cache_dir_path, local_name + ".gz")
-                    
+                    local_name = '_'.join([name, component,
+                                           architecture.replace('binary-', '')])
+                    f = os.path.join(cache_dir_path, local_name + '.gz')
+
                     if not os.path.isfile(f):
                         try:
                             urllib.urlretrieve(remote_file, f)
@@ -125,38 +123,39 @@ def create_cache(repository_root, cache_dir_path):
 
 def sync_cache(repository_root, cache_dir_path):
     """
+
     Synchronizes the existing control files in the cache,
     comparing the the ones in the repository with the local copies.
     If there are differences in the MD5sum field then the local
     copies are deleted and copied again from the repository.
     It is assumed that the cache directory was created previously.
-    
-    :param repository_root: url of the repository from which the Packages files will be updated.
 
-    :param cache_dir_path: path to the desired cache directory
+    :param repository_root: url of the repository from which the Packages
+                            files will be updated.
+    :param cache_dir_path: path to the desired cache directory.
 
     .. versionadded:: 0.1
+
     """
-    
     branches = (branch.split()
                 for branch in readconfig(os.path.join(repository_root,
-                                                      "distributions")))
+                                                      'distributions')))
     changes = []
     for branch, _ in branches:
-        remote_branch_path = os.path.join(repository_root, "dists", branch)
-        release_path = os.path.join(remote_branch_path, "Release")
+        remote_branch_path = os.path.join(repository_root, 'dists', branch)
+        release_path = os.path.join(remote_branch_path, 'Release')
         try:
             md5list = deb822.Release(urllib.urlopen(release_path)).get('MD5sum')
         except urllib2.URLError, e:
             logger.warning('Could not read release file in %s, error code #%s' % (remote_branch_path, e.code))
         else:
             for package_control_file in md5list:
-                if re.match("[\w]*-?[\w]*/[\w]*-[\w]*/Packages.gz$", package_control_file['name']):
-                    component, architecture, _ = package_control_file['name'].split("/")
+                if re.match('[\w]*-?[\w]*/[\w]*-[\w]*/Packages.gz$', package_control_file['name']):
+                    component, architecture, _ = package_control_file['name'].split('/')
                     remote_package_path = os.path.join(remote_branch_path, package_control_file['name'])
-                    local_name = "_".join([branch, component,
-                                           architecture.replace("binary-", "")])
-                    f = os.path.join(cache_dir_path, local_name + ".gz")
+                    local_name = '_'.join([branch, component,
+                                           architecture.replace('binary-', '')])
+                    f = os.path.join(cache_dir_path, local_name + '.gz')
                     if package_control_file['md5sum'] != md5Checksum(f):
                         if os.path.exists(f):
                             os.remove(f)
@@ -172,18 +171,20 @@ def sync_cache(repository_root, cache_dir_path):
 
 def update_db_from_cache(changes, cache_dir_path=None):
     """
+
     Updates all packages in a control file.
+
     If a package exists but the MD5sum field is different from the one
     stored in the database then it updates the package data fields.
     If the package doesn't exists then its created.
     If the package exists in the database but is not found in the control
     file then its deleted.
-    
-    :param cache_dir_path: path to the desired cache directory
-    
+
+    :param cache_dir_path: path to the desired cache directory.
+
     .. versionadded:: 0.1
+
     """
-    
     if cache_dir_path:
         control_files = list_items(cache_dir_path, False, True)
     else:
@@ -218,7 +219,7 @@ def update_db_from_cache(changes, cache_dir_path=None):
                         Package.objects.create_auto(paragraph, branch, comp)
                     except:
                         logger.error('Could not record %s' % paragraph['Package'])
-            
+
             bd_packages = Package.objects.filter(Details__Distribution=branch,
                                                  Details__Component = comp
                                                  ).filter(Q(Details__Architecture='all') |
@@ -244,13 +245,14 @@ def update_db_from_cache(changes, cache_dir_path=None):
 
 def fill_db_from_cache(cache_dir_path):
     """
+
     Records the data from each control file in the cache folder into the database.
-    
+
     :param cache_dir_path: path where the package cache is stored.
 
     .. versionadded:: 0.1
+
     """
-    
     control_files = list_items(cache_dir_path, False, True)
     for control_file in control_files:
         name, _ = control_file.split(".")

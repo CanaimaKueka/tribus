@@ -20,7 +20,9 @@
 
 """
 
-tribus.common
-=============
+The tribus.common package contains all the basic functions and modules.
+
+This package contains all the functions and modules that can be reused
+throughout the entire project.
 
 """

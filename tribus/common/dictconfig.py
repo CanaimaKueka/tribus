@@ -1,4 +1,10 @@
-# Copyright 2009-2010 by Vinay Sajip. All Rights Reserved.
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2009-2010 by Vinay Sajip, see COPYING for more information.
+# All Rights Reserved.
+#
+# This file is part of Tribus.
 #
 # Permission to use, copy, modify, and distribute this software and its
 # documentation for any purpose and without fee is hereby granted,
@@ -7,12 +13,21 @@
 # supporting documentation, and that the name of Vinay Sajip
 # not be used in advertising or publicity pertaining to distribution
 # of the software without specific, written prior permission.
+#
 # VINAY SAJIP DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING
 # ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL
 # VINAY SAJIP BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR
 # ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER
 # IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT
 # OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+"""
+
+This is an implementation of logging.config.dictConfig.
+
+This implementation is backported from Python 2.7 for use in previous versions.
+
+"""
 
 import logging.handlers
 import re
@@ -23,8 +38,15 @@ IDENTIFIER = re.compile('^[a-z_][a-z0-9_]*$', re.I)
 
 
 def valid_ident(s):
-    m = IDENTIFIER.match(s)
-    if not m:
+    """
+
+    Check if a string is a valid (alphanumeric) python identifier.
+
+    :param s: a string.
+    :return: ``True`` or ``ValueError``.
+
+    """
+    if not IDENTIFIER.match(s):
         raise ValueError('Not a valid Python identifier: %r' % s)
     return True
 
@@ -138,12 +160,9 @@ class ConvertingTuple(tuple):
 
 class BaseConfigurator(object):
 
-    """
-    The configurator base class which defines some useful defaults.
-    """
+    """The configurator base class which defines some useful defaults."""
 
     CONVERT_PATTERN = re.compile(r'^(?P<prefix>[a-z]+)://(?P<suffix>.*)$')
-
     WORD_PATTERN = re.compile(r'^\s*(\w+)\s*')
     DOT_PATTERN = re.compile(r'^\.\s*(\w+)\s*')
     INDEX_PATTERN = re.compile(r'^\[\s*(\w+)\s*\]\s*')
@@ -210,8 +229,8 @@ class BaseConfigurator(object):
                             d = d[idx]
                         else:
                             try:
-                                n = int(
-                                    idx)  # try as number first (most likely)
+                                # try as number first (most likely)
+                                n = int(idx)
                                 d = d[n]
                             except TypeError:
                                 d = d[idx]
@@ -225,21 +244,28 @@ class BaseConfigurator(object):
 
     def convert(self, value):
         """
-        Convert values to an appropriate type. dicts, lists and tuples are
-        replaced by their converting alternatives. Strings are checked to
-        see if they have a conversion format and are converted if they do.
+
+        Convert values to an appropriate type.
+
+        Dicts, lists and tuples are replaced by their converting alternatives.
+        Strings are checked to see if they have a conversion format and are
+        converted if they do.
+
         """
         if not isinstance(value, ConvertingDict) and isinstance(value, dict):
             value = ConvertingDict(value)
             value.configurator = self
+
         elif not isinstance(value, ConvertingList) and isinstance(value, list):
             value = ConvertingList(value)
             value.configurator = self
+
         elif not isinstance(value, ConvertingTuple) and\
                 isinstance(value, tuple):
             value = ConvertingTuple(value)
             value.configurator = self
-        elif isinstance(value, basestring):  # str for py3k
+
+        elif isinstance(value, basestring):
             m = self.CONVERT_PATTERN.match(value)
             if m:
                 d = m.groupdict()
@@ -282,7 +308,6 @@ class DictConfigurator(BaseConfigurator):
 
     def configure(self):
         """Do the configuration."""
-
         config = self.config
         if 'version' not in config:
             raise ValueError("dictionary doesn't specify a version")

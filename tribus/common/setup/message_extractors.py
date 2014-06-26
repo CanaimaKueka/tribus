@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2013 by the Babel Team, see COPYING for more information.
-# All rights reserved.
+# All Rights Reserved.
 #
 # This file is part of Tribus.
 #
