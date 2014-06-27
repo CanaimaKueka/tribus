@@ -20,6 +20,7 @@
 
 from django.core.management.base import BaseCommand
 from tribus.common.recorder import fill_db_from_cache
+from tribus.config.base import PACKAGECACHE
 
 
 class Command(BaseCommand):

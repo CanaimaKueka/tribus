@@ -18,14 +18,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.core.management.base import BaseCommand
-from tribus.common.recorder import fill_db_from_cache, create_cache
-from tribus.config.pkgrecorder import LOCAL_ROOT
-from tribus.config.base import PACKAGECACHE
+import os
+from tribus.config.base import BASEDIR
 
+reprepro_dir = os.path.join(BASEDIR, 'test_repo')
+sample_packages_dir = os.path.join(BASEDIR, 'package_samples')
+selected_packages =  os.path.join(BASEDIR, 'tribus', 'config', 'data',
+                                  'selected_packages.list')
+distributions_path = os.path.join(BASEDIR, 'tribus', 'config', 'data',
+                                  'dists-template')
 
-class Command(BaseCommand):
-
-    def handle(self, *args, **options):
-        create_cache(LOCAL_ROOT, PACKAGECACHE)
-        fill_db_from_cache(PACKAGECACHE)
