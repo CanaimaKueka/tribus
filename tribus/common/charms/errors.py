@@ -1,7 +1,7 @@
-from tribus.common.errors import CharmError, jujuError
+from tribus.common.errors import CharmError, TribusError
 
 
-class CharmNotFound(jujuError):
+class CharmNotFound(TribusError):
     """A charm was not found in the repository."""
 
     # This isn't semantically an error with a charm error, its an error
@@ -75,11 +75,11 @@ class ServiceConfigError(CharmError):
     """Indicates an issue related to definition of service options."""
 
 
-class ServiceConfigValueError(jujuError):
+class ServiceConfigValueError(TribusError):
     """Indicates an issue related to values of service options."""
 
 
-class RepositoryNotFound(jujuError):
+class RepositoryNotFound(TribusError):
     """Indicates inability to locate an appropriate repository"""
 
     def __init__(self, specifier):
