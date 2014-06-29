@@ -198,7 +198,7 @@ msgstr ""
 
 #: ../../index.rst:120
 # 1f6c33fd32d743baa7edf8bb51c5d7ff
-msgid "Puedes revisar si ya se ha reportado un error relacionado con el problema que estás presentando en el gestor de `tickets <https://github.com/CanaimaGNULinux/tribus/issues>`_."
+msgid "Puedes revisar si ya se ha reportado un error relacionado con el problema que estás presentando en el gestor de `tickets <https://github.com/tribusdev/tribus/issues>`_."
 msgstr ""
 
 #: ../../index.rst:123

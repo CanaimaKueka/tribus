@@ -297,7 +297,7 @@ msgstr ""
 msgid ""
 "Puedes revisar si ya se ha reportado un error relacionado con el problema "
 "que estás presentando en el gestor de `tickets "
-"<https://github.com/CanaimaGNULinux/tribus/issues>`_."
+"<https://github.com/tribusdev/tribus/issues>`_."
 msgstr ""
 
 # 7caa1c8b1e9a46f4b203ef14ff950ad8

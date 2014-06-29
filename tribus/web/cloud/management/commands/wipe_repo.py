@@ -20,9 +20,10 @@
 
 from django.core.management.base import BaseCommand
 from tribus.common.reprepro import reset_repository
+from tribus.config.paths import reprepro_dir
 
 
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
-        reset_repository(env.reprepro_dir)
+        reset_repository(reprepro_dir)

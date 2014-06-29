@@ -71,8 +71,6 @@ def include_deb(repository_root, distribution, comp=None, package_path=None):
 
     """
 
-    # Esto puede ser un problema si despues se ejecuta otro proceso 
-    # sin especificar la ubicacion
     os.chdir(repository_root)
     if os.path.isdir(package_path):
         local("reprepro -C %s includedeb %s %s/*.deb" % (comp, distribution, package_path))

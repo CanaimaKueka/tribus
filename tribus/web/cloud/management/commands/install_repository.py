@@ -20,9 +20,9 @@
 
 from django.core.management.base import BaseCommand
 from tribus.common.reprepro import create_repository
-
+from tribus.config.paths import distributions_path, reprepro_dir
 
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
-        create_repository(env.reprepro_dir, env.distributions_path)
+        create_repository(reprepro_dir, distributions_path)

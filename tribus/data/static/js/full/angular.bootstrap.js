@@ -178,8 +178,6 @@ angular.module('ui.bootstrap.collapse',['ui.bootstrap.transition'])
   };
 }]);
 
-ang
-
 angular.module('ui.bootstrap.accordion', ['ui.bootstrap.collapse'])
 
 .constant('accordionConfig', {

@@ -21,6 +21,7 @@
 from django.core.management.base import BaseCommand
 from tribus.common.recorder import create_cache
 from tribus.config.pkgrecorder import CANAIMA_ROOT
+from tribus.config.base import PACKAGECACHE
 
 
 class Command(BaseCommand):

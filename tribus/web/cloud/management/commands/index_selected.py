@@ -18,10 +18,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import os
 from django.core.management.base import BaseCommand
 from tribus.common.utils import list_items, find_files
 from tribus.common.reprepro import include_deb
 from tribus.config.pkgrecorder import LOCAL_ROOT, SAMPLES_DIR
+from tribus.common.logger import get_logger
+logger = get_logger()
 
 
 class Command(BaseCommand):
@@ -31,8 +34,7 @@ class Command(BaseCommand):
         for dist in list_items(SAMPLES_DIR, True, False):
             for comp in list_items(os.path.join(SAMPLES_DIR, dist), True, False):
                 for sample in find_files(os.path.join(SAMPLES_DIR, dist, comp)):
-                    with cd('%(reprepro_dir)s' % env):
-                        try:
-                            include_deb(LOCAL_ROOT, dist, comp, sample)
-                        except:
-                            logger.info('There are no packages here!')
+                    try:
+                        include_deb(LOCAL_ROOT, dist, comp, sample)
+                    except:
+                        logger.info('There are no packages here!')

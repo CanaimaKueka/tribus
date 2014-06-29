@@ -18,23 +18,26 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import os
 from django.core.management.base import BaseCommand
 from tribus.common.utils import list_items, find_files
 from tribus.common.reprepro import include_deb
+from tribus.config.paths import sample_packages_dir, reprepro_dir
+from tribus.common.logger import get_logger
+logger = get_logger()
 
 
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
         dirs = [os.path.dirname(f)
-                for f in find_files(env.sample_packages_dir, 'list')]
-        dists = filter(None, list_items(env.sample_packages_dir, dirs=True, files=False))
-        with cd('%(reprepro_dir)s' % env):
-            for directory in dirs:
-                # No se me ocurre una mejor forma (dinamica) de hacer esto
-                dist = [dist_name for dist_name in dists if dist_name in directory][0]
-                results = [each for each in os.listdir(directory) if each.endswith('.deb')]
-                if results:
-                    include_deb(env.reprepro_dir, dist, directory)
-                else:
-                    logger.info('There are no packages in %s' % directory)
+                for f in find_files(sample_packages_dir, 'list')]
+        dists = filter(None, list_items(sample_packages_dir, dirs=True, files=False))
+        for directory in dirs:
+            # No se me ocurre una mejor forma (dinamica) de hacer esto
+            dist = [dist_name for dist_name in dists if dist_name in directory][0]
+            results = [each for each in os.listdir(directory) if each.endswith('.deb')]
+            if results:
+                include_deb(reprepro_dir, dist, directory)
+            else:
+                logger.info('There are no packages in %s' % directory)
