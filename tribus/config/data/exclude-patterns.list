@@ -1,1 +1,125 @@
-../../../.gitignore
+# Python
+*.py[cod]
+
+# PNG files
+*.png
+
+# C extensions
+*.so
+
+# Celery process id
+celerybeat.pid
+
+# Packages
+*.egg
+*.egg-info
+dist
+build
+eggs
+parts
+bin
+var
+sdist
+develop-eggs
+.installed.cfg
+lib
+lib64
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage reports
+.coverage
+.tox
+nosetests.xml
+
+# Translations
+*.mo
+
+# Mr Developer
+.mr.developer.cfg
+.project
+.pydevproject
+
+# Virtualenv
+virtualenv
+virtualenv_cache
+
+# Packagecache
+packagecache
+
+# Indices
+whoosh_index
+xapian_index
+
+# Package Samples
+package_samples
+
+# Test repository
+test_repo
+
+# Vim
+.*.s[a-w][a-z]
+*.un~
+Session.vim
+.netrwhist
+*~
+
+# Netbeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+
+# Commpressed files
+*.7z
+*.jar
+*.rar
+*.zip
+*.gz
+*.bzip
+*.bz2
+*.xz
+*.lzma
+
+# packing-only formats
+*.iso
+*.tar
+
+# package management formats
+*.dmg
+*.xpi
+*.gem
+*.egg
+*.deb
+*.rpm
+
+# SublimeText project files
+*.sublime-project
+*.sublime-workspace
+
+# Eclipse projects
+.settings
+.project
+
+# Configuración local de Django
+web_local.py
+
+# Configuración en producción de Django
+web_production.py
+
+# Javascript minificado
+tribus/data/static/js/min/
+
+# CSS minificado
+tribus/data/static/css/min/
+
+# Node package manager logs
+npm-debug.log
+
+# Compiled documentation
+tribus/data/docs/html
+tribus_recorder.log
