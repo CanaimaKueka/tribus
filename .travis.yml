@@ -6,3 +6,10 @@ install:
   - 'pip install -r tribus/config/data/python-dependencies.list'
 script:
   - 'python setup.py test'
+notifications:
+    webhooks:
+        urls:
+            - https://webhooks.gitter.im/e/8d0964d32b01f7ec48cf
+        on_success: change
+        on_failure: always
+        on_start: false
