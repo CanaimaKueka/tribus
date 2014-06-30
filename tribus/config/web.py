@@ -173,7 +173,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'tribus.testing',
+    'tribus.tests',
     'tribus.web',
     'tribus.web.registration',
     'tribus.web.cloud',

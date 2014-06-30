@@ -37,7 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django_auth_ldap',
     'django_static',
-    'tribus.testing',
+    'tribus.tests',
     'tribus.web.cloud',
     'south',
     'haystack',

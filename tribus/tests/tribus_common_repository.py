@@ -31,8 +31,8 @@ from django.test import TestCase
 from tribus.__init__ import BASEDIR
 from tribus.common.utils import get_path
 
-SAMPLESDIR = get_path([BASEDIR, "tribus", "testing", "samples" ])
-FIXTURES = get_path([BASEDIR, "tribus", "testing", "fixtures" ])
+SAMPLESDIR = get_path([BASEDIR, "tribus", "tests", "samples" ])
+FIXTURES = get_path([BASEDIR, "tribus", "tests", "fixtures" ])
 dist = 'kerepakupai'
 
 class RepositoryFunctions(TestCase):

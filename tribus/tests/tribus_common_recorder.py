@@ -37,7 +37,7 @@ from tribus.__init__ import BASEDIR
 from tribus.common.utils import get_path
 from tribus.web.cloud.models import Package, Details
 
-SAMPLESDIR = get_path([BASEDIR, "tribus", "testing", "samples"])
+SAMPLESDIR = get_path([BASEDIR, "tribus", "tests", "samples"])
 test_dist = "kukenan"
 
 

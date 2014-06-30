@@ -33,7 +33,7 @@ from django.test import TestCase
 from tribus.common.utils import get_path
 from tribus.common.iosync import rmtree
 from tribus.__init__ import BASEDIR
-SAMPLESDIR = get_path([BASEDIR, "tribus", "testing", "samples" ])
+SAMPLESDIR = get_path([BASEDIR, "tribus", "tests", "samples" ])
 
 class RepreproFunctions(TestCase):
     

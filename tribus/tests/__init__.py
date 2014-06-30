@@ -20,9 +20,6 @@
 
 """
 
-tribus.testing
-==============
-
 This file contains the entry point to the tribus tests.
 
 """
@@ -47,7 +44,7 @@ from tribus.common.setup.utils import get_packages
 log = get_logger()
 
 
-class SetupTesting(TestSuite):
+class SetupTests(TestSuite):
 
     """
 
@@ -66,9 +63,9 @@ class SetupTesting(TestSuite):
                                      exclude_packages=exclude_packages)
         self.options = {'failfast': True,
                         'autoreload': '',
-                        'label': ['testing']}
+                        'label': ['tests']}
 
-        super(SetupTesting, self).__init__(tests=self.build_tests(),
+        super(SetupTests, self).__init__(tests=self.build_tests(),
                                            *args, **kwargs)
 
         # Setup testrunner.
@@ -95,7 +92,7 @@ class SetupTesting(TestSuite):
         from django.db.models import get_app
         from django.test.simple import build_suite
 
-        return [build_suite(get_app('testing'))]
+        return [build_suite(get_app('tests'))]
 
     def configure(self):
         """
@@ -107,7 +104,7 @@ class SetupTesting(TestSuite):
         from django.utils.importlib import import_module
 
         try:
-            test_settings = import_module('tribus.config.testing')
+            test_settings = import_module('tribus.config.tests')
         except ImportError as e:
             log.info('ImportError: Unable to import test settings: %s' % e)
             sys.exit(1)
@@ -128,7 +125,7 @@ class SetupTesting(TestSuite):
         """
 
         result.failfast = self.options['failfast']
-        result = super(SetupTesting, self).run(result, *args, **kwargs)
+        result = super(SetupTests, self).run(result, *args, **kwargs)
         self.test_runner.teardown_databases(self.old_config)
         self.test_runner.teardown_test_environment()
 
@@ -170,7 +167,7 @@ class SetupTesting(TestSuite):
         """
 
         include = ['%s*' % package for package in self.packages]
-        omit = ['*testing*']
+        omit = ['*tests*']
 
         log.info("\n\nCoverage Report:")
         try:

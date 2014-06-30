@@ -289,7 +289,7 @@ def get_setup_data(basedir):
         'package_data': {'': []},
         'install_requires': install_requires,
         'dependency_links': dependency_links,
-        'test_suite': 'tribus.testing.SetupTesting',
+        'test_suite': 'tribus.tests.SetupTests',
         'zip_safe': False,
         'cmdclass': {
             'clean': clean,
