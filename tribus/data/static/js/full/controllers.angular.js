@@ -12,7 +12,7 @@ function UserController($scope, UserProfile){
                 $scope.add = true;
                 break;
             }
-        }     
+        }
     });
 
 
@@ -26,10 +26,10 @@ function UserController($scope, UserProfile){
                     if (profile[0].follows[ind] == "/api/0.1/user/details/" + userview_id){
 
                         profileview[0].followers.pop(ind);
-                        profileview[0].$modify({author_id: userview_id});
+                        profileview[0].$modify({user_id: '/api/0.1/user/details/'+userview_id});
 
                         profile[0].follows.pop(ind);
-                        profile[0].$modify({author_id: user_id});
+                        profile[0].$modify({user_id: '/api/0.1/user/details/'+user_id});
                         agregado = true;
                         $scope.add = false;
 
@@ -37,18 +37,18 @@ function UserController($scope, UserProfile){
                     }
                 }
 
-                if (agregado == false){                 
+                if (agregado == false){
 
                     $scope.add= true;
                     profileview[0].followers.push("/api/0.1/user/details/"+user_id);
-                    profileview[0].$modify({author_id: userview_id});
-                    // console.log("----->  AGREGADO.", profileview); 
+                    profileview[0].$modify({user_id: '/api/0.1/user/details/'+userview_id});
+                    // console.log("----->  AGREGADO.", profileview);
                     profile[0].follows.push("/api/0.1/user/details/"+userview_id);
-                    profile[0].$modify({author_id: user_id});
+                    profile[0].$modify({user_id: '/api/0.1/user/details/'+user_id});
 
 
                 }
-            });             
+            });
         });
     };
 }
@@ -78,7 +78,7 @@ function FollowsController($scope, $filter, UserFollows, UserProfile, $timeout){
         console.log (this);
         var profile = UserProfile.query({id:user_id},function(){
             var profileview = UserProfile.query({id:Uid},function(){
-                //console.log ("/api/0.1/user/details/" + Uid);        
+                //console.log ("/api/0.1/user/details/" + Uid);
 
 
                for (var i =0; i < profile[0].follows.length; i++){
@@ -88,7 +88,7 @@ function FollowsController($scope, $filter, UserFollows, UserProfile, $timeout){
                             console.log(profile[0].follows, i);
                             profile[0].follows.splice(i,1);;
                             console.log(profile[0].follows, i);
-                            profile[0].$modify({author_id:user_id}); 
+                            profile[0].$modify({user_id: '/api/0.1/user/details/'+user_id});
                             // console.log ($scope.follows);
                             $scope.follows.splice(i,1);
                         break;
@@ -101,7 +101,7 @@ function FollowsController($scope, $filter, UserFollows, UserProfile, $timeout){
 
                             console.log(profileview[0]);
                             profileview[0].followers.splice(i,1);
-                            profileview[0].$modify({author_id: Uid});
+                            profileview[0].$modify({user_id: '/api/0.1/user/details/'+Uid});
                         break;
                     }
                 }
@@ -128,7 +128,7 @@ function FollowersController($scope, $filter, UserFollowers, UserProfile){
     $scope.convertmd5 = function(email){
         var url = 'http://www.gravatar.com/avatar/'+md5(email)+'?d=mm&s=40&r=x';
         return url;
-    }; 
+    };
 
 };
 
@@ -158,7 +158,7 @@ function TypeaheadCtrl($scope, Search){
 		            var users = results.objects[0].users;
 		            for(var i = 0; i < users.length; i++){
 		                users[i].url = user_url_placer.replace('%USER%', users[i].username);
-		                $scope.res.push({name : users[i].fullname, 
+		                $scope.res.push({name : users[i].fullname,
 		                				 url : users[i].url,
 		                				 username : users[i].username,
 		                				 type : "user"
@@ -167,8 +167,8 @@ function TypeaheadCtrl($scope, Search){
 	            }
 	        }
         });
-        
-        $scope.res.push({name : inputvalue, 
+
+        $scope.res.push({name : inputvalue,
 	                	 url : "/search?q=" + inputvalue,
 	                	 type : "search",
 	                	 search : true,
@@ -234,11 +234,7 @@ function TribController($scope, $timeout, $modal, Tribs, Timeline){
 
     $scope.createNewTrib = function(){
         Tribs.save({
-            author_id: user_id,
-            author_username: user_username,
-            author_first_name: user_first_name,
-            author_last_name: user_last_name,
-            author_email: user_email,
+            user_id: '/api/0.1/user/details/'+user_id,
             trib_content: $scope.trib_content,
             trib_pub_date: new Date().toISOString()
         }, function(e){
@@ -312,7 +308,7 @@ function TribController($scope, $timeout, $modal, Tribs, Timeline){
         if (template_name === 'profile'){
             var service = Tribs;
             var querydict = {
-                author_id : user_id,
+                user_id: user_id,
                 order_by: $scope.trib_orderby,
                 limit: $scope.trib_limit,
                 offset: $scope.trib_offset
@@ -320,7 +316,7 @@ function TribController($scope, $timeout, $modal, Tribs, Timeline){
         } else if(template_name === 'profileView'){
             var service = Tribs;
             var querydict = {
-                author_id : userview_id,
+                user_id: userview_id,
                 order_by: $scope.trib_orderby,
                 limit: $scope.trib_limit,
                 offset: $scope.trib_offset
@@ -340,7 +336,7 @@ function TribController($scope, $timeout, $modal, Tribs, Timeline){
                     if(!idInArray(results.objects[i], $scope.tribs)){
                         results.objects[i].trib_content = replaceLinks(results.objects[i].trib_content);
                         results.objects[i].author_gravatar = 'http://www.gravatar.com/avatar/';
-                        results.objects[i].author_gravatar += md5(results.objects[i].author_email);
+                        results.objects[i].author_gravatar += md5(results.objects[i].user_id.email);
                         results.objects[i].author_gravatar += '?d=mm&s=70&r=x';
                         $scope.tribs.push(results.objects[i]);
                     }
@@ -360,6 +356,7 @@ function TribController($scope, $timeout, $modal, Tribs, Timeline){
                 });
 
                 $scope.controller_busy = false;
+
             } else {
                 $scope.tribs_end = true;
                 $scope.controller_busy = false;
@@ -382,7 +379,7 @@ function TribController($scope, $timeout, $modal, Tribs, Timeline){
         if (template_name === 'profile'){
             var service = Tribs;
             var querydict = {
-                author_id : user_id,
+                user_id: user_id,
                 order_by: $scope.trib_orderby,
                 limit: $scope.trib_limit,
                 offset: $scope.new_tribs_offset
@@ -390,7 +387,7 @@ function TribController($scope, $timeout, $modal, Tribs, Timeline){
         } else if(template_name === 'profileView'){
             var service = Tribs;
             var querydict = {
-                author_id : userview_id,
+                user_id: userview_id,
                 order_by: $scope.trib_orderby,
                 limit: $scope.trib_limit,
                 offset: $scope.new_tribs_offset
@@ -411,7 +408,7 @@ function TribController($scope, $timeout, $modal, Tribs, Timeline){
                         if(!idInArray(results.objects[i], $scope.tribs)){
                             results.objects[i].trib_content = replaceLinks(results.objects[i].trib_content);
                             results.objects[i].author_gravatar = 'http://www.gravatar.com/avatar/';
-                            results.objects[i].author_gravatar += md5(results.objects[i].author_email);
+                            results.objects[i].author_gravatar += md5(results.objects[i].user_id.email);
                             results.objects[i].author_gravatar += '?d=mm&s=70&r=x';
                             $scope.tribs.unshift(results.objects[i]);
                         }
@@ -462,14 +459,9 @@ function CommentController($scope, $timeout, $modal, Comments){
 
     $scope.createNewComment = function(){
         Comments.save({
-            author_id: user_id,
-            author_username: user_username,
-            author_first_name: user_first_name,
-            author_last_name: user_last_name,
-            author_email: user_email,
             comment_content: this.comment_content,
             comment_pub_date: new Date().toISOString(),
-            trib_id: $scope.trib_id
+            trib_id: '/api/0.1/user/tribs/'+$scope.trib_id
         }, function(){
             $scope.comment_content = '';
             $timeout(function(){
@@ -536,7 +528,7 @@ function CommentController($scope, $timeout, $modal, Comments){
                         if(!idInArray(results.objects[i], $scope.comments)){
                             results.objects[i].comment_content = replaceLinks(results.objects[i].comment_content);
                             results.objects[i].author_gravatar = 'http://www.gravatar.com/avatar/';
-                            results.objects[i].author_gravatar += md5(results.objects[i].author_email);
+                            results.objects[i].author_gravatar += md5(results.objects[i].trib_id.user_id.email);
                             results.objects[i].author_gravatar += '?d=mm&s=30&r=x';
                             $scope.comments.unshift(results.objects[i]);
                         }
@@ -589,7 +581,7 @@ function CommentController($scope, $timeout, $modal, Comments){
                     if(!idInArray(results.objects[i], $scope.comments)){
                         results.objects[i].comment_content = replaceLinks(results.objects[i].comment_content);
                         results.objects[i].author_gravatar = 'http://www.gravatar.com/avatar/';
-                        results.objects[i].author_gravatar += md5(results.objects[i].author_email);
+                        results.objects[i].author_gravatar += md5(results.objects[i].trib_id.user_id.email);
                         results.objects[i].author_gravatar += '?d=mm&s=30&r=x';
                         $scope.comments.push(results.objects[i]);
                     }
