@@ -23,7 +23,7 @@
                 </span>
                 <span class="span2">
                     <button class="btn btn-success action_button" disabled="disabled">
-                        <span class="icon-pencil"></span>
+                        <span class="fa fa-pencil"></span>
                         {% trans 'Publish' %}
                     </button>
                 </span>
@@ -80,10 +80,10 @@
                     <span class="trib_content" ng-bind-html="trib.trib_content"></span>
                     <span class="trib_interact">
                         <span class="pull-right" data-ng-click="toggleComments()">
-                            <a href=""><span class="icon-chevron-down"></span>{% trans 'Comment' %}</a>
+                            <a href=""><span class="fa fa-chevron-down"></span>{% trans 'Comment' %}</a>
                         </span>
                         <span data-ng-if="trib.author_id == {{ user.id }}" data-ng-click="showDeleteModal()">
-                            <a href=""><span class="icon-trash"></span>{% trans 'Delete' %}</a>
+                            <a href=""><span class="fa fa-trash-o"></span>{% trans 'Delete' %}</a>
                         </span>
                     </span>
                     <span class="trib_reply">
@@ -111,7 +111,7 @@
                                         </span>
                                         <span data-ng-if="comment.author_id == {{ user.id }}" class="close"
                                         data-ng-click="showDeleteModal()">
-                                            <span class="icon-remove"></span>
+                                            <span class="fa fa-times"></span>
                                         </span>
                                         <span class="comment_date">
                                             <h4 data-am-time-ago="comment.comment_pub_date"></h4>
@@ -149,7 +149,7 @@
     <script type="text/ng-template" id="delete_modal_template.html">
         <div class="modal-body">
             <button type="button" class="close" data-ng-click="cancel()">
-                <span class="icon-remove"></span>
+                <span class="fa fa-times"></span>
             </button>
             <h4>{% trans 'Are you sure you want to delete this message?' %}</h4>
         </div>
