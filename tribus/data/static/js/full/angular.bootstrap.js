@@ -2554,7 +2554,7 @@ function TabsetCtrl($scope, $element) {
       <tabset>
         <tab heading="Tab 1">First Tab</tab>
         <tab select="alertMe()">
-          <tab-heading><i class="icon-bell"></i> Alert me!</tab-heading>
+          <tab-heading><i class="fa fa-bell"></i> Alert me!</tab-heading>
           Second Tab, with alert callback and html heading!
         </tab>
         <tab ng-repeat="item in items"
@@ -2600,7 +2600,7 @@ function TabsetCtrl($scope, $element) {
         And some content, too!
       </tab>
       <tab>
-        <tab-heading><i class="icon-heart"></i> Icon heading?!?</tab-heading>
+        <tab-heading><i class="fa fa-heart"></i> Icon heading?!?</tab-heading>
         That's right.
       </tab>
     </tabset>
