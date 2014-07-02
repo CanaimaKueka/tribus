@@ -11,7 +11,7 @@
                 </span>
                 <span class="profile_buttons">
                     <a class="btn btn-sm btn-block btn-success" href="https://es.gravatar.com/gravatars/new/">
-                        <i class="icon-camera bigger-120"></i>
+                        <i class="fa fa-camera bigger-120"></i>
                         <span class="bigger-110">{% trans 'Change avatar' %}</span>
                     </a>
                 </span>
@@ -19,18 +19,18 @@
                     <h3>{{ user_view.first_name }}</h3>
                     <h3>{{ user_view.last_name }}</h3>
                     <span>
-                        <i class="icon-user"></i>
+                        <i class="fa fa-user"></i>
                         {{ user_view.username }}
                     </span>
                     {% if user_view.emailVisible %}
                     <span >
-                        <i class="icon-envelope-alt"></i>
+                        <i class="fa fa-envelope-o"></i>
                         {{ user_view.email }}
                     {% endif %}    
                     </span>
                     {% if user_view.description %}
                     <span>
-                        <i class="icon-book"></i>
+                        <i class="fa fa-book"></i>
                         {{ user_view.description }}
                     </span>
                     {% endif %}
@@ -41,14 +41,14 @@
                     <tabset>
                         <tab>
                             <tab-heading>
-                                <i class="icon-list"></i>
+                                <i class="fa fa-list"></i>
                                 {% trans 'Wall' %}
                             </tab-heading>
                             {% include 'tribs.html' with user_from_template=user_view.first_name %}
                         </tab>
                         <tab>
                             <tab-heading>
-                                <i class="icon-user"></i>
+                                <i class="fa fa-user"></i>
                                 {% trans 'Edit Profile' %}
                             </tab-heading>
                             <form name="edit_profile_form" accept-charset="UTF-8" action="profile/done" autocomplete="off" novalidate method="post">
@@ -64,7 +64,7 @@
                         </tab>
                         <tab>
                             <tab-heading>
-                                <i class="icon-group"></i>
+                                <i class="fa fa-group"></i>
                                 {% trans 'Follows' %}
                             </tab-heading>
                             <div data-ng-controller="FollowsController">
@@ -102,7 +102,7 @@
                                                     <h4>{% verbatim %}@{{ follow.username }}{% endverbatim %}</h4>
                                                     <span class="pull-right">
                                                         <button  class="btn btn-danger btn-xs"  data-ng-click="eliminar(this.follow.id)">
-                                                            <i class="icon-remove icon-only"></i>
+                                                            <i class="fa fa-times icon-only"></i>
                                                         </button>
                                                     </span>
                                                 </span>
@@ -145,7 +145,7 @@
                         </tab>
                         <tab>
                             <tab-heading>
-                                <i class="icon-group"></i>
+                                <i class="fa fa-group"></i>
                                 {% trans 'Followers' %}
                             </tab-heading>
                             <div data-ng-controller="FollowersController">

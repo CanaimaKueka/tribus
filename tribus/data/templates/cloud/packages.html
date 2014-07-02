@@ -21,13 +21,13 @@
                         {% for dists in detalles|dictsort:'version' %}
                         <accordion-group is-open="false">
                             <accordion-heading>
-                                <i class="icon-chevron-right"></i> {{ tribus_distro }} {{dists.version}} ({{ dists.codename }})
+                                <i class="fa fa-chevron-right"></i> {{ tribus_distro }} {{dists.version}} ({{ dists.codename }})
                             </accordion-heading>
                             <tabset vertical="true" direction="'left'">
                                 {% for arch in dists.Architectures.items %}
                                 <tab>
                                     <tab-heading>
-                                    <i class="icon-asterisk"></i> {{ arch.0 }}
+                                    <i class="fa fa-asterisk"></i> {{ arch.0 }}
                                     </tab-heading>
                                     {% include 'cloud/architectures.html' %}
                                 </tab>
@@ -64,7 +64,7 @@
                                 <li>
                                     {% if paquete.Maintainer %}
                                     <h3 class="line-height-1 smaller">
-                                        <i class="icon-group red"></i>
+                                        <i class="fa fa-group red"></i>
                                         {% trans 'Maintainer' %}
                                     </h3>
                                     <h4 class="line-height-1 lighter">{{ paquete.Maintainer }}</h4>
@@ -73,7 +73,7 @@
                                 <li>
                                     {% if paquete.Section %}
                                     <h3 class="line-height-1 smaller">
-                                        <i class="icon-bookmark red"></i>
+                                        <i class="fa fa-bookmark red"></i>
                                         {% trans 'Section' %}
                                     </h3>
                                     <h4 class="line-height-1 lighter">{{ paquete.Section }}</h4>
@@ -82,7 +82,7 @@
                                 <li>
                                     {% if paquete.Priority %}
                                     <h3 class="line-height-1 smaller">
-                                        <i class="icon-dashboard red"></i>
+                                        <i class="fa fa-dashboard red"></i>
                                         {% trans 'Priority' %}
                                     </h3>
                                     <h4 class="line-height-1 lighter">{{ paquete.Priority }}</h4>
@@ -91,7 +91,7 @@
                                 <li>
                                     {% if paquete.Homepage %}
                                     <h3 class="line-height-1 smaller">
-                                        <i class="icon-globe red"></i>
+                                        <i class="fa fa-globe red"></i>
                                         {% trans 'Homepage' %}
                                     </h3>
                                     <h4 class="line-height-1 lighter">
@@ -104,7 +104,7 @@
                                 <li>
                                     {% if paquete.Labels.all  %}
                                     <h3 class="line-height-1 smaller">
-                                        <i class="icon-tag red"></i>
+                                        <i class="fa fa-tag red"></i>
                                         {% trans 'Tags' %}
                                     </h3>
                                     <h4 class="line-height-1 lighter">
@@ -132,13 +132,13 @@
                         <div class="widget-main padding-8">
                             <ul class="unstyled spaced">
                                 <li>
-                                    <i class="icon-circle red"></i>
+                                    <i class="fa fa-circle red"></i>
                                     <a href="http://bugs.debian.org/{{ paquete.Name }}" target="_blank">
                                         {% trans 'Bug Tracking System' %}
                                     </a>
                                 </li>
                                 <li>
-                                    <i class="icon-circle red"></i>
+                                    <i class="fa fa-circle red"></i>
                                     <a href="http://packages.qa.debian.org/{{ paquete.Name }}" target="_blank">
                                         {% trans 'Package Tracking System' %}
                                     </a>

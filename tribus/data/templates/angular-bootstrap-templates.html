@@ -42,9 +42,9 @@
 	<table>
 		<thead>
 			<tr class="text-center">
-		  		<th><button type="button" class="btn pull-left" ng-click="move(-1)"><i class="icon-chevron-left"></i></button></th>
+		  		<th><button type="button" class="btn pull-left" ng-click="move(-1)"><i class="fa fa-chevron-left"></i></button></th>
 		  		<th colspan="{% verbatim %} {{rows[0].length - 2 + showWeekNumbers}} {% endverbatim %}"><button type="button" class="btn btn-block" ng-click="toggleMode()"><strong>{% verbatim %} {{title}} {% endverbatim %}</strong></button></th>
-		  		<th><button type="button" class="btn pull-right" ng-click="move(1)"><i class="icon-chevron-right"></i></button></th>
+		  		<th><button type="button" class="btn pull-right" ng-click="move(1)"><i class="fa fa-chevron-right"></i></button></th>
 			</tr>
 			<tr class="text-center" ng-show="labels.length > 0">
 			  	<th ng-show="showWeekNumbers">#</th>
@@ -123,7 +123,7 @@
 
 <script type="text/ng-template" id="template/rating/rating.html">
 	<span ng-mouseleave="reset()">
-        <i ng-repeat="r in range" ng-mouseenter="enter($index + 1)" ng-click="rate($index + 1)" ng-class="$index < val && (r.stateOn || 'icon-star') || (r.stateOff || 'icon-star-empty')"></i>
+        <i ng-repeat="r in range" ng-mouseenter="enter($index + 1)" ng-click="rate($index + 1)" ng-class="$index < val && (r.stateOn || 'fa fa-star') || (r.stateOff || 'fa fa-star-o')"></i>
 	</span>
 </script>
 
@@ -155,9 +155,9 @@
 <script type="text/ng-template" id="template/timepicker/timepicker.html">
 	<table class="form-inline">
 	    <tr class="text-center">
-            <td><a ng-click="incrementHours()" class="btn btn-link"><i class="icon-chevron-up"></i></a></td>
+            <td><a ng-click="incrementHours()" class="btn btn-link"><i class="fa fa-chevron-up"></i></a></td>
             <td>&nbsp;</td>
-            <td><a ng-click="incrementMinutes()" class="btn btn-link"><i class="icon-chevron-up"></i></a></td>
+            <td><a ng-click="incrementMinutes()" class="btn btn-link"><i class="fa fa-chevron-up"></i></a></td>
             <td ng-show="showMeridian"></td>
 	    </tr>
 	    <tr>
@@ -167,9 +167,9 @@
             <td ng-show="showMeridian"><button type="button" ng-click="toggleMeridian()" class="btn text-center">{% verbatim %}{{meridian}}{% endverbatim %}</button></td>
 	    </tr>
 	    <tr class="text-center">
-            <td><a ng-click="decrementHours()" class="btn btn-link"><i class="icon-chevron-down"></i></a></td>
+            <td><a ng-click="decrementHours()" class="btn btn-link"><i class="fa fa-chevron-down"></i></a></td>
             <td>&nbsp;</td>
-            <td><a ng-click="decrementMinutes()" class="btn btn-link"><i class="icon-chevron-down"></i></a></td>
+            <td><a ng-click="decrementMinutes()" class="btn btn-link"><i class="fa fa-chevron-down"></i></a></td>
             <td ng-show="showMeridian"></td>
 	    </tr>
 	</table>
@@ -212,9 +212,9 @@
 <script type="text/ng-template" id="itemTpl.html">
 	<a tabindex="-1" href="{%verbatim%} {{match.model.url}} {%endverbatim%}">
 		<span ng-switch on="match.model.type">
-			<i ng-switch-when="user" class="icon-user"></i>
-			<i ng-switch-when="package" class="icon-gears"></i>
-			<i ng-switch-when="search" class="icon-search"></i>
+			<i ng-switch-when="user" class="fa fa-user"></i>
+			<i ng-switch-when="package" class="fa fa-gears"></i>
+			<i ng-switch-when="search" class="fa fa-search"></i>
 		</span>
 		<span data-ng-if="match.model.search">Buscar: </span><span ng-bind-html="match.model.name | typeaheadHighlight:query"></span>
 		<span data-ng-if="match.model.username">@</span><span data-ng-if="match.model.username" ng-bind-html="match.model.username | typeaheadHighlight:query"></span>

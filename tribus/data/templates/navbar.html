@@ -26,7 +26,7 @@
                         typeahead="item as item.name for item in getResults($viewValue)"
                         typeahead-wait-ms="300"
                         typeahead-template-url="itemTpl.html">
-	    				<span class="icon-search nav-search-icon"></span>
+	    				<span class="fa fa-search nav-search-icon"></span>
 	    				</span>
     				</form>
 				</li>                  
@@ -39,18 +39,18 @@
                 
                 {% switch profile %}
                 <li class="home">
-                    <a href="/"><span class="bigger-150 icon-home"></span></a>
+                    <a href="/"><span class="bigger-150 fa fa-home"></span></a>
                 </li>
                 <li class="divider-vertical"></li>
                 <li class="profile">
-                    <a href="/profile/"><span class="bigger-150 icon-user"></span></a>
+                    <a href="/profile/"><span class="bigger-150 fa fa-user"></span></a>
                 </li>
                 <li class="divider-vertical"></li>
                 {% endswitch%}
                 
                 <li class="dropdown settings">
                     <a id="drop-settings" href="#" class="dropdown-toggle" role="button">
-                        <span class="bigger-150 icon-cog"></span>
+                        <span class="bigger-150 fa fa-cog"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="drop-settings">
                         <li role="presentation">
