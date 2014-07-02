@@ -33,6 +33,7 @@ from tribus.common.charms.metadata import MetaData
 
 
 class CharmDirectory(CharmBase):
+
     """
 
     Directory that holds charm content.

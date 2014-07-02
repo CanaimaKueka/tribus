@@ -21,10 +21,6 @@
 
 """
 
-tribus.common.setup.clean
-=========================
-
-
 """
 
 import os

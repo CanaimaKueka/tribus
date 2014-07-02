@@ -33,10 +33,9 @@ import re
 import fnmatch
 
 from tribus.common.logger import get_logger
-from tribus.common.utils import (
-    find_files, path_to_package, find_dirs,
-    get_path, list_files, package_to_path, flatten_list,
-    readconfig)
+from tribus.common.utils import (find_files, path_to_package, find_dirs,
+                                 get_path, list_files, package_to_path,
+                                 flatten_list, readconfig)
 
 log = get_logger()
 
@@ -44,7 +43,7 @@ log = get_logger()
 def get_classifiers(filename=None):
     """
 
-    Reads python classifiers from a file.
+    Read python classifiers from a file.
 
     :param filename: a filename containing python classifiers
                      (one classifier per line).
@@ -54,7 +53,6 @@ def get_classifiers(filename=None):
     .. versionadded:: 0.1
 
     """
-
     assert filename
     return readconfig(filename, conffile=False)
 
@@ -64,8 +62,7 @@ def get_classifiers(filename=None):
 def get_dependency_links(filename=None):
     """
 
-    Procesess dependency links from a requirements file
-    or a simple pip dependency file.
+    Process dependencies from a requirements file or a pip dependency file.
 
     :param filename: a filename containing python packages
                      in a format expected by pip (one per line).
@@ -87,8 +84,8 @@ def get_dependency_links(filename=None):
 #
 def get_requirements(filename=None):
     """
-    Procesess dependencies from a requirements file
-    or a simple pip dependency file.
+
+    Process dependencies from a requirements file or a pip dependency file.
 
     :param filename: a filename containing python packages
                      in a format expected by pip (one per line).
@@ -96,6 +93,7 @@ def get_requirements(filename=None):
     :rtype: ``list``
 
     .. versionadded:: 0.1
+
     """
     assert filename is not None
     requirements = []
@@ -103,22 +101,20 @@ def get_requirements(filename=None):
         if re.match(r'(\s*#)|(\s*$)', line):
             continue
         if re.match(r'\s*-e\s+', line):
-            requirements.append(
-                re.sub(
-                    r'\s*-e\s+.*#egg=(.*)$',
-                    r'\1',
-                    line).strip(
-                    ))
+            requirements.append(re.sub(r'\s*-e\s+.*#egg=(.*)$',
+                                       r'\1', line).strip())
         elif re.match(r'\s*-f\s+', line):
             pass
         else:
             requirements.append(line.strip())
+
     return requirements
 
 
 def get_packages(path=None, exclude_packages=[]):
     """
-    Returns a list of all python packages found within directory ``path``, with
+
+    Return a list of all python packages found within directory ``path``, with
     ``exclude_packages`` packages excluded.
 
     :param path: the path where the packages will be searched. It should
@@ -132,27 +128,34 @@ def get_packages(path=None, exclude_packages=[]):
     :rtype: ``list``
 
     .. versionadded:: 0.1
+
     """
     assert path
     assert exclude_packages
     assert type(path) == str
     assert type(exclude_packages) == list
+
     pkgs = []
     path = os.path.normpath(path)
+
     for init in find_files(path=path, pattern='__init__.py'):
         include = True
         pkg = path_to_package(os.path.dirname(init).replace(path + os.sep, ''))
+
         for exclude in exclude_packages:
             if fnmatch.fnmatch(pkg, exclude + '*'):
                 include = False
+
         if include:
             pkgs.append(pkg)
+
     return filter(None, pkgs)
 
 
 def get_package_data(path=None, packages=None, data_files=None,
                      exclude_packages=None, exclude_files=None):
     """
+
     For a list of packages, find the package_data
 
     This function scans the subdirectories of a package and considers all
@@ -160,20 +163,28 @@ def get_package_data(path=None, packages=None, data_files=None,
     the package_data
 
     Returns a dictionary suitable for setup(package_data=<result>)
+
     """
     assert path is not None
     assert packages is not None
     assert data_files is not None
+
     path = os.path.normpath(path)
     package_data = {}
+
     for package in packages:
         package_data[package] = []
-        for f in find_files(path=get_path([path, package_to_path(package)]), pattern='*.*'):
+
+        for f in find_files(path=get_path([path, package_to_path(package)]),
+                            pattern='*.*'):
             package_data[package].append(f)
+
             for e in exclude_packages + ['ez_setup', 'distribute_setup']:
-                if fnmatch.fnmatch(f, get_path([path, package_to_path(e), '*'])) \
-                   and f in package_data[package]:
+
+                if (fnmatch.fnmatch(f, get_path([path, package_to_path(e), '*']))
+                   and f in package_data[package]):
                     package_data[package].remove(f)
+
             for x in exclude_files + ['*.py']:
                 if fnmatch.fnmatch(f, get_path([path, x])) \
                    and f in package_data[package]:
@@ -241,6 +252,7 @@ def get_data_files(path=None, patterns=None, exclude_files=None):
 
 def get_setup_data(basedir):
     """
+
     Prepares a dictionary of values to configure python Distutils.
 
     :param basedir: the path where the files reside. Generally the top level
@@ -249,9 +261,10 @@ def get_setup_data(basedir):
     :rtype: ``dictionary``
 
     .. versionadded:: 0.1
+
     """
     from tribus.config.base import (NAME, VERSION, URL, AUTHOR, AUTHOR_EMAIL,
-                                    DESCRIPTION, LICENSE, DOCDIR)
+                                    DESCRIPTION, LICENSE, DOCDIR, LOCALEDIR)
     from tribus.config.pkg import (classifiers, long_description,
                                    install_requires, dependency_links,
                                    exclude_packages, platforms, keywords)
@@ -316,8 +329,7 @@ def get_setup_data(basedir):
         },
         'message_extractors': {
             'tribus': [
-                ('**.html',
-                 'tribus.common.setup.message_extractors:django', ''),
+                ('**.html', 'tribus.common.setup.message_extractors:django', ''),
                 ('**.py', 'python', ''),
             ],
         },
@@ -333,27 +345,28 @@ def get_setup_data(basedir):
             },
             'update_catalog': {
                 'domain': ('setup.py', 'django'),
-                'input_file': ('setup.py', 'tribus/data/i18n/pot/django.pot'),
-                'output_dir': ('setup.py', 'tribus/data/i18n'),
+                'input_file': ('setup.py', get_path([LOCALEDIR, 'pot'
+                                                     'django.pot'])),
+                'output_dir': ('setup.py', LOCALEDIR),
                 'ignore_obsolete': ('setup.py', True),
                 'previous': ('setup.py', False),
             },
             'compile_catalog': {
                 'domain': ('setup.py', 'django'),
-                'directory': ('setup.py', 'tribus/data/i18n'),
+                'directory': ('setup.py', LOCALEDIR),
                 'use_fuzzy': ('setup.py', True),
             },
             'init_catalog': {
                 'domain': ('setup.py', 'django'),
-                'input_file': ('setup.py', 'tribus/data/i18n/pot/django.pot'),
-                'output_dir': ('setup.py', 'tribus/data/i18n'),
+                'input_file': ('setup.py', get_path([LOCALEDIR, 'pot'
+                                                     'django.pot'])),
+                'output_dir': ('setup.py', LOCALEDIR),
             },
             'extract_messages': {
-                'copyright_holder': ('setup.py', 'Desarrolladores de Tribus'),
-                'msgid_bugs_address':
-                ('setup.py',
-                    'desarrolladores@canaima.softwarelibre.gob.ve'),
-                'output_file': ('setup.py', 'tribus/data/i18n/pot/django.pot'),
+                'copyright_holder': ('setup.py', AUTHOR),
+                'msgid_bugs_address': ('setup.py', AUTHOR_EMAIL),
+                'output_file': ('setup.py', get_path([LOCALEDIR, 'pot'
+                                                     'django.pot'])),
                 'charset': ('setup.py', 'utf-8'),
                 'sort_by_file': ('setup.py', True),
                 'no_wrap': ('setup.py', True),
