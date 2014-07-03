@@ -1,7 +1,6 @@
 postgresql
 slapd
 ldap-utils
-redis-server
 reprepro
 sudo
 udev
