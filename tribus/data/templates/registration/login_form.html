@@ -7,29 +7,6 @@
         <div class="row-fluid">
 	        <div class="span4">
 		        <h3 class="lighter block">{% trans "Log in" %}</h3>
-<!-- 	            <div class="row-fluid bigger-200">
-	                <a href="{% url 'socialauth_begin' 'facebook' %}">
-	                    <span class="span3 bigger-200 text-center blue">
-	                        <i class="fa fa-facebook-square"></i>
-	                    </span>
-	                </a>
-	                <a href="{% url 'socialauth_begin' 'twitter' %}">
-	                    <span class="span3 bigger-200 text-center light-blue">
-	                        <i class="fa fa-twitter-square"></i>
-	                    </span>
-	                </a>
-	                <a href="{% url 'socialauth_begin' 'github' %}">
-	                    <span class="span3 bigger-200 text-center dark">
-	                        <i class="fa fa-github-square"></i>
-	                    </span>
-	                </a>
-	                <a href="{% url 'socialauth_begin' 'google-oauth2' %}">
-	                    <span class="span3 bigger-200 text-center red">
-	                        <i class="fa fa-google-plus-square"></i>
-	                    </span>
-	                </a>
-	            </div>
-		        <h3 class="lighter block ">{% trans "- or -" %}</h3> -->
 		        <form id="login-form" method="post" action="{% url 'registration_login' %}">
                     {% csrf_token %}
                     <ul class="unstyled">

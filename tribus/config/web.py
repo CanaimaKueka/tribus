@@ -6,8 +6,7 @@ from celery.schedules import crontab
 
 from tribus import BASEDIR
 from tribus.common.utils import get_path
-from tribus.config.ldap import (AUTH_LDAP_SERVER_URI, AUTH_LDAP_BIND_DN,
-                                AUTH_LDAP_BIND_PASSWORD)
+from tribus.config.ldap import *
 
 djcelery.setup_loader()
 
