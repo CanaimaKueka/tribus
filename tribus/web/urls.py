@@ -39,7 +39,6 @@ urlpatterns = patterns(
     url(regex=r'', view=include('tribus.web.registration.urls')),
     url(regex=r'', view=include('tribus.web.cloud.urls')),
     url(regex=r'', view=include('tribus.web.profile.urls')),
-    url(regex=r'', view=include('social_auth.urls')),
     url(regex=r'^api/', view=include(api_01.urls)),
     
     # urls adicionales para el admin aqui

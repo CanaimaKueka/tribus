@@ -39,7 +39,7 @@ from django.template import loader
 from django.contrib.sites.models import get_current_site
 from django.utils.http import int_to_base36
 from django.contrib.auth.tokens import default_token_generator
-from django.contrib.auth.hashers import UNUSABLE_PASSWORD
+from django.contrib.auth.hashers import UNUSABLE_PASSWORD_PREFIX
 from django import forms
 from django.forms import Form
 from django.utils.datastructures import SortedDict
@@ -245,7 +245,7 @@ class PasswordResetForm(BasePasswordResetForm):
             raise forms.ValidationError(self.error_messages['unknown'])
         if not any(user.password for user in self.users_cache):
             raise forms.ValidationError(self.error_messages['unknown'])
-        if any((user.password == UNUSABLE_PASSWORD)
+        if any((user.password == UNUSABLE_PASSWORD_PREFIX)
                for user in self.users_cache):
             raise forms.ValidationError(self.error_messages['unusable'])
         return email

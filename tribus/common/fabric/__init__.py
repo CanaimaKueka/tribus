@@ -118,7 +118,7 @@ def development():
     }
     preseed_env = ['%s=%s' % (i, j) for i, j in env.preseed_env_dict.items()]
     mounts = ['%(basedir)s:%(basedir)s:rw' % env]
-    start_services = ['ssh', 'postgresql', 'redis-server', 'slapd']
+    start_services = ['ssh', 'postgresql', 'slapd']
 
     env.preseed_env = '\n'.join('export %s' % i for i in preseed_env)
     env.mounts = ' '.join('--volume %s' % i for i in mounts)
