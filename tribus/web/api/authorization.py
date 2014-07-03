@@ -69,8 +69,8 @@ class UserAuthorization(Authorization):
 
 
 class UserProfileAuthorization(Authorization):
-
-    def read_list(self, object_list, bundle):  # filtrar todos los objetos pertenecientes a user
+    # filtrar todos los objetos pertenecientes a user
+    def read_list(self, object_list, bundle):
         return object_list
 
     def read_detail(self, object_list, bundle):  # aqui se debe hacer una val
@@ -116,10 +116,10 @@ class TimelineAuthorization(Authorization):
         return timeline
 
     def read_list(self, object_list, bundle):
-        return object_list.filter(author_id__in=self.get_timeline(bundle=bundle))
+        return object_list.filter(user_id__in=self.get_timeline(bundle=bundle))
 
     def read_detail(self, object_list, bundle):
-        if int(bundle.obj.author_id) in self.get_timeline(bundle=bundle):
+        if int(bundle.obj.user_id) in self.get_timeline(bundle=bundle):
             return True
         raise Unauthorized("You are not allowed to access that resource.")
 
@@ -139,13 +139,15 @@ class TribAuthorization(Authorization):
         return True
 
     def create_detail(self, object_list, bundle):
-        if int(bundle.obj.author_id) == int(bundle.request.user.id):
-            return True
+        if not bundle.request.user.is_anonymous():
+            if int(bundle.obj.user_id.id) == int(bundle.request.user.id):
+                return True
         raise Unauthorized("You are not allowed to access that resource.")
 
     def delete_detail(self, object_list, bundle):
-        if int(bundle.obj.author_id) == int(bundle.request.user.id):
-            return True
+        if not bundle.request.user.is_anonymous():
+            if int(bundle.obj.user_id.id) == int(bundle.request.user.id):
+                return True
         raise Unauthorized("You are not allowed to access that resource.")
 
 
@@ -157,20 +159,14 @@ class CommentAuthorization(Authorization):
     def read_detail(self, object_list, bundle):
         return True
 
-    def create_list(self, object_list, bundle):
-        return object_list
-
     def create_detail(self, object_list, bundle):
-        return True
-
-    def update_list(self, object_list, bundle):
-        return object_list
-
-    def update_detail(self, object_list, bundle):
-        return True
-
-    def delete_list(self, object_list, bundle):
-        return object_list
+        if not bundle.request.user.is_anonymous():
+            if int(bundle.obj.user_id.id) == int(bundle.request.user.id):
+                return True
+        raise Unauthorized("You are not allowed to access that resource.")
 
     def delete_detail(self, object_list, bundle):
-        return True
+        if not bundle.request.user.is_anonymous():
+            if int(bundle.obj.user_id.id) == int(bundle.request.user.id):
+                return True
+        raise Unauthorized("You are not allowed to access that resource.")

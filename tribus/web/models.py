@@ -17,3 +17,20 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+from django.db import models
+from django.contrib.auth.models import User
+
+
+class Trib(models.Model):
+    user_id = models.ForeignKey(User, verbose_name='')
+    trib_pub_date = models.DateTimeField(blank=False)
+    trib_content = models.CharField("", max_length=200, blank=False)
+
+
+class Comment(models.Model):
+    user_id = models.ForeignKey(User, verbose_name='')
+    trib_id = models.ForeignKey("Trib", verbose_name='')
+    comment_content = models.CharField("", max_length=200, blank=False)
+    comment_pub_date = models.DateTimeField("", blank=False)

@@ -2,7 +2,6 @@ postgresql
 slapd
 ldap-utils
 redis-server
-mongodb-server
 reprepro
 sudo
 udev

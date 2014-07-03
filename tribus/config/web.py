@@ -11,12 +11,6 @@ except:
     pass
 
 try:
-    import mongoengine
-    mongoengine.connect(db='tribus')
-except:
-    pass
-
-try:
 
     from celery.schedules import crontab
 
@@ -185,7 +179,6 @@ INSTALLED_APPS = (
     'django_static',
     'djcelery',
     'tastypie',
-    'tastypie_mongoengine',
     'haystack',
     'celery_haystack',
     'registration',
