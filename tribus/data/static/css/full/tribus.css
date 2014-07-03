@@ -6204,7 +6204,7 @@ input[type=checkbox].ace.ace-switch.ace-switch-7:checked+.lbl::after {
     width: 96%;
     position: relative;
     top: 1px;
-    margin: 0 2%;
+    margin: 0 0%;
 }
 
 .nav-tabs > li > a {
