@@ -5,8 +5,8 @@
 
 angular.module('User', ['ngResource'])
 .factory('User',  function($resource){
-    return $resource('/api/0.1/user/details/:author_id',
-        { author_id: '@author_id' }, {
+    return $resource('/api/0.1/user/details/:user_id',
+        { user_id: '@user_id' }, {
             save: {
                 method: 'POST',
                 headers: {
@@ -19,7 +19,7 @@ angular.module('User', ['ngResource'])
                 headers: {
                     'X-CSRFToken': angular.element(document.querySelector('input[name=csrfmiddlewaretoken]')).val()
                 },
-            },            
+            },
             query: {
                 method: 'GET',
                 isArray: true,
@@ -28,12 +28,12 @@ angular.module('User', ['ngResource'])
                 },
             },
         });
-});  
+});
 
 
 angular.module('UserFollowers', ['ngResource'])
 .factory('UserFollowers',  function($resource){
-    return $resource('/api/0.1/user/followers/',{},{       
+    return $resource('/api/0.1/user/followers/',{},{
         query: {
             method: 'GET',
             isArray: true,
@@ -42,11 +42,11 @@ angular.module('UserFollowers', ['ngResource'])
             },
         },
     });
-});  
+});
 
 angular.module('UserFollows', ['ngResource'])
     .factory('UserFollows', function($resource){
-    return $resource('/api/0.1/user/follows/', {}, {       
+    return $resource('/api/0.1/user/follows/', {}, {
         query: {
             method: 'GET',
             isArray: true,
@@ -55,12 +55,12 @@ angular.module('UserFollows', ['ngResource'])
             },
         },
     });
-});  
+});
 
 angular.module('UserProfile', ['ngResource'])
 .factory('UserProfile',  function($resource){
-    return $resource('/api/0.1/user/profile/:author_id',
-        { author_id: '@author_id' }, {
+    return $resource('/api/0.1/user/profile/:user_id',
+        { user_id: '@user_id' }, {
             save: {
                 method: 'POST',
                 headers: {
@@ -73,7 +73,7 @@ angular.module('UserProfile', ['ngResource'])
                 headers: {
                     'X-CSRFToken': angular.element(document.querySelector('input[name=csrfmiddlewaretoken]')).val()
                 },
-            },            
+            },
             query: {
                 method: 'GET',
                 isArray: true,

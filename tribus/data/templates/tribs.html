@@ -68,13 +68,13 @@
                 <span class="span10 trib_body">
                     <span class="trib_title">
                         <h3>
-                            <a href="/profile/{% verbatim %}{{ trib.author_username }}{% endverbatim %}">
+                            <a href="/profile/{% verbatim %}{{ trib.user_id.username }}{% endverbatim %}">
                                 {% verbatim %}
-                                {{ trib.author_first_name }} {{ trib.author_last_name }}
+                                {{ trib.user_id.first_name }} {{ trib.user_id.last_name }}
                                 {% endverbatim %}
                             </a>
                         </h3>
-                        <h4>{% verbatim %}@{{ trib.author_username }}{% endverbatim %}</h4>
+                        <h4>{% verbatim %}@{{ trib.user_id.username }}{% endverbatim %}</h4>
                         <h4 class="pull-right" data-am-time-ago="trib.trib_pub_date"></h4>
                     </span>
                     <span class="trib_content" ng-bind-html="trib.trib_content"></span>
@@ -82,8 +82,8 @@
                         <span class="pull-right" data-ng-click="toggleComments()">
                             <a href=""><span class="fa fa-chevron-down"></span>{% trans 'Comment' %}</a>
                         </span>
-                        <span data-ng-if="trib.author_id == {{ user.id }}" data-ng-click="showDeleteModal()">
-                            <a href=""><span class="fa fa-trash-o"></span>{% trans 'Delete' %}</a>
+                        <span data-ng-if="trib.user_id.id == {{ user.id }}" data-ng-click="showDeleteModal()">
+                            <a href=""><span class="icon-trash"></span>{% trans 'Delete' %}</a>
                         </span>
                     </span>
                     <span class="trib_reply">
@@ -101,15 +101,15 @@
                                     <span class="span11 comment_body">
                                         <span class="comment_text">
                                             <h3>
-                                                <a href="/profile/{% verbatim %}{{ comment.author_username }}{% endverbatim %}">
+                                                <a href="/profile/{% verbatim %}{{ comment.user_id.username }}{% endverbatim %}">
                                                     {% verbatim %}
-                                                    {{ comment.author_first_name }} {{ comment.author_last_name }}
+                                                    {{ comment.user_id.first_name }} {{ comment.user_id.last_name }}
                                                     {% endverbatim %}
                                                 </a>
                                             </h3>
                                             <span data-ng-bind-html="comment.comment_content"></span>
                                         </span>
-                                        <span data-ng-if="comment.author_id == {{ user.id }}" class="close"
+                                        <span data-ng-if="comment.user_id.id == {{ user.id }}" class="close"
                                         data-ng-click="showDeleteModal()">
                                             <span class="fa fa-times"></span>
                                         </span>

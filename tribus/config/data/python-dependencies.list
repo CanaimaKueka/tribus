@@ -20,13 +20,12 @@ celery-haystack==0.7.2
 django-waffle==0.10
 django-registration==1.0
 django-tastypie==0.10.0
-mongodbforms==0.3
+python-mimeparse==0.1.4
 transifex-client==0.11.beta
 lxml==3.3.5
 flake8==2.1.0
 pep257==0.3.2
 coveralls==0.4.2
 sh==1.09
--e git+https://github.com/LuisAlejandro/django-tastypie-mongoengine.git#egg=django-tastypie-mongoengine
 -e git+https://github.com/joseguerrero/xapian-haystack.git#egg=xapian-haystack
 -e git+https://github.com/joseguerrero/django-static.git#egg=django-static
