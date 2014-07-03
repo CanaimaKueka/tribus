@@ -20,14 +20,27 @@
 
 import yaml
 
-from tastypie.cache import NoCache
-from tastypie.authentication import SessionAuthentication
-from tastypie.constants import ALL_WITH_RELATIONS
-from tastypie import fields
-#from tastypie_mongoengine.resources import MongoEngineResource
+from django.contrib.auth.models import User
+from django.core.paginator import Paginator
+from django.core.paginator import InvalidPage
+from django.http.response import Http404
 
+from tastypie import fields
+from tastypie.cache import NoCache
+from tastypie.constants import ALL_WITH_RELATIONS
 from tastypie.resources import ModelResource, Resource
 from tastypie.fields import ManyToManyField, OneToOneField
+from tastypie.authentication import SessionAuthentication
+from tastypie.validation import CleanedDataFormValidation
+
+from waffle import switch_is_active
+
+from haystack.query import SearchQuerySet, EmptySearchQuerySet
+
+from tribus.web.models import Trib, Comment
+from tribus.web.cloud.models import Package
+from tribus.web.profile.models import UserProfile
+from tribus.web.forms import TribForm, CommentForm
 from tribus.web.api.authorization import (
     TimelineAuthorization,
     TribAuthorization,
@@ -36,27 +49,10 @@ from tribus.web.api.authorization import (
     UserProfileAuthorization,
     UserFollowsAuthorization,
     UserFollowersAuthorization)
-#from tribus.web.documents import Trib, Comment
-from tribus.web.models import Trib, Comment
 
-from django.contrib.auth.models import User
-from tribus.web.profile.models import UserProfile
-
-from haystack.query import SearchQuerySet, EmptySearchQuerySet
-from tribus.web.cloud.models import Package
-
-
-#from tribus.web.api.validation import DocumentFormValidation
-#from tribus.web.forms import TribForm, CommentForm
-from django.core.paginator import Paginator
-from django.core.paginator import InvalidPage
-from django.http.response import Http404
-from waffle import switch_is_active
-
-
-from tribus.common.charms.repository import LocalCharmRepository
-from tribus.common.utils import get_path, list_dirs
 from tribus.config.base import CHARMSDIR
+from tribus.common.utils import get_path
+from tribus.common.charms.repository import LocalCharmRepository
 from tribus.common.charms.url import CharmCollection
 
 
@@ -163,8 +159,7 @@ class TribResource(ModelResource):
         filtering = {'user_id': ALL_WITH_RELATIONS}
         authorization = TribAuthorization()
         authentication = SessionAuthentication()
-        # Traducir validacion y formularios
-        #validation = DocumentFormValidation(form_class=TribForm)
+        validation = CleanedDataFormValidation(form_class=TribForm)
         cache = NoCache()
 
 
@@ -182,8 +177,7 @@ class CommentResource(ModelResource):
         filtering = {'trib_id': ALL_WITH_RELATIONS}
         authorization = CommentAuthorization()
         authentication = SessionAuthentication()
-        # Traducir validacion y formularios
-        #validation = DocumentFormValidation(form_class=CommentForm)
+        validation = CleanedDataFormValidation(form_class=CommentForm)
         cache = NoCache()
 
 
@@ -254,7 +248,6 @@ class SearchResource(Resource):
         allowed_methods = ['get']
         include_resource_uri = False
 
-
     def dehydrate_users(self, bundle):
         if switch_is_active('profile'):
             return [{'fullname': unicode(obj.fullname),
@@ -263,13 +256,11 @@ class SearchResource(Resource):
         else:
             return []
 
-
     def dehydrate_packages(self, bundle):
         if switch_is_active('cloud'):
             return [{'name': str(obj.name)} for obj in bundle.obj['packages']]
         else:
             return []
-
 
     def get_object_list(self, bundle):
         d = {}
@@ -279,7 +270,6 @@ class SearchResource(Resource):
             d['users'] = SearchUserResource().obj_get_list(bundle)
 
         return [d]
-
 
     def obj_get_list(self, bundle, **kwargs):
         return self.get_object_list(bundle)

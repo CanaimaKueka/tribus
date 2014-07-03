@@ -19,17 +19,18 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from lxml.html import document_fromstring
-from mongodbforms import DocumentForm
+from django.forms import ModelForm
 from django.core.exceptions import ValidationError
 from django.utils.html import strip_tags, escape
 from django.utils.translation import ugettext_lazy as _
-from tribus.web.documents import Trib, Comment
+from tribus.web.models import Trib, Comment
 
 
-class TribForm(DocumentForm):
+class TribForm(ModelForm):
 
     class Meta:
-        document = Trib
+        model = Trib
+        fields = ['trib_content']
 
     def clean(self):
         cleaned_data = super(TribForm, self).clean()
@@ -47,10 +48,11 @@ class TribForm(DocumentForm):
         return cleaned_data
 
 
-class CommentForm(DocumentForm):
+class CommentForm(ModelForm):
 
     class Meta:
-        document = Comment
+        model = Comment
+        fields = ['comment_content']
 
     def clean(self):
         cleaned_data = super(CommentForm, self).clean()
@@ -65,4 +67,3 @@ class CommentForm(DocumentForm):
             else:
                 raise ValidationError(_('Enter a valid value.'))
         return cleaned_data
-

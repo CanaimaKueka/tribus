@@ -15,38 +15,29 @@ function UserController($scope, UserProfile){
         }
     });
 
-
     $scope.follow = function(){
         var agregado = false;
 
         var profile = UserProfile.query({id: user_id}, function(){
             var profileview = UserProfile.query({id: userview_id}, function(){
-
                 for (var ind = 0; ind<profile[0].follows.length; ind++){
                     if (profile[0].follows[ind] == "/api/0.1/user/details/" + userview_id){
-
                         profileview[0].followers.pop(ind);
-                        profileview[0].$modify({user_id: '/api/0.1/user/details/'+userview_id});
-
+                        profileview[0].$modify({user_id: userview_id});
                         profile[0].follows.pop(ind);
-                        profile[0].$modify({user_id: '/api/0.1/user/details/'+user_id});
+                        profile[0].$modify({user_id: user_id});
                         agregado = true;
                         $scope.add = false;
-
                         break;
                     }
                 }
 
                 if (agregado == false){
-
                     $scope.add= true;
                     profileview[0].followers.push("/api/0.1/user/details/"+user_id);
-                    profileview[0].$modify({user_id: '/api/0.1/user/details/'+userview_id});
-                    // console.log("----->  AGREGADO.", profileview);
+                    profileview[0].$modify({user_id: userview_id});
                     profile[0].follows.push("/api/0.1/user/details/"+userview_id);
-                    profile[0].$modify({user_id: '/api/0.1/user/details/'+user_id});
-
-
+                    profile[0].$modify({user_id: user_id});
                 }
             });
         });
@@ -62,7 +53,6 @@ function FollowsController($scope, $filter, UserFollows, UserProfile, $timeout){
         $scope.$watch('follows_filter', function(){
             $scope.currentPage = 0;
             $scope.filtername = $filter('filter')($scope.follows, $scope.follows_filter);
-
             $scope.numberOfPages = function(){
                 return Math.ceil($scope.filtername.length / $scope.pageSize);
             };
@@ -78,18 +68,12 @@ function FollowsController($scope, $filter, UserFollows, UserProfile, $timeout){
         console.log (this);
         var profile = UserProfile.query({id:user_id},function(){
             var profileview = UserProfile.query({id:Uid},function(){
-                //console.log ("/api/0.1/user/details/" + Uid);
-
-
                for (var i =0; i < profile[0].follows.length; i++){
-                    // console.log(i, profile[0].follows[i]);
                     if (profile[0].follows[i] == "/api/0.1/user/details/" + Uid){
-                        // console.log(i, profile[0].follows[i], "-----ejecutado");
                             console.log(profile[0].follows, i);
                             profile[0].follows.splice(i,1);;
                             console.log(profile[0].follows, i);
-                            profile[0].$modify({user_id: '/api/0.1/user/details/'+user_id});
-                            // console.log ($scope.follows);
+                            profile[0].$modify({user_id: user_id});
                             $scope.follows.splice(i,1);
                         break;
                     }
@@ -98,14 +82,12 @@ function FollowsController($scope, $filter, UserFollows, UserProfile, $timeout){
                 for (var i =0; i < profileview[0].followers.length; i++){
                     console.log(i, profileview[0].followers[i]);
                     if (profileview[0].followers[i]== "/api/0.1/user/details/" + user_id){
-
                             console.log(profileview[0]);
                             profileview[0].followers.splice(i,1);
-                            profileview[0].$modify({user_id: '/api/0.1/user/details/'+Uid});
+                            profileview[0].$modify({user_id: Uid});
                         break;
                     }
                 }
-
             });
         });
     };
@@ -118,7 +100,6 @@ function FollowersController($scope, $filter, UserFollowers, UserProfile){
         $scope.$watch('followers_filter', function(){
             $scope.currentPage = 0;
             $scope.filtername = $filter('filter')($scope.followers, $scope.followers_filter);
-
             $scope.numberOfPages = function(){
                 return Math.ceil($scope.filtername.length / $scope.pageSize);
             };
@@ -129,54 +110,52 @@ function FollowersController($scope, $filter, UserFollowers, UserProfile){
         var url = 'http://www.gravatar.com/avatar/'+md5(email)+'?d=mm&s=40&r=x';
         return url;
     };
-
 };
 
 
 function TypeaheadCtrl($scope, Search){
-	$scope.res = [];
-	
+    $scope.res = [];
     $scope.getResults = function(inputvalue){
         Search.query({ q: inputvalue }, function(results){
-        	$scope.res = [];
-        	
-        	if (waffle.switch_is_active('cloud')){
-	            if (results.objects[0].packages.length > 0) {
-	                var packages = results.objects[0].packages;
-	                for(var i = 0; i < packages.length; i++){
-	                    packages[i].url = packages_url_placer.replace('%PACKAGE%', packages[i].name);
-	                    $scope.res.push({name : packages[i].name,
-	                    				 url : packages[i].url,
-	                    				 type : "package"
-	                    				 });
-	                }
-	            }
-           	}
+            $scope.res = [];
+            	
+            if (waffle.switch_is_active('cloud')){
+                if (results.objects[0].packages.length > 0) {
+                    var packages = results.objects[0].packages;
+                    for(var i = 0; i < packages.length; i++){
+                        packages[i].url = packages_url_placer.replace('%PACKAGE%',
+                            packages[i].name);
+                        $scope.res.push({name : packages[i].name,
+                            url : packages[i].url,
+                            type : "package"
+                        });
+                    }
+                }
+            }
            	
             if (waffle.switch_is_active('profile')){
-	            if (results.objects[0].users.length > 0) {
-		            var users = results.objects[0].users;
-		            for(var i = 0; i < users.length; i++){
-		                users[i].url = user_url_placer.replace('%USER%', users[i].username);
-		                $scope.res.push({name : users[i].fullname,
-		                				 url : users[i].url,
-		                				 username : users[i].username,
-		                				 type : "user"
-		                				});
-		            }
-	            }
-	        }
+                if (results.objects[0].users.length > 0) {
+                    var users = results.objects[0].users;
+                    for(var i = 0; i < users.length; i++){
+                        users[i].url = user_url_placer.replace('%USER%',
+                            users[i].username);
+                        $scope.res.push({name : users[i].fullname,
+                            url : users[i].url,
+                            username : users[i].username,
+                            type : "user"
+                        });
+                    }
+                }
+            }
         });
 
         $scope.res.push({name : inputvalue,
-	                	 url : "/search?q=" + inputvalue,
-	                	 type : "search",
-	                	 search : true,
-	                	});
+            url : "/search?q=" + inputvalue,
+            type : "search", search : true,
+        });
         return $scope.res;
     };
 };
-
 
 function ModalController($scope, $modalInstance){
     $scope.ok = function(){$modalInstance.close();};
@@ -461,6 +440,7 @@ function CommentController($scope, $timeout, $modal, Comments){
         Comments.save({
             comment_content: this.comment_content,
             comment_pub_date: new Date().toISOString(),
+            user_id: '/api/0.1/user/details/'+user_id,
             trib_id: '/api/0.1/user/tribs/'+$scope.trib_id
         }, function(){
             $scope.comment_content = '';
@@ -528,7 +508,7 @@ function CommentController($scope, $timeout, $modal, Comments){
                         if(!idInArray(results.objects[i], $scope.comments)){
                             results.objects[i].comment_content = replaceLinks(results.objects[i].comment_content);
                             results.objects[i].author_gravatar = 'http://www.gravatar.com/avatar/';
-                            results.objects[i].author_gravatar += md5(results.objects[i].trib_id.user_id.email);
+                            results.objects[i].author_gravatar += md5(results.objects[i].user_id.email);
                             results.objects[i].author_gravatar += '?d=mm&s=30&r=x';
                             $scope.comments.unshift(results.objects[i]);
                         }
@@ -581,7 +561,7 @@ function CommentController($scope, $timeout, $modal, Comments){
                     if(!idInArray(results.objects[i], $scope.comments)){
                         results.objects[i].comment_content = replaceLinks(results.objects[i].comment_content);
                         results.objects[i].author_gravatar = 'http://www.gravatar.com/avatar/';
-                        results.objects[i].author_gravatar += md5(results.objects[i].trib_id.user_id.email);
+                        results.objects[i].author_gravatar += md5(results.objects[i].user_id.email);
                         results.objects[i].author_gravatar += '?d=mm&s=30&r=x';
                         $scope.comments.push(results.objects[i]);
                     }

@@ -101,15 +101,15 @@
                                     <span class="span11 comment_body">
                                         <span class="comment_text">
                                             <h3>
-                                                <a href="/profile/{% verbatim %}{{ comment.author_username }}{% endverbatim %}">
+                                                <a href="/profile/{% verbatim %}{{ comment.user_id.username }}{% endverbatim %}">
                                                     {% verbatim %}
-                                                    {{ comment.author_first_name }} {{ comment.author_last_name }}
+                                                    {{ comment.user_id.first_name }} {{ comment.user_id.last_name }}
                                                     {% endverbatim %}
                                                 </a>
                                             </h3>
                                             <span data-ng-bind-html="comment.comment_content"></span>
                                         </span>
-                                        <span data-ng-if="comment.author_id == {{ user.id }}" class="close"
+                                        <span data-ng-if="comment.user_id.id == {{ user.id }}" class="close"
                                         data-ng-click="showDeleteModal()">
                                             <span class="icon-remove"></span>
                                         </span>
