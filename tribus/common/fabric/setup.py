@@ -34,8 +34,8 @@ def update_catalog():
     env.password = 'tribus'
 
     with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('python setup.py update_catalog', shell_escape=False)
+        with shell_env(**env.fvars):
+            run('python setup.py update_catalog')
 
 
 def extract_messages():
@@ -50,8 +50,8 @@ def extract_messages():
     env.password = 'tribus'
 
     with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('python setup.py extract_messages', shell_escape=False)
+        with shell_env(**env.fvars):
+            run('python setup.py extract_messages')
 
 
 def compile_catalog():
@@ -66,8 +66,8 @@ def compile_catalog():
     env.password = 'tribus'
 
     with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('python setup.py compile_catalog', shell_escape=False)
+        with shell_env(**env.fvars):
+            run('python setup.py compile_catalog')
 
 
 def init_catalog():
@@ -82,8 +82,8 @@ def init_catalog():
     env.password = 'tribus'
 
     with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('python setup.py init_catalog', shell_escape=False)
+        with shell_env(**env.fvars):
+            run('python setup.py init_catalog')
 
 
 def tx_pull():
@@ -98,8 +98,8 @@ def tx_pull():
     env.password = 'tribus'
 
     with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('tx pull -a --skip', shell_escape=False)
+        with shell_env(**env.fvars):
+            run('tx pull -a --skip')
 
 
 def tx_push():
@@ -114,8 +114,8 @@ def tx_push():
     env.password = 'tribus'
 
     with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('tx push -s -t --skip --no-interactive', shell_escape=False)
+        with shell_env(**env.fvars):
+            run('tx push -s -t --skip --no-interactive')
 
 
 def build_sphinx():
@@ -130,8 +130,8 @@ def build_sphinx():
     env.password = 'tribus'
 
     with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('python setup.py build_sphinx', shell_escape=False)
+        with shell_env(**env.fvars):
+            run('python setup.py build_sphinx')
 
 
 def build_css():
@@ -146,8 +146,8 @@ def build_css():
     env.password = 'tribus'
 
     with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('python setup.py build_css', shell_escape=False)
+        with shell_env(**env.fvars):
+            run('python setup.py build_css')
 
 
 def build_js():
@@ -162,8 +162,8 @@ def build_js():
     env.password = 'tribus'
 
     with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('python setup.py build_js', shell_escape=False)
+        with shell_env(**env.fvars):
+            run('python setup.py build_js')
 
 
 def build_man():
@@ -178,8 +178,8 @@ def build_man():
     env.password = 'tribus'
 
     with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('python setup.py build_man', shell_escape=False)
+        with shell_env(**env.fvars):
+            run('python setup.py build_man')
 
 
 def build():
@@ -194,8 +194,8 @@ def build():
     env.password = 'tribus'
 
     with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('python setup.py build', shell_escape=False)
+        with shell_env(**env.fvars):
+            run('python setup.py build')
 
 
 def clean_css():
@@ -210,8 +210,8 @@ def clean_css():
     env.password = 'tribus'
 
     with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('python setup.py clean_css', shell_escape=False)
+        with shell_env(**env.fvars):
+            run('python setup.py clean_css')
 
 
 def clean_js():
@@ -226,8 +226,8 @@ def clean_js():
     env.password = 'tribus'
 
     with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('python setup.py clean_js', shell_escape=False)
+        with shell_env(**env.fvars):
+            run('python setup.py clean_js')
 
 
 def clean_sphinx():
@@ -242,8 +242,8 @@ def clean_sphinx():
     env.password = 'tribus'
 
     with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('python setup.py clean_sphinx', shell_escape=False)
+        with shell_env(**env.fvars):
+            run('python setup.py clean_sphinx')
 
 
 def clean_mo():
@@ -258,8 +258,8 @@ def clean_mo():
     env.password = 'tribus'
 
     with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('python setup.py clean_mo', shell_escape=False)
+        with shell_env(**env.fvars):
+            run('python setup.py clean_mo')
 
 
 def clean_man():
@@ -274,8 +274,8 @@ def clean_man():
     env.password = 'tribus'
 
     with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('python setup.py clean_man', shell_escape=False)
+        with shell_env(**env.fvars):
+            run('python setup.py clean_man')
 
 
 def clean_dist():
@@ -290,8 +290,8 @@ def clean_dist():
     env.password = 'tribus'
 
     with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('python setup.py clean_dist', shell_escape=False)
+        with shell_env(**env.fvars):
+            run('python setup.py clean_dist')
 
 
 def clean_pyc():
@@ -306,8 +306,8 @@ def clean_pyc():
     env.password = 'tribus'
 
     with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('python setup.py clean_pyc', shell_escape=False)
+        with shell_env(**env.fvars):
+            run('python setup.py clean_pyc')
 
 
 def clean():
@@ -322,8 +322,8 @@ def clean():
     env.password = 'tribus'
 
     with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('python setup.py clean', shell_escape=False)
+        with shell_env(**env.fvars):
+            run('python setup.py clean')
 
 
 def sdist():
@@ -338,8 +338,8 @@ def sdist():
     env.password = 'tribus'
 
     with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('python setup.py sdist', shell_escape=False)
+        with shell_env(**env.fvars):
+            run('python setup.py sdist')
 
 
 def bdist():
@@ -354,8 +354,8 @@ def bdist():
     env.password = 'tribus'
 
     with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('python setup.py bdist', shell_escape=False)
+        with shell_env(**env.fvars):
+            run('python setup.py bdist')
 
 
 def install():
@@ -370,8 +370,8 @@ def install():
     env.password = 'tribus'
 
     with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('python setup.py install', shell_escape=False)
+        with shell_env(**env.fvars):
+            run('python setup.py install')
 
 
 def test():
@@ -386,8 +386,8 @@ def test():
     env.password = 'tribus'
 
     with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('python setup.py test', shell_escape=False)
+        with shell_env(**env.fvars):
+            run('python setup.py test')
 
 
 def report_setup_data():
@@ -402,5 +402,5 @@ def report_setup_data():
     env.password = 'tribus'
 
     with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('python setup.py report_setup_data', shell_escape=False)
+        with shell_env(**env.fvars):
+            run('python setup.py report_setup_data')

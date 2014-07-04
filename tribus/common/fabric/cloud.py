@@ -34,9 +34,8 @@ def get_selected():
     env.password = 'tribus'
 
     with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('python manage.py get_selected',
-                shell_escape=False)
+        with shell_env(**env.fvars):
+            run('python manage.py get_selected')
 
 
 def install_repository():
@@ -51,9 +50,8 @@ def install_repository():
     env.password = 'tribus'
 
     with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('python manage.py install_repository',
-                shell_escape=False)
+        with shell_env(**env.fvars):
+            run('python manage.py install_repository')
 
 
 def get_sample_packages():
@@ -68,9 +66,8 @@ def get_sample_packages():
     env.password = 'tribus'
 
     with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('python manage.py get_sample_packages',
-                shell_escape=False)
+        with shell_env(**env.fvars):
+            run('python manage.py get_sample_packages')
 
 
 def select_sample_packages():
@@ -85,9 +82,8 @@ def select_sample_packages():
     env.password = 'tribus'
 
     with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('python manage.py select_sample_packages',
-                shell_escape=False)
+        with shell_env(**env.fvars):
+            run('python manage.py select_sample_packages')
 
 
 def index_selected():
@@ -102,9 +98,8 @@ def index_selected():
     env.password = 'tribus'
 
     with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('python manage.py index_selected',
-                shell_escape=False)
+        with shell_env(**env.fvars):
+            run('python manage.py index_selected')
 
 
 def index_sample_packages():
@@ -119,9 +114,8 @@ def index_sample_packages():
     env.password = 'tribus'
 
     with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('python manage.py index_sample_packages',
-                shell_escape=False)
+        with shell_env(**env.fvars):
+            run('python manage.py index_sample_packages')
 
 
 def wipe_repo():
@@ -136,9 +130,8 @@ def wipe_repo():
     env.password = 'tribus'
 
     with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('python manage.py wipe_repo',
-                shell_escape=False)
+        with shell_env(**env.fvars):
+            run('python manage.py wipe_repo')
 
 
 def filldb_from_remote():
@@ -153,9 +146,8 @@ def filldb_from_remote():
     env.password = 'tribus'
 
     with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('python manage.py filldb_from_remote',
-                shell_escape=False)
+        with shell_env(**env.fvars):
+            run('python manage.py filldb_from_remote')
 
 
 def filldb_from_local():
@@ -170,9 +162,8 @@ def filldb_from_local():
     env.password = 'tribus'
 
     with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('python manage.py filldb_from_local',
-                shell_escape=False)
+        with shell_env(**env.fvars):
+            run('python manage.py filldb_from_local')
 
 
 def create_cache_from_remote():
@@ -187,6 +178,5 @@ def create_cache_from_remote():
     env.password = 'tribus'
 
     with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('python manage.py create_cache_from_remote',
-                shell_escape=False)
+        with shell_env(**env.fvars):
+            run('python manage.py create_cache_from_remote')

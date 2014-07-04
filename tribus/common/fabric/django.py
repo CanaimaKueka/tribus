@@ -33,15 +33,9 @@ def django_syncdb():
     env.port = '22222'
     env.password = 'tribus'
 
-    local(('echo "#!/usr/bin/env bash\n'
-           'cd %(basedir)s\n'
-           '%(preseed_env)s\n'
-           'python manage.py syncdb --noinput\n'
-           'python manage.py migrate --noinput\n'
-           '%(waffle_switches)s\n'
-           '" > %(tribus_django_syncdb_script)s') % env, capture=False)
-
-    run('bash %(tribus_django_syncdb_script)s' % env)
+    with cd(env.basedir):
+        with shell_env(**env.fvars):
+            run('bash %(tribus_django_syncdb_script)s' % env)
 
 
 def django_runserver():
@@ -55,15 +49,9 @@ def django_runserver():
     env.port = '22222'
     env.password = 'tribus'
 
-    local(('echo "#!/usr/bin/env bash\n'
-           'cd %(basedir)s\n'
-           '%(preseed_env)s\n'
-           'python manage.py celeryd -c 1 --beat -l INFO &\n'
-           'python manage.py celery beat -s celerybeat-schedule &\n'
-           'python manage.py runserver 0.0.0.0:8000\n'
-           '" > %(tribus_django_runserver_script)s') % env, capture=False)
-
-    run('bash %(tribus_django_runserver_script)s' % env)
+    with cd(env.basedir):
+        with shell_env(**env.fvars):
+            run('bash %(tribus_django_runserver_script)s' % env)
 
 
 def django_shell():
@@ -78,9 +66,8 @@ def django_shell():
     env.password = 'tribus'
 
     with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('python manage.py shell',
-                shell_escape=False)
+        with shell_env(**env.fvars):
+            run('python manage.py shell')
 
 
 # def django_deployserver():

@@ -34,5 +34,5 @@ def celery_purge_tasks():
     env.password = 'tribus'
 
     with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('python manage.py celery purge', shell_escape=False)
+        with shell_env(**env.fvars):
+            run('python manage.py celery purge')

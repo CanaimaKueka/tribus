@@ -34,5 +34,5 @@ def haystack_rebuild_index():
     env.password = 'tribus'
 
     with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('python manage.py rebuild_index', shell_escape=False)
+        with shell_env(**env.fvars):
+            run('python manage.py rebuild_index')

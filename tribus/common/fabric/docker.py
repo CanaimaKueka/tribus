@@ -75,42 +75,14 @@ def docker_generate_debian_base_image():
     docker_stop_container()
 
 
-def generate_tribus_base_image_script():
-    """
-    """
-
-    local(('echo "#!/usr/bin/env bash\n'
-           '%(preseed_env)s\n'
-           'debconf-set-selections %(preseed_debconf)s\n'
-           'apt-get update\n'
-           'apt-get install %(debian_run_dependencies)s\n'
-           'apt-get install %(debian_build_dependencies)s\n'
-           'python %(tribus_get_pip_script)s\n'
-           'pip install %(python_dependencies)s\n'
-           'echo \\"root:tribus\\" | chpasswd\n'
-           'echo \\"postgres:tribus\\" | chpasswd\n'
-           'echo \\"openldap:tribus\\" | chpasswd\n'
-           '%(start_services)s\n'
-           'sudo -i -u postgres bash -c \\"psql -f \'%(preseed_db)s\'\\"\n'
-           'ldapadd %(ldap_args)s -f \\"%(preseed_ldap)s\\"\n'
-           'apt-get purge %(debian_build_dependencies)s\n'
-           'apt-get autoremove\n'
-           'apt-get autoclean\n'
-           'apt-get clean\n'
-           '%(clean)s\n'
-           'exit 0'
-           '" > %(tribus_base_image_script)s') % env, capture=False)
-
-
 def docker_generate_tribus_base_image():
     """
     """
 
     docker_stop_container()
-    generate_tribus_base_image_script()
     local(('sudo bash -c '
            '"%(docker)s run -it --name %(tribus_runtime_container)s '
-           '%(mounts)s %(debian_base_image)s '
+           '%(mounts)s %(dvars)s %(debian_base_image)s '
            'bash %(tribus_base_image_script)s"') % env, capture=False)
     local(('sudo bash -c '
            '"%(docker)s commit %(tribus_runtime_container)s '
@@ -200,16 +172,12 @@ def docker_start_container():
     """
     """
 
-    local(('echo "#!/usr/bin/env bash\n'
-           '%(start_services)s\n'
-           'tail -f /dev/null\n'
-           '" > %(tribus_start_container_script)s') % env, capture=False)
     local(('sudo bash -c '
            '"%(docker)s run -d '
            '-p 127.0.0.1:22222:22 '
            '-p 127.0.0.1:8000:8000 '
            '--name %(tribus_runtime_container)s '
-           '%(mounts)s %(tribus_runtime_image)s '
+           '%(mounts)s %(dvars)s %(tribus_runtime_image)s '
            'bash %(tribus_start_container_script)s"') % env, capture=False)
 
 
@@ -243,7 +211,8 @@ def docker_login_container():
            '-p 127.0.0.1:22222:22 '
            '-p 127.0.0.1:8000:8000 '
            '--name %(tribus_runtime_container)s '
-           '%(mounts)s %(tribus_runtime_image)s bash"') % env, capture=False)
+           '%(mounts)s %(dvars)s %(tribus_runtime_image)s '
+           'bash"') % env, capture=False)
     docker_stop_container()
 
 
@@ -252,10 +221,9 @@ def docker_update_container():
     """
 
     docker_stop_container()
-    generate_tribus_base_image_script()
     local(('sudo bash -c '
            '"%(docker)s run -it --name %(tribus_runtime_container)s '
-           '%(mounts)s %(tribus_runtime_image)s '
+           '%(mounts)s %(dvars)s %(tribus_runtime_image)s '
            'bash %(tribus_base_image_script)s"') % env, capture=False)
     docker_stop_container()
 

@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-service ssh start
-service postgresql start
-service slapd start
+for j in ${START_SERVICES}; do service ${j} restart; done
 tail -f /dev/null
 
