@@ -18,12 +18,12 @@ LOGGING = {
             'stream': sys.stdout,
             'formatter': 'standard'
         },
-        'file': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'formatter': 'standard',
-            'filename': '/tmp/tribus/logs/runtime.log'
-        },
+        # 'file': {
+        #     'level': 'INFO',
+        #     'class': 'logging.FileHandler',
+        #     'formatter': 'standard',
+        #     'filename': '/tmp/tribus/logs/runtime.log'
+        # },
     },
     'loggers': {
         'tribus': {
