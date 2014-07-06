@@ -18,7 +18,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from fabric.api import local, run, env, cd, shell_env
+from contextlib import nested
+from fabric.api import run, env, cd, shell_env, hide, settings
+
 from tribus.common.fabric.docker import docker_check_container
 
 
@@ -28,20 +30,11 @@ def django_syncdb():
 
     docker_check_container()
 
-    env.host_string = '127.0.0.1'
-    env.user = 'root'
-    env.port = '22222'
-    env.password = 'tribus'
-
-    local(('echo "#!/usr/bin/env bash\n'
-           'cd %(basedir)s\n'
-           '%(preseed_env)s\n'
-           'python manage.py syncdb --noinput\n'
-           'python manage.py migrate --noinput\n'
-           '%(waffle_switches)s\n'
-           '" > %(tribus_django_syncdb_script)s') % env, capture=False)
-
-    run('bash %(tribus_django_syncdb_script)s' % env)
+    with nested(cd(env.basedir), shell_env(**env.fvars),
+                hide('warnings', 'stderr', 'running'),
+                settings(warn_only=True)):
+        run('bash %(tribus_django_syncdb_script)s' % env)
+        run('python manage.py config_development_su')
 
 
 def django_runserver():
@@ -50,20 +43,10 @@ def django_runserver():
 
     docker_check_container()
 
-    env.host_string = '127.0.0.1'
-    env.user = 'root'
-    env.port = '22222'
-    env.password = 'tribus'
-
-    local(('echo "#!/usr/bin/env bash\n'
-           'cd %(basedir)s\n'
-           '%(preseed_env)s\n'
-           'python manage.py celeryd -c 1 --beat -l INFO &\n'
-           'python manage.py celery beat -s celerybeat-schedule &\n'
-           'python manage.py runserver 0.0.0.0:8000\n'
-           '" > %(tribus_django_runserver_script)s') % env, capture=False)
-
-    run('bash %(tribus_django_runserver_script)s' % env)
+    with nested(cd(env.basedir), shell_env(**env.fvars),
+                hide('warnings', 'stderr', 'running'),
+                settings(warn_only=True)):
+        run('bash %(tribus_django_runserver_script)s' % env)
 
 
 def django_shell():
@@ -72,20 +55,24 @@ def django_shell():
 
     docker_check_container()
 
-    env.host_string = '127.0.0.1'
-    env.user = 'root'
-    env.port = '22222'
-    env.password = 'tribus'
-
-    with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('python manage.py shell',
-                shell_escape=False)
+    with nested(cd(env.basedir), shell_env(**env.fvars),
+                hide('warnings', 'stderr', 'running'),
+                settings(warn_only=True)):
+        run('python manage.py shell')
 
 
 # def django_deployserver():
 #     """
 #     """
+
+#     env.tribus_static_dir = get_path([BASEDIR, 'tribus', 'data', 'static'])
+
+#     env.tribus_supervisor_config = get_path([CONFDIR, 'data',
+#                                              'tribus.supervisor.conf'])
+#     env.tribus_uwsgi_config = get_path([CONFDIR, 'data',
+#                                         'tribus.uwsgi.ini'])
+#     env.tribus_nginx_config = get_path([CONFDIR, 'data',
+#                                         'tribus.nginx.conf'])
 
 #     docker_kill_all_containers()
 #     local(('echo "'

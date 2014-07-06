@@ -19,16 +19,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-
 def get_logger():
 
     from logging import getLogger
-    from tribus.config.logger import LOGGING
 
     try:
         from logging.config import dictConfig
     except ImportError:
         from tribus.common.dictconfig import dictConfig
+
+    from tribus.config.logger import LOGGING
 
     dictConfig(LOGGING)
     return getLogger('tribus')

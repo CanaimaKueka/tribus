@@ -18,19 +18,22 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from contextlib import nested
-from fabric.api import run, env, cd, shell_env, hide, settings
+from django.contrib.auth.models import User
+from django.core.management.base import BaseCommand
 
-from tribus.common.fabric.docker import docker_check_container
+from tribus.web.registration.ldap.utils import create_ldap_user
 
 
-def haystack_rebuild_index():
-    """
-    """
+class Command(BaseCommand):
 
-    docker_check_container()
+    def handle(self, *args, **options):
 
-    with nested(cd(env.basedir), shell_env(**env.fvars),
-                hide('warnings', 'stderr', 'running'),
-                settings(warn_only=True)):
-        run('python manage.py rebuild_index')
+        try:
+            u = User.objects.get(username__exact='tribus')
+        except User.DoesNotExist:
+            u = User(username='tribus')
+            u.set_password('tribus')
+            u.is_superuser = True
+            u.is_staff = True
+            u.save()
+            create_ldap_user(u)
