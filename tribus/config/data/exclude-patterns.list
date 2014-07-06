@@ -30,16 +30,9 @@ pip-log.txt
 
 # Unit test / coverage reports
 .coverage
-.tox
-nosetests.xml
 
 # Translations
 *.mo
-
-# Mr Developer
-.mr.developer.cfg
-.project
-.pydevproject
 
 # Virtualenv
 virtualenv
@@ -65,15 +58,6 @@ Session.vim
 .netrwhist
 *~
 
-# Netbeans
-nbproject/private/
-build/
-nbbuild/
-dist/
-nbdist/
-nbactions.xml
-nb-configuration.xml
-
 # Commpressed files
 *.7z
 *.jar
@@ -97,10 +81,6 @@ nb-configuration.xml
 *.deb
 *.rpm
 
-# SublimeText project files
-*.sublime-project
-*.sublime-workspace
-
 # Eclipse projects
 .settings
 .project
@@ -117,9 +97,9 @@ tribus/data/static/js/min/
 # CSS minificado
 tribus/data/static/css/min/
 
-# Node package manager logs
-npm-debug.log
-
 # Compiled documentation
 tribus/data/docs/html
 tribus_recorder.log
+
+# Sublime
+*.sublime-workspace

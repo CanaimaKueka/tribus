@@ -18,7 +18,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from fabric.api import run, env, cd, shell_env
+from contextlib import nested
+from fabric.api import run, env, cd, shell_env, hide, settings
 from tribus.common.fabric.docker import docker_check_container
 
 
@@ -28,14 +29,10 @@ def get_selected():
 
     docker_check_container()
 
-    env.host_string = '127.0.0.1'
-    env.user = 'root'
-    env.port = '22222'
-    env.password = 'tribus'
-
-    with cd(env.basedir):
-        with shell_env(**env.fvars):
-            run('python manage.py get_selected')
+    with nested(cd(env.basedir), shell_env(**env.fvars),
+                hide('warnings', 'stderr', 'running'),
+                settings(warn_only=True)):
+        run('python manage.py get_selected')
 
 
 def install_repository():
@@ -44,14 +41,10 @@ def install_repository():
 
     docker_check_container()
 
-    env.host_string = '127.0.0.1'
-    env.user = 'root'
-    env.port = '22222'
-    env.password = 'tribus'
-
-    with cd(env.basedir):
-        with shell_env(**env.fvars):
-            run('python manage.py install_repository')
+    with nested(cd(env.basedir), shell_env(**env.fvars),
+                hide('warnings', 'stderr', 'running'),
+                settings(warn_only=True)):
+        run('python manage.py install_repository')
 
 
 def get_sample_packages():
@@ -60,14 +53,10 @@ def get_sample_packages():
 
     docker_check_container()
 
-    env.host_string = '127.0.0.1'
-    env.user = 'root'
-    env.port = '22222'
-    env.password = 'tribus'
-
-    with cd(env.basedir):
-        with shell_env(**env.fvars):
-            run('python manage.py get_sample_packages')
+    with nested(cd(env.basedir), shell_env(**env.fvars),
+                hide('warnings', 'stderr', 'running'),
+                settings(warn_only=True)):
+        run('python manage.py get_sample_packages')
 
 
 def select_sample_packages():
@@ -76,14 +65,10 @@ def select_sample_packages():
 
     docker_check_container()
 
-    env.host_string = '127.0.0.1'
-    env.user = 'root'
-    env.port = '22222'
-    env.password = 'tribus'
-
-    with cd(env.basedir):
-        with shell_env(**env.fvars):
-            run('python manage.py select_sample_packages')
+    with nested(cd(env.basedir), shell_env(**env.fvars),
+                hide('warnings', 'stderr', 'running'),
+                settings(warn_only=True)):
+        run('python manage.py select_sample_packages')
 
 
 def index_selected():
@@ -92,14 +77,10 @@ def index_selected():
 
     docker_check_container()
 
-    env.host_string = '127.0.0.1'
-    env.user = 'root'
-    env.port = '22222'
-    env.password = 'tribus'
-
-    with cd(env.basedir):
-        with shell_env(**env.fvars):
-            run('python manage.py index_selected')
+    with nested(cd(env.basedir), shell_env(**env.fvars),
+                hide('warnings', 'stderr', 'running'),
+                settings(warn_only=True)):
+        run('python manage.py index_selected')
 
 
 def index_sample_packages():
@@ -108,14 +89,10 @@ def index_sample_packages():
 
     docker_check_container()
 
-    env.host_string = '127.0.0.1'
-    env.user = 'root'
-    env.port = '22222'
-    env.password = 'tribus'
-
-    with cd(env.basedir):
-        with shell_env(**env.fvars):
-            run('python manage.py index_sample_packages')
+    with nested(cd(env.basedir), shell_env(**env.fvars),
+                hide('warnings', 'stderr', 'running'),
+                settings(warn_only=True)):
+        run('python manage.py index_sample_packages')
 
 
 def wipe_repo():
@@ -124,14 +101,10 @@ def wipe_repo():
 
     docker_check_container()
 
-    env.host_string = '127.0.0.1'
-    env.user = 'root'
-    env.port = '22222'
-    env.password = 'tribus'
-
-    with cd(env.basedir):
-        with shell_env(**env.fvars):
-            run('python manage.py wipe_repo')
+    with nested(cd(env.basedir), shell_env(**env.fvars),
+                hide('warnings', 'stderr', 'running'),
+                settings(warn_only=True)):
+        run('python manage.py wipe_repo')
 
 
 def filldb_from_remote():
@@ -140,14 +113,10 @@ def filldb_from_remote():
 
     docker_check_container()
 
-    env.host_string = '127.0.0.1'
-    env.user = 'root'
-    env.port = '22222'
-    env.password = 'tribus'
-
-    with cd(env.basedir):
-        with shell_env(**env.fvars):
-            run('python manage.py filldb_from_remote')
+    with nested(cd(env.basedir), shell_env(**env.fvars),
+                hide('warnings', 'stderr', 'running'),
+                settings(warn_only=True)):
+        run('python manage.py filldb_from_remote')
 
 
 def filldb_from_local():
@@ -156,14 +125,10 @@ def filldb_from_local():
 
     docker_check_container()
 
-    env.host_string = '127.0.0.1'
-    env.user = 'root'
-    env.port = '22222'
-    env.password = 'tribus'
-
-    with cd(env.basedir):
-        with shell_env(**env.fvars):
-            run('python manage.py filldb_from_local')
+    with nested(cd(env.basedir), shell_env(**env.fvars),
+                hide('warnings', 'stderr', 'running'),
+                settings(warn_only=True)):
+        run('python manage.py filldb_from_local')
 
 
 def create_cache_from_remote():
@@ -172,11 +137,7 @@ def create_cache_from_remote():
 
     docker_check_container()
 
-    env.host_string = '127.0.0.1'
-    env.user = 'root'
-    env.port = '22222'
-    env.password = 'tribus'
-
-    with cd(env.basedir):
-        with shell_env(**env.fvars):
-            run('python manage.py create_cache_from_remote')
+    with nested(cd(env.basedir), shell_env(**env.fvars),
+                hide('warnings', 'stderr', 'running'),
+                settings(warn_only=True)):
+        run('python manage.py create_cache_from_remote')

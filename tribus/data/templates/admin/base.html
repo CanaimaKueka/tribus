@@ -35,7 +35,7 @@
 			                <li class="brand">
 			                    <a href="/admin">
 			                        <span class="logo"></span>
-			                        <span class="logo_title">Tribus Admin</span>
+			                        <span class="logo_title">Tribus</span>
 			                        <span class="logo_subtitle badge badge-yellow">alpha</span>
 			                    </a>
 			                </li>
@@ -83,11 +83,6 @@
 			</div>
 			
 			{% switch admin_first_time %}
-			<!-- ADMIN FIRST TIME -->
-				ADMIN PRIMERA VEZ
-			<!-- FALTA LOG -->
-			
-			{% else %}
 			<!-- NORMAL ADMIN -->
 			
 			    <div id="content" class="{% block coltype %}colM{% endblock %}">
@@ -96,6 +91,11 @@
 			        {% endblock %}
 			        <br class="clear"/>
 			    </div>
+			
+			{% else %}
+			<!-- ADMIN FIRST TIME -->
+				ADMIN PRIMERA VEZ
+			<!-- FALTA LOG -->
 			{% endswitch %}
 	    
 		    {% block footer %}

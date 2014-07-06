@@ -19,49 +19,86 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import json
-from fabric.api import local, env
+from contextlib import nested
+from fabric.api import local, env, hide, settings, run
 
 
 def docker_kill_all_containers():
     """
     """
 
-    containers = local(('sudo bash -c '
-                        '"%(docker)s ps -aq"') % env, capture=True)
+    with nested(hide('warnings', 'stderr', 'running'),
+                settings(warn_only=True)):
 
-    if containers:
-        env.docker_containers_to_kill = containers.replace('\n', ' ')
-        local(('sudo bash -c '
-               '"%(docker)s stop --time 1 '
-               '%(docker_containers_to_kill)s"') % env,
-              capture=False)
-        local(('sudo bash -c '
-               '"%(docker)s rm -fv %(docker_containers_to_kill)s"') % env,
-              capture=False)
+        containers = local(('sudo bash -c "%(docker)s ps -aq"') % env,
+                           capture=True).split('\n')
+
+        for container in containers:
+
+            if container:
+
+                inspect = json.loads(local(('sudo bash -c '
+                                            '"%s inspect %s"') % (env.docker,
+                                                                  container),
+                                           capture=True))
+                if inspect:
+
+                    local(('sudo bash -c '
+                           '"%s stop --time 1 %s"') % (env.docker, container),
+                          capture=False)
+                    local(('sudo bash -c '
+                           '"%s rm -fv %s"') % (env.docker, container),
+                          capture=False)
 
 
 def docker_kill_all_images():
     """
     """
 
-    images = local(('sudo bash -c '
-                    '"%(docker)s images -aq"') % env, capture=True)
+    with nested(hide('warnings', 'stderr', 'running'),
+                settings(warn_only=True)):
 
-    if images:
-        env.docker_images_to_kill = images.replace('\n', ' ')
-        local(('sudo bash -c '
-               '"%(docker)s rmi -f %(docker_images_to_kill)s" || true') % env,
-              capture=False)
+        images = local(('sudo bash -c "%(docker)s images -aq"') % env,
+                       capture=True).split('\n')
+
+        for image in images:
+
+            if image:
+
+                inspect = json.loads(local(('sudo bash -c '
+                                            '"%s inspect %s"') % (env.docker,
+                                                                  image),
+                                           capture=True))
+                if inspect:
+
+                    local(('sudo bash -c '
+                           '"%s rmi -f %s"') % (env.docker, image),
+                          capture=False)
 
 
 def docker_kill_tribus_images():
     """
     """
 
-    local(('sudo bash -c '
-           '"%(docker)s rmi -f %(tribus_runtime_image)s '
-           '%(tribus_base_image)s %(debian_base_image)s" || true') % env,
-          capture=False)
+    with nested(hide('warnings', 'stderr', 'running'),
+                settings(warn_only=True)):
+
+        images = [env.tribus_base_image, env.tribus_runtime_image,
+                  env.debian_base_image]
+
+        for image in images:
+
+            if image:
+
+                inspect = json.loads(local(('sudo bash -c '
+                                            '"%s inspect %s"') % (env.docker,
+                                                                  image),
+                                           capture=True))
+                if inspect:
+
+                    local(('sudo bash -c '
+                           '"%s rmi -f %s"') % (env.docker, image),
+                          capture=False)
 
 
 def docker_generate_debian_base_image():
@@ -69,9 +106,14 @@ def docker_generate_debian_base_image():
     """
 
     docker_stop_container()
-    local(('sudo bash %(debian_base_image_script)s '
-           'luisalejandro/debian-%(arch)s '
-           'wheezy %(arch)s') % env, capture=False)
+
+    with nested(hide('warnings', 'stderr', 'running'),
+                settings(warn_only=True)):
+
+        local(('sudo bash %(debian_base_image_script)s '
+               'luisalejandro/debian-%(arch)s '
+               'wheezy %(arch)s') % env, capture=False)
+
     docker_stop_container()
 
 
@@ -80,13 +122,18 @@ def docker_generate_tribus_base_image():
     """
 
     docker_stop_container()
-    local(('sudo bash -c '
-           '"%(docker)s run -it --name %(tribus_runtime_container)s '
-           '%(mounts)s %(dvars)s %(debian_base_image)s '
-           'bash %(tribus_base_image_script)s"') % env, capture=False)
-    local(('sudo bash -c '
-           '"%(docker)s commit %(tribus_runtime_container)s '
-           '%(tribus_base_image)s"') % env, capture=False)
+
+    with nested(hide('warnings', 'stderr', 'running'),
+                settings(warn_only=True)):
+
+        local(('sudo bash -c '
+               '"%(docker)s run -it --name %(tribus_runtime_container)s '
+               '%(mounts)s %(dvars)s %(debian_base_image)s '
+               'bash %(tribus_base_image_script)s"') % env, capture=False)
+        local(('sudo bash -c '
+               '"%(docker)s commit %(tribus_runtime_container)s '
+               '%(tribus_base_image)s"') % env, capture=False)
+
     docker_stop_container()
 
 
@@ -95,8 +142,13 @@ def docker_pull_debian_base_image():
     """
 
     docker_stop_container()
-    local(('sudo bash -c '
-           '"%(docker)s pull %(debian_base_image)s"') % env, capture=False)
+
+    with nested(hide('warnings', 'stderr', 'running'),
+                settings(warn_only=True)):
+
+        local(('sudo bash -c '
+               '"%(docker)s pull %(debian_base_image)s"') % env, capture=False)
+
     docker_stop_container()
 
 
@@ -105,11 +157,16 @@ def docker_pull_tribus_base_image():
     """
 
     docker_stop_container()
-    local(('sudo bash -c '
-           '"%(docker)s pull %(tribus_base_image)s"') % env, capture=False)
-    local(('sudo bash -c '
-           '"%(docker)s run -it --name %(tribus_runtime_container)s '
-           '%(tribus_base_image)s true"') % env, capture=False)
+
+    with nested(hide('warnings', 'stderr', 'running'),
+                settings(warn_only=True)):
+
+        local(('sudo bash -c '
+               '"%(docker)s pull %(tribus_base_image)s"') % env, capture=False)
+        local(('sudo bash -c '
+               '"%(docker)s run -it --name %(tribus_runtime_container)s '
+               '%(tribus_base_image)s true"') % env, capture=False)
+
     docker_stop_container()
 
 
@@ -151,15 +208,17 @@ def docker_check_container():
     """
     """
 
-    if local(('sudo bash -c '
-              '"%(docker)s ps -a '
-              '| grep %(tribus_runtime_container)s" || true') % env,
-             capture=True):
+    with nested(hide('warnings', 'stderr', 'running'),
+                settings(warn_only=True)):
 
-        if not json.loads(local(('sudo bash -c '
-                                 '"%(docker)s inspect '
-                                 '%(tribus_runtime_container)s"') % env,
-                                capture=True))[0]['State']['Running']:
+        state = json.loads(local(('sudo bash -c '
+                                  '"%(docker)s inspect '
+                                  '%(tribus_runtime_container)s"') % env,
+                                 capture=True))
+
+    if state:
+        if not state[0]['State']['Running']:
+
             docker_stop_container()
             docker_start_container()
 
@@ -172,33 +231,48 @@ def docker_start_container():
     """
     """
 
-    local(('sudo bash -c '
-           '"%(docker)s run -d '
-           '-p 127.0.0.1:22222:22 '
-           '-p 127.0.0.1:8000:8000 '
-           '--name %(tribus_runtime_container)s '
-           '%(mounts)s %(dvars)s %(tribus_runtime_image)s '
-           'bash %(tribus_start_container_script)s"') % env, capture=False)
+    with nested(hide('warnings', 'stderr', 'running'),
+                settings(warn_only=True)):
+
+        local(('sudo bash -c '
+               '"%(docker)s run -d '
+               '-p 127.0.0.1:22222:22 '
+               '-p 127.0.0.1:8000:8000 '
+               '--name %(tribus_runtime_container)s '
+               '%(mounts)s %(dvars)s %(tribus_runtime_image)s '
+               'bash %(tribus_start_container_script)s"') % env, capture=False)
+
+        while True:
+            try:
+                run('true')
+                break
+            except:
+                run('echo "."')
 
 
 def docker_stop_container():
     """
     """
 
-    if local(('sudo bash -c '
-              '"%(docker)s ps -a '
-              '| grep %(tribus_runtime_container)s" || true') % env,
-             capture=True):
-        local(('sudo bash -c '
-               '"%(docker)s stop --time 1 '
-               '%(tribus_runtime_container)s"') % env,
-              capture=False)
-        local(('sudo bash -c '
-               '"%(docker)s commit %(tribus_runtime_container)s '
-               '%(tribus_runtime_image)s"') % env, capture=False)
-        local(('sudo bash -c '
-               '"%(docker)s rm -fv %(tribus_runtime_container)s"') % env,
-              capture=False)
+    with nested(hide('warnings', 'stderr', 'running'),
+                settings(warn_only=True)):
+
+        inspect = json.loads(local(('sudo bash -c '
+                                    '"%(docker)s inspect '
+                                    '%(tribus_runtime_container)s"') % env,
+                                   capture=True))
+        if inspect:
+
+            local(('sudo bash -c '
+                   '"%(docker)s stop --time 1 '
+                   '%(tribus_runtime_container)s"') % env,
+                  capture=False)
+            local(('sudo bash -c '
+                   '"%(docker)s commit %(tribus_runtime_container)s '
+                   '%(tribus_runtime_image)s"') % env, capture=False)
+            local(('sudo bash -c '
+                   '"%(docker)s rm -fv %(tribus_runtime_container)s"') % env,
+                  capture=False)
 
 
 def docker_login_container():
@@ -206,13 +280,18 @@ def docker_login_container():
     """
 
     docker_stop_container()
-    local(('sudo bash -c '
-           '"%(docker)s run -it '
-           '-p 127.0.0.1:22222:22 '
-           '-p 127.0.0.1:8000:8000 '
-           '--name %(tribus_runtime_container)s '
-           '%(mounts)s %(dvars)s %(tribus_runtime_image)s '
-           'bash"') % env, capture=False)
+
+    with nested(hide('warnings', 'stderr', 'running'),
+                settings(warn_only=True)):
+
+        local(('sudo bash -c '
+               '"%(docker)s run -it '
+               '-p 127.0.0.1:22222:22 '
+               '-p 127.0.0.1:8000:8000 '
+               '--name %(tribus_runtime_container)s '
+               '%(mounts)s %(dvars)s %(tribus_runtime_image)s '
+               'bash %(tribus_login_container_script)s"') % env, capture=False)
+
     docker_stop_container()
 
 
@@ -221,10 +300,15 @@ def docker_update_container():
     """
 
     docker_stop_container()
-    local(('sudo bash -c '
-           '"%(docker)s run -it --name %(tribus_runtime_container)s '
-           '%(mounts)s %(dvars)s %(tribus_runtime_image)s '
-           'bash %(tribus_base_image_script)s"') % env, capture=False)
+
+    with nested(hide('warnings', 'stderr', 'running'),
+                settings(warn_only=True)):
+
+        local(('sudo bash -c '
+               '"%(docker)s run -it --name %(tribus_runtime_container)s '
+               '%(mounts)s %(dvars)s %(tribus_runtime_image)s '
+               'bash %(tribus_base_image_script)s"') % env, capture=False)
+
     docker_stop_container()
 
 
@@ -233,7 +317,12 @@ def docker_reset_container():
     """
 
     docker_stop_container()
-    local(('sudo bash -c '
-           '"%(docker)s run -it --name %(tribus_runtime_container)s '
-           '%(tribus_base_image)s true"') % env, capture=False)
+
+    with nested(hide('warnings', 'stderr', 'running'),
+                settings(warn_only=True)):
+
+        local(('sudo bash -c '
+               '"%(docker)s run -it --name %(tribus_runtime_container)s '
+               '%(tribus_base_image)s true"') % env, capture=False)
+
     docker_stop_container()
