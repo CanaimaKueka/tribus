@@ -25,18 +25,9 @@ This file contains the entry point to the tribus tests.
 """
 
 import sys
-import os
-import pep257
 from unittest import TestSuite
-from flake8.main import print_report
-from flake8.engine import get_style_guide
-from coverage import coverage
-from coverage.misc import CoverageException
-from coveralls import Coveralls
-from coveralls.api import CoverallsException
 
 from tribus import BASEDIR
-from tribus.common.utils import find_files, get_path
 from tribus.common.logger import get_logger
 from tribus.config.pkg import exclude_packages
 from tribus.common.setup.utils import get_packages
@@ -57,8 +48,6 @@ class SetupTests(TestSuite):
 
     def __init__(self, *args, **kwargs):
         self.configure()
-        self.coverage = coverage()
-        self.coverage.start()
         self.packages = get_packages(path=BASEDIR,
                                      exclude_packages=exclude_packages)
         self.options = {'failfast': True,
@@ -66,7 +55,7 @@ class SetupTests(TestSuite):
                         'label': ['tests']}
 
         super(SetupTests, self).__init__(tests=self.build_tests(),
-                                           *args, **kwargs)
+                                         *args, **kwargs)
 
         # Setup testrunner.
         from django.test.simple import DjangoTestSuiteRunner
@@ -129,58 +118,4 @@ class SetupTests(TestSuite):
         self.test_runner.teardown_databases(self.old_config)
         self.test_runner.teardown_test_environment()
 
-        self.coverage_report()
-        self.flake8_report()
-        self.pep257_report()
-
         return result
-
-    def flake8_report(self):
-        """
-        Outputs flake8 report.
-        """
-        log.info("\n\nFlake8 Report:")
-        base = get_path([BASEDIR, 'tribus'])
-        pys = find_files(path=base, pattern='*.py')
-        flake8_style = get_style_guide()
-        report = flake8_style.check_files(pys)
-        print_report(report, flake8_style)
-
-    def pep257_report(self):
-        """
-        Outputs flake8 report.
-        """
-        log.info("\n\nPEP257 Report:")
-        base = get_path([BASEDIR, 'tribus'])
-        pys = find_files(path=base, pattern='*.py')
-        report = pep257.check(pys)
-
-        if len(list(report)) > 0:
-            for r in report:
-                log.info(r)
-        else:
-            log.info("\nNo errors found!")
-
-    def coverage_report(self):
-        """
-        Outputs Coverage report to screen and coverage.xml.
-        """
-
-        include = ['%s*' % package for package in self.packages]
-        omit = ['*tests*']
-
-        log.info("\n\nCoverage Report:")
-        try:
-            self.coverage.stop()
-            self.coverage.save()
-            self.coverage.report(include=include, omit=omit)
-        except CoverageException as e:
-            log.info("Coverage Exception: %s" % e)
-
-        if os.environ.get('TRAVIS'):
-            log.info("Submitting coverage to coveralls.io...")
-            try:
-                result = Coveralls()
-                result.wear()
-            except CoverallsException as e:
-                log.error("Coveralls Exception: %s" % e)
