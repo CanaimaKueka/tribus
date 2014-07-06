@@ -1,64 +1,113 @@
-{% load i18n %}
-{% load static %}
-{% load django_static %}
-{% load waffle_tags %}
+{% load i18n static waffle_tags %}
 <!DOCTYPE html>
-<html data-ng-app="tribus">
+<html data-ng-app="tribus" lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      prefix="og: http://ogp.me/ns# fb: http://www.facebook.com/2008/fbml">
     <head>
-        <title>{% block title %}{% endblock %}</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        {% staticall %}
-            {% for css in render_css %}
-                {% if DEBUG %}
-                <link type="text/css" rel="stylesheet" href="{% static 'css/full/'|add:css|add:'.css' %}" />
-                {% else %}
-                <link type="text/css" rel="stylesheet" href="{% static 'css/min/'|add:css|add:'.css' %}" />
-                {% endif %}
-            {% endfor %}
-        {% endstaticall %}
-        {% if DEBUG %}
-        <!--[if lte IE 8]><link type="text/css" rel="stylesheet" href="{% static 'css/full/tribus-ie.css' %}" /><![endif]-->
-        {% else %}
-        <!--[if lte IE 8]><link type="text/css" rel="stylesheet" href="{% static 'css/min/tribus-ie.css' %}" /><![endif]-->
+        <meta charset="utf-8" />
+        <!--
 
-        {% endif %}
+          _______     _  _                 
+         |__   __|   (_)| |                
+            | | _ __  _ | |__   _   _  ___ 
+            | || '__|| || '_ \ | | | |/ __|
+            | || |   | || |_) || |_| |\__ \
+            |_||_|   |_||_.__/  \__,_||___/
+                                           
 
-        <script type="text/javascript">
-            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-            ga('create', 'UA-46290421-1', 'gob.ve');
-            ga('send', 'pageview');
-        </script>
-        <script type="text/javascript">
-        	{% wafflejs %}
-        </script>
+        -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         
-        {% include 'angular-bootstrap-templates.html' %}
+        <title>{% block title %}{% endblock %}</title>
+        <meta name="author" content="" />
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+        <meta name="generator" content="" />
+        <meta name="robots" content="index, follow, noodp, noydir" />
 
+
+        <!-- Link Behavior -->
+        <link rel="canonical" href="" />
+
+        <!-- Media Files -->
+        <link type="text/css" rel="stylesheet" media="all" href="{% static 'js/full/loader.css' %}"/>
+        {% block scripts %}{% endblock %}
+        <script type="text/javascript">
+            //<![CDATA[
+            {% wafflejs %}
+            //]]>
+        </script>
+        {% include 'angular-bootstrap-templates.html' %}
+        <script type="text/javascript" src="{% static 'js/full/loader.js' %}"></script>
+
+        <!-- Browser & OS Layout -->
+<!--         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="application-name" content="Blog Hunting Bears" />
+        <meta name="msapplication-starturl" content="http://huntingbears.com.ve" />
+        <meta name="msapplication-tooltip" content="Blog Hunting Bears" />
+        <meta name="msapplication-window" content="width=1024;height=768" />
+        <meta name="msapplication-task" content="name=Blog Hunting Bears;action-uri=http://huntingbears.com.ve;icon-uri=http://huntingbears.com.ve/favicon.ico" />
+        <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+        <meta name="msapplication-TileColor" content="#FFFFFF" /> -->
+
+        <!-- Icons & Logos -->
+<!--         <link rel="icon" type="image/png" href="/favicon-196x196.png" sizes="196x196" />
+        <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160" />
+        <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+        <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
+        <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
+        <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png" />
+        <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png" />
+        <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png" />
+        <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png" />
+        <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png" />
+        <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png" />
+        <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png" />
+        <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png" />
+        <meta name="msapplication-square70x70logo" content="/mstile-70x70.png" />
+        <meta name="msapplication-square150x150logo" content="/mstile-150x150.png" />
+        <meta name="msapplication-square310x310logo" content="/mstile-310x310.png" />
+        <meta name="msapplication-wide310x150logo" content="/mstile-310x150.png" /> -->
+
+        <!-- Open Graph, Facebook, Twitter & Google+ Social Tags  -->
+<!--         <link rel="author" href="https://plus.google.com/112394891396118123263" />
+        <link rel="publisher" href="https://plus.google.com/112134881161123650096" />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Hunting Bears" />
+        <meta property="og:url" content="http://huntingbears.com.ve"/>
+        <meta property="og:title" content="Hunting Bears // Portada" />
+        <meta property="og:description" content="Un blog acerca de Software Libre y Sociedad." />
+        <meta property="og:image" content="http://huntingbears.com.ve/mstile-310x310.png" />
+        <meta property="fb:admins" content="870375116" />
+        <meta property="fb:profile_id" content="870375116" />
+        <meta property="fb:app_id" content="409501159152943" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:url" content="http://huntingbears.com.ve" />
+        <meta name="twitter:title" content="Hunting Bears // Portada" />
+        <meta name="twitter:description" content="Un blog acerca de Software Libre y Sociedad." />
+        <meta name="twitter:image:src" content="http://huntingbears.com.ve/mstile-310x310.png" />
+        <meta name="twitter:site" content="@BlgHuntingBears" />
+        <meta name="twitter:creator" content="@LuisAlejandro" /> -->
     </head>
     <body>
         {% include 'navbar.html' %}
         {% block content %}{% endblock %}
         {% include "footer.html" %}
-        {% staticall %}
-            {% for js in render_js %}
-                {% if DEBUG %}
-                <script type="text/javascript" src="{% static 'js/full/'|add:js|add:'.js' %}"></script>
-                {% else %}
-                <script type="text/javascript" src="{% static 'js/min/'|add:js|add:'.js' %}"></script>
-                {% endif %}
-            {% endfor %}
-        {% endstaticall %}
-        {% if DEBUG %}
-        <!--[if lte IE 8]><script type="text/javascript" src="{% static 'js/full/excanvas.js' %}"></script><![endif]-->
-        <!--[if lt IE 9]><script type="text/javascript" src="{% static 'js/full/html5shiv.js' %}"></script><![endif]-->
-        {% else %}
-        <!--[if lte IE 8]><script type="text/javascript" src="{% static 'js/min/excanvas.js' %}"></script><![endif]-->
-        <!--[if lt IE 9]><script type="text/javascript" src="{% static 'js/min/html5shiv.js' %}"></script><![endif]-->
-        {% endif %}
-        {% block scripts %}{% endblock %}
     </body>
 </html>
