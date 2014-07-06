@@ -27,27 +27,27 @@ LOGGING = {
     },
     'loggers': {
         'tribus': {
-            'handlers': ['console', 'file'],
+            'handlers': ['console'],
             'propagate': True,
             'level': 'INFO',
         },
         'django': {
-            'handlers': ['console', 'file'],
+            'handlers': ['console'],
             'propagate': True,
             'level': 'INFO',
         },
         'django.request': {
-            'handlers': ['console', 'file'],
+            'handlers': ['console'],
             'propagate': True,
             'level': 'INFO',
         },
         'django_auth_ldap': {
-            'handlers': ['console', 'file'],
+            'handlers': ['console'],
             'propagate': True,
             'level': 'INFO',
         },
         'haystack': {
-            'handlers': ['console', 'file'],
+            'handlers': ['console'],
             'propagate': True,
             'level': 'INFO',
         },
