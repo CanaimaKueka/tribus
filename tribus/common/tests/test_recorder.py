@@ -48,8 +48,8 @@ class RecorderFunctions(TestCase):
         from tribus.common.recorder import update_paragraph
         from tribus.config.pkgrecorder import PACKAGE_FIELDS, DETAIL_FIELDS
 
-        old_paragraph = deb822.Packages(open(get_path(SMPLDIR, 'Blender')))
-        new_paragraph = deb822.Packages(open(get_path(SMPLDIR, 'BlenderNew')))
+        old_paragraph = deb822.Packages(open(get_path([SMPLDIR, 'Blender'])))
+        new_paragraph = deb822.Packages(open(get_path([SMPLDIR, 'BlenderNew'])))
 
         Package.objects.create_auto(old_paragraph, test_dist, 'main')
         update_paragraph(new_paragraph, test_dist, 'main')

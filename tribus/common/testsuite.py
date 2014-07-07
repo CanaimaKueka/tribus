@@ -35,6 +35,7 @@ def runtests():
 
     from django.test.utils import get_runner
 
-    test_runner = get_runner(settings)
-    failures = test_runner([], verbosity=1, interactive=True)
-    sys.exit(failures)
+    TestRunner = get_runner(settings)
+    test_runner = TestRunner(verbosity=1, interactive=True)
+    failures = test_runner.run_tests(['tribus'])
+    sys.exit(bool(failures))
