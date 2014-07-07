@@ -8,7 +8,7 @@ LOGGING = {
     'disable_existing_loggers': True,
     'formatters': {
         'standard': {
-            'format': '%(levelname)s %(asctime)s %(message)s'
+            'format': '%(levelname)s: %(message)s'
         },
     },
     'handlers': {
