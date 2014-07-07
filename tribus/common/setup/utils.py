@@ -181,8 +181,7 @@ def get_package_data(path=None, packages=None, data_files=None,
         package_data[package] = list(
             set(package_data[package]) - set(flatten_list(list(zip(*data_files)[1]))))
         for i, j in enumerate(package_data[package]):
-            package_data[package][i] = package_data[package][
-                i].replace(path + os.sep + package_to_path(package) + os.sep, '')
+            package_data[package][i] = package_data[package][i].replace(path + os.sep + package_to_path(package) + os.sep, '')
     return package_data
 
 
@@ -281,15 +280,11 @@ def get_setup_data(basedir):
         'platforms': platforms,
         'packages': get_packages(path=basedir,
                                  exclude_packages=exclude_packages),
-        # data_files is empty because it is filled during
-        # execution of install_data
         'data_files': [('', [])],
-        # package_data is empty because it is filled during
-        # execution of build_py
         'package_data': {'': []},
         'install_requires': install_requires,
         'dependency_links': dependency_links,
-        'test_suite': 'tribus.tests.SetupTests',
+        'test_suite': 'tribus.common.testsuite.runtests',
         'zip_safe': False,
         'cmdclass': {
             'clean': clean,
