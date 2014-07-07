@@ -35,10 +35,10 @@
 from django.db import models
 from email.Utils import parseaddr
 from django.db.models import Q
-# from tribus.common.logger import get_logger
+from tribus.common.logger import get_logger
 from tribus.config.pkgrecorder import PACKAGE_FIELDS, DETAIL_FIELDS
 
-# logger = get_logger()
+logger = get_logger()
 # hdlr = logging.FileHandler(os.path.join(BASEDIR, 'tribus_recorder.log'))
 # formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
 # hdlr.setFormatter(formatter)

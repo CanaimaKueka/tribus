@@ -1,0 +1,8 @@
+name: configtest
+summary: "Testing Defaults"
+description: "Test for bug #873643"
+provides:
+  website:
+    interface: http
+
+

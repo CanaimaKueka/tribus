@@ -1,0 +1,17 @@
+options:
+    query-cache-size:
+        default: -1
+        type: int
+        description: Override the computed version from dataset-size. Still works if query-cache-type is "OFF" since sessions can override the cache type setting on their own.
+    awesome:
+        default: false
+        type: boolean
+        description: Set true to make this database engine truly awesome
+    tuning-level:
+        default: safest
+        type: string
+        description: Valid values are 'safest', 'fast', and 'unsafe'. If set to safest, all settings are tuned to have maximum safety at the cost of performance. Fast will turn off most controls, but may lose data on crashes. unsafe will turn off all protections.
+    monkey-madness:
+        default: 0.5
+        type: float
+        description: The amount of randomness to be desired in any data that is returned, from 0 (sane) to 1 (monkeys running the asylum).
