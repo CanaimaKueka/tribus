@@ -23,7 +23,6 @@ def runtests():
 
     import sys
     from django.conf import settings
-    from django.test.utils import get_runner
     from django.utils.importlib import import_module
 
     setting_attrs = {}
@@ -33,6 +32,8 @@ def runtests():
         setting_attrs[attr] = getattr(test_settings, attr)
 
     settings.configure(**setting_attrs)
+
+    from django.test.utils import get_runner
 
     test_runner = get_runner(settings)
     failures = test_runner([], verbosity=1, interactive=True)
