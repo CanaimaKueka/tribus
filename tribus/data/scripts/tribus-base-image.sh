@@ -2,20 +2,25 @@
 
 debconf-set-selections ${PRESEED_DEBCONF}
 
+echo "deb http://http.us.debian.org/debian wheezy-backports main" >> /etc/apt/sources.list
+
 apt-get update
 apt-get install ${DEBIAN_RUN_DEPENDENCIES}
 apt-get install ${DEBIAN_BUILD_DEPENDENCIES}
 
+curl https://bootstrap.pypa.io/get-pip.py | python
+curl https://www.npmjs.org/install.sh | bash
+
 for i in ${CHANGE_PASSWD}; do
-	echo ${i} | chpasswd
+    echo ${i} | chpasswd
 done
 
 for j in ${START_SERVICES}; do
-	service ${j} restart
+    service ${j} restart
 done
 
-easy_install pip
 pip install ${PYTHON_DEPENDENCIES}
+npm install ${NODE_DEPENDENCIES}
 
 sudo -i -u postgres bash -c "psql -f ${PRESEED_DB}"
 ldapadd ${LDAP_ARGS} -f "${PRESEED_LDAP}"
