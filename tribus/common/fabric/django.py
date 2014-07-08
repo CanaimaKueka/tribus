@@ -22,6 +22,9 @@ from contextlib import nested
 from fabric.api import env, run, cd, shell_env, hide
 
 from tribus.common.fabric.docker import docker_check_container
+from tribus.common.logger import get_logger
+
+log = get_logger()
 
 
 def django_syncdb():
@@ -29,6 +32,8 @@ def django_syncdb():
     """
 
     docker_check_container()
+
+    log.info('Syncing databases and configuration ...')
 
     with nested(hide('warnings', 'stderr', 'running'),
                 shell_env(**env.fvars), cd(env.basedir)):
@@ -41,6 +46,8 @@ def django_runserver():
 
     docker_check_container()
 
+    log.info('Starting services ...')
+
     with nested(hide('warnings', 'stderr', 'running'),
                 shell_env(**env.fvars), cd(env.basedir)):
         run('bash %(tribus_django_runserver_script)s' % env)
@@ -51,6 +58,9 @@ def django_shell():
     """
 
     docker_check_container()
+
+    log.info('Opening a django shell inside the runtime container ...')
+    log.info('(When you are done, press CTRL+D to get out).')
 
     with nested(hide('warnings', 'stderr', 'running'),
                 shell_env(**env.fvars), cd(env.basedir)):

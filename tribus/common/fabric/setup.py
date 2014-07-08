@@ -22,6 +22,9 @@ from contextlib import nested
 from fabric.api import env, run, cd, shell_env, hide
 
 from tribus.common.fabric.docker import docker_check_container
+from tribus.common.logger import get_logger
+
+log = get_logger()
 
 
 def update_catalog():

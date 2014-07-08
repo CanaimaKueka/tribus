@@ -75,9 +75,7 @@ kill_tribus_images: dependencies
 
 environment: dependencies
 
-	@$(FAB) docker_pull_debian_base_image
-	@$(FAB) docker_pull_tribus_base_image
-	@$(FAB) django_syncdb
+	@$(FAB) environment
 
 start: dependencies
 

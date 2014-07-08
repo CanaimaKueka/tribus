@@ -194,7 +194,7 @@ def docker_pull_tribus_base_image():
 
         local(('sudo bash -c '
                '"%(docker)s run -it --name %(tribus_runtime_container)s '
-               '%(tribus_base_image)s true"') % env, capture=True)
+               '%(tribus_base_image)s true"') % env, capture=False)
 
     docker_stop_container()
 
@@ -324,7 +324,7 @@ def docker_login_container():
     with nested(hide('warnings', 'stderr', 'running'),
                 shell_env(**env.fvars), cd(env.basedir)):
 
-        log.info('Opening a console inside the runtime container ...')
+        log.info('Opening a shell inside the runtime container ...')
         log.info('(When you are done, press CTRL+D to get out).')
 
         run('bash')
@@ -366,3 +366,14 @@ def docker_reset_container():
 
     django_syncdb()
     docker_stop_container()
+
+
+def environment():
+    """
+    """
+
+    from tribus.common.fabric.django import django_syncdb
+
+    docker_pull_debian_base_image()
+    docker_pull_tribus_base_image()
+    django_syncdb()

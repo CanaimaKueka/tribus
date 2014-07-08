@@ -52,7 +52,6 @@ env.port = '22222'
 env.password = 'tribus'
 env.warn_only = True
 env.output_prefix = False
-# env.connection_attempts = 3
 env.abort_on_prompts = True
 
 # Docker config
