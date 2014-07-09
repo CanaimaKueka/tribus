@@ -1,0 +1,9 @@
+options:
+  foo:
+    type: string
+    default: "foo-default"
+    description: "Foo"
+  bar:
+    type: string
+    default: "bar-default"
+    description: "Bar"

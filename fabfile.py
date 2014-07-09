@@ -20,8 +20,7 @@
 
 """
 
-Fabric deploy script for Tribus
-===============================
+This module invokes the fabric scripts for Tribus.
 
 This file is a *placeholder* for the scripts that help to deploy and setup
 a development environment for Tribus. For more information, see the

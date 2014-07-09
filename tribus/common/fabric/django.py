@@ -18,142 +18,191 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from fabric.api import local, run, env, cd, shell_env
+"""
+Django management commands.
+
+This module will run several Django management commands inside the docker
+runtime container.
+
+.. versionadded:: 0.2
+"""
+
+from contextlib import nested
+from fabric.api import env, run, cd, shell_env, hide
+
 from tribus.common.fabric.docker import docker_check_container
+from tribus.common.logger import get_logger
+
+log = get_logger()
 
 
 def django_syncdb():
     """
-    """
+    Synchronize the configuration of the container with current codebase.
 
+    This function executes Django's syncdb, configures admin users, registers
+    Waffle's switches, among other operations.
+
+    .. versionadded:: 0.2
+    """
     docker_check_container()
 
-    env.host_string = '127.0.0.1'
-    env.user = 'root'
-    env.port = '22222'
-    env.password = 'tribus'
+    log.info('Syncing databases and configuration ...')
 
-    local(('echo "#!/usr/bin/env bash\n'
-           'cd %(basedir)s\n'
-           '%(preseed_env)s\n'
-           'python manage.py syncdb --noinput\n'
-           'python manage.py migrate --noinput\n'
-           '%(waffle_switches)s\n'
-           '" > %(tribus_django_syncdb_script)s') % env, capture=False)
-
-    run('bash %(tribus_django_syncdb_script)s' % env)
+    with nested(hide('warnings', 'stderr', 'running'),
+                shell_env(**env.fvars), cd(env.basedir)):
+        run('bash %(tribus_django_syncdb_script)s' % env)
 
 
 def django_runserver():
     """
-    """
+    Run the Django development server and other services.
 
+    .. versionadded:: 0.2
+    """
     docker_check_container()
 
-    env.host_string = '127.0.0.1'
-    env.user = 'root'
-    env.port = '22222'
-    env.password = 'tribus'
+    log.info('Starting services ...')
 
-    local(('echo "#!/usr/bin/env bash\n'
-           'cd %(basedir)s\n'
-           '%(preseed_env)s\n'
-           'python manage.py celeryd -c 1 --beat -l INFO &\n'
-           'python manage.py celery beat -s celerybeat-schedule &\n'
-           'python manage.py runserver 0.0.0.0:8000\n'
-           '" > %(tribus_django_runserver_script)s') % env, capture=False)
-
-    run('bash %(tribus_django_runserver_script)s' % env)
+    with nested(hide('warnings', 'stderr', 'running'),
+                shell_env(**env.fvars), cd(env.basedir)):
+        run('bash %(tribus_django_runserver_script)s' % env)
 
 
 def django_shell():
     """
-    """
+    Open a Django shell inside the runtime container.
 
+    .. versionadded:: 0.2
+    """
     docker_check_container()
 
-    env.host_string = '127.0.0.1'
-    env.user = 'root'
-    env.port = '22222'
-    env.password = 'tribus'
+    log.info('Opening a django shell inside the runtime container ...')
+    log.info('(When you are done, press CTRL+D to get out).')
 
-    with cd(env.basedir):
-        with shell_env(**env.preseed_env_dict):
-            run('python manage.py shell',
-                shell_escape=False)
+    with nested(hide('warnings', 'stderr', 'running'),
+                shell_env(**env.fvars), cd(env.basedir)):
+        run('python manage.py shell')
 
 
-# def django_deployserver():
-#     """
-#     """
+def celery_purge_tasks():
+    """
+    Remove all tasks from the Celery queue.
 
-#     docker_kill_all_containers()
-#     local(('echo "'
-#            'upstream uwsgi {\n'
-#            '\tserver\t\t\t\tunix:///var/run/tribus/uwsgi.sock;\n'
-#            '}\n'
-#            '\n'
-#            'server {\n'
-#            '\tlisten\t\t\t\t8000;\n'
-#            '\tserver_name\t\t\t127.0.0.1;\n'
-#            '\tcharset\t\t\t\tutf-8;\n'
-#            '\n'
-#            '\tlocation /static {\n'
-#            '\t\talias\t\t\t%(tribus_static_dir)s;\n'
-#            '\t}\n'
-#            '\n'
-#            '\tlocation / {\n'
-#            '\t\tuwsgi_pass\t\tuwsgi;\n'
-#            '\t\tinclude\t\t\t/etc/nginx/uwsgi_params;\n'
-#            '\t}\n'
-#            '}'
-#            '" > %(tribus_nginx_config)s') % env, capture=False)
-#     local(('echo "'
-#            '[program:tribus-celery]\n'
-#            'command = /usr/bin/python %(basedir)s/manage.py celeryd\n'
-#            'directory = %(basedir)s\n'
-#            'user = www-data\n'
-#            'numprocs = 1\n'
-#            'stdout_logfile = /var/log/tribus/celeryd.log\n'
-#            'stderr_logfile = /var/log/tribus/celeryd.log\n'
-#            'autostart = true\n'
-#            'autorestart = true\n'
-#            'startsecs = 10\n'
-#            'stopwaitsecs = 30\n'
-#            '\n'
-#            '[program:tribus-celerybeat]\n'
-#            'command = /usr/bin/python %(basedir)s/manage.py celerybeat\n'
-#            'directory = %(basedir)s\n'
-#            'user = www-data\n'
-#            'numprocs = 1\n'
-#            'stdout_logfile = /var/log/tribus/celerybeat.log\n'
-#            'stderr_logfile = /var/log/tribus/celerybeat.log\n'
-#            'autostart = true\n'
-#            'autorestart = true\n'
-#            'startsecs = 10\n'
-#            'stopwaitsecs = 30\n'
-#            '" > %(tribus_supervisor_config)s') % env, capture=False)
-#     local(('echo "'
-#            '[uwsgi]\n'
-#            'chdir = %(basedir)s\n'
-#            'env = DJANGO_SETTINGS_MODULE=tribus.config.web\n'
-#            'wsgi-file = %(basedir)s/tribus/web/wsgi.py\n'
-#            'logto = /var/log/tribus/uwsgi.log\n'
-#            'pidfile = /var/run/tribus/uwsgi.pid\n'
-#            'socket = /var/run/tribus/uwsgi.sock\n'
-#            'plugin = python\n'
-#            '" > %(tribus_uwsgi_config)s') % env, capture=False)
-#     local(('echo "#!/usr/bin/env bash\n'
-#            'ln -fs /proc/self/fd /dev/fd\n'
-#            'ln -fs %(tribus_nginx_config)s /etc/nginx/sites-enabled/\n'
-#            'ln -fs %(tribus_uwsgi_config)s /etc/uwsgi/apps-enabled/\n'
-#            'ln -fs %(tribus_supervisor_config)s /etc/supervisor/conf.d/\n'
-#            '%(start_services)s\n'
-#            'sleep 1200\n'
-#            'exit 0'
-#            '" > %(tribus_django_runserver_script)s') % env, capture=False)
-#     local(('sudo bash -c '
-#            '"%(docker)s run -d -p 127.0.0.1:8000:8000 '
-#            '--name="%(tribus_runtime_container)s" '
-#            '%(mounts)s %(tribus_runtime_image)s '
-#            'bash %(tribus_django_runserver_script)s"') % env)
+    .. versionadded:: 0.2
+    """
+    docker_check_container()
+
+    with nested(hide('warnings', 'stderr', 'running'),
+                shell_env(**env.fvars), cd(env.basedir)):
+        run('python manage.py celery purge')
+
+
+def haystack_rebuild_index():
+    """
+    """
+    docker_check_container()
+
+    with nested(hide('warnings', 'stderr', 'running'),
+                shell_env(**env.fvars), cd(env.basedir)):
+        run('python manage.py rebuild_index')
+
+
+def get_selected():
+    """
+    """
+    docker_check_container()
+
+    with nested(hide('warnings', 'stderr', 'running'),
+                shell_env(**env.fvars), cd(env.basedir)):
+        run('python manage.py get_selected')
+
+
+def install_repository():
+    """
+    """
+    docker_check_container()
+
+    with nested(hide('warnings', 'stderr', 'running'),
+                shell_env(**env.fvars), cd(env.basedir)):
+        run('python manage.py install_repository')
+
+
+def get_sample_packages():
+    """
+    """
+    docker_check_container()
+
+    with nested(hide('warnings', 'stderr', 'running'),
+                shell_env(**env.fvars), cd(env.basedir)):
+        run('python manage.py get_sample_packages')
+
+
+def select_sample_packages():
+    """
+    """
+    docker_check_container()
+
+    with nested(hide('warnings', 'stderr', 'running'),
+                shell_env(**env.fvars), cd(env.basedir)):
+        run('python manage.py select_sample_packages')
+
+
+def index_selected():
+    """
+    """
+    docker_check_container()
+
+    with nested(hide('warnings', 'stderr', 'running'),
+                shell_env(**env.fvars), cd(env.basedir)):
+        run('python manage.py index_selected')
+
+
+def index_sample_packages():
+    """
+    """
+    docker_check_container()
+
+    with nested(hide('warnings', 'stderr', 'running'),
+                shell_env(**env.fvars), cd(env.basedir)):
+        run('python manage.py index_sample_packages')
+
+
+def wipe_repo():
+    """
+    """
+    docker_check_container()
+
+    with nested(hide('warnings', 'stderr', 'running'),
+                shell_env(**env.fvars), cd(env.basedir)):
+        run('python manage.py wipe_repo')
+
+
+def filldb_from_remote():
+    """
+    """
+    docker_check_container()
+
+    with nested(hide('warnings', 'stderr', 'running'),
+                shell_env(**env.fvars), cd(env.basedir)):
+        run('python manage.py filldb_from_remote')
+
+
+def filldb_from_local():
+    """
+    """
+    docker_check_container()
+
+    with nested(hide('warnings', 'stderr', 'running'),
+                shell_env(**env.fvars), cd(env.basedir)):
+        run('python manage.py filldb_from_local')
+
+
+def create_cache_from_remote():
+    """
+    """
+    docker_check_container()
+
+    with nested(hide('warnings', 'stderr', 'running'),
+                shell_env(**env.fvars), cd(env.basedir)):
+        run('python manage.py create_cache_from_remote')

@@ -1,38 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import djcelery
+from celery.schedules import crontab
+
 from tribus import BASEDIR
 from tribus.common.utils import get_path
+from tribus.config.ldap import *
 
-try:
-    import djcelery
-    djcelery.setup_loader()
-except:
-    pass
+djcelery.setup_loader()
 
-try:
-
-    from celery.schedules import crontab
-
-    BROKER_URL = 'redis://localhost:6379/0'
-    CELERY_RESULT_BACKEND = 'redis://localhost/0'
-    CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
-
-    CELERYBEAT_SCHEDULE = {
-        "update_cache": {
-            "task": "tribus.web.cloud.tasks.update_cache",
-            "schedule": crontab(minute=0, hour=0), # A las 12 am
-            "args": (),
-        }
-    }
-
-except:
-    pass
-
-try:
-    from tribus.config.ldap import *
-except:
-    pass
 
 SITE_ID = 1
 
@@ -72,19 +49,11 @@ ROOT_URLCONF = 'tribus.web.urls'
 WSGI_APPLICATION = 'tribus.web.wsgi.application'
 
 #
-# LDAP CONFIGURATION -----------------------------------------------------------
+# LDAP CONFIGURATION ----------------------------------------------------------
 #
 
 AUTHENTICATION_BACKENDS = (
-    #'social_auth.backends.twitter.TwitterBackend',
-    #'social_auth.backends.facebook.FacebookBackend',
-    #'social_auth.backends.google.GoogleOAuth2Backend',
-    #'social_auth.backends.contrib.github.GithubBackend',
     'django_auth_ldap.backend.LDAPBackend',
-
-
-    # acomoda aplicacion de ldap
-    #'django.contrib.auth.backends.ModelBackend',
 )
 
 # This should be secret, but as we are in development, doesn't matter
@@ -92,26 +61,8 @@ AUTHENTICATION_BACKENDS = (
 # Other local configuration should be set in tribus/config/web_local.py
 SECRET_KEY = 'oue0893ro5c^82!zke^ypu16v0u&%s($lnegf^7-vcgc^$e&$f'
 
-# SOCIAL_AUTH_ENABLED_BACKENDS = ('twitter', 'facebook', 'google', 'github')
-# SOCIAL_AUTH_DEFAULT_USERNAME = 'tribus'
-# SOCIAL_AUTH_UID_LENGTH = 32
-# SOCIAL_AUTH_ASSOCIATION_HANDLE_LENGTH = 32
-# SOCIAL_AUTH_NONCE_SERVER_URL_LENGTH = 32
-# SOCIAL_AUTH_ASSOCIATION_SERVER_URL_LENGTH = 32
-# SOCIAL_AUTH_ASSOCIATION_HANDLE_LENGTH = 32
-
-# TWITTER_CONSUMER_KEY = 'A2jx982HVh8KuFQ9q2iN8A'
-# TWITTER_CONSUMER_SECRET = 'wU3T7KPgvNqj3mBH7Pyn81T10lSw2NN4LLuZCLYk5U'
-# GOOGLE_OAUTH2_CLIENT_ID = '827167166748-7h5k1crt9fsr8jjqindi1c8hfl48eahj.apps.googleusercontent.com'
-# GOOGLE_OAUTH2_CLIENT_SECRET = 'VvoYXzfheMInzrcTq8v3Tdhf'
-# FACEBOOK_APP_ID='172639862908723'
-# FACEBOOK_API_SECRET='60735113b51809707ed3771b248fb37e'
-# FACEBOOK_EXTENDED_PERMISSIONS = ['email']
-# GITHUB_APP_ID = 'c3d70354858107387ef8'
-# GITHUB_API_SECRET = '55adbc6ecf54d295b391c8a6a1037e71165728d6'
-
 #
-# DATABASE CONFIGURATION -------------------------------------------------------
+# DATABASE CONFIGURATION ------------------------------------------------------
 #
 
 DATABASES = {
@@ -135,8 +86,31 @@ DATABASE_ROUTERS = ['ldapdb.router.Router']
 
 PASSWORD_HASHERS = (
     'tribus.web.registration.ldap.hashers.SSHAPasswordLDAPHasher',
-    #'tribus.web.registration.hashers.DummyPasswordHasher',
 )
+
+BROKER_URL = 'django://'
+CELERY_RESULT_BACKEND = 'database'
+CELERY_CACHE_BACKEND = 'memory'
+CELERY_RESULT_DBURI = "postgresql://tribus:tribus@localhost/tribus"
+CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
+
+CELERYBEAT_SCHEDULE = {
+    "update_cache": {
+        "task": "tribus.web.cloud.tasks.update_cache",
+        "schedule": crontab(minute=0, hour=0),  # A las 12 am
+        "args": (),
+    }
+}
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
+    }
+}
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+
 
 APPEND_SLASH = True
 TASTYPIE_ALLOW_MISSING_SLASH = True
@@ -160,19 +134,6 @@ HAYSTACK_CONNECTIONS = {
 HAYSTACK_SIGNAL_PROCESSOR = 'celery_haystack.signals.CelerySignalProcessor'
 
 INSTALLED_APPS = (
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.sites',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'tribus.tests',
-    'tribus.web',
-    'tribus.web.registration',
-    'tribus.web.cloud',
-    'tribus.web.profile',
-    'tribus.web.admin',
     'ldapdb',
     'django_auth_ldap',
     'south',
@@ -183,6 +144,19 @@ INSTALLED_APPS = (
     'celery_haystack',
     'registration',
     'waffle',
+    'kombu.transport.django',
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.sites',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'tribus.web',
+    'tribus.web.registration',
+    'tribus.web.cloud',
+    'tribus.web.profile',
+    'tribus.web.admin',
 )
 
 SOUTH_TESTS_MIGRATE = False
@@ -222,31 +196,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.i18n',
     'django.core.context_processors.tz',
     'tribus.web.processors.default_context',
-    #'social_auth.context_processors.social_auth_by_type_backends',
 )
-
-# SOCIAL_AUTH_PIPELINE = (
-#    'social_auth.backends.pipeline.social.social_auth_user',
-#    'social_auth.backends.pipeline.user.get_username',
-#    'tribus.web.registration.social.pipeline.create_user',
-#    'social_auth.backends.pipeline.social.associate_user',
-#    'social_auth.backends.pipeline.social.load_extra_data',
-#    'social_auth.backends.pipeline.user.update_user_details'
-#)
-
-MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
-SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
-
-CACHES = {
-    'default': {
-        'BACKEND': 'redis_cache.cache.RedisCache',
-        'LOCATION': 'localhost:6379:1',
-        'OPTIONS': {
-            'PARSER_CLASS': 'redis.connection.HiredisParser',
-            'CLIENT_CLASS': 'redis_cache.client.DefaultClient',
-        },
-    },
-}
 
 try:
     from tribus.config.logger import *

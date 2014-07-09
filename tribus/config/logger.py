@@ -7,53 +7,49 @@ LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
     'formatters': {
-        'verbose': {
-            'format': '%(levelname)s %(asctime)s %(message)s'
+        'standard': {
+            'format': '%(levelname)s: %(message)s'
         },
     },
     'handlers': {
         'console': {
-            'level': 'DEBUG',
+            'level': 'INFO',
             'class': 'logging.StreamHandler',
             'stream': sys.stdout,
-            'formatter': 'verbose'
+            'formatter': 'standard'
         },
+        # 'file': {
+        #     'level': 'INFO',
+        #     'class': 'logging.FileHandler',
+        #     'formatter': 'standard',
+        #     'filename': '/tmp/tribus/logs/runtime.log'
+        # },
     },
     'loggers': {
-        #'django': {
-        #    'handlers': ['console'],
-        #    'propagate': True,
-        #    'level': 'DEBUG',
-        #},
-        'django.request': {
-            'handlers': ['console'],
-            'propagate': True,
-            'level': 'DEBUG',
-        },
         'tribus': {
             'handlers': ['console'],
             'propagate': True,
-            'level': 'DEBUG',
+            'level': 'INFO',
         },
-        'scss': {
+        'django': {
             'handlers': ['console'],
             'propagate': True,
-            'level': 'DEBUG',
+            'level': 'INFO',
+        },
+        'django.request': {
+            'handlers': ['console'],
+            'propagate': True,
+            'level': 'INFO',
         },
         'django_auth_ldap': {
             'handlers': ['console'],
             'propagate': True,
-            'level': 'DEBUG',
-        },
-        'SocialAuth': {
-            'handlers': ['console'],
-            'propagate': True,
-            'level': 'DEBUG',
+            'level': 'INFO',
         },
         'haystack': {
             'handlers': ['console'],
             'propagate': True,
-            'level': 'DEBUG',
+            'level': 'INFO',
         },
     },
 }

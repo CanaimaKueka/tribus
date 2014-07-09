@@ -20,15 +20,18 @@
 
 """
 
-tribus.common.fabric
-====================
+This package contains remote execution scripts based on Fabric.
 
+This package is intended to serve as an automation library. It is designed to
+execute (local) operations on Tribus's development environment (Docker,
+Vagrant, chroot, etc), and also on (remote) servers when deploying Charms.
 
 """
 
 import os
 import pwd
 from fabric.api import env
+
 from tribus import BASEDIR
 from tribus.config.base import CONFDIR, AUTHOR, AUTHOR_EMAIL
 from tribus.config.ldap import (AUTH_LDAP_SERVER_URI,
@@ -41,99 +44,71 @@ from tribus.common.system import get_local_arch
 from tribus.common.fabric.docker import *
 from tribus.common.fabric.django import *
 from tribus.common.fabric.setup import *
-from tribus.common.fabric.celery import *
-from tribus.common.fabric.haystack import *
-from tribus.common.fabric.cloud import *
 
 
-def development():
-    """
-    """
+# Fabric environment configuration
+env.basedir = BASEDIR
+env.host_string = '127.0.0.1'
+env.user = str(pwd.getpwuid(os.getuid()).pw_name)
+env.user_id = str(pwd.getpwuid(os.getuid()).pw_uid)
+env.port = 22222
+env.password = 'tribus'
+env.warn_only = True
+env.output_prefix = False
 
-    # Fabric environment configuration
-    env.basedir = BASEDIR
-    env.hosts = ['localhost']
-    env.environment = 'development'
-    env.user = pwd.getpwuid(os.getuid()).pw_name
-    env.root = 'root'
+# Docker config
+env.docker = 'docker.io'
+env.arch = get_local_arch()
+env.docker_maintainer = '%s <%s>' % (AUTHOR, AUTHOR_EMAIL)
 
-    # Docker config
-    env.docker = 'docker.io'
-    env.arch = get_local_arch()
-    env.docker_maintainer = '%s <%s>' % (AUTHOR, AUTHOR_EMAIL)
+env.debian_base_image = 'luisalejandro/debian-%(arch)s:wheezy' % env
+env.tribus_base_image = 'luisalejandro/tribus-%(arch)s:wheezy' % env
+env.tribus_runtime_image = 'luisalejandro/tribus-run-%(arch)s:wheezy' % env
+env.tribus_runtime_container = 'tribus-run-container'
 
-    env.debian_base_image = 'luisalejandro/debian-%(arch)s:wheezy' % env
-    env.tribus_base_image = 'luisalejandro/tribus-%(arch)s:wheezy' % env
-    env.tribus_runtime_image = 'luisalejandro/tribus-run-%(arch)s:wheezy' % env
-    env.tribus_runtime_container = 'tribus-run-container'
+env.debian_base_image_script = get_path([BASEDIR, 'tribus',
+                                         'data', 'scripts',
+                                         'debian-base-image.sh'])
+env.tribus_base_image_script = get_path([BASEDIR, 'tribus',
+                                         'data', 'scripts',
+                                         'tribus-base-image.sh'])
+env.tribus_django_syncdb_script = get_path([BASEDIR, 'tribus',
+                                            'data', 'scripts',
+                                            'django-syncdb.sh'])
+env.tribus_django_runserver_script = get_path([BASEDIR, 'tribus',
+                                               'data', 'scripts',
+                                               'django-runserver.sh'])
+env.tribus_start_container_script = get_path([BASEDIR, 'tribus',
+                                              'data', 'scripts',
+                                              'start-container.sh'])
 
-    env.tribus_static_dir = get_path([BASEDIR, 'tribus', 'data', 'static'])
+waffle_switches = SWITCHES_CONFIGURATION.keys()
+mounts = ['%(basedir)s:%(basedir)s:rw' % env, '/tmp:/tmp:rw']
+start_services = ['ssh', 'postgresql', 'slapd']
+change_passwd = ['root:tribus', 'postgres:tribus', 'openldap:tribus']
 
-    env.tribus_supervisor_config = get_path([CONFDIR, 'data',
-                                             'tribus.supervisor.conf'])
-    env.tribus_uwsgi_config = get_path([CONFDIR, 'data',
-                                        'tribus.uwsgi.ini'])
-    env.tribus_nginx_config = get_path([CONFDIR, 'data',
-                                        'tribus.nginx.conf'])
+env.mounts = ' '.join('--volume %s' % i for i in mounts)
 
-    env.debian_base_image_script = get_path([BASEDIR, 'tribus',
-                                             'data', 'scripts',
-                                             'debian-base-image.sh'])
-    env.tribus_base_image_script = get_path([BASEDIR, 'tribus',
-                                             'data', 'scripts',
-                                             'tribus-base-image.sh'])
-    env.tribus_django_syncdb_script = get_path([BASEDIR, 'tribus',
-                                                'data', 'scripts',
-                                                'django-syncdb.sh'])
-    env.tribus_django_runserver_script = get_path([BASEDIR, 'tribus',
-                                                   'data', 'scripts',
-                                                   'django-runserver.sh'])
-    env.tribus_start_container_script = get_path([BASEDIR, 'tribus',
-                                                  'data', 'scripts',
-                                                  'start-container.sh'])
-    env.tribus_get_pip_script = get_path([BASEDIR, 'tribus',
-                                          'data', 'scripts',
-                                          'get-pip.py'])
+env.fvars = {
+    'BASEDIR': '%(basedir)s' % env,
+    'PYTHONPATH': '%(basedir)s' % env,
+    'DJANGO_SETTINGS_MODULE': 'tribus.config.web',
+    'DEBIAN_FRONTEND': 'noninteractive',
+    'PRESEED_DEBCONF': get_path([CONFDIR, 'data', 'preseed-debconf.conf']),
+    'PRESEED_DB': get_path([CONFDIR, 'data', 'preseed-db.sql']),
+    'PRESEED_LDAP': get_path([CONFDIR, 'data', 'preseed-ldap.ldif']),
+    'PYTHON_DEPENDENCIES': ' '.join(python_dependencies),
+    'DEBIAN_RUN_DEPENDENCIES':  ' '.join(debian_run_dependencies),
+    'DEBIAN_BUILD_DEPENDENCIES': ' '.join(debian_build_dependencies),
+    'LDAP_ARGS': ('-x -w %s -D %s -H %s' % (AUTH_LDAP_BIND_PASSWORD,
+                                            AUTH_LDAP_BIND_DN,
+                                            AUTH_LDAP_SERVER_URI)),
+    'START_SERVICES': ' '.join(start_services),
+    'CHANGE_PASSWD': ' '.join(change_passwd),
+    'WAFFLE_SWITCHES': ' '.join(waffle_switches),
+    'HOST_USER': env.user,
+    'HOST_USER_ID': env.user_id
+}
 
-    env.preseed_db = get_path([CONFDIR, 'data', 'preseed-db.sql'])
-    env.preseed_debconf = get_path([CONFDIR, 'data', 'preseed-debconf.conf'])
-    env.preseed_ldap = get_path([CONFDIR, 'data', 'preseed-ldap.ldif'])
-
-    env.python_dependencies = ' '.join(python_dependencies)
-    env.debian_run_dependencies = ' '.join(debian_run_dependencies)
-    env.debian_build_dependencies = ' '.join(debian_build_dependencies)
-
-    env.ldap_passwd = AUTH_LDAP_BIND_PASSWORD
-    env.ldap_writer = AUTH_LDAP_BIND_DN
-    env.ldap_server = AUTH_LDAP_SERVER_URI
-    env.ldap_args = ('-x '
-                     '-w \\"%(ldap_passwd)s\\" '
-                     '-D \\"%(ldap_writer)s\\" '
-                     '-H \\"%(ldap_server)s\\"') % env
-
-    env.preseed_env_dict = {
-        'DEBIAN_FRONTEND': 'noninteractive',
-        'DJANGO_SETTINGS_MODULE': 'tribus.config.web',
-        'PYTHONPATH': '%(basedir)s:${PYTHONPATH}' % env
-    }
-    preseed_env = ['%s=%s' % (i, j) for i, j in env.preseed_env_dict.items()]
-    mounts = ['%(basedir)s:%(basedir)s:rw' % env]
-    start_services = ['ssh', 'postgresql', 'redis-server', 'slapd']
-
-    env.preseed_env = '\n'.join('export %s' % i for i in preseed_env)
-    env.mounts = ' '.join('--volume %s' % i for i in mounts)
-    env.start_services = '\n'.join('service %s start' % i
-                                   for i in start_services)
-    env.waffle_switches = '\n'.join(('python manage.py switch '
-                                     '%s %s --create') % (i, j[1])
-                                    for i, j in SWITCHES_CONFIGURATION.items())
-
-    env.clean = ('find / -name \\"*.pyc\\" -print0 | xargs -0r rm -rf\n'
-                 'find /var/cache/apt -type f -print0 | xargs -0r rm -rf\n'
-                 'find /var/lib/apt/lists -type f -print0 | xargs -0r rm -rf\n'
-                 'find /usr/share/man -type f -print0 | xargs -0r rm -rf\n'
-                 'find /usr/share/doc -type f -print0 | xargs -0r rm -rf\n'
-                 'find /usr/share/locale -type f -print0 | xargs -0r rm -rf\n'
-                 'find /var/log -type f -print0 | xargs -0r rm -rf\n'
-                 'find /var/tmp -type f -print0 | xargs -0r rm -rf\n'
-                 'find /tmp -type f -print0 | xargs -0r rm -rf\n')
+env.dvars = ' '.join('--env %s=\\"%s\\"' % (i, j)
+                     for i, j in env.fvars.items())
