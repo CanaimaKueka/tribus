@@ -33,6 +33,7 @@ This module define funtions to accomplish the following tasks:
 """
 
 import sys
+import time
 import json
 import paramiko
 from contextlib import nested
@@ -340,6 +341,7 @@ def docker_check_ssh_to_container():
     while True:
         tries += 1
         try:
+            time.sleep(2)
             ssh.connect(hostname=env.host_string, port=env.port,
                         username=env.user, password=env.password)
         except Exception, e:
