@@ -41,33 +41,33 @@ dependencies:
 	@# distributions.
 	@$(BASH) tribus/data/scripts/satisfy-depends.sh
 
-generate_debian_base_image_i386:
+generate_debian_base_image_i386: dependencies
 
-	@$(FAB) development generate_debian_base_image_i386
+	@$(FAB) generate_debian_base_image_i386
 
-generate_debian_base_image_amd64:
+generate_debian_base_image_amd64: dependencies
 
-	@$(FAB) development generate_debian_base_image_amd64
+	@$(FAB) generate_debian_base_image_amd64
 
-generate_tribus_base_image_i386:
+generate_tribus_base_image_i386: dependencies
 
-	@$(FAB) development generate_tribus_base_image_i386
+	@$(FAB) generate_tribus_base_image_i386
 
-generate_tribus_base_image_amd64:
+generate_tribus_base_image_amd64: dependencies
 
-	@$(FAB) development generate_tribus_base_image_amd64
+	@$(FAB) generate_tribus_base_image_amd64
 
-kill_all_containers:
+kill_all_containers: dependencies
 
-	@$(FAB) development docker_kill_all_containers
+	@$(FAB) docker_kill_all_containers
 
-kill_all_images:
+kill_all_images: dependencies
 
-	@$(FAB) development docker_kill_all_images
+	@$(FAB) docker_kill_all_images
 
-kill_tribus_images:
+kill_tribus_images: dependencies
 
-	@$(FAB) development docker_kill_tribus_images
+	@$(FAB) docker_kill_tribus_images
 
 
 # COMMON TASKS -----------------------------------------------------------------
@@ -75,94 +75,91 @@ kill_tribus_images:
 
 environment: dependencies
 
-	@$(FAB) development docker_pull_debian_base_image
-	@$(FAB) development docker_pull_tribus_base_image
-	@$(FAB) development django_syncdb
+	@$(FAB) environment
 
 start: dependencies
 
-	@$(FAB) development django_runserver
+	@$(FAB) django_runserver
 
 stop: dependencies
 
-	@$(FAB) development docker_stop_container
+	@$(FAB) docker_stop_container
 
 login: dependencies
 
-	@$(FAB) development docker_login_container
+	@$(FAB) docker_login_container
 
 reset: dependencies
 
-	@$(FAB) development docker_reset_container
-	@$(FAB) development django_syncdb
+	@$(FAB) docker_reset_container
 
 update: dependencies
 
-	@$(FAB) development docker_update_container
+	@$(FAB) docker_update_container
 
 sync: dependencies
 
-	@$(FAB) development django_syncdb
+	@$(FAB) django_syncdb
 
 shell: dependencies
 
-	@$(FAB) development django_shell
+	@$(FAB) django_shell
 
 
 # REPOSITORY TASKS ------------------------------------------------------
 
 create_test_repository: dependencies
 
-	@$(FAB) development install_repository
-	@$(FAB) development select_sample_packages
-	@$(FAB) development get_sample_packages
-	@$(FAB) development index_sample_packages
+	@$(FAB) install_repository
+	@$(FAB) select_sample_packages
+	@$(FAB) get_sample_packages
+	@$(FAB) index_sample_packages
 
 
 install_repository: dependencies
 
-	@$(FAB) development install_repository
+	@$(FAB) install_repository
 
 select_samples: dependencies
 
-	@$(FAB) development select_sample_packages
+	@$(FAB) select_sample_packages
 
 get_samples: dependencies
 
-	@$(FAB) development get_sample_packages
+	@$(FAB) get_sample_packages
 
 get_selected: dependencies
 
-	@$(FAB) development get_selected
+	@$(FAB) get_selected
 
 index_selected: dependencies
 
-	@$(FAB) development index_selected
+	@$(FAB) index_selected
 
 index_samples: dependencies
 
-	@$(FAB) development index_sample_packages
+	@$(FAB) index_sample_packages
 
 # -----------------------------------------------------------------------------
 
 filldb_from_local: dependencies
 
-	@$(FAB) development filldb_from_local 
+	@$(FAB) filldb_from_local
 
 filldb_from_remote: dependencies
 
-	@$(FAB) development filldb_from_remote
+	@$(FAB) filldb_from_remote
 
 
 # INDEX TASKS -----------------------------------------------------------------
 
 rebuild_index: dependencies
 
-	@$(FAB) development haystack_rebuild_index
+	@$(FAB) haystack_rebuild_index
 
 purge_tasks: dependencies
 
-	@$(FAB) development celery_purge_tasks
+	@$(FAB) celery_purge_tasks
 
 # -----------------------------------------------------------------------------
 
@@ -170,114 +167,114 @@ purge_tasks: dependencies
 
 wipe_repo: dependencies
 
-	@$(FAB) development wipe_repo
+	@$(FAB) wipe_repo
 
 # -----------------------------------------------------------------------------
 
-update_catalog: dependencies 
+update_catalog: dependencies
 
-	@$(FAB) development update_catalog
+	@$(FAB) update_catalog
 
-compile_catalog: dependencies 
+compile_catalog: dependencies
 
-	@$(FAB) development compile_catalog
+	@$(FAB) compile_catalog
 
-init_catalog: dependencies 
+init_catalog: dependencies
 
-	@$(FAB) development init_catalog
+	@$(FAB) init_catalog
 
-extract_messages: dependencies 
+extract_messages: dependencies
 
-	@$(FAB) development extract_messages
+	@$(FAB) extract_messages
 
-tx_push: dependencies 
+tx_push: dependencies
 
-	@$(FAB) development tx_push
+	@$(FAB) tx_push
 
-tx_pull: dependencies 
+tx_pull: dependencies
 
-	@$(FAB) development tx_pull
+	@$(FAB) tx_pull
 
 
 # BUILD TASKS ------------------------------------------------------------------------------
 
 build: dependencies
 
-	@$(FAB) development build
+	@$(FAB) build
 
 build_sphinx: dependencies
 
-	@$(FAB) development build_sphinx
+	@$(FAB) build_sphinx
 
 build_mo: dependencies
 
-	@$(FAB) development build_mo
+	@$(FAB) build_mo
 
 build_css: dependencies
 
-	@$(FAB) development build_css
+	@$(FAB) build_css
 
 build_js: dependencies
 
-	@$(FAB) development build_js
+	@$(FAB) build_js
 
 build_man: dependencies
 
-	@$(FAB) development build_man
+	@$(FAB) build_man
 
 
 # CLEAN TASKS ------------------------------------------------------------------------------
 
 clean: dependencies
 
-	@$(FAB) development clean
+	@$(FAB) clean
 
 clean_css: dependencies
 
-	@$(FAB) development clean_css
+	@$(FAB) clean_css
 
 clean_js: dependencies
 
-	@$(FAB) development clean_js
+	@$(FAB) clean_js
 
 clean_mo: dependencies
 
-	@$(FAB) development clean_mo
+	@$(FAB) clean_mo
 
 clean_sphinx: dependencies
 
-	@$(FAB) development clean_sphinx
+	@$(FAB) clean_sphinx
 
 clean_man: dependencies
 
-	@$(FAB) development clean_man
+	@$(FAB) clean_man
 
 clean_dist: dependencies
 
-	@$(FAB) development clean_dist
+	@$(FAB) clean_dist
 
 clean_pyc: dependencies
 
-	@$(FAB) development clean_pyc
+	@$(FAB) clean_pyc
 
 test: dependencies
 
-	@$(FAB) development test
+	@$(FAB) test
 
 install: dependencies
 
-	@$(FAB) development install
+	@$(FAB) install
 
 bdist: dependencies
 
-	@$(FAB) development bdist
+	@$(FAB) bdist
 
 sdist: dependencies
 
-	@$(FAB) development sdist
+	@$(FAB) sdist
 
 report_setup_data: dependencies
 
-	@$(FAB) development report_setup_data
+	@$(FAB) report_setup_data
 
 .PHONY: environment

@@ -20,7 +20,7 @@
 
 """
 
-This script invokes the setup script for Tribus.
+This script invokes the setuptools script for Tribus.
 
 For more information about this file, see documentation on
 ``tribus/common/setup/utils.py``

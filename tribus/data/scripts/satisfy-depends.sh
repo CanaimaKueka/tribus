@@ -112,7 +112,7 @@ else
     fi
 
     if [ -z "${DISTRO}" ] && [ -r "/etc/debian_version" ]; then
-        
+
         if [ -z "${DISTRO}" ] && [ -r "/etc/os-release" ]; then
 
             DISTRO="$( . "/etc/os-release" && ${ECHO} "${ID,,}" )"
@@ -124,19 +124,19 @@ else
                     awk -F'/' '{print $2}' )"
 
             elif [ "${DISTRO}" == "ubuntu" ]; then
-        
+
                 CODENAME="$( . "/etc/os-release" && ${ECHO} "${VERSION,,}" | \
                     awk '{print $2}' )"
 
             elif [ "${DISTRO}" == "canaima" ]; then
-        
+
                 CODENAME="$( . "/etc/os-release" && ${ECHO} "${VERSION,,}" | \
                     sed 's/.*(\(.*\)).*/\1/g' )"
 
             fi
 
         fi
-        
+
         if [ -z "${DISTRO}" ] && [ -r "/etc/lsb-release" ]; then
 
             DISTRO="$( . "/etc/lsb-release" && ${ECHO} "${DISTRIB_ID,,}" )"
@@ -175,7 +175,6 @@ if [ "${DPKG_BASED}" != "${DPKG_BASED/${DISTRO}}" ]; then
     # If our dependencies are met, let's exit early
     if [ -n "$( which fab )" ] && [ -n "$( which docker.io )" ]; then
 
-        ${ECHO} "All dependencies are satisfied."
         exit 0
 
     fi
@@ -310,7 +309,6 @@ elif [ "${YUM_BASED}" != "${YUM_BASED/${DISTRO}}" ]; then
     # If our dependencies are met, let's exit early
     if [ -n "$( which fab )" ] && [ -n "$( which docker )" ]; then
 
-        ${ECHO} "All dependencies are satisfied."
         exit 0
 
     fi
@@ -344,7 +342,6 @@ elif [ "${PACMAN_BASED}" != "${PACMAN_BASED/${DISTRO}}" ]; then
     # If our dependencies are met, let's exit early
     if [ -n "$( which fab )" ] && [ -n "$( which docker )" ]; then
 
-        ${ECHO} "All dependencies are satisfied."
         exit 0
 
     fi
@@ -377,7 +374,6 @@ elif [ "${EMERGE_BASED}" != "${EMERGE_BASED/${DISTRO}}" ]; then
     # If our dependencies are met, let's exit early
     if [ -n "$( which fab )" ] && [ -n "$( which docker )" ]; then
 
-        ${ECHO} "All dependencies are satisfied."
         exit 0
 
     fi
