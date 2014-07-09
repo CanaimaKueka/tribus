@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tribus 0.1a1\n"
 "Report-Msgid-Bugs-To: desarrolladores@canaima.softwarelibre.gob.ve\n"
-"POT-Creation-Date: 2014-06-25 05:33+0000\n"
+"POT-Creation-Date: 2014-07-07 18:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -773,7 +773,7 @@ msgstr ""
 #: tribus/data/templates/admin/login.html:48
 #: tribus/data/templates/registration/login_form.html:3
 #: tribus/data/templates/registration/login_form.html:9
-#: tribus/data/templates/registration/login_form.html:47
+#: tribus/data/templates/registration/login_form.html:24
 msgid "Log in"
 msgstr ""
 
@@ -839,6 +839,7 @@ msgid "Edit Profile"
 msgstr ""
 
 #: tribus/data/templates/profile/profiles.html:57
+#: tribus/web/profile/forms.py:34
 msgid "Description"
 msgstr ""
 
@@ -964,15 +965,11 @@ msgstr ""
 msgid "Please resubmit the form after making the following changes:"
 msgstr ""
 
-#: tribus/data/templates/registration/login_form.html:32
-msgid "- or -"
-msgstr ""
-
-#: tribus/data/templates/registration/login_form.html:51
+#: tribus/data/templates/registration/login_form.html:28
 msgid "forgot your password?"
 msgstr ""
 
-#: tribus/data/templates/registration/login_form.html:52
+#: tribus/data/templates/registration/login_form.html:29
 msgid "are you new to Tribus?"
 msgstr ""
 
@@ -1196,19 +1193,9 @@ msgstr ""
 msgid "This is the dashboard, a place where you can follow the updates of your projects."
 msgstr ""
 
-#: tribus/web/forms.py:44 tribus/web/forms.py:46 tribus/web/forms.py:64
-#: tribus/web/forms.py:66
+#: tribus/web/forms.py:46 tribus/web/forms.py:48 tribus/web/forms.py:67
+#: tribus/web/forms.py:69
 msgid "Enter a valid value."
-msgstr ""
-
-#: tribus/web/profile/forms.py:26
-msgid "Descripcion"
-msgstr ""
-
-#: tribus/web/profile/forms.py:38 tribus/web/registration/forms.py:75
-#: tribus/web/registration/forms.py:126 tribus/web/registration/forms.py:143
-#: tribus/web/registration/forms.py:160
-msgid "This value may contain only letters, numbers and @/./+/-/_ characters."
 msgstr ""
 
 #: tribus/web/registration/forms.py:63 tribus/web/registration/forms.py:114
@@ -1217,6 +1204,11 @@ msgstr ""
 
 #: tribus/web/registration/forms.py:68
 msgid "Enter your username"
+msgstr ""
+
+#: tribus/web/registration/forms.py:75 tribus/web/registration/forms.py:126
+#: tribus/web/registration/forms.py:143 tribus/web/registration/forms.py:160
+msgid "This value may contain only letters, numbers and @/./+/-/_ characters."
 msgstr ""
 
 #: tribus/web/registration/forms.py:85

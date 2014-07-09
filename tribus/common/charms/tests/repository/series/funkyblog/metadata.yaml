@@ -1,0 +1,17 @@
+name: funkyblog
+summary: "Blog engine"
+description: "A funky blog engine"
+provides:
+  url:
+    interface: http
+    limit:
+    optional: false
+requires:
+  write-db:
+    interface: mysql
+    limit: 1
+    optional: false
+  read-db:
+    interface: mysql
+    limit: 1
+    optional: false
