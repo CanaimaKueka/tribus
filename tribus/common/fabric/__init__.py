@@ -20,9 +20,11 @@
 
 """
 
-tribus.common.fabric
-====================
+This package contains remote execution scripts based on Fabric.
 
+This package is intended to serve as an automation library. It is designed to
+execute (local) operations on Tribus's development environment (Docker,
+Vagrant, chroot, etc), and also on (remote) servers when deploying Charms.
 
 """
 
@@ -43,16 +45,16 @@ from tribus.common.fabric.docker import *
 from tribus.common.fabric.django import *
 from tribus.common.fabric.setup import *
 
+
 # Fabric environment configuration
 env.basedir = BASEDIR
 env.host_string = '127.0.0.1'
 env.user = str(pwd.getpwuid(os.getuid()).pw_name)
 env.user_id = str(pwd.getpwuid(os.getuid()).pw_uid)
-env.port = '22222'
+env.port = 22222
 env.password = 'tribus'
 env.warn_only = True
 env.output_prefix = False
-env.abort_on_prompts = True
 
 # Docker config
 env.docker = 'docker.io'

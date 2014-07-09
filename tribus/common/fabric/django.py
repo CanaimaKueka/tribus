@@ -18,6 +18,15 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""
+Django management commands.
+
+This module will run several Django management commands inside the docker
+runtime container.
+
+.. versionadded:: 0.2
+"""
+
 from contextlib import nested
 from fabric.api import env, run, cd, shell_env, hide
 
@@ -29,8 +38,13 @@ log = get_logger()
 
 def django_syncdb():
     """
-    """
+    Synchronize the configuration of the container with current codebase.
 
+    This function executes Django's syncdb, configures admin users, registers
+    Waffle's switches, among other operations.
+
+    .. versionadded:: 0.2
+    """
     docker_check_container()
 
     log.info('Syncing databases and configuration ...')
@@ -42,8 +56,10 @@ def django_syncdb():
 
 def django_runserver():
     """
-    """
+    Run the Django development server and other services.
 
+    .. versionadded:: 0.2
+    """
     docker_check_container()
 
     log.info('Starting services ...')
@@ -55,8 +71,10 @@ def django_runserver():
 
 def django_shell():
     """
-    """
+    Open a Django shell inside the runtime container.
 
+    .. versionadded:: 0.2
+    """
     docker_check_container()
 
     log.info('Opening a django shell inside the runtime container ...')
@@ -69,8 +87,10 @@ def django_shell():
 
 def celery_purge_tasks():
     """
-    """
+    Remove all tasks from the Celery queue.
 
+    .. versionadded:: 0.2
+    """
     docker_check_container()
 
     with nested(hide('warnings', 'stderr', 'running'),
@@ -81,7 +101,6 @@ def celery_purge_tasks():
 def haystack_rebuild_index():
     """
     """
-
     docker_check_container()
 
     with nested(hide('warnings', 'stderr', 'running'),
@@ -92,7 +111,6 @@ def haystack_rebuild_index():
 def get_selected():
     """
     """
-
     docker_check_container()
 
     with nested(hide('warnings', 'stderr', 'running'),
@@ -103,7 +121,6 @@ def get_selected():
 def install_repository():
     """
     """
-
     docker_check_container()
 
     with nested(hide('warnings', 'stderr', 'running'),
@@ -114,7 +131,6 @@ def install_repository():
 def get_sample_packages():
     """
     """
-
     docker_check_container()
 
     with nested(hide('warnings', 'stderr', 'running'),
@@ -125,7 +141,6 @@ def get_sample_packages():
 def select_sample_packages():
     """
     """
-
     docker_check_container()
 
     with nested(hide('warnings', 'stderr', 'running'),
@@ -136,7 +151,6 @@ def select_sample_packages():
 def index_selected():
     """
     """
-
     docker_check_container()
 
     with nested(hide('warnings', 'stderr', 'running'),
@@ -147,7 +161,6 @@ def index_selected():
 def index_sample_packages():
     """
     """
-
     docker_check_container()
 
     with nested(hide('warnings', 'stderr', 'running'),
@@ -158,7 +171,6 @@ def index_sample_packages():
 def wipe_repo():
     """
     """
-
     docker_check_container()
 
     with nested(hide('warnings', 'stderr', 'running'),
@@ -169,7 +181,6 @@ def wipe_repo():
 def filldb_from_remote():
     """
     """
-
     docker_check_container()
 
     with nested(hide('warnings', 'stderr', 'running'),
@@ -180,7 +191,6 @@ def filldb_from_remote():
 def filldb_from_local():
     """
     """
-
     docker_check_container()
 
     with nested(hide('warnings', 'stderr', 'running'),
@@ -191,7 +201,6 @@ def filldb_from_local():
 def create_cache_from_remote():
     """
     """
-
     docker_check_container()
 
     with nested(hide('warnings', 'stderr', 'running'),

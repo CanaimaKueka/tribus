@@ -22,7 +22,6 @@
 # def django_deployserver():
 #     """
 #     """
-
 #     env.tribus_static_dir = get_path([BASEDIR, 'tribus', 'data', 'static'])
 
 #     env.tribus_supervisor_config = get_path([CONFDIR, 'data',

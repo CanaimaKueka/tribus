@@ -30,7 +30,6 @@ log = get_logger()
 def update_catalog():
     """
     """
-
     docker_check_container()
 
     with nested(hide('warnings', 'stderr', 'running'),
@@ -41,7 +40,6 @@ def update_catalog():
 def extract_messages():
     """
     """
-
     docker_check_container()
 
     with nested(hide('warnings', 'stderr', 'running'),
@@ -52,7 +50,6 @@ def extract_messages():
 def compile_catalog():
     """
     """
-
     docker_check_container()
 
     with nested(hide('warnings', 'stderr', 'running'),
@@ -63,7 +60,6 @@ def compile_catalog():
 def init_catalog():
     """
     """
-
     docker_check_container()
 
     with nested(hide('warnings', 'stderr', 'running'),
@@ -74,7 +70,6 @@ def init_catalog():
 def tx_pull():
     """
     """
-
     docker_check_container()
 
     with nested(hide('warnings', 'stderr', 'running'),
@@ -85,7 +80,6 @@ def tx_pull():
 def tx_push():
     """
     """
-
     docker_check_container()
 
     with nested(hide('warnings', 'stderr', 'running'),
@@ -96,7 +90,6 @@ def tx_push():
 def build_sphinx():
     """
     """
-
     docker_check_container()
 
     with nested(hide('warnings', 'stderr', 'running'),
@@ -107,7 +100,6 @@ def build_sphinx():
 def build_css():
     """
     """
-
     docker_check_container()
 
     with nested(hide('warnings', 'stderr', 'running'),
@@ -118,7 +110,6 @@ def build_css():
 def build_js():
     """
     """
-
     docker_check_container()
 
     with nested(hide('warnings', 'stderr', 'running'),
@@ -129,7 +120,6 @@ def build_js():
 def build_man():
     """
     """
-
     docker_check_container()
 
     with nested(hide('warnings', 'stderr', 'running'),
@@ -140,7 +130,6 @@ def build_man():
 def build():
     """
     """
-
     docker_check_container()
 
     with nested(hide('warnings', 'stderr', 'running'),
@@ -151,7 +140,6 @@ def build():
 def clean_css():
     """
     """
-
     docker_check_container()
 
     with nested(hide('warnings', 'stderr', 'running'),
@@ -162,7 +150,6 @@ def clean_css():
 def clean_js():
     """
     """
-
     docker_check_container()
 
     with nested(hide('warnings', 'stderr', 'running'),
@@ -173,7 +160,6 @@ def clean_js():
 def clean_sphinx():
     """
     """
-
     docker_check_container()
 
     with nested(hide('warnings', 'stderr', 'running'),
@@ -184,7 +170,6 @@ def clean_sphinx():
 def clean_mo():
     """
     """
-
     docker_check_container()
 
     with nested(hide('warnings', 'stderr', 'running'),
@@ -195,7 +180,6 @@ def clean_mo():
 def clean_man():
     """
     """
-
     docker_check_container()
 
     with nested(hide('warnings', 'stderr', 'running'),
@@ -206,7 +190,6 @@ def clean_man():
 def clean_dist():
     """
     """
-
     docker_check_container()
 
     with nested(hide('warnings', 'stderr', 'running'),
@@ -217,7 +200,6 @@ def clean_dist():
 def clean_pyc():
     """
     """
-
     docker_check_container()
 
     with nested(hide('warnings', 'stderr', 'running'),
@@ -228,7 +210,6 @@ def clean_pyc():
 def clean():
     """
     """
-
     docker_check_container()
 
     with nested(hide('warnings', 'stderr', 'running'),
@@ -239,7 +220,6 @@ def clean():
 def sdist():
     """
     """
-
     docker_check_container()
 
     with nested(hide('warnings', 'stderr', 'running'),
@@ -250,7 +230,6 @@ def sdist():
 def bdist():
     """
     """
-
     docker_check_container()
 
     with nested(hide('warnings', 'stderr', 'running'),
@@ -261,7 +240,6 @@ def bdist():
 def install():
     """
     """
-
     docker_check_container()
 
     with nested(hide('warnings', 'stderr', 'running'),
@@ -272,7 +250,6 @@ def install():
 def test():
     """
     """
-
     docker_check_container()
 
     with nested(hide('warnings', 'stderr', 'running'),
@@ -283,7 +260,6 @@ def test():
 def report_setup_data():
     """
     """
-
     docker_check_container()
 
     with nested(hide('warnings', 'stderr', 'running'),
