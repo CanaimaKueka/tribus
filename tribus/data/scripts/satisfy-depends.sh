@@ -275,7 +275,7 @@ if [ "${DPKG_BASED}" != "${DPKG_BASED/${DISTRO}}" ]; then
         ${SUDO} ${BASH} -c "${ECHO} \"deb ${UBUNTU_MIRROR} ${CODENAME} main\" \
             > /etc/apt/sources.list"
         ${SUDO} ${BASH} -c "${ECHO} \"deb ${UBUNTU_MIRROR} ${CODENAME} universe\" \
-            > /etc/apt/sources.list"
+            >> /etc/apt/sources.list"
 
         ${SUDO} ${BASH} -c "${APTGETCMD} ${APTGETOPTS} update"
         ${SUDO} ${BASH} -c "${APTGETCMD} ${APTGETOPTS} install ${DPKG_DEPENDS}"

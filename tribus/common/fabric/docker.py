@@ -414,9 +414,11 @@ def docker_stop_container():
                   capture=True)
 
         if runtime_id:
+            # This way all the dictionary keys are lower case
+            lower_runtime_id = dict([(k.lower(), v) for k, v in runtime_id[0].items()])
 
             local(('sudo bash -c '
-                   '"%s rmi -f %s"') % (env.docker, runtime_id[0]['Id']),
+                   '"%s rmi -f %s"') % (env.docker, lower_runtime_id['id']),
                   capture=True)
 
 
