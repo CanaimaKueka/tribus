@@ -1,13 +1,13 @@
 Tribus
 ======
 
-.. image:: https://pypip.in/version/Tribus/badge.png
-   :target: https://pypi.python.org/pypi/Tribus/
-   :alt: Latest version available in PyPi
-
 .. image:: https://badge.waffle.io/tribusdev/tribus.png?label=todo&title=Roadmap
    :target: https://waffle.io/tribusdev/tribus
    :alt: Development workflow management
+
+.. image:: https://pypip.in/version/Tribus/badge.png
+   :target: https://pypi.python.org/pypi/Tribus/
+   :alt: Latest version available in PyPi
 
 .. image:: https://travis-ci.org/tribusdev/tribus.png?branch=development
    :target: https://travis-ci.org/tribusdev/tribus

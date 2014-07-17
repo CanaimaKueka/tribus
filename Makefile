@@ -19,7 +19,6 @@
 
 
 # COMMON VARIABLES & CONFIG ----------------------------------------------------
-# ------------------------------------------------------------------------------
 
 SHELL = sh -e
 PATH = "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
@@ -33,7 +32,6 @@ ROOT = root
 
 
 # HELPER TASKS -----------------------------------------------------------------
-# ------------------------------------------------------------------------------
 
 dependencies:
 
@@ -59,222 +57,199 @@ generate_tribus_base_image_amd64: dependencies
 
 kill_all_containers: dependencies
 
-	@$(FAB) docker_kill_all_containers
+	@$(FAB) kill_all_containers
 
 kill_all_images: dependencies
 
-	@$(FAB) docker_kill_all_images
+	@$(FAB) kill_all_images
 
 kill_tribus_images: dependencies
 
-	@$(FAB) docker_kill_tribus_images
+	@$(FAB) kill_tribus_images
 
 
 # COMMON TASKS -----------------------------------------------------------------
-# ------------------------------------------------------------------------------
 
 environment: dependencies
 
 	@$(FAB) environment
+	@$(FAB) django:command='syncdb'
 
 start: dependencies
 
-	@$(FAB) django_runserver
+	@$(FAB) django:command='runserver'
 
 stop: dependencies
 
-	@$(FAB) docker_stop_container
+	@$(FAB) stop
 
 login: dependencies
 
-	@$(FAB) docker_login_container
+	@$(FAB) login
 
 reset: dependencies
 
-	@$(FAB) docker_reset_container
+	@$(FAB) reset
 
 update: dependencies
 
-	@$(FAB) docker_update_container
+	@$(FAB) update
 
 sync: dependencies
 
-	@$(FAB) django_syncdb
+	@$(FAB) django:command='syncdb'
 
 shell: dependencies
 
-	@$(FAB) django_shell
-
-
-# REPOSITORY TASKS ------------------------------------------------------
+	@$(FAB) django:command='shell'
 
 create_test_repository: dependencies
 
-	@$(FAB) install_repository
-	@$(FAB) select_sample_packages
-	@$(FAB) get_sample_packages
-	@$(FAB) index_sample_packages
-
+	@$(FAB) django:command='install_repository'
+	@$(FAB) django:command='select_sample_packages'
+	@$(FAB) django:command='get_sample_packages'
+	@$(FAB) django:command='index_sample_packages'
 
 install_repository: dependencies
 
-	@$(FAB) install_repository
+	@$(FAB) django:command='install_repository'
 
 select_samples: dependencies
 
-	@$(FAB) select_sample_packages
+	@$(FAB) django:command='select_sample_packages'
 
 get_samples: dependencies
 
-	@$(FAB) get_sample_packages
+	@$(FAB) django:command='get_sample_packages'
 
 get_selected: dependencies
 
-	@$(FAB) get_selected
+	@$(FAB) django:command='get_selected'
 
 index_selected: dependencies
 
-	@$(FAB) index_selected
+	@$(FAB) django:command='index_selected'
 
 index_samples: dependencies
 
-	@$(FAB) index_sample_packages
-
-# -----------------------------------------------------------------------------
+	@$(FAB) django:command='index_sample_packages'
 
 filldb_from_local: dependencies
 
-	@$(FAB) filldb_from_local
+	@$(FAB) django:command='filldb_from_local'
 
 filldb_from_remote: dependencies
 
-	@$(FAB) filldb_from_remote
-
-
-# INDEX TASKS -----------------------------------------------------------------
+	@$(FAB) django:command='filldb_from_remote'
 
 rebuild_index: dependencies
 
-	@$(FAB) haystack_rebuild_index
+	@$(FAB) django:command='haystack_rebuild_index'
 
 purge_tasks: dependencies
 
-	@$(FAB) celery_purge_tasks
-
-# -----------------------------------------------------------------------------
-
-# TESTS TASKS -----------------------------------------------------------------
+	@$(FAB) django:command='celery_purge_tasks'
 
 wipe_repo: dependencies
 
-	@$(FAB) wipe_repo
-
-# -----------------------------------------------------------------------------
+	@$(FAB) django:command='wipe_repo'
 
 update_catalog: dependencies
 
-	@$(FAB) update_catalog
+	@$(FAB) setuptools:command='update_catalog'
 
 compile_catalog: dependencies
 
-	@$(FAB) compile_catalog
+	@$(FAB) setuptools:command='compile_catalog'
 
 init_catalog: dependencies
 
-	@$(FAB) init_catalog
+	@$(FAB) setuptools:command='init_catalog'
 
 extract_messages: dependencies
 
-	@$(FAB) extract_messages
+	@$(FAB) setuptools:command='extract_messages'
 
 tx_push: dependencies
 
-	@$(FAB) tx_push
+	@$(FAB) tx:command='push'
 
 tx_pull: dependencies
 
-	@$(FAB) tx_pull
-
-
-# BUILD TASKS ------------------------------------------------------------------------------
+	@$(FAB) tx:command='pull'
 
 build: dependencies
 
-	@$(FAB) build
+	@$(FAB) setuptools:command='build'
 
 build_sphinx: dependencies
 
-	@$(FAB) build_sphinx
+	@$(FAB) setuptools:command='build_sphinx'
 
 build_mo: dependencies
 
-	@$(FAB) build_mo
+	@$(FAB) setuptools:command='build_mo'
 
 build_css: dependencies
 
-	@$(FAB) build_css
+	@$(FAB) setuptools:command='build_css'
 
 build_js: dependencies
 
-	@$(FAB) build_js
+	@$(FAB) setuptools:command='build_js'
 
 build_man: dependencies
 
-	@$(FAB) build_man
-
-
-# CLEAN TASKS ------------------------------------------------------------------------------
+	@$(FAB) setuptools:command='build_man'
 
 clean: dependencies
 
-	@$(FAB) clean
+	@$(FAB) setuptools:command='clean'
 
 clean_css: dependencies
 
-	@$(FAB) clean_css
+	@$(FAB) setuptools:command='clean_css'
 
 clean_js: dependencies
 
-	@$(FAB) clean_js
+	@$(FAB) setuptools:command='clean_js'
 
 clean_mo: dependencies
 
-	@$(FAB) clean_mo
+	@$(FAB) setuptools:command='clean_mo'
 
 clean_sphinx: dependencies
 
-	@$(FAB) clean_sphinx
+	@$(FAB) setuptools:command='clean_sphinx'
 
 clean_man: dependencies
 
-	@$(FAB) clean_man
+	@$(FAB) setuptools:command='clean_man'
 
 clean_dist: dependencies
 
-	@$(FAB) clean_dist
+	@$(FAB) setuptools:command='clean_dist'
 
 clean_pyc: dependencies
 
-	@$(FAB) clean_pyc
+	@$(FAB) setuptools:command='clean_pyc'
 
 test: dependencies
 
-	@$(FAB) test
+	@$(FAB) setuptools:command='test'
 
 install: dependencies
 
-	@$(FAB) install
+	@$(FAB) setuptools:command='install'
 
 bdist: dependencies
 
-	@$(FAB) bdist
+	@$(FAB) setuptools:command='bdist'
 
 sdist: dependencies
 
-	@$(FAB) sdist
+	@$(FAB) setuptools:command='sdist'
 
 report_setup_data: dependencies
 
-	@$(FAB) report_setup_data
-
-.PHONY: environment
+	@$(FAB) setuptools:command='report_setup_data'

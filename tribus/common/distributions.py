@@ -18,15 +18,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-"""
+# from tribus.config.base import CONTAINERS
 
-This file is an entry point for managing Tribus in development mode.
-
-It is a wrapper to the Django management commands.
-
-"""
-
-import sys
-from django.core.management import execute_from_command_line
-
-execute_from_command_line(sys.argv)
+from distutils.spawn import find_executable

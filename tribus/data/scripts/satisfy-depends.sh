@@ -27,8 +27,18 @@
 # coreutils
 # debianutils
 
+set -e
+set -x
+
 ROOT="root"
 USER="$( id -un )"
+BASEDIR="$( pwd )"
+# CONTAINERS="$({
+#     echo "from tribus.config.base import CONTAINERS"
+#     echo "print CONTAINERS"
+# } | PYTHONPATH=${PYTHONPATH}:${BASEDIR} python )"
+
+CONTAINERS="vagrant"
 
 # Supported distributions by Package Manager
 DPKG_BASED="debian ubuntu canaima"
@@ -36,27 +46,41 @@ YUM_BASED="fedora centos"
 PACMAN_BASED="arch"
 EMERGE_BASED="gentoo"
 
-# Tribus dependencies listed by Package Manager
-DPKG_DEPENDS="docker.io fabric"
-YUM_DEPENDS="docker-io fabric"
-PACMAN_DEPENDS="docker fabric"
-EMERGE_DEPENDS="dev-python/fabric app-emulation/docker"
+if [ "${CONTAINERS}" == "docker" ]; then
+
+    DPKG_DEPENDS="docker.io fabric"
+    YUM_DEPENDS="docker-io fabric"
+    PACMAN_DEPENDS="docker fabric"
+    EMERGE_DEPENDS="dev-python/fabric app-emulation/docker"
+
+elif [ "${CONTAINERS}" == "vagrant" ]; then
+    # vagrant: wheezy, sid | precise, raring, saucy, trusty, utopic | kerepakupai, kukenan
+    # virtualbox: wheezy, jessie, sid | precise, raring, saucy, trusty, utopic | kerepakupai, kukenan
+    # rubygems: wheezy, jessie, sid | lucid, precise, raring, saucy, utopic | kerepakupai, kukenan
+    DPKG_DEPENDS="vagrant virtualbox rubygems"
+
+
+    YUM_DEPENDS=""
+    PACMAN_DEPENDS=""
+    EMERGE_DEPENDS=""
+
+fi
 
 DEBIAN_MIRROR="http://http.us.debian.org/debian"
 UBUNTU_MIRROR="http://archive.ubuntu.com/ubuntu"
 
 # Where are our helper programs?
-LSB_RELEASE="$( which lsb_release )"
-MV="$( which mv )"
-ECHO="$( which echo )"
-SU="$( which su )"
-SUDO="$( which sudo )"
+LSB_RELEASE="$( which lsb_release || true )"
+MV="$( which mv || true )"
+ECHO="$( which echo || true )"
+SU="$( which su || true )"
+SUDO="$( which sudo || true )"
 
 # Package Manager binaries
-APTGET="$( which apt-get )"
-YUM="$( which yum )"
-PACMAN="$( which pacman )"
-EMERGE="$( which emerge )"
+APTGET="$( which apt-get || true )"
+YUM="$( which yum || true )"
+PACMAN="$( which pacman || true )"
+EMERGE="$( which emerge || true )"
 
 # Package Manager commands and options
 APTGETCMD="env DEBIAN_FRONTEND=noninteractive ${APTGET}"
@@ -238,9 +262,7 @@ if [ "${DPKG_BASED}" != "${DPKG_BASED/${DISTRO}}" ]; then
         ${SUDO} ${BASH} -c "${MV} /etc/apt/sources.list /etc/apt/sources.list.bk"
         ${SUDO} ${BASH} -c "${MV} /etc/apt/sources.list.d /etc/apt/sources.list.d.bk"
 
-        ${SUDO} ${BASH} -c "${ECHO} \"deb ${UBUNTU_MIRROR} ${CODENAME} main\" \
-            > /etc/apt/sources.list"
-        ${SUDO} ${BASH} -c "${ECHO} \"deb ${UBUNTU_MIRROR} ${CODENAME} universe\" \
+        ${SUDO} ${BASH} -c "${ECHO} \"deb ${UBUNTU_MIRROR} ${CODENAME} main universe multiverse\" \
             > /etc/apt/sources.list"
 
         ${SUDO} ${BASH} -c "${APTGETCMD} ${APTGETOPTS} update"
@@ -272,10 +294,8 @@ if [ "${DPKG_BASED}" != "${DPKG_BASED/${DISTRO}}" ]; then
         ${SUDO} ${BASH} -c "${MV} /etc/apt/sources.list /etc/apt/sources.list.bk"
         ${SUDO} ${BASH} -c "${MV} /etc/apt/sources.list.d /etc/apt/sources.list.d.bk"
 
-        ${SUDO} ${BASH} -c "${ECHO} \"deb ${UBUNTU_MIRROR} ${CODENAME} main\" \
+        ${SUDO} ${BASH} -c "${ECHO} \"deb ${UBUNTU_MIRROR} ${CODENAME} main universe multiverse\" \
             > /etc/apt/sources.list"
-        ${SUDO} ${BASH} -c "${ECHO} \"deb ${UBUNTU_MIRROR} ${CODENAME} universe\" \
-            >> /etc/apt/sources.list"
 
         ${SUDO} ${BASH} -c "${APTGETCMD} ${APTGETOPTS} update"
         ${SUDO} ${BASH} -c "${APTGETCMD} ${APTGETOPTS} install ${DPKG_DEPENDS}"

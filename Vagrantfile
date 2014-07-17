@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env ruby
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2013-2014 Tribus Developers
@@ -18,15 +18,27 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-"""
+CPU = Gem::Platform.local.cpu
+CURDIR = File.dirname(__FILE__)
 
-This file is an entry point for managing Tribus in development mode.
 
-It is a wrapper to the Django management commands.
+Vagrant.configure('2') do |config|
 
-"""
+    if CPU == 'x86_64'
+        config.vm.box = 'luisalejandro/debian-amd64'
+    elsif CPU == 'x86'
+        config.vm.box = 'luisalejandro/debian-i386'
+    end
 
-import sys
-from django.core.management import execute_from_command_line
+    config.vm.synced_folder '.', '/vagrant', disabled: true
+    config.vm.synced_folder '/tmp', '/tmp'
+    config.vm.synced_folder CURDIR, CURDIR
+    config.vm.network 'forwarded_port', guest: 22, host: 22222
+    config.vm.network 'forwarded_port', guest: 8000, host: 8000
 
-execute_from_command_line(sys.argv)
+    config.vm.provision :shell do |shell|
+        shell.path = 'tribus/data/scripts/tribus-base-image.sh'
+        shell.args = ''
+    end
+
+end
