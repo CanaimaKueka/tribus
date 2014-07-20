@@ -20,530 +20,32 @@
 
 # from tribus.config.base import CONTAINERS
 
+from __future__ import with_statement, print_function
+
 import os
 import re
+import sys
+import shutil
 from subprocess import Popen, PIPE
 from distutils.spawn import find_executable
-from distutils.version import StrictVersion
 
-# from tribus.common.distributions import DISTRIBUTIONS
+from tribus.config.base import CONTAINERS
+from tribus.config.distributions import DISTRIBUTIONS
+from tribus.common.errors import CannotIdentifyDistribution, UnsupportedDistribution
+from tribus.common.utils import flatten_list
+from tribus.common.logger import get_logger
 
-DISTRIBUTIONS = {
-    'debian': {
-        'dependencies': {
-            'wheezy': [
-                {
-                    'packages': ('iptables perl libapparmor1 libsqlite3-0 '
-                                 'libdevmapper1.02.1 adduser libc6'),
-                    'origin': 'wheezy',
-                    'containers': 'docker'
-                },
-                {
-                    'packages': 'fabric init-system-helpers',
-                    'origin': 'wheezy-backports',
-                    'containers': 'docker'
-                },
-                {
-                    'packages': 'docker.io',
-                    'origin': 'jessie',
-                    'containers': 'docker'
-                },
-                {
-                    'packages': 'vagrant virtualbox',
-                    'origin': 'wheezy',
-                    'containers': 'vagrant'
-                }
-            ],
-            'jessie': [
-                {
-                    'packages': 'docker.io fabric',
-                    'origin': 'jessie',
-                    'containers': 'docker'
-                },
-                {
-                    'packages': 'vagrant',
-                    'origin': 'wheezy',
-                    'containers': 'vagrant'
-                },
-                {
-                    'packages': 'vagrant virtualbox',
-                    'origin': 'jessie',
-                    'containers': 'vagrant'
-                }
-            ],
-            'sid': [
-                {
-                    'packages': 'docker.io fabric',
-                    'origin': 'sid',
-                    'containers': 'docker'
-                },
-                {
-                    'packages': 'vagrant virtualbox',
-                    'origin': 'sid',
-                    'containers': 'vagrant'
-                }
-            ]
-        },
-        'codenames': {
-            '7.0': 'wheezy',
-            '8.0': 'jessie',
-            'rolling': 'sid'
-        },
-        'managers': {
-            'packages': {
-                'command': ('env DEBIAN_FRONTEND=noninteractive'
-                            ' %s') % find_executable('apt-get'),
-                'install': 'install',
-                'arguments': ('-qq -o Apt::Install-Recommends=false '
-                              '-o Apt::Get::Assume-Yes=true '
-                              '-o Apt::Get::AllowUnauthenticated=true '
-                              '-o DPkg::Options::=--force-confmiss '
-                              '-o DPkg::Options::=--force-confnew '
-                              '-o DPkg::Options::=--force-overwrite '
-                              '-o DPkg::Options::=--force-unsafe-io'),
-                'mirror': 'http://http.us.debian.org/debian',
-                'sections': 'main contrib non-free'
-            }
-        }
-    },
-    'ubuntu': {
-        'dependencies': {
-            'oneiric': [
-                {
-                    'packages': ('iptables perl libapparmor1 libsqlite3-0 '
-                                 'libdevmapper1.02.1 adduser libc6'),
-                    'origin': 'oneiric',
-                    'containers': 'docker'
-                },
-                {
-                    'packages': 'fabric init-system-helpers',
-                    'origin': 'wheezy-backports',
-                    'containers': 'docker'
-                },
-                {
-                    'packages': 'docker.io',
-                    'origin': 'jessie',
-                    'containers': 'docker'
-                },
-                {
-                    'packages': 'vagrant virtualbox',
-                    'origin': 'oneiric',
-                    'containers': 'vagrant'
-                }
-            ],
-            'precise': [
-                {
-                    'packages': ('iptables perl libapparmor1 libsqlite3-0 '
-                                 'libdevmapper1.02.1 adduser libc6'),
-                    'origin': 'precise',
-                    'containers': 'docker'
-                },
-                {
-                    'packages': 'fabric init-system-helpers',
-                    'origin': 'wheezy-backports',
-                    'containers': 'docker'
-                },
-                {
-                    'packages': 'docker.io',
-                    'origin': 'jessie',
-                    'containers': 'docker'
-                },
-                {
-                    'packages': 'vagrant virtualbox',
-                    'origin': 'precise',
-                    'containers': 'vagrant'
-                }
-            ],
-            'quantal': [
-                {
-                    'packages': ('iptables perl libapparmor1 libsqlite3-0 '
-                                 'libdevmapper1.02.1 adduser libc6'),
-                    'origin': 'quantal',
-                    'containers': 'docker'
-                },
-                {
-                    'packages': 'fabric init-system-helpers',
-                    'origin': 'wheezy-backports',
-                    'containers': 'docker'
-                },
-                {
-                    'packages': 'docker.io',
-                    'origin': 'jessie',
-                    'containers': 'docker'
-                },
-                {
-                    'packages': 'vagrant virtualbox',
-                    'origin': 'quantal',
-                    'containers': 'vagrant'
-                }
-            ],
-            'raring': [
-                {
-                    'packages': ('iptables perl libapparmor1 libsqlite3-0 '
-                                 'libdevmapper1.02.1 adduser libc6'),
-                    'origin': 'raring',
-                    'containers': 'docker'
-                },
-                {
-                    'packages': 'fabric init-system-helpers',
-                    'origin': 'wheezy-backports',
-                    'containers': 'docker'
-                },
-                {
-                    'packages': 'docker.io',
-                    'origin': 'jessie',
-                    'containers': 'docker'
-                },
-                {
-                    'packages': 'vagrant virtualbox',
-                    'origin': 'raring',
-                    'containers': 'vagrant'
-                }
-            ],
-            'saucy': [
-                {
-                    'packages': ('iptables perl libapparmor1 libsqlite3-0 '
-                                 'libdevmapper1.02.1 adduser libc6'),
-                    'origin': 'saucy',
-                    'containers': 'docker'
-                },
-                {
-                    'packages': 'fabric init-system-helpers',
-                    'origin': 'wheezy-backports',
-                    'containers': 'docker'
-                },
-                {
-                    'packages': 'docker.io',
-                    'origin': 'jessie',
-                    'containers': 'docker'
-                },
-                {
-                    'packages': 'vagrant virtualbox',
-                    'origin': 'saucy',
-                    'containers': 'vagrant'
-                }
-            ],
-            'trusty': [
-                {
-                    'packages': 'fabric docker.io',
-                    'origin': 'trusty',
-                    'containers': 'docker'
-                },
-                {
-                    'packages': 'vagrant virtualbox',
-                    'origin': 'trusty',
-                    'containers': 'vagrant'
-                }
-            ],
-            'utopic': [
-                {
-                    'packages': 'fabric docker.io',
-                    'origin': 'utopic',
-                    'containers': 'docker'
-                },
-                {
-                    'packages': 'vagrant virtualbox',
-                    'origin': 'utopic',
-                    'containers': 'vagrant'
-                }
-            ]
-        },
-        'codenames': {
-            '': 'oneiric',
-            '': 'precise',
-            '': 'quantal',
-            '': 'raring',
-            '': 'saucy',
-            '': 'trusty',
-            '': 'utopic'
-        },
-        'managers': {
-            'packages': {
-                'command': ('env DEBIAN_FRONTEND=noninteractive'
-                            ' %s') % find_executable('apt-get'),
-                'install': 'install',
-                'arguments': ('-qq -o Apt::Install-Recommends=false '
-                              '-o Apt::Get::Assume-Yes=true '
-                              '-o Apt::Get::AllowUnauthenticated=true '
-                              '-o DPkg::Options::=--force-confmiss '
-                              '-o DPkg::Options::=--force-confnew '
-                              '-o DPkg::Options::=--force-overwrite '
-                              '-o DPkg::Options::=--force-unsafe-io'),
-                'mirror': 'http://archive.ubuntu.com/ubuntu',
-                'sections': 'main universe multiverse restricted'
-            }
-        }
-    },
-    'canaima': {
-        'dependencies': {
-            'kerepakupai': [
-                {
-                    'packages': ('iptables perl libapparmor1 libsqlite3-0 '
-                                 'libdevmapper1.02.1 adduser libc6'),
-                    'origin': 'kerepakupai',
-                    'containers': 'docker'
-                },
-                {
-                    'packages': 'fabric init-system-helpers',
-                    'origin': 'wheezy-backports',
-                    'containers': 'docker'
-                },
-                {
-                    'packages': 'docker.io',
-                    'origin': 'jessie',
-                    'containers': 'docker'
-                },
-                {
-                    'packages': 'vagrant virtualbox',
-                    'origin': 'kerepakupai',
-                    'containers': 'vagrant'
-                }
-            ],
-            'kukenan': [
-                {
-                    'packages': ('iptables perl libapparmor1 libsqlite3-0 '
-                                 'libdevmapper1.02.1 adduser libc6'),
-                    'origin': 'kukenan',
-                    'containers': 'docker'
-                },
-                {
-                    'packages': 'fabric init-system-helpers',
-                    'origin': 'wheezy-backports',
-                    'containers': 'docker'
-                },
-                {
-                    'packages': 'docker.io',
-                    'origin': 'jessie',
-                    'containers': 'docker'
-                },
-                {
-                    'packages': 'vagrant virtualbox',
-                    'origin': 'kukenan',
-                    'containers': 'vagrant'
-                }
-            ]
-        },
-        'codenames': {
-            '4.0': 'kerepakupai',
-            '4.1': 'kukenan'
-        },
-        'managers': {
-            'packages': {
-                'command': ('env DEBIAN_FRONTEND=noninteractive'
-                            ' %s') % find_executable('apt-get'),
-                'install': 'install',
-                'arguments': ('-qq -o Apt::Install-Recommends=false '
-                              '-o Apt::Get::Assume-Yes=true '
-                              '-o Apt::Get::AllowUnauthenticated=true '
-                              '-o DPkg::Options::=--force-confmiss '
-                              '-o DPkg::Options::=--force-confnew '
-                              '-o DPkg::Options::=--force-overwrite '
-                              '-o DPkg::Options::=--force-unsafe-io'),
-                'mirror': 'http://paquetes.canaima.softwarelibre.gob.ve',
-                'sections': 'main aportes no-libres'
-            }
-        }
-    },
-    # 'fedora': {
-    #     'shrodinger': {
-    #         'docker': [
-    #             {
+log = get_logger()
 
-    #             }
-    #         ],
-    #         'vagrant': [
-    #             {
 
-    #             }
-    #         ]
-    #     },
-    #     'heisenbug': {
-    #         'docker': [
-    #             {
+class DependencySolver(object):
 
-    #             }
-    #         ],
-    #         'vagrant': [
-    #             {
-
-    #             }
-    #         ]
-    #     }
-    # },
-    # 'centos': {
-    #     '': {
-    #         'docker': [
-    #             {
-
-    #             }
-    #         ],
-    #         'vagrant': [
-    #             {
-
-    #             }
-    #         ]
-    #     }
-    # },
-    'arch': {
-        'dependencies': {
-            'rolling': [
-                {
-                    'packages': 'fabric docker',
-                    'containers': 'docker'
-                },
-                {
-                    'packages': 'vagrant virtualbox',
-                    'containers': 'vagrant'
-                }
-            ]
-        },
-        'codenames': {
-            'rolling': 'rolling'
-        },
-        'managers': {
-            'packages': {
-                'command': '%s' % find_executable('pacman'),
-                'install': '-S',
-                'arguments': '--refresh --noconfirm --noprogressbar --quiet',
-                'mirror': 'http://mirrors.kernel.org/archlinux/$repo/os/$arch'
-# Server = http://mirror.rit.edu/archlinux/$repo/os/$arch
-            }
-        }
-    },
-    'centos': {
-        'dependencies': {
-            '5.0': [
-                {
-                    'packages': 'gcc python-setuptools python-devel docker-io',
-                    'containers': 'docker'
-                },
-                {
-                    'setuptools': 'pip',
-                    'containers': 'docker'
-                },
-                {
-                    'pip': 'fabric',
-                    'containers': 'docker'
-                },
-                {
-                    'custom': '',
-                    'containers': 'vagrant'
-                }
-            ],
-            '6.0': [
-                {
-                    'packages': 'gcc python-setuptools python-devel docker-io',
-                    'containers': 'docker'
-                },
-                {
-                    'setuptools': 'pip',
-                    'containers': 'docker'
-                },
-                {
-                    'pip': 'fabric',
-                    'containers': 'docker'
-                },
-                {
-                    'custom': '',
-                    'containers': 'vagrant'
-                }
-            ],
-            '7.0': [
-                {
-                    'packages': 'gcc python-setuptools python-devel docker-io',
-                    'containers': 'docker'
-                },
-                {
-                    'setuptools': 'pip',
-                    'containers': 'docker'
-                },
-                {
-                    'pip': 'fabric',
-                    'containers': 'docker'
-                },
-                {
-                    'custom': '',
-                    'containers': 'vagrant'
-                }
-            ]
-        },
-        'codenames': {
-            '5.0': '5.0',
-            '6.0': '6.0',
-            '7.0': '7.0'
-        },
-        'managers': {
-            'packages': {
-                'command': '%s' % find_executable('yum'),
-                'install': 'install',
-                'update': 'update',
-                'arguments': '--assumeyes --nogpgcheck --quiet',
-                'mirror': [
-                    'http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=os',
-                    'http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=updates',
-                    'http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=extras',
-                    'http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=centosplus',
-                    'http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=contrib',
-                    'https://mirrors.fedoraproject.org/metalink?repo=epel-$releasever&arch=$basearch'
-                ]
-# [epel]
-# name=Extra Packages for Enterprise Linux 7 - $basearch
-# #baseurl=http://download.fedoraproject.org/pub/epel/7/$basearch
-# mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=epel-7&arch=$basearch
-# failovermethod=priority
-# enabled=1
-# gpgcheck=0
-# gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
-            }
-        }
-    },
-    # 'gentoo': {
-    #     '': {
-    #         'docker': [
-    #             {
-
-    #             }
-    #         ],
-    #         'vagrant': [
-    #             {
-
-    #             }
-    #         ]
-    #     }
-    # }
-}
-
-RELEASE_CODENAME_LOOKUP = {
-    '1.1' : 'buzz',
-    '1.2' : 'rex',
-    '1.3' : 'bo',
-    '2.0' : 'hamm',
-    '2.1' : 'slink',
-    '2.2' : 'potato',
-    '3.0' : 'woody',
-    '3.1' : 'sarge',
-    '4.0' : 'etch',
-    '5.0' : 'lenny',
-    '6.0' : 'squeeze',
-    '7'   : 'wheezy',
-    '8'   : 'jessie',
-    }
-
-TESTING_CODENAME = 'unknown.new.testing'
-
-RELEASES_ORDER = list(RELEASE_CODENAME_LOOKUP.items())
-RELEASES_ORDER.sort()
-RELEASES_ORDER = list(list(zip(*RELEASES_ORDER))[1])
-RELEASES_ORDER.extend(['stable', 'testing', 'unstable', 'sid'])
-
-class PackageInstaller(object):
-
-    def __init__(self,):
-        self.distro_data = DISTRIBUTIONS
+    def __init__(self, containers, distributions):
+        self.distname = ''
+        self.codename = ''
         self.release_data = {}
         self.dpkg_origins_data = {}
-        self.distro = ''
-        self.codename = ''
+        self.apt_policy_data = []
         self.lsb = find_executable('lsb_release')
         self.os_release = '/etc/os-release'
         self.lsb_release = '/etc/lsb-release'
@@ -554,173 +56,385 @@ class PackageInstaller(object):
         self.redhat_release = '/etc/redhat-release'
         self.debian_release = '/etc/debian_version'
         self.dpkg_origins = '/etc/dpkg/origins/default'
+        self.env = os.environ.copy()
+        self.env['LC_ALL'] = 'C'
+
         self.longnames = {
-            'v' : 'version',
+            'v': 'version',
             'o': 'origin',
             'a': 'suite',
-            'c' : 'component',
+            'c': 'component',
             'l': 'label'
         }
 
-    def release_index(self, x):
+        self.containers = containers
+        self.distributions = distributions
+        self.codenames = {}
+        self.revcodenames = {}
+
+    def codename_index(self, x):
+
         suite = x[1].get('suite')
+        order = list(self.distributions[self.distname]['codenames'].items())
+        order.sort()
+        order = list(flatten_list(list(zip(*order))[1]))
+
         if suite:
-            if suite in RELEASES_ORDER:
-                return int(len(RELEASES_ORDER) - RELEASES_ORDER.index(suite))
+            if suite in order:
+                return int(len(order) - order.index(suite))
             else:
                 return suite
         return 0
 
-    def parse_release_file(self, releasefile):
-        contentlist = open(releasefile).read().split('\n')
-        for j in contentlist:
-            if re.findall(r'=', j):
-                key = j.split('=')[0].upper()
-                value = j.split('=')[1].strip('"').lower()
-                self.release_data[key] = value
-            elif j:
-                self.release_data['PRETTY_NAME'] = j.lower()
+    def parse_release(self, release):
+
+        try:
+            with open(release) as contentlist:
+                for j in contentlist.read().split('\n'):
+                    if re.findall('=', j):
+                        key = j.split('=')[0].strip().upper()
+                        value = j.split('=')[1].strip('"').lower()
+                        self.release_data[key] = value
+                    elif j:
+                        self.release_data['PRETTY_NAME'] = j.lower()
+
+        except IOError as msg:
+            print(msg)
+
         return self.release_data
 
-    def parse_policy_line(self, data):
-        retval = {}
-        bits = data.split(',')
-        for bit in bits:
-            kv = bit.split('=', 1)
-            if len(kv) > 1:
-                k, v = kv[:2]
-                if k in self.longnames:
-                    retval[self.longnames[k]] = v
-        return retval
+    def parse_dpkg_origins(self, origins):
 
+        try:
+            with open(origins) as contentlist:
+                for j in contentlist.read().split('\n'):
+                    if re.findall(':', j):
+                        key = j.split(':')[0].strip().upper()
+                        value = j.split(':')[1].strip().lower()
+
+                        self.dpkg_origins_data[key] = value
+                    elif j:
+                        self.dpkg_origins_data['PRETTY_NAME'] = j.lower()
+
+        except IOError as msg:
+            print(msg)
+
+        return self.dpkg_origins_data
 
     def parse_apt_policy(self):
-        data = []
 
-        env = os.environ.copy()
-        env['LC_ALL'] = 'C'
-
+        retval = {}
         policy = Popen(args=['apt-cache', 'policy'],
-                       env=env,
-                       stdout=PIPE,
-                       stderr=PIPE,
+                       stdout=PIPE, stderr=PIPE, env=self.env,
                        close_fds=True).communicate()[0].decode('utf-8')
 
         for line in policy.split('\n'):
             line = line.strip()
             m = re.match(r'(-?\d+)', line)
+
             if m:
                 priority = int(m.group(1))
+
             if line.startswith('release'):
                 bits = line.split(' ', 1)
+
                 if len(bits) > 1:
-                    data.append((priority, self.parse_policy_line(bits[1])))
 
-        return data
+                    for bit in bits[1].split(','):
+                        kv = bit.split('=', 1)
 
-    def get_codename_from_apt(self, origin='Debian', component='main',
-                               ignoresuites=('experimental'),
-                               label='Debian',
-                               alternate_olabels={'Debian Ports':'ftp.debian-ports.org'}):
+                        if len(kv) > 1:
+                            k, v = kv[:2]
+
+                            if k in self.longnames:
+                                retval[self.longnames[k]] = v
+
+                    self.apt_policy_data.append((priority, retval))
+        return self.apt_policy_data
+
+    def get_codename_from_apt(self, origin, component='main'):
 
         releases = self.parse_apt_policy()
-
-        if not releases:
-            return None
-
-        # We only care about the specified origin, component, and label
         releases = [x for x in releases if (
-            x[1].get('origin', '') == origin and
-            x[1].get('component', '') == component and
-            x[1].get('label', '') == label) or (
-            x[1].get('origin', '') in alternate_olabels and
-            x[1].get('label', '') == alternate_olabels.get(x[1].get('origin', '')))]
-
-        # Check again to make sure we didn't wipe out all of the releases
-        if not releases:
-            return None
+            x[1].get('origin', '').lower() == origin and
+            x[1].get('component', '').lower() == component and
+            x[1].get('label', '').lower() == origin)]
 
         releases.sort(key=lambda tuple: tuple[0], reverse=True)
 
-        # We've sorted the list by descending priority, so the first entry should
-        # be the "main" release in use on the system
-
         max_priority = releases[0][0]
         releases = [x for x in releases if x[0] == max_priority]
-        releases.sort(key=self.release_index)
+        releases.sort(key=self.codename_index)
 
-        return releases[0][1]
+        return releases[0][1]['suite']
 
     def get_distro_data(self):
 
-        if (not self.distro) and self.lsb:
+        log.info('Attempting to identify your distribution ...')
 
-            self.distro = Popen(
-                args=['%s' % self.lsb, '-is'],
-                stdout=PIPE,
-                stderr=PIPE,
-                close_fds=True).communicate()[0].split('\n')[0].lower()
+        if (not self.distname) and self.lsb:
+
+            self.distname = Popen(
+                args=['%s' % self.lsb, '-is'], stdout=PIPE, stderr=PIPE,
+                env=self.env, close_fds=True
+                ).communicate()[0].decode('utf-8').split('\n')[0].lower()
 
             self.codename = Popen(
-                args=['%s' % self.lsb, '-cs'],
-                stdout=PIPE,
-                stderr=PIPE,
-                close_fds=True).communicate()[0].split('\n')[0].lower()
+                args=['%s' % self.lsb, '-cs'], stdout=PIPE, stderr=PIPE,
+                env=self.env, close_fds=True
+                ).communicate()[0].decode('utf-8').split('\n')[0].lower()
 
-        if (not self.distro) and os.path.exists(self.arch_release):
-            self.distro = 'arch'
-            self.codename = 'rolling'
+        if (not self.distname) and os.path.exists(self.arch_release):
+            self.distname = 'arch'
+            self.codename = '0.0'
 
-        if (not self.distro) and os.path.exists(self.gentoo_release):
-            self.distro = 'gentoo'
-            self.codename = 'rolling'
+        if (not self.distname) and os.path.exists(self.gentoo_release):
+            self.distname = 'gentoo'
+            self.codename = '0.0'
 
-        if (not self.distro) and os.path.exists(self.fedora_release):
-            self.parse_release_file(self.fedora_release)
-            self.distro = self.release_data['PRETTY_NAME'].split()[0]
+        if (not self.distname) and os.path.exists(self.fedora_release):
+            self.parse_release(self.fedora_release)
+            self.distname = self.release_data['PRETTY_NAME'].split()[0]
             self.codename = re.search(
                 r'(.*)\(.*\)',
                 self.release_data['PRETTY_NAME']).group(1).split()[-1]
 
-        if (not self.distro) and os.path.exists(self.centos_release):
-            self.parse_release_file(self.centos_release)
-            self.distro = self.release_data['PRETTY_NAME'].split()[0]
+        if (not self.distname) and os.path.exists(self.centos_release):
+            self.parse_release(self.centos_release)
+            self.distname = self.release_data['PRETTY_NAME'].split()[0]
             self.codename = self.release_data['PRETTY_NAME'].split()[-2]
 
-        if (not self.distro) and os.path.exists(self.redhat_release):
-            self.parse_release_file(self.redhat_release)
-            self.distro = self.release_data['PRETTY_NAME'].split()[0]
+        if (not self.distname) and os.path.exists(self.redhat_release):
+            self.parse_release(self.redhat_release)
+            self.distname = self.release_data['PRETTY_NAME'].split()[0]
             self.codename = self.release_data['PRETTY_NAME'].split()[-2]
 
-        if (not self.distro) and os.path.exists(self.lsb_release):
-            self.parse_release_file(self.lsb_release)
-            self.distro = self.release_data['DISTRIB_ID']
+        if (not self.distname) and os.path.exists(self.lsb_release):
+            self.parse_release(self.lsb_release)
+            self.distname = self.release_data['DISTRIB_ID']
             self.codename = self.release_data['DISTRIB_CODENAME']
 
-        if (not self.distro) and os.path.exists(self.os_release):
-            self.parse_release_file(self.os_release)
-            self.distro = self.release_data['ID']
+        if (not self.distname) and os.path.exists(self.os_release):
+            self.parse_release(self.os_release)
+            self.distname = self.release_data['ID']
             self.codename = self.release_data['PRETTY_NAME']
-            self.codename = self.codename.split()[-2].strip('()')
 
-            if self.distro == 'debian':
-                if os.path.exists(self.debian_release):
-                    self.parse_release_file(self.debian_release)
+            if self.distname == 'debian':
+                self.codename = ''
 
-                    if re.findall(r'[\d\.\d]+',
-                                  self.release_data['PRETTY_NAME']):
-                        self.codename = self.release_data['PRETTY_NAME']
+            elif self.distname == 'elementary-os':
+                self.codename = self.codename.split()[-1]
 
-                    elif re.findall(r'.*/.*',
-                                    self.release_data['PRETTY_NAME']):
-                        self.codename = self.get_codename_from_apt()['suite']
+            else:
+                self.codename = self.codename.split()[-2].strip('()')
 
-        print(self.distro, self.codename)
+        if (not self.distname) and os.path.exists(self.dpkg_origins):
+            self.parse_dpkg_origins(self.dpkg_origins)
+            self.distname = self.dpkg_origins_data['VENDOR']
+
+        if self.distname and (not self.codename) \
+           and os.path.exists(self.debian_release):
+            self.parse_release(self.debian_release)
+
+            if re.findall(r'.*/.*', self.release_data['PRETTY_NAME']):
+                self.codename = self.get_codename_from_apt(self.distname)
+
+            else:
+                self.codename = self.release_data['PRETTY_NAME']
+
+        if not (self.distname and self.codename):
+            raise CannotIdentifyDistribution()
+
+        self.codenames = self.distributions[self.distname]['codenames']
+
+        for k, v in self.codenames.items():
+            if len(v) > 1:
+                for j in v:
+                    self.revcodenames[j] = k
+            else:
+                self.revcodenames[v[0]] = k
+
+    def normalize_distro_data(self):
+
+        regex = re.compile(r'^(\d+)\.(\d+)(\.(\d+))?([ab](\d+))?$', re.VERBOSE)
+        codematch = regex.match(self.codename)
+
+        if not codematch:
+            self.version = self.revcodenames[self.codename]
+        else:
+            (major, minor, patch, pre, prenum) = codematch.group(1, 2, 4, 5, 6)
+            self.version = '.'.join(list(filter(None, [major, minor, patch,
+                                                       pre, prenum])))
+        vermatch = regex.match(self.version)
+        if self.distname == 'ubuntu':
+            self.codename = self.codenames['.'.join(vermatch.group(1, 2))][0]
+
+        else:
+            self.codename = self.codenames[str(float(vermatch.group(1)))][0]
+
+        if self.is_supported_codename():
+            log.info('You are using %s (%s).' % (self.distname, self.codename))
+            self.distribution = Distribution(self.distname,
+                                             self.codename,
+                                             self.containers,
+                                             self.distributions)
+        else:
+            raise UnsupportedDistribution()
+
+    def is_supported_distname(self):
+        if self.distname in self.distributions:
+            return True
+        return False
+
+    def is_supported_codename(self):
+        if self.is_supported_distname():
+            if (self.codename in
+               self.distributions[self.distname]['dependencies']):
+                return True
+        return False
+
+    def check_binaries(self):
+        if not self.distribution.check_binaries():
+            self.install_dependencies()
+
+    def install_dependencies(self):
+
+        log.info('Installing missing dependencies ...')
+
+        for manager, metadata in self.distribution.get_managers().items():
+            for dep in self.distribution.get_dependencies():
+                if dep.get('containers') == self.containers \
+                   and dep.get(manager):
+
+                    metadata.update({'manager': manager})
+                    metadata.update({'dependencies': dep.get(manager)})
+                    metadata.update({'origin': dep.get('origin')})
+
+                    if manager == 'custom':
+                        pass
+                        # self.custom(metadata)
+
+                    else:
+                        self.configure_mirrors(metadata)
+                        self.update_package_db(metadata)
+                        self.install(metadata)
+                        self.deconfigure_mirrors(metadata)
+
+    def configure_mirrors(self, metadata):
+
+        shutil.move(metadata['mirrorconf'], '%s.bk' % metadata['mirrorconf'])
+        shutil.move(metadata['mirrorlist'], '%s.bk' % metadata['mirrorlist'])
+
+        with open(metadata['mirrorconf'], 'a') as mirrorconf:
+            mirrorconf.write(metadata['mirrorboiler'])
+
+            for o in metadata['origin']:
+                mirrorconf.write(metadata['mirrortemplate'] % {
+                    'origin': o,
+                    'url': metadata['mirrors'][o],
+                    'sections': ' '.join(metadata.get('sections', []))
+                })
+
+    def deconfigure_mirrors(self, metadata):
+
+        shutil.move('%s.bk' % metadata['mirrorconf'], metadata['mirrorconf'])
+        shutil.move('%s.bk' % metadata['mirrorlist'], metadata['mirrorlist'])
+
+    def update_package_db(self, metadata):
+
+        if 'env' in metadata:
+            self.env.update(metadata['env'])
+
+        args = []
+        args.extend([metadata.get('command')])
+        args.extend([metadata.get('update')])
+        args.extend(metadata.get('args'))
+
+        result = Popen(args=args, stdout=PIPE, stderr=PIPE,
+                       env=self.env, close_fds=True)
+
+        for line in iter(result.stdout.readline, ''):
+            if line:
+                log.info(str(line).strip('\n'))
+            else:
+                break
+
+    def install(self, metadata):
+
+        if 'env' in metadata:
+            self.env.update(metadata['env'])
+
+        if metadata['command'] == 'apt-get':
+            metadata['args'].extend(['-t%s' % metadata['origin'][0]])
+
+        args = []
+        args.extend([metadata.get('command')])
+        args.extend([metadata.get('install')])
+        args.extend(metadata.get('args'))
+        args.extend(metadata.get('dependencies'))
+
+        result = Popen(args=args, stdout=PIPE, stderr=PIPE,
+                       env=self.env, close_fds=True)
+
+        for line in iter(result.stdout.readline, ''):
+            if line:
+                log.info(str(line).strip('\n'))
+            else:
+                break
+
+    def custom(self, metadata):
+
+        if 'env' in metadata:
+            self.env.update(metadata['env'])
+
+        for cmd in metadata.get('dependencies'):
+            args = cmd.split()
+
+            result = Popen(args=args, stdout=PIPE, stderr=PIPE,
+                           env=self.env, close_fds=True)
+
+            for line in iter(result.stdout.readline, ''):
+                if line:
+                    log.info(str(line).strip('\n'))
+                else:
+                    break
+
+
+class Distribution(object):
+
+    def __init__(self, distname, codename, containers, distributions):
+        self.distributions = distributions
+        self.distname = distname
+        self.codename = codename
+        self.containers = containers
+
+    def get_binaries(self):
+        binaries = []
+        for dep in self.get_dependencies():
+            if dep.get('containers') == self.containers \
+               and dep.get('binaries'):
+                binaries.extend(dep.get('binaries'))
+        return binaries
+
+    def get_managers(self):
+        return self.distributions[self.distname]['managers']
+
+    def get_dependencies(self):
+        return self.distributions[self.distname]['dependencies'][self.codename]
+
+    def check_binaries(self):
+        log.info('Checking for dependencies ...')
+        for b in self.get_binaries():
+            if not find_executable(b):
+                log.info('%s not found!' % b)
+                return False
+        log.info('Everything ok!')
+        return True
 
 
 if __name__ == '__main__':
 
-    installer = PackageInstaller()
+    installer = DependencySolver(CONTAINERS, DISTRIBUTIONS)
     installer.get_distro_data()
-    # installer.validate_distro()
-    # installer.check_binaries()
+    installer.normalize_distro_data()
+    installer.check_binaries()

@@ -365,6 +365,6 @@ def repeated_relation_counter(control_file):
                             match = re.match('^'+rr['name'].replace("+", "\+").replace("-", "\-")+'$', name)
                             if match and rr.get('version'):
                                 encontrados += 1
-                        if encontrados > 2:
-                            print paragraph['package'], encontrados
-                            print r
+                        # if encontrados > 2:
+                        #     print paragraph['package'], encontrados
+                        #     print r
