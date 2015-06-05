@@ -43,9 +43,14 @@ vcs['pollinterval'] = 60
 # Definicion de esclavos
 
 slaves = {}
-slaves['kukenan'] = {'arch':'i386', 
-                     'dist':'squeeze',
-                     'passwd':'123'}
+slaves['buildbot-i386'] = {'arch':'i386', 
+                           'dist':'jessie',
+                           'user':'buildbot-i386',
+                           'passwd':'123'}
+# slaves['buildbot-amd64'] = {'arch':'amd64', 
+#                            'dist':'jessie',
+#                            'user':'buildbot-amd64',
+#                            'passwd':'123'}
 
 ####### CHANGE SOURCE CONFIGURATION
 #Definicion de repositorio y revision de los cambio
@@ -61,6 +66,7 @@ for repo in packages['list']:
 
 ####### BUILDERS CONFIGURATION
 # construir la lista de arquitecturas
+
 arch = {}
 
 for s in slaves.keys():
@@ -74,22 +80,30 @@ for a in arch.keys():
             e.append(s)
     arch[a] = e
 
+for s in slaves.keys():
+    c['slaves'].append(BuildSlave(slaves[s]['user'], slaves[s]['passwd']))
+
 builders = {}
 
 for repo in packages['list']:
-    f = BuildFactory()
-    package = os.path.basename(repo)
-    f.addStep(ShellCommand(command='rm -rf *'))
-    f.addStep(ShellCommand(command=['git', 'clone', repo], workdir='build/'))
-    f.addStep(ShellCommand(command=['git', 'checkout', 'master'], workdir='build/'+package))
-    f.addStep(ShellCommand(command=['dpkg-buildpackage', '-S', '-us', '-uc'], workdir='build/'+package))
-    f.addStep(ShellCommand(command=['dpkg-buildpackage', '-us', '-uc'], workdir='build/'+package))
 
     for a in arch.keys():
+
+        package = os.path.basename(repo)
         n = package + '-' + a
         builders[n] = arch[a]
-        b = BuilderConfig(name=n, factory=f, slavenames=arch[a])
-        c['builders'].append(b)
+        f = BuildFactory()
+        f.addStep(ShellCommand(command='rm -rf *'))
+        f.addStep(ShellCommand(command=['git', 'clone', repo], workdir='build/'))
+        f.addStep(ShellCommand(command=['git', 'checkout', vcs['branch']], workdir='build/'+package))
+        f.addStep(ShellCommand(command=['git', 'buildpackage',
+                                        '--git-pbuilder',
+                                        '--git-dist=jessie',
+                                        '--git-arch='+a,
+                                        '-us', '-uc'],
+                               workdir='build/'+package,
+                               env={'DIST': 'jessie', 'ARCH': a, }))
+        c['builders'].append(BuilderConfig(name=n, factory=f, slavenames=arch[a]))
 
 ####### SCHEDULERS CONFIGURATION
 # define the periodic scheduler
@@ -103,8 +117,6 @@ for builder in builders.keys():
     # define the available schedulers
     c['schedulers'].append(sbched)
 
-for s in slaves.keys():
-    c['slaves'].append(BuildSlave(s, slaves[s]['passwd']))
 
 authz_cfg = Authz(
     # change any of these to True to enable; see the manual for more
