@@ -1,28 +1,28 @@
 Tribus
 ======
 
-.. image:: https://pypip.in/version/Tribus/badge.png
+.. image:: https://img.shields.io/pypi/v/Tribus.png
    :target: https://pypi.python.org/pypi/Tribus/
    :alt: Latest version available in PyPi
 
-.. image:: https://badge.waffle.io/tribusdev/tribus.png?label=todo&title=Roadmap
-   :target: https://waffle.io/tribusdev/tribus
+.. image:: https://badge.waffle.io/TribusGNULinux/tribus.png?label=todo&title=Roadmap
+   :target: https://waffle.io/TribusGNULinux/tribus
    :alt: Development workflow management
 
-.. image:: https://travis-ci.org/tribusdev/tribus.png?branch=development
-   :target: https://travis-ci.org/tribusdev/tribus
+.. image:: https://travis-ci.org/TribusGNULinux/tribus.svg?branch=development
+   :target: https://travis-ci.org/TribusGNULinux/tribus
    :alt: Test builds on Travis CI
 
-.. image:: https://coveralls.io/repos/tribusdev/tribus/badge.png?branch=development
-   :target: https://coveralls.io/r/tribusdev/tribus
+.. image:: https://coveralls.io/repos/TribusGNULinux/tribus/badge.svg?branch=development&service=github
+   :target: https://coveralls.io/r/TribusGNULinux/tribus?branch=development
    :alt: Test coverage
 
-.. image:: https://requires.io/github/tribusdev/tribus/requirements.png?branch=development
-   :target: https://requires.io/github/tribusdev/tribus/requirements/?branch=development
+.. image:: https://requires.io/github/TribusGNULinux/tribus/requirements.svg?branch=development
+   :target: https://requires.io/github/TribusGNULinux/tribus/requirements/?branch=development
    :alt: Status of the Python dependencies
 
-.. image:: https://landscape.io/github/tribusdev/tribus/development/landscape.png
-   :target: https://landscape.io/github/tribusdev/tribus/development
+.. image:: https://landscape.io/github/TribusGNULinux/tribus/development/landscape.svg?style=flat
+   :target: https://landscape.io/github/TribusGNULinux/tribus/development
    :alt: General health status
 
 *Tribus* es una **red social** para la gestión de comunidades de software libre. Su objetivo es simplificar las tediosas y repetitivas tareas de mantenimiento, mientras pone a disposición de sus miembros **las mejores herramientas** que le permitirán **expresar su creatividad** y **desarrollar el máximo potencial de sus capacidades**.
