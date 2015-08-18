@@ -5,10 +5,6 @@ Tribus
    :target: https://pypi.python.org/pypi/Tribus/
    :alt: Latest version available in PyPi
 
-.. image:: https://badge.waffle.io/TribusGNULinux/tribus.png?label=todo&title=Roadmap
-   :target: https://waffle.io/TribusGNULinux/tribus
-   :alt: Development workflow management
-
 .. image:: https://travis-ci.org/TribusGNULinux/tribus.svg?branch=development
    :target: https://travis-ci.org/TribusGNULinux/tribus
    :alt: Test builds on Travis CI
