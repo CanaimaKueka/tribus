@@ -17,10 +17,6 @@ Tribus
    :target: https://requires.io/github/TribusGNULinux/tribus/requirements/?branch=development
    :alt: Status of the Python dependencies
 
-.. image:: https://landscape.io/github/TribusGNULinux/tribus/development/landscape.svg?style=flat
-   :target: https://landscape.io/github/TribusGNULinux/tribus/development
-   :alt: General health status
-
 .. image:: https://www.quantifiedcode.com/api/v1/project/534670b7e079492483d404ebec6ef2be/badge.svg
    :target: https://www.quantifiedcode.com/app/project/534670b7e079492483d404ebec6ef2be
    :alt: Code issues
