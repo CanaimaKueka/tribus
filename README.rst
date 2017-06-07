@@ -1,6 +1,10 @@
 Tribus
 ======
 
+.. image:: https://badges.gitter.im/CollageLabs/collage-board.svg
+   :alt: Join the chat at https://gitter.im/CollageLabs/collage-board
+   :target: https://gitter.im/CollageLabs/collage-board?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
+
 .. image:: https://img.shields.io/pypi/v/Tribus.png
    :target: https://pypi.python.org/pypi/Tribus/
    :alt: Latest version available in PyPi
