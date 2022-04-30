@@ -25,7 +25,7 @@ tribus.config.pkg
 
 
 """
-
+from tribus import BASEDIR
 from tribus.config.base import CONFDIR, DOCDIR
 from tribus.common.utils import get_path, cat_file, readconfig
 from tribus.common.setup.utils import (get_requirements, get_dependency_links,
@@ -44,8 +44,10 @@ f_include_data_patterns = get_path([CONFDIR, 'data',
                                     'include-data-patterns.list'])
 
 f_python_dependencies = get_path([CONFDIR, 'data', 'python-dependencies.list'])
-f_debian_run_dependencies = get_path([CONFDIR, 'data', 'debian-run-dependencies.list'])
-f_debian_build_dependencies = get_path([CONFDIR, 'data', 'debian-build-dependencies.list'])
+f_debian_run_dependencies = get_path([CONFDIR, 'data',
+                                      'debian-run-dependencies.list'])
+f_debian_build_dependencies = get_path([CONFDIR, 'data',
+                                        'debian-build-dependencies.list'])
 
 exclude_sources = readconfig(filename=f_exclude_sources, conffile=False)
 exclude_packages = readconfig(filename=f_exclude_packages, conffile=False)
@@ -64,3 +66,15 @@ debian_run_dependencies = readconfig(filename=f_debian_run_dependencies,
                                      conffile=False)
 debian_build_dependencies = readconfig(filename=f_debian_build_dependencies,
                                        conffile=False)
+
+debian_base_image_script = get_path([BASEDIR, 'tribus', 'data', 'scripts',
+                                     'debian-base-image.sh'])
+tribus_base_image_script = get_path([BASEDIR, 'tribus', 'data', 'scripts',
+                                     'tribus-base-image.sh'])
+tribus_django_syncdb_script = get_path([BASEDIR, 'tribus', 'data', 'scripts',
+                                        'django-syncdb.sh'])
+tribus_django_runserver_script = get_path([BASEDIR, 'tribus', 'data', 'scripts',
+                                           'django-runserver.sh'])
+tribus_start_container_script = get_path([BASEDIR, 'tribus', 'data', 'scripts',
+                                          'start-container.sh'])
+veeweedir = get_path([BASEDIR, 'tribus', 'data', 'scripts', 'veewee'])

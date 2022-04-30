@@ -1,29 +1,37 @@
 Tribus
 ======
 
-.. image:: https://pypip.in/version/Tribus/badge.png
+.. image:: https://img.shields.io/pypi/v/Tribus.png
    :target: https://pypi.python.org/pypi/Tribus/
    :alt: Latest version available in PyPi
 
-.. image:: https://badge.waffle.io/tribusdev/tribus.png?label=todo&title=Roadmap
-   :target: https://waffle.io/tribusdev/tribus
+.. image:: https://travis-ci.org/TribusGNULinux/tribus.svg?branch=development
+   :target: https://travis-ci.org/TribusGNULinux/tribus
    :alt: Development workflow management
+
+.. image:: https://pypip.in/version/Tribus/badge.png
+   :target: https://pypi.python.org/pypi/Tribus/
+   :alt: Latest version available in PyPi
 
 .. image:: https://travis-ci.org/tribusdev/tribus.png?branch=development
    :target: https://travis-ci.org/tribusdev/tribus
    :alt: Test builds on Travis CI
 
-.. image:: https://coveralls.io/repos/tribusdev/tribus/badge.png?branch=development
-   :target: https://coveralls.io/r/tribusdev/tribus
+.. image:: https://coveralls.io/repos/TribusGNULinux/tribus/badge.svg?branch=development&service=github
+   :target: https://coveralls.io/r/TribusGNULinux/tribus?branch=development
    :alt: Test coverage
 
-.. image:: https://requires.io/github/tribusdev/tribus/requirements.png?branch=development
-   :target: https://requires.io/github/tribusdev/tribus/requirements/?branch=development
+.. image:: https://requires.io/github/TribusGNULinux/tribus/requirements.svg?branch=development
+   :target: https://requires.io/github/TribusGNULinux/tribus/requirements/?branch=development
    :alt: Status of the Python dependencies
 
-.. image:: https://landscape.io/github/tribusdev/tribus/development/landscape.png
-   :target: https://landscape.io/github/tribusdev/tribus/development
-   :alt: General health status
+.. image:: https://www.quantifiedcode.com/api/v1/project/534670b7e079492483d404ebec6ef2be/badge.svg
+   :target: https://www.quantifiedcode.com/app/project/534670b7e079492483d404ebec6ef2be
+   :alt: Code issues
+
+.. image:: https://www.quantifiedcode.com/api/v1/project/534670b7e079492483d404ebec6ef2be/badge.svg
+   :target: https://www.quantifiedcode.com/app/project/534670b7e079492483d404ebec6ef2be
+   :alt: Code issues
 
 *Tribus* es una **red social** para la gestión de comunidades de software libre. Su objetivo es simplificar las tediosas y repetitivas tareas de mantenimiento, mientras pone a disposición de sus miembros **las mejores herramientas** que le permitirán **expresar su creatividad** y **desarrollar el máximo potencial de sus capacidades**.
 

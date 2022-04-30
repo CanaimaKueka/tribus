@@ -3,7 +3,6 @@
 
 import platform
 
-
 def get_local_arch():
 
     arch = platform.architecture()

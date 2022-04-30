@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env ruby
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2013-2014 Tribus Developers
@@ -18,7 +18,27 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.contrib import admin
-from tribus.web.cloud.models import Package
+CPU = Gem::Platform.local.cpu
+CURDIR = File.dirname(__FILE__)
 
-admin.site.register(Package)
+
+Vagrant.configure('2') do |config|
+
+    if CPU == 'x86_64'
+        config.vm.box = 'luisalejandro/debian-amd64'
+    elsif CPU == 'x86'
+        config.vm.box = 'luisalejandro/debian-i386'
+    end
+
+    config.vm.synced_folder '.', '/vagrant', disabled: true
+    config.vm.synced_folder '/tmp', '/tmp'
+    config.vm.synced_folder CURDIR, CURDIR
+    config.vm.network 'forwarded_port', guest: 22, host: 22222
+    config.vm.network 'forwarded_port', guest: 8000, host: 8000
+
+    config.vm.provision :shell do |shell|
+        shell.path = 'tribus/data/scripts/tribus-base-image.sh'
+        shell.args = ''
+    end
+
+end

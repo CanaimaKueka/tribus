@@ -1,0 +1,78 @@
+[submodule "tribus/data/charms/apache2"]
+	path = tribus/data/charms/apache2
+	url = https://github.com/tribusdev/apache2.git
+[submodule "tribus/data/charms/rabbitmq-server"]
+	path = tribus/data/charms/rabbitmq-server
+	url = https://github.com/tribusdev/rabbitmq-server.git
+[submodule "tribus/data/charms/elasticsearch"]
+	path = tribus/data/charms/elasticsearch
+	url = https://github.com/tribusdev/elasticsearch.git
+[submodule "tribus/data/charms/postfix"]
+	path = tribus/data/charms/postfix
+	url = https://github.com/tribusdev/postfix.git
+[submodule "tribus/data/charms/mailman"]
+	path = tribus/data/charms/mailman
+	url = https://github.com/tribusdev/mailman.git
+[submodule "tribus/data/charms/wordpress"]
+	path = tribus/data/charms/wordpress
+	url = https://github.com/tribusdev/wordpress.git
+[submodule "tribus/data/charms/mediawiki"]
+	path = tribus/data/charms/mediawiki
+	url = https://github.com/tribusdev/mediawiki.git
+[submodule "tribus/data/charms/dokuwiki"]
+	path = tribus/data/charms/dokuwiki
+	url = https://github.com/tribusdev/dokuwiki.git
+[submodule "tribus/data/charms/nagios"]
+	path = tribus/data/charms/nagios
+	url = https://github.com/tribusdev/nagios.git
+[submodule "tribus/data/charms/nrpe"]
+	path = tribus/data/charms/nrpe
+	url = https://github.com/tribusdev/nrpe.git
+[submodule "tribus/data/charms/nrpe-external-master"]
+	path = tribus/data/charms/nrpe-external-master
+	url = https://github.com/tribusdev/nrpe-external-master.git
+[submodule "tribus/data/charms/munin"]
+	path = tribus/data/charms/munin
+	url = https://github.com/tribusdev/munin.git
+[submodule "tribus/data/charms/openvpn"]
+	path = tribus/data/charms/openvpn
+	url = https://github.com/tribusdev/openvpn.git
+[submodule "tribus/data/charms/nfs"]
+	path = tribus/data/charms/nfs
+	url = https://github.com/tribusdev/nfs.git
+[submodule "tribus/data/charms/puppet"]
+	path = tribus/data/charms/puppet
+	url = https://github.com/tribusdev/puppet.git
+[submodule "tribus/data/charms/puppetmaster"]
+	path = tribus/data/charms/puppetmaster
+	url = https://github.com/tribusdev/puppetmaster.git
+[submodule "tribus/data/charms/sbuild"]
+	path = tribus/data/charms/sbuild
+	url = https://github.com/tribusdev/sbuild.git
+[submodule "tribus/data/charms/varnish"]
+	path = tribus/data/charms/varnish
+	url = https://github.com/tribusdev/varnish.git
+[submodule "tribus/data/charms/vsftpd"]
+	path = tribus/data/charms/vsftpd
+	url = https://github.com/tribusdev/vsftpd.git
+[submodule "tribus/data/charms/roundcube"]
+	path = tribus/data/charms/roundcube
+	url = https://github.com/tribusdev/roundcube.git
+[submodule "tribus/data/charms/redis-master"]
+	path = tribus/data/charms/redis-master
+	url = https://github.com/tribusdev/redis-master.git
+[submodule "tribus/data/charms/redis-slave"]
+	path = tribus/data/charms/redis-slave
+	url = https://github.com/tribusdev/redis-slave.git
+[submodule "tribus/data/charms/cassandra"]
+	path = tribus/data/charms/cassandra
+	url = https://github.com/tribusdev/cassandra.git
+[submodule "tribus/data/charms/couchdb"]
+	path = tribus/data/charms/couchdb
+	url = https://github.com/tribusdev/couchdb.git
+[submodule "tribus/data/charms/couchbase"]
+	path = tribus/data/charms/couchbase
+	url = https://github.com/tribusdev/couchbase.git
+[submodule "tribus/data/charms/mysql"]
+	path = tribus/data/charms/mysql
+	url = https://github.com/tribusdev/mysql.git

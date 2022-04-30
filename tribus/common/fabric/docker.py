@@ -33,6 +33,7 @@ This module define funtions to accomplish the following tasks:
 """
 
 import sys
+import time
 import json
 import paramiko
 from contextlib import nested
@@ -41,6 +42,57 @@ from fabric.api import env, local, hide, run, shell_env, cd
 from tribus.common.logger import get_logger
 
 log = get_logger()
+
+
+def docker_generate_debian_base_image():
+    """
+    Generate a Debian base (Docker) image.
+
+    This function generates a minimal Debian (stable) chroot using debootstrap,
+    then configures apt, cleans and truncates the filesystem, and finally
+    imports it to docker.
+
+    .. versionadded:: 0.2
+    """
+    docker_stop_container()
+
+    with hide('warnings', 'stderr', 'running'):
+
+        log.info('Generating a fresh Debian image for Docker ...')
+
+        local(('sudo bash %(debian_base_image_script)s '
+               'luisalejandro/debian-%(arch)s '
+               'wheezy %(arch)s') % env, capture=False)
+
+    docker_stop_container()
+
+
+def docker_generate_tribus_base_image():
+    """
+    Generate a Tribus environment (Docker) image.
+
+    This function generates a minimal Debian (stable) chroot using debootstrap.
+
+    .. versionadded:: 0.2
+    """
+    docker_stop_container()
+
+    with hide('warnings', 'stderr', 'running'):
+
+        log.info('Creating a new Tribus base image ...')
+
+        local(('sudo bash -c '
+               '"%(docker)s run -it --name %(tribus_runtime_container)s '
+               '%(mounts)s %(dvars)s %(debian_base_image)s '
+               'bash %(tribus_base_image_script)s"') % env, capture=False)
+
+        log.info('Creating the runtime container ...')
+
+        local(('sudo bash -c '
+               '"%(docker)s commit %(tribus_runtime_container)s '
+               '%(tribus_base_image)s"') % env, capture=True)
+
+    docker_stop_container()
 
 
 def docker_kill_all_containers():
@@ -142,55 +194,6 @@ def docker_kill_all_images():
                           capture=True)
 
 
-def docker_generate_debian_base_image():
-    """
-    Generate a Debian base (Docker) image.
-
-    This function generates a minimal Debian (stable) chroot using debootstrap.
-
-    .. versionadded:: 0.2
-    """
-    docker_stop_container()
-
-    with hide('warnings', 'stderr', 'running'):
-
-        log.info('Creating a new Debian base image ...')
-
-        local(('sudo bash %(debian_base_image_script)s '
-               'luisalejandro/debian-%(arch)s '
-               'wheezy %(arch)s') % env, capture=False)
-
-    docker_stop_container()
-
-
-def docker_generate_tribus_base_image():
-    """
-    Generate a Tribus environment (Docker) image.
-
-    This function generates a minimal Debian (stable) chroot using debootstrap.
-
-    .. versionadded:: 0.2
-    """
-    docker_stop_container()
-
-    with hide('warnings', 'stderr', 'running'):
-
-        log.info('Creating a new Tribus base image ...')
-
-        local(('sudo bash -c '
-               '"%(docker)s run -it --name %(tribus_runtime_container)s '
-               '%(mounts)s %(dvars)s %(debian_base_image)s '
-               'bash %(tribus_base_image_script)s"') % env, capture=False)
-
-        log.info('Creating the runtime container ...')
-
-        local(('sudo bash -c '
-               '"%(docker)s commit %(tribus_runtime_container)s '
-               '%(tribus_base_image)s"') % env, capture=True)
-
-    docker_stop_container()
-
-
 def docker_pull_debian_base_image():
     """
     Pull the Debian base image from the Docker index.
@@ -233,52 +236,6 @@ def docker_pull_tribus_base_image():
     docker_stop_container()
 
 
-def generate_debian_base_image_i386():
-    """
-    Shortcut function to ``docker_generate_debian_base_image()`` (i386).
-
-    .. versionadded:: 0.2
-    """
-    env.arch = 'i386'
-    docker_generate_debian_base_image()
-
-
-def generate_debian_base_image_amd64():
-    """
-    Shortcut function to ``docker_generate_debian_base_image()`` (amd64).
-
-    .. versionadded:: 0.2
-    """
-    env.arch = 'amd64'
-    docker_generate_debian_base_image()
-
-
-def generate_tribus_base_image_i386():
-    """
-    Shortcut function to ``docker_generate_tribus_base_image()`` (i386).
-
-    .. versionadded:: 0.2
-    """
-    env.arch = 'i386'
-    env.debian_base_image = 'luisalejandro/debian-i386:wheezy'
-    env.tribus_base_image = 'luisalejandro/tribus-i386:wheezy'
-    docker_pull_debian_base_image()
-    docker_generate_tribus_base_image()
-
-
-def generate_tribus_base_image_amd64():
-    """
-    Shortcut function to ``docker_generate_tribus_base_image()`` (amd64).
-
-    .. versionadded:: 0.2
-    """
-    env.arch = 'amd64'
-    env.debian_base_image = 'luisalejandro/debian-amd64:wheezy'
-    env.tribus_base_image = 'luisalejandro/tribus-amd64:wheezy'
-    docker_pull_debian_base_image()
-    docker_generate_tribus_base_image()
-
-
 def docker_check_image():
     """
     Check if the runtime image exists, build environment if not.
@@ -294,7 +251,10 @@ def docker_check_image():
                                   '%(tribus_runtime_image)s"') % env,
                                  capture=True))
     if not state:
-        environment()
+        from tribus.common.fabric.django import django_syncdb
+        docker_pull_debian_base_image()
+        docker_pull_tribus_base_image()
+        django_syncdb()
 
 
 def docker_check_container():
@@ -340,6 +300,7 @@ def docker_check_ssh_to_container():
     while True:
         tries += 1
         try:
+            time.sleep(2)
             ssh.connect(hostname=env.host_string, port=env.port,
                         username=env.user, password=env.password)
         except Exception, e:
@@ -412,9 +373,11 @@ def docker_stop_container():
                   capture=True)
 
         if runtime_id:
+            # This way all the dictionary keys are lower case
+            lower_runtime_id = dict([(k.lower(), v) for k, v in runtime_id[0].items()])
 
             local(('sudo bash -c '
-                   '"%s rmi -f %s"') % (env.docker, runtime_id[0]['Id']),
+                   '"%s rmi -f %s"') % (env.docker, lower_runtime_id['id']),
                   capture=True)
 
 
@@ -480,20 +443,4 @@ def docker_reset_container():
                '%(tribus_base_image)s true"') % env, capture=False)
 
     docker_stop_container()
-    django_syncdb()
-
-
-def environment():
-    """
-    Reproduce the Tribus developer environment.
-
-    This function takes care of downloading and installing the software that
-    is needed to develop and maintain Tribus.
-
-    .. versionadded:: 0.2
-    """
-    from tribus.common.fabric.django import django_syncdb
-
-    docker_pull_debian_base_image()
-    docker_pull_tribus_base_image()
     django_syncdb()

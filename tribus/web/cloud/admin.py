@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+
+from tribus.web.admin.sites import tribus_admin
+from tribus.web.cloud.models import Package
+
+tribus_admin.register(Package)
+
 # from django.contrib import admin
 # from tribus.web.cloud.models import *
 

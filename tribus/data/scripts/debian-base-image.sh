@@ -1,7 +1,22 @@
 #!/usr/bin/env bash
+#
+# Copyright (C) 2013-2014 Tribus Developers
+#
+# This file is part of Tribus.
+#
+# Tribus is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Tribus is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-set -e
-set -x
 
 REPO="${1}"
 SUITE="${2}"
@@ -53,7 +68,20 @@ sudo ln -sf /bin/true sbin/initctl
 	echo 'Acquire::Languages "none";'
 } | sudo tee etc/apt/apt.conf.d/no-languages > /dev/null
 
-# shrink the image, since apt makes us fat (wheezy: ~157.5MB vs ~120MB)
+{
+    echo 'DPkg::Post-Invoke:: "rm -rf /var/cache/apt/archives/*.deb";'
+    echo 'DPkg::Post-Invoke:: "rm -rf /var/cache/apt/archives/partial/*.deb";'
+    echo 'DPkg::Post-Invoke:: "rm -rf /var/cache/apt/*.bin";'
+    echo 'Apt::Update::Post-Invoke:: "rm -rf /var/cache/apt/archives/*.deb";'
+    echo 'Apt::Update::Post-Invoke:: "rm -rf /var/cache/apt/archives/partial/*.deb";'
+    echo 'Apt::Update::Post-Invoke:: "rm -rf /var/cache/apt/*.bin";'
+    echo 'Dir::Cache::pkgcache "";'
+    echo 'Dir::Cache::srcpkgcache "";'
+} | sudo tee etc/apt/apt.conf.d/no-cache > /dev/null
+
+# shrink the image, since apt makes us fat
+sudo chroot . apt-get autoremove
+sudo chroot . apt-get autoclean
 sudo chroot . apt-get clean
 
 # Remove other stuff

@@ -258,3 +258,17 @@ class SSLVerificationUnsupported(TribusError):
         return ("HTTPS certificates cannot be verified as txaws.client.ssl is"
             " missing.\n"
             "Upgrade txaws or set 'ssl-hostname-verification' to false.")
+
+
+class CannotIdentifyDistribution(TribusError):
+    """"""
+
+    def __str__(self):
+        return ("We could not identify your distribution.")
+
+
+class UnsupportedDistribution(TribusError):
+    """"""
+
+    def __str__(self):
+        return ("Your distribution is not supported.")

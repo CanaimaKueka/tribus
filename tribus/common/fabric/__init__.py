@@ -19,96 +19,187 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """
-
 This package contains remote execution scripts based on Fabric.
 
 This package is intended to serve as an automation library. It is designed to
 execute (local) operations on Tribus's development environment (Docker,
 Vagrant, chroot, etc), and also on (remote) servers when deploying Charms.
-
 """
 
-import os
-import pwd
-from fabric.api import env
+import sys
+from fabric.api import task
 
-from tribus import BASEDIR
-from tribus.config.base import CONFDIR, AUTHOR, AUTHOR_EMAIL
-from tribus.config.ldap import (AUTH_LDAP_SERVER_URI,
-                                AUTH_LDAP_BIND_DN, AUTH_LDAP_BIND_PASSWORD)
-from tribus.config.switches import SWITCHES_CONFIGURATION
-from tribus.config.pkg import (python_dependencies, debian_run_dependencies,
-                               debian_build_dependencies)
-from tribus.common.utils import get_path
-from tribus.common.system import get_local_arch
-from tribus.common.fabric.docker import *
-from tribus.common.fabric.django import *
-from tribus.common.fabric.setup import *
+from tribus.config.base import CONTAINERS
+from tribus.common.logger import get_logger
+from tribus.common.fabric.map import FABRIC_FUNCTION_MAP
+
+log = get_logger()
+
+if CONTAINERS in FABRIC_FUNCTION_MAP:
+
+    log.info('Using "%s" as container backend.' % CONTAINERS)
+    env = FABRIC_FUNCTION_MAP[CONTAINERS]['enable_environment']()
+
+else:
+    log.info('Container backend "%s" not supported.' % CONTAINERS)
+    sys.exit(1)
 
 
-# Fabric environment configuration
-env.basedir = BASEDIR
-env.host_string = '127.0.0.1'
-env.user = str(pwd.getpwuid(os.getuid()).pw_name)
-env.user_id = str(pwd.getpwuid(os.getuid()).pw_uid)
-env.port = 22222
-env.password = 'tribus'
-env.warn_only = True
-env.output_prefix = False
+@task
+def generate_debian_base_image_i386():
+    """
+    """
+    env.arch = 'i386'
+    FABRIC_FUNCTION_MAP[CONTAINERS]['generate_debian_base_image']()
 
-# Docker config
-env.docker = 'docker.io'
-env.arch = get_local_arch()
-env.docker_maintainer = '%s <%s>' % (AUTHOR, AUTHOR_EMAIL)
 
-env.debian_base_image = 'luisalejandro/debian-%(arch)s:wheezy' % env
-env.tribus_base_image = 'luisalejandro/tribus-%(arch)s:wheezy' % env
-env.tribus_runtime_image = 'luisalejandro/tribus-run-%(arch)s:wheezy' % env
-env.tribus_runtime_container = 'tribus-run-container'
+@task
+def generate_debian_base_image_amd64():
+    """
+    """
+    env.arch = 'amd64'
+    FABRIC_FUNCTION_MAP[CONTAINERS]['generate_debian_base_image']()
 
-env.debian_base_image_script = get_path([BASEDIR, 'tribus',
-                                         'data', 'scripts',
-                                         'debian-base-image.sh'])
-env.tribus_base_image_script = get_path([BASEDIR, 'tribus',
-                                         'data', 'scripts',
-                                         'tribus-base-image.sh'])
-env.tribus_django_syncdb_script = get_path([BASEDIR, 'tribus',
-                                            'data', 'scripts',
-                                            'django-syncdb.sh'])
-env.tribus_django_runserver_script = get_path([BASEDIR, 'tribus',
-                                               'data', 'scripts',
-                                               'django-runserver.sh'])
-env.tribus_start_container_script = get_path([BASEDIR, 'tribus',
-                                              'data', 'scripts',
-                                              'start-container.sh'])
 
-waffle_switches = SWITCHES_CONFIGURATION.keys()
-mounts = ['%(basedir)s:%(basedir)s:rw' % env, '/tmp:/tmp:rw']
-start_services = ['ssh', 'postgresql', 'slapd']
-change_passwd = ['root:tribus', 'postgres:tribus', 'openldap:tribus']
+@task
+def generate_tribus_base_image_i386():
+    """
+    """
+    env.arch = 'i386'
+    env.debian_base_image = 'luisalejandro/debian-i386'
+    env.tribus_base_image = 'luisalejandro/tribus-i386'
+    FABRIC_FUNCTION_MAP[CONTAINERS]['generate_tribus_base_image']()
 
-env.mounts = ' '.join('--volume %s' % i for i in mounts)
 
-env.fvars = {
-    'BASEDIR': '%(basedir)s' % env,
-    'PYTHONPATH': '%(basedir)s' % env,
-    'DJANGO_SETTINGS_MODULE': 'tribus.config.web',
-    'DEBIAN_FRONTEND': 'noninteractive',
-    'PRESEED_DEBCONF': get_path([CONFDIR, 'data', 'preseed-debconf.conf']),
-    'PRESEED_DB': get_path([CONFDIR, 'data', 'preseed-db.sql']),
-    'PRESEED_LDAP': get_path([CONFDIR, 'data', 'preseed-ldap.ldif']),
-    'PYTHON_DEPENDENCIES': ' '.join(python_dependencies),
-    'DEBIAN_RUN_DEPENDENCIES':  ' '.join(debian_run_dependencies),
-    'DEBIAN_BUILD_DEPENDENCIES': ' '.join(debian_build_dependencies),
-    'LDAP_ARGS': ('-x -w %s -D %s -H %s' % (AUTH_LDAP_BIND_PASSWORD,
-                                            AUTH_LDAP_BIND_DN,
-                                            AUTH_LDAP_SERVER_URI)),
-    'START_SERVICES': ' '.join(start_services),
-    'CHANGE_PASSWD': ' '.join(change_passwd),
-    'WAFFLE_SWITCHES': ' '.join(waffle_switches),
-    'HOST_USER': env.user,
-    'HOST_USER_ID': env.user_id
-}
+@task
+def generate_tribus_base_image_amd64():
+    """
+    """
+    env.arch = 'amd64'
+    env.debian_base_image = 'luisalejandro/debian-amd64'
+    env.tribus_base_image = 'luisalejandro/tribus-amd64'
+    FABRIC_FUNCTION_MAP[CONTAINERS]['generate_tribus_base_image']()
 
-env.dvars = ' '.join('--env %s=\\"%s\\"' % (i, j)
-                     for i, j in env.fvars.items())
+
+@task
+def kill_all_containers():
+    """
+    """
+    FABRIC_FUNCTION_MAP[CONTAINERS]['kill_all_containers']()
+
+
+@task
+def kill_all_images():
+    """
+    """
+    FABRIC_FUNCTION_MAP[CONTAINERS]['kill_all_images']()
+
+
+@task
+def kill_tribus_images():
+    """
+    """
+    FABRIC_FUNCTION_MAP[CONTAINERS]['kill_tribus_images']()
+
+
+@task
+def environment():
+    """
+    Reproduce the Tribus developer environment.
+
+    This function takes care of downloading and installing the software that
+    is needed to develop and maintain Tribus.
+
+    .. versionadded:: 0.2
+    """
+    FABRIC_FUNCTION_MAP[CONTAINERS]['pull_debian_base_image']()
+    FABRIC_FUNCTION_MAP[CONTAINERS]['pull_tribus_base_image']()
+
+
+@task
+def stop():
+    """
+    """
+    FABRIC_FUNCTION_MAP[CONTAINERS]['stop_container']()
+
+
+@task
+def login():
+    """
+    """
+    FABRIC_FUNCTION_MAP[CONTAINERS]['login_container']()
+
+
+@task
+def reset():
+    """
+    """
+    FABRIC_FUNCTION_MAP[CONTAINERS]['reset_container']()
+
+
+@task
+def update():
+    """
+    """
+    FABRIC_FUNCTION_MAP[CONTAINERS]['update_container']()
+
+
+@task
+def django(command):
+    """
+    """
+
+    FABRIC_FUNCTION_MAP[CONTAINERS]['check_container']()
+
+    with nested(hide('warnings', 'stderr', 'running'),
+                shell_env(**env.fvars), cd(env.basedir)):
+
+        if command == 'syncdb':
+
+            run('bash %(tribus_django_syncdb_script)s' % env)
+
+        elif command == 'runserver':
+
+            run('bash %(tribus_django_runserver_script)s' % env)
+
+        elif command == 'shell':
+
+            log.info('Opening a django shell inside the runtime container ...')
+            log.info('(When you are done, press CTRL+D to get out).')
+
+            run('python manage.py shell')
+
+        else:
+
+            run('python manage.py %s' % command)
+
+
+@task
+def setuptools(command):
+    """
+    """
+    FABRIC_FUNCTION_MAP[CONTAINERS]['check_container']()
+
+    with nested(hide('warnings', 'stderr', 'running'),
+                shell_env(**env.fvars), cd(env.basedir)):
+
+        run('python setup.py %s' % command)
+
+
+@task
+def tx(command):
+    """
+    """
+
+    FABRIC_FUNCTION_MAP[CONTAINERS]['check_container']()
+
+    with nested(hide('warnings', 'stderr', 'running'),
+                shell_env(**env.fvars), cd(env.basedir)):
+
+        if command == 'pull':
+
+            run('tx pull -a --skip')
+
+        elif command == 'push':
+
+            run('tx push -s -t --skip --no-interactive')

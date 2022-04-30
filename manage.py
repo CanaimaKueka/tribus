@@ -22,6 +22,8 @@
 
 This file is an entry point for managing Tribus in development mode.
 
+It is a wrapper to the Django management commands.
+
 """
 
 import sys
