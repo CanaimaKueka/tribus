@@ -34,6 +34,10 @@ Tribus
    :target: https://www.quantifiedcode.com/app/project/534670b7e079492483d404ebec6ef2be
    :alt: Code issues
 
+.. image:: https://www.quantifiedcode.com/api/v1/project/534670b7e079492483d404ebec6ef2be/badge.svg
+   :target: https://www.quantifiedcode.com/app/project/534670b7e079492483d404ebec6ef2be
+   :alt: Code issues
+
 *Tribus* es una **red social** para la gestión de comunidades de software libre. Su objetivo es simplificar las tediosas y repetitivas tareas de mantenimiento, mientras pone a disposición de sus miembros **las mejores herramientas** que le permitirán **expresar su creatividad** y **desarrollar el máximo potencial de sus capacidades**.
 
 *Tribus* promueve la **autogestión** y la **corresponsabilidad** en las diversas áreas del proceso productivo de software, estableciendo un **modelo organizacional** que permite una **progresión** y **rotación natural** de los roles.
