@@ -33,6 +33,8 @@ else:
     PACKAGECACHE = BASEDIR + '/packagecache'
     CHARMSDIR = BASEDIR + '/tribus/data/charms'
 
+CONTAINERS = 'vagrant'
+
 # DEFAULT_CLI_OPTIONS = {
 #     'version': [['-v', '--version'], {
 #         'action': 'version',

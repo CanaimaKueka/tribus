@@ -72,6 +72,7 @@ Session.vim
 # packing-only formats
 *.iso
 *.tar
+*.box
 
 # package management formats
 *.dmg
