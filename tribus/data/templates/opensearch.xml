@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
-  <ShortName>Search My Website</ShortName>
-  <Description>Search for my brilliance.</Description>
-  <Image width="16" height="16" type="image/png">http://mywebsite.com{{ MEDIA_URL }}img/favicon.png</Image>
-  <Url type="text/html" template="http://mywebsite.com/search/?q={searchTerms}"/>
-</OpenSearchDescription>
